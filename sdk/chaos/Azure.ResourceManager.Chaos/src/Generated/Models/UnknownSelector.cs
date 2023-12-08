@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> The UnknownSelector. </summary>
     internal partial class UnknownSelector : Selector
     {
-        /// <summary> Initializes a new instance of UnknownSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSelector"/>. </summary>
         /// <param name="selectorType"> Enum of the selector type. </param>
         /// <param name="id"> String of the selector ID. </param>
         /// <param name="filter">

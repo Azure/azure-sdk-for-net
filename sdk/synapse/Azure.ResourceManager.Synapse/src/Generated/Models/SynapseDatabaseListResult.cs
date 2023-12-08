@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The list Kusto databases operation response. </summary>
     internal partial class SynapseDatabaseListResult
     {
-        /// <summary> Initializes a new instance of SynapseDatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDatabaseListResult"/>. </summary>
         internal SynapseDatabaseListResult()
         {
             Value = new ChangeTrackingList<SynapseDatabaseData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseDatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDatabaseListResult"/>. </summary>
         /// <param name="value">
         /// The list of Kusto databases.
         /// Please note <see cref="SynapseDatabaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

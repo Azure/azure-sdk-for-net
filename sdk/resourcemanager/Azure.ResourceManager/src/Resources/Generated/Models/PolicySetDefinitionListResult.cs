@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of policy set definitions. </summary>
     internal partial class PolicySetDefinitionListResult
     {
-        /// <summary> Initializes a new instance of PolicySetDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySetDefinitionListResult"/>. </summary>
         internal PolicySetDefinitionListResult()
         {
             Value = new ChangeTrackingList<PolicySetDefinitionData>();
         }
 
-        /// <summary> Initializes a new instance of PolicySetDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySetDefinitionListResult"/>. </summary>
         /// <param name="value"> An array of policy set definitions. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal PolicySetDefinitionListResult(IReadOnlyList<PolicySetDefinitionData> value, string nextLink)

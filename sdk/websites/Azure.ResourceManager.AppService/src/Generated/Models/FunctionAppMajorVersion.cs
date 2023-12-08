@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Function App stack major version. </summary>
     public partial class FunctionAppMajorVersion
     {
-        /// <summary> Initializes a new instance of FunctionAppMajorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppMajorVersion"/>. </summary>
         internal FunctionAppMajorVersion()
         {
             MinorVersions = new ChangeTrackingList<FunctionAppMinorVersion>();
         }
 
-        /// <summary> Initializes a new instance of FunctionAppMajorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppMajorVersion"/>. </summary>
         /// <param name="displayText"> Function App stack major version (display only). </param>
         /// <param name="value"> Function App stack major version name. </param>
         /// <param name="minorVersions"> Minor versions associated with the major version. </param>

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         private readonly AgentPoolsRestOperations _containerRegistryAgentPoolAgentPoolsRestClient;
         private readonly ContainerRegistryAgentPoolData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/agentPools";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerRegistryAgentPoolResource"/> class for mocking. </summary>
         protected ContainerRegistryAgentPoolResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ContainerRegistry
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/agentPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

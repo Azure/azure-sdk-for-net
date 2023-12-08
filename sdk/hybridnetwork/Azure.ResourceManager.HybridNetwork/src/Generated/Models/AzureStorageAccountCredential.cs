@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The azure storage account credential definition. </summary>
     public partial class AzureStorageAccountCredential : ArtifactAccessCredential
     {
-        /// <summary> Initializes a new instance of AzureStorageAccountCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureStorageAccountCredential"/>. </summary>
         internal AzureStorageAccountCredential()
         {
             ContainerCredentials = new ChangeTrackingList<AzureStorageAccountContainerCredential>();
             CredentialType = CredentialType.AzureStorageAccountToken;
         }
 
-        /// <summary> Initializes a new instance of AzureStorageAccountCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureStorageAccountCredential"/>. </summary>
         /// <param name="credentialType"> The credential type. </param>
         /// <param name="storageAccountId"> The storage account Id. </param>
         /// <param name="containerCredentials"> The containers that could be accessed using the current credential. </param>

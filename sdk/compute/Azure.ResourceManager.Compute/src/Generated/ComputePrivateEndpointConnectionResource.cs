@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Compute
         private readonly DiskAccessesRestOperations _computePrivateEndpointConnectionDiskAccessesRestClient;
         private readonly ComputePrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/diskAccesses/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="ComputePrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected ComputePrivateEndpointConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/diskAccesses/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> A collection of assembly definitions. </summary>
     internal partial class IntegrationAccountAssemblyList
     {
-        /// <summary> Initializes a new instance of IntegrationAccountAssemblyList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountAssemblyList"/>. </summary>
         internal IntegrationAccountAssemblyList()
         {
             Value = new ChangeTrackingList<IntegrationAccountAssemblyDefinitionData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountAssemblyList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountAssemblyList"/>. </summary>
         /// <param name="value"></param>
         internal IntegrationAccountAssemblyList(IReadOnlyList<IntegrationAccountAssemblyDefinitionData> value)
         {

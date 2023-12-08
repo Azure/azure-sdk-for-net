@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.StorageSync
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
         private readonly StorageSyncServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StorageSync/storageSyncServices";
+
         /// <summary> Initializes a new instance of the <see cref="StorageSyncServiceResource"/> class for mocking. </summary>
         protected StorageSyncServiceResource()
         {
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.StorageSync
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StorageSync/storageSyncServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

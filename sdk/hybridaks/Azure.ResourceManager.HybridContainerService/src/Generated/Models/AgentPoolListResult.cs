@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> A list of agent pool resources. </summary>
     internal partial class AgentPoolListResult
     {
-        /// <summary> Initializes a new instance of AgentPoolListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolListResult"/>. </summary>
         internal AgentPoolListResult()
         {
             Value = new ChangeTrackingList<HybridContainerServiceAgentPoolData>();
         }
 
-        /// <summary> Initializes a new instance of AgentPoolListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal AgentPoolListResult(IReadOnlyList<HybridContainerServiceAgentPoolData> value, string nextLink)

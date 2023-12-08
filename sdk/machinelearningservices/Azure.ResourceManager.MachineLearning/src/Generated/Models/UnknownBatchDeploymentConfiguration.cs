@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownBatchDeploymentConfiguration. </summary>
     internal partial class UnknownBatchDeploymentConfiguration : BatchDeploymentConfiguration
     {
-        /// <summary> Initializes a new instance of UnknownBatchDeploymentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownBatchDeploymentConfiguration"/>. </summary>
         /// <param name="deploymentConfigurationType"> [Required] The type of the deployment. </param>
         internal UnknownBatchDeploymentConfiguration(BatchDeploymentConfigurationType deploymentConfigurationType) : base(deploymentConfigurationType)
         {

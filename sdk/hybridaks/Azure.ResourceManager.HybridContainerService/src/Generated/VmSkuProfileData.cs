@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.HybridContainerService
     /// </summary>
     public partial class VmSkuProfileData : ResourceData
     {
-        /// <summary> Initializes a new instance of VmSkuProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmSkuProfileData"/>. </summary>
         public VmSkuProfileData()
         {
         }
 
-        /// <summary> Initializes a new instance of VmSkuProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmSkuProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

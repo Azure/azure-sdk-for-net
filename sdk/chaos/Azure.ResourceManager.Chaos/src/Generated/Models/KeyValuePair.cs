@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> A map to describe the settings of an action. </summary>
     public partial class KeyValuePair
     {
-        /// <summary> Initializes a new instance of KeyValuePair. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyValuePair"/>. </summary>
         /// <param name="key"> The name of the setting for the action. </param>
         /// <param name="value"> The value of the setting for the action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>

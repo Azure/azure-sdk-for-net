@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Resource information. </summary>
     public partial class ArmApplicationResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ArmApplicationResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ArmApplicationResourceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

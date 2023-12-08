@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Whether a particular kubernetes version's variant (CBLMariner, Windows, Windows2022) is ready or not. </summary>
     public partial class KubernetesVersionReadiness
     {
-        /// <summary> Initializes a new instance of KubernetesVersionReadiness. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesVersionReadiness"/>. </summary>
         internal KubernetesVersionReadiness()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesVersionReadiness. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesVersionReadiness"/>. </summary>
         /// <param name="osType"> The particular KubernetesVersion's Image's OS Type (Linux, Windows). </param>
         /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </param>
         /// <param name="ready"> Whether or not the given image is ready. </param>

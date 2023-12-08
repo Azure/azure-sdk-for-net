@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties for updating a source based trigger. </summary>
     public partial class ContainerRegistrySourceTriggerUpdateContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistrySourceTriggerUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySourceTriggerUpdateContent"/>. </summary>
         /// <param name="name"> The name of the trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ContainerRegistrySourceTriggerUpdateContent(string name)
@@ -22,6 +22,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Argument.AssertNotNull(name, nameof(name));
 
             SourceTriggerEvents = new ChangeTrackingList<ContainerRegistrySourceTriggerEvent>();
+            Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySourceTriggerUpdateContent"/>. </summary>
+        /// <param name="sourceRepository"> The properties that describes the source(code) for the task. </param>
+        /// <param name="sourceTriggerEvents"> The source event corresponding to the trigger. </param>
+        /// <param name="status"> The current status of trigger. </param>
+        /// <param name="name"> The name of the trigger. </param>
+        internal ContainerRegistrySourceTriggerUpdateContent(SourceCodeRepoUpdateContent sourceRepository, IList<ContainerRegistrySourceTriggerEvent> sourceTriggerEvents, ContainerRegistryTriggerStatus? status, string name)
+        {
+            SourceRepository = sourceRepository;
+            SourceTriggerEvents = sourceTriggerEvents;
+            Status = status;
             Name = name;
         }
 

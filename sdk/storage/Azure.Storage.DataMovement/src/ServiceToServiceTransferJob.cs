@@ -181,7 +181,16 @@ namespace Azure.Storage.DataMovement
                         : current.Uri.GetPath().Substring(containerUriPath.Length + 1);
                     StorageResourceContainer subContainer =
                         _destinationResourceContainer.GetChildStorageResourceContainer(subContainerPath);
-                    await subContainer.CreateIfNotExistsAsync().ConfigureAwait(false);
+
+                    try
+                    {
+                        await subContainer.CreateIfNotExistsAsync(_cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        await InvokeFailedArgAsync(ex).ConfigureAwait(false);
+                        yield break;
+                    }
                 }
                 else
                 {

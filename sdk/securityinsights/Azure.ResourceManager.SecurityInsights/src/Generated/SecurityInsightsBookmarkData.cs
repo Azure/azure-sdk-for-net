@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.SecurityInsights
     /// </summary>
     public partial class SecurityInsightsBookmarkData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsBookmarkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsBookmarkData"/>. </summary>
         public SecurityInsightsBookmarkData()
         {
             Labels = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsBookmarkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsBookmarkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

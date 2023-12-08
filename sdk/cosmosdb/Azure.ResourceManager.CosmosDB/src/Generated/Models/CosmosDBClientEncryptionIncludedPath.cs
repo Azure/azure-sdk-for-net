@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> . </summary>
     public partial class CosmosDBClientEncryptionIncludedPath
     {
-        /// <summary> Initializes a new instance of CosmosDBClientEncryptionIncludedPath. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBClientEncryptionIncludedPath"/>. </summary>
         /// <param name="path"> Path that needs to be encrypted. </param>
         /// <param name="clientEncryptionKeyId"> The identifier of the Client Encryption Key to be used to encrypt the path. </param>
         /// <param name="encryptionType"> The type of encryption to be performed. Eg - Deterministic, Randomized. </param>

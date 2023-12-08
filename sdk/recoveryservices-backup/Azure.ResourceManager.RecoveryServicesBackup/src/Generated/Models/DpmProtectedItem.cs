@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Additional information on Backup engine specific backup item. </summary>
     public partial class DpmProtectedItem : BackupGenericProtectedItem
     {
-        /// <summary> Initializes a new instance of DpmProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmProtectedItem"/>. </summary>
         public DpmProtectedItem()
         {
             ProtectedItemType = "DPMProtectedItem";
         }
 
-        /// <summary> Initializes a new instance of DpmProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmProtectedItem"/>. </summary>
         /// <param name="protectedItemType"> backup item type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>

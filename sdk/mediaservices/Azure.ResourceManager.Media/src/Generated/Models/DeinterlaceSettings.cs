@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Describes the de-interlacing settings. </summary>
     public partial class DeinterlaceSettings
     {
-        /// <summary> Initializes a new instance of DeinterlaceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeinterlaceSettings"/>. </summary>
         public DeinterlaceSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of DeinterlaceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeinterlaceSettings"/>. </summary>
         /// <param name="parity"> The field parity for de-interlacing, defaults to Auto. </param>
         /// <param name="mode"> The deinterlacing mode. Defaults to AutoPixelAdaptive. </param>
         internal DeinterlaceSettings(DeinterlaceParity? parity, DeinterlaceMode? mode)

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.MobileNetwork
         private readonly SimsRestOperations _mobileNetworkSimSimsRestClient;
         private readonly MobileNetworkSimData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/simGroups/sims";
+
         /// <summary> Initializes a new instance of the <see cref="MobileNetworkSimResource"/> class for mocking. </summary>
         protected MobileNetworkSimResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.MobileNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/simGroups/sims";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The license profile of the provisioned cluster. </summary>
     internal partial class ProvisionedClusterLicenseProfile
     {
-        /// <summary> Initializes a new instance of ProvisionedClusterLicenseProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterLicenseProfile"/>. </summary>
         public ProvisionedClusterLicenseProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClusterLicenseProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterLicenseProfile"/>. </summary>
         /// <param name="azureHybridBenefit"> Indicates whether Azure Hybrid Benefit is opted in. </param>
         internal ProvisionedClusterLicenseProfile(AzureHybridBenefit? azureHybridBenefit)
         {

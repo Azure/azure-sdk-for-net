@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The status of a UpdateStage. </summary>
     public partial class ContainerServiceFleetUpdateStageStatus
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateStageStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateStageStatus"/>. </summary>
         internal ContainerServiceFleetUpdateStageStatus()
         {
             Groups = new ChangeTrackingList<ContainerServiceFleetUpdateGroupStatus>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateStageStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateStageStatus"/>. </summary>
         /// <param name="status"> The status of the UpdateStage. </param>
         /// <param name="name"> The name of the UpdateStage. </param>
         /// <param name="groups"> The list of groups to be updated as part of this UpdateStage. </param>

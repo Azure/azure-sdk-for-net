@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.HybridContainerService
         private readonly AgentPoolRestOperations _hybridContainerServiceAgentPoolagentPoolRestClient;
         private readonly HybridContainerServiceAgentPoolData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/provisionedClusterInstances/agentPools";
+
         /// <summary> Initializes a new instance of the <see cref="HybridContainerServiceAgentPoolResource"/> class for mocking. </summary>
         protected HybridContainerServiceAgentPoolResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.HybridContainerService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/provisionedClusterInstances/agentPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The HybridContainerServiceAgentPoolPatch to use. </param>
+        /// <param name="patch"> The <see cref="HybridContainerServiceAgentPoolPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<HybridContainerServiceAgentPoolResource>> UpdateAsync(WaitUntil waitUntil, HybridContainerServiceAgentPoolPatch patch, CancellationToken cancellationToken = default)
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The HybridContainerServiceAgentPoolPatch to use. </param>
+        /// <param name="patch"> The <see cref="HybridContainerServiceAgentPoolPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<HybridContainerServiceAgentPoolResource> Update(WaitUntil waitUntil, HybridContainerServiceAgentPoolPatch patch, CancellationToken cancellationToken = default)

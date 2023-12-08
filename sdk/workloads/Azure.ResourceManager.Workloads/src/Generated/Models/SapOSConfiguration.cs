@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// </summary>
     public abstract partial class SapOSConfiguration
     {
-        /// <summary> Initializes a new instance of SapOSConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapOSConfiguration"/>. </summary>
         protected SapOSConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of SapOSConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapOSConfiguration"/>. </summary>
         /// <param name="osType"> The OS Type. </param>
         internal SapOSConfiguration(SapOSType osType)
         {

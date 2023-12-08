@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Object that includes an array of supported buildpacks resources and a possible link for next set. </summary>
     internal partial class SupportedBuildpacksList
     {
-        /// <summary> Initializes a new instance of SupportedBuildpacksList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedBuildpacksList"/>. </summary>
         internal SupportedBuildpacksList()
         {
             Value = new ChangeTrackingList<AppPlatformSupportedBuildpackData>();
         }
 
-        /// <summary> Initializes a new instance of SupportedBuildpacksList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedBuildpacksList"/>. </summary>
         /// <param name="value"> Collection of supported buildpacks resources. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).

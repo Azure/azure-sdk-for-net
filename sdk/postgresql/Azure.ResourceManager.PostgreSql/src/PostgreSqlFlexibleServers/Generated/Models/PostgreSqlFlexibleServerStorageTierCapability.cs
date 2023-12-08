@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Represents capability of a storage tier. </summary>
     public partial class PostgreSqlFlexibleServerStorageTierCapability : PostgreSqlBaseCapability
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageTierCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageTierCapability"/>. </summary>
         internal PostgreSqlFlexibleServerStorageTierCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageTierCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageTierCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="name"> Name to represent Storage tier capability. </param>

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Description about the errors happen while performing migration validation. </summary>
     public partial class ExecutionStatistics
     {
-        /// <summary> Initializes a new instance of ExecutionStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecutionStatistics"/>. </summary>
         internal ExecutionStatistics()
         {
             WaitStats = new ChangeTrackingDictionary<string, WaitStatistics>();
             SqlErrors = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ExecutionStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecutionStatistics"/>. </summary>
         /// <param name="executionCount"> No. of query executions. </param>
         /// <param name="cpuTimeMs"> CPU Time in millisecond(s) for the query execution. </param>
         /// <param name="elapsedTimeMs"> Time taken in millisecond(s) for executing the query. </param>

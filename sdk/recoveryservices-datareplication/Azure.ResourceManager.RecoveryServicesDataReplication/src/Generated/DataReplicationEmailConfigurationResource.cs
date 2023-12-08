@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         private readonly EmailConfigurationRestOperations _dataReplicationEmailConfigurationEmailConfigurationRestClient;
         private readonly DataReplicationEmailConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationVaults/alertSettings";
+
         /// <summary> Initializes a new instance of the <see cref="DataReplicationEmailConfigurationResource"/> class for mocking. </summary>
         protected DataReplicationEmailConfigurationResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationVaults/alertSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Details about the location requested and the available skus in the location. </summary>
     public partial class RedisEnterpriseRegionSkuDetail
     {
-        /// <summary> Initializes a new instance of RedisEnterpriseRegionSkuDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseRegionSkuDetail"/>. </summary>
         internal RedisEnterpriseRegionSkuDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseRegionSkuDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseRegionSkuDetail"/>. </summary>
         /// <param name="resourceType"> Resource type which has the SKU, such as Microsoft.Cache/redisEnterprise. </param>
         /// <param name="locationInfo"> Details about location and its capabilities. </param>
         /// <param name="skuDetails"> Details about available skus. </param>

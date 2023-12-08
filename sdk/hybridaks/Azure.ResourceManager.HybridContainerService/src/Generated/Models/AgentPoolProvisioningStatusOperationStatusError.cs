@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The AgentPoolProvisioningStatusOperationStatusError. </summary>
     public partial class AgentPoolProvisioningStatusOperationStatusError
     {
-        /// <summary> Initializes a new instance of AgentPoolProvisioningStatusOperationStatusError. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolProvisioningStatusOperationStatusError"/>. </summary>
         public AgentPoolProvisioningStatusOperationStatusError()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentPoolProvisioningStatusOperationStatusError. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolProvisioningStatusOperationStatusError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
         internal AgentPoolProvisioningStatusOperationStatusError(string code, string message)

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Define a match condition. </summary>
     public partial class RulesEngineMatchCondition
     {
-        /// <summary> Initializes a new instance of RulesEngineMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulesEngineMatchCondition"/>. </summary>
         /// <param name="rulesEngineMatchVariable"> Match Variable. </param>
         /// <param name="rulesEngineOperator"> Describes operator to apply to the match condition. </param>
         /// <param name="rulesEngineMatchValue"> Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Transforms = new ChangeTrackingList<RulesEngineMatchTransform>();
         }
 
-        /// <summary> Initializes a new instance of RulesEngineMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulesEngineMatchCondition"/>. </summary>
         /// <param name="rulesEngineMatchVariable"> Match Variable. </param>
         /// <param name="selector"> Name of selector in RequestHeader or RequestBody to be matched. </param>
         /// <param name="rulesEngineOperator"> Describes operator to apply to the match condition. </param>

@@ -10,7 +10,7 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Response of the last anomaly detection. </summary>
     public partial class UnivariateLastDetectionResult
     {
-        /// <summary> Initializes a new instance of UnivariateLastDetectionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnivariateLastDetectionResult"/>. </summary>
         /// <param name="period">
         /// Frequency extracted from the series. Zero means no recurrent pattern has been
         /// found.
@@ -52,7 +52,7 @@ namespace Azure.AI.AnomalyDetector
             IsPositiveAnomaly = isPositiveAnomaly;
         }
 
-        /// <summary> Initializes a new instance of UnivariateLastDetectionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnivariateLastDetectionResult"/>. </summary>
         /// <param name="period">
         /// Frequency extracted from the series. Zero means no recurrent pattern has been
         /// found.

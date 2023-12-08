@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     /// <summary> An array of Dedicated capacities resources. </summary>
     internal partial class DedicatedCapacities
     {
-        /// <summary> Initializes a new instance of DedicatedCapacities. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedCapacities"/>. </summary>
         /// <param name="value"> An array of Dedicated capacities resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DedicatedCapacities(IEnumerable<DedicatedCapacityData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DedicatedCapacities. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedCapacities"/>. </summary>
         /// <param name="value"> An array of Dedicated capacities resources. </param>
         internal DedicatedCapacities(IReadOnlyList<DedicatedCapacityData> value)
         {

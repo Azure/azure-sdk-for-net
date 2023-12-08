@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.TrafficManager
         private readonly TrafficManagerUserMetricsKeysRestOperations _trafficManagerUserMetricsTrafficManagerUserMetricsKeysRestClient;
         private readonly TrafficManagerUserMetricData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/trafficManagerUserMetricsKeys";
+
         /// <summary> Initializes a new instance of the <see cref="TrafficManagerUserMetricsResource"/> class for mocking. </summary>
         protected TrafficManagerUserMetricsResource()
         {
@@ -55,9 +58,6 @@ namespace Azure.ResourceManager.TrafficManager
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/trafficManagerUserMetricsKeys";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

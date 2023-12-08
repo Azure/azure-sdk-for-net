@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The VmSkuProfileProperties. </summary>
     public partial class VmSkuProfileProperties
     {
-        /// <summary> Initializes a new instance of VmSkuProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmSkuProfileProperties"/>. </summary>
         internal VmSkuProfileProperties()
         {
             Values = new ChangeTrackingList<VmSkuProperties>();
         }
 
-        /// <summary> Initializes a new instance of VmSkuProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmSkuProfileProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="values"> Array of HybridAKS Support VM Skus. </param>
         internal VmSkuProfileProperties(ResourceProvisioningState? provisioningState, IReadOnlyList<VmSkuProperties> values)

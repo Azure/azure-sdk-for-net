@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that validates connection to SQL Server and also validates source server requirements. </summary>
     public partial class ConnectToSourceSqlServerTaskInput
     {
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for Source SQL Server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> is null. </exception>
         public ConnectToSourceSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SourceConnectionInfo = sourceConnectionInfo;
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for Source SQL Server. </param>
         /// <param name="checkPermissionsGroup"> Permission group for validations. </param>
         /// <param name="collectDatabases"> Flag for whether to collect databases from source server. </param>

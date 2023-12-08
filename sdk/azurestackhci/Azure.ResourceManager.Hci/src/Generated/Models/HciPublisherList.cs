@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> List of Publisher proxy resources for the HCI cluster. </summary>
     internal partial class HciPublisherList
     {
-        /// <summary> Initializes a new instance of HciPublisherList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciPublisherList"/>. </summary>
         internal HciPublisherList()
         {
             Value = new ChangeTrackingList<PublisherData>();
         }
 
-        /// <summary> Initializes a new instance of HciPublisherList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciPublisherList"/>. </summary>
         /// <param name="value"> List of Publisher proxy resources. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal HciPublisherList(IReadOnlyList<PublisherData> value, string nextLink)

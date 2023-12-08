@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> Represents message sent to a UserSession. </summary>
     public partial class UserSessionMessage
     {
-        /// <summary> Initializes a new instance of UserSessionMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserSessionMessage"/>. </summary>
         public UserSessionMessage()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UserSessionMessage"/>. </summary>
+        /// <param name="messageTitle"> Title of message. </param>
+        /// <param name="messageBody"> Body of message. </param>
+        internal UserSessionMessage(string messageTitle, string messageBody)
+        {
+            MessageTitle = messageTitle;
+            MessageBody = messageBody;
         }
 
         /// <summary> Title of message. </summary>

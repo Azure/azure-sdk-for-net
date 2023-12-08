@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> ControlPlaneProfile - The control plane properties for the provisioned cluster. </summary>
     public partial class ControlPlaneProfile : NamedAgentPoolProfile
     {
-        /// <summary> Initializes a new instance of ControlPlaneProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControlPlaneProfile"/>. </summary>
         public ControlPlaneProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ControlPlaneProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControlPlaneProfile"/>. </summary>
         /// <param name="availabilityZones"> AvailabilityZones - The list of Availability zones to use for nodes. Datacenter racks modelled as zones. </param>
         /// <param name="osType"> The particular KubernetesVersion's Image's OS Type (Linux, Windows). </param>
         /// <param name="ossku"> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </param>

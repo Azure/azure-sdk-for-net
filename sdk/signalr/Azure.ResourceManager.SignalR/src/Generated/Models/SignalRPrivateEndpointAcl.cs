@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> ACL for a private endpoint. </summary>
     public partial class SignalRPrivateEndpointAcl : SignalRNetworkAcl
     {
-        /// <summary> Initializes a new instance of SignalRPrivateEndpointAcl. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRPrivateEndpointAcl"/>. </summary>
         /// <param name="name"> Name of the private endpoint connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SignalRPrivateEndpointAcl(string name)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SignalR.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of SignalRPrivateEndpointAcl. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRPrivateEndpointAcl"/>. </summary>
         /// <param name="allow"> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <param name="deny"> Denied request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <param name="name"> Name of the private endpoint connection. </param>

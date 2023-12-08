@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> IP rule with specific IP or IP range in CIDR format. </summary>
     public partial class ContainerRegistryIPRule
     {
-        /// <summary> Initializes a new instance of ContainerRegistryIPRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryIPRule"/>. </summary>
         /// <param name="ipAddressOrRange"> Specifies the IP or IP range in CIDR format. Only IPV4 address is allowed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddressOrRange"/> is null. </exception>
         public ContainerRegistryIPRule(string ipAddressOrRange)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             IPAddressOrRange = ipAddressOrRange;
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryIPRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryIPRule"/>. </summary>
         /// <param name="action"> The action of IP ACL rule. </param>
         /// <param name="ipAddressOrRange"> Specifies the IP or IP range in CIDR format. Only IPV4 address is allowed. </param>
         internal ContainerRegistryIPRule(ContainerRegistryIPRuleAction? action, string ipAddressOrRange)

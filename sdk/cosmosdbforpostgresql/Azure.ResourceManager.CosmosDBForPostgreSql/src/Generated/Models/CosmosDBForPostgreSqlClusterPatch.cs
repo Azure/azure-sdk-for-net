@@ -13,10 +13,49 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     /// <summary> Represents a cluster for update. </summary>
     public partial class CosmosDBForPostgreSqlClusterPatch
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterPatch"/>. </summary>
         public CosmosDBForPostgreSqlClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterPatch"/>. </summary>
+        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
+        /// <param name="administratorLoginPassword"> The password of the administrator login. Each cluster is created with pre-defined administrative role called ‘citus’. . </param>
+        /// <param name="postgresqlVersion"> The major PostgreSQL version on all cluster servers. </param>
+        /// <param name="citusVersion"> The Citus extension version on all cluster servers. </param>
+        /// <param name="isShardsOnCoordinatorEnabled"> If distributed tables are placed on coordinator or not. Should be set to 'true' on single node clusters. Requires shard rebalancing after value is changed. </param>
+        /// <param name="isHAEnabled"> If high availability (HA) is enabled or not for the cluster. </param>
+        /// <param name="preferredPrimaryZone"> Preferred primary availability zone (AZ) for all cluster servers. </param>
+        /// <param name="coordinatorServerEdition"> The edition of the coordinator (default: GeneralPurpose). </param>
+        /// <param name="coordinatorStorageQuotaInMb"> The storage of the coordinator in MB. </param>
+        /// <param name="coordinatorVCores"> The vCores count of the coordinator (max: 96). </param>
+        /// <param name="isCoordinatorPublicIPAccessEnabled"> If public access is enabled on coordinator. </param>
+        /// <param name="nodeServerEdition"> The edition of a node (default: MemoryOptimized). </param>
+        /// <param name="nodeCount"> Worker node count of the cluster. When node count is 0, it represents a single node configuration with the ability to create distributed tables on that node. 2 or more worker nodes represent multi-node configuration. Node count value cannot be 1. </param>
+        /// <param name="nodeStorageQuotaInMb"> The storage in MB on each worker node. </param>
+        /// <param name="nodeVCores"> The compute in vCores on each worker node (max: 104). </param>
+        /// <param name="isNodePublicIPAccessEnabled"> If public access is enabled on worker nodes. </param>
+        /// <param name="maintenanceWindow"> Maintenance window of a cluster. </param>
+        internal CosmosDBForPostgreSqlClusterPatch(IDictionary<string, string> tags, string administratorLoginPassword, string postgresqlVersion, string citusVersion, bool? isShardsOnCoordinatorEnabled, bool? isHAEnabled, string preferredPrimaryZone, string coordinatorServerEdition, int? coordinatorStorageQuotaInMb, int? coordinatorVCores, bool? isCoordinatorPublicIPAccessEnabled, string nodeServerEdition, int? nodeCount, int? nodeStorageQuotaInMb, int? nodeVCores, bool? isNodePublicIPAccessEnabled, CosmosDBForPostgreSqlMaintenanceWindow maintenanceWindow)
+        {
+            Tags = tags;
+            AdministratorLoginPassword = administratorLoginPassword;
+            PostgresqlVersion = postgresqlVersion;
+            CitusVersion = citusVersion;
+            IsShardsOnCoordinatorEnabled = isShardsOnCoordinatorEnabled;
+            IsHAEnabled = isHAEnabled;
+            PreferredPrimaryZone = preferredPrimaryZone;
+            CoordinatorServerEdition = coordinatorServerEdition;
+            CoordinatorStorageQuotaInMb = coordinatorStorageQuotaInMb;
+            CoordinatorVCores = coordinatorVCores;
+            IsCoordinatorPublicIPAccessEnabled = isCoordinatorPublicIPAccessEnabled;
+            NodeServerEdition = nodeServerEdition;
+            NodeCount = nodeCount;
+            NodeStorageQuotaInMb = nodeStorageQuotaInMb;
+            NodeVCores = nodeVCores;
+            IsNodePublicIPAccessEnabled = isNodePublicIPAccessEnabled;
+            MaintenanceWindow = maintenanceWindow;
         }
 
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>

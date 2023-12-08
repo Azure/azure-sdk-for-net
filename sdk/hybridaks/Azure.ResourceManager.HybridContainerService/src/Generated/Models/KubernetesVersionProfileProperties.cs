@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The KubernetesVersionProfileProperties. </summary>
     public partial class KubernetesVersionProfileProperties
     {
-        /// <summary> Initializes a new instance of KubernetesVersionProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesVersionProfileProperties"/>. </summary>
         internal KubernetesVersionProfileProperties()
         {
             Values = new ChangeTrackingList<KubernetesVersionProperties>();
         }
 
-        /// <summary> Initializes a new instance of KubernetesVersionProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesVersionProfileProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="values"> List of supported Kubernetes versions. </param>
         internal KubernetesVersionProfileProperties(ResourceProvisioningState? provisioningState, IReadOnlyList<KubernetesVersionProperties> values)

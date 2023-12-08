@@ -13,12 +13,37 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update runbook operation. </summary>
     public partial class AutomationRunbookCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationRunbookCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRunbookCreateOrUpdateContent"/>. </summary>
         /// <param name="runbookType"> Gets or sets the type of the runbook. </param>
         public AutomationRunbookCreateOrUpdateContent(AutomationRunbookType runbookType)
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             RunbookType = runbookType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationRunbookCreateOrUpdateContent"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the resource. </param>
+        /// <param name="location"> Gets or sets the location of the resource. </param>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <param name="isLogVerboseEnabled"> Gets or sets verbose log option. </param>
+        /// <param name="isLogProgressEnabled"> Gets or sets progress log option. </param>
+        /// <param name="runbookType"> Gets or sets the type of the runbook. </param>
+        /// <param name="draft"> Gets or sets the draft runbook properties. </param>
+        /// <param name="publishContentLink"> Gets or sets the published runbook content link. </param>
+        /// <param name="description"> Gets or sets the description of the runbook. </param>
+        /// <param name="logActivityTrace"> Gets or sets the activity-level tracing options of the runbook. </param>
+        internal AutomationRunbookCreateOrUpdateContent(string name, AzureLocation? location, IDictionary<string, string> tags, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, AutomationRunbookType runbookType, AutomationRunbookDraft draft, AutomationContentLink publishContentLink, string description, int? logActivityTrace)
+        {
+            Name = name;
+            Location = location;
+            Tags = tags;
+            IsLogVerboseEnabled = isLogVerboseEnabled;
+            IsLogProgressEnabled = isLogProgressEnabled;
+            RunbookType = runbookType;
+            Draft = draft;
+            PublishContentLink = publishContentLink;
+            Description = description;
+            LogActivityTrace = logActivityTrace;
         }
 
         /// <summary> Gets or sets the name of the resource. </summary>

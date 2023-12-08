@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningJobInput
     {
-        /// <summary> Initializes a new instance of MachineLearningJobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobInput"/>. </summary>
         protected MachineLearningJobInput()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningJobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobInput"/>. </summary>
         /// <param name="description"> Description for the input. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         internal MachineLearningJobInput(string description, JobInputType jobInputType)

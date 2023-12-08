@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Network and credentials configuration already applied to terminal server. </summary>
     public partial class NetworkFabricPatchablePropertiesTerminalServerConfiguration : TerminalServerPatchableProperties
     {
-        /// <summary> Initializes a new instance of NetworkFabricPatchablePropertiesTerminalServerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricPatchablePropertiesTerminalServerConfiguration"/>. </summary>
         public NetworkFabricPatchablePropertiesTerminalServerConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricPatchablePropertiesTerminalServerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricPatchablePropertiesTerminalServerConfiguration"/>. </summary>
         /// <param name="username"> Username for the terminal server connection. </param>
         /// <param name="password"> Password for the terminal server connection. </param>
         /// <param name="serialNumber"> Serial Number of Terminal server. </param>

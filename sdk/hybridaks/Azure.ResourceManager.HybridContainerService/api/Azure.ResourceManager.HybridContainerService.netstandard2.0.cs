@@ -21,18 +21,12 @@ namespace Azure.ResourceManager.HybridContainerService
     {
         public HybridContainerServiceAgentPoolData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<string> AvailabilityZones { get { throw null; } }
-        public Azure.ResourceManager.HybridContainerService.Models.CloudProviderProfile CloudProviderProfile { get { throw null; } set { } }
         public int? Count { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.AgentPoolExtendedLocation ExtendedLocation { get { throw null; } set { } }
-        public int? MaxCount { get { throw null; } set { } }
-        public int? MaxPods { get { throw null; } set { } }
-        public int? MinCount { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.Mode? Mode { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridContainerService.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string NodeImageVersion { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> NodeLabels { get { throw null; } }
-        public System.Collections.Generic.IList<string> NodeTaints { get { throw null; } }
+        public Azure.ResourceManager.HybridContainerService.Models.Ossku? OSSKU { get { throw null; } set { } }
         public Azure.ResourceManager.HybridContainerService.Models.OSType? OSType { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningStatusStatus Status { get { throw null; } set { } }
         public string VmSize { get { throw null; } set { } }
     }
@@ -44,7 +38,7 @@ namespace Azure.ResourceManager.HybridContainerService
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string connectedClusterResourceUri, string agentPoolName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -53,102 +47,31 @@ namespace Azure.ResourceManager.HybridContainerService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource> Update(Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource>> UpdateAsync(Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceAgentPoolPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceAgentPoolPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class HybridContainerServiceExtensions
     {
         public static Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource GetHybridContainerServiceAgentPoolResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetwork(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string virtualNetworksName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource>> GetHybridContainerServiceVirtualNetworkAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string virtualNetworksName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource GetHybridContainerServiceVirtualNetworkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkCollection GetHybridContainerServiceVirtualNetworks(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworks(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworksAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource GetHybridIdentityMetadataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.HybridContainerService.Models.OrchestratorVersionProfileListResult> GetOrchestratorsHybridContainerService(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.Models.OrchestratorVersionProfileListResult>> GetOrchestratorsHybridContainerServiceAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource> GetProvisionedCluster(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource>> GetProvisionedClusterAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileResource GetKubernetesVersionProfile(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileResource GetKubernetesVersionProfileResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource GetProvisionedCluster(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource GetProvisionedClusterResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.ProvisionedClusterCollection GetProvisionedClusters(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource> GetProvisionedClusters(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource> GetProvisionedClustersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileResource GetProvisionedClusterUpgradeProfileResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.HybridContainerService.StorageSpaceResource> GetStorageSpace(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string storageSpacesName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.StorageSpaceResource>> GetStorageSpaceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string storageSpacesName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.StorageSpaceResource GetStorageSpaceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.StorageSpaceCollection GetStorageSpaces(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.HybridContainerService.StorageSpaceResource> GetStorageSpaces(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.HybridContainerService.StorageSpaceResource> GetStorageSpacesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.HybridContainerService.Models.VmSkuListResult> GetVmSkusHybridContainerService(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.Models.VmSkuListResult>> GetVmSkusHybridContainerServiceAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class HybridContainerServiceVirtualNetworkCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource>, System.Collections.IEnumerable
-    {
-        protected HybridContainerServiceVirtualNetworkCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string virtualNetworksName, Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string virtualNetworksName, Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string virtualNetworksName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string virtualNetworksName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> Get(string virtualNetworksName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource>> GetAsync(string virtualNetworksName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> GetIfExists(string virtualNetworksName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource>> GetIfExistsAsync(string virtualNetworksName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class HybridContainerServiceVirtualNetworkData : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public HybridContainerServiceVirtualNetworkData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.HybridContainerService.Models.VirtualNetworksExtendedLocation ExtendedLocation { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.VirtualNetworksProperties Properties { get { throw null; } set { } }
-    }
-    public partial class HybridContainerServiceVirtualNetworkResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected HybridContainerServiceVirtualNetworkResource() { }
-        public virtual Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualNetworksName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVirtualNetworkPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceVirtualNetworkPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class HybridIdentityMetadataCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource>, System.Collections.IEnumerable
-    {
-        protected HybridIdentityMetadataCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string hybridIdentityMetadataResourceName, Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string hybridIdentityMetadataResourceName, Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string hybridIdentityMetadataResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string hybridIdentityMetadataResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource> Get(string hybridIdentityMetadataResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource>> GetAsync(string hybridIdentityMetadataResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource> GetIfExists(string hybridIdentityMetadataResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource>> GetIfExistsAsync(string hybridIdentityMetadataResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public static Azure.Response<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource> GetVirtualNetwork(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string virtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource>> GetVirtualNetworkAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string virtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.VirtualNetworkResource GetVirtualNetworkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.VirtualNetworkCollection GetVirtualNetworks(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource> GetVirtualNetworks(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource> GetVirtualNetworksAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.VmSkuProfileResource GetVmSkuProfile(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.VmSkuProfileResource GetVmSkuProfileResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class HybridIdentityMetadataData : Azure.ResourceManager.Models.ResourceData
     {
         public HybridIdentityMetadataData() { }
-        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public string ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
         public string PublicKey { get { throw null; } set { } }
         public string ResourceUid { get { throw null; } set { } }
     }
@@ -158,37 +81,39 @@ namespace Azure.ResourceManager.HybridContainerService
         protected HybridIdentityMetadataResource() { }
         public virtual Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string hybridIdentityMetadataResourceName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string connectedClusterResourceUri) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ProvisionedClusterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource>, System.Collections.IEnumerable
+    public partial class KubernetesVersionProfileData : Azure.ResourceManager.Models.ResourceData
     {
-        protected ProvisionedClusterCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string resourceName, Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string resourceName, Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource> Get(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource>> GetAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource> GetIfExists(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource>> GetIfExistsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public KubernetesVersionProfileData() { }
+        public Azure.ResourceManager.HybridContainerService.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionProfileProperties Properties { get { throw null; } }
     }
-    public partial class ProvisionedClusterData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class KubernetesVersionProfileResource : Azure.ResourceManager.ArmResource
     {
-        public ProvisionedClusterData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersResponseExtendedLocation ExtendedLocation { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersResponseProperties Properties { get { throw null; } set { } }
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected KubernetesVersionProfileResource() { }
+        public virtual Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string customLocationResourceUri) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ProvisionedClusterData : Azure.ResourceManager.Models.ResourceData
+    {
+        public ProvisionedClusterData() { }
+        public Azure.ResourceManager.HybridContainerService.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterProperties Properties { get { throw null; } set { } }
     }
     public partial class ProvisionedClusterResource : Azure.ResourceManager.ArmResource
     {
@@ -196,35 +121,29 @@ namespace Azure.ResourceManager.HybridContainerService
         protected ProvisionedClusterResource() { }
         public virtual Azure.ResourceManager.HybridContainerService.ProvisionedClusterData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.ProvisionedClusterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.ProvisionedClusterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string connectedClusterResourceUri) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataCollection GetAllHybridIdentityMetadata() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.Models.ListCredentialResponse> GetAdminKubeconfig(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.Models.ListCredentialResponse>> GetAdminKubeconfigAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource> GetHybridContainerServiceAgentPool(string agentPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource>> GetHybridContainerServiceAgentPoolAsync(string agentPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolCollection GetHybridContainerServiceAgentPools() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource> GetHybridIdentityMetadata(string hybridIdentityMetadataResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource>> GetHybridIdentityMetadataAsync(string hybridIdentityMetadataResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource GetHybridIdentityMetadata() { throw null; }
         public virtual Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileResource GetProvisionedClusterUpgradeProfile() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation UpgradeNodeImageVersionForEntireCluster(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpgradeNodeImageVersionForEntireClusterAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.Models.ListCredentialResponse> GetUserKubeconfig(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.Models.ListCredentialResponse>> GetUserKubeconfigAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ProvisionedClusterUpgradeProfileData : Azure.ResourceManager.Models.ResourceData
     {
         public ProvisionedClusterUpgradeProfileData(Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfile controlPlaneProfile, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfile> agentPoolProfiles) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfile> AgentPoolProfiles { get { throw null; } }
         public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfile ControlPlaneProfile { get { throw null; } set { } }
-        public string ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class ProvisionedClusterUpgradeProfileResource : Azure.ResourceManager.ArmResource
     {
@@ -232,52 +151,72 @@ namespace Azure.ResourceManager.HybridContainerService
         protected ProvisionedClusterUpgradeProfileResource() { }
         public virtual Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string connectedClusterResourceUri) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class StorageSpaceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridContainerService.StorageSpaceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.StorageSpaceResource>, System.Collections.IEnumerable
+    public partial class VirtualNetworkCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource>, System.Collections.IEnumerable
     {
-        protected StorageSpaceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.StorageSpaceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string storageSpacesName, Azure.ResourceManager.HybridContainerService.StorageSpaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.StorageSpaceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string storageSpacesName, Azure.ResourceManager.HybridContainerService.StorageSpaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string storageSpacesName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string storageSpacesName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.StorageSpaceResource> Get(string storageSpacesName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.HybridContainerService.StorageSpaceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridContainerService.StorageSpaceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.StorageSpaceResource>> GetAsync(string storageSpacesName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridContainerService.StorageSpaceResource> GetIfExists(string storageSpacesName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridContainerService.StorageSpaceResource>> GetIfExistsAsync(string storageSpacesName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridContainerService.StorageSpaceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridContainerService.StorageSpaceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridContainerService.StorageSpaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.StorageSpaceResource>.GetEnumerator() { throw null; }
+        protected VirtualNetworkCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string virtualNetworkName, Azure.ResourceManager.HybridContainerService.VirtualNetworkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string virtualNetworkName, Azure.ResourceManager.HybridContainerService.VirtualNetworkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string virtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string virtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource> Get(string virtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource>> GetAsync(string virtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource> GetIfExists(string virtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource>> GetIfExistsAsync(string virtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class StorageSpaceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class VirtualNetworkData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public StorageSpaceData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.HybridContainerService.Models.StorageSpacesExtendedLocation ExtendedLocation { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.StorageSpacesProperties Properties { get { throw null; } set { } }
+        public VirtualNetworkData(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkProperties Properties { get { throw null; } set { } }
     }
-    public partial class StorageSpaceResource : Azure.ResourceManager.ArmResource
+    public partial class VirtualNetworkResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected StorageSpaceResource() { }
-        public virtual Azure.ResourceManager.HybridContainerService.StorageSpaceData Data { get { throw null; } }
+        protected VirtualNetworkResource() { }
+        public virtual Azure.ResourceManager.HybridContainerService.VirtualNetworkData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.StorageSpaceResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.StorageSpaceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageSpacesName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualNetworkName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.StorageSpaceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.StorageSpaceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.StorageSpaceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.StorageSpaceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.StorageSpaceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.StorageSpaceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.StorageSpaceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.Models.StorageSpacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.StorageSpaceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.Models.StorageSpacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class VmSkuProfileData : Azure.ResourceManager.Models.ResourceData
+    {
+        public VmSkuProfileData() { }
+        public Azure.ResourceManager.HybridContainerService.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridContainerService.Models.VmSkuProfileProperties Properties { get { throw null; } }
+    }
+    public partial class VmSkuProfileResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected VmSkuProfileResource() { }
+        public virtual Azure.ResourceManager.HybridContainerService.VmSkuProfileData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.VmSkuProfileResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.VmSkuProfileData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridContainerService.VmSkuProfileResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridContainerService.VmSkuProfileData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string customLocationResourceUri) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.VmSkuProfileResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.VmSkuProfileResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.HybridContainerService.Mocking
@@ -286,126 +225,82 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
     {
         protected MockableHybridContainerServiceArmClient() { }
         public virtual Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource GetHybridContainerServiceAgentPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource GetHybridContainerServiceVirtualNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource GetHybridIdentityMetadataResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.Models.OrchestratorVersionProfileListResult> GetOrchestratorsHybridContainerService(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.Models.OrchestratorVersionProfileListResult>> GetOrchestratorsHybridContainerServiceAsync(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileResource GetKubernetesVersionProfile(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileResource GetKubernetesVersionProfileResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource GetProvisionedCluster(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource GetProvisionedClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileResource GetProvisionedClusterUpgradeProfileResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.HybridContainerService.StorageSpaceResource GetStorageSpaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.Models.VmSkuListResult> GetVmSkusHybridContainerService(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.Models.VmSkuListResult>> GetVmSkusHybridContainerServiceAsync(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HybridContainerService.VirtualNetworkResource GetVirtualNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.HybridContainerService.VmSkuProfileResource GetVmSkuProfile(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.ResourceManager.HybridContainerService.VmSkuProfileResource GetVmSkuProfileResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableHybridContainerServiceResourceGroupResource : Azure.ResourceManager.ArmResource
     {
         protected MockableHybridContainerServiceResourceGroupResource() { }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetwork(string virtualNetworksName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource>> GetHybridContainerServiceVirtualNetworkAsync(string virtualNetworksName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkCollection GetHybridContainerServiceVirtualNetworks() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource> GetProvisionedCluster(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource>> GetProvisionedClusterAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.HybridContainerService.ProvisionedClusterCollection GetProvisionedClusters() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.StorageSpaceResource> GetStorageSpace(string storageSpacesName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.StorageSpaceResource>> GetStorageSpaceAsync(string storageSpacesName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.HybridContainerService.StorageSpaceCollection GetStorageSpaces() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource> GetVirtualNetwork(string virtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource>> GetVirtualNetworkAsync(string virtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HybridContainerService.VirtualNetworkCollection GetVirtualNetworks() { throw null; }
     }
     public partial class MockableHybridContainerServiceSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableHybridContainerServiceSubscriptionResource() { }
-        public virtual Azure.Pageable<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource> GetProvisionedClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource> GetProvisionedClustersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.HybridContainerService.StorageSpaceResource> GetStorageSpaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridContainerService.StorageSpaceResource> GetStorageSpacesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource> GetVirtualNetworks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridContainerService.VirtualNetworkResource> GetVirtualNetworksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class AADProfile : Azure.ResourceManager.HybridContainerService.Models.AADProfileSecret
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AddonPhase : System.IEquatable<Azure.ResourceManager.HybridContainerService.Models.AddonPhase>
     {
-        public AADProfile() { }
-        public System.Collections.Generic.IList<string> AdminGroupObjectIds { get { throw null; } }
-        public string ClientAppId { get { throw null; } set { } }
-        public bool? EnableAzureRbac { get { throw null; } set { } }
-        public bool? Managed { get { throw null; } set { } }
-        public string ServerAppId { get { throw null; } set { } }
-        public System.Guid? TenantId { get { throw null; } set { } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AddonPhase(string value) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.AddonPhase Deleting { get { throw null; } }
+        public static Azure.ResourceManager.HybridContainerService.Models.AddonPhase Failed { get { throw null; } }
+        public static Azure.ResourceManager.HybridContainerService.Models.AddonPhase Pending { get { throw null; } }
+        public static Azure.ResourceManager.HybridContainerService.Models.AddonPhase Provisioned { get { throw null; } }
+        public static Azure.ResourceManager.HybridContainerService.Models.AddonPhase Provisioning { get { throw null; } }
+        public static Azure.ResourceManager.HybridContainerService.Models.AddonPhase ProvisioningHelmChartInstalled { get { throw null; } }
+        public static Azure.ResourceManager.HybridContainerService.Models.AddonPhase ProvisioningMSICertificateDownloaded { get { throw null; } }
+        public static Azure.ResourceManager.HybridContainerService.Models.AddonPhase Upgrading { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HybridContainerService.Models.AddonPhase other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HybridContainerService.Models.AddonPhase left, Azure.ResourceManager.HybridContainerService.Models.AddonPhase right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridContainerService.Models.AddonPhase (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HybridContainerService.Models.AddonPhase left, Azure.ResourceManager.HybridContainerService.Models.AddonPhase right) { throw null; }
+        public override string ToString() { throw null; }
     }
-    public partial class AADProfileResponse
+    public partial class AddonStatusProfile
     {
-        public AADProfileResponse() { }
-        public System.Collections.Generic.IList<string> AdminGroupObjectIds { get { throw null; } }
-        public string ClientAppId { get { throw null; } set { } }
-        public bool? EnableAzureRbac { get { throw null; } set { } }
-        public bool? Managed { get { throw null; } set { } }
-        public string ServerAppId { get { throw null; } set { } }
-        public System.Guid? TenantId { get { throw null; } set { } }
-    }
-    public partial class AADProfileSecret
-    {
-        public AADProfileSecret() { }
-        public string ServerAppSecret { get { throw null; } set { } }
-    }
-    public partial class AddonProfiles
-    {
-        public AddonProfiles() { }
-        public System.Collections.Generic.IDictionary<string, string> Config { get { throw null; } }
-        public bool? Enabled { get { throw null; } set { } }
-    }
-    public partial class AddonStatus
-    {
-        internal AddonStatus() { }
+        internal AddonStatusProfile() { }
         public string ErrorMessage { get { throw null; } }
-        public string Phase { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.HybridContainerService.Models.AddonPhase? Phase { get { throw null; } }
         public bool? Ready { get { throw null; } }
-    }
-    public partial class AgentPoolExtendedLocation
-    {
-        public AgentPoolExtendedLocation() { }
-        public string AgentPoolExtendedLocationType { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
     }
     public partial class AgentPoolProfile
     {
         public AgentPoolProfile() { }
         public System.Collections.Generic.IList<string> AvailabilityZones { get { throw null; } }
-        public Azure.ResourceManager.HybridContainerService.Models.CloudProviderProfile CloudProviderProfile { get { throw null; } set { } }
-        public int? Count { get { throw null; } set { } }
-        public int? MaxCount { get { throw null; } set { } }
-        public int? MaxPods { get { throw null; } set { } }
-        public int? MinCount { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.Mode? Mode { get { throw null; } set { } }
         public string NodeImageVersion { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> NodeLabels { get { throw null; } }
-        public System.Collections.Generic.IList<string> NodeTaints { get { throw null; } }
+        public Azure.ResourceManager.HybridContainerService.Models.Ossku? OSSKU { get { throw null; } set { } }
         public Azure.ResourceManager.HybridContainerService.Models.OSType? OSType { get { throw null; } set { } }
-        public string VmSize { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AgentPoolProvisioningState : System.IEquatable<Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningState>
+    public partial class AgentPoolProvisioningStatusOperationStatus
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AgentPoolProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningState InProgress { get { throw null; } }
-        public static Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningState left, Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningState left, Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
+        public AgentPoolProvisioningStatusOperationStatus() { }
+        public Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningStatusOperationStatusError Error { get { throw null; } set { } }
+        public string OperationId { get { throw null; } set { } }
+        public string Status { get { throw null; } set { } }
     }
-    public partial class AgentPoolProvisioningStatusError
+    public partial class AgentPoolProvisioningStatusOperationStatusError
     {
-        public AgentPoolProvisioningStatusError() { }
+        public AgentPoolProvisioningStatusOperationStatusError() { }
         public string Code { get { throw null; } set { } }
         public string Message { get { throw null; } set { } }
     }
@@ -413,216 +308,165 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     {
         public AgentPoolProvisioningStatusStatus() { }
         public string ErrorMessage { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningStatusStatusProvisioningStatus ProvisioningStatus { get { throw null; } set { } }
-        public int? ReadyReplicas { get { throw null; } set { } }
-        public int? Replicas { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningStatusOperationStatus OperationStatus { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridContainerService.Models.AgentPoolUpdateProfile> ReadyReplicas { get { throw null; } }
     }
-    public partial class AgentPoolProvisioningStatusStatusProvisioningStatus
+    public partial class AgentPoolUpdateProfile
     {
-        public AgentPoolProvisioningStatusStatusProvisioningStatus() { }
-        public Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningStatusError Error { get { throw null; } set { } }
-        public string OperationId { get { throw null; } set { } }
-        public string Phase { get { throw null; } set { } }
-        public string Status { get { throw null; } set { } }
-    }
-    public partial class ArcAgentProfile
-    {
-        public ArcAgentProfile() { }
-        public Azure.ResourceManager.HybridContainerService.Models.AutoUpgradeOption? AgentAutoUpgrade { get { throw null; } set { } }
-        public string AgentVersion { get { throw null; } set { } }
-    }
-    public partial class ArcAgentStatus
-    {
-        internal ArcAgentStatus() { }
-        public string AgentVersion { get { throw null; } }
-        public long? CoreCount { get { throw null; } }
-        public Azure.ResourceManager.HybridContainerService.Models.DeploymentState? DeploymentState { get { throw null; } }
-        public string ErrorMessage { get { throw null; } }
-        public System.DateTimeOffset? LastConnectivityOn { get { throw null; } }
-        public System.DateTimeOffset? ManagedIdentityCertificateExpirationOn { get { throw null; } }
-        public string OnboardingPublicKey { get { throw null; } }
+        public AgentPoolUpdateProfile() { }
+        public int? Count { get { throw null; } set { } }
+        public string VmSize { get { throw null; } set { } }
     }
     public static partial class ArmHybridContainerServiceModelFactory
     {
-        public static Azure.ResourceManager.HybridContainerService.Models.AddonStatus AddonStatus(string errorMessage = null, string phase = null, bool? ready = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.Models.ArcAgentStatus ArcAgentStatus(Azure.ResourceManager.HybridContainerService.Models.DeploymentState? deploymentState = default(Azure.ResourceManager.HybridContainerService.Models.DeploymentState?), string errorMessage = null, string onboardingPublicKey = null, string agentVersion = null, long? coreCount = default(long?), System.DateTimeOffset? managedIdentityCertificateExpirationOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastConnectivityOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData HybridContainerServiceAgentPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridContainerService.Models.AgentPoolExtendedLocation extendedLocation = null, int? count = default(int?), System.Collections.Generic.IEnumerable<string> availabilityZones = null, int? maxCount = default(int?), int? maxPods = default(int?), int? minCount = default(int?), Azure.ResourceManager.HybridContainerService.Models.Mode? mode = default(Azure.ResourceManager.HybridContainerService.Models.Mode?), System.Collections.Generic.IDictionary<string, string> nodeLabels = null, System.Collections.Generic.IEnumerable<string> nodeTaints = null, Azure.ResourceManager.HybridContainerService.Models.OSType? osType = default(Azure.ResourceManager.HybridContainerService.Models.OSType?), string nodeImageVersion = null, string vmSize = null, Azure.ResourceManager.HybridContainerService.Models.CloudProviderProfile cloudProviderProfile = null, Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningState? provisioningState = default(Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningState?), Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningStatusStatus status = null) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkData HybridContainerServiceVirtualNetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridContainerService.Models.VirtualNetworksProperties properties = null, Azure.ResourceManager.HybridContainerService.Models.VirtualNetworksExtendedLocation extendedLocation = null) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData HybridIdentityMetadataData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string resourceUid = null, string publicKey = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string provisioningState = null) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.Models.OrchestratorProfile OrchestratorProfile(bool? isPreview = default(bool?), string orchestratorType = null, string orchestratorVersion = null) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.Models.OrchestratorVersionProfile OrchestratorVersionProfile(bool? isPreview = default(bool?), bool? @default = default(bool?), string orchestratorType = null, string orchestratorVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.Models.OrchestratorProfile> upgrades = null) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.Models.OrchestratorVersionProfileListResult OrchestratorVersionProfileListResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.Models.OrchestratorVersionProfile> orchestrators = null) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterCreateOrUpdateContent ProvisionedClusterCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersAllProperties properties = null, Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersExtendedLocation extendedLocation = null) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.ProvisionedClusterData ProvisionedClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersResponseProperties properties = null, Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersResponseExtendedLocation extendedLocation = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.AddonStatusProfile AddonStatusProfile(string name = null, Azure.ResourceManager.HybridContainerService.Models.AddonPhase? phase = default(Azure.ResourceManager.HybridContainerService.Models.AddonPhase?), bool? ready = default(bool?), string errorMessage = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.CredentialResult CredentialResult(string name = null, byte[] value = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolData HybridContainerServiceAgentPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridContainerService.Models.ExtendedLocation extendedLocation = null, System.Collections.Generic.IEnumerable<string> availabilityZones = null, Azure.ResourceManager.HybridContainerService.Models.OSType? osType = default(Azure.ResourceManager.HybridContainerService.Models.OSType?), Azure.ResourceManager.HybridContainerService.Models.Ossku? ossku = default(Azure.ResourceManager.HybridContainerService.Models.Ossku?), string nodeImageVersion = null, int? count = default(int?), string vmSize = null, Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState?), Azure.ResourceManager.HybridContainerService.Models.AgentPoolProvisioningStatusStatus status = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataData HybridIdentityMetadataData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string resourceUid = null, string publicKey = null, Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.KubernetesPatchVersions KubernetesPatchVersions(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionReadiness> readiness = null, System.Collections.Generic.IEnumerable<string> upgrades = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.KubernetesVersionProfileData KubernetesVersionProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridContainerService.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionProfileProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionProfileProperties KubernetesVersionProfileProperties(Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionProperties> values = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionProperties KubernetesVersionProperties(string version = null, System.Collections.Generic.IEnumerable<string> capabilitiesSupportPlan = null, bool? isPreview = default(bool?), System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HybridContainerService.Models.KubernetesPatchVersions> patchVersions = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionReadiness KubernetesVersionReadiness(Azure.ResourceManager.HybridContainerService.Models.OSType? osType = default(Azure.ResourceManager.HybridContainerService.Models.OSType?), Azure.ResourceManager.HybridContainerService.Models.Ossku? osSku = default(Azure.ResourceManager.HybridContainerService.Models.Ossku?), bool? ready = default(bool?), string errorMessage = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.ListCredentialResponse ListCredentialResponse(string id = null, string name = null, Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState? status = default(Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState?), Azure.ResourceManager.HybridContainerService.Models.ListCredentialResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.Models.CredentialResult> listCredentialResponseKubeconfigs = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.ListCredentialResponseError ListCredentialResponseError(string code = null, string message = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.ProvisionedClusterData ProvisionedClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterProperties properties = null, Azure.ResourceManager.HybridContainerService.Models.ExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfile ProvisionedClusterPoolUpgradeProfile(string kubernetesVersion = null, string name = null, Azure.ResourceManager.HybridContainerService.Models.OSType? osType = default(Azure.ResourceManager.HybridContainerService.Models.OSType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfileProperties> upgrades = null) { throw null; }
         public static Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfileProperties ProvisionedClusterPoolUpgradeProfileProperties(string kubernetesVersion = null, bool? isPreview = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersAllProperties ProvisionedClustersAllProperties(Azure.ResourceManager.HybridContainerService.Models.AADProfile aadProfile = null, Azure.ResourceManager.HybridContainerService.Models.WindowsProfile windowsProfile = null, Azure.ResourceManager.HybridContainerService.Models.HttpProxyConfig httpProxyConfig = null, bool? enableRbac = default(bool?), Azure.ResourceManager.HybridContainerService.Models.LinuxProfileProperties linuxProfile = null, Azure.ResourceManager.HybridContainerService.Models.ArcAgentProfile featuresArcAgentProfile = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.HybridContainerService.Models.AddonProfiles> addonProfiles = null, Azure.ResourceManager.HybridContainerService.Models.ControlPlaneProfile controlPlane = null, string kubernetesVersion = null, Azure.ResourceManager.HybridContainerService.Models.NetworkProfile networkProfile = null, string nodeResourceGroup = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.Models.NamedAgentPoolProfile> agentPoolProfiles = null, Azure.ResourceManager.HybridContainerService.Models.CloudProviderProfile cloudProviderProfile = null, Azure.ResourceManager.HybridContainerService.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridContainerService.Models.ProvisioningState?), Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersCommonPropertiesStatus status = null) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersCommonPropertiesStatus ProvisionedClustersCommonPropertiesStatus(Azure.ResourceManager.HybridContainerService.Models.ArcAgentStatus arcAgentStatus = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HybridContainerService.Models.AddonStatus> addonStatus = null, string errorMessage = null, Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersCommonPropertiesStatusProvisioningStatus provisioningStatus = null) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersCommonPropertiesStatusProvisioningStatus ProvisionedClustersCommonPropertiesStatusProvisioningStatus(Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersCommonPropertiesStatusProvisioningStatusError error = null, string operationId = null, string phase = null, string status = null) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersCommonPropertiesStatusProvisioningStatusError ProvisionedClustersCommonPropertiesStatusProvisioningStatusError(string code = null, string message = null) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersResponseProperties ProvisionedClustersResponseProperties(Azure.ResourceManager.HybridContainerService.Models.AADProfileResponse aadProfile = null, Azure.ResourceManager.HybridContainerService.Models.WindowsProfileResponse windowsProfile = null, Azure.ResourceManager.HybridContainerService.Models.HttpProxyConfigResponse httpProxyConfig = null, bool? enableRbac = default(bool?), Azure.ResourceManager.HybridContainerService.Models.LinuxProfileProperties linuxProfile = null, Azure.ResourceManager.HybridContainerService.Models.ArcAgentProfile featuresArcAgentProfile = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.HybridContainerService.Models.AddonProfiles> addonProfiles = null, Azure.ResourceManager.HybridContainerService.Models.ControlPlaneProfile controlPlane = null, string kubernetesVersion = null, Azure.ResourceManager.HybridContainerService.Models.NetworkProfile networkProfile = null, string nodeResourceGroup = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.Models.NamedAgentPoolProfile> agentPoolProfiles = null, Azure.ResourceManager.HybridContainerService.Models.CloudProviderProfile cloudProviderProfile = null, Azure.ResourceManager.HybridContainerService.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridContainerService.Models.ProvisioningState?), Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersCommonPropertiesStatus status = null) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData ProvisionedClusterUpgradeProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string provisioningState = null, Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfile controlPlaneProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfile> agentPoolProfiles = null) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.StorageSpaceData StorageSpaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridContainerService.Models.StorageSpacesProperties properties = null, Azure.ResourceManager.HybridContainerService.Models.StorageSpacesExtendedLocation extendedLocation = null) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.Models.StorageSpacesProperties StorageSpacesProperties(Azure.ResourceManager.HybridContainerService.Models.StorageSpacesPropertiesHciStorageProfile hciStorageProfile = null, Azure.ResourceManager.HybridContainerService.Models.StorageSpacesPropertiesVmwareStorageProfile vmwareStorageProfile = null, Azure.ResourceManager.HybridContainerService.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridContainerService.Models.ProvisioningState?), Azure.ResourceManager.HybridContainerService.Models.StorageSpacesPropertiesStatusProvisioningStatus provisioningStatus = null) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.Models.VirtualNetworksProperties VirtualNetworksProperties(Azure.ResourceManager.HybridContainerService.Models.VirtualNetworksPropertiesInfraVnetProfile infraVnetProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.Models.VirtualNetworksPropertiesVipPoolItem> vipPool = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.Models.VirtualNetworksPropertiesVmipPoolItem> vmipPool = null, System.Collections.Generic.IEnumerable<string> dhcpServers = null, System.Collections.Generic.IEnumerable<string> dnsServers = null, string gateway = null, string ipAddressPrefix = null, string vlanId = null, Azure.ResourceManager.HybridContainerService.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridContainerService.Models.ProvisioningState?), Azure.ResourceManager.HybridContainerService.Models.VirtualNetworksPropertiesStatusProvisioningStatus provisioningStatus = null) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.Models.VirtualNetworksPropertiesStatusProvisioningStatus VirtualNetworksPropertiesStatusProvisioningStatus(Azure.ResourceManager.HybridContainerService.Models.VirtualNetworksPropertiesStatusProvisioningStatusError error = null, string operationId = null, string phase = null, string status = null) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.Models.VirtualNetworksPropertiesStatusProvisioningStatusError VirtualNetworksPropertiesStatusProvisioningStatusError(string code = null, string message = null) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.Models.VmSkuListResult VmSkuListResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> vmSKUs = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterProperties ProvisionedClusterProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.Models.LinuxProfilePropertiesSshPublicKeysItem> sshPublicKeys = null, Azure.ResourceManager.HybridContainerService.Models.ControlPlaneProfile controlPlane = null, string kubernetesVersion = null, Azure.ResourceManager.HybridContainerService.Models.NetworkProfile networkProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.Models.NamedAgentPoolProfile> agentPoolProfiles = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> infraNetworkVnetSubnetIds = null, Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState?), Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPropertiesStatus status = null, Azure.ResourceManager.HybridContainerService.Models.AzureHybridBenefit? licenseAzureHybridBenefit = default(Azure.ResourceManager.HybridContainerService.Models.AzureHybridBenefit?)) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPropertiesStatus ProvisionedClusterPropertiesStatus(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.Models.AddonStatusProfile> controlPlaneStatus = null, string errorMessage = null, Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPropertiesStatusOperationStatus operationStatus = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPropertiesStatusOperationStatus ProvisionedClusterPropertiesStatusOperationStatus(Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPropertiesStatusOperationStatusError error = null, string operationId = null, string status = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPropertiesStatusOperationStatusError ProvisionedClusterPropertiesStatusOperationStatusError(string code = null, string message = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.ProvisionedClusterUpgradeProfileData ProvisionedClusterUpgradeProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState?), Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfile controlPlaneProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPoolUpgradeProfile> agentPoolProfiles = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.VirtualNetworkData VirtualNetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkProperties properties = null, Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkExtendedLocation extendedLocation = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkProperties VirtualNetworkProperties(Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkPropertiesInfraVnetProfile infraVnetProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkPropertiesVipPoolItem> vipPool = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkPropertiesVmipPoolItem> vmipPool = null, System.Collections.Generic.IEnumerable<string> dhcpServers = null, System.Collections.Generic.IEnumerable<string> dnsServers = null, string gateway = null, string ipAddressPrefix = null, int? vlanId = default(int?), Azure.ResourceManager.HybridContainerService.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridContainerService.Models.ProvisioningState?), Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkPropertiesStatusOperationStatus operationStatus = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkPropertiesStatusOperationStatus VirtualNetworkPropertiesStatusOperationStatus(Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkPropertiesStatusOperationStatusError error = null, string operationId = null, string phase = null, string status = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkPropertiesStatusOperationStatusError VirtualNetworkPropertiesStatusOperationStatusError(string code = null, string message = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.VmSkuCapabilities VmSkuCapabilities(string name = null, string value = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.VmSkuProfileData VmSkuProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridContainerService.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.HybridContainerService.Models.VmSkuProfileProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.VmSkuProfileProperties VmSkuProfileProperties(Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.Models.VmSkuProperties> values = null) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.VmSkuProperties VmSkuProperties(string resourceType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridContainerService.Models.VmSkuCapabilities> capabilities = null, string name = null, string tier = null, string size = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AutoUpgradeOption : System.IEquatable<Azure.ResourceManager.HybridContainerService.Models.AutoUpgradeOption>
+    public readonly partial struct AzureHybridBenefit : System.IEquatable<Azure.ResourceManager.HybridContainerService.Models.AzureHybridBenefit>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public AutoUpgradeOption(string value) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.Models.AutoUpgradeOption Disabled { get { throw null; } }
-        public static Azure.ResourceManager.HybridContainerService.Models.AutoUpgradeOption Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HybridContainerService.Models.AutoUpgradeOption other) { throw null; }
+        public AzureHybridBenefit(string value) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.AzureHybridBenefit False { get { throw null; } }
+        public static Azure.ResourceManager.HybridContainerService.Models.AzureHybridBenefit NotApplicable { get { throw null; } }
+        public static Azure.ResourceManager.HybridContainerService.Models.AzureHybridBenefit True { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HybridContainerService.Models.AzureHybridBenefit other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HybridContainerService.Models.AutoUpgradeOption left, Azure.ResourceManager.HybridContainerService.Models.AutoUpgradeOption right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HybridContainerService.Models.AutoUpgradeOption (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HybridContainerService.Models.AutoUpgradeOption left, Azure.ResourceManager.HybridContainerService.Models.AutoUpgradeOption right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HybridContainerService.Models.AzureHybridBenefit left, Azure.ResourceManager.HybridContainerService.Models.AzureHybridBenefit right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridContainerService.Models.AzureHybridBenefit (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HybridContainerService.Models.AzureHybridBenefit left, Azure.ResourceManager.HybridContainerService.Models.AzureHybridBenefit right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class CloudProviderProfile
-    {
-        public CloudProviderProfile() { }
-        public System.Collections.Generic.IList<string> InfraNetworkVnetSubnetIds { get { throw null; } }
-        public System.Collections.Generic.IList<string> StorageSpaceIds { get { throw null; } }
     }
     public partial class ControlPlaneEndpointProfileControlPlaneEndpoint
     {
         public ControlPlaneEndpointProfileControlPlaneEndpoint() { }
         public string HostIP { get { throw null; } set { } }
-        public string Port { get { throw null; } set { } }
+        public int? Port { get { throw null; } set { } }
     }
     public partial class ControlPlaneProfile : Azure.ResourceManager.HybridContainerService.Models.NamedAgentPoolProfile
     {
         public ControlPlaneProfile() { }
         public Azure.ResourceManager.HybridContainerService.Models.ControlPlaneEndpointProfileControlPlaneEndpoint ControlPlaneEndpoint { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.LinuxProfileProperties LinuxProfile { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridContainerService.Models.LinuxProfilePropertiesSshPublicKeysItem> SshPublicKeys { get { throw null; } }
+    }
+    public partial class CredentialResult
+    {
+        internal CredentialResult() { }
+        public string Name { get { throw null; } }
+        public byte[] Value { get { throw null; } }
+    }
+    public partial class ExtendedLocation
+    {
+        public ExtendedLocation() { }
+        public Azure.ResourceManager.HybridContainerService.Models.ExtendedLocationType? ExtendedLocationType { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DeploymentState : System.IEquatable<Azure.ResourceManager.HybridContainerService.Models.DeploymentState>
+    public readonly partial struct ExtendedLocationType : System.IEquatable<Azure.ResourceManager.HybridContainerService.Models.ExtendedLocationType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public DeploymentState(string value) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.Models.DeploymentState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.HybridContainerService.Models.DeploymentState Failed { get { throw null; } }
-        public static Azure.ResourceManager.HybridContainerService.Models.DeploymentState Pending { get { throw null; } }
-        public static Azure.ResourceManager.HybridContainerService.Models.DeploymentState Provisioned { get { throw null; } }
-        public static Azure.ResourceManager.HybridContainerService.Models.DeploymentState Provisioning { get { throw null; } }
-        public static Azure.ResourceManager.HybridContainerService.Models.DeploymentState Upgrading { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HybridContainerService.Models.DeploymentState other) { throw null; }
+        public ExtendedLocationType(string value) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.ExtendedLocationType CustomLocation { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HybridContainerService.Models.ExtendedLocationType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HybridContainerService.Models.DeploymentState left, Azure.ResourceManager.HybridContainerService.Models.DeploymentState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HybridContainerService.Models.DeploymentState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HybridContainerService.Models.DeploymentState left, Azure.ResourceManager.HybridContainerService.Models.DeploymentState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HybridContainerService.Models.ExtendedLocationType left, Azure.ResourceManager.HybridContainerService.Models.ExtendedLocationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridContainerService.Models.ExtendedLocationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HybridContainerService.Models.ExtendedLocationType left, Azure.ResourceManager.HybridContainerService.Models.ExtendedLocationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class HttpProxyConfig : Azure.ResourceManager.HybridContainerService.Models.HttpProxyConfigResponse
+    public partial class HybridContainerServiceAgentPoolPatch
     {
-        public HttpProxyConfig() { }
-        public string Password { get { throw null; } set { } }
-    }
-    public partial class HttpProxyConfigResponse
-    {
-        public HttpProxyConfigResponse() { }
-        public string HttpProxy { get { throw null; } set { } }
-        public string HttpsProxy { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> NoProxy { get { throw null; } }
-        public string TrustedCa { get { throw null; } set { } }
-        public string Username { get { throw null; } set { } }
-    }
-    public partial class HybridContainerServiceVirtualNetworkPatch
-    {
-        public HybridContainerServiceVirtualNetworkPatch() { }
+        public HybridContainerServiceAgentPoolPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LicenseType : System.IEquatable<Azure.ResourceManager.HybridContainerService.Models.LicenseType>
+    public partial class KubernetesPatchVersions
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LicenseType(string value) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.Models.LicenseType None { get { throw null; } }
-        public static Azure.ResourceManager.HybridContainerService.Models.LicenseType WindowsServer { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HybridContainerService.Models.LicenseType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HybridContainerService.Models.LicenseType left, Azure.ResourceManager.HybridContainerService.Models.LicenseType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HybridContainerService.Models.LicenseType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HybridContainerService.Models.LicenseType left, Azure.ResourceManager.HybridContainerService.Models.LicenseType right) { throw null; }
-        public override string ToString() { throw null; }
+        internal KubernetesPatchVersions() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionReadiness> Readiness { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Upgrades { get { throw null; } }
     }
-    public partial class LinuxProfileProperties
+    public partial class KubernetesVersionProfileProperties
     {
-        public LinuxProfileProperties() { }
-        public string AdminUsername { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HybridContainerService.Models.LinuxProfilePropertiesSshPublicKeysItem> SshPublicKeys { get { throw null; } }
+        internal KubernetesVersionProfileProperties() { }
+        public Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridContainerService.Models.KubernetesVersionProperties> Values { get { throw null; } }
+    }
+    public partial class KubernetesVersionProperties
+    {
+        internal KubernetesVersionProperties() { }
+        public System.Collections.Generic.IReadOnlyList<string> CapabilitiesSupportPlan { get { throw null; } }
+        public bool? IsPreview { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HybridContainerService.Models.KubernetesPatchVersions> PatchVersions { get { throw null; } }
+        public string Version { get { throw null; } }
+    }
+    public partial class KubernetesVersionReadiness
+    {
+        internal KubernetesVersionReadiness() { }
+        public string ErrorMessage { get { throw null; } }
+        public Azure.ResourceManager.HybridContainerService.Models.Ossku? OSSku { get { throw null; } }
+        public Azure.ResourceManager.HybridContainerService.Models.OSType? OSType { get { throw null; } }
+        public bool? Ready { get { throw null; } }
     }
     public partial class LinuxProfilePropertiesSshPublicKeysItem
     {
         public LinuxProfilePropertiesSshPublicKeysItem() { }
         public string KeyData { get { throw null; } set { } }
     }
-    public partial class LoadBalancerProfile : Azure.ResourceManager.HybridContainerService.Models.NamedAgentPoolProfile
+    public partial class ListCredentialResponse
     {
-        public LoadBalancerProfile() { }
-        public Azure.ResourceManager.HybridContainerService.Models.LinuxProfileProperties LinuxProfile { get { throw null; } set { } }
+        internal ListCredentialResponse() { }
+        public Azure.ResourceManager.HybridContainerService.Models.ListCredentialResponseError Error { get { throw null; } }
+        public string Id { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridContainerService.Models.CredentialResult> ListCredentialResponseKubeconfigs { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        public Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState? Status { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LoadBalancerSku : System.IEquatable<Azure.ResourceManager.HybridContainerService.Models.LoadBalancerSku>
+    public partial class ListCredentialResponseError
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LoadBalancerSku(string value) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.Models.LoadBalancerSku StackedKubeVip { get { throw null; } }
-        public static Azure.ResourceManager.HybridContainerService.Models.LoadBalancerSku StackedMetallb { get { throw null; } }
-        public static Azure.ResourceManager.HybridContainerService.Models.LoadBalancerSku Unmanaged { get { throw null; } }
-        public static Azure.ResourceManager.HybridContainerService.Models.LoadBalancerSku UnstackedHaproxy { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HybridContainerService.Models.LoadBalancerSku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HybridContainerService.Models.LoadBalancerSku left, Azure.ResourceManager.HybridContainerService.Models.LoadBalancerSku right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HybridContainerService.Models.LoadBalancerSku (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HybridContainerService.Models.LoadBalancerSku left, Azure.ResourceManager.HybridContainerService.Models.LoadBalancerSku right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Mode : System.IEquatable<Azure.ResourceManager.HybridContainerService.Models.Mode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Mode(string value) { throw null; }
-        public static Azure.ResourceManager.HybridContainerService.Models.Mode LB { get { throw null; } }
-        public static Azure.ResourceManager.HybridContainerService.Models.Mode System { get { throw null; } }
-        public static Azure.ResourceManager.HybridContainerService.Models.Mode User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HybridContainerService.Models.Mode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HybridContainerService.Models.Mode left, Azure.ResourceManager.HybridContainerService.Models.Mode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HybridContainerService.Models.Mode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HybridContainerService.Models.Mode left, Azure.ResourceManager.HybridContainerService.Models.Mode right) { throw null; }
-        public override string ToString() { throw null; }
+        internal ListCredentialResponseError() { }
+        public string Code { get { throw null; } }
+        public string Message { get { throw null; } }
     }
     public partial class NamedAgentPoolProfile : Azure.ResourceManager.HybridContainerService.Models.AgentPoolProfile
     {
         public NamedAgentPoolProfile() { }
+        public int? Count { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        public string VmSize { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkPolicy : System.IEquatable<Azure.ResourceManager.HybridContainerService.Models.NetworkPolicy>
@@ -645,35 +489,28 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     public partial class NetworkProfile
     {
         public NetworkProfile() { }
-        public string DnsServiceIP { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.LoadBalancerProfile LoadBalancerProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.LoadBalancerSku? LoadBalancerSku { get { throw null; } set { } }
+        public int? LoadBalancerCount { get { throw null; } set { } }
         public Azure.ResourceManager.HybridContainerService.Models.NetworkPolicy? NetworkPolicy { get { throw null; } set { } }
         public string PodCidr { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> PodCidrs { get { throw null; } }
-        public string ServiceCidr { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> ServiceCidrs { get { throw null; } }
     }
-    public partial class OrchestratorProfile
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct Ossku : System.IEquatable<Azure.ResourceManager.HybridContainerService.Models.Ossku>
     {
-        internal OrchestratorProfile() { }
-        public bool? IsPreview { get { throw null; } }
-        public string OrchestratorType { get { throw null; } }
-        public string OrchestratorVersion { get { throw null; } }
-    }
-    public partial class OrchestratorVersionProfile
-    {
-        internal OrchestratorVersionProfile() { }
-        public bool? Default { get { throw null; } }
-        public bool? IsPreview { get { throw null; } }
-        public string OrchestratorType { get { throw null; } }
-        public string OrchestratorVersion { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridContainerService.Models.OrchestratorProfile> Upgrades { get { throw null; } }
-    }
-    public partial class OrchestratorVersionProfileListResult : Azure.ResourceManager.Models.ResourceData
-    {
-        internal OrchestratorVersionProfileListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridContainerService.Models.OrchestratorVersionProfile> Orchestrators { get { throw null; } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public Ossku(string value) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.Ossku CBLMariner { get { throw null; } }
+        public static Azure.ResourceManager.HybridContainerService.Models.Ossku Windows2019 { get { throw null; } }
+        public static Azure.ResourceManager.HybridContainerService.Models.Ossku Windows2022 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HybridContainerService.Models.Ossku other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HybridContainerService.Models.Ossku left, Azure.ResourceManager.HybridContainerService.Models.Ossku right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridContainerService.Models.Ossku (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HybridContainerService.Models.Ossku left, Azure.ResourceManager.HybridContainerService.Models.Ossku right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OSType : System.IEquatable<Azure.ResourceManager.HybridContainerService.Models.OSType>
@@ -693,18 +530,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static bool operator !=(Azure.ResourceManager.HybridContainerService.Models.OSType left, Azure.ResourceManager.HybridContainerService.Models.OSType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ProvisionedClusterCreateOrUpdateContent : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public ProvisionedClusterCreateOrUpdateContent(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersExtendedLocation ExtendedLocation { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersAllProperties Properties { get { throw null; } set { } }
-    }
-    public partial class ProvisionedClusterPatch
-    {
-        public ProvisionedClusterPatch() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
     public partial class ProvisionedClusterPoolUpgradeProfile
     {
         public ProvisionedClusterPoolUpgradeProfile() { }
@@ -719,85 +544,38 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public bool? IsPreview { get { throw null; } }
         public string KubernetesVersion { get { throw null; } }
     }
-    public partial class ProvisionedClustersAllProperties : Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersPropertiesWithSecrets
+    public partial class ProvisionedClusterProperties
     {
-        public ProvisionedClustersAllProperties() { }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.HybridContainerService.Models.AddonProfiles> AddonProfiles { get { throw null; } }
+        public ProvisionedClusterProperties() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.HybridContainerService.Models.NamedAgentPoolProfile> AgentPoolProfiles { get { throw null; } }
-        public Azure.ResourceManager.HybridContainerService.Models.CloudProviderProfile CloudProviderProfile { get { throw null; } set { } }
         public Azure.ResourceManager.HybridContainerService.Models.ControlPlaneProfile ControlPlane { get { throw null; } set { } }
-        public bool? EnableRbac { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.ArcAgentProfile FeaturesArcAgentProfile { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> InfraNetworkVnetSubnetIds { get { throw null; } }
         public string KubernetesVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.LinuxProfileProperties LinuxProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridContainerService.Models.AzureHybridBenefit? LicenseAzureHybridBenefit { get { throw null; } set { } }
         public Azure.ResourceManager.HybridContainerService.Models.NetworkProfile NetworkProfile { get { throw null; } set { } }
-        public string NodeResourceGroup { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersCommonPropertiesStatus Status { get { throw null; } }
+        public Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridContainerService.Models.LinuxProfilePropertiesSshPublicKeysItem> SshPublicKeys { get { throw null; } }
+        public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPropertiesStatus Status { get { throw null; } }
     }
-    public partial class ProvisionedClustersCommonPropertiesStatus
+    public partial class ProvisionedClusterPropertiesStatus
     {
-        internal ProvisionedClustersCommonPropertiesStatus() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HybridContainerService.Models.AddonStatus> AddonStatus { get { throw null; } }
-        public Azure.ResourceManager.HybridContainerService.Models.ArcAgentStatus ArcAgentStatus { get { throw null; } }
+        internal ProvisionedClusterPropertiesStatus() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridContainerService.Models.AddonStatusProfile> ControlPlaneStatus { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
-        public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersCommonPropertiesStatusProvisioningStatus ProvisioningStatus { get { throw null; } }
+        public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPropertiesStatusOperationStatus OperationStatus { get { throw null; } }
     }
-    public partial class ProvisionedClustersCommonPropertiesStatusProvisioningStatus
+    public partial class ProvisionedClusterPropertiesStatusOperationStatus
     {
-        internal ProvisionedClustersCommonPropertiesStatusProvisioningStatus() { }
-        public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersCommonPropertiesStatusProvisioningStatusError Error { get { throw null; } }
+        internal ProvisionedClusterPropertiesStatusOperationStatus() { }
+        public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterPropertiesStatusOperationStatusError Error { get { throw null; } }
         public string OperationId { get { throw null; } }
-        public string Phase { get { throw null; } }
         public string Status { get { throw null; } }
     }
-    public partial class ProvisionedClustersCommonPropertiesStatusProvisioningStatusError
+    public partial class ProvisionedClusterPropertiesStatusOperationStatusError
     {
-        internal ProvisionedClustersCommonPropertiesStatusProvisioningStatusError() { }
+        internal ProvisionedClusterPropertiesStatusOperationStatusError() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
-    }
-    public partial class ProvisionedClustersExtendedLocation
-    {
-        public ProvisionedClustersExtendedLocation() { }
-        public string Name { get { throw null; } set { } }
-        public string ProvisionedClustersExtendedLocationType { get { throw null; } set { } }
-    }
-    public partial class ProvisionedClustersPropertiesWithoutSecrets
-    {
-        public ProvisionedClustersPropertiesWithoutSecrets() { }
-        public Azure.ResourceManager.HybridContainerService.Models.AADProfileResponse AadProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.HttpProxyConfigResponse HttpProxyConfig { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.WindowsProfileResponse WindowsProfile { get { throw null; } set { } }
-    }
-    public partial class ProvisionedClustersPropertiesWithSecrets
-    {
-        public ProvisionedClustersPropertiesWithSecrets() { }
-        public Azure.ResourceManager.HybridContainerService.Models.AADProfile AadProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.HttpProxyConfig HttpProxyConfig { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.WindowsProfile WindowsProfile { get { throw null; } set { } }
-    }
-    public partial class ProvisionedClustersResponseExtendedLocation
-    {
-        public ProvisionedClustersResponseExtendedLocation() { }
-        public string Name { get { throw null; } set { } }
-        public string ProvisionedClustersResponseExtendedLocationType { get { throw null; } set { } }
-    }
-    public partial class ProvisionedClustersResponseProperties : Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersPropertiesWithoutSecrets
-    {
-        public ProvisionedClustersResponseProperties() { }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.HybridContainerService.Models.AddonProfiles> AddonProfiles { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HybridContainerService.Models.NamedAgentPoolProfile> AgentPoolProfiles { get { throw null; } }
-        public Azure.ResourceManager.HybridContainerService.Models.CloudProviderProfile CloudProviderProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.ControlPlaneProfile ControlPlane { get { throw null; } set { } }
-        public bool? EnableRbac { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.ArcAgentProfile FeaturesArcAgentProfile { get { throw null; } set { } }
-        public string KubernetesVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.LinuxProfileProperties LinuxProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.NetworkProfile NetworkProfile { get { throw null; } set { } }
-        public string NodeResourceGroup { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersCommonPropertiesStatus Status { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.HybridContainerService.Models.ProvisioningState>
@@ -823,129 +601,115 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static bool operator !=(Azure.ResourceManager.HybridContainerService.Models.ProvisioningState left, Azure.ResourceManager.HybridContainerService.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class StorageSpacePatch
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceProvisioningState : System.IEquatable<Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState>
     {
-        public StorageSpacePatch() { }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState Created { get { throw null; } }
+        public static Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState InProgress { get { throw null; } }
+        public static Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState Updating { get { throw null; } }
+        public static Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState Upgrading { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState left, Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState left, Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class VirtualNetworkExtendedLocation
+    {
+        public VirtualNetworkExtendedLocation() { }
+        public string Name { get { throw null; } set { } }
+        public string VirtualNetworkExtendedLocationType { get { throw null; } set { } }
+    }
+    public partial class VirtualNetworkPatch
+    {
+        public VirtualNetworkPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class StorageSpacesExtendedLocation
+    public partial class VirtualNetworkProperties
     {
-        public StorageSpacesExtendedLocation() { }
-        public string Name { get { throw null; } set { } }
-        public string StorageSpacesExtendedLocationType { get { throw null; } set { } }
-    }
-    public partial class StorageSpacesProperties
-    {
-        public StorageSpacesProperties() { }
-        public Azure.ResourceManager.HybridContainerService.Models.StorageSpacesPropertiesHciStorageProfile HciStorageProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.HybridContainerService.Models.StorageSpacesPropertiesStatusProvisioningStatus ProvisioningStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.StorageSpacesPropertiesVmwareStorageProfile VmwareStorageProfile { get { throw null; } set { } }
-    }
-    public partial class StorageSpacesPropertiesHciStorageProfile
-    {
-        public StorageSpacesPropertiesHciStorageProfile() { }
-        public string MocGroup { get { throw null; } set { } }
-        public string MocLocation { get { throw null; } set { } }
-        public string MocStorageContainer { get { throw null; } set { } }
-    }
-    public partial class StorageSpacesPropertiesStatusProvisioningStatus
-    {
-        public StorageSpacesPropertiesStatusProvisioningStatus() { }
-        public Azure.ResourceManager.HybridContainerService.Models.StorageSpacesPropertiesStatusProvisioningStatusError Error { get { throw null; } set { } }
-        public string OperationId { get { throw null; } set { } }
-        public string Phase { get { throw null; } set { } }
-        public string Status { get { throw null; } set { } }
-    }
-    public partial class StorageSpacesPropertiesStatusProvisioningStatusError
-    {
-        public StorageSpacesPropertiesStatusProvisioningStatusError() { }
-        public string Code { get { throw null; } set { } }
-        public string Message { get { throw null; } set { } }
-    }
-    public partial class StorageSpacesPropertiesVmwareStorageProfile
-    {
-        public StorageSpacesPropertiesVmwareStorageProfile() { }
-        public string Datacenter { get { throw null; } set { } }
-        public string Datastore { get { throw null; } set { } }
-        public string Folder { get { throw null; } set { } }
-        public string ResourcePool { get { throw null; } set { } }
-    }
-    public partial class VirtualNetworksExtendedLocation
-    {
-        public VirtualNetworksExtendedLocation() { }
-        public string Name { get { throw null; } set { } }
-        public string VirtualNetworksExtendedLocationType { get { throw null; } set { } }
-    }
-    public partial class VirtualNetworksProperties
-    {
-        public VirtualNetworksProperties() { }
-        public System.Collections.Generic.IReadOnlyList<string> DhcpServers { get { throw null; } }
+        public VirtualNetworkProperties() { }
+        public System.Collections.Generic.IList<string> DhcpServers { get { throw null; } }
         public System.Collections.Generic.IList<string> DnsServers { get { throw null; } }
         public string Gateway { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.VirtualNetworksPropertiesInfraVnetProfile InfraVnetProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkPropertiesInfraVnetProfile InfraVnetProfile { get { throw null; } set { } }
         public string IPAddressPrefix { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkPropertiesStatusOperationStatus OperationStatus { get { throw null; } }
         public Azure.ResourceManager.HybridContainerService.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.HybridContainerService.Models.VirtualNetworksPropertiesStatusProvisioningStatus ProvisioningStatus { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HybridContainerService.Models.VirtualNetworksPropertiesVipPoolItem> VipPool { get { throw null; } }
-        public string VlanId { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HybridContainerService.Models.VirtualNetworksPropertiesVmipPoolItem> VmipPool { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkPropertiesVipPoolItem> VipPool { get { throw null; } }
+        public int? VlanId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkPropertiesVmipPoolItem> VmipPool { get { throw null; } }
     }
-    public partial class VirtualNetworksPropertiesInfraVnetProfile
+    public partial class VirtualNetworkPropertiesInfraVnetProfile
     {
-        public VirtualNetworksPropertiesInfraVnetProfile() { }
-        public Azure.ResourceManager.HybridContainerService.Models.VirtualNetworksPropertiesInfraVnetProfileHci Hci { get { throw null; } set { } }
-        public string NetworkId { get { throw null; } set { } }
+        public VirtualNetworkPropertiesInfraVnetProfile() { }
+        public Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkPropertiesInfraVnetProfileHci Hci { get { throw null; } set { } }
         public string VmwareSegmentName { get { throw null; } set { } }
     }
-    public partial class VirtualNetworksPropertiesInfraVnetProfileHci
+    public partial class VirtualNetworkPropertiesInfraVnetProfileHci
     {
-        public VirtualNetworksPropertiesInfraVnetProfileHci() { }
+        public VirtualNetworkPropertiesInfraVnetProfileHci() { }
         public string MocGroup { get { throw null; } set { } }
         public string MocLocation { get { throw null; } set { } }
         public string MocVnetName { get { throw null; } set { } }
     }
-    public partial class VirtualNetworksPropertiesStatusProvisioningStatus
+    public partial class VirtualNetworkPropertiesStatusOperationStatus
     {
-        internal VirtualNetworksPropertiesStatusProvisioningStatus() { }
-        public Azure.ResourceManager.HybridContainerService.Models.VirtualNetworksPropertiesStatusProvisioningStatusError Error { get { throw null; } }
+        internal VirtualNetworkPropertiesStatusOperationStatus() { }
+        public Azure.ResourceManager.HybridContainerService.Models.VirtualNetworkPropertiesStatusOperationStatusError Error { get { throw null; } }
         public string OperationId { get { throw null; } }
         public string Phase { get { throw null; } }
         public string Status { get { throw null; } }
     }
-    public partial class VirtualNetworksPropertiesStatusProvisioningStatusError
+    public partial class VirtualNetworkPropertiesStatusOperationStatusError
     {
-        internal VirtualNetworksPropertiesStatusProvisioningStatusError() { }
+        internal VirtualNetworkPropertiesStatusOperationStatusError() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
     }
-    public partial class VirtualNetworksPropertiesVipPoolItem
+    public partial class VirtualNetworkPropertiesVipPoolItem
     {
-        public VirtualNetworksPropertiesVipPoolItem() { }
+        public VirtualNetworkPropertiesVipPoolItem() { }
         public string EndIP { get { throw null; } set { } }
         public string StartIP { get { throw null; } set { } }
     }
-    public partial class VirtualNetworksPropertiesVmipPoolItem
+    public partial class VirtualNetworkPropertiesVmipPoolItem
     {
-        public VirtualNetworksPropertiesVmipPoolItem() { }
+        public VirtualNetworkPropertiesVmipPoolItem() { }
         public string EndIP { get { throw null; } set { } }
         public string StartIP { get { throw null; } set { } }
     }
-    public partial class VmSkuListResult : Azure.ResourceManager.Models.ResourceData
+    public partial class VmSkuCapabilities
     {
-        internal VmSkuListResult() { }
-        public System.Collections.Generic.IReadOnlyList<string> VmSKUs { get { throw null; } }
+        internal VmSkuCapabilities() { }
+        public string Name { get { throw null; } }
+        public string Value { get { throw null; } }
     }
-    public partial class WindowsProfile : Azure.ResourceManager.HybridContainerService.Models.WindowsProfileResponse
+    public partial class VmSkuProfileProperties
     {
-        public WindowsProfile() { }
-        public string AdminPassword { get { throw null; } set { } }
+        internal VmSkuProfileProperties() { }
+        public Azure.ResourceManager.HybridContainerService.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridContainerService.Models.VmSkuProperties> Values { get { throw null; } }
     }
-    public partial class WindowsProfileResponse
+    public partial class VmSkuProperties
     {
-        public WindowsProfileResponse() { }
-        public string AdminUsername { get { throw null; } set { } }
-        public bool? EnableCsiProxy { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridContainerService.Models.LicenseType? LicenseType { get { throw null; } set { } }
+        internal VmSkuProperties() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridContainerService.Models.VmSkuCapabilities> Capabilities { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string ResourceType { get { throw null; } }
+        public string Size { get { throw null; } }
+        public string Tier { get { throw null; } }
     }
 }

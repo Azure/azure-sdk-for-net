@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> The GatewayApiData. </summary>
     public partial class GatewayApiData : ResourceData
     {
-        /// <summary> Initializes a new instance of GatewayApiData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayApiData"/>. </summary>
         public GatewayApiData()
         {
             Protocols = new ChangeTrackingList<ApiOperationInvokableProtocol>();
         }
 
-        /// <summary> Initializes a new instance of GatewayApiData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayApiData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

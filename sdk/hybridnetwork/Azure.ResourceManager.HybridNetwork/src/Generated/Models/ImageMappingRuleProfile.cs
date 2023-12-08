@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Image mapping rule profile. </summary>
     internal partial class ImageMappingRuleProfile
     {
-        /// <summary> Initializes a new instance of ImageMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageMappingRuleProfile"/>. </summary>
         public ImageMappingRuleProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageMappingRuleProfile"/>. </summary>
         /// <param name="userConfiguration"> List of values. </param>
         internal ImageMappingRuleProfile(string userConfiguration)
         {

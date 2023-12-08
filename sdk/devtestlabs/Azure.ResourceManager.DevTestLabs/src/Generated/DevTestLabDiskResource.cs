@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly DisksRestOperations _devTestLabDiskDisksRestClient;
         private readonly DevTestLabDiskData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/users/disks";
+
         /// <summary> Initializes a new instance of the <see cref="DevTestLabDiskResource"/> class for mocking. </summary>
         protected DevTestLabDiskResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.DevTestLabs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/users/disks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> CloudProviderProfile - The underlying cloud infra provider properties. </summary>
     internal partial class CloudProviderProfile
     {
-        /// <summary> Initializes a new instance of CloudProviderProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudProviderProfile"/>. </summary>
         public CloudProviderProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudProviderProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudProviderProfile"/>. </summary>
         /// <param name="infraNetworkProfile"> InfraNetworkProfile - List of infra network profiles for the provisioned cluster. </param>
         internal CloudProviderProfile(CloudProviderProfileInfraNetworkProfile infraNetworkProfile)
         {

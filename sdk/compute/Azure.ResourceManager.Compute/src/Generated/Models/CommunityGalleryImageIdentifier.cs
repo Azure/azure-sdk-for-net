@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> This is the community gallery image definition identifier. </summary>
     public partial class CommunityGalleryImageIdentifier
     {
-        /// <summary> Initializes a new instance of CommunityGalleryImageIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageIdentifier"/>. </summary>
         internal CommunityGalleryImageIdentifier()
         {
         }
 
-        /// <summary> Initializes a new instance of CommunityGalleryImageIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageIdentifier"/>. </summary>
         /// <param name="publisher"> The name of the gallery image definition publisher. </param>
         /// <param name="offer"> The name of the gallery image definition offer. </param>
         /// <param name="sku"> The name of the gallery image definition SKU. </param>

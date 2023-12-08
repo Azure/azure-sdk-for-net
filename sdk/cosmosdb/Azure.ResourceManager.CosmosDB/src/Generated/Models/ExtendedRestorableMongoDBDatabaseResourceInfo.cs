@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The resource of an Azure Cosmos DB MongoDB database event. </summary>
     public partial class ExtendedRestorableMongoDBDatabaseResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedRestorableMongoDBDatabaseResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedRestorableMongoDBDatabaseResourceInfo"/>. </summary>
         internal ExtendedRestorableMongoDBDatabaseResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtendedRestorableMongoDBDatabaseResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedRestorableMongoDBDatabaseResourceInfo"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this database event. </param>
         /// <param name="eventTimestamp"> The time when this database event happened. </param>

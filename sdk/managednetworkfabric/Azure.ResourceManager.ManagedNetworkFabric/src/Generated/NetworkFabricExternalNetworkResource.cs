@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private readonly ExternalNetworksRestOperations _networkFabricExternalNetworkExternalNetworksRestClient;
         private readonly NetworkFabricExternalNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/l3IsolationDomains/externalNetworks";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkFabricExternalNetworkResource"/> class for mocking. </summary>
         protected NetworkFabricExternalNetworkResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/l3IsolationDomains/externalNetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

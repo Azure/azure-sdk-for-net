@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmCommunicationModelFactory
     {
-        /// <summary> Initializes a new instance of CommunicationNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CommunicationNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new CommunicationNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of LinkedNotificationHub. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LinkedNotificationHub"/>. </summary>
         /// <param name="resourceId"> The resource ID of the notification hub. </param>
         /// <returns> A new <see cref="Models.LinkedNotificationHub"/> instance for mocking. </returns>
         public static LinkedNotificationHub LinkedNotificationHub(ResourceIdentifier resourceId = null)
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new LinkedNotificationHub(resourceId);
         }
 
-        /// <summary> Initializes a new instance of CommunicationServiceResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Communication.CommunicationServiceResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new CommunicationServiceResourceData(id, name, resourceType, systemData, tags, location, identity, provisioningState, hostName, dataLocation, notificationHubId, version, immutableResourceId, linkedDomains?.ToList());
         }
 
-        /// <summary> Initializes a new instance of CommunicationServiceKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CommunicationServiceKeys"/>. </summary>
         /// <param name="primaryKey"> The primary access key. </param>
         /// <param name="secondaryKey"> The secondary access key. </param>
         /// <param name="primaryConnectionString"> CommunicationService connection string constructed via the primaryKey. </param>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new CommunicationServiceKeys(primaryKey, secondaryKey, primaryConnectionString, secondaryConnectionString);
         }
 
-        /// <summary> Initializes a new instance of CommunicationDomainResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Communication.CommunicationDomainResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new CommunicationDomainResourceData(id, name, resourceType, systemData, tags, location, provisioningState, dataLocation, fromSenderDomain, mailFromSenderDomain, domainManagement, verificationStates, verificationRecords, userEngagementTracking);
         }
 
-        /// <summary> Initializes a new instance of DomainPropertiesVerificationStates. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DomainPropertiesVerificationStates"/>. </summary>
         /// <param name="domain"> A class that represents a VerificationStatus record. </param>
         /// <param name="spf"> A class that represents a VerificationStatus record. </param>
         /// <param name="dkim"> A class that represents a VerificationStatus record. </param>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new DomainPropertiesVerificationStates(domain, spf, dkim, dkim2, dmarc);
         }
 
-        /// <summary> Initializes a new instance of DomainVerificationStatusRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DomainVerificationStatusRecord"/>. </summary>
         /// <param name="status"> Status of the verification operation. </param>
         /// <param name="errorCode"> Error code. This property will only be present if the status is UnableToVerify. </param>
         /// <returns> A new <see cref="Models.DomainVerificationStatusRecord"/> instance for mocking. </returns>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new DomainVerificationStatusRecord(status, errorCode);
         }
 
-        /// <summary> Initializes a new instance of DomainPropertiesVerificationRecords. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DomainPropertiesVerificationRecords"/>. </summary>
         /// <param name="domain"> A class that represents a VerificationStatus record. </param>
         /// <param name="spf"> A class that represents a VerificationStatus record. </param>
         /// <param name="dkim"> A class that represents a VerificationStatus record. </param>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new DomainPropertiesVerificationRecords(domain, spf, dkim, dkim2, dmarc);
         }
 
-        /// <summary> Initializes a new instance of VerificationDnsRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VerificationDnsRecord"/>. </summary>
         /// <param name="dnsRecordType"> Type of the DNS record. Example: TXT. </param>
         /// <param name="name"> Name of the DNS record. </param>
         /// <param name="value"> Value of the DNS record. </param>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new VerificationDnsRecord(dnsRecordType, name, value, timeToLiveInSeconds);
         }
 
-        /// <summary> Initializes a new instance of EmailServiceResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Communication.EmailServiceResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new EmailServiceResourceData(id, name, resourceType, systemData, tags, location, provisioningState, dataLocation);
         }
 
-        /// <summary> Initializes a new instance of SenderUsernameResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Communication.SenderUsernameResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new SenderUsernameResourceData(id, name, resourceType, systemData, dataLocation, username, displayName, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of SuppressionListResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Communication.SuppressionListResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Communication.Models
             return new SuppressionListResourceData(id, name, resourceType, systemData, listName, lastUpdatedTimeStamp, createdTimeStamp, dataLocation);
         }
 
-        /// <summary> Initializes a new instance of SuppressionListAddressResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Communication.SuppressionListAddressResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

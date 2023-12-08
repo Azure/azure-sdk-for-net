@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class LoadBalancerData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of LoadBalancerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerData"/>. </summary>
         public LoadBalancerData()
         {
             FrontendIPConfigurations = new ChangeTrackingList<FrontendIPConfigurationData>();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
             OutboundRules = new ChangeTrackingList<OutboundRuleData>();
         }
 
-        /// <summary> Initializes a new instance of LoadBalancerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

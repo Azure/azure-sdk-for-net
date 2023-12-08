@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Contains stats associated with the peering. </summary>
     public partial class ExpressRouteCircuitStats
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitStats. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitStats"/>. </summary>
         public ExpressRouteCircuitStats()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitStats. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitStats"/>. </summary>
         /// <param name="primarybytesIn"> The Primary BytesIn of the peering. </param>
         /// <param name="primarybytesOut"> The primary BytesOut of the peering. </param>
         /// <param name="secondarybytesIn"> The secondary BytesIn of the peering. </param>

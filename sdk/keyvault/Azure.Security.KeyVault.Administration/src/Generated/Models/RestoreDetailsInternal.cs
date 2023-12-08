@@ -12,12 +12,12 @@ namespace Azure.Security.KeyVault.Administration.Models
     /// <summary> Restore operation. </summary>
     internal partial class RestoreDetailsInternal
     {
-        /// <summary> Initializes a new instance of RestoreDetailsInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreDetailsInternal"/>. </summary>
         internal RestoreDetailsInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of RestoreDetailsInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreDetailsInternal"/>. </summary>
         /// <param name="status"> Status of the restore operation. </param>
         /// <param name="statusDetails"> The status details of restore operation. </param>
         /// <param name="error"> Error encountered, if any, during the restore operation. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The cached image and OS type. </summary>
     public partial class CachedImages
     {
-        /// <summary> Initializes a new instance of CachedImages. </summary>
+        /// <summary> Initializes a new instance of <see cref="CachedImages"/>. </summary>
         /// <param name="osType"> The OS type of the cached image. </param>
         /// <param name="image"> The cached image name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="osType"/> or <paramref name="image"/> is null. </exception>

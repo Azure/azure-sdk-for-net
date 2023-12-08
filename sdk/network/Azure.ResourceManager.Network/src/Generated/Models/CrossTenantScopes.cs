@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Cross tenant scopes. </summary>
     public partial class CrossTenantScopes
     {
-        /// <summary> Initializes a new instance of CrossTenantScopes. </summary>
+        /// <summary> Initializes a new instance of <see cref="CrossTenantScopes"/>. </summary>
         internal CrossTenantScopes()
         {
             ManagementGroups = new ChangeTrackingList<string>();
             Subscriptions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CrossTenantScopes. </summary>
+        /// <summary> Initializes a new instance of <see cref="CrossTenantScopes"/>. </summary>
         /// <param name="tenantId"> Tenant ID. </param>
         /// <param name="managementGroups"> List of management groups. </param>
         /// <param name="subscriptions"> List of subscriptions. </param>

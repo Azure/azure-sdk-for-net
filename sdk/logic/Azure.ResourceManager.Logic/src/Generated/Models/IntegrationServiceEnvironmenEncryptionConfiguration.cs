@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The encryption configuration for the integration service environment. </summary>
     internal partial class IntegrationServiceEnvironmenEncryptionConfiguration
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmenEncryptionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmenEncryptionConfiguration"/>. </summary>
         public IntegrationServiceEnvironmenEncryptionConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmenEncryptionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmenEncryptionConfiguration"/>. </summary>
         /// <param name="encryptionKeyReference"> The encryption key reference. </param>
         internal IntegrationServiceEnvironmenEncryptionConfiguration(IntegrationServiceEnvironmenEncryptionKeyReference encryptionKeyReference)
         {

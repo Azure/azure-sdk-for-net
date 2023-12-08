@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A list of Library resources. </summary>
     internal partial class BigDataPoolLibraryListResult
     {
-        /// <summary> Initializes a new instance of BigDataPoolLibraryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BigDataPoolLibraryListResult"/>. </summary>
         /// <param name="value"> List of Library. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal BigDataPoolLibraryListResult(IEnumerable<SynapseLibraryData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of BigDataPoolLibraryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BigDataPoolLibraryListResult"/>. </summary>
         /// <param name="value"> List of Library. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal BigDataPoolLibraryListResult(IReadOnlyList<SynapseLibraryData> value, string nextLink)

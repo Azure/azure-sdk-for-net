@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly TasksRestOperations _subscriptionSecurityTaskTasksRestClient;
         private readonly SecurityTaskData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/locations/tasks";
+
         /// <summary> Initializes a new instance of the <see cref="SubscriptionSecurityTaskResource"/> class for mocking. </summary>
         protected SubscriptionSecurityTaskResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/locations/tasks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

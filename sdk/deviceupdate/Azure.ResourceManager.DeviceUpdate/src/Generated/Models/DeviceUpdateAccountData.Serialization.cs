@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.DeviceUpdate
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<DeviceUpdateProvisioningState> provisioningState = default;
             Optional<string> hostName = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<DeviceUpdatePublicNetworkAccess> publicNetworkAccess = default;
             Optional<IList<DeviceUpdatePrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<DeviceUpdateSku> sku = default;
             Optional<DeviceUpdateEncryption> encryption = default;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new DeviceUpdateProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("hostName"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                             {
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new DeviceUpdatePublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))

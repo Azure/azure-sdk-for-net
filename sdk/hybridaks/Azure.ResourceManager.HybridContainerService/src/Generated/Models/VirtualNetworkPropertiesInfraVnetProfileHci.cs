@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Infra network profile for HCI platform. </summary>
     public partial class VirtualNetworkPropertiesInfraVnetProfileHci
     {
-        /// <summary> Initializes a new instance of VirtualNetworkPropertiesInfraVnetProfileHci. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkPropertiesInfraVnetProfileHci"/>. </summary>
         public VirtualNetworkPropertiesInfraVnetProfileHci()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkPropertiesInfraVnetProfileHci. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkPropertiesInfraVnetProfileHci"/>. </summary>
         /// <param name="mocGroup"> Resource group in MOC(Microsoft On-premises Cloud). </param>
         /// <param name="mocLocation"> Location in MOC(Microsoft On-premises Cloud). </param>
         /// <param name="mocVnetName"> Virtual Network name in MOC(Microsoft On-premises Cloud). </param>

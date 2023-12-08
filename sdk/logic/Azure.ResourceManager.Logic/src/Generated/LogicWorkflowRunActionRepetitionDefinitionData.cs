@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class LogicWorkflowRunActionRepetitionDefinitionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRunActionRepetitionDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunActionRepetitionDefinitionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public LogicWorkflowRunActionRepetitionDefinitionData(AzureLocation location) : base(location)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Logic
             RepetitionIndexes = new ChangeTrackingList<LogicWorkflowRepetitionIndex>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRunActionRepetitionDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunActionRepetitionDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

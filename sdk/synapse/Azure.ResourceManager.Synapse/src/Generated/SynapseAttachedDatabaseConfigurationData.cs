@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseAttachedDatabaseConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseAttachedDatabaseConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseAttachedDatabaseConfigurationData"/>. </summary>
         public SynapseAttachedDatabaseConfigurationData()
         {
             AttachedDatabaseNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SynapseAttachedDatabaseConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseAttachedDatabaseConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

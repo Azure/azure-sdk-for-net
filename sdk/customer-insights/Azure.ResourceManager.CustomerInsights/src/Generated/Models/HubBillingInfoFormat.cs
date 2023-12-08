@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Hub billing info. </summary>
     public partial class HubBillingInfoFormat
     {
-        /// <summary> Initializes a new instance of HubBillingInfoFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubBillingInfoFormat"/>. </summary>
         public HubBillingInfoFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of HubBillingInfoFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubBillingInfoFormat"/>. </summary>
         /// <param name="skuName"> The sku name. </param>
         /// <param name="minUnits"> The minimum number of units will be billed. One unit is 10,000 Profiles and 100,000 Interactions. </param>
         /// <param name="maxUnits"> The maximum number of units can be used.  One unit is 10,000 Profiles and 100,000 Interactions. </param>

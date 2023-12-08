@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> LoadBalancerProfile - Profile of the cluster load balancer. </summary>
     internal partial class NetworkProfileLoadBalancerProfile
     {
-        /// <summary> Initializes a new instance of NetworkProfileLoadBalancerProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfileLoadBalancerProfile"/>. </summary>
         public NetworkProfileLoadBalancerProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkProfileLoadBalancerProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfileLoadBalancerProfile"/>. </summary>
         /// <param name="count"> Count - Number of load balancer VMs. The default value is 0. </param>
         internal NetworkProfileLoadBalancerProfile(int? count)
         {

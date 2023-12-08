@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> IPv6 Circuit Connection properties for global reach. </summary>
     public partial class IPv6CircuitConnectionConfig
     {
-        /// <summary> Initializes a new instance of IPv6CircuitConnectionConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPv6CircuitConnectionConfig"/>. </summary>
         public IPv6CircuitConnectionConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of IPv6CircuitConnectionConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPv6CircuitConnectionConfig"/>. </summary>
         /// <param name="addressPrefix"> /125 IP address space to carve out customer addresses for global reach. </param>
         /// <param name="circuitConnectionStatus"> Express Route Circuit connection state. </param>
         internal IPv6CircuitConnectionConfig(string addressPrefix, CircuitConnectionStatus? circuitConnectionStatus)

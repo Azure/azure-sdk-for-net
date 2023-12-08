@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SAP Availability Zone Pair. </summary>
     public partial class SapAvailabilityZonePair
     {
-        /// <summary> Initializes a new instance of SapAvailabilityZonePair. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapAvailabilityZonePair"/>. </summary>
         internal SapAvailabilityZonePair()
         {
         }
 
-        /// <summary> Initializes a new instance of SapAvailabilityZonePair. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapAvailabilityZonePair"/>. </summary>
         /// <param name="zoneA"> The zone A. </param>
         /// <param name="zoneB"> The zone B. </param>
         internal SapAvailabilityZonePair(long? zoneA, long? zoneB)

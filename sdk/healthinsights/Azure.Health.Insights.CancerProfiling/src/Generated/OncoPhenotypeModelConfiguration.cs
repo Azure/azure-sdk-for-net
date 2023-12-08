@@ -13,13 +13,13 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> Configuration affecting the Onco Phenotype model's inference. </summary>
     public partial class OncoPhenotypeModelConfiguration
     {
-        /// <summary> Initializes a new instance of OncoPhenotypeModelConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypeModelConfiguration"/>. </summary>
         public OncoPhenotypeModelConfiguration()
         {
             InferenceTypes = new ChangeTrackingList<OncoPhenotypeInferenceType>();
         }
 
-        /// <summary> Initializes a new instance of OncoPhenotypeModelConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypeModelConfiguration"/>. </summary>
         /// <param name="verbose"> An indication whether the model should produce verbose output. </param>
         /// <param name="includeEvidence"> An indication whether the model's output should include evidence for the inferences. </param>
         /// <param name="inferenceTypes">

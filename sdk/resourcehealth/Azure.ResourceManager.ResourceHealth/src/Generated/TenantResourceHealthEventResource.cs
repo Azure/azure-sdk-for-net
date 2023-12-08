@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ResourceHealth
         private readonly SecurityAdvisoryImpactedResourcesRestOperations _securityAdvisoryImpactedResourcesRestClient;
         private readonly ResourceHealthEventData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ResourceHealth/events";
+
         /// <summary> Initializes a new instance of the <see cref="TenantResourceHealthEventResource"/> class for mocking. </summary>
         protected TenantResourceHealthEventResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.ResourceHealth
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ResourceHealth/events";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

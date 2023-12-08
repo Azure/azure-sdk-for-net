@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> Reference to DNS forwarding ruleset and associated virtual network link. </summary>
     public partial class VirtualNetworkDnsForwardingRuleset
     {
-        /// <summary> Initializes a new instance of VirtualNetworkDnsForwardingRuleset. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkDnsForwardingRuleset"/>. </summary>
         internal VirtualNetworkDnsForwardingRuleset()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkDnsForwardingRuleset. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkDnsForwardingRuleset"/>. </summary>
         /// <param name="id"> DNS Forwarding Ruleset Resource ID. </param>
         /// <param name="virtualNetworkLink"> The reference to the virtual network link. </param>
         internal VirtualNetworkDnsForwardingRuleset(ResourceIdentifier id, WritableSubResource virtualNetworkLink)

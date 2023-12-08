@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> IP configuration of an Bastion Host. </summary>
     public partial class BastionHostIPConfiguration : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of BastionHostIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BastionHostIPConfiguration"/>. </summary>
         public BastionHostIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of BastionHostIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BastionHostIPConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

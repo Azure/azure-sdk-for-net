@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The profile for supported VM skus. </summary>
     public partial class VmSkuProperties
     {
-        /// <summary> Initializes a new instance of VmSkuProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmSkuProperties"/>. </summary>
         internal VmSkuProperties()
         {
             Capabilities = new ChangeTrackingList<VmSkuCapabilities>();
         }
 
-        /// <summary> Initializes a new instance of VmSkuProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmSkuProperties"/>. </summary>
         /// <param name="resourceType"> The resource type of the vm. </param>
         /// <param name="capabilities"> A name value pair to describe the specific vm's capability. </param>
         /// <param name="name"> The name of the VM Family. </param>

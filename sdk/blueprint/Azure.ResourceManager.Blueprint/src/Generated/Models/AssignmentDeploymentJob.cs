@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Represents individual job in given blueprint assignment operation. </summary>
     public partial class AssignmentDeploymentJob
     {
-        /// <summary> Initializes a new instance of AssignmentDeploymentJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentDeploymentJob"/>. </summary>
         public AssignmentDeploymentJob()
         {
             History = new ChangeTrackingList<AssignmentDeploymentJobResult>();
         }
 
-        /// <summary> Initializes a new instance of AssignmentDeploymentJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentDeploymentJob"/>. </summary>
         /// <param name="kind"> Kind of job. </param>
         /// <param name="action"> Name of the action performed in this job. </param>
         /// <param name="jobId"> Id of this job. </param>

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> API base contract details. </summary>
     public partial class ApiEntityBaseContract
     {
-        /// <summary> Initializes a new instance of ApiEntityBaseContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiEntityBaseContract"/>. </summary>
         internal ApiEntityBaseContract()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiEntityBaseContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiEntityBaseContract"/>. </summary>
         /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
         /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
         /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>

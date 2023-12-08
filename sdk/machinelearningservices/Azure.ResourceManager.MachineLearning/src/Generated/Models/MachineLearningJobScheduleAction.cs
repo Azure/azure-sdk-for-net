@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningJobScheduleAction. </summary>
     public partial class MachineLearningJobScheduleAction : MachineLearningScheduleAction
     {
-        /// <summary> Initializes a new instance of MachineLearningJobScheduleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobScheduleAction"/>. </summary>
         /// <param name="jobDefinition">
         /// [Required] Defines Schedule action definition details.
         /// Please note <see cref="MachineLearningJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ActionType = ScheduleActionType.CreateJob;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningJobScheduleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobScheduleAction"/>. </summary>
         /// <param name="actionType"> [Required] Specifies the action type of the schedule. </param>
         /// <param name="jobDefinition">
         /// [Required] Defines Schedule action definition details.

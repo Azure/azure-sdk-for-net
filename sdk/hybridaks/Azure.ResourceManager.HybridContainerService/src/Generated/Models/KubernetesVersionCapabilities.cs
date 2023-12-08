@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Capabilities on this kubernetes version. </summary>
     internal partial class KubernetesVersionCapabilities
     {
-        /// <summary> Initializes a new instance of KubernetesVersionCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesVersionCapabilities"/>. </summary>
         internal KubernetesVersionCapabilities()
         {
             SupportPlan = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of KubernetesVersionCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesVersionCapabilities"/>. </summary>
         /// <param name="supportPlan"></param>
         internal KubernetesVersionCapabilities(IReadOnlyList<string> supportPlan)
         {

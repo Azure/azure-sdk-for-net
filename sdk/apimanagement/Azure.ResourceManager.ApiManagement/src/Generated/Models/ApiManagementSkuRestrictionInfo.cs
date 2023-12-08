@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> The ApiManagementSkuRestrictionInfo. </summary>
     public partial class ApiManagementSkuRestrictionInfo
     {
-        /// <summary> Initializes a new instance of ApiManagementSkuRestrictionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSkuRestrictionInfo"/>. </summary>
         internal ApiManagementSkuRestrictionInfo()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementSkuRestrictionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSkuRestrictionInfo"/>. </summary>
         /// <param name="locations"> Locations where the SKU is restricted. </param>
         /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
         internal ApiManagementSkuRestrictionInfo(IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> zones)

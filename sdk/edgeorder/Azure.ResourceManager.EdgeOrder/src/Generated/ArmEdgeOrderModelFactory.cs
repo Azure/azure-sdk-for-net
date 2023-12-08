@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmEdgeOrderModelFactory
     {
-        /// <summary> Initializes a new instance of EdgeOrderAddressData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrder.EdgeOrderAddressData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderAddressData(id, name, resourceType, systemData, tags, location, shippingAddress, contactDetails, addressValidationStatus);
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderItemAddressProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderItemAddressProperties"/>. </summary>
         /// <param name="shippingAddress"> Shipping details for the address. </param>
         /// <param name="contactDetails"> Contact details for the address. </param>
         /// <param name="addressValidationStatus"> Status of address validation. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderItemAddressProperties(shippingAddress, contactDetails, addressValidationStatus);
         }
 
-        /// <summary> Initializes a new instance of ProductFamily. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProductFamily"/>. </summary>
         /// <param name="displayName"> Display Name for the product system. </param>
         /// <param name="description"> Description related to the product system. </param>
         /// <param name="imageInformation"> Image information for the product system. </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ProductFamily(displayName, description, imageInformation?.ToList(), costInformation, availabilityInformation, hierarchyInformation, filterableProperties?.ToList(), productLines?.ToList(), resourceProviderDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ProductLine. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProductLine"/>. </summary>
         /// <param name="displayName"> Display Name for the product system. </param>
         /// <param name="description"> Description related to the product system. </param>
         /// <param name="imageInformation"> Image information for the product system. </param>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ProductLine(displayName, description, imageInformation?.ToList(), costInformation, availabilityInformation, hierarchyInformation, filterableProperties?.ToList(), products?.ToList());
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderProduct. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProduct"/>. </summary>
         /// <param name="displayName"> Display Name for the product system. </param>
         /// <param name="description"> Description related to the product system. </param>
         /// <param name="imageInformation"> Image information for the product system. </param>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderProduct(displayName, description, imageInformation?.ToList(), costInformation, availabilityInformation, hierarchyInformation, filterableProperties?.ToList(), configurations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ProductConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProductConfiguration"/>. </summary>
         /// <param name="displayName"> Display Name for the product system. </param>
         /// <param name="description"> Description related to the product system. </param>
         /// <param name="imageInformation"> Image information for the product system. </param>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ProductConfiguration(displayName, description, imageInformation?.ToList(), costInformation, availabilityInformation, hierarchyInformation, filterableProperties?.ToList(), specifications?.ToList(), dimensions);
         }
 
-        /// <summary> Initializes a new instance of ProductSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProductSpecification"/>. </summary>
         /// <param name="name"> Name of the specification. </param>
         /// <param name="value"> Value of the specification. </param>
         /// <returns> A new <see cref="Models.ProductSpecification"/> instance for mocking. </returns>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ProductSpecification(name, value);
         }
 
-        /// <summary> Initializes a new instance of ProductDimensions. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProductDimensions"/>. </summary>
         /// <param name="length"> Length of the device. </param>
         /// <param name="height"> Height of the device. </param>
         /// <param name="width"> Width of the device. </param>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ProductDimensions(length, height, width, lengthHeightUnit, weight, depth, weightUnit);
         }
 
-        /// <summary> Initializes a new instance of ProductDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProductDescription"/>. </summary>
         /// <param name="descriptionType"> Type of description. </param>
         /// <param name="shortDescription"> Short description of the product system. </param>
         /// <param name="longDescription"> Long description of the product system. </param>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ProductDescription(descriptionType, shortDescription, longDescription, keywords?.ToList(), attributes?.ToList(), links?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ProductLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProductLink"/>. </summary>
         /// <param name="linkType"> Type of link. </param>
         /// <param name="linkUri"> Url of the link. </param>
         /// <returns> A new <see cref="Models.ProductLink"/> instance for mocking. </returns>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ProductLink(linkType, linkUri);
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderProductImageInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProductImageInformation"/>. </summary>
         /// <param name="imageType"> Type of the image. </param>
         /// <param name="imageUri"> Url of the image. </param>
         /// <returns> A new <see cref="Models.EdgeOrderProductImageInformation"/> instance for mocking. </returns>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderProductImageInformation(imageType, imageUri);
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderProductCostInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProductCostInformation"/>. </summary>
         /// <param name="billingMeterDetails"> Details on the various billing aspects for the product system. </param>
         /// <param name="billingInfoUri"> Default url to display billing information. </param>
         /// <returns> A new <see cref="Models.EdgeOrderProductCostInformation"/> instance for mocking. </returns>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderProductCostInformation(billingMeterDetails?.ToList(), billingInfoUri);
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderProductBillingMeterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProductBillingMeterDetails"/>. </summary>
         /// <param name="name"> Represents Billing type name. </param>
         /// <param name="meterDetails">
         /// Represents MeterDetails
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderProductBillingMeterDetails(name, meterDetails, meteringType, frequency);
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderProductMeterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProductMeterDetails"/>. </summary>
         /// <param name="billingType"> Represents billing type. </param>
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new UnknownMeterDetails(billingType, multiplier, chargingType);
         }
 
-        /// <summary> Initializes a new instance of ProductAvailabilityInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProductAvailabilityInformation"/>. </summary>
         /// <param name="availabilityStage"> Current availability stage of the product. Availability stage. </param>
         /// <param name="disabledReason"> Reason why the product is disabled. </param>
         /// <param name="disabledReasonMessage"> Message for why the product is disabled. </param>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ProductAvailabilityInformation(availabilityStage, disabledReason, disabledReasonMessage);
         }
 
-        /// <summary> Initializes a new instance of ResourceProviderDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceProviderDetails"/>. </summary>
         /// <param name="resourceProviderNamespace"> Resource provider namespace. </param>
         /// <returns> A new <see cref="Models.ResourceProviderDetails"/> instance for mocking. </returns>
         public static ResourceProviderDetails ResourceProviderDetails(string resourceProviderNamespace = null)
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ResourceProviderDetails(resourceProviderNamespace);
         }
 
-        /// <summary> Initializes a new instance of ProductFamiliesMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProductFamiliesMetadata"/>. </summary>
         /// <param name="displayName"> Display Name for the product system. </param>
         /// <param name="description"> Description related to the product system. </param>
         /// <param name="imageInformation"> Image information for the product system. </param>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ProductFamiliesMetadata(displayName, description, imageInformation?.ToList(), costInformation, availabilityInformation, hierarchyInformation, filterableProperties?.ToList(), productLines?.ToList(), resourceProviderDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrder.EdgeOrderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderData(id, name, resourceType, systemData, orderItemIds?.ToList(), currentStage, orderStageHistory?.ToList());
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderStageDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderStageDetails"/>. </summary>
         /// <param name="stageStatus"> Stage status. </param>
         /// <param name="stageName"> Stage name. </param>
         /// <param name="displayName"> Display name of the resource stage. </param>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderStageDetails(stageStatus, stageName, displayName, startOn);
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrder.EdgeOrderItemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderItemData(id, name, resourceType, systemData, tags, location, orderItemDetails, addressDetails, startOn, orderId);
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderItemDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderItemDetails"/>. </summary>
         /// <param name="productDetails"> Unique identifier for configuration. </param>
         /// <param name="orderItemType"> Order item type. </param>
         /// <param name="currentStage"> Current Order item Status. </param>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderItemDetails(productDetails, orderItemType, currentStage, orderItemStageHistory?.ToList(), preferences, forwardShippingDetails, reverseShippingDetails, notificationEmailList?.ToList(), cancellationReason, cancellationStatus, deletionStatus, returnReason, returnStatus, firstOrDefaultManagementResourceProviderNamespace != null ? new ResourceProviderDetails(firstOrDefaultManagementResourceProviderNamespace) : null, managementRPDetailsList?.ToList(), error);
         }
 
-        /// <summary> Initializes a new instance of ProductDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProductDetails"/>. </summary>
         /// <param name="displayInfo"> Display details of the product. </param>
         /// <param name="hierarchyInformation"> Hierarchy of the product which uniquely identifies the product. </param>
         /// <param name="count"> Quantity of the product. </param>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ProductDetails(displayInfo, hierarchyInformation, count, productDoubleEncryptionStatus, deviceDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ProductDisplayInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProductDisplayInfo"/>. </summary>
         /// <param name="productFamilyDisplayName"> Product family display name. </param>
         /// <param name="configurationDisplayName"> Configuration display name. </param>
         /// <returns> A new <see cref="Models.ProductDisplayInfo"/> instance for mocking. </returns>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ProductDisplayInfo(productFamilyDisplayName, configurationDisplayName);
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderProductDeviceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProductDeviceDetails"/>. </summary>
         /// <param name="serialNumber"> device serial number. </param>
         /// <param name="managementResourceId"> Management Resource Id. </param>
         /// <param name="managementResourceTenantId"> Management Resource Tenant ID. </param>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderProductDeviceDetails(serialNumber, managementResourceId, managementResourceTenantId);
         }
 
-        /// <summary> Initializes a new instance of ForwardShippingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ForwardShippingDetails"/>. </summary>
         /// <param name="carrierName"> Name of the carrier. </param>
         /// <param name="carrierDisplayName"> Carrier Name for display purpose. Not to be used for any processing. </param>
         /// <param name="trackingId"> TrackingId of the package. </param>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ForwardShippingDetails(carrierName, carrierDisplayName, trackingId, trackingUri);
         }
 
-        /// <summary> Initializes a new instance of ReverseShippingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReverseShippingDetails"/>. </summary>
         /// <param name="sasKeyForLabel"> SAS key to download the reverse shipment label of the package. </param>
         /// <param name="carrierName"> Name of the carrier. </param>
         /// <param name="carrierDisplayName"> Carrier Name for display purpose. Not to be used for any processing. </param>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ReverseShippingDetails(sasKeyForLabel, carrierName, carrierDisplayName, trackingId, trackingUri);
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderItemAddressDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderItemAddressDetails"/>. </summary>
         /// <param name="forwardAddress"> Customer address and contact details. It should be address resource. </param>
         /// <param name="returnAddress"> Return shipping address. </param>
         /// <returns> A new <see cref="Models.EdgeOrderItemAddressDetails"/> instance for mocking. </returns>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderItemAddressDetails(forwardAddress, returnAddress);
         }
 
-        /// <summary> Initializes a new instance of Pav2MeterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.Pav2MeterDetails"/>. </summary>
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>
         /// <param name="meterGuid"> Validation status of requested data center and transport. </param>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new Pav2MeterDetails(BillingType.Pav2, multiplier, chargingType, meterGuid);
         }
 
-        /// <summary> Initializes a new instance of PurchaseMeterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PurchaseMeterDetails"/>. </summary>
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>
         /// <param name="productId"> Product Id. </param>

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Static IP configuration for a SIM, scoped to a particular attached data network and slice. </summary>
     public partial class SimStaticIPProperties
     {
-        /// <summary> Initializes a new instance of SimStaticIPProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimStaticIPProperties"/>. </summary>
         public SimStaticIPProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SimStaticIPProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimStaticIPProperties"/>. </summary>
         /// <param name="attachedDataNetwork"> The attached data network on which the static IP address will be used. The combination of attached data network and slice defines the network scope of the IP address. The attached data network must be in the same location as the SIM. </param>
         /// <param name="slice"> The network slice on which the static IP address will be used. The combination of attached data network and slice defines the network scope of the IP address. The slice must be in the same location as the SIM. </param>
         /// <param name="staticIP"> The static IP configuration for the SIM to use at the defined network scope. </param>

@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class ExportSummary
     {
-        /// <summary> Initializes a new instance of ExportSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportSummary"/>. </summary>
         protected ExportSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of ExportSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportSummary"/>. </summary>
         /// <param name="endOn"> The time when the export was completed. </param>
         /// <param name="exportedRowCount"> The total number of labeled datapoints exported. </param>
         /// <param name="format"> [Required] The format of exported labels, also as the discriminator. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Maps.Models
     /// <summary> A list of Creator resources. </summary>
     internal partial class MapsCreatorListResult
     {
-        /// <summary> Initializes a new instance of MapsCreatorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsCreatorListResult"/>. </summary>
         internal MapsCreatorListResult()
         {
             Value = new ChangeTrackingList<MapsCreatorData>();
         }
 
-        /// <summary> Initializes a new instance of MapsCreatorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsCreatorListResult"/>. </summary>
         /// <param name="value"> a Creator account. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).

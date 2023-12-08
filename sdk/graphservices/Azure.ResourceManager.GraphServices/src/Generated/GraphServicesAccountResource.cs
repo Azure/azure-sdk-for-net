@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.GraphServices
         private readonly AccountsRestOperations _graphServicesAccountResourceAccountsRestClient;
         private readonly GraphServicesAccountResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.GraphServices/accounts";
+
         /// <summary> Initializes a new instance of the <see cref="GraphServicesAccountResource"/> class for mocking. </summary>
         protected GraphServicesAccountResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.GraphServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.GraphServices/accounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

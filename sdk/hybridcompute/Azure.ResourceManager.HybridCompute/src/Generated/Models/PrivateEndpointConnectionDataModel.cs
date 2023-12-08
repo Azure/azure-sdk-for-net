@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> The Data Model for a Private Endpoint Connection associated with a Private Link Scope. </summary>
     public partial class PrivateEndpointConnectionDataModel : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionDataModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionDataModel"/>. </summary>
         internal PrivateEndpointConnectionDataModel()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionDataModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionDataModel"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

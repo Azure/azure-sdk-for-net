@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Maps.Models
     /// <summary> Whether the operation refers to the primary or secondary key. </summary>
     public partial class MapsKeySpecification
     {
-        /// <summary> Initializes a new instance of MapsKeySpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsKeySpecification"/>. </summary>
         /// <param name="keyType"> Whether the operation refers to the primary or secondary key. </param>
         public MapsKeySpecification(MapsKeyType keyType)
         {

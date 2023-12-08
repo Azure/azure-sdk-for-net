@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ElasticSan
     /// </summary>
     public partial class ElasticSanSnapshotData : ResourceData
     {
-        /// <summary> Initializes a new instance of ElasticSanSnapshotData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanSnapshotData"/>. </summary>
         /// <param name="creationData"> Data used when creating a volume snapshot. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="creationData"/> is null. </exception>
         public ElasticSanSnapshotData(SnapshotCreationData creationData)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ElasticSan
             CreationData = creationData;
         }
 
-        /// <summary> Initializes a new instance of ElasticSanSnapshotData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanSnapshotData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

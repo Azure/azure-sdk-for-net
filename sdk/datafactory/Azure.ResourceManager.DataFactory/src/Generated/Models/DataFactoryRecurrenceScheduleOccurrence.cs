@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The recurrence schedule occurrence. </summary>
     public partial class DataFactoryRecurrenceScheduleOccurrence
     {
-        /// <summary> Initializes a new instance of DataFactoryRecurrenceScheduleOccurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryRecurrenceScheduleOccurrence"/>. </summary>
         public DataFactoryRecurrenceScheduleOccurrence()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryRecurrenceScheduleOccurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryRecurrenceScheduleOccurrence"/>. </summary>
         /// <param name="day"> The day of the week. </param>
         /// <param name="occurrence"> The occurrence. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

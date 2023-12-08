@@ -17,12 +17,14 @@ namespace Azure.Communication.PhoneNumbers.Tests
         private const string UrlEncodedPhoneNumberRegEx = @"[\\%2B]{0,3}[0-9]{11,15}";
         protected const string UnauthorizedNumber = "+14255550123";
         protected const string UnknownPhoneNumberSearchResultId = "01234567-0123-0123-0123-0123456789AB";
+        private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
 
         public PhoneNumbersClientLiveTestBase(bool isAsync) : base(isAsync)
         {
             SanitizedHeaders.Add("location");
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(PhoneNumberRegEx, SanitizeValue));
             UriRegexSanitizers.Add(new UriRegexSanitizer(UrlEncodedPhoneNumberRegEx, SanitizeValue));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
             SanitizedHeaders.Add("x-ms-content-sha256");
         }
 

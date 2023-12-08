@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmNetAppModelFactory
     {
-        /// <summary> Initializes a new instance of NetAppCheckAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppCheckAvailabilityResult"/>. </summary>
         /// <param name="isAvailable"> &lt;code&gt;true&lt;/code&gt; indicates name is valid and available. &lt;code&gt;false&lt;/code&gt; indicates the name is invalid, unavailable, or both. </param>
         /// <param name="reason"> &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable. </param>
         /// <param name="message"> If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that resource name is already in use, and direct them to select a different name. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppCheckAvailabilityResult(isAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of NetAppSubscriptionQuotaItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppSubscriptionQuotaItem"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppSubscriptionQuotaItem(id, name, resourceType, systemData, current, @default);
         }
 
-        /// <summary> Initializes a new instance of NetAppRegionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppRegionInfo"/>. </summary>
         /// <param name="storageToNetworkProximity"> Provides storage to network proximity information in the region. </param>
         /// <param name="availabilityZoneMappings"> Provides logical availability zone mappings for the subscription for a region. </param>
         /// <returns> A new <see cref="Models.NetAppRegionInfo"/> instance for mocking. </returns>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppRegionInfo(storageToNetworkProximity, availabilityZoneMappings?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AvailabilityZoneMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvailabilityZoneMapping"/>. </summary>
         /// <param name="availabilityZone"> Logical availability zone. </param>
         /// <param name="isAvailable"> Available availability zone. </param>
         /// <returns> A new <see cref="Models.AvailabilityZoneMapping"/> instance for mocking. </returns>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new AvailabilityZoneMapping(availabilityZone, isAvailable);
         }
 
-        /// <summary> Initializes a new instance of NetworkSiblingSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkSiblingSet"/>. </summary>
         /// <param name="networkSiblingSetId"> Network Sibling Set ID for a group of volumes sharing networking resources in a subnet. </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. Example /subscriptions/subscriptionId/resourceGroups/resourceGroup/providers/Microsoft.Network/virtualNetworks/testVnet/subnets/{mySubnet}. </param>
         /// <param name="networkSiblingSetStateId"> Network sibling set state Id identifying the current state of the sibling set. </param>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetworkSiblingSet(networkSiblingSetId, subnetId, networkSiblingSetStateId, networkFeatures, provisioningState, nicInfoList?.ToList());
         }
 
-        /// <summary> Initializes a new instance of NicInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NicInfo"/>. </summary>
         /// <param name="ipAddress"> ipAddress. </param>
         /// <param name="volumeResourceIds"> Volume resource Ids. </param>
         /// <returns> A new <see cref="Models.NicInfo"/> instance for mocking. </returns>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NicInfo(ipAddress, volumeResourceIds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of NetAppAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetApp.NetAppAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppAccountData(id, name, resourceType, systemData, tags, location, etag, identity, provisioningState, activeDirectories?.ToList(), encryption, disableShowmount);
         }
 
-        /// <summary> Initializes a new instance of NetAppAccountActiveDirectory. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppAccountActiveDirectory"/>. </summary>
         /// <param name="activeDirectoryId"> Id of the Active Directory. </param>
         /// <param name="username"> A domain user account with permission to create machine accounts. </param>
         /// <param name="password"> Plain text password of Active Directory domain administrator, value is masked in the response. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppAccountActiveDirectory(activeDirectoryId, username, password, domain, dns, status, statusDetails, smbServerName, organizationalUnit, site, backupOperators?.ToList(), administrators?.ToList(), kdcIP, adName, serverRootCACertificate, isAesEncryptionEnabled, isLdapSigningEnabled, securityOperators?.ToList(), isLdapOverTlsEnabled, allowLocalNfsUsersWithLdap, encryptDCConnections, ldapSearchScope, preferredServersForLdapClient);
         }
 
-        /// <summary> Initializes a new instance of NetAppKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppKeyVaultProperties"/>. </summary>
         /// <param name="keyVaultId"> UUID v4 used to identify the Azure Key Vault configuration. </param>
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
         /// <param name="keyName"> The name of KeyVault key. </param>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppKeyVaultProperties(keyVaultId, keyVaultUri, keyName, keyVaultResourceId, status);
         }
 
-        /// <summary> Initializes a new instance of NetAppEncryptionIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppEncryptionIdentity"/>. </summary>
         /// <param name="principalId"> The principal ID (object ID) of the identity used to authenticate with key vault. Read-only. </param>
         /// <param name="userAssignedIdentity"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has 'UserAssigned'. It should match key of identity.userAssignedIdentities. </param>
         /// <returns> A new <see cref="Models.NetAppEncryptionIdentity"/> instance for mocking. </returns>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppEncryptionIdentity(principalId, userAssignedIdentity);
         }
 
-        /// <summary> Initializes a new instance of CapacityPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetApp.CapacityPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new CapacityPoolData(id, name, resourceType, systemData, tags, location, etag, poolId, size, serviceLevel, provisioningState, totalThroughputMibps, utilizedThroughputMibps, qosType, isCoolAccessEnabled, encryptionType);
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetApp.NetAppVolumeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeData(id, name, resourceType, systemData, tags, location, etag, zones?.ToList(), fileSystemId, creationToken, serviceLevel, usageThreshold, exportRules != null ? new VolumePropertiesExportPolicy(exportRules?.ToList()) : null, protocolTypes?.ToList(), provisioningState, snapshotId, deleteBaseSnapshot, backupId, baremetalTenantId, subnetId, networkFeatures, networkSiblingSetId, storageToNetworkProximity, mountTargets?.ToList(), volumeType, dataProtection, isRestoring, isSnapshotDirectoryVisible, isKerberosEnabled, securityStyle, isSmbEncryptionEnabled, smbAccessBasedEnumeration, smbNonBrowsable, isSmbContinuouslyAvailable, throughputMibps, actualThroughputMibps, encryptionKeySource, keyVaultPrivateEndpointResourceId, isLdapEnabled, isCoolAccessEnabled, coolnessPeriod, coolAccessRetrievalPolicy, unixPermissions, cloneProgress, fileAccessLogs, avsDataStore, dataStoreResourceId?.ToList(), isDefaultQuotaEnabled, defaultUserQuotaInKiBs, defaultGroupQuotaInKiBs, maximumNumberOfFiles, volumeGroupName, capacityPoolResourceId, proximityPlacementGroupId, t2Network, volumeSpecName, isEncrypted, placementRules?.ToList(), enableSubvolumes, provisionedAvailabilityZone, isLargeVolume, originatingResourceId);
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeMountTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeMountTarget"/>. </summary>
         /// <param name="mountTargetId"> UUID v4 used to identify the MountTarget. </param>
         /// <param name="fileSystemId"> UUID v4 used to identify the MountTarget. </param>
         /// <param name="ipAddress"> The mount target's IPv4 address. </param>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeMountTarget(mountTargetId, fileSystemId, ipAddress, smbServerFqdn);
         }
 
-        /// <summary> Initializes a new instance of NetAppReplicationObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppReplicationObject"/>. </summary>
         /// <param name="replicationId"> Id. </param>
         /// <param name="endpointType"> Indicates whether the local volume is the source or destination for the Volume Replication. </param>
         /// <param name="replicationSchedule"> Schedule. </param>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppReplicationObject(replicationId, endpointType, replicationSchedule, remoteVolumeResourceId, remoteVolumeRegion);
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeRelocationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeRelocationProperties"/>. </summary>
         /// <param name="isRelocationRequested"> Has relocation been requested for this volume. </param>
         /// <param name="isReadyToBeFinalized"> Has relocation finished and is ready to be cleaned up. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeRelocationProperties"/> instance for mocking. </returns>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeRelocationProperties(isRelocationRequested, isReadyToBeFinalized);
         }
 
-        /// <summary> Initializes a new instance of GetGroupIdListForLdapUserResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GetGroupIdListForLdapUserResult"/>. </summary>
         /// <param name="groupIdsForLdapUser"> Group Id list. </param>
         /// <returns> A new <see cref="Models.GetGroupIdListForLdapUserResult"/> instance for mocking. </returns>
         public static GetGroupIdListForLdapUserResult GetGroupIdListForLdapUserResult(IEnumerable<string> groupIdsForLdapUser = null)
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new GetGroupIdListForLdapUserResult(groupIdsForLdapUser?.ToList());
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeReplicationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeReplicationStatus"/>. </summary>
         /// <param name="isHealthy"> Replication health check. </param>
         /// <param name="relationshipStatus"> Status of the mirror relationship. </param>
         /// <param name="mirrorState"> The status of the replication. </param>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeReplicationStatus(isHealthy, relationshipStatus, mirrorState, totalProgress, errorMessage);
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeReplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeReplication"/>. </summary>
         /// <param name="endpointType"> Indicates whether the local volume is the source or destination for the Volume Replication. </param>
         /// <param name="replicationSchedule"> Schedule. </param>
         /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeReplication(endpointType, replicationSchedule, remoteVolumeResourceId, remoteVolumeRegion);
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeSnapshotData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetApp.NetAppVolumeSnapshotData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeSnapshotData(id, name, resourceType, systemData, location, snapshotId, created, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of SnapshotPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetApp.SnapshotPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new SnapshotPolicyData(id, name, resourceType, systemData, tags, location, etag, hourlySchedule, dailySchedule, weeklySchedule, monthlySchedule, isEnabled, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of NetAppRestoreStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppRestoreStatus"/>. </summary>
         /// <param name="isHealthy"> Restore health status. </param>
         /// <param name="relationshipStatus"> Status of the restore SnapMirror relationship. </param>
         /// <param name="mirrorState"> The status of the restore. </param>
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppRestoreStatus(isHealthy, relationshipStatus, mirrorState, unhealthyReason, errorMessage, totalTransferBytes);
         }
 
-        /// <summary> Initializes a new instance of NetAppBackupPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetApp.NetAppBackupPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppBackupPolicyData(id, name, resourceType, systemData, tags, location, etag, backupPolicyId, provisioningState, dailyBackupsToKeep, weeklyBackupsToKeep, monthlyBackupsToKeep, volumesAssigned, isEnabled, volumeBackups?.ToList());
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeBackupDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeBackupDetail"/>. </summary>
         /// <param name="volumeName"> Volume name. </param>
         /// <param name="backupsCount"> Total count of backups for volume. </param>
         /// <param name="isPolicyEnabled"> Policy enabled. </param>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeBackupDetail(volumeName, backupsCount, isPolicyEnabled);
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeQuotaRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetApp.NetAppVolumeQuotaRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeQuotaRuleData(id, name, resourceType, systemData, tags, location, provisioningState, quotaSizeInKiBs, quotaType, quotaTarget);
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeGroupResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeGroupResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeGroupResult(id, name, resourceType, systemData, location, provisioningState, groupMetaData);
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeGroupMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeGroupMetadata"/>. </summary>
         /// <param name="groupDescription"> Group Description. </param>
         /// <param name="applicationType"> Application Type. </param>
         /// <param name="applicationIdentifier"> Application specific identifier. </param>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeGroupMetadata(groupDescription, applicationType, applicationIdentifier, globalPlacementRules?.ToList(), deploymentSpecId, volumesCount);
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetApp.NetAppVolumeGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeGroupData(id, name, resourceType, systemData, location, provisioningState, groupMetaData, volumes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeGroupVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeGroupVolume"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeGroupVolume(id, name, resourceType, tags, zones?.ToList(), fileSystemId, creationToken, serviceLevel, usageThreshold, exportRules != null ? new VolumePropertiesExportPolicy(exportRules?.ToList()) : null, protocolTypes?.ToList(), provisioningState, snapshotId, deleteBaseSnapshot, backupId, baremetalTenantId, subnetId, networkFeatures, networkSiblingSetId, storageToNetworkProximity, mountTargets?.ToList(), volumeType, dataProtection, isRestoring, isSnapshotDirectoryVisible, isKerberosEnabled, securityStyle, isSmbEncryptionEnabled, smbAccessBasedEnumeration, smbNonBrowsable, isSmbContinuouslyAvailable, throughputMibps, actualThroughputMibps, encryptionKeySource, keyVaultPrivateEndpointResourceId, isLdapEnabled, isCoolAccessEnabled, coolnessPeriod, coolAccessRetrievalPolicy, unixPermissions, cloneProgress, fileAccessLogs, avsDataStore, dataStoreResourceId?.ToList(), isDefaultQuotaEnabled, defaultUserQuotaInKiBs, defaultGroupQuotaInKiBs, maximumNumberOfFiles, volumeGroupName, capacityPoolResourceId, proximityPlacementGroupId, t2Network, volumeSpecName, isEncrypted, placementRules?.ToList(), enableSubvolumes, provisionedAvailabilityZone, isLargeVolume, originatingResourceId);
         }
 
-        /// <summary> Initializes a new instance of NetAppSubvolumeInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetApp.NetAppSubvolumeInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppSubvolumeInfoData(id, name, resourceType, systemData, path, size, parentPath, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of NetAppSubvolumeMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppSubvolumeMetadata"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

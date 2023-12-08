@@ -10,14 +10,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Log settings of script activity. </summary>
     public partial class ScriptActivityTypePropertiesLogSettings
     {
-        /// <summary> Initializes a new instance of ScriptActivityTypePropertiesLogSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityTypePropertiesLogSettings"/>. </summary>
         /// <param name="logDestination"> The destination of logs. Type: string. </param>
         public ScriptActivityTypePropertiesLogSettings(ScriptActivityLogDestination logDestination)
         {
             LogDestination = logDestination;
         }
 
-        /// <summary> Initializes a new instance of ScriptActivityTypePropertiesLogSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityTypePropertiesLogSettings"/>. </summary>
         /// <param name="logDestination"> The destination of logs. Type: string. </param>
         /// <param name="logLocationSettings"> Log location settings customer needs to provide when enabling log. </param>
         internal ScriptActivityTypePropertiesLogSettings(ScriptActivityLogDestination logDestination, LogLocationSettings logLocationSettings)

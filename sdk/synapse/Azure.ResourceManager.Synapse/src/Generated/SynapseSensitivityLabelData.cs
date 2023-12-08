@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseSensitivityLabelData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseSensitivityLabelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSensitivityLabelData"/>. </summary>
         public SynapseSensitivityLabelData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseSensitivityLabelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSensitivityLabelData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

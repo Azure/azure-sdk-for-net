@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.HybridContainerService
     /// </summary>
     public partial class ProvisionedClusterData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProvisionedClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterData"/>. </summary>
         public ProvisionedClusterData()
         {
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

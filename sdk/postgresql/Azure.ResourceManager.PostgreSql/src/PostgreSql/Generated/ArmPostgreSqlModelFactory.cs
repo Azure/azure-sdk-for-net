@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmPostgreSqlModelFactory
     {
-        /// <summary> Initializes a new instance of PostgreSqlServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             return new PostgreSqlServerData(id, name, resourceType, systemData, tags, location, identity, sku, administratorLogin, version, sslEnforcement, minimalTlsVersion, byokEnforcement, infrastructureEncryption, userVisibleState, fullyQualifiedDomainName, earliestRestoreOn, storageProfile, replicationRole, masterServerId, replicaCapacity, publicNetworkAccess, privateEndpointConnections?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlServerPrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlServerPrivateEndpointConnection"/>. </summary>
         /// <param name="id"> Resource ID of the Private Endpoint Connection. </param>
         /// <param name="properties"> Private endpoint connection properties. </param>
         /// <returns> A new <see cref="Models.PostgreSqlServerPrivateEndpointConnection"/> instance for mocking. </returns>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             return new PostgreSqlServerPrivateEndpointConnection(id, properties);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlServerPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlServerPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpointId"> Private endpoint which the connection belongs to. </param>
         /// <param name="privateLinkServiceConnectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             return new PostgreSqlServerPrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, privateLinkServiceConnectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlServerPrivateLinkServiceConnectionStateProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlServerPrivateLinkServiceConnectionStateProperty"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The actions required for private link service connection. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             return new PostgreSqlServerPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlFirewallRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             return new PostgreSqlFirewallRuleData(id, name, resourceType, systemData, startIPAddress, endIPAddress);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlVirtualNetworkRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlVirtualNetworkRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             return new PostgreSqlVirtualNetworkRuleData(id, name, resourceType, systemData, virtualNetworkSubnetId, ignoreMissingVnetServiceEndpoint, state);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             return new PostgreSqlDatabaseData(id, name, resourceType, systemData, charset, collation);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             return new PostgreSqlConfigurationData(id, name, resourceType, systemData, value, description, defaultValue, dataType, allowedValues, source);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlLogFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlLogFile"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             return new PostgreSqlLogFile(id, name, resourceType, systemData, sizeInKB, createdOn, lastModifiedOn, logFileType, uri);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlServerAdministratorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlServerAdministratorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             return new PostgreSqlServerAdministratorData(id, name, resourceType, systemData, administratorType, loginAccountName, secureId, tenantId);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlRecoverableServerResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlRecoverableServerResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             return new PostgreSqlRecoverableServerResourceData(id, name, resourceType, systemData, lastAvailableBackupOn, serviceLevelObjective, edition, vCores, hardwareGeneration, version);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlPerformanceTierProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlPerformanceTierProperties"/>. </summary>
         /// <param name="id"> ID of the performance tier. </param>
         /// <param name="maxBackupRetentionDays"> Maximum Backup retention in days for the performance tier edition. </param>
         /// <param name="minBackupRetentionDays"> Minimum Backup retention in days for the performance tier edition. </param>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             return new PostgreSqlPerformanceTierProperties(id, maxBackupRetentionDays, minBackupRetentionDays, maxStorageInMB, minLargeStorageInMB, maxLargeStorageInMB, minStorageInMB, serviceLevelObjectives?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlPerformanceTierServiceLevelObjectives. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlPerformanceTierServiceLevelObjectives"/>. </summary>
         /// <param name="id"> ID for the service level objective. </param>
         /// <param name="edition"> Edition of the performance tier. </param>
         /// <param name="vCores"> vCore associated with the service level objective. </param>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             return new PostgreSqlPerformanceTierServiceLevelObjectives(id, edition, vCores, hardwareGeneration, maxBackupRetentionDays, minBackupRetentionDays, maxStorageInMB, minStorageInMB);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlNameAvailabilityResult"/>. </summary>
         /// <param name="message"> Error Message. </param>
         /// <param name="isNameAvailable"> Indicates whether the resource name is available. </param>
         /// <param name="reason"> Reason for name being unavailable. </param>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             return new PostgreSqlNameAvailabilityResult(message, isNameAvailable, reason);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlServerSecurityAlertPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlServerSecurityAlertPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             return new PostgreSqlServerSecurityAlertPolicyData(id, name, resourceType, systemData, state, disabledAlerts?.ToList(), emailAddresses?.ToList(), sendToEmailAccountAdmins, storageEndpoint, storageAccountAccessKey, retentionDays);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             return new PostgreSqlPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlPrivateLinkServiceConnectionStateProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlPrivateLinkServiceConnectionStateProperty"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The actions required for private link service connection. </param>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             return new PostgreSqlPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             return new PostgreSqlPrivateLinkResourceData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <returns> A new <see cref="Models.PostgreSqlPrivateLinkResourceProperties"/> instance for mocking. </returns>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             return new PostgreSqlPrivateLinkResourceProperties(groupId, requiredMembers?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlServerKeyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlServerKeyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

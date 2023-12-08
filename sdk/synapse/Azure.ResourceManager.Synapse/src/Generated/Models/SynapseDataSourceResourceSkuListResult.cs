@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> List of available SKUs for a Kusto Pool. </summary>
     internal partial class SynapseDataSourceResourceSkuListResult
     {
-        /// <summary> Initializes a new instance of SynapseDataSourceResourceSkuListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataSourceResourceSkuListResult"/>. </summary>
         internal SynapseDataSourceResourceSkuListResult()
         {
             Value = new ChangeTrackingList<SynapseDataSourceResourceSku>();
         }
 
-        /// <summary> Initializes a new instance of SynapseDataSourceResourceSkuListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataSourceResourceSkuListResult"/>. </summary>
         /// <param name="value"> The collection of available SKUs for an existing resource. </param>
         internal SynapseDataSourceResourceSkuListResult(IReadOnlyList<SynapseDataSourceResourceSku> value)
         {

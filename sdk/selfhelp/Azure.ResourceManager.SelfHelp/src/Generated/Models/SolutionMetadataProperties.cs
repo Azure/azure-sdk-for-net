@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Metadata Properties. </summary>
     public partial class SolutionMetadataProperties
     {
-        /// <summary> Initializes a new instance of SolutionMetadataProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SolutionMetadataProperties"/>. </summary>
         public SolutionMetadataProperties()
         {
             RequiredInputs = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SolutionMetadataProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SolutionMetadataProperties"/>. </summary>
         /// <param name="solutionId"> Solution Id. </param>
         /// <param name="solutionType"> Solution Type. </param>
         /// <param name="description"> A detailed description of solution. </param>

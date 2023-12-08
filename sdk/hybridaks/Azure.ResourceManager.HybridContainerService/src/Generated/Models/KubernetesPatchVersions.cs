@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Kubernetes Patch Version profile. </summary>
     public partial class KubernetesPatchVersions
     {
-        /// <summary> Initializes a new instance of KubernetesPatchVersions. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesPatchVersions"/>. </summary>
         internal KubernetesPatchVersions()
         {
             Readiness = new ChangeTrackingList<KubernetesVersionReadiness>();
             Upgrades = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of KubernetesPatchVersions. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesPatchVersions"/>. </summary>
         /// <param name="readiness"> Whether the kubernetes version variant (Linux, Windows, Windows2022) is ready or not. </param>
         /// <param name="upgrades"> Possible upgrade path for given patch version. </param>
         internal KubernetesPatchVersions(IReadOnlyList<KubernetesVersionReadiness> readiness, IReadOnlyList<string> upgrades)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define a resource to query flow log and traffic analytics (optional) status. </summary>
     public partial class FlowLogStatusContent
     {
-        /// <summary> Initializes a new instance of FlowLogStatusContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowLogStatusContent"/>. </summary>
         /// <param name="targetResourceId"> The target resource where getting the flow log and traffic analytics (optional) status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
         public FlowLogStatusContent(ResourceIdentifier targetResourceId)

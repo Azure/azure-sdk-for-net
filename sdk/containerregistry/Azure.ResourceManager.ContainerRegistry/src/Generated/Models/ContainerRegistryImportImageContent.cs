@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The ContainerRegistryImportImageContent. </summary>
     public partial class ContainerRegistryImportImageContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryImportImageContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImportImageContent"/>. </summary>
         /// <param name="source"> The source of the image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         public ContainerRegistryImportImageContent(ContainerRegistryImportSource source)
@@ -24,6 +24,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Source = source;
             TargetTags = new ChangeTrackingList<string>();
             UntaggedTargetRepositories = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImportImageContent"/>. </summary>
+        /// <param name="source"> The source of the image. </param>
+        /// <param name="targetTags"> List of strings of the form repo[:tag]. When tag is omitted the source will be used (or 'latest' if source tag is also omitted). </param>
+        /// <param name="untaggedTargetRepositories"> List of strings of repository names to do a manifest only copy. No tag will be created. </param>
+        /// <param name="mode"> When Force, any existing target tags will be overwritten. When NoForce, any existing target tags will fail the operation before any copying begins. </param>
+        internal ContainerRegistryImportImageContent(ContainerRegistryImportSource source, IList<string> targetTags, IList<string> untaggedTargetRepositories, ContainerRegistryImportMode? mode)
+        {
+            Source = source;
+            TargetTags = targetTags;
+            UntaggedTargetRepositories = untaggedTargetRepositories;
+            Mode = mode;
         }
 
         /// <summary> The source of the image. </summary>

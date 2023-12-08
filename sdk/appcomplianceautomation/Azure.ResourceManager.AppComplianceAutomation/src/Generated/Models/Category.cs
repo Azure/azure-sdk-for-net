@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> A class represent the compliance category. </summary>
     public partial class Category
     {
-        /// <summary> Initializes a new instance of Category. </summary>
+        /// <summary> Initializes a new instance of <see cref="Category"/>. </summary>
         internal Category()
         {
             ControlFamilies = new ChangeTrackingList<ControlFamily>();
         }
 
-        /// <summary> Initializes a new instance of Category. </summary>
+        /// <summary> Initializes a new instance of <see cref="Category"/>. </summary>
         /// <param name="categoryName"> The name of the compliance category. e.g. "Operational Security". </param>
         /// <param name="categoryType"> The category type. </param>
         /// <param name="categoryStatus"> Category status. </param>

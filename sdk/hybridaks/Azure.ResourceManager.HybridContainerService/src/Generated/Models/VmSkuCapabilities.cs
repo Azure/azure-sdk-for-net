@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> describes the vm sku capabilities object. </summary>
     public partial class VmSkuCapabilities
     {
-        /// <summary> Initializes a new instance of VmSkuCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmSkuCapabilities"/>. </summary>
         internal VmSkuCapabilities()
         {
         }
 
-        /// <summary> Initializes a new instance of VmSkuCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmSkuCapabilities"/>. </summary>
         /// <param name="name"> An invariant to describe the feature. </param>
         /// <param name="value"> An invariant if the feature is measured by quantity. </param>
         internal VmSkuCapabilities(string name, string value)

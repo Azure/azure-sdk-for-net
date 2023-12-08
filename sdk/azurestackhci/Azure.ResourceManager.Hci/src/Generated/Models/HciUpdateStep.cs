@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> Progress representation of the update run steps. </summary>
     public partial class HciUpdateStep
     {
-        /// <summary> Initializes a new instance of HciUpdateStep. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciUpdateStep"/>. </summary>
         public HciUpdateStep()
         {
             Steps = new ChangeTrackingList<HciUpdateStep>();
         }
 
-        /// <summary> Initializes a new instance of HciUpdateStep. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciUpdateStep"/>. </summary>
         /// <param name="name"> Name of the step. </param>
         /// <param name="description"> More detailed description of the step. </param>
         /// <param name="errorMessage"> Error message, specified if the step is in a failed state. </param>

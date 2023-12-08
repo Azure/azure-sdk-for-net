@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> InfraNetworkProfile - List of infra network profiles for the provisioned cluster. </summary>
     internal partial class CloudProviderProfileInfraNetworkProfile
     {
-        /// <summary> Initializes a new instance of CloudProviderProfileInfraNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudProviderProfileInfraNetworkProfile"/>. </summary>
         public CloudProviderProfileInfraNetworkProfile()
         {
             VnetSubnetIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of CloudProviderProfileInfraNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudProviderProfileInfraNetworkProfile"/>. </summary>
         /// <param name="vnetSubnetIds"> Array of references to azure resource corresponding to the Network object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}. </param>
         internal CloudProviderProfileInfraNetworkProfile(IList<ResourceIdentifier> vnetSubnetIds)
         {

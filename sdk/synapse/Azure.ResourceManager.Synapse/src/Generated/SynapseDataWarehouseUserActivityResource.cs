@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly SqlPoolDataWarehouseUserActivitiesRestOperations _synapseDataWarehouseUserActivitySqlPoolDataWarehouseUserActivitiesRestClient;
         private readonly SynapseDataWarehouseUserActivityData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/dataWarehouseUserActivities";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseDataWarehouseUserActivityResource"/> class for mocking. </summary>
         protected SynapseDataWarehouseUserActivityResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/dataWarehouseUserActivities";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

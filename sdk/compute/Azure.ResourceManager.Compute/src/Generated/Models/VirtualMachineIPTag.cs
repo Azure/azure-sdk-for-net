@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Contains the IP tag associated with the public IP address. </summary>
     public partial class VirtualMachineIPTag
     {
-        /// <summary> Initializes a new instance of VirtualMachineIPTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineIPTag"/>. </summary>
         public VirtualMachineIPTag()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineIPTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineIPTag"/>. </summary>
         /// <param name="ipTagType"> IP tag type. Example: FirstPartyUsage. </param>
         /// <param name="tag"> IP tag associated with the public IP. Example: SQL, Storage etc. </param>
         internal VirtualMachineIPTag(string ipTagType, string tag)

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Base class for HyperVReplica policy details. </summary>
     public partial class HyperVReplicaBasePolicyDetails : PolicyProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of HyperVReplicaBasePolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaBasePolicyDetails"/>. </summary>
         internal HyperVReplicaBasePolicyDetails()
         {
             InstanceType = "HyperVReplicaBasePolicyDetails";
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaBasePolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaBasePolicyDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="recoveryPoints"> A value indicating the number of recovery points. </param>
         /// <param name="applicationConsistentSnapshotFrequencyInHours"> A value indicating the application consistent frequency. </param>

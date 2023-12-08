@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Result of the request to list custom domains. It contains a list of custom domain objects and a URL link to get the next set of results. </summary>
     internal partial class CustomDomainListResult
     {
-        /// <summary> Initializes a new instance of CustomDomainListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDomainListResult"/>. </summary>
         internal CustomDomainListResult()
         {
             Value = new ChangeTrackingList<CdnCustomDomainData>();
         }
 
-        /// <summary> Initializes a new instance of CustomDomainListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDomainListResult"/>. </summary>
         /// <param name="value"> List of CDN CustomDomains within an endpoint. </param>
         /// <param name="nextLink"> URL to get the next set of custom domain objects if there are any. </param>
         internal CustomDomainListResult(IReadOnlyList<CdnCustomDomainData> value, string nextLink)

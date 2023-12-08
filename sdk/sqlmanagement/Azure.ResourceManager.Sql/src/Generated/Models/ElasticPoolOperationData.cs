@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A elastic pool operation. </summary>
     public partial class ElasticPoolOperationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ElasticPoolOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolOperationData"/>. </summary>
         public ElasticPoolOperationData()
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolOperationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

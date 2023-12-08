@@ -10,9 +10,18 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> CPU consumption datapoint. </summary>
     internal partial class ProcessCpuData
     {
-        /// <summary> Initializes a new instance of ProcessCpuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProcessCpuData"/>. </summary>
         public ProcessCpuData()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProcessCpuData"/>. </summary>
+        /// <param name="processName"> Process name. </param>
+        /// <param name="cpuPercentage"> CPU consumption percentage. </param>
+        internal ProcessCpuData(string processName, int? cpuPercentage)
+        {
+            ProcessName = processName;
+            CpuPercentage = cpuPercentage;
         }
 
         /// <summary> Process name. </summary>

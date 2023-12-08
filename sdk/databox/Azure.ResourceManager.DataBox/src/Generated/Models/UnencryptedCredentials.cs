@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Unencrypted credentials for accessing device. </summary>
     public partial class UnencryptedCredentials
     {
-        /// <summary> Initializes a new instance of UnencryptedCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnencryptedCredentials"/>. </summary>
         internal UnencryptedCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of UnencryptedCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnencryptedCredentials"/>. </summary>
         /// <param name="jobName"> Name of the job. </param>
         /// <param name="jobSecrets">
         /// Secrets related to this job.

@@ -12,7 +12,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The UnknownIntegrationRuntime. </summary>
     internal partial class UnknownIntegrationRuntime : IntegrationRuntime
     {
-        /// <summary> Initializes a new instance of UnknownIntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownIntegrationRuntime"/>. </summary>
         /// <param name="type"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

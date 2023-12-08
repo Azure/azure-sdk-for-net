@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The UnknownEventSpecificDetails. </summary>
     internal partial class UnknownEventSpecificDetails : SiteRecoveryEventSpecificDetails
     {
-        /// <summary> Initializes a new instance of UnknownEventSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownEventSpecificDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         internal UnknownEventSpecificDetails(string instanceType) : base(instanceType)
         {

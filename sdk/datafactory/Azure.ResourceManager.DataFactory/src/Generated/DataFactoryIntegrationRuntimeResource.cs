@@ -45,6 +45,9 @@ namespace Azure.ResourceManager.DataFactory
         private readonly IntegrationRuntimeNodesRestOperations _integrationRuntimeNodesRestClient;
         private readonly DataFactoryIntegrationRuntimeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/integrationRuntimes";
+
         /// <summary> Initializes a new instance of the <see cref="DataFactoryIntegrationRuntimeResource"/> class for mocking. </summary>
         protected DataFactoryIntegrationRuntimeResource()
         {
@@ -75,9 +78,6 @@ namespace Azure.ResourceManager.DataFactory
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/integrationRuntimes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

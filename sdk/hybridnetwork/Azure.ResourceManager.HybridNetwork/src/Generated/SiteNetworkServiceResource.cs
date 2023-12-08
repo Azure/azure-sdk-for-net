@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.HybridNetwork
         private readonly SiteNetworkServicesRestOperations _siteNetworkServiceRestClient;
         private readonly SiteNetworkServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/siteNetworkServices";
+
         /// <summary> Initializes a new instance of the <see cref="SiteNetworkServiceResource"/> class for mocking. </summary>
         protected SiteNetworkServiceResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.HybridNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/siteNetworkServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

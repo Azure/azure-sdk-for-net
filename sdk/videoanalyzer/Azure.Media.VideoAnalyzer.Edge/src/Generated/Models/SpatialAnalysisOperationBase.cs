@@ -14,12 +14,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// </summary>
     public abstract partial class SpatialAnalysisOperationBase
     {
-        /// <summary> Initializes a new instance of SpatialAnalysisOperationBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisOperationBase"/>. </summary>
         protected SpatialAnalysisOperationBase()
         {
         }
 
-        /// <summary> Initializes a new instance of SpatialAnalysisOperationBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisOperationBase"/>. </summary>
         /// <param name="type"> The Type discriminator for the derived types. </param>
         internal SpatialAnalysisOperationBase(string type)
         {

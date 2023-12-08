@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The DscNodeCountProperties. </summary>
     internal partial class DscNodeCountProperties
     {
-        /// <summary> Initializes a new instance of DscNodeCountProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeCountProperties"/>. </summary>
         internal DscNodeCountProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DscNodeCountProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeCountProperties"/>. </summary>
         /// <param name="nameCount"> Gets the count for the name. </param>
         internal DscNodeCountProperties(int? nameCount)
         {

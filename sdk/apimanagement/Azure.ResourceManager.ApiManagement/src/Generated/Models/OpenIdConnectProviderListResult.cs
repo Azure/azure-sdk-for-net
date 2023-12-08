@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged OpenIdProviders list representation. </summary>
     internal partial class OpenIdConnectProviderListResult
     {
-        /// <summary> Initializes a new instance of OpenIdConnectProviderListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenIdConnectProviderListResult"/>. </summary>
         internal OpenIdConnectProviderListResult()
         {
             Value = new ChangeTrackingList<ApiManagementOpenIdConnectProviderData>();
         }
 
-        /// <summary> Initializes a new instance of OpenIdConnectProviderListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenIdConnectProviderListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

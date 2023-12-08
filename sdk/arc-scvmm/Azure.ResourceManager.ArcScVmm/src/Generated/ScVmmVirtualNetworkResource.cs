@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ArcScVmm
         private readonly VirtualNetworksRestOperations _scVmmVirtualNetworkVirtualNetworksRestClient;
         private readonly ScVmmVirtualNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ScVmm/virtualNetworks";
+
         /// <summary> Initializes a new instance of the <see cref="ScVmmVirtualNetworkResource"/> class for mocking. </summary>
         protected ScVmmVirtualNetworkResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ArcScVmm
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ScVmm/virtualNetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

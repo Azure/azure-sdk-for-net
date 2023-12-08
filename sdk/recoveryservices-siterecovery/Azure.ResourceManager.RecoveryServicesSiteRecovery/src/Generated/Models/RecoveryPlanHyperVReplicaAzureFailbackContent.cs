@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan HVR Azure failback input. </summary>
     public partial class RecoveryPlanHyperVReplicaAzureFailbackContent : RecoveryPlanProviderSpecificFailoverContent
     {
-        /// <summary> Initializes a new instance of RecoveryPlanHyperVReplicaAzureFailbackContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanHyperVReplicaAzureFailbackContent"/>. </summary>
         /// <param name="dataSyncOption"> The data sync option. </param>
         /// <param name="recoveryVmCreationOption"> The ALR option. </param>
         public RecoveryPlanHyperVReplicaAzureFailbackContent(SiteRecoveryDataSyncStatus dataSyncOption, AlternateLocationRecoveryOption recoveryVmCreationOption)
@@ -18,6 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DataSyncOption = dataSyncOption;
             RecoveryVmCreationOption = recoveryVmCreationOption;
             InstanceType = "HyperVReplicaAzureFailback";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanHyperVReplicaAzureFailbackContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="dataSyncOption"> The data sync option. </param>
+        /// <param name="recoveryVmCreationOption"> The ALR option. </param>
+        internal RecoveryPlanHyperVReplicaAzureFailbackContent(string instanceType, SiteRecoveryDataSyncStatus dataSyncOption, AlternateLocationRecoveryOption recoveryVmCreationOption) : base(instanceType)
+        {
+            DataSyncOption = dataSyncOption;
+            RecoveryVmCreationOption = recoveryVmCreationOption;
+            InstanceType = instanceType ?? "HyperVReplicaAzureFailback";
         }
 
         /// <summary> The data sync option. </summary>

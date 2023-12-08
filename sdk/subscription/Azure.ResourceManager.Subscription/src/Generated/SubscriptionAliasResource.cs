@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Subscription
         private readonly AliasRestOperations _subscriptionAliasAliasRestClient;
         private readonly SubscriptionAliasData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Subscription/aliases";
+
         /// <summary> Initializes a new instance of the <see cref="SubscriptionAliasResource"/> class for mocking. </summary>
         protected SubscriptionAliasResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Subscription
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Subscription/aliases";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Subscription
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The SubscriptionAliasCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The <see cref="SubscriptionAliasCreateOrUpdateContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SubscriptionAliasResource>> UpdateAsync(WaitUntil waitUntil, SubscriptionAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Subscription
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The SubscriptionAliasCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The <see cref="SubscriptionAliasCreateOrUpdateContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SubscriptionAliasResource> Update(WaitUntil waitUntil, SubscriptionAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)

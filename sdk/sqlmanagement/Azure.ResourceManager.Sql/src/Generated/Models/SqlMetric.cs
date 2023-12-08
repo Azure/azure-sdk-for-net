@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Database metrics. </summary>
     public partial class SqlMetric
     {
-        /// <summary> Initializes a new instance of SqlMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlMetric"/>. </summary>
         internal SqlMetric()
         {
             MetricValues = new ChangeTrackingList<SqlMetricValue>();
         }
 
-        /// <summary> Initializes a new instance of SqlMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlMetric"/>. </summary>
         /// <param name="startOn"> The start time for the metric (ISO-8601 format). </param>
         /// <param name="endOn"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="timeGrain"> The time step to be used to summarize the metric values. </param>

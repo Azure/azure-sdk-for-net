@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Profile of the managed cluster load balancer. </summary>
     public partial class ManagedClusterLoadBalancerProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterLoadBalancerProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProfile"/>. </summary>
         public ManagedClusterLoadBalancerProfile()
         {
             EffectiveOutboundIPs = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterLoadBalancerProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProfile"/>. </summary>
         /// <param name="managedOutboundIPs"> Desired managed outbound IPs for the cluster load balancer. </param>
         /// <param name="outboundIPPrefixes"> Desired outbound IP Prefix resources for the cluster load balancer. </param>
         /// <param name="outboundIPs"> Desired outbound IP resources for the cluster load balancer. </param>

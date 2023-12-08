@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The cluster definition. </summary>
     public partial class HDInsightClusterDefinition
     {
-        /// <summary> Initializes a new instance of HDInsightClusterDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterDefinition"/>. </summary>
         public HDInsightClusterDefinition()
         {
             ComponentVersion = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterDefinition"/>. </summary>
         /// <param name="blueprint"> The link to the blueprint. </param>
         /// <param name="kind"> The type of cluster. </param>
         /// <param name="componentVersion"> The versions of different services in the cluster. </param>

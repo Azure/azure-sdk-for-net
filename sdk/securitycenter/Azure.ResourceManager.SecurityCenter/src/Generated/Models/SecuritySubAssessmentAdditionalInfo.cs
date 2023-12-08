@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// </summary>
     public abstract partial class SecuritySubAssessmentAdditionalInfo
     {
-        /// <summary> Initializes a new instance of SecuritySubAssessmentAdditionalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecuritySubAssessmentAdditionalInfo"/>. </summary>
         protected SecuritySubAssessmentAdditionalInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SecuritySubAssessmentAdditionalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecuritySubAssessmentAdditionalInfo"/>. </summary>
         /// <param name="assessedResourceType"> Sub-assessment resource type. </param>
         internal SecuritySubAssessmentAdditionalInfo(AssessedResourceType assessedResourceType)
         {

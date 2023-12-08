@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.CustomerInsights
         private readonly PredictionsRestOperations _predictionResourceFormatPredictionsRestClient;
         private readonly PredictionResourceFormatData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/predictions";
+
         /// <summary> Initializes a new instance of the <see cref="PredictionResourceFormatResource"/> class for mocking. </summary>
         protected PredictionResourceFormatResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.CustomerInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/predictions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

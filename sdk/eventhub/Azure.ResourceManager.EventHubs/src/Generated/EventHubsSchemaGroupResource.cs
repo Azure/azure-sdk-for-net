@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.EventHubs
         private readonly SchemaRegistryRestOperations _eventHubsSchemaGroupSchemaRegistryRestClient;
         private readonly EventHubsSchemaGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/schemagroups";
+
         /// <summary> Initializes a new instance of the <see cref="EventHubsSchemaGroupResource"/> class for mocking. </summary>
         protected EventHubsSchemaGroupResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.EventHubs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/schemagroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

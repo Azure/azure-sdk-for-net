@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Contains Provisioning errors. </summary>
     public partial class VirtualNetworkPropertiesStatusOperationStatus
     {
-        /// <summary> Initializes a new instance of VirtualNetworkPropertiesStatusOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkPropertiesStatusOperationStatus"/>. </summary>
         internal VirtualNetworkPropertiesStatusOperationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkPropertiesStatusOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkPropertiesStatusOperationStatus"/>. </summary>
         /// <param name="error"></param>
         /// <param name="operationId"></param>
         /// <param name="phase"> Phase represents the current phase of the virtual network provisioning. E.g. Pending, Running, Terminating, Failed etc. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> The term details of the subscription at renewal. </summary>
     public partial class SubscriptionRenewalTermDetails
     {
-        /// <summary> Initializes a new instance of SubscriptionRenewalTermDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionRenewalTermDetails"/>. </summary>
         internal SubscriptionRenewalTermDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionRenewalTermDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionRenewalTermDetails"/>. </summary>
         /// <param name="billingFrequency"> The billing frequency of the subscription. </param>
         /// <param name="productTypeId"> The ID of the product. </param>
         /// <param name="quantity"> The number of licenses. </param>

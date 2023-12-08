@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Property of git environment. </summary>
     internal partial class ConfigurationServiceGitProperty
     {
-        /// <summary> Initializes a new instance of ConfigurationServiceGitProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationServiceGitProperty"/>. </summary>
         public ConfigurationServiceGitProperty()
         {
             ConfigurationServiceGitRepositories = new ChangeTrackingList<AppPlatformConfigurationServiceGitRepository>();
         }
 
-        /// <summary> Initializes a new instance of ConfigurationServiceGitProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationServiceGitProperty"/>. </summary>
         /// <param name="configurationServiceGitRepositories"> Repositories of Application Configuration Service git property. </param>
         internal ConfigurationServiceGitProperty(IList<AppPlatformConfigurationServiceGitRepository> configurationServiceGitRepositories)
         {

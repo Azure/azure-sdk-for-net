@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> A list of provisioned clusters resources. </summary>
     internal partial class ProvisionedClustersListResult
     {
-        /// <summary> Initializes a new instance of ProvisionedClustersListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersListResult"/>. </summary>
         internal ProvisionedClustersListResult()
         {
             Value = new ChangeTrackingList<ProvisionedClusterData>();
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClustersListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal ProvisionedClustersListResult(IReadOnlyList<ProvisionedClusterData> value, string nextLink)

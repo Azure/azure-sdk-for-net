@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly KeysRestOperations _synapseKeyKeysRestClient;
         private readonly SynapseKeyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/keys";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseKeyResource"/> class for mocking. </summary>
         protected SynapseKeyResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/keys";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

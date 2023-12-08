@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmHybridContainerServiceModelFactory
     {
-        /// <summary> Initializes a new instance of ProvisionedClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridContainerService.ProvisionedClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new ProvisionedClusterData(id, name, resourceType, systemData, properties, extendedLocation);
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProvisionedClusterProperties"/>. </summary>
         /// <param name="sshPublicKeys"> LinuxProfile - The profile for Linux VMs in the Provisioned Cluster. </param>
         /// <param name="controlPlane"> ControlPlane - ControlPlane Configuration. </param>
         /// <param name="kubernetesVersion"> KubernetesVersion - Version of Kubernetes specified when creating the managed cluster. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new ProvisionedClusterProperties(sshPublicKeys != null ? new LinuxProfileProperties(new LinuxProfilePropertiesSsh(sshPublicKeys?.ToList())) : null, controlPlane, kubernetesVersion, networkProfile, agentPoolProfiles?.ToList(), infraNetworkVnetSubnetIds != null ? new CloudProviderProfile(new CloudProviderProfileInfraNetworkProfile(infraNetworkVnetSubnetIds?.ToList())) : null, provisioningState, status, licenseAzureHybridBenefit != null ? new ProvisionedClusterLicenseProfile(licenseAzureHybridBenefit) : null);
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClusterPropertiesStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProvisionedClusterPropertiesStatus"/>. </summary>
         /// <param name="controlPlaneStatus"> Status of the control plane components. </param>
         /// <param name="errorMessage"> ErrorMessage - Error messages during creation of cluster. </param>
         /// <param name="operationStatus"> Contains Provisioning errors. </param>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new ProvisionedClusterPropertiesStatus(controlPlaneStatus?.ToList(), errorMessage, operationStatus);
         }
 
-        /// <summary> Initializes a new instance of AddonStatusProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AddonStatusProfile"/>. </summary>
         /// <param name="name"> Name of the addon. </param>
         /// <param name="phase"> Observed phase of the addon on the target cluster. Possible values include: 'pending', 'provisioning', 'provisioning {HelmChartInstalled}', 'provisioning {MSICertificateDownloaded}', 'provisioned', 'deleting', 'failed', 'upgrading'. </param>
         /// <param name="ready"> Indicates whether the addon is ready. </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new AddonStatusProfile(name, phase, ready, errorMessage);
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClusterPropertiesStatusOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProvisionedClusterPropertiesStatusOperationStatus"/>. </summary>
         /// <param name="error"></param>
         /// <param name="operationId"></param>
         /// <param name="status"></param>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new ProvisionedClusterPropertiesStatusOperationStatus(error, operationId, status);
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClusterPropertiesStatusOperationStatusError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProvisionedClusterPropertiesStatusOperationStatusError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
         /// <returns> A new <see cref="Models.ProvisionedClusterPropertiesStatusOperationStatusError"/> instance for mocking. </returns>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new ProvisionedClusterPropertiesStatusOperationStatusError(code, message);
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClusterUpgradeProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridContainerService.ProvisionedClusterUpgradeProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new ProvisionedClusterUpgradeProfileData(id, name, resourceType, systemData, provisioningState, controlPlaneProfile, agentPoolProfiles?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClusterPoolUpgradeProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProvisionedClusterPoolUpgradeProfile"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="name"> The Agent Pool name. </param>
         /// <param name="osType"> The particular KubernetesVersion's Image's OS Type (Linux, Windows). </param>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new ProvisionedClusterPoolUpgradeProfile(kubernetesVersion, name, osType, upgrades?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClusterPoolUpgradeProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProvisionedClusterPoolUpgradeProfileProperties"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="isPreview"> Whether the Kubernetes version is currently in preview. </param>
         /// <returns> A new <see cref="Models.ProvisionedClusterPoolUpgradeProfileProperties"/> instance for mocking. </returns>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new ProvisionedClusterPoolUpgradeProfileProperties(kubernetesVersion, isPreview);
         }
 
-        /// <summary> Initializes a new instance of HybridIdentityMetadataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridContainerService.HybridIdentityMetadataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new HybridIdentityMetadataData(id, name, resourceType, systemData, resourceUid, publicKey, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of HybridContainerServiceAgentPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridContainerService.HybridContainerServiceAgentPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new HybridContainerServiceAgentPoolData(id, name, resourceType, systemData, tags, location, extendedLocation, availabilityZones?.ToList(), osType, ossku, nodeImageVersion, count, vmSize, provisioningState, status);
         }
 
-        /// <summary> Initializes a new instance of ListCredentialResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ListCredentialResponse"/>. </summary>
         /// <param name="id"> Operation Id. </param>
         /// <param name="name"> Operation Name. </param>
         /// <param name="resourceId"> ARM Resource Id of the provisioned cluster instance. </param>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new ListCredentialResponse(id, name, resourceId, status, error, listCredentialResponseKubeconfigs != null ? new ListCredentialResponseProperties(listCredentialResponseKubeconfigs?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of ListCredentialResponseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ListCredentialResponseError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
         /// <returns> A new <see cref="Models.ListCredentialResponseError"/> instance for mocking. </returns>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new ListCredentialResponseError(code, message);
         }
 
-        /// <summary> Initializes a new instance of CredentialResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CredentialResult"/>. </summary>
         /// <param name="name"> The name of the credential. </param>
         /// <param name="value"> Base64-encoded Kubernetes configuration file. </param>
         /// <returns> A new <see cref="Models.CredentialResult"/> instance for mocking. </returns>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new CredentialResult(name, value);
         }
 
-        /// <summary> Initializes a new instance of KubernetesVersionProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridContainerService.KubernetesVersionProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new KubernetesVersionProfileData(id, name, resourceType, systemData, extendedLocation, properties);
         }
 
-        /// <summary> Initializes a new instance of KubernetesVersionProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KubernetesVersionProfileProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="values"> List of supported Kubernetes versions. </param>
         /// <returns> A new <see cref="Models.KubernetesVersionProfileProperties"/> instance for mocking. </returns>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new KubernetesVersionProfileProperties(provisioningState, values?.ToList());
         }
 
-        /// <summary> Initializes a new instance of KubernetesVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KubernetesVersionProperties"/>. </summary>
         /// <param name="version"> major.minor version of Kubernetes release. </param>
         /// <param name="capabilitiesSupportPlan"> Capabilities on this kubernetes version. </param>
         /// <param name="isPreview"> Whether this version is in preview mode. </param>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new KubernetesVersionProperties(version, capabilitiesSupportPlan != null ? new KubernetesVersionCapabilities(capabilitiesSupportPlan?.ToList()) : null, isPreview, patchVersions);
         }
 
-        /// <summary> Initializes a new instance of KubernetesPatchVersions. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KubernetesPatchVersions"/>. </summary>
         /// <param name="readiness"> Whether the kubernetes version variant (Linux, Windows, Windows2022) is ready or not. </param>
         /// <param name="upgrades"> Possible upgrade path for given patch version. </param>
         /// <returns> A new <see cref="Models.KubernetesPatchVersions"/> instance for mocking. </returns>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new KubernetesPatchVersions(readiness?.ToList(), upgrades?.ToList());
         }
 
-        /// <summary> Initializes a new instance of KubernetesVersionReadiness. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KubernetesVersionReadiness"/>. </summary>
         /// <param name="osType"> The particular KubernetesVersion's Image's OS Type (Linux, Windows). </param>
         /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </param>
         /// <param name="ready"> Whether or not the given image is ready. </param>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new KubernetesVersionReadiness(osType, osSku, ready, errorMessage);
         }
 
-        /// <summary> Initializes a new instance of VmSkuProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridContainerService.VmSkuProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new VmSkuProfileData(id, name, resourceType, systemData, extendedLocation, properties);
         }
 
-        /// <summary> Initializes a new instance of VmSkuProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VmSkuProfileProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="values"> Array of HybridAKS Support VM Skus. </param>
         /// <returns> A new <see cref="Models.VmSkuProfileProperties"/> instance for mocking. </returns>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new VmSkuProfileProperties(provisioningState, values?.ToList());
         }
 
-        /// <summary> Initializes a new instance of VmSkuProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VmSkuProperties"/>. </summary>
         /// <param name="resourceType"> The resource type of the vm. </param>
         /// <param name="capabilities"> A name value pair to describe the specific vm's capability. </param>
         /// <param name="name"> The name of the VM Family. </param>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new VmSkuProperties(resourceType, capabilities?.ToList(), name, tier, size);
         }
 
-        /// <summary> Initializes a new instance of VmSkuCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VmSkuCapabilities"/>. </summary>
         /// <param name="name"> An invariant to describe the feature. </param>
         /// <param name="value"> An invariant if the feature is measured by quantity. </param>
         /// <returns> A new <see cref="Models.VmSkuCapabilities"/> instance for mocking. </returns>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new VmSkuCapabilities(name, value);
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridContainerService.VirtualNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new VirtualNetworkData(id, name, resourceType, systemData, tags, location, properties, extendedLocation);
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkProperties"/>. </summary>
         /// <param name="infraVnetProfile"></param>
         /// <param name="vipPool"> Virtual IP Pool for Kubernetes. </param>
         /// <param name="vmipPool"> IP Pool for Virtual Machines. </param>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new VirtualNetworkProperties(infraVnetProfile, vipPool?.ToList(), vmipPool?.ToList(), dhcpServers?.ToList(), dnsServers?.ToList(), gateway, ipAddressPrefix, vlanId, provisioningState, operationStatus != null ? new VirtualNetworkPropertiesStatus(operationStatus) : null);
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkPropertiesStatusOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkPropertiesStatusOperationStatus"/>. </summary>
         /// <param name="error"></param>
         /// <param name="operationId"></param>
         /// <param name="phase"> Phase represents the current phase of the virtual network provisioning. E.g. Pending, Running, Terminating, Failed etc. </param>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new VirtualNetworkPropertiesStatusOperationStatus(error, operationId, phase, status);
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkPropertiesStatusOperationStatusError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkPropertiesStatusOperationStatusError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
         /// <returns> A new <see cref="Models.VirtualNetworkPropertiesStatusOperationStatusError"/> instance for mocking. </returns>

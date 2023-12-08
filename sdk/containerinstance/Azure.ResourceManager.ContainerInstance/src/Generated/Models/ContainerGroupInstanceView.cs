@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The instance view of the container group. Only valid in response. </summary>
     public partial class ContainerGroupInstanceView
     {
-        /// <summary> Initializes a new instance of ContainerGroupInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupInstanceView"/>. </summary>
         internal ContainerGroupInstanceView()
         {
             Events = new ChangeTrackingList<ContainerEvent>();
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupInstanceView"/>. </summary>
         /// <param name="events"> The events of this container group. </param>
         /// <param name="state"> The state of the container group. Only valid in response. </param>
         internal ContainerGroupInstanceView(IReadOnlyList<ContainerEvent> events, string state)

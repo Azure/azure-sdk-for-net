@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the connection fields. </summary>
     public partial class AutomationConnectionFieldDefinition
     {
-        /// <summary> Initializes a new instance of AutomationConnectionFieldDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionFieldDefinition"/>. </summary>
         /// <param name="fieldDefinitionType"> Gets or sets the type of the connection field definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fieldDefinitionType"/> is null. </exception>
         public AutomationConnectionFieldDefinition(string fieldDefinitionType)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Automation.Models
             FieldDefinitionType = fieldDefinitionType;
         }
 
-        /// <summary> Initializes a new instance of AutomationConnectionFieldDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionFieldDefinition"/>. </summary>
         /// <param name="isEncrypted"> Gets or sets the isEncrypted flag of the connection field definition. </param>
         /// <param name="isOptional"> Gets or sets the isOptional flag of the connection field definition. </param>
         /// <param name="fieldDefinitionType"> Gets or sets the type of the connection field definition. </param>

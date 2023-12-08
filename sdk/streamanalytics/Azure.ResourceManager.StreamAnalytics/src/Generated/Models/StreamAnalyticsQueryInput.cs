@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> An input for the query compilation. </summary>
     public partial class StreamAnalyticsQueryInput
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsQueryInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsQueryInput"/>. </summary>
         /// <param name="name"> The name of the input. </param>
         /// <param name="queryInputType"> The type of the input, can be Stream or Reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="queryInputType"/> is null. </exception>

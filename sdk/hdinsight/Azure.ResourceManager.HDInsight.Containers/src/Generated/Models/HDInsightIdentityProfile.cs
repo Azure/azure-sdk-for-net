@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Identity Profile with details of an MSI. </summary>
     public partial class HDInsightIdentityProfile
     {
-        /// <summary> Initializes a new instance of HDInsightIdentityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightIdentityProfile"/>. </summary>
         /// <param name="msiResourceId"> ResourceId of the MSI. </param>
         /// <param name="msiClientId"> ClientId of the MSI. </param>
         /// <param name="msiObjectId"> ObjectId of the MSI. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Identities for the virtual machine scale set under the node type. </summary>
     internal partial class VmManagedIdentity
     {
-        /// <summary> Initializes a new instance of VmManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmManagedIdentity"/>. </summary>
         public VmManagedIdentity()
         {
             UserAssignedIdentities = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of VmManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmManagedIdentity"/>. </summary>
         /// <param name="userAssignedIdentities"> The list of user identities associated with the virtual machine scale set under the node type. Each entry will be an ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
         internal VmManagedIdentity(IList<ResourceIdentifier> userAssignedIdentities)
         {

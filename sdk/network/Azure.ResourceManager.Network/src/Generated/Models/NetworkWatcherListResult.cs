@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListNetworkWatchers API service call. </summary>
     internal partial class NetworkWatcherListResult
     {
-        /// <summary> Initializes a new instance of NetworkWatcherListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkWatcherListResult"/>. </summary>
         internal NetworkWatcherListResult()
         {
             Value = new ChangeTrackingList<NetworkWatcherData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkWatcherListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkWatcherListResult"/>. </summary>
         /// <param name="value"> List of network watcher resources. </param>
         internal NetworkWatcherListResult(IReadOnlyList<NetworkWatcherData> value)
         {

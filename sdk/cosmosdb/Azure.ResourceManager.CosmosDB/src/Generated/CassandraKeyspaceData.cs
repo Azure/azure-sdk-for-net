@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CassandraKeyspaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CassandraKeyspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraKeyspaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CassandraKeyspaceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraKeyspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraKeyspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

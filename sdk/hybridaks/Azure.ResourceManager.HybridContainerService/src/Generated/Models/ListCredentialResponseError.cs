@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The ListCredentialResponseError. </summary>
     public partial class ListCredentialResponseError
     {
-        /// <summary> Initializes a new instance of ListCredentialResponseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListCredentialResponseError"/>. </summary>
         internal ListCredentialResponseError()
         {
         }
 
-        /// <summary> Initializes a new instance of ListCredentialResponseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListCredentialResponseError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
         internal ListCredentialResponseError(string code, string message)

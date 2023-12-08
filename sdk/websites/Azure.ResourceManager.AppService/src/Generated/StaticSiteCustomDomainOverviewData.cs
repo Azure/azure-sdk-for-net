@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class StaticSiteCustomDomainOverviewData : ResourceData
     {
-        /// <summary> Initializes a new instance of StaticSiteCustomDomainOverviewData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteCustomDomainOverviewData"/>. </summary>
         public StaticSiteCustomDomainOverviewData()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteCustomDomainOverviewData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteCustomDomainOverviewData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

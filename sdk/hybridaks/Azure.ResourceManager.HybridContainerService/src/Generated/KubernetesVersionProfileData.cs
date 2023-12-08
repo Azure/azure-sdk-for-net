@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.HybridContainerService
     /// </summary>
     public partial class KubernetesVersionProfileData : ResourceData
     {
-        /// <summary> Initializes a new instance of KubernetesVersionProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesVersionProfileData"/>. </summary>
         public KubernetesVersionProfileData()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesVersionProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesVersionProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

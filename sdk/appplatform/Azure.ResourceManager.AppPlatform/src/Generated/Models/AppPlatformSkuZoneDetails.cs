@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Details of capabilities available to a SKU in specific zones. </summary>
     public partial class AppPlatformSkuZoneDetails
     {
-        /// <summary> Initializes a new instance of AppPlatformSkuZoneDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSkuZoneDetails"/>. </summary>
         internal AppPlatformSkuZoneDetails()
         {
             Name = new ChangeTrackingList<string>();
             Capabilities = new ChangeTrackingList<AppPlatformSkuCapabilities>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSkuZoneDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSkuZoneDetails"/>. </summary>
         /// <param name="name">
         /// Gets the set of zones that the SKU is available in with the
         /// specified capabilities.

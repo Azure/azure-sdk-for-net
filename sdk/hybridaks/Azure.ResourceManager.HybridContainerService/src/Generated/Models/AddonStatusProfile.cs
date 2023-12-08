@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Defines the addon status profile. </summary>
     public partial class AddonStatusProfile
     {
-        /// <summary> Initializes a new instance of AddonStatusProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddonStatusProfile"/>. </summary>
         internal AddonStatusProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of AddonStatusProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddonStatusProfile"/>. </summary>
         /// <param name="name"> Name of the addon. </param>
         /// <param name="phase"> Observed phase of the addon on the target cluster. Possible values include: 'pending', 'provisioning', 'provisioning {HelmChartInstalled}', 'provisioning {MSICertificateDownloaded}', 'provisioned', 'deleting', 'failed', 'upgrading'. </param>
         /// <param name="ready"> Indicates whether the addon is ready. </param>

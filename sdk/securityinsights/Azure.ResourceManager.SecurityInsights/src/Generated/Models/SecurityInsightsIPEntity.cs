@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents an ip entity. </summary>
     public partial class SecurityInsightsIPEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIPEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIPEntity"/>. </summary>
         public SecurityInsightsIPEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = SecurityInsightsEntityKind.IP;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIPEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIPEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

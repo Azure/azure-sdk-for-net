@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public abstract partial class DependencyReference
     {
-        /// <summary> Initializes a new instance of DependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DependencyReference"/>. </summary>
         protected DependencyReference()
         {
         }
 
-        /// <summary> Initializes a new instance of DependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DependencyReference"/>. </summary>
         /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
         internal DependencyReference(string dependencyReferenceType)
         {

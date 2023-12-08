@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> ConnectionState information. </summary>
     public partial class ServiceBusPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of ServiceBusPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusPrivateLinkServiceConnectionState"/>. </summary>
         public ServiceBusPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> Status of the connection. </param>
         /// <param name="description"> Description of the connection state. </param>
         internal ServiceBusPrivateLinkServiceConnectionState(ServiceBusPrivateLinkConnectionStatus? status, string description)

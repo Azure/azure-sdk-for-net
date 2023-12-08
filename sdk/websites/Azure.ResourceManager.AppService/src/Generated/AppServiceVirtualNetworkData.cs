@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class AppServiceVirtualNetworkData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkData"/>. </summary>
         public AppServiceVirtualNetworkData()
         {
             Routes = new ChangeTrackingList<AppServiceVirtualNetworkRoute>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

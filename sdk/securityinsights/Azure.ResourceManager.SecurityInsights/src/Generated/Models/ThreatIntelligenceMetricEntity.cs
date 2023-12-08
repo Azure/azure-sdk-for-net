@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Describes threat intelligence metric entity. </summary>
     public partial class ThreatIntelligenceMetricEntity
     {
-        /// <summary> Initializes a new instance of ThreatIntelligenceMetricEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceMetricEntity"/>. </summary>
         internal ThreatIntelligenceMetricEntity()
         {
         }
 
-        /// <summary> Initializes a new instance of ThreatIntelligenceMetricEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceMetricEntity"/>. </summary>
         /// <param name="metricName"> Metric name. </param>
         /// <param name="metricValue"> Metric value. </param>
         internal ThreatIntelligenceMetricEntity(string metricName, int? metricValue)

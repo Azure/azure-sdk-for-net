@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <summary> Creates the agent pool in the Hybrid AKS provisioned cluster instance. </summary>
         /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
-        /// <param name="data"> The HybridContainerServiceAgentPool to use. </param>
+        /// <param name="data"> The <see cref="HybridContainerServiceAgentPoolData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/>, <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <summary> Creates the agent pool in the Hybrid AKS provisioned cluster instance. </summary>
         /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
-        /// <param name="data"> The HybridContainerServiceAgentPool to use. </param>
+        /// <param name="data"> The <see cref="HybridContainerServiceAgentPoolData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/>, <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <summary> Updates the agent pool in the Hybrid AKS provisioned cluster instance. </summary>
         /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
-        /// <param name="patch"> The HybridContainerServiceAgentPoolPatch to use. </param>
+        /// <param name="patch"> The <see cref="HybridContainerServiceAgentPoolPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/>, <paramref name="agentPoolName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <summary> Updates the agent pool in the Hybrid AKS provisioned cluster instance. </summary>
         /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
-        /// <param name="patch"> The HybridContainerServiceAgentPoolPatch to use. </param>
+        /// <param name="patch"> The <see cref="HybridContainerServiceAgentPoolPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/>, <paramref name="agentPoolName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>

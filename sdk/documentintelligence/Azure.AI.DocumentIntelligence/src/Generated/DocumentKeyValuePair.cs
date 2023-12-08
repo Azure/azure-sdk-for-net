@@ -16,7 +16,7 @@ namespace Azure.AI.DocumentIntelligence
     /// </summary>
     public partial class DocumentKeyValuePair
     {
-        /// <summary> Initializes a new instance of DocumentKeyValuePair. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentKeyValuePair"/>. </summary>
         /// <param name="key"> Field label of the key-value pair. </param>
         /// <param name="confidence"> Confidence of correctly extracting the key-value pair. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.AI.DocumentIntelligence
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of DocumentKeyValuePair. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentKeyValuePair"/>. </summary>
         /// <param name="key"> Field label of the key-value pair. </param>
         /// <param name="value"> Field value of the key-value pair. </param>
         /// <param name="confidence"> Confidence of correctly extracting the key-value pair. </param>

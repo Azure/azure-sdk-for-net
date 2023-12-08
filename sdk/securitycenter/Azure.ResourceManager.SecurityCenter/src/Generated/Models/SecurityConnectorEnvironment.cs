@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// </summary>
     public abstract partial class SecurityConnectorEnvironment
     {
-        /// <summary> Initializes a new instance of SecurityConnectorEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityConnectorEnvironment"/>. </summary>
         protected SecurityConnectorEnvironment()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityConnectorEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityConnectorEnvironment"/>. </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
         internal SecurityConnectorEnvironment(EnvironmentType environmentType)
         {

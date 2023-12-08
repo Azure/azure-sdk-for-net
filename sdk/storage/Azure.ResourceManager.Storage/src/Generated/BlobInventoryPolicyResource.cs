@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Storage
         private readonly BlobInventoryPoliciesRestOperations _blobInventoryPolicyRestClient;
         private readonly BlobInventoryPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/inventoryPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="BlobInventoryPolicyResource"/> class for mocking. </summary>
         protected BlobInventoryPolicyResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Storage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/inventoryPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

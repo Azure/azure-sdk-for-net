@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ArcScVmm
         private readonly VirtualMachineTemplatesRestOperations _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient;
         private readonly ScVmmVirtualMachineTemplateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ScVmm/virtualMachineTemplates";
+
         /// <summary> Initializes a new instance of the <see cref="ScVmmVirtualMachineTemplateResource"/> class for mocking. </summary>
         protected ScVmmVirtualMachineTemplateResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ArcScVmm
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ScVmm/virtualMachineTemplates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

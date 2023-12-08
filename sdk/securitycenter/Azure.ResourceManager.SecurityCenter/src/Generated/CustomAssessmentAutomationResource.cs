@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly CustomAssessmentAutomationsRestOperations _customAssessmentAutomationRestClient;
         private readonly CustomAssessmentAutomationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/customAssessmentAutomations";
+
         /// <summary> Initializes a new instance of the <see cref="CustomAssessmentAutomationResource"/> class for mocking. </summary>
         protected CustomAssessmentAutomationResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/customAssessmentAutomations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

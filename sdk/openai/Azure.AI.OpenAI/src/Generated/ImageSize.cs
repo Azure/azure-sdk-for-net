@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> The desired size of the generated images. Must be one of 256x256, 512x512, or 1024x1024. </summary>
+    /// <summary> The desired size of generated images. </summary>
     public readonly partial struct ImageSize : IEquatable<ImageSize>
     {
         private readonly string _value;
@@ -25,13 +25,34 @@ namespace Azure.AI.OpenAI
         private const string Size256x256Value = "256x256";
         private const string Size512x512Value = "512x512";
         private const string Size1024x1024Value = "1024x1024";
+        private const string Size1792x1024Value = "1792x1024";
+        private const string Size1024x1792Value = "1024x1792";
 
-        /// <summary> Image size of 256x256. </summary>
+        /// <summary>
+        /// Very small image size of 256x256 pixels.
+        /// Only supported with dall-e-2 models.
+        /// </summary>
         public static ImageSize Size256x256 { get; } = new ImageSize(Size256x256Value);
-        /// <summary> Image size of 512x512. </summary>
+        /// <summary>
+        /// A smaller image size of 512x512 pixels.
+        /// Only supported with dall-e-2 models.
+        /// </summary>
         public static ImageSize Size512x512 { get; } = new ImageSize(Size512x512Value);
-        /// <summary> Image size of 1024x1024. </summary>
+        /// <summary>
+        /// A standard, square image size of 1024x1024 pixels.
+        /// Supported by both dall-e-2 and dall-e-3 models.
+        /// </summary>
         public static ImageSize Size1024x1024 { get; } = new ImageSize(Size1024x1024Value);
+        /// <summary>
+        /// A wider image size of 1024x1792 pixels.
+        /// Only supported with dall-e-3 models.
+        /// </summary>
+        public static ImageSize Size1792x1024 { get; } = new ImageSize(Size1792x1024Value);
+        /// <summary>
+        /// A taller image size of 1792x1024 pixels.
+        /// Only supported with dall-e-3 models.
+        /// </summary>
+        public static ImageSize Size1024x1792 { get; } = new ImageSize(Size1024x1792Value);
         /// <summary> Determines if two <see cref="ImageSize"/> values are the same. </summary>
         public static bool operator ==(ImageSize left, ImageSize right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImageSize"/> values are not the same. </summary>

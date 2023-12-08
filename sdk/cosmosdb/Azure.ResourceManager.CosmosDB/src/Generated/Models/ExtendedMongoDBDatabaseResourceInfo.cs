@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The ExtendedMongoDBDatabaseResourceInfo. </summary>
     public partial class ExtendedMongoDBDatabaseResourceInfo : MongoDBDatabaseResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedMongoDBDatabaseResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedMongoDBDatabaseResourceInfo"/>. </summary>
         /// <param name="databaseName"> Name of the Cosmos DB MongoDB database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public ExtendedMongoDBDatabaseResourceInfo(string databaseName) : base(databaseName)
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Argument.AssertNotNull(databaseName, nameof(databaseName));
         }
 
-        /// <summary> Initializes a new instance of ExtendedMongoDBDatabaseResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedMongoDBDatabaseResourceInfo"/>. </summary>
         /// <param name="databaseName"> Name of the Cosmos DB MongoDB database. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>

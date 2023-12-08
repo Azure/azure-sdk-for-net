@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The result of a request to list private link resources for a container registry. </summary>
     internal partial class ContainerRegistryPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of ContainerRegistryPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPrivateLinkResourceListResult"/>. </summary>
         internal ContainerRegistryPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<ContainerRegistryPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> The list of private link resources. Since this list may be incomplete, the nextLink field should be used to request the next list of private link resources. </param>
         /// <param name="nextLink"> The URI that can be used to request the next list of private link resources. </param>
         internal ContainerRegistryPrivateLinkResourceListResult(IReadOnlyList<ContainerRegistryPrivateLinkResourceData> value, string nextLink)

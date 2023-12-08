@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Custom Keys credential object. </summary>
     internal partial class CustomKeys
     {
-        /// <summary> Initializes a new instance of CustomKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomKeys"/>. </summary>
         public CustomKeys()
         {
             Keys = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of CustomKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomKeys"/>. </summary>
         /// <param name="keys"> Dictionary of &lt;string&gt;. </param>
         internal CustomKeys(IDictionary<string, string> keys)
         {

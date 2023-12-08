@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The UnknownClipTime. </summary>
     internal partial class UnknownClipTime : ClipTime
     {
-        /// <summary> Initializes a new instance of UnknownClipTime. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownClipTime"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         internal UnknownClipTime(string odataType) : base(odataType)
         {

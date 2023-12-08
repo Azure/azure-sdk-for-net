@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The AccountEncryption. </summary>
     public partial class AccountEncryption
     {
-        /// <summary> Initializes a new instance of AccountEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountEncryption"/>. </summary>
         /// <param name="keyType"> The type of key used to encrypt the Account Key. </param>
         public AccountEncryption(AccountEncryptionKeyType keyType)
         {
             KeyType = keyType;
         }
 
-        /// <summary> Initializes a new instance of AccountEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountEncryption"/>. </summary>
         /// <param name="keyType"> The type of key used to encrypt the Account Key. </param>
         /// <param name="keyVaultProperties"> The properties of the key used to encrypt the account. </param>
         /// <param name="identity"> The Key Vault identity. </param>

@@ -48,6 +48,9 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly ManagedNetworkProvisionsRestOperations _managedNetworkProvisionsRestClient;
         private readonly MachineLearningWorkspaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces";
+
         /// <summary> Initializes a new instance of the <see cref="MachineLearningWorkspaceResource"/> class for mocking. </summary>
         protected MachineLearningWorkspaceResource()
         {
@@ -80,9 +83,6 @@ namespace Azure.ResourceManager.MachineLearning
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

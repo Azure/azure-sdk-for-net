@@ -14,13 +14,13 @@ namespace Azure.Maps.Search.Models
     /// <summary> Result object for a Search API response. </summary>
     public partial class SearchAddressResultItem
     {
-        /// <summary> Initializes a new instance of SearchAddressResultItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchAddressResultItem"/>. </summary>
         internal SearchAddressResultItem()
         {
             EntryPoints = new ChangeTrackingList<FacilityEntryPoint>();
         }
 
-        /// <summary> Initializes a new instance of SearchAddressResultItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchAddressResultItem"/>. </summary>
         /// <param name="searchAddressResultType">
         /// One of:
         /// * POI

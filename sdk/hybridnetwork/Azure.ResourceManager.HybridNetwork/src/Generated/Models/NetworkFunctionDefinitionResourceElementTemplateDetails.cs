@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The network function definition resource element template details. </summary>
     public partial class NetworkFunctionDefinitionResourceElementTemplateDetails : ResourceElementTemplate
     {
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionResourceElementTemplateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionResourceElementTemplateDetails"/>. </summary>
         public NetworkFunctionDefinitionResourceElementTemplateDetails()
         {
             ResourceElementType = Type.NetworkFunctionDefinition;
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionResourceElementTemplateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionResourceElementTemplateDetails"/>. </summary>
         /// <param name="name"> Name of the resource element template. </param>
         /// <param name="resourceElementType"> The resource element template type. </param>
         /// <param name="dependsOnProfile"> The depends on profile. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The X12 processing settings. </summary>
     public partial class X12ProcessingSettings
     {
-        /// <summary> Initializes a new instance of X12ProcessingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12ProcessingSettings"/>. </summary>
         /// <param name="maskSecurityInfo"> The value indicating whether to mask security information. </param>
         /// <param name="convertImpliedDecimal"> The value indicating whether to convert numerical type to implied decimal. </param>
         /// <param name="preserveInterchange"> The value indicating whether to preserve interchange. </param>

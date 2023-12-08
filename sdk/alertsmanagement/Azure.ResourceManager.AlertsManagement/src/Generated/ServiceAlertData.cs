@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AlertsManagement
     /// </summary>
     public partial class ServiceAlertData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertData"/>. </summary>
         public ServiceAlertData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The virtual network connection reset shared key. </summary>
     public partial class ConnectionResetSharedKey
     {
-        /// <summary> Initializes a new instance of ConnectionResetSharedKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionResetSharedKey"/>. </summary>
         /// <param name="keyLength"> The virtual network connection reset shared key length, should between 1 and 128. </param>
         public ConnectionResetSharedKey(int keyLength)
         {

@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// </summary>
     public partial class LinkedService
     {
-        /// <summary> Initializes a new instance of LinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedService"/>. </summary>
         public LinkedService()
         {
             Parameters = new ChangeTrackingDictionary<string, ParameterSpecification>();
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of LinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

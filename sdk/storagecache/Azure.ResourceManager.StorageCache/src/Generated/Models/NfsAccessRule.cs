@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Rule to place restrictions on portions of the cache namespace being presented to clients. </summary>
     public partial class NfsAccessRule
     {
-        /// <summary> Initializes a new instance of NfsAccessRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NfsAccessRule"/>. </summary>
         /// <param name="scope"> Scope for this rule. The scope and filter determine which clients match the rule. </param>
         /// <param name="access"> Access allowed by this rule. </param>
         public NfsAccessRule(NfsAccessRuleScope scope, NfsAccessRuleAccess access)
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             Access = access;
         }
 
-        /// <summary> Initializes a new instance of NfsAccessRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NfsAccessRule"/>. </summary>
         /// <param name="scope"> Scope for this rule. The scope and filter determine which clients match the rule. </param>
         /// <param name="filter"> Filter applied to the scope for this rule. The filter's format depends on its scope. 'default' scope matches all clients and has no filter value. 'network' scope takes a filter in CIDR format (for example, 10.99.1.0/24). 'host' takes an IP address or fully qualified domain name as filter. If a client does not match any filter rule and there is no default rule, access is denied. </param>
         /// <param name="access"> Access allowed by this rule. </param>

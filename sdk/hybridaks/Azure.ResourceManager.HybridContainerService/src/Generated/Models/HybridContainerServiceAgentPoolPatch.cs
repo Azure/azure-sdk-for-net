@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The agentPool resource patch definition. </summary>
     public partial class HybridContainerServiceAgentPoolPatch
     {
-        /// <summary> Initializes a new instance of HybridContainerServiceAgentPoolPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridContainerServiceAgentPoolPatch"/>. </summary>
         public HybridContainerServiceAgentPoolPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridContainerServiceAgentPoolPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal HybridContainerServiceAgentPoolPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

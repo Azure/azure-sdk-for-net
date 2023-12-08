@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Support
         private readonly CommunicationsNoSubscriptionRestOperations _supportTicketNoSubCommunicationCommunicationsNoSubscriptionRestClient;
         private readonly SupportTicketData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Support/supportTickets";
+
         /// <summary> Initializes a new instance of the <see cref="TenantSupportTicketResource"/> class for mocking. </summary>
         protected TenantSupportTicketResource()
         {
@@ -69,9 +72,6 @@ namespace Azure.ResourceManager.Support
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Support/supportTickets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

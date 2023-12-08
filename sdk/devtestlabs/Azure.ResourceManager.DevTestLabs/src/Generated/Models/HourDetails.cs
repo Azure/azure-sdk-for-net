@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of an hourly schedule. </summary>
     internal partial class HourDetails
     {
-        /// <summary> Initializes a new instance of HourDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HourDetails"/>. </summary>
         public HourDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of HourDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HourDetails"/>. </summary>
         /// <param name="minute"> Minutes of the hour the schedule will run. </param>
         internal HourDetails(int? minute)
         {

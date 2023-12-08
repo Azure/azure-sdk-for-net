@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The virtualNetworks resource patch definition. </summary>
     public partial class VirtualNetworkPatch
     {
-        /// <summary> Initializes a new instance of VirtualNetworkPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkPatch"/>. </summary>
         public VirtualNetworkPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal VirtualNetworkPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

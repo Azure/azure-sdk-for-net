@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> An object representing a list in the document. </summary>
     public partial class DocumentList
     {
-        /// <summary> Initializes a new instance of DocumentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentList"/>. </summary>
         /// <param name="spans"> Location of the list in the reading order concatenated content. </param>
         /// <param name="items"> Items in the list. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="spans"/> or <paramref name="items"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.AI.DocumentIntelligence
             Items = items.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentList"/>. </summary>
         /// <param name="spans"> Location of the list in the reading order concatenated content. </param>
         /// <param name="items"> Items in the list. </param>
         internal DocumentList(IReadOnlyList<DocumentSpan> spans, IReadOnlyList<DocumentListItem> items)

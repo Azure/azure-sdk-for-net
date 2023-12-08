@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The ListCredentialResponseProperties. </summary>
     internal partial class ListCredentialResponseProperties
     {
-        /// <summary> Initializes a new instance of ListCredentialResponseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListCredentialResponseProperties"/>. </summary>
         internal ListCredentialResponseProperties()
         {
             Kubeconfigs = new ChangeTrackingList<CredentialResult>();
         }
 
-        /// <summary> Initializes a new instance of ListCredentialResponseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListCredentialResponseProperties"/>. </summary>
         /// <param name="kubeconfigs"> Base64-encoded Kubernetes configuration file. </param>
         internal ListCredentialResponseProperties(IReadOnlyList<CredentialResult> kubeconfigs)
         {

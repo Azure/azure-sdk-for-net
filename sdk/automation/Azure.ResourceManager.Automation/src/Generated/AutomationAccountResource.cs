@@ -70,6 +70,9 @@ namespace Azure.ResourceManager.Automation
         private readonly WebhookRestOperations _automationWebhookWebhookRestClient;
         private readonly AutomationAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts";
+
         /// <summary> Initializes a new instance of the <see cref="AutomationAccountResource"/> class for mocking. </summary>
         protected AutomationAccountResource()
         {
@@ -126,9 +129,6 @@ namespace Azure.ResourceManager.Automation
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

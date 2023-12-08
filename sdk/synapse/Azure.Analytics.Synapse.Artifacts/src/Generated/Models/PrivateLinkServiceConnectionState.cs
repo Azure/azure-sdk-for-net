@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Connection state details of the private endpoint. </summary>
     public partial class PrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of PrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceConnectionState"/>. </summary>
         public PrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The actions required for private link service connection. </param>

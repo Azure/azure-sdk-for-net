@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PrivateDns.Models
     /// <summary> A PTR record. </summary>
     public partial class PrivateDnsPtrRecordInfo
     {
-        /// <summary> Initializes a new instance of PrivateDnsPtrRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsPtrRecordInfo"/>. </summary>
         public PrivateDnsPtrRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateDnsPtrRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsPtrRecordInfo"/>. </summary>
         /// <param name="ptrDomainName"> The PTR target domain name for this PTR record. </param>
         internal PrivateDnsPtrRecordInfo(string ptrDomainName)
         {

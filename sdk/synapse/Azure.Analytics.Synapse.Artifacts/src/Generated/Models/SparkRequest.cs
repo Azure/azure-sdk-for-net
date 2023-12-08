@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The SparkRequest. </summary>
     public partial class SparkRequest
     {
-        /// <summary> Initializes a new instance of SparkRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkRequest"/>. </summary>
         internal SparkRequest()
         {
             Arguments = new ChangeTrackingList<string>();
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Configuration = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SparkRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkRequest"/>. </summary>
         /// <param name="name"></param>
         /// <param name="file"></param>
         /// <param name="className"></param>

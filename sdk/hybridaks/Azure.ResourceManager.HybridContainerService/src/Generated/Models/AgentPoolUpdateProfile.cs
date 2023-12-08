@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> AgentPool update configuration. </summary>
     public partial class AgentPoolUpdateProfile
     {
-        /// <summary> Initializes a new instance of AgentPoolUpdateProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolUpdateProfile"/>. </summary>
         public AgentPoolUpdateProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentPoolUpdateProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolUpdateProfile"/>. </summary>
         /// <param name="count"> Count - Number of agents to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </param>
         /// <param name="vmSize"> VmSize - The size of the agent pool VMs. </param>
         internal AgentPoolUpdateProfile(int? count, string vmSize)

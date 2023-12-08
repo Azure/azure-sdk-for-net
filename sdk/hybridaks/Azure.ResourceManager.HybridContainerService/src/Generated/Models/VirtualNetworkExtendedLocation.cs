@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The VirtualNetworkExtendedLocation. </summary>
     public partial class VirtualNetworkExtendedLocation
     {
-        /// <summary> Initializes a new instance of VirtualNetworkExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkExtendedLocation"/>. </summary>
         public VirtualNetworkExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkExtendedLocation"/>. </summary>
         /// <param name="virtualNetworkExtendedLocationType"> The extended location type. </param>
         /// <param name="name"> The extended location name. </param>
         internal VirtualNetworkExtendedLocation(string virtualNetworkExtendedLocationType, string name)

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Collection of alerts. </summary>
     internal partial class AlertList
     {
-        /// <summary> Initializes a new instance of AlertList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertList"/>. </summary>
         internal AlertList()
         {
             Value = new ChangeTrackingList<DataBoxEdgeAlertData>();
         }
 
-        /// <summary> Initializes a new instance of AlertList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertList"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal AlertList(IReadOnlyList<DataBoxEdgeAlertData> value, string nextLink)

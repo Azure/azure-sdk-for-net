@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The list of new failover policies for the failover priority change. </summary>
     public partial class CosmosDBFailoverPolicies
     {
-        /// <summary> Initializes a new instance of CosmosDBFailoverPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBFailoverPolicies"/>. </summary>
         /// <param name="failoverPolicies"> List of failover policies. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverPolicies"/> is null. </exception>
         public CosmosDBFailoverPolicies(IEnumerable<CosmosDBFailoverPolicy> failoverPolicies)
@@ -23,6 +23,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Argument.AssertNotNull(failoverPolicies, nameof(failoverPolicies));
 
             FailoverPolicies = failoverPolicies.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBFailoverPolicies"/>. </summary>
+        /// <param name="failoverPolicies"> List of failover policies. </param>
+        internal CosmosDBFailoverPolicies(IList<CosmosDBFailoverPolicy> failoverPolicies)
+        {
+            FailoverPolicies = failoverPolicies;
         }
 
         /// <summary> List of failover policies. </summary>

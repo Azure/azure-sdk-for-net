@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Kubernetes version profile for given major.minor release. </summary>
     public partial class KubernetesVersionProperties
     {
-        /// <summary> Initializes a new instance of KubernetesVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesVersionProperties"/>. </summary>
         internal KubernetesVersionProperties()
         {
             PatchVersions = new ChangeTrackingDictionary<string, KubernetesPatchVersions>();
         }
 
-        /// <summary> Initializes a new instance of KubernetesVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesVersionProperties"/>. </summary>
         /// <param name="version"> major.minor version of Kubernetes release. </param>
         /// <param name="capabilities"> Capabilities on this kubernetes version. </param>
         /// <param name="isPreview"> Whether this version is in preview mode. </param>

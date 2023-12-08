@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Result of query. It contains all columns listed under groupings and aggregation. </summary>
     public partial class QueryResult : ResourceData
     {
-        /// <summary> Initializes a new instance of QueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryResult"/>. </summary>
         internal QueryResult()
         {
             Columns = new ChangeTrackingList<QueryColumn>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of QueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

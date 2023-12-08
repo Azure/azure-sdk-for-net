@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Properties of Cognitive Services account. </summary>
     public partial class CognitiveServicesAccountProperties
     {
-        /// <summary> Initializes a new instance of CognitiveServicesAccountProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountProperties"/>. </summary>
         public CognitiveServicesAccountProperties()
         {
             Capabilities = new ChangeTrackingList<CognitiveServicesSkuCapability>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CommitmentPlanAssociations = new ChangeTrackingList<CommitmentPlanAssociation>();
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesAccountProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountProperties"/>. </summary>
         /// <param name="provisioningState"> Gets the status of the cognitive services account at the time the operation was called. </param>
         /// <param name="endpoint"> Endpoint of the created account. </param>
         /// <param name="capabilities"> Gets the capabilities of the cognitive services account. Each item indicates the capability of a specific feature. The values are read-only and for reference only. </param>

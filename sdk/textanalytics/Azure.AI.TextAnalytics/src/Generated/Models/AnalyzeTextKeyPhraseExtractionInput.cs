@@ -10,10 +10,21 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The AnalyzeTextKeyPhraseExtractionInput. </summary>
     internal partial class AnalyzeTextKeyPhraseExtractionInput : AnalyzeTextTask
     {
-        /// <summary> Initializes a new instance of AnalyzeTextKeyPhraseExtractionInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextKeyPhraseExtractionInput"/>. </summary>
         public AnalyzeTextKeyPhraseExtractionInput()
         {
             Kind = AnalyzeTextTaskKind.KeyPhraseExtraction;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextKeyPhraseExtractionInput"/>. </summary>
+        /// <param name="kind"> Enumeration of supported Text Analysis tasks. </param>
+        /// <param name="analysisInput"></param>
+        /// <param name="parameters"> Supported parameters for a Key Phrase Extraction task. </param>
+        internal AnalyzeTextKeyPhraseExtractionInput(AnalyzeTextTaskKind kind, MultiLanguageAnalysisInput analysisInput, KeyPhraseTaskParameters parameters) : base(kind)
+        {
+            AnalysisInput = analysisInput;
+            Parameters = parameters;
+            Kind = kind;
         }
 
         /// <summary> Gets or sets the analysis input. </summary>

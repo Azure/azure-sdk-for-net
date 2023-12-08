@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The QueryStatistics. </summary>
     public partial class QueryStatistics : ResourceData
     {
-        /// <summary> Initializes a new instance of QueryStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryStatistics"/>. </summary>
         public QueryStatistics()
         {
             Intervals = new ChangeTrackingList<QueryMetricInterval>();
         }
 
-        /// <summary> Initializes a new instance of QueryStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryStatistics"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

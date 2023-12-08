@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class MachineLearningDataVersionProperties : MachineLearningAssetBase
     {
-        /// <summary> Initializes a new instance of MachineLearningDataVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDataVersionProperties"/>. </summary>
         /// <param name="dataUri"> [Required] Uri of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
         public MachineLearningDataVersionProperties(Uri dataUri)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DataUri = dataUri;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDataVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDataVersionProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

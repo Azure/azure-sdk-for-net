@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The set of run properties that can be updated. </summary>
     public partial class ContainerRegistryRunPatch
     {
-        /// <summary> Initializes a new instance of ContainerRegistryRunPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunPatch"/>. </summary>
         public ContainerRegistryRunPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunPatch"/>. </summary>
+        /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled or not. </param>
+        internal ContainerRegistryRunPatch(bool? isArchiveEnabled)
+        {
+            IsArchiveEnabled = isArchiveEnabled;
         }
 
         /// <summary> The value that indicates whether archiving is enabled or not. </summary>

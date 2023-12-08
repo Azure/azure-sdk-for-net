@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery virtual network input to create new virtual network from given source network. </summary>
     public partial class NewRecoveryVirtualNetwork : RecoveryVirtualNetworkCustomDetails
     {
-        /// <summary> Initializes a new instance of NewRecoveryVirtualNetwork. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRecoveryVirtualNetwork"/>. </summary>
         public NewRecoveryVirtualNetwork()
         {
             ResourceType = "New";
         }
 
-        /// <summary> Initializes a new instance of NewRecoveryVirtualNetwork. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRecoveryVirtualNetwork"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
         /// <param name="recoveryVirtualNetworkResourceGroupName"> The name of the resource group to be used to create the recovery virtual network. If absent, target network would be created in the same resource group as target VM. </param>
         /// <param name="recoveryVirtualNetworkName"> The recovery virtual network name. </param>

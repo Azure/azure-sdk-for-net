@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Collection of logs to be enabled or disabled for log analytics. </summary>
     public partial class ClusterLogAnalyticsApplicationLogs
     {
-        /// <summary> Initializes a new instance of ClusterLogAnalyticsApplicationLogs. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterLogAnalyticsApplicationLogs"/>. </summary>
         public ClusterLogAnalyticsApplicationLogs()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterLogAnalyticsApplicationLogs. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterLogAnalyticsApplicationLogs"/>. </summary>
         /// <param name="isStdOutEnabled"> True if stdout is enabled, otherwise false. </param>
         /// <param name="isStdErrorEnabled"> True if stderror is enabled, otherwise false. </param>
         internal ClusterLogAnalyticsApplicationLogs(bool? isStdOutEnabled, bool? isStdErrorEnabled)

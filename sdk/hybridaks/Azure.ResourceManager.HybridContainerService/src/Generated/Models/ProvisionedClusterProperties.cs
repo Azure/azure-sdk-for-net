@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> All properties of the provisioned cluster. </summary>
     public partial class ProvisionedClusterProperties
     {
-        /// <summary> Initializes a new instance of ProvisionedClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterProperties"/>. </summary>
         public ProvisionedClusterProperties()
         {
             AgentPoolProfiles = new ChangeTrackingList<NamedAgentPoolProfile>();
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterProperties"/>. </summary>
         /// <param name="linuxProfile"> LinuxProfile - The profile for Linux VMs in the Provisioned Cluster. </param>
         /// <param name="controlPlane"> ControlPlane - ControlPlane Configuration. </param>
         /// <param name="kubernetesVersion"> KubernetesVersion - Version of Kubernetes specified when creating the managed cluster. </param>

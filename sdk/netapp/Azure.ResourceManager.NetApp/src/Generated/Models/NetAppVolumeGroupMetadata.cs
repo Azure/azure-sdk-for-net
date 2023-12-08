@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Volume group properties. </summary>
     public partial class NetAppVolumeGroupMetadata
     {
-        /// <summary> Initializes a new instance of NetAppVolumeGroupMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupMetadata"/>. </summary>
         public NetAppVolumeGroupMetadata()
         {
             GlobalPlacementRules = new ChangeTrackingList<NetAppVolumePlacementRule>();
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeGroupMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupMetadata"/>. </summary>
         /// <param name="groupDescription"> Group Description. </param>
         /// <param name="applicationType"> Application Type. </param>
         /// <param name="applicationIdentifier"> Application specific identifier. </param>

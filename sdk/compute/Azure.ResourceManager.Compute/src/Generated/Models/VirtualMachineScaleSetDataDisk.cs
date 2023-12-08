@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machine scale set data disk. </summary>
     public partial class VirtualMachineScaleSetDataDisk
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetDataDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetDataDisk"/>. </summary>
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
         /// <param name="createOption"> The create option. </param>
         public VirtualMachineScaleSetDataDisk(int lun, DiskCreateOptionType createOption)
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             CreateOption = createOption;
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetDataDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetDataDisk"/>. </summary>
         /// <param name="name"> The disk name. </param>
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
         /// <param name="caching"> Specifies the caching requirements. Possible values are: **None,** **ReadOnly,** **ReadWrite.** The default values are: **None for Standard storage. ReadOnly for Premium storage.**. </param>

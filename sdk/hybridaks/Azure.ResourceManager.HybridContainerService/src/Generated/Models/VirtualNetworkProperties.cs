@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> HybridAKSNetworkSpec defines the desired state of HybridAKSNetwork. </summary>
     public partial class VirtualNetworkProperties
     {
-        /// <summary> Initializes a new instance of VirtualNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkProperties"/>. </summary>
         public VirtualNetworkProperties()
         {
             VipPool = new ChangeTrackingList<VirtualNetworkPropertiesVipPoolItem>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             DnsServers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkProperties"/>. </summary>
         /// <param name="infraVnetProfile"></param>
         /// <param name="vipPool"> Virtual IP Pool for Kubernetes. </param>
         /// <param name="vmipPool"> IP Pool for Virtual Machines. </param>

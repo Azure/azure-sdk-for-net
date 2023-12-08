@@ -14,11 +14,26 @@ namespace Azure.Security.KeyVault.Administration.Models
     /// <summary> Role definition properties. </summary>
     internal partial class RoleDefinitionProperties
     {
-        /// <summary> Initializes a new instance of RoleDefinitionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleDefinitionProperties"/>. </summary>
         public RoleDefinitionProperties()
         {
             Permissions = new ChangeTrackingList<KeyVaultPermission>();
             AssignableScopes = new ChangeTrackingList<KeyVaultRoleScope>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RoleDefinitionProperties"/>. </summary>
+        /// <param name="roleName"> The role name. </param>
+        /// <param name="description"> The role definition description. </param>
+        /// <param name="roleType"> The role type. </param>
+        /// <param name="permissions"> Role definition permissions. </param>
+        /// <param name="assignableScopes"> Role definition assignable scopes. </param>
+        internal RoleDefinitionProperties(string roleName, string description, KeyVaultRoleType? roleType, IList<KeyVaultPermission> permissions, IList<KeyVaultRoleScope> assignableScopes)
+        {
+            RoleName = roleName;
+            Description = description;
+            RoleType = roleType;
+            Permissions = permissions;
+            AssignableScopes = assignableScopes;
         }
 
         /// <summary> The role name. </summary>

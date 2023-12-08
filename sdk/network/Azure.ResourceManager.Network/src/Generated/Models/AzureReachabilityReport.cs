@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Azure reachability report details. </summary>
     public partial class AzureReachabilityReport
     {
-        /// <summary> Initializes a new instance of AzureReachabilityReport. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReport"/>. </summary>
         /// <param name="aggregationLevel"> The aggregation level of Azure reachability report. Can be Country, State or City. </param>
         /// <param name="providerLocation"> Parameters that define a geographic location. </param>
         /// <param name="reachabilityReport"> List of Azure reachability report items. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
             ReachabilityReport = reachabilityReport.ToList();
         }
 
-        /// <summary> Initializes a new instance of AzureReachabilityReport. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReport"/>. </summary>
         /// <param name="aggregationLevel"> The aggregation level of Azure reachability report. Can be Country, State or City. </param>
         /// <param name="providerLocation"> Parameters that define a geographic location. </param>
         /// <param name="reachabilityReport"> List of Azure reachability report items. </param>

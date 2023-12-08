@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Resource identifiers for a policy. </summary>
     public partial class PolicyReference
     {
-        /// <summary> Initializes a new instance of PolicyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyReference"/>. </summary>
         internal PolicyReference()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyReference"/>. </summary>
         /// <param name="policyDefinitionId"> The resource identifier of the policy definition. </param>
         /// <param name="policySetDefinitionId"> The resource identifier of the policy set definition. </param>
         /// <param name="policyDefinitionReferenceId"> The reference identifier of a specific policy definition within a policy set definition. </param>

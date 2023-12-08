@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListApplicationGatewayPrivateEndpointConnection API service call. Gets all private endpoint connections for an application gateway. </summary>
     internal partial class ApplicationGatewayPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateEndpointConnectionListResult"/>. </summary>
         internal ApplicationGatewayPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<ApplicationGatewayPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> List of private endpoint connections on an application gateway. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         internal ApplicationGatewayPrivateEndpointConnectionListResult(IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData> value, string nextLink)

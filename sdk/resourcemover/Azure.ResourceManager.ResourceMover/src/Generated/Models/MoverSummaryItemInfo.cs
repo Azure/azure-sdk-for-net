@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Summary item. </summary>
     internal partial class MoverSummaryItemInfo
     {
-        /// <summary> Initializes a new instance of MoverSummaryItemInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverSummaryItemInfo"/>. </summary>
         internal MoverSummaryItemInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverSummaryItemInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverSummaryItemInfo"/>. </summary>
         /// <param name="count"> Gets the count. </param>
         /// <param name="item"> Gets the item. </param>
         internal MoverSummaryItemInfo(int? count, string item)

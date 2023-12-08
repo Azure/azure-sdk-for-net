@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The list kubeconfig result response. </summary>
     public partial class ListCredentialResponse
     {
-        /// <summary> Initializes a new instance of ListCredentialResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListCredentialResponse"/>. </summary>
         internal ListCredentialResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of ListCredentialResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListCredentialResponse"/>. </summary>
         /// <param name="id"> Operation Id. </param>
         /// <param name="name"> Operation Name. </param>
         /// <param name="resourceId"> ARM Resource Id of the provisioned cluster instance. </param>

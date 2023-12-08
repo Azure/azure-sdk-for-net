@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Relay.Models
     /// <summary> The response from the list namespace operation. </summary>
     internal partial class AuthorizationRuleListResult
     {
-        /// <summary> Initializes a new instance of AuthorizationRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationRuleListResult"/>. </summary>
         internal AuthorizationRuleListResult()
         {
             Value = new ChangeTrackingList<RelayAuthorizationRuleData>();
         }
 
-        /// <summary> Initializes a new instance of AuthorizationRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationRuleListResult"/>. </summary>
         /// <param name="value"> Result of the list authorization rules operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if value contains incomplete list of authorization rules. </param>
         internal AuthorizationRuleListResult(IReadOnlyList<RelayAuthorizationRuleData> value, string nextLink)

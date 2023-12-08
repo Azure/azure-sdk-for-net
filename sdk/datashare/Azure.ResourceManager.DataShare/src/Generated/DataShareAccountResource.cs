@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DataShare
         private readonly AccountsRestOperations _dataShareAccountAccountsRestClient;
         private readonly DataShareAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts";
+
         /// <summary> Initializes a new instance of the <see cref="DataShareAccountResource"/> class for mocking. </summary>
         protected DataShareAccountResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DataShare
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

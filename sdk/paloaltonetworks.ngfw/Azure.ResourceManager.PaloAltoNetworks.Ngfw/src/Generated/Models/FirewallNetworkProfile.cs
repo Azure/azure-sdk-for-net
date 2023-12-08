@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Network settings for Firewall. </summary>
     public partial class FirewallNetworkProfile
     {
-        /// <summary> Initializes a new instance of FirewallNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallNetworkProfile"/>. </summary>
         /// <param name="networkType"> vnet or vwan, cannot be updated. </param>
         /// <param name="publicIPs"> List of IPs associated with the Firewall. </param>
         /// <param name="enableEgressNat"> Enable egress NAT, enabled by default. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             TrustedRanges = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FirewallNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallNetworkProfile"/>. </summary>
         /// <param name="vnetConfiguration"> Vnet configurations. </param>
         /// <param name="vwanConfiguration"> Vwan configurations. </param>
         /// <param name="networkType"> vnet or vwan, cannot be updated. </param>

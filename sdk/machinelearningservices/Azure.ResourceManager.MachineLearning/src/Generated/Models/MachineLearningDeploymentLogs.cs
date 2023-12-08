@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningDeploymentLogs. </summary>
     public partial class MachineLearningDeploymentLogs
     {
-        /// <summary> Initializes a new instance of MachineLearningDeploymentLogs. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDeploymentLogs"/>. </summary>
         internal MachineLearningDeploymentLogs()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDeploymentLogs. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDeploymentLogs"/>. </summary>
         /// <param name="content"> The retrieved online deployment logs. </param>
         internal MachineLearningDeploymentLogs(string content)
         {

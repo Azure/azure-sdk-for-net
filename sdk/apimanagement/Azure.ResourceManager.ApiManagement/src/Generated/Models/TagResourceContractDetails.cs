@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> TagResource contract properties. </summary>
     public partial class TagResourceContractDetails
     {
-        /// <summary> Initializes a new instance of TagResourceContractDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagResourceContractDetails"/>. </summary>
         /// <param name="tag"> Tag associated with the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tag"/> is null. </exception>
         internal TagResourceContractDetails(AssociatedTagProperties tag)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Tag = tag;
         }
 
-        /// <summary> Initializes a new instance of TagResourceContractDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagResourceContractDetails"/>. </summary>
         /// <param name="tag"> Tag associated with the resource. </param>
         /// <param name="api"> API associated with the tag. </param>
         /// <param name="operation"> Operation associated with the tag. </param>

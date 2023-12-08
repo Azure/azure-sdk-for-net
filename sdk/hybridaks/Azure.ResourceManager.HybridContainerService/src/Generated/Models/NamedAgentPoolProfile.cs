@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Agent pool profile along with a name parameter. </summary>
     public partial class NamedAgentPoolProfile : AgentPoolProfile
     {
-        /// <summary> Initializes a new instance of NamedAgentPoolProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamedAgentPoolProfile"/>. </summary>
         public NamedAgentPoolProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of NamedAgentPoolProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamedAgentPoolProfile"/>. </summary>
         /// <param name="availabilityZones"> AvailabilityZones - The list of Availability zones to use for nodes. Datacenter racks modelled as zones. </param>
         /// <param name="osType"> The particular KubernetesVersion's Image's OS Type (Linux, Windows). </param>
         /// <param name="ossku"> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </param>

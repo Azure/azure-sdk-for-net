@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The NginxConfigurationProperties. </summary>
     public partial class NginxConfigurationProperties
     {
-        /// <summary> Initializes a new instance of NginxConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxConfigurationProperties"/>. </summary>
         public NginxConfigurationProperties()
         {
             Files = new ChangeTrackingList<NginxConfigurationFile>();
             ProtectedFiles = new ChangeTrackingList<NginxConfigurationFile>();
         }
 
-        /// <summary> Initializes a new instance of NginxConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxConfigurationProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="files"></param>
         /// <param name="protectedFiles"></param>

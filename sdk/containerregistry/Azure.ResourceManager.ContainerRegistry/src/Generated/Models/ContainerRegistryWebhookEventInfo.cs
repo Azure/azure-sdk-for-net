@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The basic information of an event. </summary>
     public partial class ContainerRegistryWebhookEventInfo
     {
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventInfo"/>. </summary>
         internal ContainerRegistryWebhookEventInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventInfo"/>. </summary>
         /// <param name="id"> The event ID. </param>
         internal ContainerRegistryWebhookEventInfo(Guid? id)
         {

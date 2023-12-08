@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.IotHub
     /// </summary>
     public partial class EventHubConsumerGroupInfoData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventHubConsumerGroupInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubConsumerGroupInfoData"/>. </summary>
         internal EventHubConsumerGroupInfoData()
         {
             Properties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of EventHubConsumerGroupInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubConsumerGroupInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

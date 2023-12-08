@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Maintenance
         private readonly MaintenanceConfigurationsRestOperations _maintenanceConfigurationRestClient;
         private readonly MaintenanceConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Maintenance/maintenanceConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="MaintenanceConfigurationResource"/> class for mocking. </summary>
         protected MaintenanceConfigurationResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Maintenance
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Maintenance/maintenanceConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

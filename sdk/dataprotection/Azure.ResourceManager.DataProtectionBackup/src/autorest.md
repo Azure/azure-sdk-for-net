@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: DataProtectionBackup
 namespace: Azure.ResourceManager.DataProtectionBackup
-require: https://github.com/Azure/azure-rest-api-specs/blob/0762e82bcccef4a032e29dda5e4c07fd7cc822a6/specification/dataprotection/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/1fead771fdafa41ccaa1e43750bab608b951ca80/specification/dataprotection/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -74,6 +74,9 @@ override-operation-name:
   ResourceGuards_GetUpdateProtectionPolicyRequestsObjects: GetUpdateProtectionPolicyObjects
   DataProtection_CheckFeatureSupport: CheckDataProtectionBackupFeatureSupport
   BackupVaults_CheckNameAvailability: CheckDataProtectionBackupVaultNameAvailability
+  FetchCrossRegionRestoreJob_Get: GetCrossRegionRestoreJob
+  FetchCrossRegionRestoreJobs_List: GetCrossRegionRestoreJobs
+  FetchSecondaryRecoveryPoints_List: GetSecondaryRecoveryPoints
 
 rename-mapping:
   AzureBackupJobResource: DataProtectionBackupJob
@@ -98,7 +101,7 @@ rename-mapping:
   TriggerBackupRequest.backupRuleOptions: BackupRules
   OperationExtendedInfo: DataProtectionOperationExtendedInfo
   OperationJobExtendedInfo: DataProtectionOperationJobExtendedInfo
-  OperationJobExtendedInfo.jobId: JobResourceId|arm-id
+  OperationJobExtendedInfo.jobId: JobIdentifier
   AzureBackupFindRestorableTimeRangesRequest: BackupFindRestorableTimeRangeContent
   AzureBackupFindRestorableTimeRangesRequest.startTime: StartOn|date-time
   AzureBackupFindRestorableTimeRangesRequest.endTime: EndOn|date-time
@@ -249,6 +252,17 @@ rename-mapping:
   FeatureSettings: BackupVaultFeatureSettings
   IdentityDetails: DataProtectionIdentityDetails
   NamespacedNameResource: NamespacedName
+  CrossRegionRestoreDetails.sourceBackupInstanceId : -|arm-id
+  CrossRegionRestoreDetails.sourceRegion  : -|azure-location
+  CrossRegionRestoreJobRequest.jobId : -|uuid
+  CrossRegionRestoreJobRequest.sourceBackupVaultId : -|arm-id
+  CrossRegionRestoreJobRequest.sourceRegion  : -|azure-location
+  CrossRegionRestoreJobsRequest.sourceBackupVaultId : -|arm-id
+  CrossRegionRestoreJobsRequest.sourceRegion  : -|azure-location
+  FetchSecondaryRPsRequestParameters.sourceBackupInstanceId : -|arm-id
+  FetchSecondaryRPsRequestParameters.sourceRegion  : -|azure-location
+  BackupVault.replicatedRegions : -|azure-location
+  RecoveryPointCompletionState: DataProtectionBackupRecoveryPointCompletionState
 
 directive:
 # Correct the type of properties

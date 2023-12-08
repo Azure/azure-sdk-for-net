@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> The parameters used to check the availability of the vault name. </summary>
     public partial class KeyVaultNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KeyVaultNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The vault name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KeyVaultNameAvailabilityContent(string name)
@@ -22,6 +22,15 @@ namespace Azure.ResourceManager.KeyVault.Models
 
             Name = name;
             ResourceType = "Microsoft.KeyVault/vaults";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The vault name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.KeyVault/vaults. </param>
+        internal KeyVaultNameAvailabilityContent(string name, ResourceType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> The vault name. </summary>

@@ -14,13 +14,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Information about an activity run in a pipeline. </summary>
     public partial class ActivityRun
     {
-        /// <summary> Initializes a new instance of ActivityRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivityRun"/>. </summary>
         internal ActivityRun()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of ActivityRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivityRun"/>. </summary>
         /// <param name="pipelineName"> The name of the pipeline. </param>
         /// <param name="pipelineRunId"> The id of the pipeline run. </param>
         /// <param name="activityName"> The name of the activity. </param>

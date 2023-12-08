@@ -10,9 +10,30 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Defines the virtual disk update. </summary>
     public partial class VMwareVirtualDiskUpdate
     {
-        /// <summary> Initializes a new instance of VMwareVirtualDiskUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareVirtualDiskUpdate"/>. </summary>
         public VMwareVirtualDiskUpdate()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareVirtualDiskUpdate"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the virtual disk. </param>
+        /// <param name="diskSizeGB"> Gets or sets the disk total size. </param>
+        /// <param name="deviceKey"> Gets or sets the device key value. </param>
+        /// <param name="diskMode"> Gets or sets the disk mode. </param>
+        /// <param name="controllerKey"> Gets or sets the controller id. </param>
+        /// <param name="unitNumber"> Gets or sets the unit number of the disk on the controller. </param>
+        /// <param name="deviceName"> Gets or sets the device name. </param>
+        /// <param name="diskType"> Gets or sets the disk backing type. </param>
+        internal VMwareVirtualDiskUpdate(string name, int? diskSizeGB, int? deviceKey, VMwareDiskMode? diskMode, int? controllerKey, int? unitNumber, string deviceName, VMwareDiskType? diskType)
+        {
+            Name = name;
+            DiskSizeGB = diskSizeGB;
+            DeviceKey = deviceKey;
+            DiskMode = diskMode;
+            ControllerKey = controllerKey;
+            UnitNumber = unitNumber;
+            DeviceName = deviceName;
+            DiskType = diskType;
         }
 
         /// <summary> Gets or sets the name of the virtual disk. </summary>

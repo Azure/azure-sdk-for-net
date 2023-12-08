@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The Asset Storage container SAS URLs. </summary>
     internal partial class AssetContainerSas
     {
-        /// <summary> Initializes a new instance of AssetContainerSas. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssetContainerSas"/>. </summary>
         internal AssetContainerSas()
         {
             AssetContainerSasUris = new ChangeTrackingList<Uri>();
         }
 
-        /// <summary> Initializes a new instance of AssetContainerSas. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssetContainerSas"/>. </summary>
         /// <param name="assetContainerSasUris"> The list of Asset container SAS URLs. </param>
         internal AssetContainerSas(IReadOnlyList<Uri> assetContainerSasUris)
         {

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> The service endpoint properties. </summary>
     public partial class ManagedClusterServiceEndpoint
     {
-        /// <summary> Initializes a new instance of ManagedClusterServiceEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterServiceEndpoint"/>. </summary>
         /// <param name="service"> The type of the endpoint service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="service"/> is null. </exception>
         public ManagedClusterServiceEndpoint(string service)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Locations = new ChangeTrackingList<AzureLocation>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterServiceEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterServiceEndpoint"/>. </summary>
         /// <param name="service"> The type of the endpoint service. </param>
         /// <param name="locations"> A list of locations. </param>
         internal ManagedClusterServiceEndpoint(string service, IList<AzureLocation> locations)

@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the update module operation. </summary>
     public partial class AutomationAccountPython2PackagePatch
     {
-        /// <summary> Initializes a new instance of AutomationAccountPython2PackagePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountPython2PackagePatch"/>. </summary>
         public AutomationAccountPython2PackagePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountPython2PackagePatch"/>. </summary>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        internal AutomationAccountPython2PackagePatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Gets or sets the tags attached to the resource. </summary>

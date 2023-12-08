@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of External Networks. </summary>
     internal partial class ExternalNetworksList
     {
-        /// <summary> Initializes a new instance of ExternalNetworksList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExternalNetworksList"/>. </summary>
         internal ExternalNetworksList()
         {
             Value = new ChangeTrackingList<NetworkFabricExternalNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of ExternalNetworksList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExternalNetworksList"/>. </summary>
         /// <param name="value"> List of External Network resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal ExternalNetworksList(IReadOnlyList<NetworkFabricExternalNetworkData> value, string nextLink)

@@ -5,8 +5,9 @@
       <example>
 This sample shows how to call GetCascadeDeleteJobDetailsAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -17,8 +18,9 @@ Console.WriteLine(result.GetProperty("resourceType").ToString());
 ]]></code>
 This sample shows how to call GetCascadeDeleteJobDetailsAsync with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -41,8 +43,9 @@ Console.WriteLine(result.GetProperty("endTime").ToString());
       <example>
 This sample shows how to call GetCascadeDeleteJobDetails and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -53,8 +56,9 @@ Console.WriteLine(result.GetProperty("resourceType").ToString());
 ]]></code>
 This sample shows how to call GetCascadeDeleteJobDetails with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -77,8 +81,9 @@ Console.WriteLine(result.GetProperty("endTime").ToString());
       <example>
 This sample shows how to call GetManagementZoneAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.GetManagementZoneAsync("<partyId>", "<managementZoneId>", null);
 
@@ -87,8 +92,9 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetManagementZoneAsync with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.GetManagementZoneAsync("<partyId>", "<managementZoneId>", null);
 
@@ -115,8 +121,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call GetManagementZone and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.GetManagementZone("<partyId>", "<managementZoneId>", null);
 
@@ -125,8 +132,9 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetManagementZone with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.GetManagementZone("<partyId>", "<managementZoneId>", null);
 
@@ -153,8 +161,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateAsync("<partyId>", "<managementZoneId>", content);
@@ -164,8 +173,9 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -207,8 +217,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdate("<partyId>", "<managementZoneId>", content);
@@ -218,8 +229,9 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdate with all parameters and request content and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -261,8 +273,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call DeleteAsync.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DeleteAsync("<partyId>", "<managementZoneId>");
 
@@ -270,8 +283,9 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteAsync with all parameters.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DeleteAsync("<partyId>", "<managementZoneId>");
 
@@ -282,8 +296,9 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call Delete.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Delete("<partyId>", "<managementZoneId>");
 
@@ -291,8 +306,9 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call Delete with all parameters.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Delete("<partyId>", "<managementZoneId>");
 
@@ -303,8 +319,9 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetManagementZonesAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 await foreach (BinaryData item in client.GetManagementZonesAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -314,8 +331,9 @@ await foreach (BinaryData item in client.GetManagementZonesAsync(null, null, nul
 ]]></code>
 This sample shows how to call GetManagementZonesAsync with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 await foreach (BinaryData item in client.GetManagementZonesAsync(new string[] { "<types>" }, new string[] { "<cropIds>" }, new string[] { "<seasonIds>" }, new string[] { "<fieldIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -343,8 +361,9 @@ await foreach (BinaryData item in client.GetManagementZonesAsync(new string[] { 
       <example>
 This sample shows how to call GetManagementZones and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 foreach (BinaryData item in client.GetManagementZones(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -354,8 +373,9 @@ foreach (BinaryData item in client.GetManagementZones(null, null, null, null, nu
 ]]></code>
 This sample shows how to call GetManagementZones with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 foreach (BinaryData item in client.GetManagementZones(new string[] { "<types>" }, new string[] { "<cropIds>" }, new string[] { "<seasonIds>" }, new string[] { "<fieldIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -383,8 +403,9 @@ foreach (BinaryData item in client.GetManagementZones(new string[] { "<types>" }
       <example>
 This sample shows how to call GetManagementZonesByPartyIdAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 await foreach (BinaryData item in client.GetManagementZonesByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -394,8 +415,9 @@ await foreach (BinaryData item in client.GetManagementZonesByPartyIdAsync("<part
 ]]></code>
 This sample shows how to call GetManagementZonesByPartyIdAsync with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 await foreach (BinaryData item in client.GetManagementZonesByPartyIdAsync("<partyId>", new string[] { "<types>" }, new string[] { "<cropIds>" }, new string[] { "<seasonIds>" }, new string[] { "<fieldIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -423,8 +445,9 @@ await foreach (BinaryData item in client.GetManagementZonesByPartyIdAsync("<part
       <example>
 This sample shows how to call GetManagementZonesByPartyId and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 foreach (BinaryData item in client.GetManagementZonesByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -434,8 +457,9 @@ foreach (BinaryData item in client.GetManagementZonesByPartyId("<partyId>", null
 ]]></code>
 This sample shows how to call GetManagementZonesByPartyId with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 foreach (BinaryData item in client.GetManagementZonesByPartyId("<partyId>", new string[] { "<types>" }, new string[] { "<cropIds>" }, new string[] { "<seasonIds>" }, new string[] { "<fieldIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -463,8 +487,9 @@ foreach (BinaryData item in client.GetManagementZonesByPartyId("<partyId>", new 
       <example>
 This sample shows how to call CreateCascadeDeleteJobAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<managementZoneId>", null);
 BinaryData responseData = operation.Value;
@@ -476,8 +501,9 @@ Console.WriteLine(result.GetProperty("resourceType").ToString());
 ]]></code>
 This sample shows how to call CreateCascadeDeleteJobAsync with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<managementZoneId>", null);
 BinaryData responseData = operation.Value;
@@ -501,8 +527,9 @@ Console.WriteLine(result.GetProperty("endTime").ToString());
       <example>
 This sample shows how to call CreateCascadeDeleteJob and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<managementZoneId>", null);
 BinaryData responseData = operation.Value;
@@ -514,8 +541,9 @@ Console.WriteLine(result.GetProperty("resourceType").ToString());
 ]]></code>
 This sample shows how to call CreateCascadeDeleteJob with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-ManagementZones client = new FarmBeatsClient(credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
+ManagementZones client = new FarmBeatsClient(endpoint, credential).GetManagementZonesClient(apiVersion: "2022-11-01-preview");
 
 Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<managementZoneId>", null);
 BinaryData responseData = operation.Value;

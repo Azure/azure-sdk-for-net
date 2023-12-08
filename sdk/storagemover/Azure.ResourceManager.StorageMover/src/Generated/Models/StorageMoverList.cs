@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> List of Storage Movers. </summary>
     internal partial class StorageMoverList
     {
-        /// <summary> Initializes a new instance of StorageMoverList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverList"/>. </summary>
         internal StorageMoverList()
         {
             Value = new ChangeTrackingList<StorageMoverData>();
         }
 
-        /// <summary> Initializes a new instance of StorageMoverList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> Request URL that can be used to query next page of containers. Returned when total number of requested containers exceed maximum page size. </param>
         internal StorageMoverList(IReadOnlyList<StorageMoverData> value, string nextLink)

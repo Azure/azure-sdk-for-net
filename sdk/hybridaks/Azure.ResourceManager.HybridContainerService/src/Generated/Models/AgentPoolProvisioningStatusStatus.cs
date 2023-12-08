@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Defines the observed state of the agent pool. </summary>
     public partial class AgentPoolProvisioningStatusStatus
     {
-        /// <summary> Initializes a new instance of AgentPoolProvisioningStatusStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolProvisioningStatusStatus"/>. </summary>
         public AgentPoolProvisioningStatusStatus()
         {
             ReadyReplicas = new ChangeTrackingList<AgentPoolUpdateProfile>();
         }
 
-        /// <summary> Initializes a new instance of AgentPoolProvisioningStatusStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolProvisioningStatusStatus"/>. </summary>
         /// <param name="errorMessage"> ErrorMessage - Error messages during creation of agent pool. </param>
         /// <param name="operationStatus"> Contains Provisioning errors. </param>
         /// <param name="readyReplicas"></param>

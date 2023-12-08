@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Paypal Service linked service. </summary>
     public partial class PaypalLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of PaypalLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaypalLinkedService"/>. </summary>
         /// <param name="host"> The URL of the PayPal instance. (i.e. api.sandbox.paypal.com). </param>
         /// <param name="clientId"> The client ID associated with your PayPal application. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="clientId"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "Paypal";
         }
 
-        /// <summary> Initializes a new instance of PaypalLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaypalLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

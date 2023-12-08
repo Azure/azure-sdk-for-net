@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Properties patch for a Big Data pool. </summary>
     public partial class SynapseBigDataPoolInfoPatch
     {
-        /// <summary> Initializes a new instance of SynapseBigDataPoolInfoPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseBigDataPoolInfoPatch"/>. </summary>
         public SynapseBigDataPoolInfoPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseBigDataPoolInfoPatch"/>. </summary>
+        /// <param name="tags"> Updated tags for the Big Data pool. </param>
+        internal SynapseBigDataPoolInfoPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Updated tags for the Big Data pool. </summary>

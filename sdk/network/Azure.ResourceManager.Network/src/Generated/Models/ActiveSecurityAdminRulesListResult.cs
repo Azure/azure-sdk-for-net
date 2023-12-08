@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Result of the request to list active security admin rules. It contains a list of active security admin rules and a skiptoken to get the next set of results. </summary>
     internal partial class ActiveSecurityAdminRulesListResult
     {
-        /// <summary> Initializes a new instance of ActiveSecurityAdminRulesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActiveSecurityAdminRulesListResult"/>. </summary>
         internal ActiveSecurityAdminRulesListResult()
         {
             Value = new ChangeTrackingList<ActiveBaseSecurityAdminRule>();
         }
 
-        /// <summary> Initializes a new instance of ActiveSecurityAdminRulesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActiveSecurityAdminRulesListResult"/>. </summary>
         /// <param name="value">
         /// Gets a page of active security admin rules.
         /// Please note <see cref="ActiveBaseSecurityAdminRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

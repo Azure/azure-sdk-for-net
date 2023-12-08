@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MonitoringThreshold. </summary>
     internal partial class MonitoringThreshold
     {
-        /// <summary> Initializes a new instance of MonitoringThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringThreshold"/>. </summary>
         public MonitoringThreshold()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitoringThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringThreshold"/>. </summary>
         /// <param name="value"> The threshold value. If null, the set default is dependent on the metric type. </param>
         internal MonitoringThreshold(double? value)
         {

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The parameters of a capacity reservation Profile. </summary>
     internal partial class CapacityReservationProfile
     {
-        /// <summary> Initializes a new instance of CapacityReservationProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityReservationProfile"/>. </summary>
         public CapacityReservationProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of CapacityReservationProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityReservationProfile"/>. </summary>
         /// <param name="capacityReservationGroup"> Specifies the capacity reservation group resource id that should be used for allocating the virtual machine or scaleset vm instances provided enough capacity has been reserved. Please refer to https://aka.ms/CapacityReservation for more details. </param>
         internal CapacityReservationProfile(WritableSubResource capacityReservationGroup)
         {

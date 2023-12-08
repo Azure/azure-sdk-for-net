@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Network
         private readonly VpnConnectionsRestOperations _vpnConnectionRestClient;
         private readonly VpnConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/vpnGateways/vpnConnections";
+
         /// <summary> Initializes a new instance of the <see cref="VpnConnectionResource"/> class for mocking. </summary>
         protected VpnConnectionResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/vpnGateways/vpnConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
         private readonly ManagedCCFRestOperations _managedCcfManagedCcfRestClient;
         private readonly ManagedCcfData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ConfidentialLedger/managedCCFs";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedCcfResource"/> class for mocking. </summary>
         protected ManagedCcfResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ConfidentialLedger
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ConfidentialLedger/managedCCFs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

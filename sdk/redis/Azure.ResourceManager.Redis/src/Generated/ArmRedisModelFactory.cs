@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmRedisModelFactory
     {
-        /// <summary> Initializes a new instance of RedisUpgradeNotification. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisUpgradeNotification"/>. </summary>
         /// <param name="name"> Name of upgrade notification. </param>
         /// <param name="timestamp"> Timestamp when upgrade notification occurred. </param>
         /// <param name="upsellNotification"> Details about this upgrade notification. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisUpgradeNotification(name, timestamp, upsellNotification);
         }
 
-        /// <summary> Initializes a new instance of RedisCommonConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisCommonConfiguration"/>. </summary>
         /// <param name="isRdbBackupEnabled"> Specifies whether the rdb backup is enabled. </param>
         /// <param name="rdbBackupFrequency"> Specifies the frequency for creating rdb backup in minutes. Valid values: (15, 30, 60, 360, 720, 1440). </param>
         /// <param name="rdbBackupMaxSnapshotCount"> Specifies the maximum number of snapshots for rdb backup. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisCommonConfiguration(isRdbBackupEnabled, rdbBackupFrequency, rdbBackupMaxSnapshotCount, rdbStorageConnectionString, isAofBackupEnabled, aofStorageConnectionString0, aofStorageConnectionString1, maxFragmentationMemoryReserved, maxMemoryPolicy, maxMemoryReserved, maxMemoryDelta, maxClients, preferredDataArchiveAuthMethod, preferredDataPersistenceAuthMethod, zonalConfiguration, authNotRequired, storageSubscriptionId, additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of RedisData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Redis.RedisData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisData(id, name, resourceType, systemData, tags, location, zones?.ToList(), identity, redisConfiguration, redisVersion, enableNonSslPort, replicasPerMaster, replicasPerPrimary, tenantSettings, shardCount, minimumTlsVersion, publicNetworkAccess, sku, subnetId, staticIP, provisioningState, hostName, port, sslPort, accessKeys, linkedServers?.ToList(), instances?.ToList(), privateEndpointConnections?.ToList());
         }
 
-        /// <summary> Initializes a new instance of RedisAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisAccessKeys"/>. </summary>
         /// <param name="primaryKey"> The current primary key that clients can use to authenticate with Redis cache. </param>
         /// <param name="secondaryKey"> The current secondary key that clients can use to authenticate with Redis cache. </param>
         /// <returns> A new <see cref="Models.RedisAccessKeys"/> instance for mocking. </returns>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisAccessKeys(primaryKey, secondaryKey);
         }
 
-        /// <summary> Initializes a new instance of RedisInstanceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisInstanceDetails"/>. </summary>
         /// <param name="sslPort"> Redis instance SSL port. </param>
         /// <param name="nonSslPort"> If enableNonSslPort is true, provides Redis instance Non-SSL port. </param>
         /// <param name="zone"> If the Cache uses availability zones, specifies availability zone where this instance is located. </param>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisInstanceDetails(sslPort, nonSslPort, zone, shardId, isMaster, isPrimary);
         }
 
-        /// <summary> Initializes a new instance of RedisPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Redis.RedisPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, redisPrivateLinkServiceConnectionState, redisProvisioningState);
         }
 
-        /// <summary> Initializes a new instance of RedisForceRebootResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisForceRebootResult"/>. </summary>
         /// <param name="message"> Status message. </param>
         /// <returns> A new <see cref="Models.RedisForceRebootResult"/> instance for mocking. </returns>
         public static RedisForceRebootResult RedisForceRebootResult(string message = null)
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisForceRebootResult(message);
         }
 
-        /// <summary> Initializes a new instance of RedisFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Redis.RedisFirewallRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisFirewallRuleData(id, name, resourceType, systemData, startIP, endIP);
         }
 
-        /// <summary> Initializes a new instance of RedisPatchScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Redis.RedisPatchScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisPatchScheduleData(id, name, resourceType, systemData, location, scheduleEntries?.ToList());
         }
 
-        /// <summary> Initializes a new instance of RedisLinkedServerWithPropertyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Redis.RedisLinkedServerWithPropertyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisLinkedServerWithPropertyData(id, name, resourceType, systemData, linkedRedisCacheId, linkedRedisCacheLocation, serverRole, geoReplicatedPrimaryHostName, primaryHostName, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of RedisPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisPrivateLinkResource(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
         }
 
-        /// <summary> Initializes a new instance of RedisOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisOperationStatus"/>. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>

@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Tags object for patch operations. </summary>
     public partial class HDInsightClusterPoolPatch
     {
-        /// <summary> Initializes a new instance of HDInsightClusterPoolPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterPoolPatch"/>. </summary>
         public HDInsightClusterPoolPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterPoolPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal HDInsightClusterPoolPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

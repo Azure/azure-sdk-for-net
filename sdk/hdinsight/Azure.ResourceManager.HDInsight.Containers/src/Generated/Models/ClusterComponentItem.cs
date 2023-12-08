@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The ClusterComponentItem. </summary>
     public partial class ClusterComponentItem
     {
-        /// <summary> Initializes a new instance of ClusterComponentItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterComponentItem"/>. </summary>
         internal ClusterComponentItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterComponentItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterComponentItem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="version"></param>
         internal ClusterComponentItem(string name, string version)

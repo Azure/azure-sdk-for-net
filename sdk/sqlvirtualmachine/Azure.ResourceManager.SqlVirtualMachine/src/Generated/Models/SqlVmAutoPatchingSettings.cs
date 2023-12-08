@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Set a patching window during which Windows and SQL patches will be applied. </summary>
     public partial class SqlVmAutoPatchingSettings
     {
-        /// <summary> Initializes a new instance of SqlVmAutoPatchingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmAutoPatchingSettings"/>. </summary>
         public SqlVmAutoPatchingSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlVmAutoPatchingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmAutoPatchingSettings"/>. </summary>
         /// <param name="isEnabled"> Enable or disable autopatching on SQL virtual machine. </param>
         /// <param name="dayOfWeek"> Day of week to apply the patch on. </param>
         /// <param name="maintenanceWindowStartingHour"> Hour of the day when patching is initiated. Local VM time. </param>

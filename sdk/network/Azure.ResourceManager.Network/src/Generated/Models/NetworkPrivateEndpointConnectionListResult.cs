@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for the ListPrivateEndpointConnection API service call. </summary>
     internal partial class NetworkPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of NetworkPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkPrivateEndpointConnectionListResult"/>. </summary>
         internal NetworkPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<NetworkPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> A list of PrivateEndpointConnection resources for a specific private link service. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal NetworkPrivateEndpointConnectionListResult(IReadOnlyList<NetworkPrivateEndpointConnectionData> value, string nextLink)

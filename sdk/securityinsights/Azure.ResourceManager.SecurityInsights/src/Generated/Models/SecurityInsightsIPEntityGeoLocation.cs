@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> The geo-location context attached to the ip entity. </summary>
     public partial class SecurityInsightsIPEntityGeoLocation
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIPEntityGeoLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIPEntityGeoLocation"/>. </summary>
         internal SecurityInsightsIPEntityGeoLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIPEntityGeoLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIPEntityGeoLocation"/>. </summary>
         /// <param name="asn"> Autonomous System Number. </param>
         /// <param name="city"> City name. </param>
         /// <param name="countryCode"> The country code according to ISO 3166 format. </param>

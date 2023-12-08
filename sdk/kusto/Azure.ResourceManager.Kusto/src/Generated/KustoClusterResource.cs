@@ -52,6 +52,9 @@ namespace Azure.ResourceManager.Kusto
         private readonly SandboxCustomImagesRestOperations _sandboxCustomImageRestClient;
         private readonly KustoClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters";
+
         /// <summary> Initializes a new instance of the <see cref="KustoClusterResource"/> class for mocking. </summary>
         protected KustoClusterResource()
         {
@@ -93,9 +96,6 @@ namespace Azure.ResourceManager.Kusto
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

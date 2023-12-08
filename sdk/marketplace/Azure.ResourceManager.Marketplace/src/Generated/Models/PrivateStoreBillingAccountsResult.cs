@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Billing accounts response object. </summary>
     public partial class PrivateStoreBillingAccountsResult
     {
-        /// <summary> Initializes a new instance of PrivateStoreBillingAccountsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreBillingAccountsResult"/>. </summary>
         internal PrivateStoreBillingAccountsResult()
         {
             BillingAccounts = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PrivateStoreBillingAccountsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreBillingAccountsResult"/>. </summary>
         /// <param name="billingAccounts"> Billing accounts list. </param>
         internal PrivateStoreBillingAccountsResult(IReadOnlyList<string> billingAccounts)
         {

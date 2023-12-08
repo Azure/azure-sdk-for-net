@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class CloudServiceRoleInstanceData : ResourceData
     {
-        /// <summary> Initializes a new instance of CloudServiceRoleInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceRoleInstanceData"/>. </summary>
         internal CloudServiceRoleInstanceData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of CloudServiceRoleInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceRoleInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

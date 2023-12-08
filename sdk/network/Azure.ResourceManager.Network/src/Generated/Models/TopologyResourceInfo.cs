@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The network resource topology information for the given resource group. </summary>
     public partial class TopologyResourceInfo
     {
-        /// <summary> Initializes a new instance of TopologyResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopologyResourceInfo"/>. </summary>
         internal TopologyResourceInfo()
         {
             Associations = new ChangeTrackingList<TopologyAssociation>();
         }
 
-        /// <summary> Initializes a new instance of TopologyResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopologyResourceInfo"/>. </summary>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="id"> ID of the resource. </param>
         /// <param name="location"> Resource location. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The VirtualNetworkPropertiesStatusOperationStatusError. </summary>
     public partial class VirtualNetworkPropertiesStatusOperationStatusError
     {
-        /// <summary> Initializes a new instance of VirtualNetworkPropertiesStatusOperationStatusError. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkPropertiesStatusOperationStatusError"/>. </summary>
         internal VirtualNetworkPropertiesStatusOperationStatusError()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkPropertiesStatusOperationStatusError. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkPropertiesStatusOperationStatusError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
         internal VirtualNetworkPropertiesStatusOperationStatusError(string code, string message)

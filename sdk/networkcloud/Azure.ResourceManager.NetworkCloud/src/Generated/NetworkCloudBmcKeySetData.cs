@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudBmcKeySetData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkCloudBmcKeySetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudBmcKeySetData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="azureGroupId"> The object ID of Azure Active Directory group that all users in the list must be in for access to be granted. Users that are not in the group will not have access. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud
             UserListStatus = new ChangeTrackingList<KeySetUserStatus>();
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudBmcKeySetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudBmcKeySetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Extended Location definition. </summary>
     public partial class ExtendedLocation
     {
-        /// <summary> Initializes a new instance of ExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
         public ExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
         /// <param name="extendedLocationType"> The extended location type. </param>
         /// <param name="name"> The extended location name. </param>
         internal ExtendedLocation(ExtendedLocationType? extendedLocationType, string name)

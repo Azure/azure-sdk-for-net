@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Eligible child resource. </summary>
     public partial class EligibleChildResource
     {
-        /// <summary> Initializes a new instance of EligibleChildResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="EligibleChildResource"/>. </summary>
         internal EligibleChildResource()
         {
         }
 
-        /// <summary> Initializes a new instance of EligibleChildResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="EligibleChildResource"/>. </summary>
         /// <param name="id"> The resource scope Id. </param>
         /// <param name="name"> The resource name. </param>
         /// <param name="resourceType"> The resource type. </param>

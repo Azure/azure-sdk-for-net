@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The publishing profile of a gallery image version. </summary>
     public partial class GalleryApplicationVersionPublishingProfile : GalleryArtifactPublishingProfileBase
     {
-        /// <summary> Initializes a new instance of GalleryApplicationVersionPublishingProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionPublishingProfile"/>. </summary>
         /// <param name="source"> The source image from which the Image Version is going to be created. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         public GalleryApplicationVersionPublishingProfile(UserArtifactSource source)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             CustomActions = new ChangeTrackingList<GalleryApplicationCustomAction>();
         }
 
-        /// <summary> Initializes a new instance of GalleryApplicationVersionPublishingProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionPublishingProfile"/>. </summary>
         /// <param name="targetRegions"> The target regions where the Image Version is going to be replicated to. This property is updatable. </param>
         /// <param name="replicaCount"> The number of replicas of the Image Version to be created per region. This property would take effect for a region when regionalReplicaCount is not specified. This property is updatable. </param>
         /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Infra network profile for VMware platform. </summary>
     internal partial class VirtualNetworkPropertiesInfraVnetProfileVmware
     {
-        /// <summary> Initializes a new instance of VirtualNetworkPropertiesInfraVnetProfileVmware. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkPropertiesInfraVnetProfileVmware"/>. </summary>
         public VirtualNetworkPropertiesInfraVnetProfileVmware()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkPropertiesInfraVnetProfileVmware. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkPropertiesInfraVnetProfileVmware"/>. </summary>
         /// <param name="segmentName"> Name of the network segment in VSphere. </param>
         internal VirtualNetworkPropertiesInfraVnetProfileVmware(string segmentName)
         {

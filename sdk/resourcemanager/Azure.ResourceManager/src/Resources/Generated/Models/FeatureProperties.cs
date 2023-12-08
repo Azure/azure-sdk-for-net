@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Information about feature. </summary>
     internal partial class FeatureProperties
     {
-        /// <summary> Initializes a new instance of FeatureProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureProperties"/>. </summary>
         internal FeatureProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of FeatureProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureProperties"/>. </summary>
         /// <param name="state"> The registration state of the feature for the subscription. </param>
         internal FeatureProperties(string state)
         {

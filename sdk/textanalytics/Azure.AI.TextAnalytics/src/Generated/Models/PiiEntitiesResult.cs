@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics
     /// <summary> The PiiResult. </summary>
     internal partial class PiiEntitiesResult : PreBuiltResult
     {
-        /// <summary> Initializes a new instance of PiiEntitiesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiEntitiesResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.TextAnalytics
             Documents = documents.ToList();
         }
 
-        /// <summary> Initializes a new instance of PiiEntitiesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiEntitiesResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>

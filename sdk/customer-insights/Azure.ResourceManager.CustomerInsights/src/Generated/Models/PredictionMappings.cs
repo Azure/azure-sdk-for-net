@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Definition of the link mapping of prediction. </summary>
     public partial class PredictionMappings
     {
-        /// <summary> Initializes a new instance of PredictionMappings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredictionMappings"/>. </summary>
         /// <param name="score"> The score of the link mapping. </param>
         /// <param name="grade"> The grade of the link mapping. </param>
         /// <param name="reason"> The reason of the link mapping. </param>

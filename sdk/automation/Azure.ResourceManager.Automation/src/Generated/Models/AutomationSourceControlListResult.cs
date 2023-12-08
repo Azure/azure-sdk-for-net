@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list source controls operation. </summary>
     internal partial class AutomationSourceControlListResult
     {
-        /// <summary> Initializes a new instance of AutomationSourceControlListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationSourceControlListResult"/>. </summary>
         internal AutomationSourceControlListResult()
         {
             Value = new ChangeTrackingList<AutomationSourceControlData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationSourceControlListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationSourceControlListResult"/>. </summary>
         /// <param name="value"> The list of source controls. </param>
         /// <param name="nextLink"> The next link. </param>
         internal AutomationSourceControlListResult(IReadOnlyList<AutomationSourceControlData> value, string nextLink)

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The List Virtual Machine size operation response. </summary>
     internal partial class VirtualMachineSizeListResult
     {
-        /// <summary> Initializes a new instance of VirtualMachineSizeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineSizeListResult"/>. </summary>
         internal VirtualMachineSizeListResult()
         {
             Value = new ChangeTrackingList<MachineLearningVmSize>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineSizeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineSizeListResult"/>. </summary>
         /// <param name="value"> The list of virtual machine sizes supported by AmlCompute. </param>
         internal VirtualMachineSizeListResult(IReadOnlyList<MachineLearningVmSize> value)
         {

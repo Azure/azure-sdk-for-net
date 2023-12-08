@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> List of admin request approval resources. </summary>
     internal partial class MarketplaceAdminApprovalRequestList
     {
-        /// <summary> Initializes a new instance of MarketplaceAdminApprovalRequestList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalRequestList"/>. </summary>
         internal MarketplaceAdminApprovalRequestList()
         {
             Value = new ChangeTrackingList<MarketplaceAdminApprovalRequestData>();
         }
 
-        /// <summary> Initializes a new instance of MarketplaceAdminApprovalRequestList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalRequestList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of notifications list results if there are any. </param>
         internal MarketplaceAdminApprovalRequestList(IReadOnlyList<MarketplaceAdminApprovalRequestData> value, string nextLink)

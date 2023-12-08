@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The workflow output parameter. </summary>
     public partial class LogicWorkflowOutputParameterInfo : LogicWorkflowParameterInfo
     {
-        /// <summary> Initializes a new instance of LogicWorkflowOutputParameterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowOutputParameterInfo"/>. </summary>
         public LogicWorkflowOutputParameterInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowOutputParameterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowOutputParameterInfo"/>. </summary>
         /// <param name="parameterType"> The type. </param>
         /// <param name="value"> The value. </param>
         /// <param name="metadata"> The metadata. </param>

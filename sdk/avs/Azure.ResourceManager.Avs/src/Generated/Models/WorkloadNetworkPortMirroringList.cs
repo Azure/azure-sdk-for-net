@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A list of NSX Port Mirroring. </summary>
     internal partial class WorkloadNetworkPortMirroringList
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkPortMirroringList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkPortMirroringList"/>. </summary>
         internal WorkloadNetworkPortMirroringList()
         {
             Value = new ChangeTrackingList<WorkloadNetworkPortMirroringProfileData>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkPortMirroringList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkPortMirroringList"/>. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
         internal WorkloadNetworkPortMirroringList(IReadOnlyList<WorkloadNetworkPortMirroringProfileData> value, string nextLink)

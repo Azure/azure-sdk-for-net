@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Result of listing the run history of an export. </summary>
     internal partial class ExportExecutionListResult
     {
-        /// <summary> Initializes a new instance of ExportExecutionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportExecutionListResult"/>. </summary>
         public ExportExecutionListResult()
         {
             Value = new ChangeTrackingList<ExportRun>();
         }
 
-        /// <summary> Initializes a new instance of ExportExecutionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportExecutionListResult"/>. </summary>
         /// <param name="value"> A list of export runs. </param>
         internal ExportExecutionListResult(IReadOnlyList<ExportRun> value)
         {

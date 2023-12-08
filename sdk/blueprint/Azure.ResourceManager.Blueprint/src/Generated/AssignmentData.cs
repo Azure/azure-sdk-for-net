@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Blueprint
     /// </summary>
     public partial class AssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of AssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentData"/>. </summary>
         /// <param name="identity"> Managed identity for this blueprint assignment. </param>
         /// <param name="parameters"> Blueprint assignment parameter values. </param>
         /// <param name="resourceGroups"> Names and locations of resource group placeholders. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Blueprint
             Location = location;
         }
 
-        /// <summary> Initializes a new instance of AssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

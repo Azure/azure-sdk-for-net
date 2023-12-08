@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     /// <summary> Wrapper for error response to follow ARM guidelines. </summary>
     public partial class ErrorResponseWrapper
     {
-        /// <summary> Initializes a new instance of ErrorResponseWrapper. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorResponseWrapper"/>. </summary>
         internal ErrorResponseWrapper()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorResponseWrapper. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorResponseWrapper"/>. </summary>
         /// <param name="error"> The error response. </param>
         internal ErrorResponseWrapper(ErrorResponse error)
         {

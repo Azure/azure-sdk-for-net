@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of p2s vpn connections to be disconnected. </summary>
     public partial class P2SVpnConnectionRequest
     {
-        /// <summary> Initializes a new instance of P2SVpnConnectionRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="P2SVpnConnectionRequest"/>. </summary>
         public P2SVpnConnectionRequest()
         {
             VpnConnectionIds = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="P2SVpnConnectionRequest"/>. </summary>
+        /// <param name="vpnConnectionIds"> List of p2s vpn connection Ids. </param>
+        internal P2SVpnConnectionRequest(IList<string> vpnConnectionIds)
+        {
+            VpnConnectionIds = vpnConnectionIds;
         }
 
         /// <summary> List of p2s vpn connection Ids. </summary>

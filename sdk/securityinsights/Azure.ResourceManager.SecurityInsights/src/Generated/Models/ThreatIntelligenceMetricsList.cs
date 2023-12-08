@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> List of all the threat intelligence metric fields (type/threat type/source). </summary>
     internal partial class ThreatIntelligenceMetricsList
     {
-        /// <summary> Initializes a new instance of ThreatIntelligenceMetricsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceMetricsList"/>. </summary>
         /// <param name="value"> Array of threat intelligence metric fields (type/threat type/source). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ThreatIntelligenceMetricsList(IEnumerable<ThreatIntelligenceMetrics> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ThreatIntelligenceMetricsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceMetricsList"/>. </summary>
         /// <param name="value"> Array of threat intelligence metric fields (type/threat type/source). </param>
         internal ThreatIntelligenceMetricsList(IReadOnlyList<ThreatIntelligenceMetrics> value)
         {

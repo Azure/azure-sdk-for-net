@@ -14,10 +14,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> The type used for update operations of the LocalRulestackResource. </summary>
     public partial class LocalRulestackPatch
     {
-        /// <summary> Initializes a new instance of LocalRulestackPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackPatch"/>. </summary>
         public LocalRulestackPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackPatch"/>. </summary>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The updatable properties of the LocalRulestackResource. </param>
+        internal LocalRulestackPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, LocalRulestackUpdateProperties properties)
+        {
+            Identity = identity;
+            Tags = tags;
+            Properties = properties;
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>

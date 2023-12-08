@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The AssignmentPrincipal. </summary>
     public partial class AssignmentPrincipal
     {
-        /// <summary> Initializes a new instance of AssignmentPrincipal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentPrincipal"/>. </summary>
         /// <param name="principalId"> The principal id being assigned to. </param>
         /// <param name="principalType"> The Type of the principal ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="principalId"/> or <paramref name="principalType"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             PrincipalMetadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AssignmentPrincipal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentPrincipal"/>. </summary>
         /// <param name="principalId"> The principal id being assigned to. </param>
         /// <param name="principalType"> The Type of the principal ID. </param>
         /// <param name="principalMetadata"> Other metadata for the principal. </param>

@@ -36,6 +36,9 @@ namespace Azure.ResourceManager.HybridContainerService
         private readonly ProvisionedClusterInstancesRestOperations _provisionedClusterUpgradeProfileprovisionedClusterInstancesRestClient;
         private readonly ProvisionedClusterUpgradeProfileData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/provisionedClusterInstances/upgradeProfiles";
+
         /// <summary> Initializes a new instance of the <see cref="ProvisionedClusterUpgradeProfileResource"/> class for mocking. </summary>
         protected ProvisionedClusterUpgradeProfileResource()
         {
@@ -62,9 +65,6 @@ namespace Azure.ResourceManager.HybridContainerService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/provisionedClusterInstances/upgradeProfiles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

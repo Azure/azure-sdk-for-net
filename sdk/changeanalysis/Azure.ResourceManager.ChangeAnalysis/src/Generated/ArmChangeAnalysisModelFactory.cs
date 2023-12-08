@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmChangeAnalysisModelFactory
     {
-        /// <summary> Initializes a new instance of DetectedChangeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DetectedChangeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             return new DetectedChangeData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of ChangeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ChangeProperties"/>. </summary>
         /// <param name="resourceId"> The resource id that the change is attached to. </param>
         /// <param name="changeDetectedOn"> The time when the change is detected. </param>
         /// <param name="initiatedByList">
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             return new ChangeProperties(resourceId, changeDetectedOn, initiatedByList?.ToList(), changeType, propertyChanges?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PropertyChange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PropertyChange"/>. </summary>
         /// <param name="changeType"> The type of the change. </param>
         /// <param name="changeCategory"> The change category. </param>
         /// <param name="jsonPath"> The json path of the changed property. </param>

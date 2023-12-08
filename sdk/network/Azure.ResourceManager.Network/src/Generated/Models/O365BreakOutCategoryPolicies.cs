@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Office365 breakout categories. </summary>
     public partial class O365BreakOutCategoryPolicies
     {
-        /// <summary> Initializes a new instance of O365BreakOutCategoryPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="O365BreakOutCategoryPolicies"/>. </summary>
         public O365BreakOutCategoryPolicies()
         {
         }
 
-        /// <summary> Initializes a new instance of O365BreakOutCategoryPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="O365BreakOutCategoryPolicies"/>. </summary>
         /// <param name="allow"> Flag to control allow category. </param>
         /// <param name="optimize"> Flag to control optimize category. </param>
         /// <param name="default"> Flag to control default category. </param>

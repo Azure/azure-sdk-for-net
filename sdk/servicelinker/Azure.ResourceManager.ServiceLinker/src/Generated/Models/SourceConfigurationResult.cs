@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> Configurations for source resource, include appSettings, connectionString and serviceBindings. </summary>
     public partial class SourceConfigurationResult
     {
-        /// <summary> Initializes a new instance of SourceConfigurationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceConfigurationResult"/>. </summary>
         internal SourceConfigurationResult()
         {
             Configurations = new ChangeTrackingList<SourceConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of SourceConfigurationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceConfigurationResult"/>. </summary>
         /// <param name="configurations"> The configuration properties for source resource. </param>
         internal SourceConfigurationResult(IReadOnlyList<SourceConfiguration> configurations)
         {

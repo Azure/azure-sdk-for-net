@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of static sites. </summary>
     internal partial class StaticSiteListResult
     {
-        /// <summary> Initializes a new instance of StaticSiteListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal StaticSiteListResult(IEnumerable<StaticSiteData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of StaticSiteListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal StaticSiteListResult(IReadOnlyList<StaticSiteData> value, string nextLink)

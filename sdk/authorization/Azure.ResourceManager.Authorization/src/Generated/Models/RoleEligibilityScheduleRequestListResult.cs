@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Role eligibility schedule request list operation result. </summary>
     internal partial class RoleEligibilityScheduleRequestListResult
     {
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleRequestListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleRequestListResult"/>. </summary>
         internal RoleEligibilityScheduleRequestListResult()
         {
             Value = new ChangeTrackingList<RoleEligibilityScheduleRequestData>();
         }
 
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleRequestListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleRequestListResult"/>. </summary>
         /// <param name="value"> Role eligibility schedule request list. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal RoleEligibilityScheduleRequestListResult(IReadOnlyList<RoleEligibilityScheduleRequestData> value, string nextLink)

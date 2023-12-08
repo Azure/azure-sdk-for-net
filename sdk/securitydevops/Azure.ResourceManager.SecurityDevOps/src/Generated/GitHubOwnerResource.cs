@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.SecurityDevOps
         private readonly GitHubOwnerRestOperations _gitHubOwnerRestClient;
         private readonly GitHubOwnerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SecurityDevOps/gitHubConnectors/owners";
+
         /// <summary> Initializes a new instance of the <see cref="GitHubOwnerResource"/> class for mocking. </summary>
         protected GitHubOwnerResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.SecurityDevOps
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SecurityDevOps/gitHubConnectors/owners";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

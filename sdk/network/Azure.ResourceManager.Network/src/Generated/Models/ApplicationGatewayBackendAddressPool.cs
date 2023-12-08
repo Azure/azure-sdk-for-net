@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Backend Address Pool of an application gateway. </summary>
     public partial class ApplicationGatewayBackendAddressPool : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendAddressPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendAddressPool"/>. </summary>
         public ApplicationGatewayBackendAddressPool()
         {
             BackendIPConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
             BackendAddresses = new ChangeTrackingList<ApplicationGatewayBackendAddress>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendAddressPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendAddressPool"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

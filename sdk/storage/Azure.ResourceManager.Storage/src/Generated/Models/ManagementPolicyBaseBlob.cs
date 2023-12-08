@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Management policy action for base blob. </summary>
     public partial class ManagementPolicyBaseBlob
     {
-        /// <summary> Initializes a new instance of ManagementPolicyBaseBlob. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyBaseBlob"/>. </summary>
         public ManagementPolicyBaseBlob()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagementPolicyBaseBlob. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyBaseBlob"/>. </summary>
         /// <param name="tierToCool"> The function to tier blobs to cool storage. </param>
         /// <param name="tierToArchive"> The function to tier blobs to archive storage. </param>
         /// <param name="tierToCold"> The function to tier blobs to cold storage. </param>

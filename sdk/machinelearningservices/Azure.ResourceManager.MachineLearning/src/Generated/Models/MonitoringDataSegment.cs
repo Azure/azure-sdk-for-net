@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MonitoringDataSegment. </summary>
     public partial class MonitoringDataSegment
     {
-        /// <summary> Initializes a new instance of MonitoringDataSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringDataSegment"/>. </summary>
         public MonitoringDataSegment()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MonitoringDataSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringDataSegment"/>. </summary>
         /// <param name="feature"> The feature to segment the data on. </param>
         /// <param name="values"> Filters for only the specified values of the given segmented feature. </param>
         internal MonitoringDataSegment(string feature, IList<string> values)

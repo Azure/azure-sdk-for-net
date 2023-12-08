@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
     internal partial class PrivateEndpointConnectionListResultWithSystemData
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionListResultWithSystemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionListResultWithSystemData"/>. </summary>
         internal PrivateEndpointConnectionListResultWithSystemData()
         {
             Value = new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnectionDataData>();
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionListResultWithSystemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionListResultWithSystemData"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         internal PrivateEndpointConnectionListResultWithSystemData(IReadOnlyList<DesktopVirtualizationPrivateEndpointConnectionDataData> value, string nextLink)

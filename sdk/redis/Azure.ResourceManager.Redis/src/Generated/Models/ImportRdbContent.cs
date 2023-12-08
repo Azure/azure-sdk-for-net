@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> Parameters for Redis import operation. </summary>
     public partial class ImportRdbContent
     {
-        /// <summary> Initializes a new instance of ImportRdbContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportRdbContent"/>. </summary>
         /// <param name="files"> files to import. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="files"/> is null. </exception>
         public ImportRdbContent(IEnumerable<string> files)
@@ -23,6 +23,19 @@ namespace Azure.ResourceManager.Redis.Models
             Argument.AssertNotNull(files, nameof(files));
 
             Files = files.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImportRdbContent"/>. </summary>
+        /// <param name="format"> File format. </param>
+        /// <param name="files"> files to import. </param>
+        /// <param name="preferredDataArchiveAuthMethod"> Preferred auth method to communicate to storage account used for data archive, specify SAS or ManagedIdentity, default value is SAS. </param>
+        /// <param name="storageSubscriptionId"> Subscription id of the storage container containing files to import using Managed Identity. </param>
+        internal ImportRdbContent(string format, IList<string> files, string preferredDataArchiveAuthMethod, string storageSubscriptionId)
+        {
+            Format = format;
+            Files = files;
+            PreferredDataArchiveAuthMethod = preferredDataArchiveAuthMethod;
+            StorageSubscriptionId = storageSubscriptionId;
         }
 
         /// <summary> File format. </summary>

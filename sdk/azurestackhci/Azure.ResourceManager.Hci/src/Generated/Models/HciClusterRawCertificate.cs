@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The HciClusterRawCertificate. </summary>
     internal partial class HciClusterRawCertificate
     {
-        /// <summary> Initializes a new instance of HciClusterRawCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciClusterRawCertificate"/>. </summary>
         public HciClusterRawCertificate()
         {
             Certificates = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HciClusterRawCertificate"/>. </summary>
+        /// <param name="certificates"></param>
+        internal HciClusterRawCertificate(IList<string> certificates)
+        {
+            Certificates = certificates;
         }
 
         /// <summary> Gets the certificates. </summary>

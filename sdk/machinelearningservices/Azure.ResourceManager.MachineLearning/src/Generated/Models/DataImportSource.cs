@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class DataImportSource
     {
-        /// <summary> Initializes a new instance of DataImportSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataImportSource"/>. </summary>
         protected DataImportSource()
         {
         }
 
-        /// <summary> Initializes a new instance of DataImportSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataImportSource"/>. </summary>
         /// <param name="connection"> Workspace connection for data import source storage. </param>
         /// <param name="sourceType"> [Required] Specifies the type of data. </param>
         internal DataImportSource(string connection, DataImportSourceType sourceType)

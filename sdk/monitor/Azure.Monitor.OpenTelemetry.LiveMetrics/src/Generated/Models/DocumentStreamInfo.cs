@@ -13,13 +13,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> Configurations/filters set by UX to scope the document/telemetry it's interested in. </summary>
     internal partial class DocumentStreamInfo
     {
-        /// <summary> Initializes a new instance of DocumentStreamInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentStreamInfo"/>. </summary>
         internal DocumentStreamInfo()
         {
             DocumentFilterGroups = new ChangeTrackingList<DocumentFilterConjunctionGroupInfo>();
         }
 
-        /// <summary> Initializes a new instance of DocumentStreamInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentStreamInfo"/>. </summary>
         /// <param name="id"> Identifier of the document stream initiated by a UX. </param>
         /// <param name="documentFilterGroups"> Gets or sets an OR-connected collection of filter groups. </param>
         internal DocumentStreamInfo(string id, IReadOnlyList<DocumentFilterConjunctionGroupInfo> documentFilterGroups)

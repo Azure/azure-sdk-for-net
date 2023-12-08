@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary> Creates the Hybrid AKS provisioned cluster instance. </summary>
         /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
-        /// <param name="data"> The ProvisionedCluster to use. </param>
+        /// <param name="data"> The <see cref="ProvisionedClusterData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> or <paramref name="data"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(string connectedClusterResourceUri, ProvisionedClusterData data, CancellationToken cancellationToken = default)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary> Creates the Hybrid AKS provisioned cluster instance. </summary>
         /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
-        /// <param name="data"> The ProvisionedCluster to use. </param>
+        /// <param name="data"> The <see cref="ProvisionedClusterData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> or <paramref name="data"/> is null. </exception>
         public Response CreateOrUpdate(string connectedClusterResourceUri, ProvisionedClusterData data, CancellationToken cancellationToken = default)

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that collects user tables for the given list of databases. </summary>
     public partial class GetUserTablesMySqlTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of GetUserTablesMySqlTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesMySqlTaskProperties"/>. </summary>
         public GetUserTablesMySqlTaskProperties()
         {
             Output = new ChangeTrackingList<GetUserTablesMySqlTaskOutput>();
             TaskType = TaskType.GetUserTablesMySql;
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesMySqlTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesMySqlTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> MAB workload-specific error information. </summary>
     public partial class MabErrorInfo
     {
-        /// <summary> Initializes a new instance of MabErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabErrorInfo"/>. </summary>
         public MabErrorInfo()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MabErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabErrorInfo"/>. </summary>
         /// <param name="errorString"> Localized error string. </param>
         /// <param name="recommendations"> List of localized recommendations. </param>
         internal MabErrorInfo(string errorString, IReadOnlyList<string> recommendations)

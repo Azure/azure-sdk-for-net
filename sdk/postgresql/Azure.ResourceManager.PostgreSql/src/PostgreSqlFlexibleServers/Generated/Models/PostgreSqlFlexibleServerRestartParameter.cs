@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Represents server restart parameters. </summary>
     public partial class PostgreSqlFlexibleServerRestartParameter
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerRestartParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerRestartParameter"/>. </summary>
         public PostgreSqlFlexibleServerRestartParameter()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerRestartParameter"/>. </summary>
+        /// <param name="restartWithFailover"> Indicates whether to restart the server with failover. </param>
+        /// <param name="failoverMode"> Failover mode. </param>
+        internal PostgreSqlFlexibleServerRestartParameter(bool? restartWithFailover, PostgreSqlFlexibleServerFailoverMode? failoverMode)
+        {
+            RestartWithFailover = restartWithFailover;
+            FailoverMode = failoverMode;
         }
 
         /// <summary> Indicates whether to restart the server with failover. </summary>

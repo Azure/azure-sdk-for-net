@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> MariaDB server linked service. </summary>
     public partial class MariaDBLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of MariaDBLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MariaDBLinkedService"/>. </summary>
         public MariaDBLinkedService()
         {
             LinkedServiceType = "MariaDB";
         }
 
-        /// <summary> Initializes a new instance of MariaDBLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MariaDBLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

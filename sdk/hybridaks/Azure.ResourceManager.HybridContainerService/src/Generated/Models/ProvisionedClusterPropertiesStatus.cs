@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> HybridAKSClusterStatus defines the observed state of HybridAKSCluster. </summary>
     public partial class ProvisionedClusterPropertiesStatus
     {
-        /// <summary> Initializes a new instance of ProvisionedClusterPropertiesStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterPropertiesStatus"/>. </summary>
         internal ProvisionedClusterPropertiesStatus()
         {
             ControlPlaneStatus = new ChangeTrackingList<AddonStatusProfile>();
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClusterPropertiesStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterPropertiesStatus"/>. </summary>
         /// <param name="controlPlaneStatus"> Status of the control plane components. </param>
         /// <param name="errorMessage"> ErrorMessage - Error messages during creation of cluster. </param>
         /// <param name="operationStatus"> Contains Provisioning errors. </param>

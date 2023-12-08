@@ -13,7 +13,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Azure Blob Storage content. </summary>
     public partial class AzureBlobContentSource
     {
-        /// <summary> Initializes a new instance of AzureBlobContentSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobContentSource"/>. </summary>
         /// <param name="containerUrl"> Azure Blob Storage container URL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerUrl"/> is null. </exception>
         public AzureBlobContentSource(Uri containerUrl)
@@ -23,7 +23,7 @@ namespace Azure.AI.DocumentIntelligence
             ContainerUrl = containerUrl;
         }
 
-        /// <summary> Initializes a new instance of AzureBlobContentSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobContentSource"/>. </summary>
         /// <param name="containerUrl"> Azure Blob Storage container URL. </param>
         /// <param name="prefix"> Blob name prefix. </param>
         internal AzureBlobContentSource(Uri containerUrl, string prefix)

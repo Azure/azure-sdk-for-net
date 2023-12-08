@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure IaaS VM workload-specific job object. </summary>
     public partial class IaasVmBackupJobV2 : BackupGenericJob
     {
-        /// <summary> Initializes a new instance of IaasVmBackupJobV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmBackupJobV2"/>. </summary>
         public IaasVmBackupJobV2()
         {
             ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             JobType = "AzureIaaSVMJobV2";
         }
 
-        /// <summary> Initializes a new instance of IaasVmBackupJobV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmBackupJobV2"/>. </summary>
         /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
         /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
         /// <param name="operation"> The operation name. </param>
