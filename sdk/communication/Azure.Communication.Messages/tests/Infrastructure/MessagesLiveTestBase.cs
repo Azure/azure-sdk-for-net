@@ -10,7 +10,7 @@ namespace Azure.Communication.Messages.Tests
 {
     public class MessagesLiveTestBase : RecordedTestBase<MessagesTestEnvironment>
     {
-        public MessagesLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public MessagesLiveTestBase(bool isAsync) : base(isAsync)
         {
             SanitizedHeaders.Add("x-ms-content-sha256");
         }
