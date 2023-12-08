@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 {
@@ -13,14 +13,19 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
     /// The 'FlipDocumentBuffers' method swaps the current buffer with a new one, allowing the
     /// consumer to process the documents in the returned buffer without interference from ongoing writes.
     /// </summary>
-    internal class DoubleBuffer<T> where T : class
+    internal class DoubleBuffer
     {
-        public T Instance = Activator.CreateInstance<T>();
+        private DocumentBuffer _currentBuffer = new();
 
-        public T FlipBuffers()
+        public void WriteDocument(DocumentIngress document)
+        {
+            _currentBuffer.Add(document);
+        }
+
+        public DocumentBuffer FlipDocumentBuffers()
         {
             // Atomically exchange the current buffer with a new empty buffer and return the old buffer
-            return Interlocked.Exchange(ref Instance, Activator.CreateInstance<T>());
+            return Interlocked.Exchange(ref _currentBuffer, new DocumentBuffer());
         }
     }
 }
