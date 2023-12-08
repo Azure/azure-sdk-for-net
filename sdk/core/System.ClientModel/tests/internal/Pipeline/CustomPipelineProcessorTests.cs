@@ -20,8 +20,10 @@ public class CustomPipelineProcessorTests
             fixedPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
+            beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 0,
-            perTryIndex: 0);
+            perTryIndex: 0,
+            beforeTransportIndex: 0);
 
         Assert.IsFalse(processor.ProcessNext());
     }
@@ -38,8 +40,10 @@ public class CustomPipelineProcessorTests
             fixedPolicies: new PipelinePolicy[1],
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
+            beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 1,
-            perTryIndex: 0);
+            perTryIndex: 0,
+            beforeTransportIndex: 0);
         });
 
         Assert.AreEqual("perCallIndex", perCallEx!.ParamName);
@@ -50,8 +54,10 @@ public class CustomPipelineProcessorTests
             fixedPolicies: new PipelinePolicy[1],
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
+            beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 2,
-            perTryIndex: 2);
+            perTryIndex: 2,
+            beforeTransportIndex: 2);
         });
 
         Assert.AreEqual("perCallIndex", perCallEx!.ParamName);
@@ -62,8 +68,10 @@ public class CustomPipelineProcessorTests
             fixedPolicies: new PipelinePolicy[1],
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
+            beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 0,
-            perTryIndex: 2);
+            perTryIndex: 2,
+            beforeTransportIndex: 2);
         });
 
         Assert.AreEqual("perTryIndex", perTryEx!.ParamName);
@@ -82,8 +90,10 @@ public class CustomPipelineProcessorTests
             fixedPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallPolicies: policies,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
+            beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 0,
-            perTryIndex: 0);
+            perTryIndex: 0,
+            beforeTransportIndex: 0);
 
         Assert.IsTrue(processor.ProcessNext());
 
@@ -106,9 +116,11 @@ public class CustomPipelineProcessorTests
         ClientPipeline.RequestOptionsProcessor processor = new(message,
             fixedPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
+            beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perTryPolicies: policies,
             perCallIndex: 0,
-            perTryIndex: 0);
+            perTryIndex: 0,
+            beforeTransportIndex: 0);
 
         Assert.IsTrue(processor.ProcessNext());
 
@@ -135,8 +147,10 @@ public class CustomPipelineProcessorTests
             fixedPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallPolicies: perCall,
             perTryPolicies: perTry,
+            beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 0,
-            perTryIndex: 0);
+            perTryIndex: 0,
+            beforeTransportIndex: 0);
 
         Assert.IsTrue(processor.ProcessNext());
 
@@ -168,8 +182,10 @@ public class CustomPipelineProcessorTests
             fixedPolicies: original,
             perCallPolicies: policies,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
+            beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 0,
-            perTryIndex: 0);
+            perTryIndex: 0,
+            beforeTransportIndex: 0);
 
         Assert.IsTrue(processor.ProcessNext());
 
@@ -208,8 +224,10 @@ public class CustomPipelineProcessorTests
             fixedPolicies: original,
             perCallPolicies: policies,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
+            beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 2,
-            perTryIndex: 2);
+            perTryIndex: 2,
+            beforeTransportIndex: 2);
 
         Assert.IsTrue(processor.ProcessNext());
 
@@ -248,8 +266,10 @@ public class CustomPipelineProcessorTests
             fixedPolicies: original,
             perCallPolicies: policies,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
+            beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 2,
-            perTryIndex: 2);
+            perTryIndex: 2,
+            beforeTransportIndex: 2);
 
         Assert.IsTrue(processor.ProcessNext());
 
@@ -288,8 +308,10 @@ public class CustomPipelineProcessorTests
             fixedPolicies: original,
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perTryPolicies: policies,
+            beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 0,
-            perTryIndex: 0);
+            perTryIndex: 0,
+            beforeTransportIndex: 0);
 
         Assert.IsTrue(processor.ProcessNext());
 
@@ -327,9 +349,11 @@ public class CustomPipelineProcessorTests
         ClientPipeline.RequestOptionsProcessor processor = new(message,
             fixedPolicies: original,
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
+            beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perTryPolicies: policies,
             perCallIndex: 0,
-            perTryIndex: 2);
+            perTryIndex: 2,
+            beforeTransportIndex: 2);
 
         Assert.IsTrue(processor.ProcessNext());
 
@@ -367,9 +391,11 @@ public class CustomPipelineProcessorTests
         ClientPipeline.RequestOptionsProcessor processor = new(message,
             fixedPolicies: original,
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
+            beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perTryPolicies: policies,
             perCallIndex: 0,
-            perTryIndex: 2);
+            perTryIndex: 2,
+            beforeTransportIndex: 2);
 
         Assert.IsTrue(processor.ProcessNext());
 
@@ -411,8 +437,10 @@ public class CustomPipelineProcessorTests
             fixedPolicies: original,
             perCallPolicies: perCall,
             perTryPolicies: perTry,
+            beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 0,
-            perTryIndex: 0);
+            perTryIndex: 0,
+            beforeTransportIndex: 0);
 
         Assert.IsTrue(processor.ProcessNext());
 
@@ -456,8 +484,10 @@ public class CustomPipelineProcessorTests
             fixedPolicies: original,
             perCallPolicies: perCall,
             perTryPolicies: perTry,
+            beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 2,
-            perTryIndex: 2);
+            perTryIndex: 2,
+            beforeTransportIndex: 2);
 
         Assert.IsTrue(processor.ProcessNext());
 
@@ -503,8 +533,10 @@ public class CustomPipelineProcessorTests
             fixedPolicies: original,
             perCallPolicies: perCall,
             perTryPolicies: perTry,
+            beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallIndex: 1,
-            perTryIndex: 2);
+            perTryIndex: 2,
+            beforeTransportIndex: 2);
 
         Assert.IsTrue(processor.ProcessNext());
 

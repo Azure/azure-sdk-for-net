@@ -60,6 +60,8 @@ public class PipelineMessage : IDisposable
 
     internal PipelinePolicy[]? PerTryPolicies { get; set; }
 
+    internal PipelinePolicy[]? BeforeTransportPolicies { get; set; }
+
     #endregion
 
     #region IDisposable

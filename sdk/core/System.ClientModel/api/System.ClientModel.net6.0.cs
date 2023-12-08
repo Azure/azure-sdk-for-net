@@ -76,7 +76,7 @@ namespace System.ClientModel.Primitives
     {
         internal ClientPipeline() { }
         public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.Primitives.PipelineOptions options, params System.ClientModel.Primitives.PipelinePolicy[] perCallPolicies) { throw null; }
-        public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.Primitives.PipelineOptions options, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> perTryPolicies) { throw null; }
+        public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.Primitives.PipelineOptions options, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> perTryPolicies, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> beforeTransportPolicies) { throw null; }
         public System.ClientModel.Primitives.PipelineMessage CreateMessage() { throw null; }
         public void Send(System.ClientModel.Primitives.PipelineMessage message) { }
         public System.Threading.Tasks.ValueTask SendAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
@@ -181,6 +181,7 @@ namespace System.ClientModel.Primitives
     {
         PerCall = 0,
         PerTry = 1,
+        BeforeTransport = 2,
     }
     public abstract partial class PipelineProcessor
     {
