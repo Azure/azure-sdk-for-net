@@ -103,7 +103,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
         }
 
-        public static explicit operator ModelAsStruct(OutputMessage result)
+        public static explicit operator ModelAsStruct(ClientResult result)
         {
             if (result is null) throw new ArgumentNullException(nameof(result));
 

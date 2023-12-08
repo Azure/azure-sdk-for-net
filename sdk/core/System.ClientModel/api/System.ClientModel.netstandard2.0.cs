@@ -9,6 +9,21 @@ namespace System.ClientModel
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public System.ClientModel.Primitives.PipelineResponse? GetRawResponse() { throw null; }
     }
+    public abstract partial class ClientResult
+    {
+        protected ClientResult(System.ClientModel.Primitives.PipelineResponse response) { }
+        public static System.ClientModel.OptionalClientResult<T> FromOptionalValue<T>(T? value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
+        public static System.ClientModel.ClientResult FromResponse(System.ClientModel.Primitives.PipelineResponse response) { throw null; }
+        public static System.ClientModel.ClientResult<T> FromValue<T>(T value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
+        public System.ClientModel.Primitives.PipelineResponse GetRawResponse() { throw null; }
+    }
+    public abstract partial class ClientResult<T> : System.ClientModel.OptionalClientResult<T>
+    {
+        protected ClientResult(T value, System.ClientModel.Primitives.PipelineResponse response) : base (default(T), default(System.ClientModel.Primitives.PipelineResponse)) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public sealed override bool HasValue { get { throw null; } }
+        public sealed override T Value { get { throw null; } }
+    }
     public abstract partial class InputContent : System.IDisposable
     {
         protected InputContent() { }
@@ -39,26 +54,11 @@ namespace System.ClientModel
         public static System.ClientModel.ModelReaderWriterOptions Json { get { throw null; } }
         public static System.ClientModel.ModelReaderWriterOptions Xml { get { throw null; } }
     }
-    public abstract partial class OptionalOutputMessage<T> : System.ClientModel.OutputMessage
+    public abstract partial class OptionalClientResult<T> : System.ClientModel.ClientResult
     {
-        protected OptionalOutputMessage(T? value, System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        protected OptionalClientResult(T? value, System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
         public virtual bool HasValue { get { throw null; } }
         public virtual T? Value { get { throw null; } }
-    }
-    public abstract partial class OutputMessage
-    {
-        protected OutputMessage(System.ClientModel.Primitives.PipelineResponse response) { }
-        public static System.ClientModel.OptionalOutputMessage<T> FromOptionalValue<T>(T? value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
-        public static System.ClientModel.OutputMessage FromResponse(System.ClientModel.Primitives.PipelineResponse response) { throw null; }
-        public static System.ClientModel.OutputMessage<T> FromValue<T>(T value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
-        public System.ClientModel.Primitives.PipelineResponse GetRawResponse() { throw null; }
-    }
-    public abstract partial class OutputMessage<T> : System.ClientModel.OptionalOutputMessage<T>
-    {
-        protected OutputMessage(T value, System.ClientModel.Primitives.PipelineResponse response) : base (default(T), default(System.ClientModel.Primitives.PipelineResponse)) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public sealed override bool HasValue { get { throw null; } }
-        public sealed override T Value { get { throw null; } }
     }
     public partial class RequestOptions
     {

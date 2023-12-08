@@ -27,7 +27,7 @@ public class MapsClientTests
         try
         {
             IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
-            OutputMessage<IPAddressCountryPair> output = client.GetCountryCode(ipAddress);
+            ClientResult<IPAddressCountryPair> output = client.GetCountryCode(ipAddress);
 
             Assert.AreEqual("US", output.Value.CountryRegion.IsoCode);
             Assert.AreEqual(IPAddress.Parse("2001:4898:80e8:b::189"), output.Value.IpAddress);
@@ -54,7 +54,7 @@ public class MapsClientTests
         try
         {
             IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
-            OutputMessage<IPAddressCountryPair> output = client.GetCountryCode(ipAddress);
+            ClientResult<IPAddressCountryPair> output = client.GetCountryCode(ipAddress);
 
             Assert.AreEqual("US", output.Value.CountryRegion.IsoCode);
             Assert.AreEqual(IPAddress.Parse("2001:4898:80e8:b::189"), output.Value.IpAddress);
@@ -79,7 +79,7 @@ public class MapsClientTests
         try
         {
             IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
-            OutputMessage<IPAddressCountryPair> output = client.GetCountryCode(ipAddress);
+            ClientResult<IPAddressCountryPair> output = client.GetCountryCode(ipAddress);
 
             Assert.AreEqual("US", output.Value.CountryRegion.IsoCode);
             Assert.AreEqual(IPAddress.Parse("2001:4898:80e8:b::189"), output.Value.IpAddress);
@@ -105,7 +105,7 @@ public class MapsClientTests
         try
         {
             IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
-            OutputMessage<IPAddressCountryPair> output = client.GetCountryCode(ipAddress);
+            ClientResult<IPAddressCountryPair> output = client.GetCountryCode(ipAddress);
 
             Assert.IsTrue(customPolicy.ProcessedMessage);
         }
@@ -129,7 +129,7 @@ public class MapsClientTests
         try
         {
             IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
-            OutputMessage<IPAddressCountryPair> output = client.GetCountryCode(ipAddress);
+            ClientResult<IPAddressCountryPair> output = client.GetCountryCode(ipAddress);
 
             PipelineResponse reponse = output.GetRawResponse();
 
@@ -157,7 +157,7 @@ public class MapsClientTests
             options.CancellationToken = new CancellationToken();
 
             // Call protocol method in order to pass RequestOptions
-            OutputMessage output = client.GetCountryCode(ipAddress.ToString(), options);
+            ClientResult output = client.GetCountryCode(ipAddress.ToString(), options);
 
             // TODO: Add validation test
         }
@@ -183,7 +183,7 @@ public class MapsClientTests
             options.AddHeader("CustomHeader", "CustomHeaderValue");
 
             // Call protocol method in order to pass RequestOptions
-            OutputMessage output = client.GetCountryCode(ipAddress.ToString(), options);
+            ClientResult output = client.GetCountryCode(ipAddress.ToString(), options);
 
             // TODO: Add validation test
         }
@@ -210,7 +210,7 @@ public class MapsClientTests
             options.AddPolicy(customPolicy, PipelinePosition.PerCall);
 
             // Call protocol method in order to pass RequestOptions
-            OutputMessage output = client.GetCountryCode(ipAddress.ToString(), options);
+            ClientResult output = client.GetCountryCode(ipAddress.ToString(), options);
 
             Assert.IsTrue(customPolicy.ProcessedMessage);
         }
@@ -236,7 +236,7 @@ public class MapsClientTests
             options.ErrorBehavior = ErrorBehavior.NoThrow;
 
             // Call protocol method in order to pass RequestOptions
-            OutputMessage output = client.GetCountryCode(ipAddress.ToString(), options);
+            ClientResult output = client.GetCountryCode(ipAddress.ToString(), options);
         }
         catch (ClientRequestException e)
         {

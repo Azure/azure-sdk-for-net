@@ -114,7 +114,7 @@ namespace Azure
         public Azure.ETag? IfMatch { get { throw null; } set { } }
         public Azure.ETag? IfNoneMatch { get { throw null; } set { } }
     }
-    public abstract partial class NullableResponse<T> : System.ClientModel.OptionalOutputMessage<T>
+    public abstract partial class NullableResponse<T> : System.ClientModel.OptionalClientResult<T>
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected NullableResponse() : base (default(T), default(System.ClientModel.Primitives.PipelineResponse)) { }

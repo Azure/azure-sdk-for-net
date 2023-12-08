@@ -28,22 +28,22 @@ public class OpenAIClient
         _pipeline = ClientPipeline.Create(options, new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer"));
     }
 
-    public virtual OutputMessage<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions)
+    public virtual ClientResult<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions)
     {
         if (deploymentId is null) throw new ArgumentNullException(nameof(deploymentId));
         if (deploymentId.Length == 0) throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentId));
         if (completionsOptions is null) throw new ArgumentNullException(nameof(completionsOptions));
 
         InputContent content = InputContent.Create(completionsOptions);
-        OutputMessage result = GetCompletions(deploymentId, content);
+        ClientResult result = GetCompletions(deploymentId, content);
 
         PipelineResponse response = result.GetRawResponse();
         Completions completions = Completions.FromResponse(response);
 
-        return OutputMessage.FromValue(completions, response);
+        return ClientResult.FromValue(completions, response);
     }
 
-    public virtual OutputMessage GetCompletions(string deploymentId, InputContent content, RequestOptions options = null)
+    public virtual ClientResult GetCompletions(string deploymentId, InputContent content, RequestOptions options = null)
     {
         if (deploymentId is null) throw new ArgumentNullException(nameof(deploymentId));
         if (deploymentId.Length == 0) throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentId));
@@ -60,7 +60,7 @@ public class OpenAIClient
             throw new ClientRequestException(response);
         }
 
-        return OutputMessage.FromResponse(response);
+        return ClientResult.FromResponse(response);
     }
 
     internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, InputContent content, RequestOptions options)

@@ -31,19 +31,19 @@ public class MapsClient
         _pipeline = ClientPipeline.Create(options, new KeyCredentialAuthenticationPolicy(_credential, "subscription-key"));
     }
 
-    public virtual OutputMessage<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress)
+    public virtual ClientResult<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress)
     {
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
-        OutputMessage output = GetCountryCode(ipAddress.ToString());
+        ClientResult output = GetCountryCode(ipAddress.ToString());
 
         PipelineResponse response = output.GetRawResponse();
         IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
 
-        return OutputMessage.FromValue(value, response);
+        return ClientResult.FromValue(value, response);
     }
 
-    public virtual OutputMessage GetCountryCode(string ipAddress, RequestOptions options = null)
+    public virtual ClientResult GetCountryCode(string ipAddress, RequestOptions options = null)
     {
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
@@ -60,7 +60,7 @@ public class MapsClient
             throw new ClientRequestException(response);
         }
 
-        return OutputMessage.FromResponse(response);
+        return ClientResult.FromResponse(response);
     }
 
     private PipelineMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)

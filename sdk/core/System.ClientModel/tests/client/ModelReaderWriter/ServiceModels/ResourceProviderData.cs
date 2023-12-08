@@ -27,7 +27,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
             return InputContent.Create(resourceProviderData, ModelReaderWriterHelper.WireOptions);
         }
 
-        public static explicit operator ResourceProviderData(OutputMessage result)
+        public static explicit operator ResourceProviderData(ClientResult result)
         {
             if (result is null) throw new ArgumentNullException(nameof(result));
 
