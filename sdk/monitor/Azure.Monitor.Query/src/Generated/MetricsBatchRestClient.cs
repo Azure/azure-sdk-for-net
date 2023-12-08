@@ -122,7 +122,7 @@ namespace Azure.Monitor.Query
         /// <param name="filter"> The filter is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="metricnamespace"/>, <paramref name="metricnames"/> or <paramref name="resourceIds"/> is null. </exception>
-        public async Task<Response<MetricResultsResponse>> BatchAsync(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList resourceIds, string starttime = null, string endtime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MetricsBatchResult>> BatchAsync(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList resourceIds, string starttime = null, string endtime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -147,9 +147,9 @@ namespace Azure.Monitor.Query
             {
                 case 200:
                     {
-                        MetricResultsResponse value = default;
+                        MetricsBatchResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MetricResultsResponse.DeserializeMetricResultsResponse(document.RootElement);
+                        value = MetricsBatchResult.DeserializeMetricsBatchResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -189,7 +189,7 @@ namespace Azure.Monitor.Query
         /// <param name="filter"> The filter is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="metricnamespace"/>, <paramref name="metricnames"/> or <paramref name="resourceIds"/> is null. </exception>
-        public Response<MetricResultsResponse> Batch(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList resourceIds, string starttime = null, string endtime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<MetricsBatchResult> Batch(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList resourceIds, string starttime = null, string endtime = null, TimeSpan? interval = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
             if (subscriptionId == null)
             {
@@ -214,9 +214,9 @@ namespace Azure.Monitor.Query
             {
                 case 200:
                     {
-                        MetricResultsResponse value = default;
+                        MetricsBatchResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MetricResultsResponse.DeserializeMetricResultsResponse(document.RootElement);
+                        value = MetricsBatchResult.DeserializeMetricsBatchResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -1,0 +1,37 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/servicebus/service.projects
+    - sdk/servicebus/Azure.Messaging.ServiceBus
+    - sdk/servicebus/Azure.Messaging.ServiceBus/ci.yml
+
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/servicebus/service.projects
+    - sdk/servicebus/Azure.Messaging.ServiceBus
+    - sdk/servicebus/Azure.Messaging.ServiceBus/ci.yml
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    SDKType: client
+    ServiceDirectory: servicebus
+    BuildSnippets: false
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.Messaging.ServiceBus
+      safeName: AzureMessagingServiceBus

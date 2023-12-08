@@ -9,7 +9,6 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-#if NET5_0_OR_GREATER
     public class TestActivitySourceListener: IDisposable
     {
         private readonly ActivityListener _listener;
@@ -60,5 +59,4 @@ namespace Azure.Core.Tests
             _listener?.Dispose();
         }
     }
-#endif
 }
