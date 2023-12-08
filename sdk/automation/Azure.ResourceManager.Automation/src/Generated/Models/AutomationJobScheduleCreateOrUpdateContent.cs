@@ -60,6 +60,6 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Gets or sets the hybrid worker group that the scheduled job should run on. </summary>
         public string RunOn { get; set; }
         /// <summary> Gets or sets a list of job properties. </summary>
-        public IDictionary<string, string> Parameters { get; }
+        public IDictionary<string, string> Parameters { get; set; }
     }
 }
