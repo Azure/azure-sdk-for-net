@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using Azure;
@@ -5277,6 +5278,24 @@ namespace Azure.ResourceManager.Network.Models
             destinationPortRanges ??= new List<string>();
 
             return new NetworkDefaultAdminRule(id, name, resourceType, systemData, AdminRuleKind.Default, etag, description, flag, protocol, sources?.ToList(), destinations?.ToList(), sourcePortRanges?.ToList(), destinationPortRanges?.ToList(), access, priority, direction, provisioningState, resourceGuid);
+        }
+
+        /// <summary> Initializes a new instance of NetworkVirtualApplianceConnectionData. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="namePropertiesName"> The name of the resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the NetworkVirtualApplianceConnection resource. </param>
+        /// <param name="asn"> Network Virtual Appliance ASN. </param>
+        /// <param name="tunnelIdentifier"> Unique identifier for the connection. </param>
+        /// <param name="bgpPeerAddress"> List of bgpPeerAddresses for the NVA instances. </param>
+        /// <param name="enableInternetSecurity"> Enable internet security. </param>
+        /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Network.NetworkVirtualApplianceConnectionData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkVirtualApplianceConnectionData NetworkVirtualApplianceConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, string namePropertiesName, NetworkProvisioningState? provisioningState, long? asn, long? tunnelIdentifier, IEnumerable<string> bgpPeerAddress, bool? enableInternetSecurity)
+        {
+            return NetworkVirtualApplianceConnectionData(id, name, resourceType, namePropertiesName, provisioningState, asn, tunnelIdentifier, bgpPeerAddress, enableInternetSecurity, default);
         }
     }
 }
