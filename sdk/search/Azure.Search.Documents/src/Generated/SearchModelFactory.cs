@@ -85,6 +85,27 @@ namespace Azure.Search.Documents.Models
             return new IndexerExecutionResult(status, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.SynonymMap"/>. </summary>
+        /// <param name="name"> The name of the synonym map. </param>
+        /// <param name="synonyms"> A series of synonym rules in the specified synonym map format. The rules must be separated by newlines. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your sensitive data. Once you have encrypted your data, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <returns> A new <see cref="Indexes.Models.SynonymMap"/> instance for mocking. </returns>
+        public static SynonymMap SynonymMap(string name = null, string synonyms = null, SearchResourceEncryptionKey encryptionKey = null)
+        {
+            return new SynonymMap(name, format: null, synonyms, encryptionKey, etag: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchSuggester"/>. </summary>
+        /// <param name="name"> The name of the suggester. </param>
+        /// <param name="sourceFields"> The list of field names to which the suggester applies. Each field must be searchable. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchSuggester"/> instance for mocking. </returns>
+        public static SearchSuggester SearchSuggester(string name = null, IEnumerable<string> sourceFields = null)
+        {
+            sourceFields ??= new List<string>();
+
+            return new SearchSuggester(name, searchMode: null, sourceFields?.ToList());
+        }
+
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexStatistics"/>. </summary>
         /// <param name="documentCount"> The number of documents in the index. </param>
         /// <param name="storageSize"> The amount of storage in bytes consumed by the index. </param>
