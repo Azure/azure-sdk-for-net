@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public partial class DataFactoryIntegrationRuntimeProperties
     {
-        /// <summary> Initializes a new instance of DataFactoryIntegrationRuntimeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryIntegrationRuntimeProperties"/>. </summary>
         public DataFactoryIntegrationRuntimeProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryIntegrationRuntimeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryIntegrationRuntimeProperties"/>. </summary>
         /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

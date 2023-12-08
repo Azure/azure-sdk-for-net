@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> GatewayCustomBgpIpAddressIpConfiguration for a virtual network gateway connection. </summary>
     public partial class GatewayCustomBgpIPAddressIPConfiguration
     {
-        /// <summary> Initializes a new instance of GatewayCustomBgpIPAddressIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayCustomBgpIPAddressIPConfiguration"/>. </summary>
         /// <param name="ipConfigurationId"> The IpconfigurationId of ipconfiguration which belongs to gateway. </param>
         /// <param name="customBgpIPAddress"> The custom BgpPeeringAddress which belongs to IpconfigurationId. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationId"/> or <paramref name="customBgpIPAddress"/> is null. </exception>

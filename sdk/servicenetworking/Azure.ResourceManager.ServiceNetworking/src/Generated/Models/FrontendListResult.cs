@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     /// <summary> The response of a Frontend list operation. </summary>
     internal partial class FrontendListResult
     {
-        /// <summary> Initializes a new instance of FrontendListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontendListResult"/>. </summary>
         /// <param name="value"> The Frontend items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal FrontendListResult(IEnumerable<FrontendData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of FrontendListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontendListResult"/>. </summary>
         /// <param name="value"> The Frontend items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal FrontendListResult(IReadOnlyList<FrontendData> value, Uri nextLink)

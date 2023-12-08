@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> A class that describes the reason for a validation failure. </summary>
     public partial class VirtualNetworkValidationFailureDetails : ResourceData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkValidationFailureDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkValidationFailureDetails"/>. </summary>
         public VirtualNetworkValidationFailureDetails()
         {
             FailedTests = new ChangeTrackingList<VirtualNetworkValidationTestFailure>();
             Warnings = new ChangeTrackingList<VirtualNetworkValidationTestFailure>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkValidationFailureDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkValidationFailureDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

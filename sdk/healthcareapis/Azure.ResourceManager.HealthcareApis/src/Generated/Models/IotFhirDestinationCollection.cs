@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> A collection of IoT Connector FHIR destinations. </summary>
     internal partial class IotFhirDestinationCollection
     {
-        /// <summary> Initializes a new instance of IotFhirDestinationCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotFhirDestinationCollection"/>. </summary>
         internal IotFhirDestinationCollection()
         {
             Value = new ChangeTrackingList<HealthcareApisIotFhirDestinationData>();
         }
 
-        /// <summary> Initializes a new instance of IotFhirDestinationCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotFhirDestinationCollection"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of IoT FHIR destinations. </param>
         /// <param name="value"> The list of IoT Connector FHIR destinations. </param>
         internal IotFhirDestinationCollection(string nextLink, IReadOnlyList<HealthcareApisIotFhirDestinationData> value)

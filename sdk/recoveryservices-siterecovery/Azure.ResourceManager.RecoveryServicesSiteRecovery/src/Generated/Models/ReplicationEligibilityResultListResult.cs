@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Replication eligibility results collection response model. </summary>
     internal partial class ReplicationEligibilityResultListResult
     {
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationEligibilityResultListResult"/>. </summary>
         internal ReplicationEligibilityResultListResult()
         {
             Value = new ChangeTrackingList<ReplicationEligibilityResultData>();
         }
 
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationEligibilityResultListResult"/>. </summary>
         /// <param name="value"> The replication eligibility results details. </param>
         internal ReplicationEligibilityResultListResult(IReadOnlyList<ReplicationEligibilityResultData> value)
         {

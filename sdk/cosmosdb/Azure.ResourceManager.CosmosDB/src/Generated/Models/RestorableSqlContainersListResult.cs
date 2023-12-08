@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the SQL container events and their properties. </summary>
     internal partial class RestorableSqlContainersListResult
     {
-        /// <summary> Initializes a new instance of RestorableSqlContainersListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableSqlContainersListResult"/>. </summary>
         internal RestorableSqlContainersListResult()
         {
             Value = new ChangeTrackingList<RestorableSqlContainer>();
         }
 
-        /// <summary> Initializes a new instance of RestorableSqlContainersListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableSqlContainersListResult"/>. </summary>
         /// <param name="value"> List of SQL container events and their properties. </param>
         internal RestorableSqlContainersListResult(IReadOnlyList<RestorableSqlContainer> value)
         {

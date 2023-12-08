@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.NewRelicObservability
         private readonly TagRulesRestOperations _newRelicObservabilityTagRuleTagRulesRestClient;
         private readonly NewRelicObservabilityTagRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "NewRelic.Observability/monitors/tagRules";
+
         /// <summary> Initializes a new instance of the <see cref="NewRelicObservabilityTagRuleResource"/> class for mocking. </summary>
         protected NewRelicObservabilityTagRuleResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.NewRelicObservability
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "NewRelic.Observability/monitors/tagRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

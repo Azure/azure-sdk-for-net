@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.EnergyServices
     /// <summary> A class representing the EnergyService data model. </summary>
     public partial class EnergyServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of EnergyServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnergyServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public EnergyServiceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of EnergyServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnergyServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

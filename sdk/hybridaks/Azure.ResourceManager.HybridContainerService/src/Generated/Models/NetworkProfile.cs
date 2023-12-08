@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> NetworkProfile - Profile of network configuration. </summary>
     public partial class NetworkProfile
     {
-        /// <summary> Initializes a new instance of NetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfile"/>. </summary>
         public NetworkProfile()
         {
             PodCidrs = new ChangeTrackingList<string>();
             ServiceCidrs = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfile"/>. </summary>
         /// <param name="loadBalancerProfile"> LoadBalancerProfile - Profile of the cluster load balancer. </param>
         /// <param name="loadBalancerSku"> LoadBalancerSku - The load balancer sku for the provisioned cluster. Possible values: 'unstacked-haproxy', 'stacked-kube-vip', 'stacked-metallb', 'unmanaged'. The default is 'unmanaged'. </param>
         /// <param name="dnsServiceIP"> DNSServiceIP - An IP address assigned to the Kubernetes DNS service. It must be within the Kubernetes service address range specified in serviceCidr. </param>

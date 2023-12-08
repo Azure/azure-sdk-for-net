@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Tracking courier information. </summary>
     public partial class DataBoxEdgeTrackingInfo
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeTrackingInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeTrackingInfo"/>. </summary>
         internal DataBoxEdgeTrackingInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeTrackingInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeTrackingInfo"/>. </summary>
         /// <param name="serialNumber"> Serial number of the device being tracked. </param>
         /// <param name="carrierName"> Name of the carrier used in the delivery. </param>
         /// <param name="trackingId"> Tracking ID of the shipment. </param>

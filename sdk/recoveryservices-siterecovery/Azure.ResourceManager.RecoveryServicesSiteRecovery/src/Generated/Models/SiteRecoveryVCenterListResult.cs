@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Collection of vCenter details. </summary>
     internal partial class SiteRecoveryVCenterListResult
     {
-        /// <summary> Initializes a new instance of SiteRecoveryVCenterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVCenterListResult"/>. </summary>
         internal SiteRecoveryVCenterListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryVCenterData>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryVCenterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVCenterListResult"/>. </summary>
         /// <param name="value"> The vCenter details. </param>
         /// <param name="nextLink"> The value of next link. </param>
         internal SiteRecoveryVCenterListResult(IReadOnlyList<SiteRecoveryVCenterData> value, string nextLink)

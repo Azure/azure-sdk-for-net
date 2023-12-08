@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Specifies the operating system settings for the virtual machine. </summary>
     public partial class OSProfileForVmInstance
     {
-        /// <summary> Initializes a new instance of OSProfileForVmInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSProfileForVmInstance"/>. </summary>
         public OSProfileForVmInstance()
         {
         }
 
-        /// <summary> Initializes a new instance of OSProfileForVmInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSProfileForVmInstance"/>. </summary>
         /// <param name="computerName"> Gets or sets computer name. </param>
         /// <param name="adminUsername"> Gets or sets administrator username. </param>
         /// <param name="adminPassword"> Sets administrator password. </param>

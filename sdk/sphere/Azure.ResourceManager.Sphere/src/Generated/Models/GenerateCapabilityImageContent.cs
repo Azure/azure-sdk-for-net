@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class GenerateCapabilityImageContent
     {
-        /// <summary> Initializes a new instance of GenerateCapabilityImageContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateCapabilityImageContent"/>. </summary>
         /// <param name="capabilities">
         /// List of capabilities to create
         /// Serialized Name: GenerateCapabilityImageRequest.capabilities
@@ -29,6 +29,16 @@ namespace Azure.ResourceManager.Sphere.Models
             Argument.AssertNotNull(capabilities, nameof(capabilities));
 
             Capabilities = capabilities.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GenerateCapabilityImageContent"/>. </summary>
+        /// <param name="capabilities">
+        /// List of capabilities to create
+        /// Serialized Name: GenerateCapabilityImageRequest.capabilities
+        /// </param>
+        internal GenerateCapabilityImageContent(IList<SphereCapabilityType> capabilities)
+        {
+            Capabilities = capabilities;
         }
 
         /// <summary>

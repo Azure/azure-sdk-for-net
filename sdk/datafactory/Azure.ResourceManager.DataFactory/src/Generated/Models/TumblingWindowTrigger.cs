@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Trigger that schedules pipeline runs for all fixed time interval windows from a start time without gaps and also supports backfill scenarios (when start time is in the past). </summary>
     public partial class TumblingWindowTrigger : DataFactoryTriggerProperties
     {
-        /// <summary> Initializes a new instance of TumblingWindowTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="TumblingWindowTrigger"/>. </summary>
         /// <param name="pipeline"> Pipeline for which runs are created when an event is fired for trigger window that is ready. </param>
         /// <param name="frequency"> The frequency of the time windows. </param>
         /// <param name="interval"> The interval of the time windows. The minimum interval allowed is 15 Minutes. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             TriggerType = "TumblingWindowTrigger";
         }
 
-        /// <summary> Initializes a new instance of TumblingWindowTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="TumblingWindowTrigger"/>. </summary>
         /// <param name="triggerType"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>

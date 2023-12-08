@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CosmosDBSqlClientEncryptionKeyData : ResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlClientEncryptionKeyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlClientEncryptionKeyData"/>. </summary>
         public CosmosDBSqlClientEncryptionKeyData()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlClientEncryptionKeyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlClientEncryptionKeyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

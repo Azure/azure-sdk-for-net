@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network rule collection resource. </summary>
     public partial class AzureFirewallNetworkRuleCollectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of AzureFirewallNetworkRuleCollectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallNetworkRuleCollectionData"/>. </summary>
         public AzureFirewallNetworkRuleCollectionData()
         {
             Rules = new ChangeTrackingList<AzureFirewallNetworkRule>();
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallNetworkRuleCollectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallNetworkRuleCollectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

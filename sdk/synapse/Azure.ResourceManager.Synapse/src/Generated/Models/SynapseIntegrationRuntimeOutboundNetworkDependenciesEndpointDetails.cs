@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The details of Azure-SSIS integration runtime outbound network dependency endpoint. </summary>
     public partial class SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails"/>. </summary>
         internal SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails"/>. </summary>
         /// <param name="port"> The port of endpoint. </param>
         internal SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(int? port)
         {

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> The AvailableRuntimeVersions. </summary>
     internal partial class AvailableRuntimeVersions
     {
-        /// <summary> Initializes a new instance of AvailableRuntimeVersions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableRuntimeVersions"/>. </summary>
         internal AvailableRuntimeVersions()
         {
             Value = new ChangeTrackingList<AppPlatformSupportedRuntimeVersion>();
         }
 
-        /// <summary> Initializes a new instance of AvailableRuntimeVersions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableRuntimeVersions"/>. </summary>
         /// <param name="value"> A list of all supported runtime versions. </param>
         internal AvailableRuntimeVersions(IReadOnlyList<AppPlatformSupportedRuntimeVersion> value)
         {

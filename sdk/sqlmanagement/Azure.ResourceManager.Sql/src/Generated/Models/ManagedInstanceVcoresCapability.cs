@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The managed instance virtual cores capability. </summary>
     public partial class ManagedInstanceVcoresCapability
     {
-        /// <summary> Initializes a new instance of ManagedInstanceVcoresCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceVcoresCapability"/>. </summary>
         internal ManagedInstanceVcoresCapability()
         {
             SupportedStorageSizes = new ChangeTrackingList<MaxSizeRangeCapability>();
             SupportedMaintenanceConfigurations = new ChangeTrackingList<ManagedInstanceMaintenanceConfigurationCapability>();
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceVcoresCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceVcoresCapability"/>. </summary>
         /// <param name="name"> The virtual cores identifier. </param>
         /// <param name="value"> The virtual cores value. </param>
         /// <param name="includedMaxSize"> Included size. </param>

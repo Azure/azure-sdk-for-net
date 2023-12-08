@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies information about the operating system disk used by the virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </summary>
     public partial class VirtualMachineOSDisk
     {
-        /// <summary> Initializes a new instance of VirtualMachineOSDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineOSDisk"/>. </summary>
         /// <param name="createOption"> Specifies how the virtual machine should be created. Possible values are: **Attach.** This value is used when you are using a specialized disk to create the virtual machine. **FromImage.** This value is used when you are using an image to create the virtual machine. If you are using a platform image, you should also use the imageReference element described above. If you are using a marketplace image, you should also use the plan element previously described. </param>
         public VirtualMachineOSDisk(DiskCreateOptionType createOption)
         {
             CreateOption = createOption;
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineOSDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineOSDisk"/>. </summary>
         /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. Possible values are: **Windows,** **Linux.**. </param>
         /// <param name="encryptionSettings"> Specifies the encryption settings for the OS Disk. Minimum api-version: 2015-06-15. </param>
         /// <param name="name"> The disk name. </param>

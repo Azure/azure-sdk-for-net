@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Akamai access control. </summary>
     internal partial class AkamaiAccessControl
     {
-        /// <summary> Initializes a new instance of AkamaiAccessControl. </summary>
+        /// <summary> Initializes a new instance of <see cref="AkamaiAccessControl"/>. </summary>
         public AkamaiAccessControl()
         {
             AkamaiSignatureHeaderAuthenticationKeyList = new ChangeTrackingList<AkamaiSignatureHeaderAuthenticationKey>();
         }
 
-        /// <summary> Initializes a new instance of AkamaiAccessControl. </summary>
+        /// <summary> Initializes a new instance of <see cref="AkamaiAccessControl"/>. </summary>
         /// <param name="akamaiSignatureHeaderAuthenticationKeyList"> authentication key list. </param>
         internal AkamaiAccessControl(IList<AkamaiSignatureHeaderAuthenticationKey> akamaiSignatureHeaderAuthenticationKeyList)
         {

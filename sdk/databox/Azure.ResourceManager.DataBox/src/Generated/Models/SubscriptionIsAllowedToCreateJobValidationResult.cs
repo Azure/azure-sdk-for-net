@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Properties of subscription permission to create job validation response. </summary>
     public partial class SubscriptionIsAllowedToCreateJobValidationResult : DataBoxValidationInputResult
     {
-        /// <summary> Initializes a new instance of SubscriptionIsAllowedToCreateJobValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionIsAllowedToCreateJobValidationResult"/>. </summary>
         internal SubscriptionIsAllowedToCreateJobValidationResult()
         {
             ValidationType = DataBoxValidationInputDiscriminator.ValidateSubscriptionIsAllowedToCreateJob;
         }
 
-        /// <summary> Initializes a new instance of SubscriptionIsAllowedToCreateJobValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionIsAllowedToCreateJobValidationResult"/>. </summary>
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Validation status of subscription permission to create job. </param>

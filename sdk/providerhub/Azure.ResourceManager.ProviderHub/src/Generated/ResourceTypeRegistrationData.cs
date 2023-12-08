@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.ProviderHub
     /// <summary> A class representing the ResourceTypeRegistration data model. </summary>
     public partial class ResourceTypeRegistrationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ResourceTypeRegistrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeRegistrationData"/>. </summary>
         public ResourceTypeRegistrationData()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeRegistrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeRegistrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

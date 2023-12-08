@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A database metric name. </summary>
     public partial class SqlMetricName
     {
-        /// <summary> Initializes a new instance of SqlMetricName. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlMetricName"/>. </summary>
         internal SqlMetricName()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlMetricName. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlMetricName"/>. </summary>
         /// <param name="value"> The name of the database metric. </param>
         /// <param name="localizedValue"> The friendly name of the database metric. </param>
         internal SqlMetricName(string value, string localizedValue)

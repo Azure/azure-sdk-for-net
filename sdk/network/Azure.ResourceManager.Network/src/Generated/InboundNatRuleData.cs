@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class InboundNatRuleData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of InboundNatRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundNatRuleData"/>. </summary>
         public InboundNatRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of InboundNatRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundNatRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

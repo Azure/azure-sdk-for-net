@@ -13,10 +13,19 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the partner configuration update. </summary>
     public partial class PartnerConfigurationPatch
     {
-        /// <summary> Initializes a new instance of PartnerConfigurationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerConfigurationPatch"/>. </summary>
         public PartnerConfigurationPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PartnerConfigurationPatch"/>. </summary>
+        /// <param name="tags"> Tags of the partner configuration resource. </param>
+        /// <param name="defaultMaximumExpirationTimeInDays"> The default time used to validate the maximum expiration time for each authorized partners in days. Allowed values ar between 1 and 365 days. </param>
+        internal PartnerConfigurationPatch(IDictionary<string, string> tags, int? defaultMaximumExpirationTimeInDays)
+        {
+            Tags = tags;
+            DefaultMaximumExpirationTimeInDays = defaultMaximumExpirationTimeInDays;
         }
 
         /// <summary> Tags of the partner configuration resource. </summary>

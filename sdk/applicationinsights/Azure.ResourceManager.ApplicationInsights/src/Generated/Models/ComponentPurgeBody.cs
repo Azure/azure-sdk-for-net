@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Describes the body of a purge request for an App Insights component. </summary>
     public partial class ComponentPurgeBody
     {
-        /// <summary> Initializes a new instance of ComponentPurgeBody. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentPurgeBody"/>. </summary>
         /// <param name="table"> Table from which to purge data. </param>
         /// <param name="filters"> The set of columns and filters (queries) to run over them to purge the resulting data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> or <paramref name="filters"/> is null. </exception>
@@ -26,6 +26,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
             Table = table;
             Filters = filters.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ComponentPurgeBody"/>. </summary>
+        /// <param name="table"> Table from which to purge data. </param>
+        /// <param name="filters"> The set of columns and filters (queries) to run over them to purge the resulting data. </param>
+        internal ComponentPurgeBody(string table, IList<ComponentPurgeBodyFilters> filters)
+        {
+            Table = table;
+            Filters = filters;
         }
 
         /// <summary> Table from which to purge data. </summary>

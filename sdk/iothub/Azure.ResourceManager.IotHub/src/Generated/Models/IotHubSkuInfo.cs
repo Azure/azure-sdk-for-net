@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Information about the SKU of the IoT hub. </summary>
     public partial class IotHubSkuInfo
     {
-        /// <summary> Initializes a new instance of IotHubSkuInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubSkuInfo"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         public IotHubSkuInfo(IotHubSku name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of IotHubSkuInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubSkuInfo"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="tier"> The billing tier for the IoT hub. </param>
         /// <param name="capacity"> The number of provisioned IoT Hub units. See: https://docs.microsoft.com/azure/azure-subscription-service-limits#iot-hub-limits. </param>

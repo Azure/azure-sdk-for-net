@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         private readonly MarketplaceAgreementsRestOperations _marketplaceAgreementRestClient;
         private readonly MarketplaceAgreementTermData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MarketplaceOrdering/agreements/offers/plans";
+
         /// <summary> Initializes a new instance of the <see cref="MarketplaceAgreementResource"/> class for mocking. </summary>
         protected MarketplaceAgreementResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.MarketplaceOrdering
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MarketplaceOrdering/agreements/offers/plans";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly ReplicationEligibilityResultsRestOperations _replicationEligibilityResultRestClient;
         private readonly ReplicationEligibilityResultData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/replicationEligibilityResults";
+
         /// <summary> Initializes a new instance of the <see cref="ReplicationEligibilityResultResource"/> class for mocking. </summary>
         protected ReplicationEligibilityResultResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/replicationEligibilityResults";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

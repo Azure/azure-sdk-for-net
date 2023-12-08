@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The SparkJobPythonEntry. </summary>
     public partial class SparkJobPythonEntry : SparkJobEntry
     {
-        /// <summary> Initializes a new instance of SparkJobPythonEntry. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJobPythonEntry"/>. </summary>
         /// <param name="file"> [Required] Relative python file path for job entry point. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
         public SparkJobPythonEntry(string file)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SparkJobEntryType = SparkJobEntryType.SparkJobPythonEntry;
         }
 
-        /// <summary> Initializes a new instance of SparkJobPythonEntry. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJobPythonEntry"/>. </summary>
         /// <param name="sparkJobEntryType"> [Required] Type of the job's entry point. </param>
         /// <param name="file"> [Required] Relative python file path for job entry point. </param>
         internal SparkJobPythonEntry(SparkJobEntryType sparkJobEntryType, string file) : base(sparkJobEntryType)

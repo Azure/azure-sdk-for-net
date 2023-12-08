@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The Elastic Pool performance level capability. </summary>
     public partial class ElasticPoolPerformanceLevelCapability
     {
-        /// <summary> Initializes a new instance of ElasticPoolPerformanceLevelCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolPerformanceLevelCapability"/>. </summary>
         internal ElasticPoolPerformanceLevelCapability()
         {
             SupportedLicenseTypes = new ChangeTrackingList<LicenseTypeCapability>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
             SupportedMaintenanceConfigurations = new ChangeTrackingList<MaintenanceConfigurationCapability>();
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolPerformanceLevelCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolPerformanceLevelCapability"/>. </summary>
         /// <param name="performanceLevel"> The performance level for the pool. </param>
         /// <param name="sku"> The sku. </param>
         /// <param name="supportedLicenseTypes"> List of supported license types. </param>

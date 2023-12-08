@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The CassandraCertificate. </summary>
     public partial class CassandraCertificate
     {
-        /// <summary> Initializes a new instance of CassandraCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraCertificate"/>. </summary>
         public CassandraCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraCertificate"/>. </summary>
         /// <param name="pem"> PEM formatted public key. </param>
         internal CassandraCertificate(string pem)
         {

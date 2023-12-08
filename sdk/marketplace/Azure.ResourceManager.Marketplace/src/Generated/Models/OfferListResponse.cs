@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> The OfferListResponse. </summary>
     internal partial class OfferListResponse
     {
-        /// <summary> Initializes a new instance of OfferListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfferListResponse"/>. </summary>
         internal OfferListResponse()
         {
             Value = new ChangeTrackingList<PrivateStoreOfferData>();
         }
 
-        /// <summary> Initializes a new instance of OfferListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfferListResponse"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of offer list results if there are any. </param>
         internal OfferListResponse(IReadOnlyList<PrivateStoreOfferData> value, string nextLink)

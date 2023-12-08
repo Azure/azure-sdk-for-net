@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The DocumentResult. </summary>
     internal partial class DocumentResult
     {
-        /// <summary> Initializes a new instance of DocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="warnings"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Models
             Warnings = warnings.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>

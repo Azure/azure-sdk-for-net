@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class CaCertificateData : ResourceData
     {
-        /// <summary> Initializes a new instance of CaCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CaCertificateData"/>. </summary>
         public CaCertificateData()
         {
         }
 
-        /// <summary> Initializes a new instance of CaCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CaCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

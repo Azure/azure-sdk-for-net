@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Sql
         private readonly MaintenanceWindowsRestOperations _maintenanceWindowsMaintenanceWindowsRestClient;
         private readonly MaintenanceWindowsData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/maintenanceWindows";
+
         /// <summary> Initializes a new instance of the <see cref="MaintenanceWindowsResource"/> class for mocking. </summary>
         protected MaintenanceWindowsResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/maintenanceWindows";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="maintenanceWindowName"> Maintenance window name. </param>
-        /// <param name="data"> The MaintenanceWindows to use. </param>
+        /// <param name="data"> The <see cref="MaintenanceWindowsData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, string maintenanceWindowName, MaintenanceWindowsData data, CancellationToken cancellationToken = default)
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="maintenanceWindowName"> Maintenance window name. </param>
-        /// <param name="data"> The MaintenanceWindows to use. </param>
+        /// <param name="data"> The <see cref="MaintenanceWindowsData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, string maintenanceWindowName, MaintenanceWindowsData data, CancellationToken cancellationToken = default)

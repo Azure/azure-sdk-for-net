@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The relevant Mongo Role Definitions. </summary>
     internal partial class MongoDBRoleDefinitionListResult
     {
-        /// <summary> Initializes a new instance of MongoDBRoleDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBRoleDefinitionListResult"/>. </summary>
         internal MongoDBRoleDefinitionListResult()
         {
             Value = new ChangeTrackingList<MongoDBRoleDefinitionData>();
         }
 
-        /// <summary> Initializes a new instance of MongoDBRoleDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBRoleDefinitionListResult"/>. </summary>
         /// <param name="value"> List of Mongo Role Definitions and their properties. </param>
         internal MongoDBRoleDefinitionListResult(IReadOnlyList<MongoDBRoleDefinitionData> value)
         {

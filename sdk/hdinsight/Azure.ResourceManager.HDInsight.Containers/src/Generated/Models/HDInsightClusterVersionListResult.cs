@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Represents a list of cluster versions. </summary>
     internal partial class HDInsightClusterVersionListResult
     {
-        /// <summary> Initializes a new instance of HDInsightClusterVersionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterVersionListResult"/>. </summary>
         internal HDInsightClusterVersionListResult()
         {
             Value = new ChangeTrackingList<HDInsightClusterVersion>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterVersionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterVersionListResult"/>. </summary>
         /// <param name="value"> The list of cluster versions. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal HDInsightClusterVersionListResult(IReadOnlyList<HDInsightClusterVersion> value, string nextLink)

@@ -15,13 +15,13 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> The response for the Onco Phenotype request. </summary>
     public partial class OncoPhenotypeResult
     {
-        /// <summary> Initializes a new instance of OncoPhenotypeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypeResult"/>. </summary>
         internal OncoPhenotypeResult()
         {
             Errors = new ChangeTrackingList<ResponseError>();
         }
 
-        /// <summary> Initializes a new instance of OncoPhenotypeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypeResult"/>. </summary>
         /// <param name="jobId"> A processing job identifier. </param>
         /// <param name="createdDateTime"> The date and time when the processing job was created. </param>
         /// <param name="expirationDateTime"> The date and time when the processing job is set to expire. </param>

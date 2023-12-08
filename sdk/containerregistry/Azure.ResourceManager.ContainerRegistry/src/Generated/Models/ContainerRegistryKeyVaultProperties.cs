@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The ContainerRegistryKeyVaultProperties. </summary>
     public partial class ContainerRegistryKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of ContainerRegistryKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryKeyVaultProperties"/>. </summary>
         public ContainerRegistryKeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryKeyVaultProperties"/>. </summary>
         /// <param name="keyIdentifier"> Key vault uri to access the encryption key. </param>
         /// <param name="versionedKeyIdentifier"> The fully qualified key identifier that includes the version of the key that is actually used for encryption. </param>
         /// <param name="identity"> The client id of the identity which will be used to access key vault. </param>

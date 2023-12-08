@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.AppService
         private readonly StaticSitesRestOperations _staticSiteRestClient;
         private readonly StaticSiteData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/staticSites";
+
         /// <summary> Initializes a new instance of the <see cref="StaticSiteResource"/> class for mocking. </summary>
         protected StaticSiteResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/staticSites";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -859,7 +859,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The StaticSiteUserInvitationContent to use. </param>
+        /// <param name="content"> The <see cref="StaticSiteUserInvitationContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<StaticSiteUserInvitationResult>> CreateUserRolesInvitationLinkAsync(StaticSiteUserInvitationContent content, CancellationToken cancellationToken = default)
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The StaticSiteUserInvitationContent to use. </param>
+        /// <param name="content"> The <see cref="StaticSiteUserInvitationContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<StaticSiteUserInvitationResult> CreateUserRolesInvitationLink(StaticSiteUserInvitationContent content, CancellationToken cancellationToken = default)
@@ -1321,7 +1321,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The StaticSiteResetContent to use. </param>
+        /// <param name="content"> The <see cref="StaticSiteResetContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response> ResetApiKeyAsync(StaticSiteResetContent content, CancellationToken cancellationToken = default)
@@ -1355,7 +1355,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The StaticSiteResetContent to use. </param>
+        /// <param name="content"> The <see cref="StaticSiteResetContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response ResetApiKey(StaticSiteResetContent content, CancellationToken cancellationToken = default)

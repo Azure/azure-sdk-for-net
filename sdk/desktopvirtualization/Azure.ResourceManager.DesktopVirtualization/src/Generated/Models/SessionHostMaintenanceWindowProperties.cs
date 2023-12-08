@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> Maintenance window starting hour and day of week. </summary>
     public partial class SessionHostMaintenanceWindowProperties
     {
-        /// <summary> Initializes a new instance of SessionHostMaintenanceWindowProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionHostMaintenanceWindowProperties"/>. </summary>
         public SessionHostMaintenanceWindowProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SessionHostMaintenanceWindowProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionHostMaintenanceWindowProperties"/>. </summary>
         /// <param name="hour"> The update start hour of the day. (0 - 23). </param>
         /// <param name="dayOfWeek"> Day of the week. </param>
         internal SessionHostMaintenanceWindowProperties(int? hour, DesktopVirtualizationDayOfWeek? dayOfWeek)

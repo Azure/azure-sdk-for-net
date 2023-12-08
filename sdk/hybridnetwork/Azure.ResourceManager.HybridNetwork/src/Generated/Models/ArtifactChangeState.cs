@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The artifact updating request payload. </summary>
     public partial class ArtifactChangeState
     {
-        /// <summary> Initializes a new instance of ArtifactChangeState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactChangeState"/>. </summary>
         public ArtifactChangeState()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArtifactChangeState"/>. </summary>
+        /// <param name="properties"> Artifact update state properties. </param>
+        internal ArtifactChangeState(ArtifactChangeStateProperties properties)
+        {
+            Properties = properties;
         }
 
         /// <summary> Artifact update state properties. </summary>

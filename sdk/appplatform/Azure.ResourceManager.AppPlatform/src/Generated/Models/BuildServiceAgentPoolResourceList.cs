@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Object that includes an array of build service agent pool resources and a possible link for next set. </summary>
     internal partial class BuildServiceAgentPoolResourceList
     {
-        /// <summary> Initializes a new instance of BuildServiceAgentPoolResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildServiceAgentPoolResourceList"/>. </summary>
         internal BuildServiceAgentPoolResourceList()
         {
             Value = new ChangeTrackingList<AppPlatformBuildServiceAgentPoolData>();
         }
 
-        /// <summary> Initializes a new instance of BuildServiceAgentPoolResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildServiceAgentPoolResourceList"/>. </summary>
         /// <param name="value"> Collection of build service agent pool resource. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).

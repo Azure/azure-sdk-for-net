@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the activity output type. </summary>
     public partial class AutomationActivityOutputType
     {
-        /// <summary> Initializes a new instance of AutomationActivityOutputType. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationActivityOutputType"/>. </summary>
         internal AutomationActivityOutputType()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationActivityOutputType. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationActivityOutputType"/>. </summary>
         /// <param name="name"> Gets or sets the name of the activity output type. </param>
         /// <param name="activityOutputType"> Gets or sets the type of the activity output type. </param>
         internal AutomationActivityOutputType(string name, string activityOutputType)

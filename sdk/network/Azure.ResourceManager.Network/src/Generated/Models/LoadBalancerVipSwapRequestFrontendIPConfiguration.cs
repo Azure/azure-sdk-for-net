@@ -13,9 +13,18 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> VIP swap request's frontend IP configuration object. </summary>
     public partial class LoadBalancerVipSwapRequestFrontendIPConfiguration
     {
-        /// <summary> Initializes a new instance of LoadBalancerVipSwapRequestFrontendIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerVipSwapRequestFrontendIPConfiguration"/>. </summary>
         public LoadBalancerVipSwapRequestFrontendIPConfiguration()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerVipSwapRequestFrontendIPConfiguration"/>. </summary>
+        /// <param name="id"> The ID of frontend IP configuration resource. </param>
+        /// <param name="publicIPAddress"> A reference to public IP address resource. </param>
+        internal LoadBalancerVipSwapRequestFrontendIPConfiguration(string id, WritableSubResource publicIPAddress)
+        {
+            Id = id;
+            PublicIPAddress = publicIPAddress;
         }
 
         /// <summary> The ID of frontend IP configuration resource. </summary>

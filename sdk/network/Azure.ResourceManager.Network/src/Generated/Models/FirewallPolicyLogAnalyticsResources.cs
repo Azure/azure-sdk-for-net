@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Log Analytics Resources for Firewall Policy Insights. </summary>
     public partial class FirewallPolicyLogAnalyticsResources
     {
-        /// <summary> Initializes a new instance of FirewallPolicyLogAnalyticsResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyLogAnalyticsResources"/>. </summary>
         public FirewallPolicyLogAnalyticsResources()
         {
             Workspaces = new ChangeTrackingList<FirewallPolicyLogAnalyticsWorkspace>();
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyLogAnalyticsResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyLogAnalyticsResources"/>. </summary>
         /// <param name="workspaces"> List of workspaces for Firewall Policy Insights. </param>
         /// <param name="defaultWorkspaceId"> The default workspace Id for Firewall Policy Insights. </param>
         internal FirewallPolicyLogAnalyticsResources(IList<FirewallPolicyLogAnalyticsWorkspace> workspaces, WritableSubResource defaultWorkspaceId)

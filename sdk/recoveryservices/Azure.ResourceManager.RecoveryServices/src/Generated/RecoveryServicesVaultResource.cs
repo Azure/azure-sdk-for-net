@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.RecoveryServices
         private readonly UsagesRestOperations _usagesRestClient;
         private readonly RecoveryServicesVaultData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults";
+
         /// <summary> Initializes a new instance of the <see cref="RecoveryServicesVaultResource"/> class for mocking. </summary>
         protected RecoveryServicesVaultResource()
         {
@@ -84,9 +87,6 @@ namespace Azure.ResourceManager.RecoveryServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateLinkResourceName"> The String to use. </param>
+        /// <param name="privateLinkResourceName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateLinkResourceName"> The String to use. </param>
+        /// <param name="privateLinkResourceName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> The list of managed private endpoints of a grafana resource. </summary>
     internal partial class ManagedPrivateEndpointModelListResponse
     {
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointModelListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelListResponse"/>. </summary>
         internal ManagedPrivateEndpointModelListResponse()
         {
             Value = new ChangeTrackingList<ManagedPrivateEndpointModelData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointModelListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelListResponse"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal ManagedPrivateEndpointModelListResponse(IReadOnlyList<ManagedPrivateEndpointModelData> value, string nextLink)

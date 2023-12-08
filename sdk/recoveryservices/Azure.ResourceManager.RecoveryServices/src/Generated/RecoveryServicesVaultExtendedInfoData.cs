@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServices
     /// </summary>
     public partial class RecoveryServicesVaultExtendedInfoData : ResourceData
     {
-        /// <summary> Initializes a new instance of RecoveryServicesVaultExtendedInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultExtendedInfoData"/>. </summary>
         public RecoveryServicesVaultExtendedInfoData()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesVaultExtendedInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultExtendedInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

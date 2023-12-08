@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
     /// </summary>
     public partial class AgFoodPlatformPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of AgFoodPlatformPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgFoodPlatformPrivateLinkResourceData"/>. </summary>
         public AgFoodPlatformPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AgFoodPlatformPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgFoodPlatformPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

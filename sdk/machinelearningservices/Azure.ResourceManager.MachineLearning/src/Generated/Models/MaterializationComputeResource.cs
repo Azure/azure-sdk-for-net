@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Dto object representing compute resource. </summary>
     internal partial class MaterializationComputeResource
     {
-        /// <summary> Initializes a new instance of MaterializationComputeResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaterializationComputeResource"/>. </summary>
         public MaterializationComputeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of MaterializationComputeResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaterializationComputeResource"/>. </summary>
         /// <param name="instanceType"> Specifies the instance type. </param>
         internal MaterializationComputeResource(string instanceType)
         {

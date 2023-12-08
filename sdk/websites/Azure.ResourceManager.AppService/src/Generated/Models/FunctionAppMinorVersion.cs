@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Function App stack minor version. </summary>
     public partial class FunctionAppMinorVersion
     {
-        /// <summary> Initializes a new instance of FunctionAppMinorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppMinorVersion"/>. </summary>
         internal FunctionAppMinorVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of FunctionAppMinorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppMinorVersion"/>. </summary>
         /// <param name="displayText"> Function App stack (display only). </param>
         /// <param name="value"> Function App stack name. </param>
         /// <param name="stackSettings"> Settings associated with the minor version. </param>

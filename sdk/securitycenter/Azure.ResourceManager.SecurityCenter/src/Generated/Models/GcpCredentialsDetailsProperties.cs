@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> GCP cloud account connector based service to service credentials, the credentials are composed of the organization ID and a JSON API key (write only). </summary>
     public partial class GcpCredentialsDetailsProperties : AuthenticationDetailsProperties
     {
-        /// <summary> Initializes a new instance of GcpCredentialsDetailsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GcpCredentialsDetailsProperties"/>. </summary>
         /// <param name="organizationId"> The organization ID of the GCP cloud account. </param>
         /// <param name="gcpCredentialType"> Type field of the API key (write only). </param>
         /// <param name="projectId"> Project ID field of the API key (write only). </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AuthenticationType = AuthenticationType.GcpCredentials;
         }
 
-        /// <summary> Initializes a new instance of GcpCredentialsDetailsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GcpCredentialsDetailsProperties"/>. </summary>
         /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
         /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
         /// <param name="authenticationType"> Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials. </param>

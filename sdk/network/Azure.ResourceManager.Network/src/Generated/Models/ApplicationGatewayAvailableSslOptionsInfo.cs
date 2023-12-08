@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ApplicationGatewayAvailableSslOptions API service call. </summary>
     public partial class ApplicationGatewayAvailableSslOptionsInfo : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslOptionsInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAvailableSslOptionsInfo"/>. </summary>
         public ApplicationGatewayAvailableSslOptionsInfo()
         {
             PredefinedPolicies = new ChangeTrackingList<WritableSubResource>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             AvailableProtocols = new ChangeTrackingList<ApplicationGatewaySslProtocol>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslOptionsInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAvailableSslOptionsInfo"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

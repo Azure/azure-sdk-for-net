@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Endpoints accessed for a common purpose that the App Service Environment requires outbound network access to. </summary>
     public partial class StoragePoolOutboundEnvironment
     {
-        /// <summary> Initializes a new instance of StoragePoolOutboundEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePoolOutboundEnvironment"/>. </summary>
         internal StoragePoolOutboundEnvironment()
         {
             Endpoints = new ChangeTrackingList<OutboundEndpointDependency>();
         }
 
-        /// <summary> Initializes a new instance of StoragePoolOutboundEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePoolOutboundEnvironment"/>. </summary>
         /// <param name="category"> The type of service accessed by the App Service Environment, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </param>
         /// <param name="endpoints"> The endpoints that the App Service Environment reaches the service at. </param>
         internal StoragePoolOutboundEnvironment(string category, IReadOnlyList<OutboundEndpointDependency> endpoints)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The IotSecurityAggregatedAlertTopDevice. </summary>
     public partial class IotSecurityAggregatedAlertTopDevice
     {
-        /// <summary> Initializes a new instance of IotSecurityAggregatedAlertTopDevice. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedAlertTopDevice"/>. </summary>
         internal IotSecurityAggregatedAlertTopDevice()
         {
         }
 
-        /// <summary> Initializes a new instance of IotSecurityAggregatedAlertTopDevice. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedAlertTopDevice"/>. </summary>
         /// <param name="deviceId"> Name of the device. </param>
         /// <param name="alertsCount"> Number of alerts raised for this device. </param>
         /// <param name="lastOccurrence"> Most recent time this alert was raised for this device, on this day. </param>

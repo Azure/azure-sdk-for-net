@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> SKU details. </summary>
     public partial class KeyVaultSku
     {
-        /// <summary> Initializes a new instance of KeyVaultSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSku"/>. </summary>
         /// <param name="family"> SKU family name. </param>
         /// <param name="name"> SKU name to specify whether the key vault is a standard vault or a premium vault. </param>
         public KeyVaultSku(KeyVaultSkuFamily family, KeyVaultSkuName name)

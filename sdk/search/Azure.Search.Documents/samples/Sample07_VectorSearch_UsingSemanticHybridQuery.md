@@ -13,7 +13,7 @@ string vectorSearchProfileName = "my-vector-profile";
 string vectorSearchHnswConfig = "my-hsnw-vector-config";
 int modelDimensions = 1536;
 
-string indexName = "Hotel";
+string indexName = "hotel";
 SearchIndex searchIndex = new(indexName)
 {
     Fields =

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the service task to upload an OCI driver. </summary>
     internal partial class UploadOciDriverTaskInput
     {
-        /// <summary> Initializes a new instance of UploadOciDriverTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadOciDriverTaskInput"/>. </summary>
         public UploadOciDriverTaskInput()
         {
         }
 
-        /// <summary> Initializes a new instance of UploadOciDriverTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadOciDriverTaskInput"/>. </summary>
         /// <param name="driverShare"> File share information for the OCI driver archive. </param>
         internal UploadOciDriverTaskInput(FileShare driverShare)
         {

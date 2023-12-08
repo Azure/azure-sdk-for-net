@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _siteBackupWebAppsRestClient;
         private readonly WebAppBackupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/backups";
+
         /// <summary> Initializes a new instance of the <see cref="SiteBackupResource"/> class for mocking. </summary>
         protected SiteBackupResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/backups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

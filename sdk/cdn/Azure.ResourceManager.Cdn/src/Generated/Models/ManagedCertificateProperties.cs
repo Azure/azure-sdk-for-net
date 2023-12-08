@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Managed Certificate used for https. </summary>
     public partial class ManagedCertificateProperties : FrontDoorSecretProperties
     {
-        /// <summary> Initializes a new instance of ManagedCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedCertificateProperties"/>. </summary>
         public ManagedCertificateProperties()
         {
             SecretType = SecretType.ManagedCertificate;
         }
 
-        /// <summary> Initializes a new instance of ManagedCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedCertificateProperties"/>. </summary>
         /// <param name="secretType"> The type of the secret resource. </param>
         /// <param name="subject"> Subject name in the certificate. </param>
         /// <param name="expiresOn"> Certificate expiration date. </param>

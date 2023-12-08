@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The list clusters operation response. </summary>
     internal partial class ClusterListResult
     {
-        /// <summary> Initializes a new instance of ClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterListResult"/>. </summary>
         internal ClusterListResult()
         {
             Value = new ChangeTrackingList<OperationalInsightsClusterData>();
         }
 
-        /// <summary> Initializes a new instance of ClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of recommendations. </param>
         /// <param name="value"> A list of Log Analytics clusters. </param>
         internal ClusterListResult(string nextLink, IReadOnlyList<OperationalInsightsClusterData> value)

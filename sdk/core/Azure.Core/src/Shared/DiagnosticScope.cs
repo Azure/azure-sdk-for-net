@@ -148,7 +148,8 @@ namespace Azure.Core.Pipeline
                 // TODO (limolkova) when we start targeting .NET 8 we should put
                 // requestFailedException.InnerException.HttpRequestError into error.type
 
-                _activityAdapter?.MarkFailed(exception, requestFailedException.ErrorCode);
+                string? errorCode = string.IsNullOrEmpty(requestFailedException.ErrorCode) ? null : requestFailedException.ErrorCode;
+                _activityAdapter?.MarkFailed(exception, errorCode);
             }
             else
             {
@@ -478,6 +479,10 @@ namespace Azure.Core.Pipeline
 
             private Activity? StartActivitySourceActivity()
             {
+                if (_activitySource == null)
+                {
+                    return null;
+                }
 #if NETCOREAPP2_1
                 return ActivityExtensions.ActivitySourceStartActivity(
                     _activitySource,
@@ -489,21 +494,9 @@ namespace Azure.Core.Pipeline
                     traceparent: _traceparent,
                     tracestate: _tracestate);
 #else
-                if (_activitySource == null)
-                {
-                    return null;
-                }
-                ActivityContext context;
-                if (_traceparent != null)
-                {
-                    context = ActivityContext.Parse(_traceparent, _tracestate);
-                }
-                else
-                {
-                    context = new ActivityContext();
-                }
-                var activity = _activitySource.StartActivity(_activityName, _kind, context, _tagCollection, GetActivitySourceLinkCollection()!, _startTime);
-                return activity;
+                // TODO(limolkova) set isRemote to true once we switch to DiagnosticSource 7.0
+                ActivityContext.TryParse(_traceparent, _tracestate, out ActivityContext context);
+                return _activitySource.StartActivity(_activityName, _kind, context, _tagCollection, GetActivitySourceLinkCollection()!, _startTime);
 #endif
             }
 
@@ -521,19 +514,21 @@ namespace Azure.Core.Pipeline
                     _diagnosticSource?.Write(_activityName + ".Exception", exception);
                 }
 
-#if NETCOREAPP2_1
-                if (ActivityExtensions.SupportsActivitySource())
-                {
-                    _currentActivity?.SetErrorStatus(exception?.ToString());
-                }
-#endif
-#if NET6_0_OR_GREATER // SetStatus is only defined in NET 6 or greater
                 if (errorCode == null && exception != null)
                 {
                     errorCode = exception.GetType().FullName;
                 }
 
-                _currentActivity?.AddTag("error.type", errorCode ?? "_OTHER");
+                errorCode ??= "_OTHER";
+#if NETCOREAPP2_1
+                if (ActivityExtensions.SupportsActivitySource())
+                {
+                    _currentActivity?.AddTag("error.type", errorCode);
+                    _currentActivity?.SetErrorStatus(exception?.ToString());
+                }
+#else
+                // SetStatus is only defined in NET 6 or greater
+                _currentActivity?.SetTag("error.type", errorCode);
                 _currentActivity?.SetStatus(ActivityStatusCode.Error, exception?.ToString());
 #endif
             }
@@ -625,7 +620,7 @@ namespace Azure.Core.Pipeline
         private static Func<Activity, string, object?>? GetCustomPropertyMethod;
         private static Action<Activity, string, object>? SetCustomPropertyMethod;
         private static readonly ParameterExpression ActivityParameter = Expression.Parameter(typeof(Activity));
-        private static MethodInfo? ParseActivityContextMethod;
+        private static MethodInfo? TryParseActivityContextMethod;
         private static Action<Activity, string>? SetDisplayNameMethod;
 
         public static object? GetCustomProperty(this Activity activity, string propertyName)
@@ -984,7 +979,7 @@ namespace Azure.Core.Pipeline
                         var tagsParameter = Expression.Parameter(typeof(ICollection<KeyValuePair<string, object>>));
                         var linksParameter = Expression.Parameter(typeof(IList));
                         var methodParameter = method.GetParameters();
-                        ParseActivityContextMethod = ActivityContextType.GetMethod("Parse", BindingFlags.Static | BindingFlags.Public);
+                        TryParseActivityContextMethod = ActivityContextType.GetMethod("TryParse", BindingFlags.Static | BindingFlags.Public);
 
                         ActivitySourceStartActivityMethod = Expression.Lambda<Func<object, string, int, object?, ICollection<KeyValuePair<string, object>>?, IList?, DateTimeOffset, Activity?>>(
                             Expression.Call(
@@ -1001,13 +996,19 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            if (ActivityContextType != null && ParseActivityContextMethod != null)
+            if (ActivityContextType != null && TryParseActivityContextMethod != null)
             {
                 if (traceparent != null)
-                    activityContext = ParseActivityContextMethod.Invoke(null, new[] {traceparent, tracestate})!;
+                {
+                    object?[] parameters = new object?[] { traceparent, tracestate, default };
+                    TryParseActivityContextMethod.Invoke(null, parameters);
+                    activityContext = parameters[2];
+                }
                 else
+                {
                     // because ActivityContext is a struct, we need to create a default instance rather than allowing the argument to be null
                     activityContext = Activator.CreateInstance(ActivityContextType);
+                }
             }
 
             return ActivitySourceStartActivityMethod.Invoke(activitySource, activityName, kind, activityContext, tags, links, startTime);

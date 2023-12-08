@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Software update configuration machine run model. </summary>
     public partial class SoftwareUpdateConfigurationMachineRun
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationMachineRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationMachineRun"/>. </summary>
         internal SoftwareUpdateConfigurationMachineRun()
         {
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationMachineRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationMachineRun"/>. </summary>
         /// <param name="name"> Name of the software update configuration machine run. </param>
         /// <param name="id"> Resource Id of the software update configuration machine run. </param>
         /// <param name="targetComputerId"> name of the updated computer. </param>

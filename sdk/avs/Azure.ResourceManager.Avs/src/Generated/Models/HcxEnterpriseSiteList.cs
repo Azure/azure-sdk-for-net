@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A paged list of HCX Enterprise Sites. </summary>
     internal partial class HcxEnterpriseSiteList
     {
-        /// <summary> Initializes a new instance of HcxEnterpriseSiteList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HcxEnterpriseSiteList"/>. </summary>
         internal HcxEnterpriseSiteList()
         {
             Value = new ChangeTrackingList<HcxEnterpriseSiteData>();
         }
 
-        /// <summary> Initializes a new instance of HcxEnterpriseSiteList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HcxEnterpriseSiteList"/>. </summary>
         /// <param name="value"> The items on a page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
         internal HcxEnterpriseSiteList(IReadOnlyList<HcxEnterpriseSiteData> value, string nextLink)

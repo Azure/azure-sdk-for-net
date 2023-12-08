@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A remote private endpoint connection. </summary>
     public partial class DataFactoryPrivateEndpointConnectionProperties
     {
-        /// <summary> Initializes a new instance of DataFactoryPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointConnectionProperties"/>. </summary>
         public DataFactoryPrivateEndpointConnectionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="privateEndpoint"> PrivateEndpoint of a remote private endpoint connection. </param>
         /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>

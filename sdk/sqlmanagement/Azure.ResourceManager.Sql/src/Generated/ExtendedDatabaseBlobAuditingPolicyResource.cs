@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Sql
         private readonly ExtendedDatabaseBlobAuditingPoliciesRestOperations _extendedDatabaseBlobAuditingPolicyRestClient;
         private readonly ExtendedDatabaseBlobAuditingPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/extendedAuditingSettings";
+
         /// <summary> Initializes a new instance of the <see cref="ExtendedDatabaseBlobAuditingPolicyResource"/> class for mocking. </summary>
         protected ExtendedDatabaseBlobAuditingPolicyResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/extendedAuditingSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

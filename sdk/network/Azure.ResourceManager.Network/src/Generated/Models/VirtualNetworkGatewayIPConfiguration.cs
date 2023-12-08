@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> IP configuration for virtual network gateway. </summary>
     public partial class VirtualNetworkGatewayIPConfiguration : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayIPConfiguration"/>. </summary>
         public VirtualNetworkGatewayIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayIPConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

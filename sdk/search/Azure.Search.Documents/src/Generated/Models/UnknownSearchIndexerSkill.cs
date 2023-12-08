@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Models
     /// <summary> The UnknownSearchIndexerSkill. </summary>
     internal partial class UnknownSearchIndexerSkill : SearchIndexerSkill
     {
-        /// <summary> Initializes a new instance of UnknownSearchIndexerSkill. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSearchIndexerSkill"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of skill. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character `#`. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>

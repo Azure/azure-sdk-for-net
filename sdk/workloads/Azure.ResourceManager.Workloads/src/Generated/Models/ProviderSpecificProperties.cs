@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// </summary>
     public abstract partial class ProviderSpecificProperties
     {
-        /// <summary> Initializes a new instance of ProviderSpecificProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderSpecificProperties"/>. </summary>
         protected ProviderSpecificProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ProviderSpecificProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderSpecificProperties"/>. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
         internal ProviderSpecificProperties(string providerType)
         {

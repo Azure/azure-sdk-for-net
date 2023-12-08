@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         private readonly VirtualMachineInstancesRestOperations _vMwareVmInstanceVirtualMachineInstancesRestClient;
         private readonly VMwareVmInstanceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/virtualMachineInstances";
+
         /// <summary> Initializes a new instance of the <see cref="VMwareVmInstanceResource"/> class for mocking. </summary>
         protected VMwareVmInstanceResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/virtualMachineInstances";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

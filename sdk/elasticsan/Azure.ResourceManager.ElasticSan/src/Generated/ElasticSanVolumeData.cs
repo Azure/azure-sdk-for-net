@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.ElasticSan
     /// </summary>
     public partial class ElasticSanVolumeData : ResourceData
     {
-        /// <summary> Initializes a new instance of ElasticSanVolumeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeData"/>. </summary>
         /// <param name="sizeGiB"> Volume size. </param>
         public ElasticSanVolumeData(long sizeGiB)
         {
             SizeGiB = sizeGiB;
         }
 
-        /// <summary> Initializes a new instance of ElasticSanVolumeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

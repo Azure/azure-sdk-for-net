@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> HybridAKSNetworkStatus defines the observed state of HybridAKSNetwork. </summary>
     internal partial class VirtualNetworksPropertiesStatus
     {
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesStatus"/>. </summary>
         internal VirtualNetworksPropertiesStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesStatus"/>. </summary>
         /// <param name="provisioningStatus"> Contains Provisioning errors. </param>
         internal VirtualNetworksPropertiesStatus(VirtualNetworksPropertiesStatusProvisioningStatus provisioningStatus)
         {

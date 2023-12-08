@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The paginated list of CDN peering prefixes. </summary>
     internal partial class CdnPeeringPrefixListResult
     {
-        /// <summary> Initializes a new instance of CdnPeeringPrefixListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnPeeringPrefixListResult"/>. </summary>
         internal CdnPeeringPrefixListResult()
         {
             Value = new ChangeTrackingList<CdnPeeringPrefix>();
         }
 
-        /// <summary> Initializes a new instance of CdnPeeringPrefixListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnPeeringPrefixListResult"/>. </summary>
         /// <param name="value"> The list of CDN peering prefixes. </param>
         /// <param name="nextLink"> The link to fetch the next page of CDN peering prefixes. </param>
         internal CdnPeeringPrefixListResult(IReadOnlyList<CdnPeeringPrefix> value, string nextLink)

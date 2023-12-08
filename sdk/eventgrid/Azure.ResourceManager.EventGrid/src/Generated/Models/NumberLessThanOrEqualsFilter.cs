@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> NumberLessThanOrEquals Filter. </summary>
     public partial class NumberLessThanOrEqualsFilter : EventGridFilter
     {
-        /// <summary> Initializes a new instance of NumberLessThanOrEqualsFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="NumberLessThanOrEqualsFilter"/>. </summary>
         public NumberLessThanOrEqualsFilter()
         {
             OperatorType = FilterOperatorType.NumberLessThanOrEquals;
         }
 
-        /// <summary> Initializes a new instance of NumberLessThanOrEqualsFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="NumberLessThanOrEqualsFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
         /// <param name="value"> The filter value. </param>

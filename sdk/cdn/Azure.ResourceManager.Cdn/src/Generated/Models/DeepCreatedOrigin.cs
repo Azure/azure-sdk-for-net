@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The main origin of CDN content which is added when creating a CDN endpoint. </summary>
     public partial class DeepCreatedOrigin
     {
-        /// <summary> Initializes a new instance of DeepCreatedOrigin. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeepCreatedOrigin"/>. </summary>
         /// <param name="name"> Origin name which must be unique within the endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DeepCreatedOrigin(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of DeepCreatedOrigin. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeepCreatedOrigin"/>. </summary>
         /// <param name="name"> Origin name which must be unique within the endpoint. </param>
         /// <param name="hostName"> The address of the origin. It can be a domain name, IPv4 address, or IPv6 address. This should be unique across all origins in an endpoint. </param>
         /// <param name="httpPort"> The value of the HTTP port. Must be between 1 and 65535. </param>

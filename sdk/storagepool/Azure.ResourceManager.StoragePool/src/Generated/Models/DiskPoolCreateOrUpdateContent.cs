@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Request payload for create or update Disk Pool request. </summary>
     public partial class DiskPoolCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of DiskPoolCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPoolCreateOrUpdateContent"/>. </summary>
         /// <param name="sku"> Determines the SKU of the Disk Pool. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="subnetId"> Azure Resource ID of a Subnet for the Disk Pool. </param>
@@ -34,6 +34,33 @@ namespace Azure.ResourceManager.StoragePool.Models
             Disks = new ChangeTrackingList<WritableSubResource>();
             SubnetId = subnetId;
             AdditionalCapabilities = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiskPoolCreateOrUpdateContent"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="sku"> Determines the SKU of the Disk Pool. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="managedBy"> Azure resource id. Indicates if this resource is managed by another Azure resource. </param>
+        /// <param name="managedByExtended"> List of Azure resource ids that manage this resource. </param>
+        /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: ["1"]. </param>
+        /// <param name="disks"> List of Azure Managed Disks to attach to a Disk Pool. </param>
+        /// <param name="subnetId"> Azure Resource ID of a Subnet for the Disk Pool. </param>
+        /// <param name="additionalCapabilities"> List of additional capabilities for a Disk Pool. </param>
+        internal DiskPoolCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StoragePoolSku sku, IDictionary<string, string> tags, AzureLocation location, string managedBy, IList<string> managedByExtended, IList<string> availabilityZones, IList<WritableSubResource> disks, ResourceIdentifier subnetId, IList<string> additionalCapabilities) : base(id, name, resourceType, systemData)
+        {
+            Sku = sku;
+            Tags = tags;
+            Location = location;
+            ManagedBy = managedBy;
+            ManagedByExtended = managedByExtended;
+            AvailabilityZones = availabilityZones;
+            Disks = disks;
+            SubnetId = subnetId;
+            AdditionalCapabilities = additionalCapabilities;
         }
 
         /// <summary> Determines the SKU of the Disk Pool. </summary>

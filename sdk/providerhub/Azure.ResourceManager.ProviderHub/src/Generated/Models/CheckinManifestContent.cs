@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The CheckinManifestContent. </summary>
     public partial class CheckinManifestContent
     {
-        /// <summary> Initializes a new instance of CheckinManifestContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckinManifestContent"/>. </summary>
         /// <param name="environment"> The environment supplied to the checkin manifest operation. </param>
         /// <param name="baselineArmManifestLocation"> The baseline ARM manifest location supplied to the checkin manifest operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environment"/> is null. </exception>

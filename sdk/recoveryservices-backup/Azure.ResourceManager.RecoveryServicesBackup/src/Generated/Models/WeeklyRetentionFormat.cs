@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Weekly retention format. </summary>
     public partial class WeeklyRetentionFormat
     {
-        /// <summary> Initializes a new instance of WeeklyRetentionFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="WeeklyRetentionFormat"/>. </summary>
         public WeeklyRetentionFormat()
         {
             DaysOfTheWeek = new ChangeTrackingList<BackupDayOfWeek>();
             WeeksOfTheMonth = new ChangeTrackingList<BackupWeekOfMonth>();
         }
 
-        /// <summary> Initializes a new instance of WeeklyRetentionFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="WeeklyRetentionFormat"/>. </summary>
         /// <param name="daysOfTheWeek"> List of days of the week. </param>
         /// <param name="weeksOfTheMonth"> List of weeks of month. </param>
         internal WeeklyRetentionFormat(IList<BackupDayOfWeek> daysOfTheWeek, IList<BackupWeekOfMonth> weeksOfTheMonth)

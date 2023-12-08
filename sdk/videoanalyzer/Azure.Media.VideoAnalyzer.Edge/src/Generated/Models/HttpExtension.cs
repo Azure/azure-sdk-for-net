@@ -14,7 +14,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> HTTP extension processor allows pipeline extension plugins to be connected to the pipeline through over the HTTP protocol. Extension plugins must act as an HTTP server. Please see https://aka.ms/ava-extension-http for details. </summary>
     public partial class HttpExtension : ExtensionProcessorBase
     {
-        /// <summary> Initializes a new instance of HttpExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpExtension"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <param name="endpoint">
@@ -34,7 +34,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.HttpExtension";
         }
 
-        /// <summary> Initializes a new instance of HttpExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpExtension"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>

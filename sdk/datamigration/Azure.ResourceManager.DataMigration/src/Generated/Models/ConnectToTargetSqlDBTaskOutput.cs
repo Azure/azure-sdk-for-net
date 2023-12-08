@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for the task that validates connection to SQL DB and target server requirements. </summary>
     public partial class ConnectToTargetSqlDBTaskOutput
     {
-        /// <summary> Initializes a new instance of ConnectToTargetSqlDBTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlDBTaskOutput"/>. </summary>
         internal ConnectToTargetSqlDBTaskOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetSqlDBTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlDBTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="databases"> Source databases as a map from database name to database id. </param>
         /// <param name="targetServerVersion"> Version of the target server. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Availability group configuration. </summary>
     internal partial class AvailabilityGroupConfiguration
     {
-        /// <summary> Initializes a new instance of AvailabilityGroupConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilityGroupConfiguration"/>. </summary>
         public AvailabilityGroupConfiguration()
         {
             Replicas = new ChangeTrackingList<AvailabilityGroupReplica>();
         }
 
-        /// <summary> Initializes a new instance of AvailabilityGroupConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilityGroupConfiguration"/>. </summary>
         /// <param name="replicas"> Replica configurations. </param>
         internal AvailabilityGroupConfiguration(IList<AvailabilityGroupReplica> replicas)
         {

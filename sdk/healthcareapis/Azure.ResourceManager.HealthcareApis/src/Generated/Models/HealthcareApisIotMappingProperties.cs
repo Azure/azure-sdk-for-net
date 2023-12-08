@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> The mapping content. </summary>
     public partial class HealthcareApisIotMappingProperties
     {
-        /// <summary> Initializes a new instance of HealthcareApisIotMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisIotMappingProperties"/>. </summary>
         public HealthcareApisIotMappingProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisIotMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisIotMappingProperties"/>. </summary>
         /// <param name="content"> The mapping. </param>
         internal HealthcareApisIotMappingProperties(BinaryData content)
         {

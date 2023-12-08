@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The FleetHubProfile configures the fleet hub. </summary>
     public partial class ContainerServiceFleetHubProfile
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetHubProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetHubProfile"/>. </summary>
         public ContainerServiceFleetHubProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetHubProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetHubProfile"/>. </summary>
         /// <param name="dnsPrefix"> DNS prefix used to create the FQDN for the Fleet hub. </param>
         /// <param name="fqdn"> The FQDN of the Fleet hub. </param>
         /// <param name="kubernetesVersion"> The Kubernetes version of the Fleet hub. </param>

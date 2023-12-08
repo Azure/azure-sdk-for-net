@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The azure table storage linked service. </summary>
     public partial class AzureTableStorageLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of AzureTableStorageLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureTableStorageLinkedService"/>. </summary>
         public AzureTableStorageLinkedService()
         {
             Type = "AzureTableStorage";
         }
 
-        /// <summary> Initializes a new instance of AzureTableStorageLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureTableStorageLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

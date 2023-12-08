@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The ip address range. </summary>
     public partial class FlowAccessControlIPAddressRange
     {
-        /// <summary> Initializes a new instance of FlowAccessControlIPAddressRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowAccessControlIPAddressRange"/>. </summary>
         public FlowAccessControlIPAddressRange()
         {
         }
 
-        /// <summary> Initializes a new instance of FlowAccessControlIPAddressRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowAccessControlIPAddressRange"/>. </summary>
         /// <param name="addressRange"> The IP address range. </param>
         internal FlowAccessControlIPAddressRange(string addressRange)
         {

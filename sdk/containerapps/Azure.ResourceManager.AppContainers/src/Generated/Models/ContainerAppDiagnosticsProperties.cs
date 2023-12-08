@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Diagnostics resource specific properties. </summary>
     public partial class ContainerAppDiagnosticsProperties
     {
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticsProperties"/>. </summary>
         public ContainerAppDiagnosticsProperties()
         {
             Dataset = new ChangeTrackingList<ContainerAppDiagnosticsDataApiResult>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticsProperties"/>. </summary>
         /// <param name="metadata"> Metadata of the diagnostics response. </param>
         /// <param name="dataset"> Set of data collections associated with the response. </param>
         /// <param name="status"> Status of the diagnostics response. </param>

@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> An object representing a section in the document. </summary>
     public partial class DocumentSection
     {
-        /// <summary> Initializes a new instance of DocumentSection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentSection"/>. </summary>
         /// <param name="spans"> Location of the section in the reading order concatenated content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="spans"/> is null. </exception>
         internal DocumentSection(IEnumerable<DocumentSpan> spans)
@@ -26,7 +26,7 @@ namespace Azure.AI.DocumentIntelligence
             Elements = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DocumentSection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentSection"/>. </summary>
         /// <param name="spans"> Location of the section in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the section. </param>
         internal DocumentSection(IReadOnlyList<DocumentSpan> spans, IReadOnlyList<string> elements)

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly CassandraResourcesRestOperations _cassandraKeyspaceCassandraResourcesRestClient;
         private readonly CassandraKeyspaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces";
+
         /// <summary> Initializes a new instance of the <see cref="CassandraKeyspaceResource"/> class for mocking. </summary>
         protected CassandraKeyspaceResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

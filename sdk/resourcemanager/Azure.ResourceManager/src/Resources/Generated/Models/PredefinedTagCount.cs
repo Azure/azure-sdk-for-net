@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Tag count. </summary>
     public partial class PredefinedTagCount
     {
-        /// <summary> Initializes a new instance of PredefinedTagCount. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredefinedTagCount"/>. </summary>
         internal PredefinedTagCount()
         {
         }
 
-        /// <summary> Initializes a new instance of PredefinedTagCount. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredefinedTagCount"/>. </summary>
         /// <param name="predefinedTagCountType"> Type of count. </param>
         /// <param name="value"> Value of count. </param>
         internal PredefinedTagCount(string predefinedTagCountType, int? value)

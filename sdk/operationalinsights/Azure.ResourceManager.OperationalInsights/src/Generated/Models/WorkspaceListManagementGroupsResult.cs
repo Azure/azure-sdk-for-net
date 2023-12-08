@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The list workspace management groups operation response. </summary>
     internal partial class WorkspaceListManagementGroupsResult
     {
-        /// <summary> Initializes a new instance of WorkspaceListManagementGroupsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceListManagementGroupsResult"/>. </summary>
         internal WorkspaceListManagementGroupsResult()
         {
             Value = new ChangeTrackingList<OperationalInsightsManagementGroup>();
         }
 
-        /// <summary> Initializes a new instance of WorkspaceListManagementGroupsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceListManagementGroupsResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of management groups attached to the workspace. </param>
         internal WorkspaceListManagementGroupsResult(IReadOnlyList<OperationalInsightsManagementGroup> value)
         {

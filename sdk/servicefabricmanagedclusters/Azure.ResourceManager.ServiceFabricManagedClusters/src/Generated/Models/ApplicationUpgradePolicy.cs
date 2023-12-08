@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes the policy for a monitored application upgrade. </summary>
     public partial class ApplicationUpgradePolicy
     {
-        /// <summary> Initializes a new instance of ApplicationUpgradePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationUpgradePolicy"/>. </summary>
         public ApplicationUpgradePolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationUpgradePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationUpgradePolicy"/>. </summary>
         /// <param name="applicationHealthPolicy">
         /// Defines a health policy used to evaluate the health of an application or one of its children entities.
         ///

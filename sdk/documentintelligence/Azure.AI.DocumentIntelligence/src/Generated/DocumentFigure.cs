@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> An object representing a figure in the document. </summary>
     public partial class DocumentFigure
     {
-        /// <summary> Initializes a new instance of DocumentFigure. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentFigure"/>. </summary>
         /// <param name="spans"> Location of the figure in the reading order concatenated content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="spans"/> is null. </exception>
         internal DocumentFigure(IEnumerable<DocumentSpan> spans)
@@ -28,7 +28,7 @@ namespace Azure.AI.DocumentIntelligence
             Footnotes = new ChangeTrackingList<DocumentFootnote>();
         }
 
-        /// <summary> Initializes a new instance of DocumentFigure. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentFigure"/>. </summary>
         /// <param name="boundingRegions"> Bounding regions covering the figure. </param>
         /// <param name="spans"> Location of the figure in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the figure, excluding any caption or footnotes. </param>

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.EnergyServices
         private readonly EnergyServicesRestOperations _energyServiceRestClient;
         private readonly EnergyServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OpenEnergyPlatform/energyServices";
+
         /// <summary> Initializes a new instance of the <see cref="EnergyServiceResource"/> class for mocking. </summary>
         protected EnergyServiceResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.EnergyServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OpenEnergyPlatform/energyServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The EnergyServicePatch to use. </param>
+        /// <param name="patch"> The <see cref="EnergyServicePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<EnergyServiceResource>> UpdateAsync(EnergyServicePatch patch, CancellationToken cancellationToken = default)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The EnergyServicePatch to use. </param>
+        /// <param name="patch"> The <see cref="EnergyServicePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<EnergyServiceResource> Update(EnergyServicePatch patch, CancellationToken cancellationToken = default)

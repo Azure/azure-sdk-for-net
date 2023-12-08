@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.StorageMover
     /// </summary>
     public partial class JobRunData : ResourceData
     {
-        /// <summary> Initializes a new instance of JobRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobRunData"/>. </summary>
         public JobRunData()
         {
         }
 
-        /// <summary> Initializes a new instance of JobRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobRunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

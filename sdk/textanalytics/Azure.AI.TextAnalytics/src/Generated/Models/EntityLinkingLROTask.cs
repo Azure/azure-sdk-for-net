@@ -10,13 +10,13 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> An object representing the task definition for an Entity Linking task. </summary>
     internal partial class EntityLinkingLROTask : AnalyzeTextLROTask
     {
-        /// <summary> Initializes a new instance of EntityLinkingLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingLROTask"/>. </summary>
         public EntityLinkingLROTask()
         {
             Kind = AnalyzeTextLROTaskKind.EntityLinking;
         }
 
-        /// <summary> Initializes a new instance of EntityLinkingLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingLROTask"/>. </summary>
         /// <param name="taskName"></param>
         /// <param name="kind"> Enumeration of supported long-running Text Analysis tasks. </param>
         /// <param name="parameters"> Supported parameters for an Entity Linking task. </param>

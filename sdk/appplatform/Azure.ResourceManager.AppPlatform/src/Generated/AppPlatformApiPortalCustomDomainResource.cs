@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly ApiPortalCustomDomainsRestOperations _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient;
         private readonly AppPlatformApiPortalCustomDomainData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/apiPortals/domains";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformApiPortalCustomDomainResource"/> class for mocking. </summary>
         protected AppPlatformApiPortalCustomDomainResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/apiPortals/domains";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

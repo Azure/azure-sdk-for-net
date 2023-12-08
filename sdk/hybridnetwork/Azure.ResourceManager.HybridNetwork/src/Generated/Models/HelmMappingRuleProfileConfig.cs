@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The helm deployment options. </summary>
     public partial class HelmMappingRuleProfileConfig
     {
-        /// <summary> Initializes a new instance of HelmMappingRuleProfileConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="HelmMappingRuleProfileConfig"/>. </summary>
         public HelmMappingRuleProfileConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of HelmMappingRuleProfileConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="HelmMappingRuleProfileConfig"/>. </summary>
         /// <param name="installOptions"> The helm deployment install options. </param>
         /// <param name="upgradeOptions"> The helm deployment upgrade options. </param>
         internal HelmMappingRuleProfileConfig(HelmInstallConfig installOptions, HelmUpgradeConfig upgradeOptions)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The mapping between a particular user and the access type on the SMB share. </summary>
     public partial class UserAccessRight
     {
-        /// <summary> Initializes a new instance of UserAccessRight. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserAccessRight"/>. </summary>
         /// <param name="userId"> User ID (already existing in the device). </param>
         /// <param name="accessType"> Type of access to be allowed for the user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>

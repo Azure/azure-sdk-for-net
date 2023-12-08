@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkFabricData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkFabricData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="networkFabricSku"> Supported Network Fabric SKU.Example: Compute / Aggregate racks. Once the user chooses a particular SKU, only supported racks can be added to the Network Fabric. The SKU determines whether it is a single / multi rack Network Fabric. </param>
         /// <param name="networkFabricControllerId"> Azure resource ID for the NetworkFabricController the NetworkFabric belongs. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             L3IsolationDomains = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

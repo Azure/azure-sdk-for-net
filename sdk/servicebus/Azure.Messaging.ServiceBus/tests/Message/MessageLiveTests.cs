@@ -184,6 +184,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.EnqueuedTimeUtcName));
                 Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.DeadLetterSourceName));
                 Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.MessageStateName));
+                Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.PartitionIdName));
                 Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterReasonHeader));
                 Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterErrorDescriptionHeader));
 

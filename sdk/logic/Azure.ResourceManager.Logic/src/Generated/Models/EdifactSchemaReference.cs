@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Edifact schema reference. </summary>
     public partial class EdifactSchemaReference
     {
-        /// <summary> Initializes a new instance of EdifactSchemaReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactSchemaReference"/>. </summary>
         /// <param name="messageId"> The message id. </param>
         /// <param name="messageVersion"> The message version. </param>
         /// <param name="messageRelease"> The message release version. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Logic.Models
             SchemaName = schemaName;
         }
 
-        /// <summary> Initializes a new instance of EdifactSchemaReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactSchemaReference"/>. </summary>
         /// <param name="messageId"> The message id. </param>
         /// <param name="messageVersion"> The message version. </param>
         /// <param name="messageRelease"> The message release version. </param>

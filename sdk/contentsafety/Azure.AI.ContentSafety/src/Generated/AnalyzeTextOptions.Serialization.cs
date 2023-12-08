@@ -37,10 +37,15 @@ namespace Azure.AI.ContentSafety
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BreakByBlocklists))
+            if (Optional.IsDefined(HaltOnBlocklistHit))
             {
-                writer.WritePropertyName("breakByBlocklists"u8);
-                writer.WriteBooleanValue(BreakByBlocklists.Value);
+                writer.WritePropertyName("haltOnBlocklistHit"u8);
+                writer.WriteBooleanValue(HaltOnBlocklistHit.Value);
+            }
+            if (Optional.IsDefined(OutputType))
+            {
+                writer.WritePropertyName("outputType"u8);
+                writer.WriteStringValue(OutputType.Value.ToString());
             }
             writer.WriteEndObject();
         }

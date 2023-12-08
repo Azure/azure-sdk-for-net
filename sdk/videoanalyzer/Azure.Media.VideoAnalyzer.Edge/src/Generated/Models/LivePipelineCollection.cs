@@ -13,13 +13,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> A collection of live pipelines. </summary>
     public partial class LivePipelineCollection
     {
-        /// <summary> Initializes a new instance of LivePipelineCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="LivePipelineCollection"/>. </summary>
         public LivePipelineCollection()
         {
             Value = new ChangeTrackingList<LivePipeline>();
         }
 
-        /// <summary> Initializes a new instance of LivePipelineCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="LivePipelineCollection"/>. </summary>
         /// <param name="value"> List of live pipelines. </param>
         /// <param name="continuationToken"> A continuation token to be used in subsequent calls when enumerating through the collection. This is returned when the collection results won't fit in a single response. </param>
         internal LivePipelineCollection(IList<LivePipeline> value, string continuationToken)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> The StorageQoSPolicyDetails definition. </summary>
     public partial class StorageQoSPolicyDetails
     {
-        /// <summary> Initializes a new instance of StorageQoSPolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageQoSPolicyDetails"/>. </summary>
         public StorageQoSPolicyDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageQoSPolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageQoSPolicyDetails"/>. </summary>
         /// <param name="name"> The name of the policy. </param>
         /// <param name="id"> The ID of the QoS policy. </param>
         internal StorageQoSPolicyDetails(string name, string id)

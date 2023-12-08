@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </summary>
     public partial class MachineLearningError
     {
-        /// <summary> Initializes a new instance of MachineLearningError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningError"/>. </summary>
         internal MachineLearningError()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningError"/>. </summary>
         /// <param name="error"> The error object. </param>
         internal MachineLearningError(ResponseError error)
         {

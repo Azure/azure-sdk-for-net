@@ -13,7 +13,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Tag attributes. </summary>
     public partial class ArtifactTagProperties
     {
-        /// <summary> Initializes a new instance of ArtifactTagProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactTagProperties"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repositoryName"> Image name. </param>
         /// <param name="name"> Tag name. </param>
@@ -36,7 +36,7 @@ namespace Azure.Containers.ContainerRegistry
             LastUpdatedOn = lastUpdatedOn;
         }
 
-        /// <summary> Initializes a new instance of ArtifactTagProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactTagProperties"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repositoryName"> Image name. </param>
         /// <param name="name"> Tag name. </param>

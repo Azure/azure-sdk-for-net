@@ -10,12 +10,12 @@ namespace Azure.Maps.Routing.Models
     /// <summary> Response object of the current cell in the input matrix. </summary>
     internal partial class RouteMatrixResultResponse
     {
-        /// <summary> Initializes a new instance of RouteMatrixResultResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteMatrixResultResponse"/>. </summary>
         internal RouteMatrixResultResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of RouteMatrixResultResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteMatrixResultResponse"/>. </summary>
         /// <param name="summary"> Summary object for route section. </param>
         internal RouteMatrixResultResponse(RouteLegSummary summary)
         {

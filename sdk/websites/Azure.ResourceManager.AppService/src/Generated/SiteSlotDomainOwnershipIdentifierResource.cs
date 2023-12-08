@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _siteSlotDomainOwnershipIdentifierWebAppsRestClient;
         private readonly AppServiceIdentifierData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/domainOwnershipIdentifiers";
+
         /// <summary> Initializes a new instance of the <see cref="SiteSlotDomainOwnershipIdentifierResource"/> class for mocking. </summary>
         protected SiteSlotDomainOwnershipIdentifierResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/domainOwnershipIdentifiers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

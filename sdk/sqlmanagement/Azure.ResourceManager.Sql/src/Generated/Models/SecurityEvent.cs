@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A security event. </summary>
     public partial class SecurityEvent : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityEvent"/>. </summary>
         public SecurityEvent()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityEvent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

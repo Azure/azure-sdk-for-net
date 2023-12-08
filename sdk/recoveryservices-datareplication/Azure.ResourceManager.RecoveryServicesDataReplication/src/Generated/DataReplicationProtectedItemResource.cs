@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         private readonly ProtectedItemRestOperations _dataReplicationProtectedItemProtectedItemRestClient;
         private readonly DataReplicationProtectedItemData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationVaults/protectedItems";
+
         /// <summary> Initializes a new instance of the <see cref="DataReplicationProtectedItemResource"/> class for mocking. </summary>
         protected DataReplicationProtectedItemResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationVaults/protectedItems";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

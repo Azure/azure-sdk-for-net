@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Zone and associated hosts info. </summary>
     public partial class AvsClusterZone
     {
-        /// <summary> Initializes a new instance of AvsClusterZone. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsClusterZone"/>. </summary>
         internal AvsClusterZone()
         {
             Hosts = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AvsClusterZone. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsClusterZone"/>. </summary>
         /// <param name="hosts"> List of hosts belonging to the availability zone in a cluster. </param>
         /// <param name="zone"> Availability zone identifier. </param>
         internal AvsClusterZone(IReadOnlyList<string> hosts, string zone)

@@ -14,9 +14,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class TestFailoverProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of TestFailoverProviderSpecificContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestFailoverProviderSpecificContent"/>. </summary>
         protected TestFailoverProviderSpecificContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TestFailoverProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        internal TestFailoverProviderSpecificContent(string instanceType)
+        {
+            InstanceType = instanceType;
         }
 
         /// <summary> The class type. </summary>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The UnknownInputProperties. </summary>
     internal partial class UnknownInputProperties : StreamingJobInputProperties
     {
-        /// <summary> Initializes a new instance of UnknownInputProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownInputProperties"/>. </summary>
         /// <param name="inputPropertiesType"> Indicates whether the input is a source of reference data or stream data. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="serialization">
         /// Describes how data from an input is serialized or how data is serialized when written to an output. Required on PUT (CreateOrReplace) requests.

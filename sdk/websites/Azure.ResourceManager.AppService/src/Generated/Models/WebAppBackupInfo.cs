@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Description of a backup which will be performed. </summary>
     public partial class WebAppBackupInfo : ResourceData
     {
-        /// <summary> Initializes a new instance of WebAppBackupInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppBackupInfo"/>. </summary>
         public WebAppBackupInfo()
         {
             Databases = new ChangeTrackingList<AppServiceDatabaseBackupSetting>();
         }
 
-        /// <summary> Initializes a new instance of WebAppBackupInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppBackupInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

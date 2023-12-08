@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Attestation.Models
     /// <summary> A private link resource. </summary>
     public partial class AttestationPrivateLinkResource : ResourceData
     {
-        /// <summary> Initializes a new instance of AttestationPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationPrivateLinkResource"/>. </summary>
         public AttestationPrivateLinkResource()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AttestationPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

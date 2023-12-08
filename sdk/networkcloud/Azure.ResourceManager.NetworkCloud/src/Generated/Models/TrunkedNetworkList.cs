@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> TrunkedNetworkList represents a list of trunked networks. </summary>
     internal partial class TrunkedNetworkList
     {
-        /// <summary> Initializes a new instance of TrunkedNetworkList. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrunkedNetworkList"/>. </summary>
         internal TrunkedNetworkList()
         {
             Value = new ChangeTrackingList<NetworkCloudTrunkedNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of TrunkedNetworkList. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrunkedNetworkList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of trunked networks. </param>
         internal TrunkedNetworkList(string nextLink, IReadOnlyList<NetworkCloudTrunkedNetworkData> value)

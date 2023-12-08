@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Avs
         private readonly WorkloadNetworksRestOperations _workloadNetworkDnsServiceWorkloadNetworksRestClient;
         private readonly WorkloadNetworkDnsServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/workloadNetworks/dnsServices";
+
         /// <summary> Initializes a new instance of the <see cref="WorkloadNetworkDnsServiceResource"/> class for mocking. </summary>
         protected WorkloadNetworkDnsServiceResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/workloadNetworks/dnsServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

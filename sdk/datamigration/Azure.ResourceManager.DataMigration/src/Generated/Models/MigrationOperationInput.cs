@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Migration Operation Input. </summary>
     public partial class MigrationOperationInput
     {
-        /// <summary> Initializes a new instance of MigrationOperationInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationOperationInput"/>. </summary>
         public MigrationOperationInput()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MigrationOperationInput"/>. </summary>
+        /// <param name="migrationOperationId"> ID tracking migration operation. </param>
+        internal MigrationOperationInput(Guid? migrationOperationId)
+        {
+            MigrationOperationId = migrationOperationId;
         }
 
         /// <summary> ID tracking migration operation. </summary>

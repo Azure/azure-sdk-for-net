@@ -13,14 +13,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Reference objects for custom activity. </summary>
     public partial class CustomActivityReferenceObject
     {
-        /// <summary> Initializes a new instance of CustomActivityReferenceObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomActivityReferenceObject"/>. </summary>
         public CustomActivityReferenceObject()
         {
             LinkedServices = new ChangeTrackingList<LinkedServiceReference>();
             Datasets = new ChangeTrackingList<DatasetReference>();
         }
 
-        /// <summary> Initializes a new instance of CustomActivityReferenceObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomActivityReferenceObject"/>. </summary>
         /// <param name="linkedServices"> Linked service references. </param>
         /// <param name="datasets"> Dataset references. </param>
         internal CustomActivityReferenceObject(IList<LinkedServiceReference> linkedServices, IList<DatasetReference> datasets)

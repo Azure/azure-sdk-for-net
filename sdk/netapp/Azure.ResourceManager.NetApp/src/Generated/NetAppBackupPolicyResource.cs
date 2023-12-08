@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.NetApp
         private readonly BackupPoliciesRestOperations _netAppBackupPolicyBackupPoliciesRestClient;
         private readonly NetAppBackupPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/backupPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="NetAppBackupPolicyResource"/> class for mocking. </summary>
         protected NetAppBackupPolicyResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.NetApp
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/backupPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

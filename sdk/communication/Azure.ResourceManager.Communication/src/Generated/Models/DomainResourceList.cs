@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> Object that includes an array of Domains resource and a possible link for next set. </summary>
     internal partial class DomainResourceList
     {
-        /// <summary> Initializes a new instance of DomainResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainResourceList"/>. </summary>
         internal DomainResourceList()
         {
             Value = new ChangeTrackingList<CommunicationDomainResourceData>();
         }
 
-        /// <summary> Initializes a new instance of DomainResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainResourceList"/>. </summary>
         /// <param name="value"> List of Domains resource. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).

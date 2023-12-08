@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The result of a request to check the availability of a container registry name. </summary>
     public partial class ContainerRegistryNameAvailableResult
     {
-        /// <summary> Initializes a new instance of ContainerRegistryNameAvailableResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryNameAvailableResult"/>. </summary>
         internal ContainerRegistryNameAvailableResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryNameAvailableResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryNameAvailableResult"/>. </summary>
         /// <param name="isNameAvailable"> The value that indicates whether the name is available. </param>
         /// <param name="reason"> If any, the reason that the name is not available. </param>
         /// <param name="message"> If any, the error message that provides more detail for the reason that the name is not available. </param>

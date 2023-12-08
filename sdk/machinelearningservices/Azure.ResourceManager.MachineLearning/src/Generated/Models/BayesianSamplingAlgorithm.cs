@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Defines a Sampling Algorithm that generates values based on previous values. </summary>
     public partial class BayesianSamplingAlgorithm : SamplingAlgorithm
     {
-        /// <summary> Initializes a new instance of BayesianSamplingAlgorithm. </summary>
+        /// <summary> Initializes a new instance of <see cref="BayesianSamplingAlgorithm"/>. </summary>
         public BayesianSamplingAlgorithm()
         {
             SamplingAlgorithmType = SamplingAlgorithmType.Bayesian;
         }
 
-        /// <summary> Initializes a new instance of BayesianSamplingAlgorithm. </summary>
+        /// <summary> Initializes a new instance of <see cref="BayesianSamplingAlgorithm"/>. </summary>
         /// <param name="samplingAlgorithmType"> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </param>
         internal BayesianSamplingAlgorithm(SamplingAlgorithmType samplingAlgorithmType) : base(samplingAlgorithmType)
         {

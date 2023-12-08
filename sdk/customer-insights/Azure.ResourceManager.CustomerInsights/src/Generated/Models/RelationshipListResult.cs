@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The response of list relationship operation. </summary>
     internal partial class RelationshipListResult
     {
-        /// <summary> Initializes a new instance of RelationshipListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelationshipListResult"/>. </summary>
         internal RelationshipListResult()
         {
             Value = new ChangeTrackingList<RelationshipResourceFormatData>();
         }
 
-        /// <summary> Initializes a new instance of RelationshipListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelationshipListResult"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal RelationshipListResult(IReadOnlyList<RelationshipResourceFormatData> value, string nextLink)

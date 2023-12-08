@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> TLS settings for the resource. </summary>
     internal partial class WebPubSubTlsSettings
     {
-        /// <summary> Initializes a new instance of WebPubSubTlsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubTlsSettings"/>. </summary>
         public WebPubSubTlsSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of WebPubSubTlsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubTlsSettings"/>. </summary>
         /// <param name="isClientCertEnabled"> Request client certificate during TLS handshake if enabled. </param>
         internal WebPubSubTlsSettings(bool? isClientCertEnabled)
         {

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Result of Tenant Configuration Sync State. </summary>
     public partial class TenantConfigurationSyncStateContract : ResourceData
     {
-        /// <summary> Initializes a new instance of TenantConfigurationSyncStateContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantConfigurationSyncStateContract"/>. </summary>
         public TenantConfigurationSyncStateContract()
         {
         }
 
-        /// <summary> Initializes a new instance of TenantConfigurationSyncStateContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantConfigurationSyncStateContract"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -19,7 +19,7 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class EmbeddingsOptions
     {
-        /// <summary> Initializes a new instance of EmbeddingsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmbeddingsOptions"/>. </summary>
         /// <param name="user">
         /// An identifier for the caller or end user of the operation. This may be used for tracking
         /// or rate-limiting purposes.

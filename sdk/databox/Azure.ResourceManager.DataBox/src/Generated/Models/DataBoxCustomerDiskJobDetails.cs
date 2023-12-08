@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Customer disk job details. </summary>
     public partial class DataBoxCustomerDiskJobDetails : DataBoxBasicJobDetails
     {
-        /// <summary> Initializes a new instance of DataBoxCustomerDiskJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxCustomerDiskJobDetails"/>. </summary>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="returnToCustomerPackageDetails"> Return package shipping details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> or <paramref name="returnToCustomerPackageDetails"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBox.Models
             JobDetailsType = DataBoxOrderType.DataBoxCustomerDisk;
         }
 
-        /// <summary> Initializes a new instance of DataBoxCustomerDiskJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxCustomerDiskJobDetails"/>. </summary>
         /// <param name="jobStages"> List of stages that run in the job. </param>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>

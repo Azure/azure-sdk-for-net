@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The object being used to update tags of a resource, in general used for PATCH operations. </summary>
     public partial class CognitiveServicesPatchResourceTags
     {
-        /// <summary> Initializes a new instance of CognitiveServicesPatchResourceTags. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesPatchResourceTags"/>. </summary>
         public CognitiveServicesPatchResourceTags()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesPatchResourceTags"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal CognitiveServicesPatchResourceTags(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

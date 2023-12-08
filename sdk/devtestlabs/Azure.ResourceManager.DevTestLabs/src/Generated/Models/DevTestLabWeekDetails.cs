@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of a weekly schedule. </summary>
     public partial class DevTestLabWeekDetails
     {
-        /// <summary> Initializes a new instance of DevTestLabWeekDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabWeekDetails"/>. </summary>
         public DevTestLabWeekDetails()
         {
             Weekdays = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabWeekDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabWeekDetails"/>. </summary>
         /// <param name="weekdays"> The days of the week for which the schedule is set (e.g. Sunday, Monday, Tuesday, etc.). </param>
         /// <param name="time"> The time of the day the schedule will occur. </param>
         internal DevTestLabWeekDetails(IList<string> weekdays, string time)

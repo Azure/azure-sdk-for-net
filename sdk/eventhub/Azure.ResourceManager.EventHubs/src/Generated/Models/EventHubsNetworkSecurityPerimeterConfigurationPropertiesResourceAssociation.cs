@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Information about resource association. </summary>
     public partial class EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation
     {
-        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation"/>. </summary>
         internal EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation"/>. </summary>
         /// <param name="name"> Name of the resource association. </param>
         /// <param name="accessMode"> Access Mode of the resource association. </param>
         internal EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(string name, EventHubsResourceAssociationAccessMode? accessMode)

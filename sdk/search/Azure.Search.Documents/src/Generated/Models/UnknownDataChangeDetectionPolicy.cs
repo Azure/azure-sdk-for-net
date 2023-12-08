@@ -12,7 +12,7 @@ namespace Azure.Search.Documents.Models
     /// <summary> The UnknownDataChangeDetectionPolicy. </summary>
     internal partial class UnknownDataChangeDetectionPolicy : DataChangeDetectionPolicy
     {
-        /// <summary> Initializes a new instance of UnknownDataChangeDetectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDataChangeDetectionPolicy"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of data change detection policy. </param>
         internal UnknownDataChangeDetectionPolicy(string oDataType) : base(oDataType)
         {

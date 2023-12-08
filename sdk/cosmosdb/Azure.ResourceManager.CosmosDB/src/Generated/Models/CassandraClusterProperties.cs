@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Properties of a managed Cassandra cluster. </summary>
     public partial class CassandraClusterProperties
     {
-        /// <summary> Initializes a new instance of CassandraClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterProperties"/>. </summary>
         public CassandraClusterProperties()
         {
             ClientCertificates = new ChangeTrackingList<CassandraCertificate>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             BackupSchedules = new ChangeTrackingList<CassandraClusterBackupSchedule>();
         }
 
-        /// <summary> Initializes a new instance of CassandraClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the resource at the time the operation was called. </param>
         /// <param name="restoreFromBackupId"> To create an empty cluster, omit this field or set it to null. To restore a backup into a new cluster, set this field to the resource id of the backup. </param>
         /// <param name="delegatedManagementSubnetId"> Resource id of a subnet that this cluster's management service should have its network interface attached to. The subnet must be routable to all subnets that will be delegated to data centers. The resource id must be of the form '/subscriptions/&lt;subscription id&gt;/resourceGroups/&lt;resource group&gt;/providers/Microsoft.Network/virtualNetworks/&lt;virtual network&gt;/subnets/&lt;subnet&gt;'. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Telegram channel definition. </summary>
     public partial class TelegramChannel : BotChannelProperties
     {
-        /// <summary> Initializes a new instance of TelegramChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelegramChannel"/>. </summary>
         public TelegramChannel()
         {
             ChannelName = "TelegramChannel";
         }
 
-        /// <summary> Initializes a new instance of TelegramChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelegramChannel"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>

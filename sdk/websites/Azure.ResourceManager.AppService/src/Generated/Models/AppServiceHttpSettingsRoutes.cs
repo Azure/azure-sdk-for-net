@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of the paths HTTP requests. </summary>
     internal partial class AppServiceHttpSettingsRoutes
     {
-        /// <summary> Initializes a new instance of AppServiceHttpSettingsRoutes. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceHttpSettingsRoutes"/>. </summary>
         public AppServiceHttpSettingsRoutes()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceHttpSettingsRoutes. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceHttpSettingsRoutes"/>. </summary>
         /// <param name="apiPrefix"> The prefix that should precede all the authentication/authorization paths. </param>
         internal AppServiceHttpSettingsRoutes(string apiPrefix)
         {

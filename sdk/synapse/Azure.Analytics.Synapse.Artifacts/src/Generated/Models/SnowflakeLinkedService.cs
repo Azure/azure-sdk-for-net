@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Snowflake linked service. </summary>
     public partial class SnowflakeLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of SnowflakeLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnowflakeLinkedService"/>. </summary>
         /// <param name="connectionString"> The connection string of snowflake. Type: string, SecureString. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public SnowflakeLinkedService(object connectionString)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Snowflake";
         }
 
-        /// <summary> Initializes a new instance of SnowflakeLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnowflakeLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> HyperV to AzStackHCI recovery point model custom properties. </summary>
     public partial class HyperVToAzStackHciRecoveryPointModelCustomProperties : RecoveryPointModelCustomProperties
     {
-        /// <summary> Initializes a new instance of HyperVToAzStackHciRecoveryPointModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciRecoveryPointModelCustomProperties"/>. </summary>
         internal HyperVToAzStackHciRecoveryPointModelCustomProperties()
         {
             DiskIds = new ChangeTrackingList<string>();
             InstanceType = "HyperVToAzStackHCI";
         }
 
-        /// <summary> Initializes a new instance of HyperVToAzStackHciRecoveryPointModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciRecoveryPointModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="diskIds"> Gets or sets the list of the disk Ids. </param>
         internal HyperVToAzStackHciRecoveryPointModelCustomProperties(string instanceType, IReadOnlyList<string> diskIds) : base(instanceType)

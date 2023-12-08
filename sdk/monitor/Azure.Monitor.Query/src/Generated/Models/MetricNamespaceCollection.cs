@@ -15,7 +15,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Represents collection of metric namespaces. </summary>
     internal partial class MetricNamespaceCollection
     {
-        /// <summary> Initializes a new instance of MetricNamespaceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricNamespaceCollection"/>. </summary>
         /// <param name="value"> The values for the metric namespaces. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal MetricNamespaceCollection(IEnumerable<MetricNamespace> value)
@@ -25,7 +25,7 @@ namespace Azure.Monitor.Query.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of MetricNamespaceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricNamespaceCollection"/>. </summary>
         /// <param name="value"> The values for the metric namespaces. </param>
         internal MetricNamespaceCollection(IReadOnlyList<MetricNamespace> value)
         {

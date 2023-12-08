@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> The settings for the CORS configuration of the service instance. </summary>
     public partial class HealthcareApisServiceCorsConfiguration
     {
-        /// <summary> Initializes a new instance of HealthcareApisServiceCorsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceCorsConfiguration"/>. </summary>
         public HealthcareApisServiceCorsConfiguration()
         {
             Origins = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Methods = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisServiceCorsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceCorsConfiguration"/>. </summary>
         /// <param name="origins"> The origins to be allowed via CORS. </param>
         /// <param name="headers"> The headers to be allowed via CORS. </param>
         /// <param name="methods"> The methods to be allowed via CORS. </param>

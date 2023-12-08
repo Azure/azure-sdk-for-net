@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The availability of the metric. </summary>
     public partial class CosmosDBMetricAvailability
     {
-        /// <summary> Initializes a new instance of CosmosDBMetricAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMetricAvailability"/>. </summary>
         internal CosmosDBMetricAvailability()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBMetricAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMetricAvailability"/>. </summary>
         /// <param name="timeGrain"> The time grain to be used to summarize the metric values. </param>
         /// <param name="retention"> The retention for the metric values. </param>
         internal CosmosDBMetricAvailability(string timeGrain, string retention)

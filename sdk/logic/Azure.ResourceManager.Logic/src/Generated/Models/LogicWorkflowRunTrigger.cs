@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The workflow run trigger. </summary>
     public partial class LogicWorkflowRunTrigger
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRunTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunTrigger"/>. </summary>
         internal LogicWorkflowRunTrigger()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRunTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunTrigger"/>. </summary>
         /// <param name="name"> Gets the name. </param>
         /// <param name="inputs"> Gets the inputs. </param>
         /// <param name="inputsLink"> Gets the link to inputs. </param>

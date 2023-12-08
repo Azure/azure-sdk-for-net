@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.EventHubs
         private readonly ConsumerGroupsRestOperations _eventHubsConsumerGroupConsumerGroupsRestClient;
         private readonly EventHubsConsumerGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/eventhubs/consumergroups";
+
         /// <summary> Initializes a new instance of the <see cref="EventHubsConsumerGroupResource"/> class for mocking. </summary>
         protected EventHubsConsumerGroupResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.EventHubs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/eventhubs/consumergroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

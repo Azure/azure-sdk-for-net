@@ -13,10 +13,19 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> Defines the virtualMachineUpdate. </summary>
     public partial class ScVmmVirtualMachinePatch
     {
-        /// <summary> Initializes a new instance of ScVmmVirtualMachinePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmVirtualMachinePatch"/>. </summary>
         public ScVmmVirtualMachinePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScVmmVirtualMachinePatch"/>. </summary>
+        /// <param name="properties"> Defines the resource properties. </param>
+        /// <param name="tags"> Gets or sets the Resource tags. </param>
+        internal ScVmmVirtualMachinePatch(VirtualMachineUpdateProperties properties, IDictionary<string, string> tags)
+        {
+            Properties = properties;
+            Tags = tags;
         }
 
         /// <summary> Defines the resource properties. </summary>

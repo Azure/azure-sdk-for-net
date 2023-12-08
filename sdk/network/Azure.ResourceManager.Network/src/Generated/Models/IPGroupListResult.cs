@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for the ListIpGroups API service call. </summary>
     internal partial class IPGroupListResult
     {
-        /// <summary> Initializes a new instance of IPGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPGroupListResult"/>. </summary>
         internal IPGroupListResult()
         {
             Value = new ChangeTrackingList<IPGroupData>();
         }
 
-        /// <summary> Initializes a new instance of IPGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPGroupListResult"/>. </summary>
         /// <param name="value"> The list of IpGroups information resources. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         internal IPGroupListResult(IReadOnlyList<IPGroupData> value, string nextLink)

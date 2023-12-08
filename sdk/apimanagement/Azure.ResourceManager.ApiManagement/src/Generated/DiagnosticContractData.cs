@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class DiagnosticContractData : ResourceData
     {
-        /// <summary> Initializes a new instance of DiagnosticContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticContractData"/>. </summary>
         public DiagnosticContractData()
         {
         }
 
-        /// <summary> Initializes a new instance of DiagnosticContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

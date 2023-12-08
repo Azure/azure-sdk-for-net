@@ -46,6 +46,9 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly DeploymentsRestOperations _appPlatformDeploymentDeploymentsRestClient;
         private readonly AppPlatformServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformServiceResource"/> class for mocking. </summary>
         protected AppPlatformServiceResource()
         {
@@ -78,9 +81,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

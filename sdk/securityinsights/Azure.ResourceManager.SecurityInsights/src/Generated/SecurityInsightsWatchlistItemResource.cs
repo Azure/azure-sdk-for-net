@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.SecurityInsights
         private readonly WatchlistItemsRestOperations _securityInsightsWatchlistItemWatchlistItemsRestClient;
         private readonly SecurityInsightsWatchlistItemData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/watchlists/watchlistItems";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityInsightsWatchlistItemResource"/> class for mocking. </summary>
         protected SecurityInsightsWatchlistItemResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.SecurityInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/watchlists/watchlistItems";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -1273,8 +1273,8 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary> Get the health for routing endpoints. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="iotHubName"> The String to use. </param>
+        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
+        /// <param name="iotHubName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1302,8 +1302,8 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary> Get the health for routing endpoints. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="iotHubName"> The String to use. </param>
+        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
+        /// <param name="iotHubName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2381,8 +2381,8 @@ namespace Azure.ResourceManager.IotHub
         /// <summary> Get the health for routing endpoints. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="iotHubName"> The String to use. </param>
+        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
+        /// <param name="iotHubName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2412,8 +2412,8 @@ namespace Azure.ResourceManager.IotHub
         /// <summary> Get the health for routing endpoints. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription identifier. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="iotHubName"> The String to use. </param>
+        /// <param name="resourceGroupName"> The <see cref="string"/> to use. </param>
+        /// <param name="iotHubName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="iotHubName"/> is an empty string, and was expected to be non-empty. </exception>

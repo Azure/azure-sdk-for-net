@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseExtendedSqlPoolBlobAuditingPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseExtendedSqlPoolBlobAuditingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyData"/>. </summary>
         public SynapseExtendedSqlPoolBlobAuditingPolicyData()
         {
             AuditActionsAndGroups = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SynapseExtendedSqlPoolBlobAuditingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> CVE summary values. </summary>
     public partial class CveSummary
     {
-        /// <summary> Initializes a new instance of CveSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="CveSummary"/>. </summary>
         internal CveSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of CveSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="CveSummary"/>. </summary>
         /// <param name="critical"> The total number of critical severity CVEs detected. </param>
         /// <param name="high"> The total number of high severity CVEs detected. </param>
         /// <param name="medium"> The total number of medium severity CVEs detected. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> HybridAKSClusterStatus defines the observed state of HybridAKSCluster. </summary>
     public partial class ProvisionedClustersCommonPropertiesStatus
     {
-        /// <summary> Initializes a new instance of ProvisionedClustersCommonPropertiesStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersCommonPropertiesStatus"/>. </summary>
         internal ProvisionedClustersCommonPropertiesStatus()
         {
             AddonStatus = new ChangeTrackingDictionary<string, AddonStatus>();
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClustersCommonPropertiesStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersCommonPropertiesStatus"/>. </summary>
         /// <param name="featuresStatus"> Additional features status like Arc Agent Onboarding. </param>
         /// <param name="addonStatus"> AddonStatus - Status of Addons. </param>
         /// <param name="errorMessage"> ErrorMessage - Error messages during creation of cluster. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownPackageInputPathBase. </summary>
     internal partial class UnknownPackageInputPathBase : PackageInputPathBase
     {
-        /// <summary> Initializes a new instance of UnknownPackageInputPathBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownPackageInputPathBase"/>. </summary>
         /// <param name="inputPathType"> [Required] Input path type for package inputs. </param>
         internal UnknownPackageInputPathBase(InputPathType inputPathType) : base(inputPathType)
         {

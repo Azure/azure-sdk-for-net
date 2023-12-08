@@ -46,6 +46,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         private readonly BuildsRestOperations _buildsRestClient;
         private readonly ContainerRegistryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerRegistryResource"/> class for mocking. </summary>
         protected ContainerRegistryResource()
         {
@@ -76,9 +79,6 @@ namespace Azure.ResourceManager.ContainerRegistry
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

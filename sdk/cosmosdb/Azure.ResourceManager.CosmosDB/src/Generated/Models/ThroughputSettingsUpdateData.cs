@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters to update Cosmos DB resource throughput. </summary>
     public partial class ThroughputSettingsUpdateData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ThroughputSettingsUpdateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThroughputSettingsUpdateData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a resource throughput. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Resource = resource;
         }
 
-        /// <summary> Initializes a new instance of ThroughputSettingsUpdateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThroughputSettingsUpdateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

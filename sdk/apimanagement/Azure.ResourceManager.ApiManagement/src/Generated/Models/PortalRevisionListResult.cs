@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged list of portal revisions. </summary>
     internal partial class PortalRevisionListResult
     {
-        /// <summary> Initializes a new instance of PortalRevisionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PortalRevisionListResult"/>. </summary>
         internal PortalRevisionListResult()
         {
             Value = new ChangeTrackingList<ApiManagementPortalRevisionData>();
         }
 
-        /// <summary> Initializes a new instance of PortalRevisionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PortalRevisionListResult"/>. </summary>
         /// <param name="value"> Collection of portal revisions. </param>
         /// <param name="nextLink"> Next page link, if any. </param>
         internal PortalRevisionListResult(IReadOnlyList<ApiManagementPortalRevisionData> value, string nextLink)

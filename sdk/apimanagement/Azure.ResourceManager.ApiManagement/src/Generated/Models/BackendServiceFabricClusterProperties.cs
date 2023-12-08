@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Properties of the Service Fabric Type Backend. </summary>
     public partial class BackendServiceFabricClusterProperties
     {
-        /// <summary> Initializes a new instance of BackendServiceFabricClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendServiceFabricClusterProperties"/>. </summary>
         /// <param name="managementEndpoints"> The cluster management endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementEndpoints"/> is null. </exception>
         public BackendServiceFabricClusterProperties(IEnumerable<string> managementEndpoints)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ServerX509Names = new ChangeTrackingList<X509CertificateName>();
         }
 
-        /// <summary> Initializes a new instance of BackendServiceFabricClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendServiceFabricClusterProperties"/>. </summary>
         /// <param name="clientCertificateId"> The client certificate id for the management endpoint. </param>
         /// <param name="clientCertificatethumbprint"> The client certificate thumbprint for the management endpoint. Will be ignored if certificatesIds are provided. </param>
         /// <param name="maxPartitionResolutionRetries"> Maximum number of retries while attempting resolve the partition. </param>

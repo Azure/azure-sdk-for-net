@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A list activity runs. </summary>
     public partial class ActivityRunsQueryResponse
     {
-        /// <summary> Initializes a new instance of ActivityRunsQueryResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivityRunsQueryResponse"/>. </summary>
         /// <param name="value"> List of activity runs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ActivityRunsQueryResponse(IEnumerable<ActivityRun> value)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ActivityRunsQueryResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivityRunsQueryResponse"/>. </summary>
         /// <param name="value"> List of activity runs. </param>
         /// <param name="continuationToken"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
         internal ActivityRunsQueryResponse(IReadOnlyList<ActivityRun> value, string continuationToken)

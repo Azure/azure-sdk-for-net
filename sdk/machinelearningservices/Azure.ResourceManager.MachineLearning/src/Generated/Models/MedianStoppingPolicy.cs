@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Defines an early termination policy based on running averages of the primary metric of all runs. </summary>
     public partial class MedianStoppingPolicy : MachineLearningEarlyTerminationPolicy
     {
-        /// <summary> Initializes a new instance of MedianStoppingPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="MedianStoppingPolicy"/>. </summary>
         public MedianStoppingPolicy()
         {
             PolicyType = EarlyTerminationPolicyType.MedianStopping;
         }
 
-        /// <summary> Initializes a new instance of MedianStoppingPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="MedianStoppingPolicy"/>. </summary>
         /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
         /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
         /// <param name="policyType"> [Required] Name of policy configuration. </param>

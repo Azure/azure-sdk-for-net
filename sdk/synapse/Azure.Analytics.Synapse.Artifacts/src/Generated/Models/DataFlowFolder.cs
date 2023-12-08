@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </summary>
     public partial class DataFlowFolder
     {
-        /// <summary> Initializes a new instance of DataFlowFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowFolder"/>. </summary>
         public DataFlowFolder()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFlowFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowFolder"/>. </summary>
         /// <param name="name"> The name of the folder that this data flow is in. </param>
         internal DataFlowFolder(string name)
         {

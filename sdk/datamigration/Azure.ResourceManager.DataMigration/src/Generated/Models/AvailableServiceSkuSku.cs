@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> SKU name, tier, etc. </summary>
     public partial class AvailableServiceSkuSku
     {
-        /// <summary> Initializes a new instance of AvailableServiceSkuSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableServiceSkuSku"/>. </summary>
         internal AvailableServiceSkuSku()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailableServiceSkuSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableServiceSkuSku"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="family"> SKU family. </param>
         /// <param name="size"> SKU size. </param>

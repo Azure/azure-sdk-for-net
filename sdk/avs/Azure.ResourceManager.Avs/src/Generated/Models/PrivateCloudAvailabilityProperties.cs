@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> The properties describing private cloud availability zone distribution. </summary>
     public partial class PrivateCloudAvailabilityProperties
     {
-        /// <summary> Initializes a new instance of PrivateCloudAvailabilityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateCloudAvailabilityProperties"/>. </summary>
         public PrivateCloudAvailabilityProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateCloudAvailabilityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateCloudAvailabilityProperties"/>. </summary>
         /// <param name="strategy"> The availability strategy for the private cloud. </param>
         /// <param name="zone"> The primary availability zone for the private cloud. </param>
         /// <param name="secondaryZone"> The secondary availability zone for the private cloud. </param>

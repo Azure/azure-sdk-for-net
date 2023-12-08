@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.CustomerInsights
         private readonly KpiRestOperations _kpiResourceFormatKpiRestClient;
         private readonly KpiResourceFormatData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/kpi";
+
         /// <summary> Initializes a new instance of the <see cref="KpiResourceFormatResource"/> class for mocking. </summary>
         protected KpiResourceFormatResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.CustomerInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/kpi";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The result of a request to list scope maps for a container registry. </summary>
     internal partial class ScopeMapListResult
     {
-        /// <summary> Initializes a new instance of ScopeMapListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeMapListResult"/>. </summary>
         internal ScopeMapListResult()
         {
             Value = new ChangeTrackingList<ScopeMapData>();
         }
 
-        /// <summary> Initializes a new instance of ScopeMapListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeMapListResult"/>. </summary>
         /// <param name="value"> The list of scope maps. Since this list may be incomplete, the nextLink field should be used to request the next list of scope maps. </param>
         /// <param name="nextLink"> The URI that can be used to request the next list of scope maps. </param>
         internal ScopeMapListResult(IReadOnlyList<ScopeMapData> value, string nextLink)

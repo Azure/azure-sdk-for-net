@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The profile of an orchestrator and its available versions. </summary>
     public partial class OrchestratorVersionProfile
     {
-        /// <summary> Initializes a new instance of OrchestratorVersionProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrchestratorVersionProfile"/>. </summary>
         internal OrchestratorVersionProfile()
         {
             Upgrades = new ChangeTrackingList<OrchestratorProfile>();
         }
 
-        /// <summary> Initializes a new instance of OrchestratorVersionProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrchestratorVersionProfile"/>. </summary>
         /// <param name="isPreview"> Whether Kubernetes version is currently in preview. </param>
         /// <param name="default"> Installed by default if version is not specified. </param>
         /// <param name="orchestratorType"> Orchestrator type. </param>

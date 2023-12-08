@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of resource providers. </summary>
     internal partial class TenantResourceProviderListResult
     {
-        /// <summary> Initializes a new instance of TenantResourceProviderListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantResourceProviderListResult"/>. </summary>
         internal TenantResourceProviderListResult()
         {
             Value = new ChangeTrackingList<TenantResourceProvider>();
         }
 
-        /// <summary> Initializes a new instance of TenantResourceProviderListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantResourceProviderListResult"/>. </summary>
         /// <param name="value"> An array of resource providers. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal TenantResourceProviderListResult(IReadOnlyList<TenantResourceProvider> value, string nextLink)

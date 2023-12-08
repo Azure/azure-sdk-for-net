@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.AppConfiguration
         private readonly ConfigurationStoresRestOperations _appConfigurationStoreConfigurationStoresRestClient;
         private readonly AppConfigurationStoreData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppConfiguration/configurationStores";
+
         /// <summary> Initializes a new instance of the <see cref="AppConfigurationStoreResource"/> class for mocking. </summary>
         protected AppConfigurationStoreResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.AppConfiguration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppConfiguration/configurationStores";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

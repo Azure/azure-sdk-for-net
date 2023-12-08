@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> A list of deployments resource ids. </summary>
     internal partial class DeploymentList
     {
-        /// <summary> Initializes a new instance of DeploymentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentList"/>. </summary>
         internal DeploymentList()
         {
             Deployments = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of DeploymentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentList"/>. </summary>
         /// <param name="deployments"> A list of deployment resource ids. </param>
         internal DeploymentList(IReadOnlyList<ResourceIdentifier> deployments)
         {

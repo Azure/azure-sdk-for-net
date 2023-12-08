@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> All security rules associated with the network interface. </summary>
     public partial class SecurityRuleAssociations
     {
-        /// <summary> Initializes a new instance of SecurityRuleAssociations. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityRuleAssociations"/>. </summary>
         internal SecurityRuleAssociations()
         {
             DefaultSecurityRules = new ChangeTrackingList<SecurityRuleData>();
             EffectiveSecurityRules = new ChangeTrackingList<EffectiveNetworkSecurityRule>();
         }
 
-        /// <summary> Initializes a new instance of SecurityRuleAssociations. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityRuleAssociations"/>. </summary>
         /// <param name="networkInterfaceAssociation"> Network interface and it's custom security rules. </param>
         /// <param name="subnetAssociation"> Subnet and it's custom security rules. </param>
         /// <param name="defaultSecurityRules"> Collection of default security rules of the network security group. </param>

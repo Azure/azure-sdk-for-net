@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Cdn
         private readonly CdnOriginsRestOperations _cdnOriginRestClient;
         private readonly CdnOriginData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/endpoints/origins";
+
         /// <summary> Initializes a new instance of the <see cref="CdnOriginResource"/> class for mocking. </summary>
         protected CdnOriginResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Cdn
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/endpoints/origins";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

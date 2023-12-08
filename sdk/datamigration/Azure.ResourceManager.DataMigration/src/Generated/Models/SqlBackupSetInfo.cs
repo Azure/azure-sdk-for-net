@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Information of backup set. </summary>
     public partial class SqlBackupSetInfo
     {
-        /// <summary> Initializes a new instance of SqlBackupSetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlBackupSetInfo"/>. </summary>
         internal SqlBackupSetInfo()
         {
             ListOfBackupFiles = new ChangeTrackingList<SqlBackupFileInfo>();
             IgnoreReasons = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SqlBackupSetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlBackupSetInfo"/>. </summary>
         /// <param name="backupSetId"> Backup set id. </param>
         /// <param name="firstLSN"> First LSN of the backup set. </param>
         /// <param name="lastLSN"> Last LSN of the backup set. </param>

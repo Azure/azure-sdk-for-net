@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Grafana
         private readonly PrivateLinkResourcesRestOperations _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly GrafanaPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Dashboard/grafana/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="GrafanaPrivateLinkResource"/> class for mocking. </summary>
         protected GrafanaPrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Grafana
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Dashboard/grafana/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

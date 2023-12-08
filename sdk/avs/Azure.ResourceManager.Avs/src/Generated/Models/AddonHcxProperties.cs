@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> The properties of an HCX addon. </summary>
     public partial class AddonHcxProperties : AvsPrivateCloudAddonProperties
     {
-        /// <summary> Initializes a new instance of AddonHcxProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddonHcxProperties"/>. </summary>
         /// <param name="offer"> The HCX offer, example VMware MaaS Cloud Provider (Enterprise). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offer"/> is null. </exception>
         public AddonHcxProperties(string offer)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Avs.Models
             AddonType = AddonType.HCX;
         }
 
-        /// <summary> Initializes a new instance of AddonHcxProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddonHcxProperties"/>. </summary>
         /// <param name="addonType"> The type of private cloud addon. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
         /// <param name="offer"> The HCX offer, example VMware MaaS Cloud Provider (Enterprise). </param>

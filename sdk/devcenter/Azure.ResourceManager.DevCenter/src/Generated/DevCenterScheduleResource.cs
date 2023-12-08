@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DevCenter
         private readonly SchedulesRestOperations _devCenterScheduleSchedulesRestClient;
         private readonly DevCenterScheduleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects/pools/schedules";
+
         /// <summary> Initializes a new instance of the <see cref="DevCenterScheduleResource"/> class for mocking. </summary>
         protected DevCenterScheduleResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DevCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects/pools/schedules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

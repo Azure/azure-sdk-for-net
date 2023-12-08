@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Key Vault Key Url and vault id of KeK, KeK is optional and when provided is used to unwrap the encryptionKey. </summary>
     public partial class KeyVaultAndKeyReference
     {
-        /// <summary> Initializes a new instance of KeyVaultAndKeyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultAndKeyReference"/>. </summary>
         /// <param name="sourceVault"> Resource id of the KeyVault containing the key or secret. </param>
         /// <param name="keyUri"> Url pointing to a key or secret in KeyVault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceVault"/> or <paramref name="keyUri"/> is null. </exception>

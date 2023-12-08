@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Status and result of the analyze operation. </summary>
     internal partial class AnalyzeResultOperation
     {
-        /// <summary> Initializes a new instance of AnalyzeResultOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeResultOperation"/>. </summary>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the analyze operation was submitted. </param>
         /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             LastUpdatedDateTime = lastUpdatedDateTime;
         }
 
-        /// <summary> Initializes a new instance of AnalyzeResultOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeResultOperation"/>. </summary>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the analyze operation was submitted. </param>
         /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>

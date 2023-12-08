@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
     /// <summary> The endpoint access for the target resource. </summary>
     public partial class TargetResourceEndpointAccess
     {
-        /// <summary> Initializes a new instance of TargetResourceEndpointAccess. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetResourceEndpointAccess"/>. </summary>
         internal TargetResourceEndpointAccess()
         {
         }
 
-        /// <summary> Initializes a new instance of TargetResourceEndpointAccess. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetResourceEndpointAccess"/>. </summary>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="namespaceNameSuffix"> The suffix domain name of relay namespace. </param>
         /// <param name="hybridConnectionName"> Azure Relay hybrid connection name for the resource. </param>

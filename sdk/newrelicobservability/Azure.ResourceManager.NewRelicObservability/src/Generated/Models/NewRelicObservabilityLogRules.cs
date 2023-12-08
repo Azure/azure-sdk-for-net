@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
     public partial class NewRelicObservabilityLogRules
     {
-        /// <summary> Initializes a new instance of NewRelicObservabilityLogRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityLogRules"/>. </summary>
         public NewRelicObservabilityLogRules()
         {
             FilteringTags = new ChangeTrackingList<NewRelicObservabilityFilteringTag>();
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityLogRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityLogRules"/>. </summary>
         /// <param name="sendAadLogs"> Flag specifying if AAD logs should be sent for the Monitor resource. </param>
         /// <param name="sendSubscriptionLogs"> Flag specifying if subscription logs should be sent for the Monitor resource. </param>
         /// <param name="sendActivityLogs"> Flag specifying if activity logs from Azure resources should be sent for the Monitor resource. </param>

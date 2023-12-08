@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.StorageMover
     /// </summary>
     public partial class StorageMoverEndpointData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageMoverEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverEndpointData"/>. </summary>
         /// <param name="properties">
         /// The resource specific properties for the Storage Mover resource.
         /// Please note <see cref="EndpointBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StorageMover
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of StorageMoverEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

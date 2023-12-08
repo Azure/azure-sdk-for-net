@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The list of managed API operations. </summary>
     internal partial class LogicApiOperationListResult
     {
-        /// <summary> Initializes a new instance of LogicApiOperationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiOperationListResult"/>. </summary>
         internal LogicApiOperationListResult()
         {
             Value = new ChangeTrackingList<LogicApiOperationInfo>();
         }
 
-        /// <summary> Initializes a new instance of LogicApiOperationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiOperationListResult"/>. </summary>
         /// <param name="value"> The api operation definitions for an API. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal LogicApiOperationListResult(IReadOnlyList<LogicApiOperationInfo> value, string nextLink)

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiData"/>. </summary>
         public ApiData()
         {
             Protocols = new ChangeTrackingList<ApiOperationInvokableProtocol>();
         }
 
-        /// <summary> Initializes a new instance of ApiData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

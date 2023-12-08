@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the update dsc node operation. </summary>
     public partial class DscNodePatch
     {
-        /// <summary> Initializes a new instance of DscNodePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodePatch"/>. </summary>
         public DscNodePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DscNodePatch"/>. </summary>
+        /// <param name="nodeId"> Gets or sets the id of the dsc node. </param>
+        /// <param name="properties"></param>
+        internal DscNodePatch(string nodeId, DscNodeUpdateParametersProperties properties)
+        {
+            NodeId = nodeId;
+            Properties = properties;
         }
 
         /// <summary> Gets or sets the id of the dsc node. </summary>

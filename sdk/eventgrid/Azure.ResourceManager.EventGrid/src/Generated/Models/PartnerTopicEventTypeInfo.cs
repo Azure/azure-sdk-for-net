@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> The event type information for Channels. </summary>
     public partial class PartnerTopicEventTypeInfo
     {
-        /// <summary> Initializes a new instance of PartnerTopicEventTypeInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerTopicEventTypeInfo"/>. </summary>
         public PartnerTopicEventTypeInfo()
         {
             InlineEventTypes = new ChangeTrackingDictionary<string, InlineEventProperties>();
         }
 
-        /// <summary> Initializes a new instance of PartnerTopicEventTypeInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerTopicEventTypeInfo"/>. </summary>
         /// <param name="kind"> The kind of event type used. </param>
         /// <param name="inlineEventTypes">
         /// A collection of inline event types for the resource. The inline event type keys are of type string which represents the name of the event.

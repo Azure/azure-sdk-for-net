@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Actions are applied to the filtered blobs when the execution condition is met. </summary>
     public partial class ManagementPolicyAction
     {
-        /// <summary> Initializes a new instance of ManagementPolicyAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyAction"/>. </summary>
         public ManagementPolicyAction()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagementPolicyAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyAction"/>. </summary>
         /// <param name="baseBlob"> The management policy action for base blob. </param>
         /// <param name="snapshot"> The management policy action for snapshot. </param>
         /// <param name="version"> The management policy action for version. </param>

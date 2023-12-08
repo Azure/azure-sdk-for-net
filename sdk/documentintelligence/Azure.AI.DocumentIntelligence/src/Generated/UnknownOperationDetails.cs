@@ -14,7 +14,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Unknown version of OperationDetails. </summary>
     internal partial class UnknownOperationDetails : OperationDetails
     {
-        /// <summary> Initializes a new instance of UnknownOperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
@@ -27,7 +27,7 @@ namespace Azure.AI.DocumentIntelligence
             Argument.AssertNotNull(resourceLocation, nameof(resourceLocation));
         }
 
-        /// <summary> Initializes a new instance of UnknownOperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>

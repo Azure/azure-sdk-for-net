@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// </summary>
     public partial class PostgreSqlFlexibleServerActiveDirectoryAdministratorData : ResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerActiveDirectoryAdministratorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorData"/>. </summary>
         public PostgreSqlFlexibleServerActiveDirectoryAdministratorData()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerActiveDirectoryAdministratorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

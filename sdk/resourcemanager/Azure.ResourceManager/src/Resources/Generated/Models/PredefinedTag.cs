@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Tag details. </summary>
     public partial class PredefinedTag
     {
-        /// <summary> Initializes a new instance of PredefinedTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredefinedTag"/>. </summary>
         internal PredefinedTag()
         {
             Values = new ChangeTrackingList<PredefinedTagValue>();
         }
 
-        /// <summary> Initializes a new instance of PredefinedTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredefinedTag"/>. </summary>
         /// <param name="id"> The tag name ID. </param>
         /// <param name="tagName"> The tag name. </param>
         /// <param name="count"> The total number of resources that use the resource tag. When a tag is initially created and has no associated resources, the value is 0. </param>

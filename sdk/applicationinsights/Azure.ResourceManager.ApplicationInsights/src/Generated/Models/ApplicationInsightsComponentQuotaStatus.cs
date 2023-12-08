@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> An Application Insights component daily data volume cap status. </summary>
     public partial class ApplicationInsightsComponentQuotaStatus
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentQuotaStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentQuotaStatus"/>. </summary>
         internal ApplicationInsightsComponentQuotaStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentQuotaStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentQuotaStatus"/>. </summary>
         /// <param name="appId"> The Application ID for the Application Insights component. </param>
         /// <param name="shouldBeThrottled"> The daily data volume cap is met, and data ingestion will be stopped. </param>
         /// <param name="expirationTime"> Date and time when the daily data volume cap will be reset, and data ingestion will resume. </param>

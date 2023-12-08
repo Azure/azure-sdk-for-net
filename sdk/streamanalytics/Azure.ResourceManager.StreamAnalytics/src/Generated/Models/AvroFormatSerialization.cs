@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes how data from an input is serialized or how data is serialized when written to an output in Avro format. </summary>
     public partial class AvroFormatSerialization : StreamAnalyticsDataSerialization
     {
-        /// <summary> Initializes a new instance of AvroFormatSerialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvroFormatSerialization"/>. </summary>
         public AvroFormatSerialization()
         {
             EventSerializationType = EventSerializationType.Avro;
         }
 
-        /// <summary> Initializes a new instance of AvroFormatSerialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvroFormatSerialization"/>. </summary>
         /// <param name="eventSerializationType"> Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="properties"> The properties that are associated with the Avro serialization type. Required on PUT (CreateOrReplace) requests. </param>
         internal AvroFormatSerialization(EventSerializationType eventSerializationType, BinaryData properties) : base(eventSerializationType)

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> List of subscription Ids in the private store. </summary>
     public partial class SubscriptionsContextList
     {
-        /// <summary> Initializes a new instance of SubscriptionsContextList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionsContextList"/>. </summary>
         internal SubscriptionsContextList()
         {
             SubscriptionsIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SubscriptionsContextList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionsContextList"/>. </summary>
         /// <param name="subscriptionsIds"></param>
         internal SubscriptionsContextList(IReadOnlyList<string> subscriptionsIds)
         {

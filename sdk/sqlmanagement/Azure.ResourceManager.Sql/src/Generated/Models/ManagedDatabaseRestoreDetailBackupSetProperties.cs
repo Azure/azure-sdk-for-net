@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The managed database's restore details backup set properties. </summary>
     public partial class ManagedDatabaseRestoreDetailBackupSetProperties
     {
-        /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailBackupSetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseRestoreDetailBackupSetProperties"/>. </summary>
         internal ManagedDatabaseRestoreDetailBackupSetProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailBackupSetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseRestoreDetailBackupSetProperties"/>. </summary>
         /// <param name="status"> Backup set status. </param>
         /// <param name="firstStripeName"> First stripe name. </param>
         /// <param name="numberOfStripes"> Number of stripes. </param>

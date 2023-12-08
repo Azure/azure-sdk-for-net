@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB Cassandra view resource object. </summary>
     public partial class CassandraViewResource
     {
-        /// <summary> Initializes a new instance of CassandraViewResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraViewResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB Cassandra view. </param>
         /// <param name="viewDefinition"> View Definition of the Cosmos DB Cassandra view. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="viewDefinition"/> is null. </exception>

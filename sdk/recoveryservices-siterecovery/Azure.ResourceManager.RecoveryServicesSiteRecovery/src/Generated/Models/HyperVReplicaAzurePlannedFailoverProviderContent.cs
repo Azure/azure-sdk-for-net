@@ -12,10 +12,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> HyperVReplicaAzure specific planned failover input. </summary>
     public partial class HyperVReplicaAzurePlannedFailoverProviderContent : PlannedFailoverProviderSpecificFailoverContent
     {
-        /// <summary> Initializes a new instance of HyperVReplicaAzurePlannedFailoverProviderContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzurePlannedFailoverProviderContent"/>. </summary>
         public HyperVReplicaAzurePlannedFailoverProviderContent()
         {
             InstanceType = "HyperVReplicaAzure";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzurePlannedFailoverProviderContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="primaryKekCertificatePfx"> Primary kek certificate pfx. </param>
+        /// <param name="secondaryKekCertificatePfx"> Secondary kek certificate pfx. </param>
+        /// <param name="recoveryPointId"> The recovery point id to be passed to failover to a particular recovery point. In case of latest recovery point, null should be passed. </param>
+        /// <param name="osUpgradeVersion"> A value indicating the inplace OS Upgrade version. </param>
+        internal HyperVReplicaAzurePlannedFailoverProviderContent(string instanceType, string primaryKekCertificatePfx, string secondaryKekCertificatePfx, ResourceIdentifier recoveryPointId, string osUpgradeVersion) : base(instanceType)
+        {
+            PrimaryKekCertificatePfx = primaryKekCertificatePfx;
+            SecondaryKekCertificatePfx = secondaryKekCertificatePfx;
+            RecoveryPointId = recoveryPointId;
+            OSUpgradeVersion = osUpgradeVersion;
+            InstanceType = instanceType ?? "HyperVReplicaAzure";
         }
 
         /// <summary> Primary kek certificate pfx. </summary>

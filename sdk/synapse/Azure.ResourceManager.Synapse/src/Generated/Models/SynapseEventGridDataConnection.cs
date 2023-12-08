@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Class representing an Event Grid data connection. </summary>
     public partial class SynapseEventGridDataConnection : SynapseDataConnectionData
     {
-        /// <summary> Initializes a new instance of SynapseEventGridDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseEventGridDataConnection"/>. </summary>
         public SynapseEventGridDataConnection()
         {
             Kind = SynapseDataConnectionKind.EventGrid;
         }
 
-        /// <summary> Initializes a new instance of SynapseEventGridDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseEventGridDataConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

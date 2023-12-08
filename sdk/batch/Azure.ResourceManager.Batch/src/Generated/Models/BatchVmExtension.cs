@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> The configuration for virtual machine extensions. </summary>
     public partial class BatchVmExtension
     {
-        /// <summary> Initializes a new instance of BatchVmExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchVmExtension"/>. </summary>
         /// <param name="name"> The name of the virtual machine extension. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="extensionType"> The type of the extensions. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Batch.Models
             ProvisionAfterExtensions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BatchVmExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchVmExtension"/>. </summary>
         /// <param name="name"> The name of the virtual machine extension. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="extensionType"> The type of the extensions. </param>

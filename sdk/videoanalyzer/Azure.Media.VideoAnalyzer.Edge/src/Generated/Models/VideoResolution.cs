@@ -10,12 +10,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The Video resolution. </summary>
     public partial class VideoResolution
     {
-        /// <summary> Initializes a new instance of VideoResolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoResolution"/>. </summary>
         public VideoResolution()
         {
         }
 
-        /// <summary> Initializes a new instance of VideoResolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoResolution"/>. </summary>
         /// <param name="width"> The number of columns of the Video image. </param>
         /// <param name="height"> The number of lines of the Video image. </param>
         internal VideoResolution(float? width, float? height)

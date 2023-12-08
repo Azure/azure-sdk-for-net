@@ -10,7 +10,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The UnknownEndpointBase. </summary>
     internal partial class UnknownEndpointBase : EndpointBase
     {
-        /// <summary> Initializes a new instance of UnknownEndpointBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownEndpointBase"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="credentials">
         /// Credentials to be presented to the endpoint.

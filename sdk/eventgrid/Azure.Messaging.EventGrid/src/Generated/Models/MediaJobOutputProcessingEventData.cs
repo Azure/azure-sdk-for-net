@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Job output processing event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.JobOutputProcessing event. </summary>
     public partial class MediaJobOutputProcessingEventData : MediaJobOutputStateChangeEventData
     {
-        /// <summary> Initializes a new instance of MediaJobOutputProcessingEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputProcessingEventData"/>. </summary>
         internal MediaJobOutputProcessingEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaJobOutputProcessingEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputProcessingEventData"/>. </summary>
         /// <param name="previousState"> The previous state of the Job. </param>
         /// <param name="output">
         /// Gets the output.

@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes how data from an input is serialized or how data is serialized when written to an output in Parquet format. </summary>
     public partial class ParquetFormatSerialization : StreamAnalyticsDataSerialization
     {
-        /// <summary> Initializes a new instance of ParquetFormatSerialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParquetFormatSerialization"/>. </summary>
         public ParquetFormatSerialization()
         {
             EventSerializationType = EventSerializationType.Parquet;
         }
 
-        /// <summary> Initializes a new instance of ParquetFormatSerialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParquetFormatSerialization"/>. </summary>
         /// <param name="eventSerializationType"> Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="properties"> The properties that are associated with the Parquet serialization type. Required on PUT (CreateOrReplace) requests. </param>
         internal ParquetFormatSerialization(EventSerializationType eventSerializationType, BinaryData properties) : base(eventSerializationType)

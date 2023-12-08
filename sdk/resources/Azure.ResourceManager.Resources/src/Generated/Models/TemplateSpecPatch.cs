@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Template Spec properties to be updated (only tags are currently supported). </summary>
     public partial class TemplateSpecPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of TemplateSpecPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateSpecPatch"/>. </summary>
         public TemplateSpecPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of TemplateSpecPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateSpecPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

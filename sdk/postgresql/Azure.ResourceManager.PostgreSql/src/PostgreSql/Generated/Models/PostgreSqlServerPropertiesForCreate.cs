@@ -14,9 +14,28 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// </summary>
     public abstract partial class PostgreSqlServerPropertiesForCreate
     {
-        /// <summary> Initializes a new instance of PostgreSqlServerPropertiesForCreate. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPropertiesForCreate"/>. </summary>
         protected PostgreSqlServerPropertiesForCreate()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPropertiesForCreate"/>. </summary>
+        /// <param name="version"> Server version. </param>
+        /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
+        /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
+        /// <param name="infrastructureEncryption"> Status showing whether the server enabled infrastructure encryption. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="storageProfile"> Storage profile of a server. </param>
+        /// <param name="createMode"> The mode to create a new server. </param>
+        internal PostgreSqlServerPropertiesForCreate(PostgreSqlServerVersion? version, PostgreSqlSslEnforcementEnum? sslEnforcement, PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion, PostgreSqlInfrastructureEncryption? infrastructureEncryption, PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess, PostgreSqlStorageProfile storageProfile, PostgreSqlCreateMode createMode)
+        {
+            Version = version;
+            SslEnforcement = sslEnforcement;
+            MinimalTlsVersion = minimalTlsVersion;
+            InfrastructureEncryption = infrastructureEncryption;
+            PublicNetworkAccess = publicNetworkAccess;
+            StorageProfile = storageProfile;
+            CreateMode = createMode;
         }
 
         /// <summary> Server version. </summary>

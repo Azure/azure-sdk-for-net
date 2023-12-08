@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> List of Snapshots. </summary>
     internal partial class SnapshotList
     {
-        /// <summary> Initializes a new instance of SnapshotList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotList"/>. </summary>
         internal SnapshotList()
         {
             Value = new ChangeTrackingList<ElasticSanSnapshotData>();
         }
 
-        /// <summary> Initializes a new instance of SnapshotList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotList"/>. </summary>
         /// <param name="value"> An array of Snapshot objects. </param>
         /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
         internal SnapshotList(IReadOnlyList<ElasticSanSnapshotData> value, string nextLink)

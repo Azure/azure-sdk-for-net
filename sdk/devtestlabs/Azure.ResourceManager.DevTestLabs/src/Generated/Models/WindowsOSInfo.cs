@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Information about a Windows OS. </summary>
     internal partial class WindowsOSInfo
     {
-        /// <summary> Initializes a new instance of WindowsOSInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsOSInfo"/>. </summary>
         public WindowsOSInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of WindowsOSInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsOSInfo"/>. </summary>
         /// <param name="windowsOSState"> The state of the Windows OS (i.e. NonSysprepped, SysprepRequested, SysprepApplied). </param>
         internal WindowsOSInfo(WindowsOSState? windowsOSState)
         {

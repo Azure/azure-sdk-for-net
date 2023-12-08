@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            CheckNameAvailabilityContent content = new CheckNameAvailabilityContent()
+            DeviceUpdateAvailabilityContent content = new DeviceUpdateAvailabilityContent()
             {
                 Name = "contoso",
-                ResourceType = "Microsoft.DeviceUpdate/accounts",
+                CheckNameAvailabilityRequestType = new ResourceType("Microsoft.DeviceUpdate/accounts"),
             };
-            CheckNameAvailabilityResponse result = await subscriptionResource.CheckDeviceUpdateNameAvailabilityAsync(content);
+            DeviceUpdateNameAvailabilityResult result = await subscriptionResource.CheckDeviceUpdateNameAvailabilityAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            CheckNameAvailabilityContent content = new CheckNameAvailabilityContent()
+            DeviceUpdateAvailabilityContent content = new DeviceUpdateAvailabilityContent()
             {
                 Name = "contoso",
-                ResourceType = "Microsoft.DeviceUpdate/accounts",
+                CheckNameAvailabilityRequestType = new ResourceType("Microsoft.DeviceUpdate/accounts"),
             };
-            CheckNameAvailabilityResponse result = await subscriptionResource.CheckDeviceUpdateNameAvailabilityAsync(content);
+            DeviceUpdateNameAvailabilityResult result = await subscriptionResource.CheckDeviceUpdateNameAvailabilityAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

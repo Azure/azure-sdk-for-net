@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Spark job definition. </summary>
     public partial class SparkJob : MachineLearningJobProperties
     {
-        /// <summary> Initializes a new instance of SparkJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJob"/>. </summary>
         /// <param name="codeId"> [Required] ARM resource ID of the code asset. </param>
         /// <param name="entry">
         /// [Required] The entry to execute on startup of the job.
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobType = JobType.Spark;
         }
 
-        /// <summary> Initializes a new instance of SparkJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJob"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

@@ -12,31 +12,15 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class AzureChatExtensionsMessageContext : IUtf8JsonSerializable
+    public partial class AzureChatExtensionsMessageContext
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Messages))
-            {
-                writer.WritePropertyName("messages"u8);
-                writer.WriteStartArray();
-                foreach (var item in Messages)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static AzureChatExtensionsMessageContext DeserializeAzureChatExtensionsMessageContext(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<ChatMessage>> messages = default;
+            Optional<IReadOnlyList<ChatResponseMessage>> messages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messages"u8))
@@ -45,10 +29,10 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    List<ChatMessage> array = new List<ChatMessage>();
+                    List<ChatResponseMessage> array = new List<ChatResponseMessage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatMessage.DeserializeChatMessage(item));
+                        array.Add(ChatResponseMessage.DeserializeChatResponseMessage(item));
                     }
                     messages = array;
                     continue;
@@ -63,14 +47,6 @@ namespace Azure.AI.OpenAI
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeAzureChatExtensionsMessageContext(document.RootElement);
-        }
-
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
         }
     }
 }

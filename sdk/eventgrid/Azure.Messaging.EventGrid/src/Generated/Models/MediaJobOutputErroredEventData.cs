@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Job output error event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.JobOutputErrored event. </summary>
     public partial class MediaJobOutputErroredEventData : MediaJobOutputStateChangeEventData
     {
-        /// <summary> Initializes a new instance of MediaJobOutputErroredEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputErroredEventData"/>. </summary>
         internal MediaJobOutputErroredEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaJobOutputErroredEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputErroredEventData"/>. </summary>
         /// <param name="previousState"> The previous state of the Job. </param>
         /// <param name="output">
         /// Gets the output.

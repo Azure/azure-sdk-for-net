@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Rest Service linked service. </summary>
     public partial class RestServiceLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of RestServiceLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestServiceLinkedService"/>. </summary>
         /// <param name="uri"> The base URL of the REST service. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the REST service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "RestService";
         }
 
-        /// <summary> Initializes a new instance of RestServiceLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestServiceLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Data proxy properties for a managed dedicated integration runtime. </summary>
     public partial class SynapseIntegrationRuntimeDataProxyProperties
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeDataProxyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeDataProxyProperties"/>. </summary>
         public SynapseIntegrationRuntimeDataProxyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeDataProxyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeDataProxyProperties"/>. </summary>
         /// <param name="connectVia"> The self-hosted integration runtime reference. </param>
         /// <param name="stagingLinkedService"> The staging linked service reference. </param>
         /// <param name="path"> The path to contain the staged data in the Blob storage. </param>

@@ -22,8 +22,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWeatherData_ShortVersion()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
+            WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -46,8 +47,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWeatherData_ShortVersion_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
+            WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -70,8 +72,9 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWeatherData_AllParameters()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
+            WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -167,8 +170,9 @@ value = "<value>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWeatherData_AllParameters_Async()
         {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
+            WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(new
             {

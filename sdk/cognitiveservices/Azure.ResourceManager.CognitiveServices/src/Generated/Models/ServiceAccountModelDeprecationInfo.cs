@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Cognitive Services account ModelDeprecationInfo. </summary>
     public partial class ServiceAccountModelDeprecationInfo
     {
-        /// <summary> Initializes a new instance of ServiceAccountModelDeprecationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountModelDeprecationInfo"/>. </summary>
         public ServiceAccountModelDeprecationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountModelDeprecationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountModelDeprecationInfo"/>. </summary>
         /// <param name="fineTuneOn"> The datetime of deprecation of the fineTune Model. </param>
         /// <param name="inferenceOn"> The datetime of deprecation of the inference Model. </param>
         internal ServiceAccountModelDeprecationInfo(DateTimeOffset? fineTuneOn, DateTimeOffset? inferenceOn)

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     /// <summary> Unit systems info for the data provider. </summary>
     public partial class UnitSystemsInfo
     {
-        /// <summary> Initializes a new instance of UnitSystemsInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnitSystemsInfo"/>. </summary>
         /// <param name="key"> UnitSystem key sent as part of ProviderInput. </param>
         /// <param name="values"> List of unit systems supported by this data provider. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="values"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of UnitSystemsInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnitSystemsInfo"/>. </summary>
         /// <param name="key"> UnitSystem key sent as part of ProviderInput. </param>
         /// <param name="values"> List of unit systems supported by this data provider. </param>
         internal UnitSystemsInfo(string key, IReadOnlyList<string> values)

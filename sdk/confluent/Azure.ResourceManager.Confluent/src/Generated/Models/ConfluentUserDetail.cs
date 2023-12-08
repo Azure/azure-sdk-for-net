@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Confluent.Models
     /// <summary> Subscriber detail. </summary>
     public partial class ConfluentUserDetail
     {
-        /// <summary> Initializes a new instance of ConfluentUserDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentUserDetail"/>. </summary>
         /// <param name="emailAddress"> Email address. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="emailAddress"/> is null. </exception>
         public ConfluentUserDetail(string emailAddress)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Confluent.Models
             EmailAddress = emailAddress;
         }
 
-        /// <summary> Initializes a new instance of ConfluentUserDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentUserDetail"/>. </summary>
         /// <param name="firstName"> First name. </param>
         /// <param name="lastName"> Last name. </param>
         /// <param name="emailAddress"> Email address. </param>

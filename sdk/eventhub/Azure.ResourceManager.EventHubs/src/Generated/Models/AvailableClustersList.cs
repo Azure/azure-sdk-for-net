@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> The response of the List Available Clusters operation. </summary>
     internal partial class AvailableClustersList
     {
-        /// <summary> Initializes a new instance of AvailableClustersList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableClustersList"/>. </summary>
         internal AvailableClustersList()
         {
             Value = new ChangeTrackingList<AvailableCluster>();
         }
 
-        /// <summary> Initializes a new instance of AvailableClustersList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableClustersList"/>. </summary>
         /// <param name="value"> The count of readily available and pre-provisioned Event Hubs Clusters per region. </param>
         internal AvailableClustersList(IReadOnlyList<AvailableCluster> value)
         {

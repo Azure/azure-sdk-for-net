@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Azure container mapping of the endpoint. </summary>
     public partial class DataBoxEdgeStorageContainerInfo
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeStorageContainerInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageContainerInfo"/>. </summary>
         /// <param name="storageAccountCredentialId"> ID of the storage account credential used to access storage. </param>
         /// <param name="containerName"> Container name (Based on the data format specified, this represents the name of Azure Files/Page blob/Block blob). </param>
         /// <param name="dataFormat"> Storage format used for the file represented by the share. </param>

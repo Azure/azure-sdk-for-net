@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class PublicCertificateData : ResourceData
     {
-        /// <summary> Initializes a new instance of PublicCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicCertificateData"/>. </summary>
         public PublicCertificateData()
         {
         }
 
-        /// <summary> Initializes a new instance of PublicCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

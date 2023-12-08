@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Certificate configuration which consist of non-trusted intermediates and root certificates. </summary>
     public partial class CertificateConfiguration
     {
-        /// <summary> Initializes a new instance of CertificateConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateConfiguration"/>. </summary>
         /// <param name="storeName"> The System.Security.Cryptography.x509certificates.StoreName certificate store location. Only Root and CertificateAuthority are valid locations. </param>
         public CertificateConfiguration(CertificateConfigurationStoreName storeName)
         {
             StoreName = storeName;
         }
 
-        /// <summary> Initializes a new instance of CertificateConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateConfiguration"/>. </summary>
         /// <param name="encodedCertificate"> Base64 Encoded certificate. </param>
         /// <param name="certificatePassword"> Certificate Password. </param>
         /// <param name="storeName"> The System.Security.Cryptography.x509certificates.StoreName certificate store location. Only Root and CertificateAuthority are valid locations. </param>

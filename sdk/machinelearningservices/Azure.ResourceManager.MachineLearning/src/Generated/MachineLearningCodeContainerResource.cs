@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly CodeContainersRestOperations _machineLearningCodeContainerCodeContainersRestClient;
         private readonly MachineLearningCodeContainerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/codes";
+
         /// <summary> Initializes a new instance of the <see cref="MachineLearningCodeContainerResource"/> class for mocking. </summary>
         protected MachineLearningCodeContainerResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.MachineLearning
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/codes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

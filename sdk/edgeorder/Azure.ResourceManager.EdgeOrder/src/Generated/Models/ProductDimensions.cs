@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Dimensions of a configuration. </summary>
     public partial class ProductDimensions
     {
-        /// <summary> Initializes a new instance of ProductDimensions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductDimensions"/>. </summary>
         internal ProductDimensions()
         {
         }
 
-        /// <summary> Initializes a new instance of ProductDimensions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductDimensions"/>. </summary>
         /// <param name="length"> Length of the device. </param>
         /// <param name="height"> Height of the device. </param>
         /// <param name="width"> Width of the device. </param>

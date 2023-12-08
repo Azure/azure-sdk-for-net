@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the source control sync job. </summary>
     public partial class SourceControlSyncJobResult
     {
-        /// <summary> Initializes a new instance of SourceControlSyncJobResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceControlSyncJobResult"/>. </summary>
         internal SourceControlSyncJobResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SourceControlSyncJobResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceControlSyncJobResult"/>. </summary>
         /// <param name="id"> The id of the job. </param>
         /// <param name="sourceControlSyncJobId"> The source control sync job id. </param>
         /// <param name="createdOn"> The creation time of the job. </param>

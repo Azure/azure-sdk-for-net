@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes multiple sets of queue selectors, of which one will be selected and attached according to a weighting. </summary>
     public partial class WeightedAllocationQueueSelectorAttachment : QueueSelectorAttachment
     {
-        /// <summary> Initializes a new instance of WeightedAllocationQueueSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="WeightedAllocationQueueSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
         /// <param name="allocations"> A collection of percentage based weighted allocations. </param>
         internal WeightedAllocationQueueSelectorAttachment(QueueSelectorAttachmentKind kind, IReadOnlyList<QueueWeightedAllocation> allocations) : base(kind)

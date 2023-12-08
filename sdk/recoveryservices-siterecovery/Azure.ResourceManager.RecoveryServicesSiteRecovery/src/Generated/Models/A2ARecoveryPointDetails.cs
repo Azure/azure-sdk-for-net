@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A provider specific recovery point details. </summary>
     public partial class A2ARecoveryPointDetails : ProviderSpecificRecoveryPointDetails
     {
-        /// <summary> Initializes a new instance of A2ARecoveryPointDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2ARecoveryPointDetails"/>. </summary>
         internal A2ARecoveryPointDetails()
         {
             Disks = new ChangeTrackingList<string>();
             InstanceType = "A2A";
         }
 
-        /// <summary> Initializes a new instance of A2ARecoveryPointDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2ARecoveryPointDetails"/>. </summary>
         /// <param name="instanceType"> Gets the provider type. </param>
         /// <param name="recoveryPointSyncType"> A value indicating whether the recovery point is multi VM consistent. </param>
         /// <param name="disks"> List of disk ids representing a recovery point. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The data source precedence is a way to know the precedence of each data source. </summary>
     public partial class DataSourcePrecedence
     {
-        /// <summary> Initializes a new instance of DataSourcePrecedence. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataSourcePrecedence"/>. </summary>
         internal DataSourcePrecedence()
         {
         }
 
-        /// <summary> Initializes a new instance of DataSourcePrecedence. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataSourcePrecedence"/>. </summary>
         /// <param name="precedence"> the precedence value. </param>
         /// <param name="name"> The data source name. </param>
         /// <param name="dataSourceType"> The data source type. </param>

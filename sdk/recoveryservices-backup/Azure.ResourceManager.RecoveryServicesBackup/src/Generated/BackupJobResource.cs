@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly JobCancellationsRestOperations _jobCancellationsRestClient;
         private readonly BackupJobData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupJobs";
+
         /// <summary> Initializes a new instance of the <see cref="BackupJobResource"/> class for mocking. </summary>
         protected BackupJobResource()
         {
@@ -70,9 +73,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupJobs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

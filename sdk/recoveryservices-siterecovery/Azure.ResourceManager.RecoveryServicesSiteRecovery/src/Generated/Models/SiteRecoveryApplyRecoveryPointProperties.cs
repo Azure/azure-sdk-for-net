@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input properties to apply recovery point. </summary>
     public partial class SiteRecoveryApplyRecoveryPointProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryApplyRecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryApplyRecoveryPointProperties"/>. </summary>
         /// <param name="providerSpecificDetails">
         /// Provider specific input for applying recovery point.
         /// Please note <see cref="SiteRecoveryApplyRecoveryPointProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -24,6 +24,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
             Argument.AssertNotNull(providerSpecificDetails, nameof(providerSpecificDetails));
 
+            ProviderSpecificDetails = providerSpecificDetails;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryApplyRecoveryPointProperties"/>. </summary>
+        /// <param name="recoveryPointId"> The recovery point Id. </param>
+        /// <param name="providerSpecificDetails">
+        /// Provider specific input for applying recovery point.
+        /// Please note <see cref="SiteRecoveryApplyRecoveryPointProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2AApplyRecoveryPointContent"/>, <see cref="A2ACrossClusterMigrationApplyRecoveryPointContent"/>, <see cref="HyperVReplicaAzureApplyRecoveryPointContent"/>, <see cref="InMageAzureV2ApplyRecoveryPointContent"/> and <see cref="InMageRcmApplyRecoveryPointContent"/>.
+        /// </param>
+        internal SiteRecoveryApplyRecoveryPointProperties(ResourceIdentifier recoveryPointId, SiteRecoveryApplyRecoveryPointProviderSpecificContent providerSpecificDetails)
+        {
+            RecoveryPointId = recoveryPointId;
             ProviderSpecificDetails = providerSpecificDetails;
         }
 

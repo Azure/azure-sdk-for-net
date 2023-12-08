@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The Dynamics entity dataset. </summary>
     public partial class DynamicsEntityDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of DynamicsEntityDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsEntityDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public DynamicsEntityDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "DynamicsEntity";
         }
 
-        /// <summary> Initializes a new instance of DynamicsEntityDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsEntityDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

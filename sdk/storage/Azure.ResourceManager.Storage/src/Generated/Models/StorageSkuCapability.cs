@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc. </summary>
     public partial class StorageSkuCapability
     {
-        /// <summary> Initializes a new instance of StorageSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSkuCapability"/>. </summary>
         internal StorageSkuCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSkuCapability"/>. </summary>
         /// <param name="name"> The name of capability, The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc. </param>
         /// <param name="value"> A string value to indicate states of given capability. Possibly 'true' or 'false'. </param>
         internal StorageSkuCapability(string name, string value)

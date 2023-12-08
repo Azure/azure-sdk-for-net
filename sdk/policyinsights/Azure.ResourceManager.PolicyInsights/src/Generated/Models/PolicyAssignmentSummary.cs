@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Policy assignment summary. </summary>
     public partial class PolicyAssignmentSummary
     {
-        /// <summary> Initializes a new instance of PolicyAssignmentSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentSummary"/>. </summary>
         internal PolicyAssignmentSummary()
         {
             PolicyDefinitions = new ChangeTrackingList<PolicyDefinitionSummary>();
             PolicyGroups = new ChangeTrackingList<PolicyGroupSummary>();
         }
 
-        /// <summary> Initializes a new instance of PolicyAssignmentSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentSummary"/>. </summary>
         /// <param name="policyAssignmentId"> Policy assignment ID. </param>
         /// <param name="policySetDefinitionId"> Policy set definition ID, if the policy assignment is for a policy set. </param>
         /// <param name="results"> Compliance summary for the policy assignment. </param>

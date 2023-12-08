@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly DiagnosticRestOperations _apiManagementDiagnosticDiagnosticRestClient;
         private readonly DiagnosticContractData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/diagnostics";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementDiagnosticResource"/> class for mocking. </summary>
         protected ApiManagementDiagnosticResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/diagnostics";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

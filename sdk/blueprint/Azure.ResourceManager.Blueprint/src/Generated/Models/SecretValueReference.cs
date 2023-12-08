@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Reference to a Key Vault secret. </summary>
     public partial class SecretValueReference
     {
-        /// <summary> Initializes a new instance of SecretValueReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretValueReference"/>. </summary>
         /// <param name="keyVault"> Specifies the reference to a given Azure Key Vault. </param>
         /// <param name="secretName"> Name of the secret. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVault"/> or <paramref name="secretName"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             SecretName = secretName;
         }
 
-        /// <summary> Initializes a new instance of SecretValueReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretValueReference"/>. </summary>
         /// <param name="keyVault"> Specifies the reference to a given Azure Key Vault. </param>
         /// <param name="secretName"> Name of the secret. </param>
         /// <param name="secretVersion"> The version of the secret to use. If left blank, the latest version of the secret is used. </param>

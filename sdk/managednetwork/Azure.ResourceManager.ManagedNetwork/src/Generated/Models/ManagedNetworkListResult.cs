@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
     /// <summary> Result of the request to list Managed Network. It contains a list of Managed Networks and a URL link to get the next set of results. </summary>
     internal partial class ManagedNetworkListResult
     {
-        /// <summary> Initializes a new instance of ManagedNetworkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkListResult"/>. </summary>
         internal ManagedNetworkListResult()
         {
             Value = new ChangeTrackingList<ManagedNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedNetworkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkListResult"/>. </summary>
         /// <param name="value"> Gets a page of ManagedNetworks. </param>
         /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
         internal ManagedNetworkListResult(IReadOnlyList<ManagedNetworkData> value, string nextLink)

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of Network Fabrics. </summary>
     internal partial class NetworkFabricsListResult
     {
-        /// <summary> Initializes a new instance of NetworkFabricsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricsListResult"/>. </summary>
         internal NetworkFabricsListResult()
         {
             Value = new ChangeTrackingList<NetworkFabricData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricsListResult"/>. </summary>
         /// <param name="value"> List of Network Fabric resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal NetworkFabricsListResult(IReadOnlyList<NetworkFabricData> value, string nextLink)

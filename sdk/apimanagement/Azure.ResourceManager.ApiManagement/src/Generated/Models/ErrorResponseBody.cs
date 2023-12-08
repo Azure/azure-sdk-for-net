@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Error Body contract. </summary>
     public partial class ErrorResponseBody
     {
-        /// <summary> Initializes a new instance of ErrorResponseBody. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorResponseBody"/>. </summary>
         public ErrorResponseBody()
         {
             Details = new ChangeTrackingList<ErrorFieldContract>();
         }
 
-        /// <summary> Initializes a new instance of ErrorResponseBody. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorResponseBody"/>. </summary>
         /// <param name="code"> Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response. </param>
         /// <param name="message"> Human-readable representation of the error. </param>
         /// <param name="details"> The list of invalid fields send in request, in case of validation error. </param>

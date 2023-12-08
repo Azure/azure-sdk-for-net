@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> The details of a management group. </summary>
     public partial class ManagementGroupInfo
     {
-        /// <summary> Initializes a new instance of ManagementGroupInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupInfo"/>. </summary>
         internal ManagementGroupInfo()
         {
             Path = new ChangeTrackingList<ManagementGroupPathElement>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             ManagementGroupAncestorChain = new ChangeTrackingList<ManagementGroupPathElement>();
         }
 
-        /// <summary> Initializes a new instance of ManagementGroupInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupInfo"/>. </summary>
         /// <param name="version"> The version number of the object. </param>
         /// <param name="updatedOn"> The date and time when this object was last updated. </param>
         /// <param name="updatedBy"> The identity of the principal or process that updated the object. </param>

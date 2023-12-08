@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class CognitiveServicesAccountData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CognitiveServicesAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CognitiveServicesAccountData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Policy tracked resource record. </summary>
     public partial class PolicyTrackedResourceRecord
     {
-        /// <summary> Initializes a new instance of PolicyTrackedResourceRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyTrackedResourceRecord"/>. </summary>
         internal PolicyTrackedResourceRecord()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyTrackedResourceRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyTrackedResourceRecord"/>. </summary>
         /// <param name="trackedResourceId"> The ID of the policy tracked resource. </param>
         /// <param name="policyDetails"> The details of the policy that require the tracked resource. </param>
         /// <param name="createdBy"> The details of the policy triggered deployment that created the tracked resource. </param>

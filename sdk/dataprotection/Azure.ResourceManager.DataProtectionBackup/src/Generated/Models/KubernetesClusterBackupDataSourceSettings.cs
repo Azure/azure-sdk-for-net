@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Parameters for Kubernetes Cluster Backup Datasource. </summary>
     public partial class KubernetesClusterBackupDataSourceSettings : BackupDataSourceSettings
     {
-        /// <summary> Initializes a new instance of KubernetesClusterBackupDataSourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterBackupDataSourceSettings"/>. </summary>
         /// <param name="isSnapshotVolumesEnabled"> Gets or sets the volume snapshot property. This property if enabled will take volume snapshots during backup. </param>
         /// <param name="isClusterScopeResourcesIncluded"> Gets or sets the include cluster resources property. This property if enabled will include cluster scope resources during backup. </param>
         public KubernetesClusterBackupDataSourceSettings(bool isSnapshotVolumesEnabled, bool isClusterScopeResourcesIncluded)
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = "KubernetesClusterBackupDatasourceParameters";
         }
 
-        /// <summary> Initializes a new instance of KubernetesClusterBackupDataSourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterBackupDataSourceSettings"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="isSnapshotVolumesEnabled"> Gets or sets the volume snapshot property. This property if enabled will take volume snapshots during backup. </param>
         /// <param name="isClusterScopeResourcesIncluded"> Gets or sets the include cluster resources property. This property if enabled will include cluster scope resources during backup. </param>

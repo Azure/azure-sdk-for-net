@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Redis
     /// </summary>
     public partial class RedisLinkedServerWithPropertyData : ResourceData
     {
-        /// <summary> Initializes a new instance of RedisLinkedServerWithPropertyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisLinkedServerWithPropertyData"/>. </summary>
         public RedisLinkedServerWithPropertyData()
         {
         }
 
-        /// <summary> Initializes a new instance of RedisLinkedServerWithPropertyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisLinkedServerWithPropertyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

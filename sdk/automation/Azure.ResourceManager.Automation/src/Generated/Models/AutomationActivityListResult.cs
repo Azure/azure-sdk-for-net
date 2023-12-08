@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list activity operation. </summary>
     internal partial class AutomationActivityListResult
     {
-        /// <summary> Initializes a new instance of AutomationActivityListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationActivityListResult"/>. </summary>
         internal AutomationActivityListResult()
         {
             Value = new ChangeTrackingList<AutomationActivity>();
         }
 
-        /// <summary> Initializes a new instance of AutomationActivityListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationActivityListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of activities. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
         internal AutomationActivityListResult(IReadOnlyList<AutomationActivity> value, string nextLink)

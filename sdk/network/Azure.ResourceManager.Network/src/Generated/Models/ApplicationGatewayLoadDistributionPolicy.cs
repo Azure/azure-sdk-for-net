@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Load Distribution Policy of an application gateway. </summary>
     public partial class ApplicationGatewayLoadDistributionPolicy : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayLoadDistributionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayLoadDistributionPolicy"/>. </summary>
         public ApplicationGatewayLoadDistributionPolicy()
         {
             LoadDistributionTargets = new ChangeTrackingList<ApplicationGatewayLoadDistributionTarget>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayLoadDistributionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayLoadDistributionPolicy"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

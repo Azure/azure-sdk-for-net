@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> Request to merge two billing subscriptions. </summary>
     public partial class BillingSubscriptionMergeContent
     {
-        /// <summary> Initializes a new instance of BillingSubscriptionMergeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionMergeContent"/>. </summary>
         public BillingSubscriptionMergeContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionMergeContent"/>. </summary>
+        /// <param name="targetBillingSubscriptionName"> The ID of the target billing subscription that will be merged with the source subscription provided in the request. </param>
+        /// <param name="quantity"> The quantity of the source billing subscription that will be merged with the target billing subscription. </param>
+        internal BillingSubscriptionMergeContent(string targetBillingSubscriptionName, int? quantity)
+        {
+            TargetBillingSubscriptionName = targetBillingSubscriptionName;
+            Quantity = quantity;
         }
 
         /// <summary> The ID of the target billing subscription that will be merged with the source subscription provided in the request. </summary>

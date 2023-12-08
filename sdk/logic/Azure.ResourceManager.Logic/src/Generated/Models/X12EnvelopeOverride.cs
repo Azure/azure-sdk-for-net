@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The X12 envelope override settings. </summary>
     public partial class X12EnvelopeOverride
     {
-        /// <summary> Initializes a new instance of X12EnvelopeOverride. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12EnvelopeOverride"/>. </summary>
         /// <param name="targetNamespace"> The target namespace on which this envelope settings has to be applied. </param>
         /// <param name="protocolVersion"> The protocol version on which this envelope settings has to be applied. </param>
         /// <param name="messageId"> The message id on which this envelope settings has to be applied. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Logic.Models
             TimeFormat = timeFormat;
         }
 
-        /// <summary> Initializes a new instance of X12EnvelopeOverride. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12EnvelopeOverride"/>. </summary>
         /// <param name="targetNamespace"> The target namespace on which this envelope settings has to be applied. </param>
         /// <param name="protocolVersion"> The protocol version on which this envelope settings has to be applied. </param>
         /// <param name="messageId"> The message id on which this envelope settings has to be applied. </param>

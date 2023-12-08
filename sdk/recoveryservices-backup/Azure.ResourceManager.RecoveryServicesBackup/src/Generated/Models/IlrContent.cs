@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public abstract partial class IlrContent
     {
-        /// <summary> Initializes a new instance of IlrContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IlrContent"/>. </summary>
         protected IlrContent()
         {
         }
 
-        /// <summary> Initializes a new instance of IlrContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IlrContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         internal IlrContent(string objectType)
         {

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The DatadogAgreementResourceProperties to use. </param>
+        /// <param name="body"> The <see cref="DatadogAgreementResourceProperties"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DatadogAgreementResourceProperties>> CreateOrUpdateMarketplaceAgreementAsync(DatadogAgreementResourceProperties body = null, CancellationToken cancellationToken = default)
         {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The DatadogAgreementResourceProperties to use. </param>
+        /// <param name="body"> The <see cref="DatadogAgreementResourceProperties"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DatadogAgreementResourceProperties> CreateOrUpdateMarketplaceAgreement(DatadogAgreementResourceProperties body = null, CancellationToken cancellationToken = default)
         {

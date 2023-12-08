@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Values returned by the List operation. </summary>
     internal partial class BatchAccountListResult
     {
-        /// <summary> Initializes a new instance of BatchAccountListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountListResult"/>. </summary>
         internal BatchAccountListResult()
         {
             Value = new ChangeTrackingList<BatchAccountData>();
         }
 
-        /// <summary> Initializes a new instance of BatchAccountListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountListResult"/>. </summary>
         /// <param name="value"> The collection of Batch accounts returned by the listing operation. </param>
         /// <param name="nextLink"> The continuation token. </param>
         internal BatchAccountListResult(IReadOnlyList<BatchAccountData> value, string nextLink)

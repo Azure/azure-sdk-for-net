@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.Quantum.Models
     /// <summary> Details of check name availability request body. </summary>
     public partial class CheckNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityContent"/>. </summary>
         public CheckNameAvailabilityContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Name for checking availability. </param>
+        /// <param name="resourceType"> The resource type of Quantum Workspace. </param>
+        internal CheckNameAvailabilityContent(string name, string resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> Name for checking availability. </summary>

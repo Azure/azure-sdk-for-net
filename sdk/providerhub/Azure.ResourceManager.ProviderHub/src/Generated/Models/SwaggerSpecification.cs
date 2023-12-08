@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The SwaggerSpecification. </summary>
     public partial class SwaggerSpecification
     {
-        /// <summary> Initializes a new instance of SwaggerSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerSpecification"/>. </summary>
         public SwaggerSpecification()
         {
             ApiVersions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SwaggerSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerSpecification"/>. </summary>
         /// <param name="apiVersions"></param>
         /// <param name="swaggerSpecFolderUri"></param>
         internal SwaggerSpecification(IList<string> apiVersions, Uri swaggerSpecFolderUri)

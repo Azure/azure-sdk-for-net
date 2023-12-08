@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Radius Server Settings. </summary>
     public partial class RadiusServer
     {
-        /// <summary> Initializes a new instance of RadiusServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="RadiusServer"/>. </summary>
         /// <param name="radiusServerAddress"> The address of this radius server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="radiusServerAddress"/> is null. </exception>
         public RadiusServer(string radiusServerAddress)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             RadiusServerAddress = radiusServerAddress;
         }
 
-        /// <summary> Initializes a new instance of RadiusServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="RadiusServer"/>. </summary>
         /// <param name="radiusServerAddress"> The address of this radius server. </param>
         /// <param name="radiusServerScore"> The initial score assigned to this radius server. </param>
         /// <param name="radiusServerSecret"> The secret used for this radius server. </param>

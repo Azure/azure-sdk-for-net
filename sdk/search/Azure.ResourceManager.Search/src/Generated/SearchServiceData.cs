@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Search
     /// </summary>
     public partial class SearchServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SearchServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SearchServiceData(AzureLocation location) : base(location)
         {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Search
             SharedPrivateLinkResources = new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of SearchServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
