@@ -18,7 +18,7 @@ namespace Azure.Storage
         /// <summary>
         /// The minimum value of HTTP request Content-Length for applying expect-continue.
         /// </summary>
-        public long ContentLengthThreshold { get; set; }
+        public long? ContentLengthThreshold { get; set; }
 
         /// <summary>
         /// In mode <see cref="ExpectContinueMode.ApplyOnThrottle"/>, the time interval to apply the header

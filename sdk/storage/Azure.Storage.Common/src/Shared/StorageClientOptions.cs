@@ -130,13 +130,20 @@ namespace Azure.Storage
             {
                 switch (expectContinue.Mode)
                 {
-                    case ExpectContinueOptions.ApplyHeaderMode.ApplyOnThrottle:
-                        pipelineOptions.PerCallPolicies.Add(new ExpectContinueOnThrottlePolicy() { ThrottleInterval = expectContinue.ThrottleInterval });
+                    case ExpectContinueMode.ApplyOnThrottle:
+                        pipelineOptions.PerCallPolicies.Add(new ExpectContinueOnThrottlePolicy()
+                        {
+                            ThrottleInterval = expectContinue.ThrottleInterval,
+                            ContentLengthThreshold = expectContinue.ContentLengthThreshold ?? 0,
+                        });
                         break;
-                    case ExpectContinueOptions.ApplyHeaderMode.On:
-                        pipelineOptions.PerCallPolicies.Add(new ExpectContinuePolicy());
+                    case ExpectContinueMode.On:
+                        pipelineOptions.PerCallPolicies.Add(new ExpectContinuePolicy()
+                        {
+                            ContentLengthThreshold = expectContinue.ContentLengthThreshold ?? 0,
+                        });
                         break;
-                    case ExpectContinueOptions.ApplyHeaderMode.Off:
+                    case ExpectContinueMode.Off:
                         break;
                 }
             }
