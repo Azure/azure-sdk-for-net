@@ -116,15 +116,14 @@ namespace System.ClientModel.Primitives
         public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineProcessor pipeline) { }
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineProcessor pipeline) { throw null; }
     }
-    public abstract partial class MessageHeaders
+    public abstract partial class MessageHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable
     {
         protected MessageHeaders() { }
-        public abstract int Count { get; }
         public abstract void Add(string name, string value);
+        public abstract System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, string>> GetEnumerator();
         public abstract bool Remove(string name);
         public abstract void Set(string name, string value);
-        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, System.Collections.Generic.IEnumerable<string>>> headers);
-        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> headers);
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public abstract bool TryGetValue(string name, out string? value);
         public abstract bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }

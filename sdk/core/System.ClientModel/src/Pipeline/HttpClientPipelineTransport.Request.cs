@@ -99,35 +99,37 @@ public partial class HttpClientPipelineTransport
             httpRequest.Headers.ExpectContinue = false;
 #endif
 
-            // TODO: Come back and address this implementation per switching on string/list
-            // header values once we reimplement assignment of headers to ResponseHeader directly.
-            request.Headers.TryGetHeaders(out IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers);
-            foreach (KeyValuePair<string, IEnumerable<string>> header in headers)
+            if (request.Headers is not PipelineRequestHeaders headers)
             {
-                object headerValue = header.Value.Count() == 1 ? header.Value.First() : header.Value;
+                throw new InvalidOperationException($"Invalid type for request.Headers: '{request.Headers?.GetType()}'.");
+            }
+
+            int i = 0;
+            while (headers.GetNextValue(i++, out string headerName, out object headerValue))
+            {
                 switch (headerValue)
                 {
                     case string stringValue:
                         // Authorization is special cased because it is in the hot path for auth polices that set this header on each request and retry.
-                        if (header.Key == AuthorizationHeaderName && AuthenticationHeaderValue.TryParse(stringValue, out var authHeader))
+                        if (headerName == AuthorizationHeaderName && AuthenticationHeaderValue.TryParse(stringValue, out var authHeader))
                         {
                             httpRequest.Headers.Authorization = authHeader;
                         }
-                        else if (!httpRequest.Headers.TryAddWithoutValidation(header.Key, stringValue))
+                        else if (!httpRequest.Headers.TryAddWithoutValidation(headerName, stringValue))
                         {
-                            if (httpContent != null && !httpContent.Headers.TryAddWithoutValidation(header.Key, stringValue))
+                            if (httpContent != null && !httpContent.Headers.TryAddWithoutValidation(headerName, stringValue))
                             {
-                                throw new InvalidOperationException($"Unable to add header {header.Key} to header collection.");
+                                throw new InvalidOperationException($"Unable to add header {headerName} to header collection.");
                             }
                         }
                         break;
 
                     case List<string> listValue:
-                        if (!httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value))
+                        if (!httpRequest.Headers.TryAddWithoutValidation(headerName, listValue))
                         {
-                            if (httpContent != null && !httpContent.Headers.TryAddWithoutValidation(header.Key, header.Value))
+                            if (httpContent != null && !httpContent.Headers.TryAddWithoutValidation(headerName, listValue))
                             {
-                                throw new InvalidOperationException($"Unable to add header {header.Key} to header collection.");
+                                throw new InvalidOperationException($"Unable to add header {headerName} to header collection.");
                             }
                         }
                         break;
