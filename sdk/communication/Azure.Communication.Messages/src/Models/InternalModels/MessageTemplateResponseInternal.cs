@@ -5,8 +5,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    [CodeGenModel("TemplateResponseWhatsApp")]
-    internal partial class TemplateResponseWhatsAppInternal
+    /// <summary> The response item for template. </summary>
+    [CodeGenModel("MessageTemplateResponse")]
+    internal partial class MessageTemplateResponseInternal
     {
     }
 }

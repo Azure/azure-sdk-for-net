@@ -36,7 +36,7 @@ namespace Azure.Communication.Messages.Tests
             NotificationMessagesClient notificationMessagesClient = CreateMockNotificationMessagesClient(202, SendMessageApiResponsePayload);
 
             //act
-            SendMessageOptions sendMessageOptions = new SendMessageOptions("testChannelRegistrationId", new List<string> { "+1(123)456-7890" }, "testMessage");
+            SendMessageOptions sendMessageOptions = new SendMessageOptions(Guid.NewGuid(), new List<string> { "+1(123)456-7890" }, "testMessage");
             SendMessageResult sendMessageResult = await notificationMessagesClient.SendMessageAsync(sendMessageOptions);
 
             //assert
@@ -65,7 +65,7 @@ namespace Azure.Communication.Messages.Tests
             try
             {
                 //act
-                SendMessageOptions sendMessageOptions = new SendMessageOptions("invalidChannelRegistrationId", new List<string> { "+1(123)456-7890" }, "testMessage");
+                SendMessageOptions sendMessageOptions = new SendMessageOptions(Guid.NewGuid(), new List<string> { "+1(123)456-7890" }, "testMessage");
                 await notificationMessagesClient.SendMessageAsync(sendMessageOptions);
             }
             catch (RequestFailedException requestFailedException)

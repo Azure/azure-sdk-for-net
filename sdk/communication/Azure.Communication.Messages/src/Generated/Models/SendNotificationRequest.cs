@@ -19,10 +19,9 @@ namespace Azure.Communication.Messages
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="type"> The type of message. Supports text, image, template. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="channelRegistrationId"/> or <paramref name="to"/> is null. </exception>
-        public SendNotificationRequest(string channelRegistrationId, IEnumerable<string> to, CommunicationMessageType type)
+        /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
+        public SendNotificationRequest(Guid channelRegistrationId, IEnumerable<string> to, CommunicationMessageType type)
         {
-            Argument.AssertNotNull(channelRegistrationId, nameof(channelRegistrationId));
             Argument.AssertNotNull(to, nameof(to));
 
             ChannelRegistrationId = channelRegistrationId;
@@ -37,7 +36,7 @@ namespace Azure.Communication.Messages
         /// <param name="content"> Message content. </param>
         /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
         /// <param name="template"> The template object used to create templates. </param>
-        internal SendNotificationRequest(string channelRegistrationId, IList<string> to, CommunicationMessageType type, string content, string mediaUri, MessageTemplateInternal template)
+        internal SendNotificationRequest(Guid channelRegistrationId, IList<string> to, CommunicationMessageType type, string content, string mediaUri, MessageTemplateInternal template)
         {
             ChannelRegistrationId = channelRegistrationId;
             To = to;
@@ -48,7 +47,7 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> The Channel Registration ID for the Business Identifier. </summary>
-        public string ChannelRegistrationId { get; }
+        public Guid ChannelRegistrationId { get; }
         /// <summary> The native external platform user identifiers of the recipient. </summary>
         public IList<string> To { get; }
         /// <summary> The type of message. Supports text, image, template. </summary>

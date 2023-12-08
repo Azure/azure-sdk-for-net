@@ -19,16 +19,16 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-            IReadOnlyList<TemplateResponseInternal> value = default;
+            IReadOnlyList<MessageTemplateResponseInternal> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<TemplateResponseInternal> array = new List<TemplateResponseInternal>();
+                    List<MessageTemplateResponseInternal> array = new List<MessageTemplateResponseInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TemplateResponseInternal.DeserializeTemplateResponseInternal(item));
+                        array.Add(MessageTemplateResponseInternal.DeserializeMessageTemplateResponseInternal(item));
                     }
                     value = array;
                     continue;

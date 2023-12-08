@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Communication.Messages.Models.Channels;
 using NUnit.Framework;
 
 namespace Azure.Communication.Messages.Tests
@@ -23,7 +24,7 @@ namespace Azure.Communication.Messages.Tests
         {
             // Arrange
             NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
-            var options = new SendMessageOptions(TestEnvironment.SenderChannelRegistrationId, new List<string> { TestEnvironment.RecipientIdentifier }, "LiveTest");
+            var options = new SendMessageOptions(new Guid(TestEnvironment.SenderChannelRegistrationId), new List<string> { TestEnvironment.RecipientIdentifier }, "LiveTest");
 
             // Act
             Response<SendMessageResult> response = await notificationMessagesClient.SendMessageAsync(options);
@@ -37,7 +38,7 @@ namespace Azure.Communication.Messages.Tests
         {
             // Arrange
             NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClientWithAzureKeyCredential();
-            var options = new SendMessageOptions(TestEnvironment.SenderChannelRegistrationId, new List<string> { TestEnvironment.RecipientIdentifier }, "LiveTest");
+            var options = new SendMessageOptions(new Guid(TestEnvironment.SenderChannelRegistrationId), new List<string> { TestEnvironment.RecipientIdentifier }, "LiveTest");
 
             // Act
             Response<SendMessageResult> response = await notificationMessagesClient.SendMessageAsync(options);
@@ -51,15 +52,16 @@ namespace Azure.Communication.Messages.Tests
         {
             // Arrange
             NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
-            string channelRegistrationId = TestEnvironment.SenderChannelRegistrationId;
-            IEnumerable<string> recipients = new List<string> { TestEnvironment.RecipientIdentifier };
+            Guid channelRegistrationId = new Guid(TestEnvironment.SenderChannelRegistrationId);
+            IList<string> recipients = new List<string> { TestEnvironment.RecipientIdentifier };
 
             var ThreeDays = new MessageTemplateText("threeDays", "3");
-            IEnumerable<MessageTemplateValue> values = new List<MessageTemplateValue> { ThreeDays };
+            IList<MessageTemplateValue> values = new List<MessageTemplateValue> { ThreeDays };
 
-            MessageTemplateWhatsAppBindings bindings = new MessageTemplateWhatsAppBindings(
-                body: new[] { ThreeDays.Name }
-            );
+            WhatsAppMessageTemplateBindings bindings = new()
+            {
+                Body = new[] { ThreeDays.Name }
+            };
 
             MessageTemplate template = new MessageTemplate("sample_shipping_confirmation", "en_us", values, bindings);
             SendMessageOptions options = new SendMessageOptions(channelRegistrationId, recipients, template);
@@ -76,17 +78,19 @@ namespace Azure.Communication.Messages.Tests
         {
             // Arrange
             NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
-            string channelRegistrationId = TestEnvironment.SenderChannelRegistrationId;
-            IEnumerable<string> recipients = new List<string> { TestEnvironment.RecipientIdentifier };
+            Guid channelRegistrationId = new Guid(TestEnvironment.SenderChannelRegistrationId);
+            IList<string> recipients = new List<string> { TestEnvironment.RecipientIdentifier };
 
             var image = new MessageTemplateImage("image", new Uri(ImageUrl));
             var product = new MessageTemplateText("product", "Microsoft Office");
 
-            IEnumerable<MessageTemplateValue> values = new List<MessageTemplateValue> { image, product };
-            MessageTemplateWhatsAppBindings bindings = new MessageTemplateWhatsAppBindings(
-                header: new[] { image.Name },
-                body: new[] { product.Name }
-            );
+            IList<MessageTemplateValue> values = new List<MessageTemplateValue> { image, product };
+            WhatsAppMessageTemplateBindings bindings = new()
+            {
+                Header = new[] { image.Name },
+                Body = new[] { product.Name }
+            };
+
             MessageTemplate template = new MessageTemplate("sample_purchase_feedback", "en_us", values, bindings);
             SendMessageOptions options = new SendMessageOptions(channelRegistrationId, recipients, template);
 
@@ -102,21 +106,23 @@ namespace Azure.Communication.Messages.Tests
         {
             // Arrange
             NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
-            string channelRegistrationId = TestEnvironment.SenderChannelRegistrationId;
-            IEnumerable<string> recipients = new List<string> { TestEnvironment.RecipientIdentifier };
+            Guid channelRegistrationId = new Guid(TestEnvironment.SenderChannelRegistrationId);
+            IList<string> recipients = new List<string> { TestEnvironment.RecipientIdentifier };
 
             var name = new MessageTemplateText("name", "Gloria");
-            var yes = new MessageTemplateQuickAction("yes", null, "Yay!");
-            var no = new MessageTemplateQuickAction("no", null, "Nay!");
+            var yes = new MessageTemplateQuickAction("yes") { Payload = "Yay!" };
+            var no = new MessageTemplateQuickAction("no") { Payload = "Nay!" };
 
-            IEnumerable<MessageTemplateValue> values = new List<MessageTemplateValue> { name, yes, no };
-            MessageTemplateWhatsAppBindings bindings = new MessageTemplateWhatsAppBindings(
-                body: new[] { name.Name },
-                button: new[] {
-                    new KeyValuePair<string, MessageTemplateValueWhatsAppSubType>(yes.Name, MessageTemplateValueWhatsAppSubType.QuickReply),
-                    new KeyValuePair<string, MessageTemplateValueWhatsAppSubType>(no.Name, MessageTemplateValueWhatsAppSubType.QuickReply),
+            IList<MessageTemplateValue> values = new List<MessageTemplateValue> { name, yes, no };
+            WhatsAppMessageTemplateBindings bindings = new()
+            {
+                Body = new[] { name.Name },
+                Buttons = new[] {
+                    new KeyValuePair<string, WhatsAppMessageTemplateValueSubType>(yes.Name, WhatsAppMessageTemplateValueSubType.QuickReply),
+                    new KeyValuePair<string, WhatsAppMessageTemplateValueSubType>(no.Name, WhatsAppMessageTemplateValueSubType.QuickReply),
                 }
-            );
+            };
+
             MessageTemplate template = new MessageTemplate("sample_issue_resolution", "en_us", values, bindings);
             SendMessageOptions options = new SendMessageOptions(channelRegistrationId, recipients, template);
 
@@ -132,18 +138,20 @@ namespace Azure.Communication.Messages.Tests
         {
             // Arrange
             NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
-            string channelRegistrationId = TestEnvironment.SenderChannelRegistrationId;
-            IEnumerable<string> recipients = new List<string> { TestEnvironment.RecipientIdentifier };
+            Guid channelRegistrationId = new Guid(TestEnvironment.SenderChannelRegistrationId);
+            IList<string> recipients = new List<string> { TestEnvironment.RecipientIdentifier };
 
             var venue = new MessageTemplateText("venue", "Starbucks");
             var time = new MessageTemplateText("time", "Today 2-4PM");
             var video = new MessageTemplateVideo("video", new Uri(VideoUrl));
 
-            IEnumerable<MessageTemplateValue> values = new List<MessageTemplateValue> { venue, time, video };
-            MessageTemplateWhatsAppBindings bindings = new MessageTemplateWhatsAppBindings(
-                header: new[] { video.Name },
-                body: new[] { venue.Name, time.Name }
-            );
+            IList<MessageTemplateValue> values = new List<MessageTemplateValue> { venue, time, video };
+            WhatsAppMessageTemplateBindings bindings = new()
+            {
+                Header = new[] { video.Name },
+                Body = new[] { venue.Name, time.Name }
+            };
+
             MessageTemplate template = new MessageTemplate("sample_happy_hour_announcement", "en_us", values, bindings);
             SendMessageOptions options = new SendMessageOptions(channelRegistrationId, recipients, template);
 
@@ -159,19 +167,21 @@ namespace Azure.Communication.Messages.Tests
         {
             // Arrange
             NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
-            string channelRegistrationId = TestEnvironment.SenderChannelRegistrationId;
-            IEnumerable<string> recipients = new List<string> { TestEnvironment.RecipientIdentifier };
+            Guid channelRegistrationId = new Guid(TestEnvironment.SenderChannelRegistrationId);
+            IList<string> recipients = new List<string> { TestEnvironment.RecipientIdentifier };
 
             var document = new MessageTemplateDocument("document", new Uri(DocumentUrl));
             var firstName = new MessageTemplateText("firstName", "Gloria");
             var lastName = new MessageTemplateText("lastName", "Li");
             var date = new MessageTemplateText("date", "July 1st, 2023");
 
-            IEnumerable<MessageTemplateValue> values = new List<MessageTemplateValue> { document, firstName, lastName, date };
-            MessageTemplateWhatsAppBindings bindings = new MessageTemplateWhatsAppBindings(
-                header: new[] { document.Name },
-                body: new[] { firstName.Name, lastName.Name, date.Name }
-            );
+            IList<MessageTemplateValue> values = new List<MessageTemplateValue> { document, firstName, lastName, date };
+            WhatsAppMessageTemplateBindings bindings = new()
+            {
+                Header = new[] { document.Name },
+                Body = new[] { firstName.Name, lastName.Name, date.Name }
+            };
+
             MessageTemplate template = new MessageTemplate("sample_flight_confirmation", "en_us", values, bindings);
             SendMessageOptions options = new SendMessageOptions(channelRegistrationId, recipients, template);
 
@@ -187,19 +197,21 @@ namespace Azure.Communication.Messages.Tests
         {
             // Arrange
             NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
-            string channelRegistrationId = TestEnvironment.SenderChannelRegistrationId;
-            IEnumerable<string> recipients = new List<string> { TestEnvironment.RecipientIdentifier };
+            Guid channelRegistrationId = new Guid(TestEnvironment.SenderChannelRegistrationId);
+            IList<string> recipients = new List<string> { TestEnvironment.RecipientIdentifier };
 
             var image = new MessageTemplateImage("image", new Uri(ImageUrl));
             var title = new MessageTemplateText("title", "Avengers");
             var time = new MessageTemplateText("time", "July 1st, 2023 12:30PM");
             var venue = new MessageTemplateText("venue", "Cineplex");
             var seats = new MessageTemplateText("seats", "Seat 1A");
-            IEnumerable<MessageTemplateValue> values = new List<MessageTemplateValue> { image, title, time, venue, seats };
-            MessageTemplateWhatsAppBindings bindings = new MessageTemplateWhatsAppBindings(
-                header: new[] { image.Name },
-                body: new[] { title.Name, time.Name, venue.Name, seats.Name }
-            );
+            IList<MessageTemplateValue> values = new List<MessageTemplateValue> { image, title, time, venue, seats };
+            WhatsAppMessageTemplateBindings bindings = new()
+            {
+                Header = new[] { image.Name },
+                Body = new[] { title.Name, time.Name, venue.Name, seats.Name }
+            };
+
             MessageTemplate template = new MessageTemplate("sample_movie_ticket_confirmation", "en_us", values, bindings);
             SendMessageOptions options = new SendMessageOptions(channelRegistrationId, recipients, template);
 

@@ -8,19 +8,19 @@
 namespace Azure.Communication.Messages
 {
     /// <summary> The WhatsApp-specific template response contract. </summary>
-    internal partial class TemplateResponseWhatsAppInternal
+    internal partial class WhatsAppMessageTemplateResponse
     {
-        /// <summary> Initializes a new instance of <see cref="TemplateResponseWhatsAppInternal"/>. </summary>
-        internal TemplateResponseWhatsAppInternal()
+        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateResponse"/>. </summary>
+        internal WhatsAppMessageTemplateResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TemplateResponseWhatsAppInternal"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateResponse"/>. </summary>
         /// <param name="content">
         /// WhatsApp platform's template content
         /// This is the payload returned from WhatsApp API.
         /// </param>
-        internal TemplateResponseWhatsAppInternal(object content)
+        internal WhatsAppMessageTemplateResponse(object content)
         {
             Content = content;
         }

@@ -16,7 +16,7 @@ namespace Azure.Communication.Messages
         /// <param name="language">The codes for the supported languages for templates.</param>
         /// <param name="values">The template values.</param>
         /// <param name="bindings">The binding object to link values to the template specific locations.</param>
-        public MessageTemplate(string name, string language, IEnumerable<MessageTemplateValue> values = null, MessageTemplateBindings bindings = null)
+        public MessageTemplate(string name, string language, IList<MessageTemplateValue> values = null, MessageTemplateBindings bindings = null)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Language = language ?? throw new ArgumentNullException(nameof(language));
@@ -29,7 +29,7 @@ namespace Azure.Communication.Messages
         /// <summary> The codes for the supported languages for templates. </summary>
         public string Language { get; }
         /// <summary> The template values. </summary>
-        public IEnumerable<MessageTemplateValue> Values { get; }
+        public IList<MessageTemplateValue> Values { get; }
         /// <summary> The binding object to link values to the template specific locations. </summary>
         public MessageTemplateBindings Bindings { get; }
 

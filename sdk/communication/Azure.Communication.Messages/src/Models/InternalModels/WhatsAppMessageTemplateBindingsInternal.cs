@@ -5,9 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> The ChannelType. </summary>
-    [CodeGenModel("ChannelType")]
-    public partial struct CommunicationMessagesChannelType
+    [CodeGenModel("WhatsAppMessageTemplateBindings")]
+    internal partial class WhatsAppMessageTemplateBindingsInternal
     {
     }
 }

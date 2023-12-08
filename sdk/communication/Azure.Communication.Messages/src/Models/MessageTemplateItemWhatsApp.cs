@@ -8,7 +8,7 @@ namespace Azure.Communication.Messages
     /// <summary> The WhatsApp-specific template response contract. </summary>
     public partial class MessageTemplateItemWhatsApp
     {
-        /// <summary> Initializes a new instance of TemplateResponseWhatsApp. </summary>
+        /// <summary> Initializes a new instance of WhatsAppMessageTemplateResponse. </summary>
         internal MessageTemplateItemWhatsApp()
         {
         }
@@ -19,7 +19,7 @@ namespace Azure.Communication.Messages
         /// </summary>
         public BinaryData Content { get; }
 
-        internal MessageTemplateItemWhatsApp(TemplateResponseWhatsAppInternal templateResponseWhatsAppInternal)
+        internal MessageTemplateItemWhatsApp(WhatsAppMessageTemplateResponse templateResponseWhatsAppInternal)
         {
             Content = new BinaryData(templateResponseWhatsAppInternal.Content);
         }

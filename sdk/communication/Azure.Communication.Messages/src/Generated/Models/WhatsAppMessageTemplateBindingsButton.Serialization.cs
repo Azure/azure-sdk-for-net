@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    internal partial class MessageTemplateBindingsWhatsAppButton : IUtf8JsonSerializable
+    internal partial class WhatsAppMessageTemplateBindingsButton : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
