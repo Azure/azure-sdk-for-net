@@ -26,7 +26,7 @@ namespace System.ClientModel
         /// <param name="model">The <see cref="IPersistableModel{T}"/> to write.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="InputContent"/> that wraps a <see cref="IPersistableModel{T}"/>.</returns>
-        public static InputContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T: IPersistableModel<T>
+        public static InputContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
             => new ModelMessageBody<T>(model, options ?? ModelWriteWireOptions);
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace System.ClientModel
         /// <inheritdoc/>
         public abstract void Dispose();
 
-        private sealed class ModelMessageBody<T> : InputContent where T: IPersistableModel<T>
+        private sealed class ModelMessageBody<T> : InputContent where T : IPersistableModel<T>
         {
             private readonly T _model;
             private readonly ModelReaderWriterOptions _options;
