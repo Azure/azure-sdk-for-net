@@ -60,6 +60,7 @@ public class RequestOptions
         message.PerTryPolicies = _perTryPolicies;
         message.BeforeTransportPolicies = _beforeTransportPolicies;
 
+        // TODO: revisit for perf
         foreach (var header in _requestHeaders)
         {
             message.Request.Headers.Add(header.Key, string.Join(",", header.Value));

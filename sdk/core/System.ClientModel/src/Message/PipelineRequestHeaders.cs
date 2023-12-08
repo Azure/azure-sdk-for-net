@@ -62,6 +62,22 @@ internal class PipelineRequestHeaders : MessageHeaders
     public override IEnumerator<KeyValuePair<string, IEnumerable<string>>> GetEnumerator()
         => GetHeadersListValues().GetEnumerator();
 
+    // Internal API provided to take advantage of performance-optimized implementation.
+    internal bool GetNextValue(int index, out string name, out object value)
+    {
+        if (index >= _headers.Count)
+        {
+            name = default!;
+            value = default!;
+            return false;
+        }
+
+        _headers.GetAt(index, out IgnoreCaseString headerName, out object headerValue);
+        name = headerName;
+        value = headerValue;
+        return true;
+    }
+
     #region Implementation
     private IEnumerable<KeyValuePair<string, string>> GetHeadersStringValues()
     {
