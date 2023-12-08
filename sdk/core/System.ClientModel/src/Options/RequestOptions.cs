@@ -60,10 +60,9 @@ public class RequestOptions
         message.PerCallPolicies = _perCallPolicies;
         message.PerTryPolicies = _perTryPolicies;
 
-        _requestHeaders.TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers);
-        foreach (var header in headers)
+        foreach (var header in _requestHeaders)
         {
-            message.Request.Headers.Add(header.Key, header.Value);
+            message.Request.Headers.Add(header.Key, string.Join(",", header.Value));
         }
     }
 
