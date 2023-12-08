@@ -47,12 +47,12 @@ namespace Azure.Communication.Messages
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateClient"/>.</summary>
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
-        /// <param name="keyCredential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
+        /// <param name="credential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
         /// <param name="options">Client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public MessageTemplateClient(Uri endpoint, AzureKeyCredential keyCredential, CommunicationMessagesClientOptions options = default)
+        public MessageTemplateClient(Uri endpoint, AzureKeyCredential credential, CommunicationMessagesClientOptions options = default)
              : this(
                 Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(keyCredential, nameof(keyCredential)),
+                Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new CommunicationMessagesClientOptions())
         {
         }
