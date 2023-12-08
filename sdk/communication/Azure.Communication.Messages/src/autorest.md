@@ -11,10 +11,10 @@ If any of the new objects needs to be overwritten, add the required changes to t
 > see https://aka.ms/autorest
 ``` yaml
 title: Messages
-tag: package-2023-08-24-preview
+tag: package-2024-02-01
 model-namespace: false
 require:
-    -  https://github.com/Azure/azure-rest-api-specs/blob/bf04fb1344aec3daf86deff14ae5d73f943d7cca/specification/communication/data-plane/Messages/readme.md
+    -  https://github.com/Azure/azure-rest-api-specs/blob/b12a894d53bee553535927772e5a2f3e2dae158e/specification/communication/data-plane/Messages/readme.md
 payload-flattening-threshold: 10
 generation1-convenience-client: true
 ```

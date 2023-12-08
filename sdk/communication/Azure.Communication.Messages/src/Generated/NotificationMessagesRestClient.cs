@@ -50,6 +50,8 @@ namespace Azure.Communication.Messages
             uri.AppendPath("/messages/notifications/:send", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Repeatability-Request-Id", Guid.NewGuid());
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "O");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var model = new SendNotificationRequest(channelRegistrationId, to.ToList(), type)
