@@ -6,7 +6,9 @@ using System.Collections.Generic;
 
 namespace System.ClientModel.Primitives;
 
-public abstract class MessageHeaders : IEnumerable<KeyValuePair<string, IEnumerable<string>>>
+public abstract class MessageHeaders
+    : IEnumerable<KeyValuePair<string, IEnumerable<string>>>,
+      IEnumerable<KeyValuePair<string, string>>
 {
     public abstract void Add(string name, string value);
 
@@ -21,4 +23,14 @@ public abstract class MessageHeaders : IEnumerable<KeyValuePair<string, IEnumera
     public abstract IEnumerator<KeyValuePair<string, IEnumerable<string>>> GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    IEnumerator<KeyValuePair<string, string>> IEnumerable<KeyValuePair<string, string>>.GetEnumerator()
+    {
+        return GetHeadersStringValues().GetEnumerator();
+    }
+
+    private IEnumerable<KeyValuePair<string, string>> GetHeadersStringValues()
+    {
+
+    }
 }
