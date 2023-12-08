@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new StorageSyncNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of StorageSyncServiceCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageSyncServiceCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new StorageSyncServiceCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, identity, incomingTrafficPolicy, useIdentity);
         }
 
-        /// <summary> Initializes a new instance of StorageSyncServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSync.StorageSyncServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointRecallError(errorCode, count);
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointProvisioningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServerEndpointProvisioningStatus"/>. </summary>
         /// <param name="provisioningStatus"> Server Endpoint provisioning status. </param>
         /// <param name="provisioningType"> Server Endpoint provisioning type. </param>
         /// <param name="provisioningStepStatuses"> Provisioning Step status information for each step in the provisioning process. </param>
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointProvisioningStatus(provisioningStatus, provisioningType, provisioningStepStatuses?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointProvisioningStepStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServerEndpointProvisioningStepStatus"/>. </summary>
         /// <param name="name"> Name of the provisioning step. </param>
         /// <param name="status"> Status of the provisioning step. </param>
         /// <param name="startOn"> Start time of the provisioning step. </param>
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointProvisioningStepStatus(name, status, startOn, minutesLeft, progressPercentage, endOn, errorCode, additionalInformation);
         }
 
-        /// <summary> Initializes a new instance of StorageSyncRegisteredServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSync.StorageSyncRegisteredServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new StorageSyncRegisteredServerCreateOrUpdateContent(id, name, resourceType, systemData, serverCertificate, agentVersion, serverOSVersion, lastHeartbeat, serverRole, clusterId, clusterName, serverId, friendlyName, applicationId, identity);
         }
 
-        /// <summary> Initializes a new instance of StorageSyncRegisteredServerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageSyncRegisteredServerPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

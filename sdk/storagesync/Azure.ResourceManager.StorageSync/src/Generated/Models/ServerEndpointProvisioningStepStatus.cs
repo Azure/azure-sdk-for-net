@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Server endpoint provisioning step status object. </summary>
     public partial class ServerEndpointProvisioningStepStatus
     {
-        /// <summary> Initializes a new instance of ServerEndpointProvisioningStepStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointProvisioningStepStatus"/>. </summary>
         internal ServerEndpointProvisioningStepStatus()
         {
             AdditionalInformation = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointProvisioningStepStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointProvisioningStepStatus"/>. </summary>
         /// <param name="name"> Name of the provisioning step. </param>
         /// <param name="status"> Status of the provisioning step. </param>
         /// <param name="startOn"> Start time of the provisioning step. </param>
