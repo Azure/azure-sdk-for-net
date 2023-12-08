@@ -133,4 +133,9 @@ Write-Host "Deleting test app files."
 Set-Location -Path ..
 Remove-Item -Path "./$folderPath" -Recurse -Force
 
+if ($numExpectedWarnings -ne $actualWarningCount) {
+  Write-Host "The number of expected warnings ($numExpectedWarnings) was different than the actual warning count ($actualWarningCount)."
+  exit 2
+}
+
 exit $warnings.Count
