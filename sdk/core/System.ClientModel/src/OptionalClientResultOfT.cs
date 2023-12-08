@@ -5,11 +5,11 @@ using System.ClientModel.Primitives;
 
 namespace System.ClientModel;
 
-public abstract class OptionalOutputMessage<T> : OutputMessage
+public abstract class OptionalClientResult<T> : ClientResult
 {
     private readonly T? _value;
 
-    protected OptionalOutputMessage(T? value, PipelineResponse response) : base(response)
+    protected OptionalClientResult(T? value, PipelineResponse response) : base(response)
         => _value = value;
 
     /// <summary>

@@ -22,26 +22,12 @@ public class PipelineMessage : IDisposable
 
     public PipelineRequest Request { get; }
 
-    public PipelineResponse Response
+    public PipelineResponse? Response
     {
-        get
-        {
-            if (_response is null)
-            {
-                throw new InvalidOperationException("Response has not been set on Message.");
-            }
-
-            return _response;
-        }
+        get => _response;
 
         // This is set internally by the transport.
         protected internal set => _response = value;
-    }
-
-    public bool TryGetResponse(out PipelineResponse response)
-    {
-        response = _response!;
-        return _response is not null;
     }
 
     #region Pipeline invocation options
@@ -73,6 +59,8 @@ public class PipelineMessage : IDisposable
     internal PipelinePolicy[]? PerCallPolicies { get; set; }
 
     internal PipelinePolicy[]? PerTryPolicies { get; set; }
+
+    internal PipelinePolicy[]? BeforeTransportPolicies { get; set; }
 
     #endregion
 

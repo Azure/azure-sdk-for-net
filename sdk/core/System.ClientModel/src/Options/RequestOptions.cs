@@ -16,6 +16,7 @@ public class RequestOptions
 {
     private PipelinePolicy[]? _perCallPolicies;
     private PipelinePolicy[]? _perTryPolicies;
+    private PipelinePolicy[]? _beforeTransportPolicies;
 
     private readonly MessageHeaders _requestHeaders;
 
@@ -31,9 +32,7 @@ public class RequestOptions
     public ErrorBehavior ErrorBehavior { get; set; }
 
     public void AddHeader(string name, string value)
-    {
-        _requestHeaders.Add(name, value);
-    }
+        => _requestHeaders.Add(name, value);
 
     // Set options on the message before sending it through the pipeline.
     protected internal void Apply(PipelineMessage message, PipelineMessageClassifier? messageClassifier = default)
@@ -59,6 +58,7 @@ public class RequestOptions
         // Copy custom pipeline policies.
         message.PerCallPolicies = _perCallPolicies;
         message.PerTryPolicies = _perTryPolicies;
+        message.BeforeTransportPolicies = _beforeTransportPolicies;
 
         foreach (var header in _requestHeaders)
         {
@@ -77,6 +77,9 @@ public class RequestOptions
                 break;
             case PipelinePosition.PerTry:
                 _perTryPolicies = PipelineOptions.AddPolicy(policy, _perTryPolicies);
+                break;
+            case PipelinePosition.BeforeTransport:
+                _beforeTransportPolicies = PipelineOptions.AddPolicy(policy, _beforeTransportPolicies);
                 break;
             default:
                 throw new ArgumentException($"Unexpected value for position: '{position}'.");

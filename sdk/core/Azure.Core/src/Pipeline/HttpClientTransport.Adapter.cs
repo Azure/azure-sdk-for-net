@@ -43,8 +43,13 @@ namespace Azure.Core.Pipeline
                     throw new InvalidOperationException($"Unsupported message type: '{message?.GetType()}'.");
                 }
 
+                if (message.Response is not PipelineResponse pipelineResponse)
+                {
+                    throw new InvalidOperationException($"Unsupported response type: '{message?.GetType()}'.");
+                }
+
                 string clientRequestId = httpMessage.Request.ClientRequestId;
-                httpMessage.Response = new HttpClientTransportResponse(clientRequestId, message.Response);
+                httpMessage.Response = new HttpClientTransportResponse(clientRequestId, pipelineResponse);
             }
         }
     }

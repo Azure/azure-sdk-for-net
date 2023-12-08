@@ -21,7 +21,7 @@ public partial class HttpClientPipelineTransport
 
         private string _method;
         private Uri? _uri;
-        private InputContent? _content;
+        private BinaryContent? _content;
 
         private readonly PipelineRequestHeaders _headers;
 
@@ -60,10 +60,10 @@ public partial class HttpClientPipelineTransport
             _uri = uri;
         }
 
-        protected override InputContent? GetContentCore()
+        protected override BinaryContent? GetContentCore()
             => _content;
 
-        protected override void SetContentCore(InputContent? content)
+        protected override void SetContentCore(BinaryContent? content)
             => _content = content;
 
         protected override MessageHeaders GetHeadersCore()
@@ -138,10 +138,10 @@ public partial class HttpClientPipelineTransport
 
         private sealed class MessageBodyAdapter : HttpContent
         {
-            private readonly InputContent _content;
+            private readonly BinaryContent _content;
             private readonly CancellationToken _cancellationToken;
 
-            public MessageBodyAdapter(InputContent content, CancellationToken cancellationToken)
+            public MessageBodyAdapter(BinaryContent content, CancellationToken cancellationToken)
             {
                 ClientUtilities.AssertNotNull(content, nameof(content));
 

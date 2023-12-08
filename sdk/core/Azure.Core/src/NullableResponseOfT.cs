@@ -11,7 +11,7 @@ namespace Azure
     /// </summary>
     /// <typeparam name="T">The type of returned value.</typeparam>
 #pragma warning disable SA1649 // File name should match first type name
-    public abstract class NullableResponse<T> : OptionalOutputMessage<T>
+    public abstract class NullableResponse<T> : OptionalClientResult<T>
 #pragma warning restore SA1649 // File name should match first type name
     {
         private const string NoValue = "<null>";

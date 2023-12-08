@@ -108,14 +108,14 @@ namespace Azure.Core
         /// TBD.
         /// </summary>
         /// <returns></returns>
-        protected override InputContent? GetContentCore()
+        protected override BinaryContent? GetContentCore()
             => _content;
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="content"></param>
-        protected override void SetContentCore(InputContent? content)
+        protected override void SetContentCore(BinaryContent? content)
             => _content = (RequestContent?)content;
 
         /// <summary>

@@ -17,17 +17,17 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
     /// </summary>
     public partial class ResourceProviderData
     {
-        public static implicit operator InputContent(ResourceProviderData resourceProviderData)
+        public static implicit operator BinaryContent(ResourceProviderData resourceProviderData)
         {
             if (resourceProviderData == null)
             {
                 return null;
             }
 
-            return InputContent.Create(resourceProviderData, ModelReaderWriterHelper.WireOptions);
+            return BinaryContent.Create(resourceProviderData, ModelReaderWriterHelper.WireOptions);
         }
 
-        public static explicit operator ResourceProviderData(OutputMessage result)
+        public static explicit operator ResourceProviderData(ClientResult result)
         {
             if (result is null) throw new ArgumentNullException(nameof(result));
 

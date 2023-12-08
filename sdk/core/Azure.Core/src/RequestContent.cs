@@ -19,7 +19,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents the content sent as part of the <see cref="Request"/>.
     /// </summary>
-    public abstract class RequestContent : InputContent
+    public abstract class RequestContent : BinaryContent
     {
         private static readonly ModelReaderWriterOptions ModelWriteWireOptions = new ModelReaderWriterOptions("W");
 
@@ -92,7 +92,7 @@ namespace Azure.Core
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a a <see cref="IPersistableModel{T}"/>.</returns>
         public static new RequestContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
-            => new AzureInputContent(InputContent.Create(model, options ?? ModelWriteWireOptions));
+            => new AzureInputContent(BinaryContent.Create(model, options ?? ModelWriteWireOptions));
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
@@ -154,9 +154,9 @@ namespace Azure.Core
 
         private sealed class AzureInputContent : RequestContent
         {
-            private readonly InputContent _content;
+            private readonly BinaryContent _content;
 
-            public AzureInputContent(InputContent content)
+            public AzureInputContent(BinaryContent content)
             {
                 _content = content;
             }

@@ -18,6 +18,8 @@ public class PipelineOptions
 
     internal PipelinePolicy[]? PerTryPolicies { get; set; }
 
+    internal PipelinePolicy[]? BeforeTransportPolicies { get; set; }
+
     #endregion
 
     #region Pipeline creation: Required policy overrides
@@ -45,6 +47,9 @@ public class PipelineOptions
                 break;
             case PipelinePosition.PerTry:
                 PerTryPolicies = AddPolicy(policy, PerTryPolicies);
+                break;
+            case PipelinePosition.BeforeTransport:
+                BeforeTransportPolicies = AddPolicy(policy, BeforeTransportPolicies);
                 break;
             default:
                 throw new ArgumentException($"Unexpected value for position: '{position}'.");
