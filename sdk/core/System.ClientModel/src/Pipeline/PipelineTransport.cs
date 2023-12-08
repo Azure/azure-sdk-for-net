@@ -56,7 +56,7 @@ public abstract class PipelineTransport : PipelinePolicy
             throw new InvalidOperationException("Request was not set on message.");
         }
 
-        if (message.Response is null)
+        if (message.Response is not null)
         {
             throw new InvalidOperationException("Response should not be set before transport is invoked.");
         }
