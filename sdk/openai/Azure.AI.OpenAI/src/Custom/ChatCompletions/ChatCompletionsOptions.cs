@@ -137,4 +137,16 @@ public partial class ChatCompletionsOptions
         Enhancements = null;
         Tools = new ChangeTrackingList<ChatCompletionsToolDefinition>();
     }
+
+    /// <summary>
+    /// If specified, the model will configure which of the provided tools it can use for the chat completions response.
+    /// </summary>
+    public ChatCompletionsToolChoice ToolChoice { get; set; }
+
+    // CUSTOM CODE NOTE:
+    //  Retaining the generated "ToolChoice" as a renamed, internal property facilitates the change of type of
+    //  ToolChoice to the custom abstraction seen above.
+
+    [CodeGenMember("ToolChoice")]
+    internal BinaryData InternalSuppressedToolChoice { get; set; }
 }

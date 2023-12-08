@@ -12,8 +12,8 @@ namespace Azure.AI.OpenAI;
 public partial class ChatCompletionsOptions : IUtf8JsonSerializable
 {
     // CUSTOM CODE NOTE:
-    //   This customized serialization allows us to reproject the logit_bias map of Token IDs to scores as the wire-
-    //   encoded, string-keyed map it must be sent as.
+    //   We manipulate the object model of this type relative to the wire format in several places; currently, this is
+    //   best facilitated by performing a complete customization of the serialization.
 
     void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
     {
@@ -37,8 +37,22 @@ public partial class ChatCompletionsOptions : IUtf8JsonSerializable
         }
         if (Optional.IsDefined(FunctionCall))
         {
+            // CUSTOM CODE NOTE:
+            //   This is an important custom deserialization step for the intended merging of presets (none, auto)
+            //   and named function definitions. Because presets serialize as a string instead of as object contents,
+            //   the customization has to occur at this parent options level.
             writer.WritePropertyName("function_call"u8);
-            writer.WriteObjectValue(FunctionCall);
+            if (FunctionCall.IsPredefined)
+            {
+                writer.WriteStringValue(FunctionCall.Name);
+            }
+            else
+            {
+                writer.WriteStartObject();
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(FunctionCall.Name);
+                writer.WriteEndObject();
+            }
         }
         if (Optional.IsDefined(MaxTokens))
         {
@@ -126,7 +140,7 @@ public partial class ChatCompletionsOptions : IUtf8JsonSerializable
         if (Optional.IsDefined(ResponseFormat))
         {
             writer.WritePropertyName("response_format"u8);
-            writer.WriteStringValue(ResponseFormat.Value.ToString());
+            writer.WriteObjectValue(ResponseFormat);
         }
         if (Optional.IsCollectionDefined(Tools))
         {
@@ -140,15 +154,10 @@ public partial class ChatCompletionsOptions : IUtf8JsonSerializable
         }
         if (Optional.IsDefined(ToolChoice))
         {
+            // CUSTOM CODE NOTE:
+            //   ChatCompletionsToolChoice is a fully custom type and needs integrated custom serialization here.
             writer.WritePropertyName("tool_choice"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ToolChoice);
-#else
-            using (JsonDocument document = JsonDocument.Parse(ToolChoice))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
-#endif
+            writer.WriteObjectValue(ToolChoice);
         }
         writer.WriteEndObject();
     }

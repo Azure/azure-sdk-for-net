@@ -106,5 +106,11 @@ public partial class ChatTools
             }
         }
         #endregion
+
+        #region Snippet:ChatTools:UseToolChoice
+        chatCompletionsOptions.ToolChoice = ChatCompletionsToolChoice.Auto; // let the model decide
+        chatCompletionsOptions.ToolChoice = ChatCompletionsToolChoice.None; // don't call tools
+        chatCompletionsOptions.ToolChoice = getWeatherTool; // only use the specified tool
+        #endregion
     }
 }

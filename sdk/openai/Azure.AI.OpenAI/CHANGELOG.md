@@ -1,14 +1,19 @@
 # Release History
 
-## 1.0.0-beta.11 (Unreleased)
+## 1.0.0-beta.11 (2023-12-07)
 
-### Features Added
+This is a fast-following bug fix update to address some of the biggest issues reported by the community. Thank you
+sharing your experiences!
 
 ### Breaking Changes
 
+- The type of `ChatCompletionsOptions.ToolChoice` has been updated from `BinaryData` to a new `ChatCompletionsToolChoice` type. Please use `ChatCompletionsToolChoice.None`, `ChatCompletionsToolChoice.Auto`, or provide a reference to a function or function tool definition to migrate.
+
 ### Bugs Fixed
 
-### Other Changes
+- `ChatCompletionsOptions.ResponseFormat` now serializes correctly and will not result in "not of type 'object" errors
+- `ChatCompletionsOptions.FunctionCall` is fixed to again work with `FunctionDefinition.None` and `FunctionDefinition.Auto` instead of resulting in not finding a named "none" or "auto" function
+- `ChatCompletionsOptions.ToolChoice` previously defaulted to a `BinaryData` type and has now been corrected to use a custom `ChatCompletionsToolChoice` type that parallels `FunctionDefinition` for older function calling.
 
 ## 1.0.0-beta.10 (2023-12-06)
 

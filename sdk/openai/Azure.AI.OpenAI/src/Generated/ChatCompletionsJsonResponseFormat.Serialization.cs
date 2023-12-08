@@ -10,13 +10,11 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    internal partial class ChatCompletionsNamedFunctionToolSelection : IUtf8JsonSerializable
+    internal partial class ChatCompletionsJsonResponseFormat : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name.ToString());
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WriteEndObject();

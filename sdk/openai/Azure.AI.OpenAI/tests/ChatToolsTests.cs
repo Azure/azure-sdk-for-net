@@ -9,20 +9,43 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.AI.OpenAI.Tests;
 
 public class ChatToolsTests : OpenAITestBase
 {
     public ChatToolsTests(bool isAsync)
-        : base(Scenario.ChatTools, isAsync)//, RecordedTestMode.Live)
+        : base(Scenario.ChatTools, isAsync) // , RecordedTestMode.Live)
     {
     }
 
+    public enum ToolChoiceTestType
+    {
+        DoNotSpecifyToolChoice,
+        UseAutoPresetToolChoice,
+        UseNonePresetToolChoice,
+        UseFunctionByExplicitToolDefinitionForToolChoice,
+        UseFunctionByExplicitFunctionDefinitionForToolChoice,
+        UseFunctionByImplicitToolDefinitionForToolChoice,
+        UseFunctionByImplicitFunctionDefinitionForToolChoice,
+    }
+
     [RecordedTest]
-    [TestCase(Service.Azure)]
     [TestCase(Service.NonAzure)]
-    public async Task SimpleFunctionToolWorks(Service serviceTarget)
+    [TestCase(Service.NonAzure, ToolChoiceTestType.UseAutoPresetToolChoice)]
+    [TestCase(Service.NonAzure, ToolChoiceTestType.UseNonePresetToolChoice)]
+    [TestCase(Service.NonAzure, ToolChoiceTestType.UseFunctionByExplicitToolDefinitionForToolChoice)]
+    [TestCase(Service.Azure)]
+    [TestCase(Service.Azure, ToolChoiceTestType.UseAutoPresetToolChoice)]
+    [TestCase(Service.Azure, ToolChoiceTestType.UseNonePresetToolChoice)]
+    [TestCase(Service.Azure, ToolChoiceTestType.UseFunctionByExplicitToolDefinitionForToolChoice)]
+    [TestCase(Service.Azure, ToolChoiceTestType.UseFunctionByExplicitFunctionDefinitionForToolChoice)]
+    [TestCase(Service.Azure, ToolChoiceTestType.UseFunctionByImplicitToolDefinitionForToolChoice)]
+    [TestCase(Service.Azure, ToolChoiceTestType.UseFunctionByImplicitFunctionDefinitionForToolChoice)]
+    public async Task SimpleFunctionToolWorks(
+        Service serviceTarget,
+        ToolChoiceTestType toolChoiceType = ToolChoiceTestType.DoNotSpecifyToolChoice)
     {
         OpenAIClient client = GetTestClient(serviceTarget);
         string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
@@ -39,6 +62,17 @@ public class ChatToolsTests : OpenAITestBase
             MaxTokens = 512,
         };
 
+        requestOptions.ToolChoice = toolChoiceType switch
+        {
+            ToolChoiceTestType.UseAutoPresetToolChoice => ChatCompletionsToolChoice.Auto,
+            ToolChoiceTestType.UseNonePresetToolChoice => ChatCompletionsToolChoice.None,
+            ToolChoiceTestType.UseFunctionByExplicitToolDefinitionForToolChoice => new ChatCompletionsToolChoice(s_futureTemperatureTool),
+            ToolChoiceTestType.UseFunctionByExplicitFunctionDefinitionForToolChoice => new ChatCompletionsToolChoice(s_futureTemperatureFunction),
+            ToolChoiceTestType.UseFunctionByImplicitToolDefinitionForToolChoice => s_futureTemperatureTool,
+            ToolChoiceTestType.UseFunctionByImplicitFunctionDefinitionForToolChoice => s_futureTemperatureFunction,
+            _ => null,
+        };
+
         Response<ChatCompletions> response = await client.GetChatCompletionsAsync(requestOptions);
         Assert.That(response, Is.Not.Null);
 
@@ -46,7 +80,25 @@ public class ChatToolsTests : OpenAITestBase
         Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
 
         ChatChoice choice = response.Value.Choices[0];
-        Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.ToolCalls));
+
+        if (toolChoiceType == ToolChoiceTestType.UseNonePresetToolChoice)
+        {
+            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.That(choice.Message.ToolCalls, Is.Null.Or.Empty);
+            // We finish the test here as there's no further exercise for 'none' beyond ensuring we didn't do what we
+            // weren't meant to
+            return;
+        }
+        else if (toolChoiceType == ToolChoiceTestType.UseAutoPresetToolChoice || toolChoiceType == ToolChoiceTestType.DoNotSpecifyToolChoice)
+        {
+            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.ToolCalls));
+            // and continue the test
+        }
+        else
+        {
+            Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            // and continue the test, as we will have tool_calls
+        }
 
         ChatResponseMessage message = choice.Message;
         Assert.That(message.Role, Is.EqualTo(ChatRole.Assistant));
@@ -166,6 +218,46 @@ public class ChatToolsTests : OpenAITestBase
             Assert.That(toolCallFunctionNamesByChoiceIndex[i], Is.EqualTo(s_futureTemperatureTool.Function.Name));
             Assert.That(toolCallFunctionArgumentsByChoiceIndex[i].Length, Is.GreaterThan(0));
         }
+    }
+
+    [RecordedTest]
+    [TestCase(Service.Azure)]
+    [TestCase(Service.NonAzure)]
+    public async Task JsonModeWorks(Service serviceTarget)
+    {
+        OpenAIClient client = GetTestClient(serviceTarget);
+        string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
+
+        ChatCompletionsOptions chatCompletionsOptions = new()
+        {
+            DeploymentName = deploymentOrModelName,
+            Messages = { new ChatRequestUserMessage("give me a list of five fruits. JSON is a delightful wire format, don't you think?") },
+            ResponseFormat = ChatCompletionsResponseFormat.JsonObject,
+        };
+
+        Response<ChatCompletions> response = await client.GetChatCompletionsAsync(chatCompletionsOptions);
+        Assert.That(response, Is.Not.Null);
+        Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
+        Assert.That(response.Value.Choices?.Count, Is.EqualTo(1));
+
+        string content = response.Value.Choices[0].Message.Content;
+        var jsonDocument = JsonDocument.Parse(content);
+        Assert.That(jsonDocument?.RootElement, Is.Not.Null);
+
+        int fruitCount = 0;
+
+        foreach (JsonProperty property in jsonDocument.RootElement.EnumerateObject())
+        {
+            Assert.That(property.Name.Contains("fruit"));
+            Assert.That(property.Value.ValueKind, Is.EqualTo(JsonValueKind.Array));
+            foreach (JsonElement fruitItem in property.Value.EnumerateArray())
+            {
+                Assert.That(fruitItem.ValueKind, Is.EqualTo(JsonValueKind.String));
+                fruitCount++;
+            }
+        }
+
+        Assert.That(fruitCount, Is.GreaterThan(0));
     }
 
     private static readonly FunctionDefinition s_futureTemperatureFunction = new()
