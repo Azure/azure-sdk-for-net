@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.0-beta.5 (2023-12-07)
 
 ### Bugs Fixed
 
-### Other Changes
+- Updated Event Metrics to use Assembly.GetName instead of static dll name.
 
 ## 1.0.0-beta.4 (2023-11-23)
 
