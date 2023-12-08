@@ -12,8 +12,8 @@ namespace Azure.AI.OpenAI;
 public partial class ChatCompletionsOptions : IUtf8JsonSerializable
 {
     // CUSTOM CODE NOTE:
-    //   This customized serialization allows us to reproject the logit_bias map of Token IDs to scores as the wire-
-    //   encoded, string-keyed map it must be sent as.
+    //   We manipulate the object model of this type relative to the wire format in several places; currently, this is
+    //   best facilitated by performing a complete customization of the serialization.
 
     void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
     {
@@ -154,6 +154,8 @@ public partial class ChatCompletionsOptions : IUtf8JsonSerializable
         }
         if (Optional.IsDefined(ToolChoice))
         {
+            // CUSTOM CODE NOTE:
+            //   ChatCompletionsToolChoice is a fully custom type and needs integrated custom serialization here.
             writer.WritePropertyName("tool_choice"u8);
             writer.WriteObjectValue(ToolChoice);
         }
