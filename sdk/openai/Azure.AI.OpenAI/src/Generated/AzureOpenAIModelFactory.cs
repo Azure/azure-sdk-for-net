@@ -295,6 +295,30 @@ namespace Azure.AI.OpenAI
             return new ChatCompletions(id, created, choices?.ToList(), promptFilterResults?.ToList(), systemFingerprint, usage);
         }
 
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatChoice"/>. </summary>
+        /// <param name="message"> The chat message for a given chat completions prompt. </param>
+        /// <param name="index"> The ordered index associated with this chat completions choice. </param>
+        /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
+        /// <param name="finishDetails">
+        /// The reason the model stopped generating tokens, together with any applicable details.
+        /// This structured representation replaces 'finish_reason' for some models.
+        /// </param>
+        /// <param name="contentFilterResults">
+        /// Information about the content filtering category (hate, sexual, violence, self_harm), if it
+        /// has been detected, as well as the severity level (very_low, low, medium, high-scale that
+        /// determines the intensity and risk level of harmful content) and if it has been filtered or not.
+        /// </param>
+        /// <param name="enhancements">
+        /// Represents the output results of Azure OpenAI enhancements to chat completions, as configured via the matching input
+        /// provided in the request. This supplementary information is only available when using Azure OpenAI and only when the
+        /// request is configured to use enhancements.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.ChatChoice"/> instance for mocking. </returns>
+        public static ChatChoice ChatChoice(ChatResponseMessage message = null, int index = default, CompletionsFinishReason? finishReason = null, ChatFinishDetails finishDetails = null, ContentFilterResultsForChoice contentFilterResults = null, AzureChatEnhancements enhancements = null)
+        {
+            return new ChatChoice(message, index, finishReason, finishDetails, internalStreamingDeltaMessage: null, contentFilterResults, enhancements);
+        }
+
         /// <summary> Initializes a new instance of <see cref="OpenAI.ChatResponseMessage"/>. </summary>
         /// <param name="role"> The chat role associated with the message. </param>
         /// <param name="content"> The content of the message. </param>
