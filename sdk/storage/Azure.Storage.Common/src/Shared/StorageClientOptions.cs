@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Shared;
