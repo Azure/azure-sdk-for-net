@@ -1,16 +1,10 @@
 # Release History
 
-## 1.2.0-beta.7 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.2.0-beta.7 (2023-12-08)
 
 ### Bugs Fixed
 
  - Add ApiVersion support for `ConfigurationAssignmentsRestClient` in `MockableMaintenanceResourceGroupResource` for issue #40511
-
-### Other Changes
 
 ## 1.2.0-beta.6 (2023-11-29)
 
