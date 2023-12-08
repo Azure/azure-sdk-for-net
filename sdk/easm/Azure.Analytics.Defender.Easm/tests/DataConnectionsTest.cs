@@ -29,7 +29,6 @@ namespace Azure.Analytics.Defender.Easm.Tests
         {
             var results = client.GetDataConnectionsAsync();
             var asyncNumerator = results.GetAsyncEnumerator();
-            var something = asyncNumerator.Current;
             Assert.IsNotNull(results);
             await foreach (DataConnection result in results)
             {
