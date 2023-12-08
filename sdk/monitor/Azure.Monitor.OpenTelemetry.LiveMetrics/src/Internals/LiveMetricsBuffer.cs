@@ -8,7 +8,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
     /// <summary>
     /// This class encapsulates metrics sent to Live Metrics.
     /// </summary>
-    internal class LiveMetricsBuffer
+    internal struct LiveMetricsBuffer
     {
         // REQUEST
         internal long RequestsCount;
