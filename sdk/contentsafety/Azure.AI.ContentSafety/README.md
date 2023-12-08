@@ -84,8 +84,8 @@ There are different types of analysis available from this service. The following
 
 |Feature  |Description  |
 |---------|---------|
-|Text Analysis API|Scans text for sexual content, violence, hate, and self harm with multi-severity levels.|
-|Image Analysis API|Scans images for sexual content, violence, hate, and self harm with multi-severity levels.|
+|Text Analysis API|Scans text for sexual content, violence, hate, and self-harm with multi-severity levels.|
+|Image Analysis API|Scans images for sexual content, violence, hate, and self-harm with multi-severity levels.|
 | Text Blocklist Management APIs|The default AI classifiers are sufficient for most content safety needs. However, you might need to screen for terms that are specific to your use case. You can create blocklists of terms to use with the Text API.|
 
 ### Harm categories
