@@ -6,7 +6,6 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -202,19 +201,8 @@ namespace Azure.Core
             public override void Set(string name, string value)
                 => _headers.SetValue(name, value);
 
-            public override IEnumerator<KeyValuePair<string, IEnumerable<string>>> GetEnumerator()
-                => GetHeadersEnumerableValues().GetEnumerator();
-
-            private IEnumerable<KeyValuePair<string, IEnumerable<string>>> GetHeadersEnumerableValues()
-            {
-                foreach (HttpHeader header in _headers)
-                {
-                    yield return new KeyValuePair<string, IEnumerable<string>>(header.Name, GetHeaderValues(header.Value));
-                }
-            }
-
-            private IEnumerable<string> GetHeaderValues(string compositeHeaderValue)
-                => compositeHeaderValue.Split(';');
+            public override IEnumerator<KeyValuePair<string, string>> GetEnumerator()
+                => GetHeadersCompositeValues().GetEnumerator();
 
             private IEnumerable<KeyValuePair<string, string>> GetHeadersCompositeValues()
             {

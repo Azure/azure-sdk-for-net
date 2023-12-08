@@ -416,7 +416,7 @@ public class MapsClientTests
                 throw new NotImplementedException();
             }
 
-            public override IEnumerator<KeyValuePair<string, IEnumerable<string>>> GetEnumerator()
+            public override IEnumerator<KeyValuePair<string, string>> GetEnumerator()
             {
                 throw new NotImplementedException();
             }
