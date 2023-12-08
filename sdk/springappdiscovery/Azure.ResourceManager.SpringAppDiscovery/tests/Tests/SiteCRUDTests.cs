@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -17,8 +18,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
     [TestFixture]
     public class SiteCRUDTests : SpringAppDiscoveryManagementTestBase
     {
-        public const string rgName = "sdk-migration-test1";
-        public const string siteName = "springboot-sites-crud-site";
+        public const string subId = "bf85658b-2e17-4390-8a60-1772d27ff80d";
+
+        public const string rgName = "sdk-migration-test";
+        public const string siteName = "springboot-sites-crud-site-for-server";
         public const string migrationProject = "springboot-sites-crud-migrationprj";
         public AzureLocation defaultResourceLocation = AzureLocation.SoutheastAsia;
 
@@ -26,10 +29,11 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
 
         public SpringbootsitesProperties siteProperties = new SpringbootsitesProperties();
 
-        public SpringbootsitesModelExtendedLocation extendLocation = new SpringbootsitesModelExtendedLocation("microsoft.extendedlocation/customlocations", "springboot");
+        public SpringbootsitesModelExtendedLocation extendLocation = new SpringbootsitesModelExtendedLocation("CustomLocation", "/subscriptions/" + subId +"/resourceGroups/" +  rgName + "/providers/Microsoft.ExtendedLocation/customLocations/springboot");
 
         public SiteCRUDTests() : base(true)
         {
+            Mode = RecordedTestMode.Playback;
         }
 
         [SetUp]
@@ -50,12 +54,13 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
         {
             SpringbootsitesModelCollection siteColletion = await GetSpringbootsitesModelCollectionAsync(rgName);
 
+            siteProperties.MasterSiteId="1234";
+            siteProperties.MigrateProjectId="5678";
             SpringbootsitesModelData modelData = new SpringbootsitesModelData(null, siteName, resourceType, null, new Dictionary<string, string>(),
                 defaultResourceLocation, siteProperties, extendLocation);
 
-            //create a server
+            //create a site
             var createSiteOperation = await siteColletion.CreateOrUpdateAsync(WaitUntil.Completed, siteName, modelData, CancellationToken.None);
-            await createSiteOperation.WaitForCompletionAsync();
             Assert.IsTrue(createSiteOperation.HasCompleted);
             Assert.IsTrue(createSiteOperation.HasValue);
 
@@ -63,6 +68,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
             Assert.IsTrue(await siteColletion.ExistsAsync(siteName));
 
             //get a site
+            Response<SpringbootsitesModelResource> getSiteResponse = await siteColletion.GetAsync(siteName);
+            SpringbootsitesModelResource siteResource = getSiteResponse.Value;
             NullableResponse<SpringbootsitesModelResource> getIfExistResponse = await siteColletion.GetIfExistsAsync(siteName);
             Assert.True(getIfExistResponse.HasValue);
 
@@ -74,14 +81,9 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
             }
             Assert.True(siteCount > 0);
 
-            Response<SpringbootsitesModelResource> getSiteResponse = await siteColletion.GetAsync(siteName);
-            SpringbootsitesModelResource siteResource = getSiteResponse.Value;
-            Assert.IsNotNull(siteResource);
-
-            var deletetServerOperation = await siteResource.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
-            await deletetServerOperation.WaitForCompletionResponseAsync();
-            Assert.IsTrue(deletetServerOperation.HasCompleted);
-
+            //delete a site
+            var deletetServerOperationAgain = await siteResource.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
+            Assert.IsTrue(deletetServerOperationAgain.HasCompleted);
         }
     }
 }

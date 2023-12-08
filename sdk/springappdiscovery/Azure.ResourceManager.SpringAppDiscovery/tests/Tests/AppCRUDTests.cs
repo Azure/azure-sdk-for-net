@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -17,27 +18,15 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
     [TestFixture]
     public class AppCRUDTests : SpringAppDiscoveryManagementTestBase
     {
-        public const string rgName = "sdk-migration-test1";
+        public const string rgName = "sdk-migration-test";
+
         public const string siteName = "springboot-sites-crud-site-for-server";
-        public const string migrationProject = "springboot-sites-crud-migrationprj";
-        public AzureLocation defaultResourceLocation = AzureLocation.SoutheastAsia;
 
-        public ResourceType resourceType = new ResourceType("microsoft.offazurespringboot/springbootsites");
-
-        public SpringbootsitesProperties siteProperties = new SpringbootsitesProperties();
-
-        public SpringbootsitesModelExtendedLocation extendLocation = new SpringbootsitesModelExtendedLocation("microsoft.extendedlocation/customlocations", "springboot");
-
-        public const string serverName = "test-swagger-api-server";
-
-        public const string serverIp = "10.150.221.94";
-
-        public const string machineId = "test-swagger-marchine-id";
-
-         public const string appName = "test-swagger-app-name";
+        public const string appName = "73e1b34eb8e5edef53838453c261544269ee28c878751619c460bca663650b6d";
 
         public AppCRUDTests() : base(true)
         {
+            Mode = RecordedTestMode.Playback;
         }
 
         [SetUp]
@@ -50,17 +39,22 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
         }
 
         /// <summary>
-        /// Test Server CRUD for spring discovery
+        /// Test App CRUD for spring discovery
         /// </summary>
         /// <returns></returns>
         [TestCase]
-        public async Task TestSitesCRUDAsyncOperations()
+        public async Task TestAppsCRUDAsyncOperations()
         {
+            //get a site
             SpringbootsitesModelResource siteModelResource = await GetSpringsiteModelResource(rgName, siteName);
+            await siteModelResource.TriggerRefreshSiteAsync(WaitUntil.Completed);
+
+            //judge a app exist or not
             SpringbootappsModelCollection appsColletion = siteModelResource.GetSpringbootappsModels();
             bool result = await appsColletion.ExistsAsync(appName, CancellationToken.None);
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
 
+            //get all apps
             AsyncPageable<SpringbootappsModelResource> appListResponse = appsColletion.GetAllAsync();
             int appCount = 0;
             await foreach (var item in appListResponse) {
@@ -68,12 +62,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
             }
             Assert.True(appCount > 0);
 
+            //get an app
             Response<SpringbootappsModelResource> appResponse = await appsColletion.GetAsync(appName);
             SpringbootappsModelResource appModelResource = appResponse.Value;
             Assert.IsNotNull(appModelResource);
             SpringbootappsModelData appModelData = appModelResource.Data;
             Assert.IsNotNull(appModelData);
 
+            //patch an app
             KeyValuePair<string, string> myKeyValuePair = new KeyValuePair<string, string>("appKey", "appValue");
             SpringbootappsModelPatch appPatch = new SpringbootappsModelPatch(){
                 Tags = {myKeyValuePair,}
@@ -82,16 +78,17 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
             var updateOperataion = await appModelResource.UpdateAsync(WaitUntil.Completed, appPatch);
             await  updateOperataion.WaitForCompletionAsync();
             Assert.IsTrue(updateOperataion.HasCompleted);
-            appResponse = await appsColletion.GetAsync(appName);
-             appModelResource = appResponse.Value;
+            Assert.IsTrue(await containsTag(appsColletion, appName, myKeyValuePair));
+        }
+
+        private async Task<bool> containsTag(SpringbootappsModelCollection appsColletion, string appName, KeyValuePair<string, string> myKeyValuePair) {
+            Response<SpringbootappsModelResource> appResponse = await appsColletion.GetAsync(appName);
+            SpringbootappsModelResource appModelResource = appResponse.Value;
             Assert.IsNotNull(appModelResource);
-            appModelData = appModelResource.Data;
+            SpringbootappsModelData appModelData = appModelResource.Data;
             Assert.IsNotNull(appModelData);
             IDictionary<string, string> tags = appModelData.Tags;
-            Assert.IsTrue(tags.Contains(myKeyValuePair));
-
-            appResponse = await appModelResource.AddTagAsync("a", "b", CancellationToken.None);
-            Assert.IsNotNull(appResponse);
+            return tags.Contains(myKeyValuePair);
         }
     }
 }

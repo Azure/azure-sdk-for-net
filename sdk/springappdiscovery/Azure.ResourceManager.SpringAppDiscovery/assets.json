@@ -1,6 +1,6 @@
 {
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
-  "TagPrefix": "net/<service name>/Azure.ResourceManager.SpringAppDiscovery",
+  "TagPrefix": "net/springappdiscovery/Azure.ResourceManager.SpringAppDiscovery",
   "Tag": ""
 }

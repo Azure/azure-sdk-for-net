@@ -1,0 +1,71 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.SpringAppDiscovery.Models;
+using NUnit.Framework;
+
+namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
+{
+    [TestFixture]
+    public class ErrorSummaryCRUDTests : SpringAppDiscoveryManagementTestBase
+    {
+        public const string subId = "bf85658b-2e17-4390-8a60-1772d27ff80d";
+
+        public const string rgName = "sdk-migration-test";
+
+        public const string siteName = "springboot-sites-crud-site-for-server";
+
+        public ErrorSummaryCRUDTests() : base(true)
+        {
+            Mode = RecordedTestMode.Playback;
+        }
+
+        [SetUp]
+        public async Task ClearAndInitialize()
+        {
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
+                await CreateCommonClient();
+            }
+        }
+
+        /// <summary>
+        /// Test ErrorSummary CRUD for spring discovery
+        /// </summary>
+        /// <returns></returns>
+        [TestCase]
+        public async Task TestSummariesCRUDAsyncOperations()
+        {
+            SpringbootsitesModelCollection siteColletion = await GetSpringbootsitesModelCollectionAsync(rgName);
+
+            //judge a site exist or not
+            Assert.IsTrue(await siteColletion.ExistsAsync(siteName));
+
+            //get a site
+            Response<SpringbootsitesModelResource> getSiteResponse = await siteColletion.GetAsync(siteName);
+            SpringbootsitesModelResource siteResource = getSiteResponse.Value;
+            ErrorSummaryCollection errorSummaryCollection = siteResource.GetErrorSummaries();
+
+            //get all errorSummaries
+            AsyncPageable<ErrorSummaryResource> getErrorSummaryResponse = errorSummaryCollection.GetAllAsync();
+            int errorSummaryCount = 0;
+            await foreach (var item in getErrorSummaryResponse) {
+                errorSummaryCount++;
+            }
+            Assert.True(errorSummaryCount > 0);
+
+            //get an errorSummary
+            Response<ErrorSummaryResource> getErrorSummaryReponse = await errorSummaryCollection.GetAsync("default", CancellationToken.None);
+            Assert.IsNotNull(getErrorSummaryReponse.Value);
+        }
+    }
+}

@@ -17,16 +17,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
     [TestFixture]
     public class ServerCRUDTests : SpringAppDiscoveryManagementTestBase
     {
-        public const string rgName = "sdk-migration-test1";
+        public const string rgName = "sdk-migration-test";
         public const string siteName = "springboot-sites-crud-site-for-server";
-        public const string migrationProject = "springboot-sites-crud-migrationprj";
-        public AzureLocation defaultResourceLocation = AzureLocation.SoutheastAsia;
-
-        public ResourceType resourceType = new ResourceType("microsoft.offazurespringboot/springbootsites");
-
-        public SpringbootsitesProperties siteProperties = new SpringbootsitesProperties();
-
-        public SpringbootsitesModelExtendedLocation extendLocation = new SpringbootsitesModelExtendedLocation("microsoft.extendedlocation/customlocations", "springboot");
 
         public const string serverName = "test-swagger-api-server";
 
@@ -34,8 +26,11 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
 
         public const string machineId = "test-swagger-marchine-id";
 
+        public const string machineId1 = "test-swagger-marchine-id1";
+
         public ServerCRUDTests() : base(true)
         {
+            Mode = RecordedTestMode.Playback;
         }
 
         [SetUp]
@@ -52,22 +47,27 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
         /// </summary>
         /// <returns></returns>
         [TestCase]
-        public async Task TestSitesCRUDAsyncOperations()
+        public async Task TestServersCRUDAsyncOperations()
         {
+            //get a site
             SpringbootsitesModelResource siteModelResource = await GetSpringsiteModelResource(rgName, siteName);
+
+            //get a server collection
             SpringbootserversModelCollection serverColletion = siteModelResource.GetSpringbootserversModels();
             SpringbootserversProperties properties = new SpringbootserversProperties(serverIp);
             properties.MachineArmId=machineId;
             properties.Port=22;
             SpringbootserversModelData data = new SpringbootserversModelData();
             data.Properties = properties;
+
+            //create a server
             var createServerOperation = await serverColletion.CreateOrUpdateAsync(WaitUntil.Completed, serverName, data, CancellationToken.None);
-            await  createServerOperation.WaitForCompletionAsync();
+            await createServerOperation.WaitForCompletionAsync();
             Assert.IsTrue(createServerOperation.HasCompleted);
             Assert.IsTrue(createServerOperation.HasValue);
 
-             //judge a site exist or not
-            Assert.IsTrue(await serverColletion.ExistsAsync(siteName));
+             //judge a server exist or not
+            Assert.IsTrue(await serverColletion.ExistsAsync(serverName));
 
             //get a server
             NullableResponse<SpringbootserversModelResource> getIfExistResponse = await serverColletion.GetIfExistsAsync(serverName);
@@ -81,20 +81,25 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
             }
             Assert.True(serverCount > 0);
 
-            Response<SpringbootserversModelResource> getServerResponse = await serverColletion.GetAsync(siteName);
+            //get a server
+            Response<SpringbootserversModelResource> getServerResponse = await serverColletion.GetAsync(serverName);
             SpringbootserversModelResource serverModelResource = getServerResponse.Value;
             Assert.IsNotNull(serverModelResource);
 
             SpringbootserversModelPatch serverPatch = new SpringbootserversModelPatch(){
-                 Tags = {["serverKey"] = "serverValue",}
+                 Tags = {["serverKey"] = "serverValue1",}
             };
 
-            var updateOperataion = await serverModelResource.UpdateAsync(WaitUntil.Completed, serverPatch);
-            await  updateOperataion.WaitForCompletionAsync();
-            Assert.IsTrue(updateOperataion.HasCompleted);
+            properties.MachineArmId=machineId1;
+            serverPatch.Properties= properties;
 
+            //patch a server
+            var updateOperataion = await serverModelResource.UpdateAsync(WaitUntil.Completed, serverPatch);
+            Assert.IsTrue(updateOperataion.HasCompleted);
+            Assert.IsTrue(updateOperataion.HasValue);
+
+            //delete a server
             var deletetServerOperation = await serverModelResource.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
-            await deletetServerOperation.WaitForCompletionResponseAsync();
             Assert.IsTrue(deletetServerOperation.HasCompleted);
         }
     }
