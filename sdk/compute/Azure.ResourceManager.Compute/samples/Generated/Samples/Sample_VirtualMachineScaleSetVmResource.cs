@@ -1123,14 +1123,10 @@ DetachOption = DiskDetachOptionType.ForceDetach,
 }
 },
             };
-            ArmOperation<VirtualMachineScaleSetVmResource> lro = await virtualMachineScaleSetVm.AttachDetachDataDisksAsync(WaitUntil.Completed, attachDetachDataDisksRequest);
-            VirtualMachineScaleSetVmResource result = lro.Value;
+            ArmOperation<VirtualMachineStorageProfile> lro = await virtualMachineScaleSetVm.AttachDetachDataDisksAsync(WaitUntil.Completed, attachDetachDataDisksRequest);
+            VirtualMachineStorageProfile result = lro.Value;
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VirtualMachineScaleSetVmData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // VirtualMachineScaleSetVM_AttachDetachDataDisks_MinimumSet_Gen
@@ -1167,14 +1163,10 @@ new DataDisksToAttach("/subscriptions/{subscription-id}/resourceGroups/myResourc
 new DataDisksToDetach("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/vmss3176_vmss3176_1_disk1_1a4e784bdafa49baa780eb2d128ff65x")
 },
             };
-            ArmOperation<VirtualMachineScaleSetVmResource> lro = await virtualMachineScaleSetVm.AttachDetachDataDisksAsync(WaitUntil.Completed, attachDetachDataDisksRequest);
-            VirtualMachineScaleSetVmResource result = lro.Value;
+            ArmOperation<VirtualMachineStorageProfile> lro = await virtualMachineScaleSetVm.AttachDetachDataDisksAsync(WaitUntil.Completed, attachDetachDataDisksRequest);
+            VirtualMachineStorageProfile result = lro.Value;
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VirtualMachineScaleSetVmData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // VirtualMachineScaleSetVMs_RunCommand

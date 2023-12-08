@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of ResourceSharingProfile. </summary>
-        /// <param name="subscriptionIds"> Specifies an array of Subscription resource Ids that capacity reservation group is shared with. The resource Id should be provided in form: /subscriptions/{subscriptionId}. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
+        /// <param name="subscriptionIds"> Specifies an array of subscription resource IDs that capacity reservation group is shared with. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
         internal ResourceSharingProfile(IList<WritableSubResource> subscriptionIds)
         {
             SubscriptionIds = subscriptionIds;
         }
 
-        /// <summary> Specifies an array of Subscription resource Ids that capacity reservation group is shared with. The resource Id should be provided in form: /subscriptions/{subscriptionId}. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </summary>
+        /// <summary> Specifies an array of subscription resource IDs that capacity reservation group is shared with. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </summary>
         public IList<WritableSubResource> SubscriptionIds { get; }
     }
 }
