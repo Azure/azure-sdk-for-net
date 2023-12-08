@@ -65,7 +65,7 @@ string region = "<Text Translator Azure Region>";
 TextTranslationClient client = new TextTranslationClient(new AzureKeyCredential(apiKey), new Uri(endpoint), region);
 ```
 
-#### Create `TextTranslationClient` with Entra Credential
+#### Create `TextTranslationClient` with Entra ID
 
 Client API key authentication is used in most of the examples, but you can also authenticate with Microsoft Entra ID using the [Azure Identity library][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below, install the Azure.Identity package:
 
