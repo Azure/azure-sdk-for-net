@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+ - Add ApiVersion support for `ConfigurationAssignmentsRestClient` in `MockableMaintenanceResourceGroupResource` for issue #40511
+
 ### Other Changes
 
 ## 1.2.0-beta.6 (2023-11-29)
