@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- Remove targets for .NET Core 2.1 and .NET 5 since they are out of support. Remaining targets are unchanged.
 
 ## 1.36.0 (2023-11-10)
 
