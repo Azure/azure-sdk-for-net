@@ -137,6 +137,7 @@ namespace Azure.Storage.Blobs
             Stream destination,
             BlobRequestConditions conditions,
             bool async,
+            bool? userPrincipalName,
             CancellationToken cancellationToken)
         {
             // Wrap the download range calls in a Download span for distributed
@@ -163,6 +164,7 @@ namespace Azure.Storage.Blobs
                         _progress,
                         _innerOperationName,
                         async,
+                        userPrincipalName,
                         cancellationToken).ConfigureAwait(false);
                 }
                 catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
@@ -174,6 +176,7 @@ namespace Azure.Storage.Blobs
                         _progress,
                         _innerOperationName,
                         async,
+                        userPrincipalName,
                         cancellationToken).ConfigureAwait(false);
                 }
 
@@ -263,6 +266,7 @@ namespace Azure.Storage.Blobs
                             _progress,
                             _innerOperationName,
                             async,
+                            userPrincipalName,
                             cancellationToken);
                     if (runningTasks != null)
                     {

@@ -9,6 +9,7 @@ using System.Text;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.Files.DataLake
 {
