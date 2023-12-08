@@ -6,9 +6,9 @@ using System.ComponentModel;
 
 namespace System.ClientModel;
 
-public abstract class OutputMessage<T> : OptionalOutputMessage<T>
+public abstract class ClientResult<T> : OptionalClientResult<T>
 {
-    protected OutputMessage(T value, PipelineResponse response)
+    protected ClientResult(T value, PipelineResponse response)
         : base(value, response) { }
 
     public sealed override T Value => base.Value!;

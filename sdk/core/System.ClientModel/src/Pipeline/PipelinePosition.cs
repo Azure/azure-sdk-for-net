@@ -6,6 +6,7 @@ namespace System.ClientModel.Primitives
     public enum PipelinePosition
     {
         PerCall,
-        PerTry
+        PerTry,
+        BeforeTransport
     }
 }

@@ -38,14 +38,24 @@ namespace Azure.Core
         /// </summary>
         public new Response Response
         {
-            get => (Response)base.Response;
+            get
+            {
+                if (base.Response is null)
+                {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new InvalidOperationException("Response was not set, make sure SendAsync was called");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                }
+                return (Response)base.Response;
+            }
+
             set => base.Response = value;
         }
 
         /// <summary>
         /// Gets the value indicating if the response is set on this message.
         /// </summary>
-        public bool HasResponse => TryGetResponse(out _);
+        public bool HasResponse => base.Response is not null;
 
         internal void ClearResponse() => Response = null!;
 
@@ -177,18 +187,17 @@ namespace Azure.Core
         /// did not have content set.</returns>
         public Stream? ExtractResponseContent()
         {
-            if (!TryGetResponse(out PipelineResponse pipelineResponse) ||
-                pipelineResponse is not Response response)
+            if (!HasResponse)
             {
                 return null;
             }
 
-            switch (response.ContentStream)
+            switch (Response.ContentStream)
             {
                 case ResponseShouldNotBeUsedStream responseContent:
                     return responseContent.Original;
                 case Stream stream:
-                    response.ContentStream = new ResponseShouldNotBeUsedStream(response.ContentStream);
+                    Response.ContentStream = new ResponseShouldNotBeUsedStream(Response.ContentStream);
                     return stream;
                 default:
                     return null;

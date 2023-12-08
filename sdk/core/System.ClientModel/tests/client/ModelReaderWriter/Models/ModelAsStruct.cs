@@ -60,9 +60,9 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        public static implicit operator InputContent(ModelAsStruct model)
+        public static implicit operator BinaryContent(ModelAsStruct model)
         {
-            return InputContent.Create(model, ModelReaderWriterHelper.WireOptions);
+            return BinaryContent.Create(model, ModelReaderWriterHelper.WireOptions);
         }
 
         ModelAsStruct IPersistableModel<ModelAsStruct>.Create(BinaryData data, ModelReaderWriterOptions options)
@@ -103,7 +103,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
         }
 
-        public static explicit operator ModelAsStruct(OutputMessage result)
+        public static explicit operator ModelAsStruct(ClientResult result)
         {
             if (result is null) throw new ArgumentNullException(nameof(result));
 

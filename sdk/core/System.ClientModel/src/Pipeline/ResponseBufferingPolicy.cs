@@ -87,6 +87,11 @@ public class ResponseBufferingPolicy : PipelinePolicy
             return;
         }
 
+        if (message.Response is null)
+        {
+            throw new InvalidOperationException("Response is not set on message.");
+        }
+
         Stream? responseContentStream = message.Response.ContentStream;
         if (responseContentStream is null ||
             message.Response.TryGetBufferedContent(out var _))

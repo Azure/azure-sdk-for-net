@@ -16,12 +16,12 @@ public abstract class PipelineTransport : PipelinePolicy
     {
         ProcessCore(message);
 
-        if (!message.TryGetResponse(out PipelineResponse response))
+        if (message.Response is null)
         {
             throw new InvalidOperationException("Response was not set by transport.");
         }
 
-        response.IsError = message.MessageClassifier?.IsErrorResponse(message) ?? default;
+        message.Response.IsError = message.MessageClassifier?.IsErrorResponse(message) ?? default;
     }
 
     /// <summary>
@@ -32,12 +32,12 @@ public abstract class PipelineTransport : PipelinePolicy
     {
         await ProcessCoreAsync(message).ConfigureAwait(false);
 
-        if (!message.TryGetResponse(out PipelineResponse response))
+        if (message.Response is null)
         {
             throw new InvalidOperationException("Response was not set by transport.");
         }
 
-        response.IsError = message.MessageClassifier?.IsErrorResponse(message) ?? default;
+        message.Response.IsError = message.MessageClassifier?.IsErrorResponse(message) ?? default;
     }
 
     protected abstract void ProcessCore(PipelineMessage message);
@@ -56,7 +56,7 @@ public abstract class PipelineTransport : PipelinePolicy
             throw new InvalidOperationException("Request was not set on message.");
         }
 
-        if (message.TryGetResponse(out PipelineResponse _))
+        if (message.Response is not null)
         {
             throw new InvalidOperationException("Response should not be set before transport is invoked.");
         }
