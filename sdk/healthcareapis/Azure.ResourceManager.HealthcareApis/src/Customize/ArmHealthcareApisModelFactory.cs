@@ -5,10 +5,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure;
+using System.ComponentModel;
 using Azure.Core;
-using Azure.ResourceManager.HealthcareApis;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
@@ -32,6 +30,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
         /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         /// <returns> A new <see cref="HealthcareApis.DicomServiceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DicomServiceData DicomServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisProvisioningState? provisioningState, DicomServiceAuthenticationConfiguration authenticationConfiguration, DicomServiceCorsConfiguration corsConfiguration, Uri serviceUri, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity, ETag? etag)
             => DicomServiceData(id, name, resourceType, systemData, tags, location, provisioningState, authenticationConfiguration, corsConfiguration, serviceUri, privateEndpointConnections, publicNetworkAccess, null, null, identity, etag);
 
@@ -57,6 +56,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
         /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         /// <returns> A new <see cref="HealthcareApis.FhirServiceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static FhirServiceData FhirServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FhirServiceKind? kind, HealthcareApisProvisioningState? provisioningState, IEnumerable<FhirServiceAccessPolicyEntry> accessPolicies, FhirServiceAcrConfiguration acrConfiguration, FhirServiceAuthenticationConfiguration authenticationConfiguration, FhirServiceCorsConfiguration corsConfiguration, string exportStorageAccountName, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, FhirServiceEventState? eventState, FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration, FhirServiceImportConfiguration importConfiguration, ManagedServiceIdentity identity, ETag? etag)
             => FhirServiceData(id, name, resourceType, systemData, tags, location, kind, provisioningState, acrConfiguration, authenticationConfiguration, corsConfiguration, null, privateEndpointConnections, publicNetworkAccess, eventState, resourceVersionPolicyConfiguration, importConfiguration, null, null, identity, etag);
     }
