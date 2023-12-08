@@ -1,5 +1,15 @@
 # Release History
 
+## 12.19.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 12.19.0-beta.1 (2023-12-05)
 - Fixed bug where parsing the "sdd" value of a SAS would increment the value by 6 if the value was 10 or over.
 

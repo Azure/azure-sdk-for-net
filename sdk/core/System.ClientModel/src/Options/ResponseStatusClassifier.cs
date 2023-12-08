@@ -5,7 +5,7 @@ using System.ClientModel.Internal;
 
 namespace System.ClientModel.Primitives
 {
-    public class ResponseStatusClassifier : MessageClassifier
+    public class ResponseStatusClassifier : PipelineMessageClassifier
     {
         // We need 10 ulongs to represent status codes 100 - 599.
         private const int Length = 10;

@@ -32,13 +32,16 @@ namespace Azure.Identity.Tests
 
             var options = new UsernamePasswordCredentialOptions
             {
-                Transport = config.Transport,
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
+            if (config.Transport != null)
+            {
+                options.Transport = config.Transport;
+            }
             var pipeline = CredentialPipeline.GetInstance(options);
-            return InstrumentClient(new UsernamePasswordCredential("user", "password", config.TenantId, ClientId, options, pipeline, null));
+            return InstrumentClient(new UsernamePasswordCredential("user", "password", config.TenantId, ClientId, options, pipeline, config.MockPublicMsalClient));
         }
 
         [Test]
@@ -46,7 +49,7 @@ namespace Azure.Identity.Tests
         {
             string expInnerExMessage = Guid.NewGuid().ToString();
 
-            var mockMsalClient = new MockMsalPublicClient() { UserPassAuthFactory = (_, _) => { throw new MockClientException(expInnerExMessage); } };
+            var mockMsalClient = new MockMsalPublicClient() { UserPassAuthFactory = (_, _, _, _, _, _) => { throw new MockClientException(expInnerExMessage); } };
 
             var username = Guid.NewGuid().ToString();
             var password = Guid.NewGuid().ToString();

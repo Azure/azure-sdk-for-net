@@ -28,16 +28,14 @@ public class OpenAIClient
         _pipeline = ClientPipeline.Create(options, new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer"));
     }
 
-    public virtual OutputMessage<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
+    public virtual OutputMessage<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions)
     {
         if (deploymentId is null) throw new ArgumentNullException(nameof(deploymentId));
         if (deploymentId.Length == 0) throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentId));
         if (completionsOptions is null) throw new ArgumentNullException(nameof(completionsOptions));
 
-        RequestOptions options = FromCancellationToken(cancellationToken);
         InputContent content = InputContent.Create(completionsOptions);
-
-        OutputMessage result = GetCompletions(deploymentId, content, options);
+        OutputMessage result = GetCompletions(deploymentId, content);
 
         PipelineResponse response = result.GetRawResponse();
         Completions completions = Completions.FromResponse(response);
@@ -88,17 +86,6 @@ public class OpenAIClient
         return message;
     }
 
-    private static RequestOptions DefaultRequestContext = new RequestOptions();
-    internal static RequestOptions FromCancellationToken(CancellationToken cancellationToken = default)
-    {
-        if (!cancellationToken.CanBeCanceled)
-        {
-            return DefaultRequestContext;
-        }
-
-        return new RequestOptions() { CancellationToken = cancellationToken };
-    }
-
-    private static MessageClassifier _messageClassifier200;
-    private static MessageClassifier MessageClassifier200 => _messageClassifier200 ??= new ResponseStatusClassifier(stackalloc ushort[] { 200 });
+    private static PipelineMessageClassifier _messageClassifier200;
+    private static PipelineMessageClassifier MessageClassifier200 => _messageClassifier200 ??= new ResponseStatusClassifier(stackalloc ushort[] { 200 });
 }
