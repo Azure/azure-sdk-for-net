@@ -41,7 +41,7 @@ namespace Azure.Identity
         private readonly bool _logAccountDetails;
         internal readonly bool _isChainedCredential;
         internal const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
-        internal const string AzurePowerShellModuleNotInstalledError = "Az.Account module >= 2.2.0 is not installed.";
+        internal const string AzurePowerShellModuleNotInstalledError = "Az.Accounts module >= 2.2.0 is not installed.";
         internal const string PowerShellNotInstalledError = "PowerShell is not installed.";
         internal const string AzurePowerShellTimeoutError = "Azure PowerShell authentication timed out.";
 

@@ -30,14 +30,17 @@ namespace Azure.Identity.Tests
 
             var options = new AuthorizationCodeCredentialOptions
             {
-                Transport = config.Transport,
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
+            if (config.Transport != null)
+            {
+                options.Transport = config.Transport;
+            }
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(
-           new AuthorizationCodeCredential(config.TenantId, ClientId, clientSecret, authCode, options, null, pipeline));
+           new AuthorizationCodeCredential(config.TenantId, ClientId, clientSecret, authCode, options, config.MockConfidentialMsalClient, pipeline));
         }
 
         [SetUp]

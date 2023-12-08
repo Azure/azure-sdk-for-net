@@ -18,9 +18,9 @@ namespace Azure.AI.OpenAI
     public partial class AzureChatExtensionsMessageContext
     {
         /// <summary> Initializes a new instance of <see cref="AzureChatExtensionsMessageContext"/>. </summary>
-        public AzureChatExtensionsMessageContext()
+        internal AzureChatExtensionsMessageContext()
         {
-            Messages = new ChangeTrackingList<ChatMessage>();
+            Messages = new ChangeTrackingList<ChatResponseMessage>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureChatExtensionsMessageContext"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.AI.OpenAI
         ///   course of generating a chat completions response that was augmented by capabilities from Azure OpenAI chat
         ///   extensions.
         /// </param>
-        internal AzureChatExtensionsMessageContext(IList<ChatMessage> messages)
+        internal AzureChatExtensionsMessageContext(IReadOnlyList<ChatResponseMessage> messages)
         {
             Messages = messages;
         }
@@ -41,6 +41,6 @@ namespace Azure.AI.OpenAI
         ///   course of generating a chat completions response that was augmented by capabilities from Azure OpenAI chat
         ///   extensions.
         /// </summary>
-        public IList<ChatMessage> Messages { get; }
+        public IReadOnlyList<ChatResponseMessage> Messages { get; }
     }
 }

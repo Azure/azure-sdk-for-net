@@ -761,8 +761,6 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 if ((!IsPublishing) || (_producerManagementTask?.IsCompleted ?? false))
                 {
-                    var releaseGuard = false;
-
                     try
                     {
                         if (!_stateGuard.Wait(0, cancellationToken))
@@ -770,7 +768,6 @@ namespace Azure.Messaging.EventHubs.Producer
                             await _stateGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
                         }
 
-                        releaseGuard = true;
                         Argument.AssertNotClosed(_isClosed, nameof(EventHubBufferedProducerClient));
 
                         // StartPublishingAsync will verify that publishing is not already taking
@@ -781,7 +778,7 @@ namespace Azure.Messaging.EventHubs.Producer
                     }
                     finally
                     {
-                        if (releaseGuard)
+                        if (_stateGuard.CurrentCount == 0)
                         {
                             _stateGuard.Release();
                         }
@@ -923,8 +920,6 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 if ((!IsPublishing) || (_producerManagementTask?.IsCompleted ?? false))
                 {
-                    var releaseGuard = false;
-
                     try
                     {
                         if (!_stateGuard.Wait(0, cancellationToken))
@@ -932,7 +927,6 @@ namespace Azure.Messaging.EventHubs.Producer
                             await _stateGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
                         }
 
-                        releaseGuard = true;
                         Argument.AssertNotClosed(_isClosed, nameof(EventHubBufferedProducerClient));
 
                         // StartPublishingAsync will verify that publishing is not already taking
@@ -943,7 +937,7 @@ namespace Azure.Messaging.EventHubs.Producer
                     }
                     finally
                     {
-                        if (releaseGuard)
+                        if (_stateGuard.CurrentCount == 0)
                         {
                             _stateGuard.Release();
                         }
@@ -1035,14 +1029,10 @@ namespace Azure.Messaging.EventHubs.Producer
         {
             Argument.AssertNotClosed(_isClosed, nameof(EventHubBufferedProducerClient));
 
-            var releaseGuard = false;
-
             if (!_stateGuard.Wait(0, cancellationToken))
             {
                 await _stateGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
             }
-
-            releaseGuard = true;
 
             try
             {
@@ -1055,7 +1045,7 @@ namespace Azure.Messaging.EventHubs.Producer
             }
             finally
             {
-                if (releaseGuard)
+                if (_stateGuard.CurrentCount == 0)
                 {
                     _stateGuard.Release();
                 }
@@ -1083,7 +1073,6 @@ namespace Azure.Messaging.EventHubs.Producer
                 return;
             }
 
-            var releaseGuard = false;
             var capturedExceptions = default(List<Exception>);
 
             try
@@ -1094,8 +1083,6 @@ namespace Azure.Messaging.EventHubs.Producer
                 }
 
                 // If we've reached this point without an exception, the guard is held.
-
-                releaseGuard = true;
 
                 if (_isClosed)
                 {
@@ -1195,7 +1182,7 @@ namespace Azure.Messaging.EventHubs.Producer
             }
             finally
             {
-                if (releaseGuard)
+                if (_stateGuard.CurrentCount == 0)
                 {
                     _stateGuard.Release();
                 }

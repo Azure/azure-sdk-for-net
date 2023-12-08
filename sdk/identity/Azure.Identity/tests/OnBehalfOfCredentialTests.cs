@@ -50,11 +50,14 @@ namespace Azure.Identity.Tests
 
             var options = new OnBehalfOfCredentialOptions
             {
-                Transport = config.Transport,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
                 IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
+            if (config.Transport != null)
+            {
+                options.Transport = config.Transport;
+            }
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(
                 new OnBehalfOfCredential(
@@ -64,7 +67,7 @@ namespace Azure.Identity.Tests
                     expectedUserAssertion,
                     options,
                     pipeline,
-                    null));
+                    config.MockConfidentialMsalClient));
         }
 
         [Test]
