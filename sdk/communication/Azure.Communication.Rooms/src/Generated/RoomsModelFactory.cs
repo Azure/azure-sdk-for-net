@@ -29,5 +29,13 @@ namespace Azure.Communication.Rooms
 
             return new CommunicationRoom(id, createdAt, validFrom, validUntil, pstnDialOutEnabled);
         }
+
+        /// <summary> Initializes a new instance of <see cref="Rooms.RoomParticipant"/>. </summary>
+        /// <param name="role"> The role of a room participant. The default value is Attendee. </param>
+        /// <returns> A new <see cref="Rooms.RoomParticipant"/> instance for mocking. </returns>
+        public static RoomParticipant RoomParticipant(ParticipantRole role = default)
+        {
+            return new RoomParticipant(rawId: null, role);
+        }
     }
 }
