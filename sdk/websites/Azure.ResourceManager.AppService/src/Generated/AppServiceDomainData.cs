@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class AppServiceDomainData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceDomainData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AppServiceDomainData(AzureLocation location) : base(location)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             DomainNotRenewableReasons = new ChangeTrackingList<DomainNotRenewableReason>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

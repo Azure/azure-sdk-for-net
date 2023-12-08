@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> Container group subnet information. </summary>
     public partial class ContainerGroupSubnetId
     {
-        /// <summary> Initializes a new instance of ContainerGroupSubnetId. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupSubnetId"/>. </summary>
         /// <param name="id"> Resource ID of virtual network and subnet. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public ContainerGroupSubnetId(ResourceIdentifier id)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupSubnetId. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupSubnetId"/>. </summary>
         /// <param name="id"> Resource ID of virtual network and subnet. </param>
         /// <param name="name"> Friendly name for the subnet. </param>
         internal ContainerGroupSubnetId(ResourceIdentifier id, string name)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The deleted share to be restored. </summary>
     public partial class DeletedShare
     {
-        /// <summary> Initializes a new instance of DeletedShare. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedShare"/>. </summary>
         /// <param name="deletedShareName"> Required. Identify the name of the deleted share that will be restored. </param>
         /// <param name="deletedShareVersion"> Required. Identify the version of the deleted share that will be restored. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedShareName"/> or <paramref name="deletedShareVersion"/> is null. </exception>

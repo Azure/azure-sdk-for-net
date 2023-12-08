@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.MySql
 {
     /// <summary>
     /// A Class representing a MySqlServerAdministrator along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MySqlServerAdministratorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMySqlServerAdministratorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MySqlServerResource" /> using the GetMySqlServerAdministrator method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlServerAdministratorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMySqlServerAdministratorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MySqlServerResource"/> using the GetMySqlServerAdministrator method.
     /// </summary>
     public partial class MySqlServerAdministratorResource : ArmResource
     {
@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.MySql
         private readonly ServerAdministratorsRestOperations _mySqlServerAdministratorServerAdministratorsRestClient;
         private readonly MySqlServerAdministratorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers/administrators";
+
         /// <summary> Initializes a new instance of the <see cref="MySqlServerAdministratorResource"/> class for mocking. </summary>
         protected MySqlServerAdministratorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MySqlServerAdministratorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlServerAdministratorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MySqlServerAdministratorResource(ArmClient client, MySqlServerAdministratorData data) : this(client, data.Id)
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.MySql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers/administrators";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

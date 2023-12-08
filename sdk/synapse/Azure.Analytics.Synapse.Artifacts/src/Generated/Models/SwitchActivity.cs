@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> This activity evaluates an expression and executes activities under the cases property that correspond to the expression evaluation expected in the equals property. </summary>
     public partial class SwitchActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of SwitchActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwitchActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="on"> An expression that would evaluate to a string or integer. This is used to determine the block of activities in cases that will be executed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="on"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Switch";
         }
 
-        /// <summary> Initializes a new instance of SwitchActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwitchActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

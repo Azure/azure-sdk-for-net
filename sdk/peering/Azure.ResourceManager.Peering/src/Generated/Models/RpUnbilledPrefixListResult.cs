@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The paginated list of RP unbilled prefixes. </summary>
     internal partial class RpUnbilledPrefixListResult
     {
-        /// <summary> Initializes a new instance of RpUnbilledPrefixListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RpUnbilledPrefixListResult"/>. </summary>
         internal RpUnbilledPrefixListResult()
         {
             Value = new ChangeTrackingList<RoutingPreferenceUnbilledPrefix>();
         }
 
-        /// <summary> Initializes a new instance of RpUnbilledPrefixListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RpUnbilledPrefixListResult"/>. </summary>
         /// <param name="value"> The list of RP unbilled prefixes. </param>
         /// <param name="nextLink"> The link to fetch the next page of RP unbilled prefixes. </param>
         internal RpUnbilledPrefixListResult(IReadOnlyList<RoutingPreferenceUnbilledPrefix> value, string nextLink)

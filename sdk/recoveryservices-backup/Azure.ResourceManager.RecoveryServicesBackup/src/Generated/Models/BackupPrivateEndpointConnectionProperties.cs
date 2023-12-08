@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Private Endpoint Connection Response Properties. </summary>
     public partial class BackupPrivateEndpointConnectionProperties
     {
-        /// <summary> Initializes a new instance of BackupPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupPrivateEndpointConnectionProperties"/>. </summary>
         public BackupPrivateEndpointConnectionProperties()
         {
             GroupIds = new ChangeTrackingList<VaultSubResourceType>();
         }
 
-        /// <summary> Initializes a new instance of BackupPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="provisioningState"> Gets or sets provisioning state of the private endpoint connection. </param>
         /// <param name="privateEndpoint"> Gets or sets private endpoint associated with the private endpoint connection. </param>
         /// <param name="groupIds"> Group Ids for the Private Endpoint. </param>

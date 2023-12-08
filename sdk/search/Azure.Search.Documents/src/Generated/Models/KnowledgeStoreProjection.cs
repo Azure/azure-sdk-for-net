@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Container object for various projection selectors. </summary>
     public partial class KnowledgeStoreProjection
     {
-        /// <summary> Initializes a new instance of KnowledgeStoreProjection. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreProjection"/>. </summary>
         public KnowledgeStoreProjection()
         {
             Tables = new ChangeTrackingList<KnowledgeStoreTableProjectionSelector>();
@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Files = new ChangeTrackingList<KnowledgeStoreFileProjectionSelector>();
         }
 
-        /// <summary> Initializes a new instance of KnowledgeStoreProjection. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreProjection"/>. </summary>
         /// <param name="tables"> Projections to Azure Table storage. </param>
         /// <param name="objects"> Projections to Azure Blob storage. </param>
         /// <param name="files"> Projections to Azure File storage. </param>

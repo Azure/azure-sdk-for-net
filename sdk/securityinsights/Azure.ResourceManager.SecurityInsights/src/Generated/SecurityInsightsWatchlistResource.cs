@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A Class representing a SecurityInsightsWatchlist along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityInsightsWatchlistResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityInsightsWatchlistResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" /> using the GetSecurityInsightsWatchlist method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsWatchlistResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityInsightsWatchlistResource method.
+    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/> using the GetSecurityInsightsWatchlist method.
     /// </summary>
     public partial class SecurityInsightsWatchlistResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.SecurityInsights
         private readonly WatchlistsRestOperations _securityInsightsWatchlistWatchlistsRestClient;
         private readonly SecurityInsightsWatchlistData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/watchlists";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityInsightsWatchlistResource"/> class for mocking. </summary>
         protected SecurityInsightsWatchlistResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityInsightsWatchlistResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsWatchlistResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityInsightsWatchlistResource(ArmClient client, SecurityInsightsWatchlistData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.SecurityInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/watchlists";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

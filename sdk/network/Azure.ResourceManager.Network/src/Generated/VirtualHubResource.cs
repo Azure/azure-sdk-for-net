@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a VirtualHub along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VirtualHubResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVirtualHubResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetVirtualHub method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualHubResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVirtualHubResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetVirtualHub method.
     /// </summary>
     public partial class VirtualHubResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Network
         private readonly VirtualHubsRestOperations _virtualHubRestClient;
         private readonly VirtualHubData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualHubResource"/> class for mocking. </summary>
         protected VirtualHubResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VirtualHubResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualHubResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VirtualHubResource(ArmClient client, VirtualHubData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

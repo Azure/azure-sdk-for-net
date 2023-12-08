@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Script reference. </summary>
     public partial class MachineLearningScriptReference
     {
-        /// <summary> Initializes a new instance of MachineLearningScriptReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScriptReference"/>. </summary>
         public MachineLearningScriptReference()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningScriptReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScriptReference"/>. </summary>
         /// <param name="scriptSource"> The storage source of the script: inline, workspace. </param>
         /// <param name="scriptData"> The location of scripts in the mounted volume. </param>
         /// <param name="scriptArguments"> Optional command line arguments passed to the script to run. </param>

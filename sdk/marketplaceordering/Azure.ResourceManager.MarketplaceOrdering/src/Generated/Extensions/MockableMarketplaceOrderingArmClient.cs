@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MarketplaceAgreementTermResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MarketplaceAgreementTermResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceAgreementTermResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MarketplaceAgreementTermResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MarketplaceAgreementTermResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceAgreementTermResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MarketplaceAgreementTermResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MarketplaceAgreementTermResource"/> object. </returns>
         public virtual MarketplaceAgreementTermResource GetMarketplaceAgreementTermResource(ResourceIdentifier id)
         {
             MarketplaceAgreementTermResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MarketplaceAgreementResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MarketplaceAgreementResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceAgreementResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MarketplaceAgreementResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MarketplaceAgreementResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceAgreementResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MarketplaceAgreementResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MarketplaceAgreementResource"/> object. </returns>
         public virtual MarketplaceAgreementResource GetMarketplaceAgreementResource(ResourceIdentifier id)
         {
             MarketplaceAgreementResource.ValidateResourceId(id);

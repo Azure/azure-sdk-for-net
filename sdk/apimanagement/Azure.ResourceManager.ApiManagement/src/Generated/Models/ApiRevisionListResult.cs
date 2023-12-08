@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged API Revision list representation. </summary>
     internal partial class ApiRevisionListResult
     {
-        /// <summary> Initializes a new instance of ApiRevisionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiRevisionListResult"/>. </summary>
         internal ApiRevisionListResult()
         {
             Value = new ChangeTrackingList<ApiRevisionContract>();
         }
 
-        /// <summary> Initializes a new instance of ApiRevisionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiRevisionListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Crypto certificate properties. </summary>
     public partial class FirmwareCryptoCertificate
     {
-        /// <summary> Initializes a new instance of FirmwareCryptoCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificate"/>. </summary>
         internal FirmwareCryptoCertificate()
         {
             Usage = new ChangeTrackingList<string>();
             FilePaths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FirmwareCryptoCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificate"/>. </summary>
         /// <param name="cryptoCertId"> ID for the certificate. </param>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="subject"> Subject information of the certificate. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Managed identity settings for upstream. </summary>
     internal partial class ManagedIdentitySettings
     {
-        /// <summary> Initializes a new instance of ManagedIdentitySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentitySettings"/>. </summary>
         public ManagedIdentitySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedIdentitySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentitySettings"/>. </summary>
         /// <param name="resource">
         /// The Resource indicating the App ID URI of the target resource.
         /// It also appears in the aud (audience) claim of the issued token.

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> The SecurityInsightsIncidentActionConfiguration. </summary>
     public partial class SecurityInsightsIncidentActionConfiguration
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentActionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentActionConfiguration"/>. </summary>
         public SecurityInsightsIncidentActionConfiguration()
         {
             Labels = new ChangeTrackingList<SecurityInsightsIncidentLabel>();
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentActionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentActionConfiguration"/>. </summary>
         /// <param name="severity"> The severity of the incident. </param>
         /// <param name="status"> The status of the incident. </param>
         /// <param name="classification"> The reason the incident was closed. </param>

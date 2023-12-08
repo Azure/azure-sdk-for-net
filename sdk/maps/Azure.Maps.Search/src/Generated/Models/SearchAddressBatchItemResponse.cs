@@ -12,7 +12,7 @@ namespace Azure.Maps.Search.Models
     /// <summary> The result of the query. SearchAddressResponse if the query completed successfully, ErrorResponse otherwise. </summary>
     public partial class SearchAddressBatchItemResponse : SearchAddressResult
     {
-        /// <summary> Initializes a new instance of SearchAddressBatchItemResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchAddressBatchItemResponse"/>. </summary>
         internal SearchAddressBatchItemResponse()
         {
         }

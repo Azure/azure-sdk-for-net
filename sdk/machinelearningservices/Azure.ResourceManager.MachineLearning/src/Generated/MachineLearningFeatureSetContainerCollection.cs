@@ -21,9 +21,9 @@ using Azure.ResourceManager.MachineLearning.Models;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningFeatureSetContainerResource" /> and their operations.
-    /// Each <see cref="MachineLearningFeatureSetContainerResource" /> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource" />.
-    /// To get a <see cref="MachineLearningFeatureSetContainerCollection" /> instance call the GetMachineLearningFeatureSetContainers method from an instance of <see cref="MachineLearningWorkspaceResource" />.
+    /// A class representing a collection of <see cref="MachineLearningFeatureSetContainerResource"/> and their operations.
+    /// Each <see cref="MachineLearningFeatureSetContainerResource"/> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource"/>.
+    /// To get a <see cref="MachineLearningFeatureSetContainerCollection"/> instance call the GetMachineLearningFeatureSetContainers method from an instance of <see cref="MachineLearningWorkspaceResource"/>.
     /// </summary>
     public partial class MachineLearningFeatureSetContainerCollection : ArmCollection, IEnumerable<MachineLearningFeatureSetContainerResource>, IAsyncEnumerable<MachineLearningFeatureSetContainerResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningFeatureSetContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningFeatureSetContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningFeatureSetContainerResource> GetAllAsync(MachineLearningFeatureSetContainerCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new MachineLearningFeatureSetContainerCollectionGetAllOptions();
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningFeatureSetContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningFeatureSetContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningFeatureSetContainerResource> GetAll(MachineLearningFeatureSetContainerCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new MachineLearningFeatureSetContainerCollectionGetAllOptions();

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkFabricExternalNetworkResource" /> and their operations.
-    /// Each <see cref="NetworkFabricExternalNetworkResource" /> in the collection will belong to the same instance of <see cref="NetworkFabricL3IsolationDomainResource" />.
-    /// To get a <see cref="NetworkFabricExternalNetworkCollection" /> instance call the GetNetworkFabricExternalNetworks method from an instance of <see cref="NetworkFabricL3IsolationDomainResource" />.
+    /// A class representing a collection of <see cref="NetworkFabricExternalNetworkResource"/> and their operations.
+    /// Each <see cref="NetworkFabricExternalNetworkResource"/> in the collection will belong to the same instance of <see cref="NetworkFabricL3IsolationDomainResource"/>.
+    /// To get a <see cref="NetworkFabricExternalNetworkCollection"/> instance call the GetNetworkFabricExternalNetworks method from an instance of <see cref="NetworkFabricL3IsolationDomainResource"/>.
     /// </summary>
     public partial class NetworkFabricExternalNetworkCollection : ArmCollection, IEnumerable<NetworkFabricExternalNetworkResource>, IAsyncEnumerable<NetworkFabricExternalNetworkResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFabricExternalNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkFabricExternalNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkFabricExternalNetworkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricExternalNetworkExternalNetworksRestClient.CreateListByL3IsolationDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkFabricExternalNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkFabricExternalNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkFabricExternalNetworkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricExternalNetworkExternalNetworksRestClient.CreateListByL3IsolationDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

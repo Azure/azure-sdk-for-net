@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Support
 {
     /// <summary>
     /// A Class representing a SupportTicketNoSubFile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SupportTicketNoSubFileResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSupportTicketNoSubFileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantFileWorkspaceResource" /> using the GetSupportTicketNoSubFile method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SupportTicketNoSubFileResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSupportTicketNoSubFileResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantFileWorkspaceResource"/> using the GetSupportTicketNoSubFile method.
     /// </summary>
     public partial class SupportTicketNoSubFileResource : ArmResource
     {
@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.Support
         private readonly FilesNoSubscriptionRestOperations _supportTicketNoSubFileFilesNoSubscriptionRestClient;
         private readonly SupportFileDetailData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Support/fileWorkspaces/files";
+
         /// <summary> Initializes a new instance of the <see cref="SupportTicketNoSubFileResource"/> class for mocking. </summary>
         protected SupportTicketNoSubFileResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SupportTicketNoSubFileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SupportTicketNoSubFileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SupportTicketNoSubFileResource(ArmClient client, SupportFileDetailData data) : this(client, data.Id)
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Support
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Support/fileWorkspaces/files";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

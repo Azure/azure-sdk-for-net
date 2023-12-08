@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> The application resource for patch operations. </summary>
     public partial class ServiceFabricApplicationPatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricApplicationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationPatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public ServiceFabricApplicationPatch(AzureLocation location) : base(location)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             ManagedIdentities = new ChangeTrackingList<ApplicationUserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricApplicationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

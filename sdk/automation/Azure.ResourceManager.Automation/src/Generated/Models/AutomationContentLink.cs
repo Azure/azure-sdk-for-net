@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the content link. </summary>
     public partial class AutomationContentLink
     {
-        /// <summary> Initializes a new instance of AutomationContentLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationContentLink"/>. </summary>
         public AutomationContentLink()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationContentLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationContentLink"/>. </summary>
         /// <param name="uri"> Gets or sets the uri of the runbook content. </param>
         /// <param name="contentHash"> Gets or sets the hash. </param>
         /// <param name="version"> Gets or sets the version of the content. </param>

@@ -10,12 +10,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     /// <summary> The error details. </summary>
     internal partial class TelemetryErrorDetails
     {
-        /// <summary> Initializes a new instance of TelemetryErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelemetryErrorDetails"/>. </summary>
         internal TelemetryErrorDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of TelemetryErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelemetryErrorDetails"/>. </summary>
         /// <param name="index"> The index in the original payload of the item. </param>
         /// <param name="statusCode"> The item specific [HTTP Response status code](#Response Status Codes). </param>
         /// <param name="message"> The error message. </param>

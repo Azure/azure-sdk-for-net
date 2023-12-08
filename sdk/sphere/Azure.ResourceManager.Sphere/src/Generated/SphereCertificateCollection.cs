@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sphere
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SphereCertificateResource" /> and their operations.
-    /// Each <see cref="SphereCertificateResource" /> in the collection will belong to the same instance of <see cref="SphereCatalogResource" />.
-    /// To get a <see cref="SphereCertificateCollection" /> instance call the GetSphereCertificates method from an instance of <see cref="SphereCatalogResource" />.
+    /// A class representing a collection of <see cref="SphereCertificateResource"/> and their operations.
+    /// Each <see cref="SphereCertificateResource"/> in the collection will belong to the same instance of <see cref="SphereCatalogResource"/>.
+    /// To get a <see cref="SphereCertificateCollection"/> instance call the GetSphereCertificates method from an instance of <see cref="SphereCatalogResource"/>.
     /// </summary>
     public partial class SphereCertificateCollection : ArmCollection, IEnumerable<SphereCertificateResource>, IAsyncEnumerable<SphereCertificateResource>
     {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SphereCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SphereCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SphereCertificateResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCertificateCertificatesRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SphereCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SphereCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SphereCertificateResource> GetAll(string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCertificateCertificatesRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);

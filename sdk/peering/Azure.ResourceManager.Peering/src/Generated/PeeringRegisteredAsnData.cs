@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Peering
     /// </summary>
     public partial class PeeringRegisteredAsnData : ResourceData
     {
-        /// <summary> Initializes a new instance of PeeringRegisteredAsnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringRegisteredAsnData"/>. </summary>
         public PeeringRegisteredAsnData()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringRegisteredAsnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringRegisteredAsnData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The ExpressRoute circuit ID and the Auth Key are required for you to successfully deploy NFC service. </summary>
     public partial class ExpressRouteConnectionInformation
     {
-        /// <summary> Initializes a new instance of ExpressRouteConnectionInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteConnectionInformation"/>. </summary>
         /// <param name="expressRouteCircuitId"> The express route circuit Azure resource ID, must be of type Microsoft.Network/expressRouteCircuits/circuitName. The ExpressRoute Circuit is a mandatory attribute. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteCircuitId"/> is null. </exception>
         public ExpressRouteConnectionInformation(ResourceIdentifier expressRouteCircuitId)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ExpressRouteCircuitId = expressRouteCircuitId;
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteConnectionInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteConnectionInformation"/>. </summary>
         /// <param name="expressRouteCircuitId"> The express route circuit Azure resource ID, must be of type Microsoft.Network/expressRouteCircuits/circuitName. The ExpressRoute Circuit is a mandatory attribute. </param>
         /// <param name="expressRouteAuthorizationKey"> Authorization key for the circuit, must be of type Microsoft.Network/expressRouteCircuits/authorizations. The Auth Key is a mandatory attribute. </param>
         internal ExpressRouteConnectionInformation(ResourceIdentifier expressRouteCircuitId, string expressRouteAuthorizationKey)

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Qumulo
 {
     /// <summary>
-    /// A class representing a collection of <see cref="QumuloFileSystemResource" /> and their operations.
-    /// Each <see cref="QumuloFileSystemResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="QumuloFileSystemResourceCollection" /> instance call the GetQumuloFileSystemResources method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="QumuloFileSystemResource"/> and their operations.
+    /// Each <see cref="QumuloFileSystemResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="QumuloFileSystemResourceCollection"/> instance call the GetQumuloFileSystemResources method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class QumuloFileSystemResourceCollection : ArmCollection, IEnumerable<QumuloFileSystemResource>, IAsyncEnumerable<QumuloFileSystemResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Qumulo
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="QumuloFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="QumuloFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<QumuloFileSystemResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _qumuloFileSystemResourceFileSystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Qumulo
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="QumuloFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="QumuloFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<QumuloFileSystemResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _qumuloFileSystemResourceFileSystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

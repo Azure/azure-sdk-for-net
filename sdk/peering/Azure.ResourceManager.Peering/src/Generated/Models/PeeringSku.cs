@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The SKU that defines the tier and kind of the peering. </summary>
     public partial class PeeringSku
     {
-        /// <summary> Initializes a new instance of PeeringSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringSku"/>. </summary>
         public PeeringSku()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringSku"/>. </summary>
         /// <param name="name"> The name of the peering SKU. </param>
         /// <param name="tier"> The tier of the peering SKU. </param>
         /// <param name="family"> The family of the peering SKU. </param>

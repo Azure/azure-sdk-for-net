@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure Batch linked service. </summary>
     public partial class AzureBatchLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of AzureBatchLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBatchLinkedService"/>. </summary>
         /// <param name="accountName"> The Azure Batch account name. Type: string (or Expression with resultType string). </param>
         /// <param name="batchUri"> The Azure Batch URI. Type: string (or Expression with resultType string). </param>
         /// <param name="poolName"> The Azure Batch pool name. Type: string (or Expression with resultType string). </param>
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureBatch";
         }
 
-        /// <summary> Initializes a new instance of AzureBatchLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBatchLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

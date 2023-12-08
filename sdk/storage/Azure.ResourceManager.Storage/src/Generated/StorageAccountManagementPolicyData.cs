@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Storage
     /// </summary>
     public partial class StorageAccountManagementPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageAccountManagementPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountManagementPolicyData"/>. </summary>
         public StorageAccountManagementPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountManagementPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountManagementPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

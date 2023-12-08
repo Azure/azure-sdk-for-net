@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define a geographic location. </summary>
     public partial class AzureReachabilityReportLocation
     {
-        /// <summary> Initializes a new instance of AzureReachabilityReportLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportLocation"/>. </summary>
         /// <param name="country"> The name of the country. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="country"/> is null. </exception>
         public AzureReachabilityReportLocation(string country)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             Country = country;
         }
 
-        /// <summary> Initializes a new instance of AzureReachabilityReportLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportLocation"/>. </summary>
         /// <param name="country"> The name of the country. </param>
         /// <param name="state"> The name of the state. </param>
         /// <param name="city"> The name of the city or town. </param>

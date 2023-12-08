@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> VirtualHubBgpConnections list. </summary>
     internal partial class ListVirtualHubBgpConnectionResults
     {
-        /// <summary> Initializes a new instance of ListVirtualHubBgpConnectionResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVirtualHubBgpConnectionResults"/>. </summary>
         internal ListVirtualHubBgpConnectionResults()
         {
             Value = new ChangeTrackingList<BgpConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ListVirtualHubBgpConnectionResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVirtualHubBgpConnectionResults"/>. </summary>
         /// <param name="value"> The list of VirtualHubBgpConnections. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         internal ListVirtualHubBgpConnectionResults(IReadOnlyList<BgpConnectionData> value, string nextLink)

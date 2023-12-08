@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Class representing a Traffic Manager Name Availability response. </summary>
     public partial class TrafficManagerNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of TrafficManagerNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerNameAvailabilityResult"/>. </summary>
         internal TrafficManagerNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerNameAvailabilityResult"/>. </summary>
         /// <param name="name"> The relative name. </param>
         /// <param name="resourceType"> Traffic Manager profile resource type. </param>
         /// <param name="isNameAvailable"> Describes whether the relative name is available or not. </param>

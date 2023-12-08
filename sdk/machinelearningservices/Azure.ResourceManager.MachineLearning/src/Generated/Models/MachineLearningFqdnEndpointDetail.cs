@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningFqdnEndpointDetail. </summary>
     public partial class MachineLearningFqdnEndpointDetail
     {
-        /// <summary> Initializes a new instance of MachineLearningFqdnEndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFqdnEndpointDetail"/>. </summary>
         internal MachineLearningFqdnEndpointDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningFqdnEndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFqdnEndpointDetail"/>. </summary>
         /// <param name="port"></param>
         internal MachineLearningFqdnEndpointDetail(int? port)
         {

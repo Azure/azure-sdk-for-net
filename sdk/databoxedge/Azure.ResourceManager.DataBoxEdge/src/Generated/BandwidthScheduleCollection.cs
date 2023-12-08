@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BandwidthScheduleResource" /> and their operations.
-    /// Each <see cref="BandwidthScheduleResource" /> in the collection will belong to the same instance of <see cref="DataBoxEdgeDeviceResource" />.
-    /// To get a <see cref="BandwidthScheduleCollection" /> instance call the GetBandwidthSchedules method from an instance of <see cref="DataBoxEdgeDeviceResource" />.
+    /// A class representing a collection of <see cref="BandwidthScheduleResource"/> and their operations.
+    /// Each <see cref="BandwidthScheduleResource"/> in the collection will belong to the same instance of <see cref="DataBoxEdgeDeviceResource"/>.
+    /// To get a <see cref="BandwidthScheduleCollection"/> instance call the GetBandwidthSchedules method from an instance of <see cref="DataBoxEdgeDeviceResource"/>.
     /// </summary>
     public partial class BandwidthScheduleCollection : ArmCollection, IEnumerable<BandwidthScheduleResource>, IAsyncEnumerable<BandwidthScheduleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BandwidthScheduleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BandwidthScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BandwidthScheduleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _bandwidthScheduleRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BandwidthScheduleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BandwidthScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BandwidthScheduleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _bandwidthScheduleRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

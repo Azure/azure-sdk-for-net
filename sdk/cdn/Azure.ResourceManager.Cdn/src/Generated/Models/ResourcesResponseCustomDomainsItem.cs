@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The ResourcesResponseCustomDomainsItem. </summary>
     public partial class ResourcesResponseCustomDomainsItem
     {
-        /// <summary> Initializes a new instance of ResourcesResponseCustomDomainsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcesResponseCustomDomainsItem"/>. </summary>
         internal ResourcesResponseCustomDomainsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourcesResponseCustomDomainsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcesResponseCustomDomainsItem"/>. </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="endpointId"></param>

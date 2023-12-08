@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The governance email weekly notification configuration. </summary>
     public partial class GovernanceRuleEmailNotification
     {
-        /// <summary> Initializes a new instance of GovernanceRuleEmailNotification. </summary>
+        /// <summary> Initializes a new instance of <see cref="GovernanceRuleEmailNotification"/>. </summary>
         public GovernanceRuleEmailNotification()
         {
         }
 
-        /// <summary> Initializes a new instance of GovernanceRuleEmailNotification. </summary>
+        /// <summary> Initializes a new instance of <see cref="GovernanceRuleEmailNotification"/>. </summary>
         /// <param name="isManagerEmailNotificationDisabled"> Defines whether manager email notifications are disabled. </param>
         /// <param name="isOwnerEmailNotificationDisabled"> Defines whether owner email notifications are disabled. </param>
         internal GovernanceRuleEmailNotification(bool? isManagerEmailNotificationDisabled, bool? isOwnerEmailNotificationDisabled)

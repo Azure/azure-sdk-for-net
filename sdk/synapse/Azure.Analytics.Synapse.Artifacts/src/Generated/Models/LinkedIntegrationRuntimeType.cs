@@ -14,12 +14,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// </summary>
     public partial class LinkedIntegrationRuntimeType
     {
-        /// <summary> Initializes a new instance of LinkedIntegrationRuntimeType. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeType"/>. </summary>
         public LinkedIntegrationRuntimeType()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkedIntegrationRuntimeType. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeType"/>. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
         internal LinkedIntegrationRuntimeType(string authorizationType)
         {

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Data Protection Manager (DPM) specific backup engine. </summary>
     public partial class DpmBackupEngine : BackupGenericEngine
     {
-        /// <summary> Initializes a new instance of DpmBackupEngine. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmBackupEngine"/>. </summary>
         public DpmBackupEngine()
         {
             BackupEngineType = BackupEngineType.DpmBackupEngine;
         }
 
-        /// <summary> Initializes a new instance of DpmBackupEngine. </summary>
+        /// <summary> Initializes a new instance of <see cref="DpmBackupEngine"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the backup engine. </param>
         /// <param name="backupManagementType"> Type of backup management for the backup engine. </param>
         /// <param name="registrationStatus"> Registration status of the backup engine with the Recovery Services Vault. </param>

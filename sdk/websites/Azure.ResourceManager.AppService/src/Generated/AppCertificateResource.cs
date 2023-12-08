@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing an AppCertificate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppCertificateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAppCertificate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppCertificateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppCertificateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAppCertificate method.
     /// </summary>
     public partial class AppCertificateResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.AppService
         private readonly CertificatesRestOperations _appCertificateCertificatesRestClient;
         private readonly AppCertificateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/certificates";
+
         /// <summary> Initializes a new instance of the <see cref="AppCertificateResource"/> class for mocking. </summary>
         protected AppCertificateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppCertificateResource(ArmClient client, AppCertificateData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/certificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

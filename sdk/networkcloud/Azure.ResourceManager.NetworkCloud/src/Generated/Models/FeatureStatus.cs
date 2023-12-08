@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> FeatureStatus contains information regarding a Kubernetes cluster feature. </summary>
     public partial class FeatureStatus
     {
-        /// <summary> Initializes a new instance of FeatureStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureStatus"/>. </summary>
         internal FeatureStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of FeatureStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureStatus"/>. </summary>
         /// <param name="detailedStatus"> The status representing the state of this feature. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
         /// <param name="name"> The name of the feature. </param>

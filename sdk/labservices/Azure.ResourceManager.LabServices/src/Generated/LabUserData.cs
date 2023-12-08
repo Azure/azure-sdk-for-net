@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.LabServices
     /// </summary>
     public partial class LabUserData : ResourceData
     {
-        /// <summary> Initializes a new instance of LabUserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabUserData"/>. </summary>
         /// <param name="email"> Email address of the user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
         public LabUserData(string email)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.LabServices
             Email = email;
         }
 
-        /// <summary> Initializes a new instance of LabUserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabUserData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

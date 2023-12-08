@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines NIC IP configuration properties. </summary>
     public partial class NicIPConfigurationResourceSettings
     {
-        /// <summary> Initializes a new instance of NicIPConfigurationResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NicIPConfigurationResourceSettings"/>. </summary>
         public NicIPConfigurationResourceSettings()
         {
             LoadBalancerBackendAddressPools = new ChangeTrackingList<LoadBalancerBackendAddressPoolReferenceInfo>();
             LoadBalancerNatRules = new ChangeTrackingList<LoadBalancerNatRuleReferenceInfo>();
         }
 
-        /// <summary> Initializes a new instance of NicIPConfigurationResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NicIPConfigurationResourceSettings"/>. </summary>
         /// <param name="name"> Gets or sets the IP configuration name. </param>
         /// <param name="privateIPAddress"> Gets or sets the private IP address of the network interface IP Configuration. </param>
         /// <param name="privateIPAllocationMethod"> Gets or sets the private IP address allocation method. </param>

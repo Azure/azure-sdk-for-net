@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public abstract partial class FactoryRepoConfiguration
     {
-        /// <summary> Initializes a new instance of FactoryRepoConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FactoryRepoConfiguration"/>. </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="repositoryName"> Repository name. </param>
         /// <param name="collaborationBranch"> Collaboration branch. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             RootFolder = rootFolder;
         }
 
-        /// <summary> Initializes a new instance of FactoryRepoConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FactoryRepoConfiguration"/>. </summary>
         /// <param name="factoryRepoConfigurationType"> Type of repo configuration. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="repositoryName"> Repository name. </param>

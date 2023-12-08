@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> List of trusted access roles. </summary>
     internal partial class TrustedAccessRoleListResult
     {
-        /// <summary> Initializes a new instance of TrustedAccessRoleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrustedAccessRoleListResult"/>. </summary>
         internal TrustedAccessRoleListResult()
         {
             Value = new ChangeTrackingList<ContainerServiceTrustedAccessRole>();
         }
 
-        /// <summary> Initializes a new instance of TrustedAccessRoleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrustedAccessRoleListResult"/>. </summary>
         /// <param name="value"> Role list. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal TrustedAccessRoleListResult(IReadOnlyList<ContainerServiceTrustedAccessRole> value, string nextLink)

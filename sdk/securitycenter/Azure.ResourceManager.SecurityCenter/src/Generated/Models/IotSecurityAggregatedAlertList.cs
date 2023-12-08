@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of IoT Security solution aggregated alert data. </summary>
     internal partial class IotSecurityAggregatedAlertList
     {
-        /// <summary> Initializes a new instance of IotSecurityAggregatedAlertList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedAlertList"/>. </summary>
         /// <param name="value"> List of aggregated alerts data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IotSecurityAggregatedAlertList(IEnumerable<IotSecurityAggregatedAlertData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of IotSecurityAggregatedAlertList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedAlertList"/>. </summary>
         /// <param name="value"> List of aggregated alerts data. </param>
         /// <param name="nextLink"> When there is too much alert data for one page, use this URI to fetch the next page. </param>
         internal IotSecurityAggregatedAlertList(IReadOnlyList<IotSecurityAggregatedAlertData> value, string nextLink)

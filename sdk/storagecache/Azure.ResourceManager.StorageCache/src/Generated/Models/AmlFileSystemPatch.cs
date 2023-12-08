@@ -13,10 +13,21 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> An AML file system update instance. </summary>
     public partial class AmlFileSystemPatch
     {
-        /// <summary> Initializes a new instance of AmlFileSystemPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemPatch"/>. </summary>
         public AmlFileSystemPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="encryptionSettings"> Specifies encryption settings of the AML file system. </param>
+        /// <param name="maintenanceWindow"> Start time of a 30-minute weekly maintenance window. </param>
+        internal AmlFileSystemPatch(IDictionary<string, string> tags, AmlFileSystemEncryptionSettings encryptionSettings, AmlFileSystemUpdatePropertiesMaintenanceWindow maintenanceWindow)
+        {
+            Tags = tags;
+            EncryptionSettings = encryptionSettings;
+            MaintenanceWindow = maintenanceWindow;
         }
 
         /// <summary> Resource tags. </summary>

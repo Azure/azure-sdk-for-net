@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Data flow flowlet. </summary>
     public partial class Flowlet : DataFlow
     {
-        /// <summary> Initializes a new instance of Flowlet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Flowlet"/>. </summary>
         public Flowlet()
         {
             Sources = new ChangeTrackingList<DataFlowSource>();
@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Flowlet";
         }
 
-        /// <summary> Initializes a new instance of Flowlet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Flowlet"/>. </summary>
         /// <param name="type"> Type of data flow. </param>
         /// <param name="description"> The description of the data flow. </param>
         /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>

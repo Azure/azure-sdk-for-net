@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged API Version Set list representation. </summary>
     internal partial class ApiVersionSetListResult
     {
-        /// <summary> Initializes a new instance of ApiVersionSetListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiVersionSetListResult"/>. </summary>
         internal ApiVersionSetListResult()
         {
             Value = new ChangeTrackingList<ApiVersionSetData>();
         }
 
-        /// <summary> Initializes a new instance of ApiVersionSetListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiVersionSetListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

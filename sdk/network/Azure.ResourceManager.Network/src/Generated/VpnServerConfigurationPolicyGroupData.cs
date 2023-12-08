@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VpnServerConfigurationPolicyGroupData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of VpnServerConfigurationPolicyGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigurationPolicyGroupData"/>. </summary>
         public VpnServerConfigurationPolicyGroupData()
         {
             PolicyMembers = new ChangeTrackingList<VpnServerConfigurationPolicyGroupMember>();
             P2SConnectionConfigurations = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of VpnServerConfigurationPolicyGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigurationPolicyGroupData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

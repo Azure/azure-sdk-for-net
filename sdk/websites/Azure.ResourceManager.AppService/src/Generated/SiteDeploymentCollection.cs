@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteDeploymentResource" /> and their operations.
-    /// Each <see cref="SiteDeploymentResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
-    /// To get a <see cref="SiteDeploymentCollection" /> instance call the GetSiteDeployments method from an instance of <see cref="WebSiteResource" />.
+    /// A class representing a collection of <see cref="SiteDeploymentResource"/> and their operations.
+    /// Each <see cref="SiteDeploymentResource"/> in the collection will belong to the same instance of <see cref="WebSiteResource"/>.
+    /// To get a <see cref="SiteDeploymentCollection"/> instance call the GetSiteDeployments method from an instance of <see cref="WebSiteResource"/>.
     /// </summary>
     public partial class SiteDeploymentCollection : ArmCollection, IEnumerable<SiteDeploymentResource>, IAsyncEnumerable<SiteDeploymentResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteDeploymentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDeploymentWebAppsRestClient.CreateListDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteDeploymentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDeploymentWebAppsRestClient.CreateListDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

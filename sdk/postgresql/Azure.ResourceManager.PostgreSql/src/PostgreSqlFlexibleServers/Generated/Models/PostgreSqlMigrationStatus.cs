@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Migration status. </summary>
     public partial class PostgreSqlMigrationStatus
     {
-        /// <summary> Initializes a new instance of PostgreSqlMigrationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationStatus"/>. </summary>
         internal PostgreSqlMigrationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlMigrationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationStatus"/>. </summary>
         /// <param name="state"> State of migration. </param>
         /// <param name="error"> Error message, if any, for the migration state. </param>
         /// <param name="currentSubStateDetails"> Current Migration sub state details. </param>

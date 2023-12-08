@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The class to specify one track property condition. </summary>
     public partial class FilterTrackPropertyCondition
     {
-        /// <summary> Initializes a new instance of FilterTrackPropertyCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterTrackPropertyCondition"/>. </summary>
         /// <param name="property"> The track property type. </param>
         /// <param name="value"> The track property value. </param>
         /// <param name="operation"> The track property condition operation. </param>

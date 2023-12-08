@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The user owned storage for Cognitive Services account. </summary>
     public partial class ServiceAccountUserOwnedStorage
     {
-        /// <summary> Initializes a new instance of ServiceAccountUserOwnedStorage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountUserOwnedStorage"/>. </summary>
         public ServiceAccountUserOwnedStorage()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountUserOwnedStorage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountUserOwnedStorage"/>. </summary>
         /// <param name="resourceId"> Full resource id of a Microsoft.Storage resource. </param>
         /// <param name="identityClientId"></param>
         internal ServiceAccountUserOwnedStorage(ResourceIdentifier resourceId, Guid? identityClientId)

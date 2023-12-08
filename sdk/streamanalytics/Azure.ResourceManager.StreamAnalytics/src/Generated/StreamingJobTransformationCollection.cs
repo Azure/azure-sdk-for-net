@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.StreamAnalytics
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StreamingJobTransformationResource" /> and their operations.
-    /// Each <see cref="StreamingJobTransformationResource" /> in the collection will belong to the same instance of <see cref="StreamingJobResource" />.
-    /// To get a <see cref="StreamingJobTransformationCollection" /> instance call the GetStreamingJobTransformations method from an instance of <see cref="StreamingJobResource" />.
+    /// A class representing a collection of <see cref="StreamingJobTransformationResource"/> and their operations.
+    /// Each <see cref="StreamingJobTransformationResource"/> in the collection will belong to the same instance of <see cref="StreamingJobResource"/>.
+    /// To get a <see cref="StreamingJobTransformationCollection"/> instance call the GetStreamingJobTransformations method from an instance of <see cref="StreamingJobResource"/>.
     /// </summary>
     public partial class StreamingJobTransformationCollection : ArmCollection
     {

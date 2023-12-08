@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.StorageSync
     /// </summary>
     public partial class StorageSyncServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of StorageSyncServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public StorageSyncServiceData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<StorageSyncPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of StorageSyncServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

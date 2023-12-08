@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> An Application Insights component daily data volume cap. </summary>
     public partial class ApplicationInsightsComponentDataVolumeCap
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentDataVolumeCap. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentDataVolumeCap"/>. </summary>
         public ApplicationInsightsComponentDataVolumeCap()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentDataVolumeCap. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentDataVolumeCap"/>. </summary>
         /// <param name="cap"> Daily data volume cap in GB. </param>
         /// <param name="resetTime"> Daily data volume cap UTC reset hour. </param>
         /// <param name="warningThreshold"> Reserved, not used for now. </param>

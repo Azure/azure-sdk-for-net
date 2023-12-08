@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> DataBox Disk Granular Copy Progress. </summary>
     public partial class DataBoxDiskGranularCopyProgress : GranularCopyProgress
     {
-        /// <summary> Initializes a new instance of DataBoxDiskGranularCopyProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxDiskGranularCopyProgress"/>. </summary>
         internal DataBoxDiskGranularCopyProgress()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxDiskGranularCopyProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxDiskGranularCopyProgress"/>. </summary>
         /// <param name="storageAccountName"> Name of the storage account. This will be empty for data account types other than storage account. </param>
         /// <param name="transferType"> Transfer type of data. </param>
         /// <param name="dataAccountType"> Data Account Type. </param>

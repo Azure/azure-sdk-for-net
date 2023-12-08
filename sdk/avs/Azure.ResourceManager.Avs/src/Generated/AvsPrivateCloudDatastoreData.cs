@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class AvsPrivateCloudDatastoreData : ResourceData
     {
-        /// <summary> Initializes a new instance of AvsPrivateCloudDatastoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudDatastoreData"/>. </summary>
         public AvsPrivateCloudDatastoreData()
         {
         }
 
-        /// <summary> Initializes a new instance of AvsPrivateCloudDatastoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudDatastoreData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

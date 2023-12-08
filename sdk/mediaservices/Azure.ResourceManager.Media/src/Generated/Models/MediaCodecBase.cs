@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Media.Models
     /// </summary>
     public abstract partial class MediaCodecBase
     {
-        /// <summary> Initializes a new instance of MediaCodecBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaCodecBase"/>. </summary>
         protected MediaCodecBase()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaCodecBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaCodecBase"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="label"> An optional label for the codec. The label can be used to control muxing behavior. </param>
         internal MediaCodecBase(string odataType, string label)

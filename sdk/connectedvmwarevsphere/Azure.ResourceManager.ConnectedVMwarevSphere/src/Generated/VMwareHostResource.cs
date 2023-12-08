@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary>
     /// A Class representing a VMwareHost along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VMwareHostResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVMwareHostResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetVMwareHost method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VMwareHostResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVMwareHostResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetVMwareHost method.
     /// </summary>
     public partial class VMwareHostResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         private readonly HostsRestOperations _vMwareHostHostsRestClient;
         private readonly VMwareHostData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/hosts";
+
         /// <summary> Initializes a new instance of the <see cref="VMwareHostResource"/> class for mocking. </summary>
         protected VMwareHostResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VMwareHostResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VMwareHostResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VMwareHostResource(ArmClient client, VMwareHostData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/hosts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

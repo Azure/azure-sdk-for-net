@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The AS2 agreement message connection settings. </summary>
     public partial class AS2MessageConnectionSettings
     {
-        /// <summary> Initializes a new instance of AS2MessageConnectionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AS2MessageConnectionSettings"/>. </summary>
         /// <param name="ignoreCertificateNameMismatch"> The value indicating whether to ignore mismatch in certificate name. </param>
         /// <param name="supportHttpStatusCodeContinue"> The value indicating whether to support HTTP status code 'CONTINUE'. </param>
         /// <param name="keepHttpConnectionAlive"> The value indicating whether to keep the connection alive. </param>

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataReplicationVaultResource" /> and their operations.
-    /// Each <see cref="DataReplicationVaultResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DataReplicationVaultCollection" /> instance call the GetDataReplicationVaults method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DataReplicationVaultResource"/> and their operations.
+    /// Each <see cref="DataReplicationVaultResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DataReplicationVaultCollection"/> instance call the GetDataReplicationVaults method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DataReplicationVaultCollection : ArmCollection, IEnumerable<DataReplicationVaultResource>, IAsyncEnumerable<DataReplicationVaultResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="continuationToken"> Continuation token from the previous call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataReplicationVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataReplicationVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataReplicationVaultResource> GetAllAsync(string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationVaultVaultRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, continuationToken);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="continuationToken"> Continuation token from the previous call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataReplicationVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataReplicationVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataReplicationVaultResource> GetAll(string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationVaultVaultRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, continuationToken);

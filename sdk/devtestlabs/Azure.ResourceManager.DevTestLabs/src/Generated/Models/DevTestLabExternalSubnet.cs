@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Subnet information as returned by the Microsoft.Network API. </summary>
     public partial class DevTestLabExternalSubnet
     {
-        /// <summary> Initializes a new instance of DevTestLabExternalSubnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabExternalSubnet"/>. </summary>
         internal DevTestLabExternalSubnet()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabExternalSubnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabExternalSubnet"/>. </summary>
         /// <param name="id"> Gets or sets the identifier. </param>
         /// <param name="name"> Gets or sets the name. </param>
         internal DevTestLabExternalSubnet(ResourceIdentifier id, string name)

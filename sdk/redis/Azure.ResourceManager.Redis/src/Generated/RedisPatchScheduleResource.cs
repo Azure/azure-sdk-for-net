@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Redis
 {
     /// <summary>
     /// A Class representing a RedisPatchSchedule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RedisPatchScheduleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRedisPatchScheduleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RedisResource" /> using the GetRedisPatchSchedule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RedisPatchScheduleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRedisPatchScheduleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RedisResource"/> using the GetRedisPatchSchedule method.
     /// </summary>
     public partial class RedisPatchScheduleResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Redis
         private readonly PatchSchedulesRestOperations _redisPatchSchedulePatchSchedulesRestClient;
         private readonly RedisPatchScheduleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cache/redis/patchSchedules";
+
         /// <summary> Initializes a new instance of the <see cref="RedisPatchScheduleResource"/> class for mocking. </summary>
         protected RedisPatchScheduleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RedisPatchScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RedisPatchScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RedisPatchScheduleResource(ArmClient client, RedisPatchScheduleData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Redis
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cache/redis/patchSchedules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

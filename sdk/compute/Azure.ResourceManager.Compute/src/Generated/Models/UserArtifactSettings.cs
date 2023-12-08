@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Additional settings for the VM app that contains the target package and config file name when it is deployed to target VM or VM scale set. </summary>
     public partial class UserArtifactSettings
     {
-        /// <summary> Initializes a new instance of UserArtifactSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserArtifactSettings"/>. </summary>
         public UserArtifactSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of UserArtifactSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserArtifactSettings"/>. </summary>
         /// <param name="packageFileName"> Optional. The name to assign the downloaded package file on the VM. This is limited to 4096 characters. If not specified, the package file will be named the same as the Gallery Application name. </param>
         /// <param name="configFileName"> Optional. The name to assign the downloaded config file on the VM. This is limited to 4096 characters. If not specified, the config file will be named the Gallery Application name appended with "_config". </param>
         internal UserArtifactSettings(string packageFileName, string configFileName)

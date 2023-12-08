@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Information about the extracted cell in a table. </summary>
     internal partial class DataTableCell
     {
-        /// <summary> Initializes a new instance of DataTableCell. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTableCell"/>. </summary>
         /// <param name="rowIndex"> Row index of the cell. </param>
         /// <param name="columnIndex"> Column index of the cell. </param>
         /// <param name="text"> Text content of the cell. </param>
@@ -35,7 +35,7 @@ namespace Azure.AI.FormRecognizer.Models
             Elements = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataTableCell. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTableCell"/>. </summary>
         /// <param name="rowIndex"> Row index of the cell. </param>
         /// <param name="columnIndex"> Column index of the cell. </param>
         /// <param name="rowSpan"> Number of rows spanned by this cell. </param>

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementLogger along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementLoggerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementLoggerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementLogger method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementLoggerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementLoggerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementLogger method.
     /// </summary>
     public partial class ApiManagementLoggerResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly LoggerRestOperations _apiManagementLoggerLoggerRestClient;
         private readonly ApiManagementLoggerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/loggers";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementLoggerResource"/> class for mocking. </summary>
         protected ApiManagementLoggerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementLoggerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementLoggerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementLoggerResource(ArmClient client, ApiManagementLoggerData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/loggers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Static Route Configuration properties. </summary>
     public partial class InternalNetworkStaticRouteConfiguration : StaticRouteConfiguration
     {
-        /// <summary> Initializes a new instance of InternalNetworkStaticRouteConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalNetworkStaticRouteConfiguration"/>. </summary>
         public InternalNetworkStaticRouteConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of InternalNetworkStaticRouteConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalNetworkStaticRouteConfiguration"/>. </summary>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
         /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
         /// <param name="ipv6Routes"> List of IPv6 Routes. </param>

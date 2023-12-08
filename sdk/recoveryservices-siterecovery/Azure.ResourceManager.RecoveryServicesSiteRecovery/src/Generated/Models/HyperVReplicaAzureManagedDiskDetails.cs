@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Hyper-V Managed disk details. </summary>
     public partial class HyperVReplicaAzureManagedDiskDetails
     {
-        /// <summary> Initializes a new instance of HyperVReplicaAzureManagedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureManagedDiskDetails"/>. </summary>
         internal HyperVReplicaAzureManagedDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaAzureManagedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureManagedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <param name="seedManagedDiskId"> Seed managed disk Id. </param>
         /// <param name="replicaDiskType"> The replica disk type. </param>

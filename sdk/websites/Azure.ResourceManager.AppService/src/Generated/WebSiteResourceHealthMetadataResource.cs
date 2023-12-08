@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a WebSiteResourceHealthMetadata along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteResourceHealthMetadataResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebSiteResourceHealthMetadataResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetWebSiteResourceHealthMetadata method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSiteResourceHealthMetadataResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWebSiteResourceHealthMetadataResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetWebSiteResourceHealthMetadata method.
     /// </summary>
     public partial class WebSiteResourceHealthMetadataResource : ArmResource
     {
@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.AppService
         private readonly ResourceHealthMetadataRestOperations _webSiteResourceHealthMetadataResourceHealthMetadataRestClient;
         private readonly ResourceHealthMetadataData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/resourceHealthMetadata";
+
         /// <summary> Initializes a new instance of the <see cref="WebSiteResourceHealthMetadataResource"/> class for mocking. </summary>
         protected WebSiteResourceHealthMetadataResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebSiteResourceHealthMetadataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteResourceHealthMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebSiteResourceHealthMetadataResource(ArmClient client, ResourceHealthMetadataData data) : this(client, data.Id)
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/resourceHealthMetadata";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

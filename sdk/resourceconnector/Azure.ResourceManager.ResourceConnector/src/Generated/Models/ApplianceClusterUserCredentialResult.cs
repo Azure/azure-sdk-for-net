@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     /// <summary> The List Cluster User Credential appliance. </summary>
     public partial class ApplianceClusterUserCredentialResult
     {
-        /// <summary> Initializes a new instance of ApplianceClusterUserCredentialResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceClusterUserCredentialResult"/>. </summary>
         internal ApplianceClusterUserCredentialResult()
         {
             Kubeconfigs = new ChangeTrackingList<ApplianceCredentialKubeconfig>();
         }
 
-        /// <summary> Initializes a new instance of ApplianceClusterUserCredentialResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceClusterUserCredentialResult"/>. </summary>
         /// <param name="hybridConnectionConfig"> Contains the REP (rendezvous endpoint) and “Listener” access token from notification service (NS). </param>
         /// <param name="kubeconfigs"> The list of appliance kubeconfigs. </param>
         internal ApplianceClusterUserCredentialResult(HybridConnectionConfig hybridConnectionConfig, IReadOnlyList<ApplianceCredentialKubeconfig> kubeconfigs)

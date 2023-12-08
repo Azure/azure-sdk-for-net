@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Aggregated property of each type. </summary>
     public partial class SmartGroupAggregatedProperty
     {
-        /// <summary> Initializes a new instance of SmartGroupAggregatedProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupAggregatedProperty"/>. </summary>
         public SmartGroupAggregatedProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of SmartGroupAggregatedProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupAggregatedProperty"/>. </summary>
         /// <param name="name"> Name of the type. </param>
         /// <param name="count"> Total number of items of type. </param>
         internal SmartGroupAggregatedProperty(string name, long? count)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> An Encryption Key. </summary>
     public partial class AvsEncryptionKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of AvsEncryptionKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsEncryptionKeyVaultProperties"/>. </summary>
         public AvsEncryptionKeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AvsEncryptionKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsEncryptionKeyVaultProperties"/>. </summary>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="keyVersion"> The version of the key. </param>
         /// <param name="autoDetectedKeyVersion"> The auto-detected version of the key if versionType is auto-detected. </param>

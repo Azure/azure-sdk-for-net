@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> List of available SKUs. </summary>
     internal partial class IotDpsSkuDefinitionListResult
     {
-        /// <summary> Initializes a new instance of IotDpsSkuDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotDpsSkuDefinitionListResult"/>. </summary>
         internal IotDpsSkuDefinitionListResult()
         {
             Value = new ChangeTrackingList<DeviceProvisioningServicesSkuDefinition>();
         }
 
-        /// <summary> Initializes a new instance of IotDpsSkuDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotDpsSkuDefinitionListResult"/>. </summary>
         /// <param name="value"> The list of SKUs. </param>
         /// <param name="nextLink"> The next link. </param>
         internal IotDpsSkuDefinitionListResult(IReadOnlyList<DeviceProvisioningServicesSkuDefinition> value, string nextLink)

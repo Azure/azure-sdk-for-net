@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Managed resource group configuration. </summary>
     public partial class ManagedResourceGroupConfiguration
     {
-        /// <summary> Initializes a new instance of ManagedResourceGroupConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedResourceGroupConfiguration"/>. </summary>
         public ManagedResourceGroupConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedResourceGroupConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedResourceGroupConfiguration"/>. </summary>
         /// <param name="name"> Managed resource group name. </param>
         /// <param name="location"> Managed resource group location. </param>
         internal ManagedResourceGroupConfiguration(string name, AzureLocation? location)

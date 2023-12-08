@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> For example, between 2021-05-25T13:00:00Z and 2021-05-25T14:00:00Z. </summary>
     public partial class ContainerServiceTimeSpan
     {
-        /// <summary> Initializes a new instance of ContainerServiceTimeSpan. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceTimeSpan"/>. </summary>
         public ContainerServiceTimeSpan()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceTimeSpan. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceTimeSpan"/>. </summary>
         /// <param name="startOn"> The start of a time span. </param>
         /// <param name="endOn"> The end of a time span. </param>
         internal ContainerServiceTimeSpan(DateTimeOffset? startOn, DateTimeOffset? endOn)

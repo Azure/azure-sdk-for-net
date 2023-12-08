@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearninRegistryComponentContainerResource" /> and their operations.
-    /// Each <see cref="MachineLearninRegistryComponentContainerResource" /> in the collection will belong to the same instance of <see cref="MachineLearningRegistryResource" />.
-    /// To get a <see cref="MachineLearninRegistryComponentContainerCollection" /> instance call the GetMachineLearninRegistryComponentContainers method from an instance of <see cref="MachineLearningRegistryResource" />.
+    /// A class representing a collection of <see cref="MachineLearninRegistryComponentContainerResource"/> and their operations.
+    /// Each <see cref="MachineLearninRegistryComponentContainerResource"/> in the collection will belong to the same instance of <see cref="MachineLearningRegistryResource"/>.
+    /// To get a <see cref="MachineLearninRegistryComponentContainerCollection"/> instance call the GetMachineLearninRegistryComponentContainers method from an instance of <see cref="MachineLearningRegistryResource"/>.
     /// </summary>
     public partial class MachineLearninRegistryComponentContainerCollection : ArmCollection, IEnumerable<MachineLearninRegistryComponentContainerResource>, IAsyncEnumerable<MachineLearninRegistryComponentContainerResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearninRegistryComponentContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearninRegistryComponentContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearninRegistryComponentContainerResource> GetAllAsync(string skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearninRegistryComponentContainerRegistryComponentContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearninRegistryComponentContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearninRegistryComponentContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearninRegistryComponentContainerResource> GetAll(string skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearninRegistryComponentContainerRegistryComponentContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);

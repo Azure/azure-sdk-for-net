@@ -13,10 +13,25 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the update webhook operation. </summary>
     public partial class AutomationWebhookPatch
     {
-        /// <summary> Initializes a new instance of AutomationWebhookPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationWebhookPatch"/>. </summary>
         public AutomationWebhookPatch()
         {
             Parameters = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationWebhookPatch"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the webhook. </param>
+        /// <param name="isEnabled"> Gets or sets the value of the enabled flag of webhook. </param>
+        /// <param name="runOn"> Gets or sets the name of the hybrid worker group the webhook job will run on. </param>
+        /// <param name="parameters"> Gets or sets the parameters of the job. </param>
+        /// <param name="description"> Gets or sets the description of the webhook. </param>
+        internal AutomationWebhookPatch(string name, bool? isEnabled, string runOn, IDictionary<string, string> parameters, string description)
+        {
+            Name = name;
+            IsEnabled = isEnabled;
+            RunOn = runOn;
+            Parameters = parameters;
+            Description = description;
         }
 
         /// <summary> Gets or sets the name of the webhook. </summary>

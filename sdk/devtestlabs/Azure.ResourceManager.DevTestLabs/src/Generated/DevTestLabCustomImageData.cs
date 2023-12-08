@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.DevTestLabs
     /// </summary>
     public partial class DevTestLabCustomImageData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevTestLabCustomImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevTestLabCustomImageData(AzureLocation location) : base(location)
         {
             DataDiskStorageInfo = new ChangeTrackingList<DevTestLabDataDiskStorageTypeInfo>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabCustomImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

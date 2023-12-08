@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Select video tracks from the input by specifying an attribute and an attribute filter. </summary>
     public partial class SelectVideoTrackByAttribute : VideoTrackDescriptor
     {
-        /// <summary> Initializes a new instance of SelectVideoTrackByAttribute. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelectVideoTrackByAttribute"/>. </summary>
         /// <param name="attribute"> The TrackAttribute to filter the tracks by. </param>
         /// <param name="filter"> The type of AttributeFilter to apply to the TrackAttribute in order to select the tracks. </param>
         public SelectVideoTrackByAttribute(TrackAttribute attribute, TrackAttributeFilter filter)
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.SelectVideoTrackByAttribute";
         }
 
-        /// <summary> Initializes a new instance of SelectVideoTrackByAttribute. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelectVideoTrackByAttribute"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="attribute"> The TrackAttribute to filter the tracks by. </param>
         /// <param name="filter"> The type of AttributeFilter to apply to the TrackAttribute in order to select the tracks. </param>

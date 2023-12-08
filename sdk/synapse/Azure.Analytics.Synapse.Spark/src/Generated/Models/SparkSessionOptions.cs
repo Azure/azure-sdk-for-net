@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> The SparkSessionOptions. </summary>
     public partial class SparkSessionOptions
     {
-        /// <summary> Initializes a new instance of SparkSessionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkSessionOptions"/>. </summary>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SparkSessionOptions(string name)
@@ -29,6 +29,43 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Files = new ChangeTrackingList<string>();
             Archives = new ChangeTrackingList<string>();
             Configuration = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkSessionOptions"/>. </summary>
+        /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="artifactId"></param>
+        /// <param name="name"></param>
+        /// <param name="file"></param>
+        /// <param name="className"></param>
+        /// <param name="arguments"></param>
+        /// <param name="jars"></param>
+        /// <param name="pythonFiles"></param>
+        /// <param name="files"></param>
+        /// <param name="archives"></param>
+        /// <param name="configuration"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="driverMemory"></param>
+        /// <param name="driverCores"></param>
+        /// <param name="executorMemory"></param>
+        /// <param name="executorCores"></param>
+        /// <param name="executorCount"></param>
+        internal SparkSessionOptions(IDictionary<string, string> tags, string artifactId, string name, string file, string className, IList<string> arguments, IList<string> jars, IList<string> pythonFiles, IList<string> files, IList<string> archives, IDictionary<string, string> configuration, string driverMemory, int? driverCores, string executorMemory, int? executorCores, int? executorCount)
+        {
+            Tags = tags;
+            ArtifactId = artifactId;
+            Name = name;
+            File = file;
+            ClassName = className;
+            Arguments = arguments;
+            Jars = jars;
+            PythonFiles = pythonFiles;
+            Files = files;
+            Archives = archives;
+            Configuration = configuration;
+            DriverMemory = driverMemory;
+            DriverCores = driverCores;
+            ExecutorMemory = executorMemory;
+            ExecutorCores = executorCores;
+            ExecutorCount = executorCount;
         }
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>

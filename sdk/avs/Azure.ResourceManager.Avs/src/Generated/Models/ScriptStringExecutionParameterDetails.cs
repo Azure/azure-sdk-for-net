@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> a plain text value execution parameter. </summary>
     public partial class ScriptStringExecutionParameterDetails : ScriptExecutionParameterDetails
     {
-        /// <summary> Initializes a new instance of ScriptStringExecutionParameterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptStringExecutionParameterDetails"/>. </summary>
         /// <param name="name"> The parameter name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ScriptStringExecutionParameterDetails(string name) : base(name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Avs.Models
             ParameterType = ScriptExecutionParameterType.Value;
         }
 
-        /// <summary> Initializes a new instance of ScriptStringExecutionParameterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptStringExecutionParameterDetails"/>. </summary>
         /// <param name="name"> The parameter name. </param>
         /// <param name="parameterType"> The type of execution parameter. </param>
         /// <param name="value"> The value for the passed parameter. </param>

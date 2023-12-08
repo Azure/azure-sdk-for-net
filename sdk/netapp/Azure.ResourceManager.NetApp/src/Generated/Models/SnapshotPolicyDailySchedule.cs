@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Daily Schedule properties. </summary>
     public partial class SnapshotPolicyDailySchedule
     {
-        /// <summary> Initializes a new instance of SnapshotPolicyDailySchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyDailySchedule"/>. </summary>
         public SnapshotPolicyDailySchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of SnapshotPolicyDailySchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyDailySchedule"/>. </summary>
         /// <param name="snapshotsToKeep"> Daily snapshot count to keep. </param>
         /// <param name="hour"> Indicates which hour in UTC timezone a snapshot should be taken. </param>
         /// <param name="minute"> Indicates which minute snapshot should be taken. </param>

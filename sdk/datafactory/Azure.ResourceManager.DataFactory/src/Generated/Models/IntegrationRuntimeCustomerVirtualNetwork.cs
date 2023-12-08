@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The definition and properties of virtual network to which Azure-SSIS integration runtime will join. </summary>
     internal partial class IntegrationRuntimeCustomerVirtualNetwork
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeCustomerVirtualNetwork. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeCustomerVirtualNetwork"/>. </summary>
         public IntegrationRuntimeCustomerVirtualNetwork()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeCustomerVirtualNetwork. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeCustomerVirtualNetwork"/>. </summary>
         /// <param name="subnetId"> The ID of subnet to which Azure-SSIS integration runtime will join. </param>
         internal IntegrationRuntimeCustomerVirtualNetwork(ResourceIdentifier subnetId)
         {

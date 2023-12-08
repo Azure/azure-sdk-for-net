@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a LocalNetworkGateway along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LocalNetworkGatewayResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLocalNetworkGatewayResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetLocalNetworkGateway method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LocalNetworkGatewayResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLocalNetworkGatewayResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetLocalNetworkGateway method.
     /// </summary>
     public partial class LocalNetworkGatewayResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Network
         private readonly LocalNetworkGatewaysRestOperations _localNetworkGatewayRestClient;
         private readonly LocalNetworkGatewayData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/localNetworkGateways";
+
         /// <summary> Initializes a new instance of the <see cref="LocalNetworkGatewayResource"/> class for mocking. </summary>
         protected LocalNetworkGatewayResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LocalNetworkGatewayResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LocalNetworkGatewayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LocalNetworkGatewayResource(ArmClient client, LocalNetworkGatewayData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/localNetworkGateways";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

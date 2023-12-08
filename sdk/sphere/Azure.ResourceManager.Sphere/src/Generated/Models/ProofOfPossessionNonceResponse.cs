@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class ProofOfPossessionNonceResponse : SphereCertificateProperties
     {
-        /// <summary> Initializes a new instance of ProofOfPossessionNonceResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProofOfPossessionNonceResponse"/>. </summary>
         internal ProofOfPossessionNonceResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of ProofOfPossessionNonceResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProofOfPossessionNonceResponse"/>. </summary>
         /// <param name="certificate">
         /// The certificate as a UTF-8 encoded base 64 string.
         /// Serialized Name: CertificateProperties.certificate

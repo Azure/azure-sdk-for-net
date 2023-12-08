@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Result of the request to list VpnSiteLinks. It contains a list of VpnSiteLinks and a URL nextLink to get the next set of results. </summary>
     internal partial class ListVpnSiteLinksResult
     {
-        /// <summary> Initializes a new instance of ListVpnSiteLinksResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVpnSiteLinksResult"/>. </summary>
         internal ListVpnSiteLinksResult()
         {
             Value = new ChangeTrackingList<VpnSiteLinkData>();
         }
 
-        /// <summary> Initializes a new instance of ListVpnSiteLinksResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVpnSiteLinksResult"/>. </summary>
         /// <param name="value"> List of VpnSitesLinks. </param>
         /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
         internal ListVpnSiteLinksResult(IReadOnlyList<VpnSiteLinkData> value, string nextLink)

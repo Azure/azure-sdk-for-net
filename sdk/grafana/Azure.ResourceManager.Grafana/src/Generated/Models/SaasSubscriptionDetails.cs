@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> SaaS subscription details of a Grafana instance. </summary>
     public partial class SaasSubscriptionDetails
     {
-        /// <summary> Initializes a new instance of SaasSubscriptionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SaasSubscriptionDetails"/>. </summary>
         internal SaasSubscriptionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SaasSubscriptionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SaasSubscriptionDetails"/>. </summary>
         /// <param name="planId"> The plan Id of the SaaS subscription. </param>
         /// <param name="offerId"> The offer Id of the SaaS subscription. </param>
         /// <param name="publisherId"> The publisher Id of the SaaS subscription. </param>

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class PolicySignaturesOverridesForIdpsData
     {
-        /// <summary> Initializes a new instance of PolicySignaturesOverridesForIdpsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySignaturesOverridesForIdpsData"/>. </summary>
         public PolicySignaturesOverridesForIdpsData()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicySignaturesOverridesForIdpsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySignaturesOverridesForIdpsData"/>. </summary>
         /// <param name="name"> Contains the name of the resource (default). </param>
         /// <param name="id"> Will contain the resource id of the signature override resource. </param>
         /// <param name="resourceType"> Will contain the type of the resource: Microsoft.Network/firewallPolicies/intrusionDetectionSignaturesOverrides. </param>

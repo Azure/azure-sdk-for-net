@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NetworkFunction
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CollectorPolicyResource" /> and their operations.
-    /// Each <see cref="CollectorPolicyResource" /> in the collection will belong to the same instance of <see cref="AzureTrafficCollectorResource" />.
-    /// To get a <see cref="CollectorPolicyCollection" /> instance call the GetCollectorPolicies method from an instance of <see cref="AzureTrafficCollectorResource" />.
+    /// A class representing a collection of <see cref="CollectorPolicyResource"/> and their operations.
+    /// Each <see cref="CollectorPolicyResource"/> in the collection will belong to the same instance of <see cref="AzureTrafficCollectorResource"/>.
+    /// To get a <see cref="CollectorPolicyCollection"/> instance call the GetCollectorPolicies method from an instance of <see cref="AzureTrafficCollectorResource"/>.
     /// </summary>
     public partial class CollectorPolicyCollection : ArmCollection, IEnumerable<CollectorPolicyResource>, IAsyncEnumerable<CollectorPolicyResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CollectorPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CollectorPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CollectorPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectorPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CollectorPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CollectorPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CollectorPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _collectorPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

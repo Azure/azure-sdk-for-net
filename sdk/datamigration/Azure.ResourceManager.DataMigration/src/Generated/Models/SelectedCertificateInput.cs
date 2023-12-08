@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Info for certificate to be exported for TDE enabled databases. </summary>
     public partial class SelectedCertificateInput
     {
-        /// <summary> Initializes a new instance of SelectedCertificateInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelectedCertificateInput"/>. </summary>
         /// <param name="certificateName"> Name of certificate to be exported. </param>
         /// <param name="password"> Password to use for encrypting the exported certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="password"/> is null. </exception>

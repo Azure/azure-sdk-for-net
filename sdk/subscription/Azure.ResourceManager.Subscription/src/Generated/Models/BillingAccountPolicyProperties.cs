@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> Put billing account policies response properties. </summary>
     public partial class BillingAccountPolicyProperties
     {
-        /// <summary> Initializes a new instance of BillingAccountPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingAccountPolicyProperties"/>. </summary>
         internal BillingAccountPolicyProperties()
         {
             ServiceTenants = new ChangeTrackingList<ServiceTenant>();
         }
 
-        /// <summary> Initializes a new instance of BillingAccountPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingAccountPolicyProperties"/>. </summary>
         /// <param name="serviceTenants"> Service tenant for the billing account. </param>
         /// <param name="allowTransfers"> Determine if the transfers are allowed for the billing account. </param>
         internal BillingAccountPolicyProperties(IReadOnlyList<ServiceTenant> serviceTenants, bool? allowTransfers)

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The provisionedClusters resource definition. </summary>
     public partial class ProvisionedClusterCreateOrUpdateContent : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ProvisionedClusterCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The location. </param>
         public ProvisionedClusterCreateOrUpdateContent(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClusterCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

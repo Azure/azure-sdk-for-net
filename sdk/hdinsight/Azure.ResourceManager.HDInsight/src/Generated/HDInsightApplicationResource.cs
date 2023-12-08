@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.HDInsight
 {
     /// <summary>
     /// A Class representing a HDInsightApplication along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HDInsightApplicationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHDInsightApplicationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HDInsightClusterResource" /> using the GetHDInsightApplication method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HDInsightApplicationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHDInsightApplicationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HDInsightClusterResource"/> using the GetHDInsightApplication method.
     /// </summary>
     public partial class HDInsightApplicationResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.HDInsight
         private readonly ApplicationsRestOperations _hdInsightApplicationApplicationsRestClient;
         private readonly HDInsightApplicationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HDInsight/clusters/applications";
+
         /// <summary> Initializes a new instance of the <see cref="HDInsightApplicationResource"/> class for mocking. </summary>
         protected HDInsightApplicationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HDInsightApplicationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HDInsightApplicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HDInsightApplicationResource(ArmClient client, HDInsightApplicationData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.HDInsight
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HDInsight/clusters/applications";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

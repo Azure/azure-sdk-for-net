@@ -14,13 +14,46 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> Monitoring data point coming from SDK, which includes metrics, documents and other metadata info. </summary>
     internal partial class MonitoringDataPoint
     {
-        /// <summary> Initializes a new instance of MonitoringDataPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringDataPoint"/>. </summary>
         public MonitoringDataPoint()
         {
             Metrics = new ChangeTrackingList<MetricPoint>();
             Documents = new ChangeTrackingList<DocumentIngress>();
             TopCpuProcesses = new ChangeTrackingList<ProcessCpuData>();
             CollectionConfigurationErrors = new ChangeTrackingList<CollectionConfigurationError>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitoringDataPoint"/>. </summary>
+        /// <param name="version"> AI SDK version. </param>
+        /// <param name="invariantVersion"> Version/generation of the data contract (MonitoringDataPoint) between SDK and QuickPulse. </param>
+        /// <param name="instance"> Service instance name where AI SDK lives. </param>
+        /// <param name="roleName"> Service role name. </param>
+        /// <param name="machineName"> Computer name where AI SDK lives. </param>
+        /// <param name="streamId"> Identifies an AI SDK as a trusted agent to report metrics and documents. </param>
+        /// <param name="timestamp"> Data point generation timestamp. </param>
+        /// <param name="transmissionTime"> Timestamp when SDK transmits the metrics and documents to QuickPulse. A 8-byte long type of ticks. </param>
+        /// <param name="isWebApp"> True if the current application is an Azure Web App. </param>
+        /// <param name="performanceCollectionSupported"> True if performance counters collection is supported. </param>
+        /// <param name="metrics"> An array of meric data points. </param>
+        /// <param name="documents"> An array of documents of a specific type {RequestDocumentIngress}, {RemoteDependencyDocumentIngress}, {ExceptionDocumentIngress}, {EventDocumentIngress}, or {TraceDocumentIngress}. </param>
+        /// <param name="topCpuProcesses"> An array of top cpu consumption data point. </param>
+        /// <param name="collectionConfigurationErrors"> An array of error while parsing and applying . </param>
+        internal MonitoringDataPoint(string version, int? invariantVersion, string instance, string roleName, string machineName, string streamId, DateTimeOffset? timestamp, DateTimeOffset? transmissionTime, bool? isWebApp, bool? performanceCollectionSupported, IList<MetricPoint> metrics, IList<DocumentIngress> documents, IList<ProcessCpuData> topCpuProcesses, IList<CollectionConfigurationError> collectionConfigurationErrors)
+        {
+            Version = version;
+            InvariantVersion = invariantVersion;
+            Instance = instance;
+            RoleName = roleName;
+            MachineName = machineName;
+            StreamId = streamId;
+            Timestamp = timestamp;
+            TransmissionTime = transmissionTime;
+            IsWebApp = isWebApp;
+            PerformanceCollectionSupported = performanceCollectionSupported;
+            Metrics = metrics;
+            Documents = documents;
+            TopCpuProcesses = topCpuProcesses;
+            CollectionConfigurationErrors = collectionConfigurationErrors;
         }
 
         /// <summary> AI SDK version. </summary>

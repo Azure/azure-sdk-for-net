@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a CassandraTable along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CassandraTableResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCassandraTableResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CassandraKeyspaceResource" /> using the GetCassandraTable method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CassandraTableResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCassandraTableResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CassandraKeyspaceResource"/> using the GetCassandraTable method.
     /// </summary>
     public partial class CassandraTableResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly CassandraResourcesRestOperations _cassandraTableCassandraResourcesRestClient;
         private readonly CassandraTableData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables";
+
         /// <summary> Initializes a new instance of the <see cref="CassandraTableResource"/> class for mocking. </summary>
         protected CassandraTableResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CassandraTableResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CassandraTableResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CassandraTableResource(ArmClient client, CassandraTableData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets an object representing a CassandraTableThroughputSettingResource along with the instance operations that can be performed on it in the CassandraTable. </summary>
-        /// <returns> Returns a <see cref="CassandraTableThroughputSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CassandraTableThroughputSettingResource"/> object. </returns>
         public virtual CassandraTableThroughputSettingResource GetCassandraTableThroughputSetting()
         {
             return new CassandraTableThroughputSettingResource(Client, Id.AppendChildResource("throughputSettings", "default"));

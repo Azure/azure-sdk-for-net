@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Deployment resource properties payload. </summary>
     public partial class AppPlatformDeploymentProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformDeploymentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformDeploymentProperties"/>. </summary>
         public AppPlatformDeploymentProperties()
         {
             Instances = new ChangeTrackingList<AppPlatformDeploymentInstance>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformDeploymentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformDeploymentProperties"/>. </summary>
         /// <param name="source">
         /// Uploaded source information of the deployment.
         /// Please note <see cref="AppPlatformUserSourceInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

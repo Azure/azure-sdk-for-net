@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Node type list results. </summary>
     internal partial class NodeTypeListResult
     {
-        /// <summary> Initializes a new instance of NodeTypeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeTypeListResult"/>. </summary>
         internal NodeTypeListResult()
         {
             Value = new ChangeTrackingList<ServiceFabricManagedNodeTypeData>();
         }
 
-        /// <summary> Initializes a new instance of NodeTypeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeTypeListResult"/>. </summary>
         /// <param name="value"> The list of node types. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal NodeTypeListResult(IReadOnlyList<ServiceFabricManagedNodeTypeData> value, string nextLink)

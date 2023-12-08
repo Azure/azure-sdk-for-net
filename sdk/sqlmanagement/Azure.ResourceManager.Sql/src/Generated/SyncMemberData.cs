@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SyncMemberData : ResourceData
     {
-        /// <summary> Initializes a new instance of SyncMemberData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncMemberData"/>. </summary>
         public SyncMemberData()
         {
         }
 
-        /// <summary> Initializes a new instance of SyncMemberData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncMemberData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

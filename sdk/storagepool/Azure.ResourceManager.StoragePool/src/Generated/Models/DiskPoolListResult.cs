@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> List of Disk Pools. </summary>
     internal partial class DiskPoolListResult
     {
-        /// <summary> Initializes a new instance of DiskPoolListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPoolListResult"/>. </summary>
         /// <param name="value"> An array of Disk pool objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DiskPoolListResult(IEnumerable<DiskPoolData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DiskPoolListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPoolListResult"/>. </summary>
         /// <param name="value"> An array of Disk pool objects. </param>
         /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
         internal DiskPoolListResult(IReadOnlyList<DiskPoolData> value, string nextLink)

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// </summary>
     public partial class ExtensionDataSource
     {
-        /// <summary> Initializes a new instance of ExtensionDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionDataSource"/>. </summary>
         /// <param name="extensionName"> The name of the VM extension. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public ExtensionDataSource(string extensionName)
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
             InputDataSources = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ExtensionDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionDataSource"/>. </summary>
         /// <param name="streams">
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> AAD Vpn authentication type related parameters. </summary>
     public partial class AadAuthenticationParameters
     {
-        /// <summary> Initializes a new instance of AadAuthenticationParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="AadAuthenticationParameters"/>. </summary>
         public AadAuthenticationParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of AadAuthenticationParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="AadAuthenticationParameters"/>. </summary>
         /// <param name="aadTenant"> AAD Vpn authentication parameter AAD tenant. </param>
         /// <param name="aadAudience"> AAD Vpn authentication parameter AAD audience. </param>
         /// <param name="aadIssuer"> AAD Vpn authentication parameter AAD issuer. </param>

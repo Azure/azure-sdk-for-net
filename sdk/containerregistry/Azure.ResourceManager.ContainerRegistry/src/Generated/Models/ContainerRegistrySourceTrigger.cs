@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties of a source based trigger. </summary>
     public partial class ContainerRegistrySourceTrigger
     {
-        /// <summary> Initializes a new instance of ContainerRegistrySourceTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySourceTrigger"/>. </summary>
         /// <param name="sourceRepository"> The properties that describes the source(code) for the task. </param>
         /// <param name="sourceTriggerEvents"> The source event corresponding to the trigger. </param>
         /// <param name="name"> The name of the trigger. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistrySourceTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySourceTrigger"/>. </summary>
         /// <param name="sourceRepository"> The properties that describes the source(code) for the task. </param>
         /// <param name="sourceTriggerEvents"> The source event corresponding to the trigger. </param>
         /// <param name="status"> The current status of trigger. </param>

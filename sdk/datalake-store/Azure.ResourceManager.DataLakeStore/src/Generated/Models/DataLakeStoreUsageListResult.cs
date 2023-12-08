@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> The response from the List Usages operation. </summary>
     internal partial class DataLakeStoreUsageListResult
     {
-        /// <summary> Initializes a new instance of DataLakeStoreUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreUsageListResult"/>. </summary>
         internal DataLakeStoreUsageListResult()
         {
             Value = new ChangeTrackingList<DataLakeStoreUsage>();
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreUsageListResult"/>. </summary>
         /// <param name="value"> Gets or sets the list of Storage Resource Usages. </param>
         internal DataLakeStoreUsageListResult(IReadOnlyList<DataLakeStoreUsage> value)
         {

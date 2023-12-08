@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The ArcPasswordCredential. </summary>
     public partial class ArcPasswordCredential
     {
-        /// <summary> Initializes a new instance of ArcPasswordCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcPasswordCredential"/>. </summary>
         internal ArcPasswordCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of ArcPasswordCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcPasswordCredential"/>. </summary>
         /// <param name="secretText"></param>
         /// <param name="keyId"></param>
         /// <param name="startOn"></param>

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The artifact content properties definition. </summary>
     public partial class ArtifactContentProperties : ArtifactProperties
     {
-        /// <summary> Initializes a new instance of ArtifactContentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactContentProperties"/>. </summary>
         public ArtifactContentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ArtifactContentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactContentProperties"/>. </summary>
         /// <param name="createdOn"> The artifact creation time. </param>
         /// <param name="changedOn"> The artifact changed time. </param>
         /// <param name="metadata"> Anything. </param>

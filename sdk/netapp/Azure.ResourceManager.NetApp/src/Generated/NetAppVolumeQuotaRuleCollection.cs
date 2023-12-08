@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetAppVolumeQuotaRuleResource" /> and their operations.
-    /// Each <see cref="NetAppVolumeQuotaRuleResource" /> in the collection will belong to the same instance of <see cref="NetAppVolumeResource" />.
-    /// To get a <see cref="NetAppVolumeQuotaRuleCollection" /> instance call the GetNetAppVolumeQuotaRules method from an instance of <see cref="NetAppVolumeResource" />.
+    /// A class representing a collection of <see cref="NetAppVolumeQuotaRuleResource"/> and their operations.
+    /// Each <see cref="NetAppVolumeQuotaRuleResource"/> in the collection will belong to the same instance of <see cref="NetAppVolumeResource"/>.
+    /// To get a <see cref="NetAppVolumeQuotaRuleCollection"/> instance call the GetNetAppVolumeQuotaRules method from an instance of <see cref="NetAppVolumeResource"/>.
     /// </summary>
     public partial class NetAppVolumeQuotaRuleCollection : ArmCollection, IEnumerable<NetAppVolumeQuotaRuleResource>, IAsyncEnumerable<NetAppVolumeQuotaRuleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetAppVolumeQuotaRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetAppVolumeQuotaRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetAppVolumeQuotaRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeQuotaRuleVolumeQuotaRulesRestClient.CreateListByVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetAppVolumeQuotaRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetAppVolumeQuotaRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetAppVolumeQuotaRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeQuotaRuleVolumeQuotaRulesRestClient.CreateListByVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

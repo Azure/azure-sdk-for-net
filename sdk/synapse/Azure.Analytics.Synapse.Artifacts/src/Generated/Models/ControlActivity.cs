@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// </summary>
     public partial class ControlActivity : Activity
     {
-        /// <summary> Initializes a new instance of ControlActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControlActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ControlActivity(string name) : base(name)
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Container";
         }
 
-        /// <summary> Initializes a new instance of ControlActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControlActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

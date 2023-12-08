@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Summary Collection. </summary>
     internal partial class MoverSummaryList
     {
-        /// <summary> Initializes a new instance of MoverSummaryList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverSummaryList"/>. </summary>
         internal MoverSummaryList()
         {
             Summary = new ChangeTrackingList<MoverSummaryItemInfo>();
         }
 
-        /// <summary> Initializes a new instance of MoverSummaryList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverSummaryList"/>. </summary>
         /// <param name="fieldName"> Gets or sets the field name on which summary is done. </param>
         /// <param name="summary"> Gets or sets the list of summary items. </param>
         internal MoverSummaryList(string fieldName, IReadOnlyList<MoverSummaryItemInfo> summary)

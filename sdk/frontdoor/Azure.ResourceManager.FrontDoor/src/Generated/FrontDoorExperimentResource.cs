@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.FrontDoor
 {
     /// <summary>
     /// A Class representing a FrontDoorExperiment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FrontDoorExperimentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFrontDoorExperimentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FrontDoorNetworkExperimentProfileResource" /> using the GetFrontDoorExperiment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FrontDoorExperimentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFrontDoorExperimentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="FrontDoorNetworkExperimentProfileResource"/> using the GetFrontDoorExperiment method.
     /// </summary>
     public partial class FrontDoorExperimentResource : ArmResource
     {
@@ -43,12 +43,15 @@ namespace Azure.ResourceManager.FrontDoor
         private readonly ReportsRestOperations _reportsRestClient;
         private readonly FrontDoorExperimentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/NetworkExperimentProfiles/Experiments";
+
         /// <summary> Initializes a new instance of the <see cref="FrontDoorExperimentResource"/> class for mocking. </summary>
         protected FrontDoorExperimentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FrontDoorExperimentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorExperimentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FrontDoorExperimentResource(ArmClient client, FrontDoorExperimentData data) : this(client, data.Id)
@@ -71,9 +74,6 @@ namespace Azure.ResourceManager.FrontDoor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/NetworkExperimentProfiles/Experiments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

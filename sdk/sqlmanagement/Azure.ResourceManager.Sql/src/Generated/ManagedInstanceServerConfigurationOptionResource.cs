@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a ManagedInstanceServerConfigurationOption along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedInstanceServerConfigurationOptionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedInstanceServerConfigurationOptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource" /> using the GetManagedInstanceServerConfigurationOption method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedInstanceServerConfigurationOptionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedInstanceServerConfigurationOptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource"/> using the GetManagedInstanceServerConfigurationOption method.
     /// </summary>
     public partial class ManagedInstanceServerConfigurationOptionResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Sql
         private readonly ServerConfigurationOptionsRestOperations _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient;
         private readonly ManagedInstanceServerConfigurationOptionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/serverConfigurationOptions";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceServerConfigurationOptionResource"/> class for mocking. </summary>
         protected ManagedInstanceServerConfigurationOptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedInstanceServerConfigurationOptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceServerConfigurationOptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedInstanceServerConfigurationOptionResource(ArmClient client, ManagedInstanceServerConfigurationOptionData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/serverConfigurationOptions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

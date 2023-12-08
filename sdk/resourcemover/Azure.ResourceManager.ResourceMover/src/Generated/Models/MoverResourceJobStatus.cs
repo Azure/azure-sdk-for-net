@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the job status. </summary>
     public partial class MoverResourceJobStatus
     {
-        /// <summary> Initializes a new instance of MoverResourceJobStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceJobStatus"/>. </summary>
         internal MoverResourceJobStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverResourceJobStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceJobStatus"/>. </summary>
         /// <param name="jobName"> Defines the job name. </param>
         /// <param name="jobProgress"> Gets or sets the monitoring job percentage. </param>
         internal MoverResourceJobStatus(MoverResourceJobName? jobName, string jobProgress)

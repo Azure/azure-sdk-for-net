@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Active Directory account details to operate Windows Server Failover Cluster. </summary>
     public partial class WindowsServerFailoverClusterDomainProfile
     {
-        /// <summary> Initializes a new instance of WindowsServerFailoverClusterDomainProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsServerFailoverClusterDomainProfile"/>. </summary>
         public WindowsServerFailoverClusterDomainProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of WindowsServerFailoverClusterDomainProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsServerFailoverClusterDomainProfile"/>. </summary>
         /// <param name="domainFqdn"> Fully qualified name of the domain. </param>
         /// <param name="organizationalUnitPath"> Organizational Unit path in which the nodes and cluster will be present. </param>
         /// <param name="clusterBootstrapAccount"> Account name used for creating cluster (at minimum needs permissions to 'Create Computer Objects' in domain). </param>

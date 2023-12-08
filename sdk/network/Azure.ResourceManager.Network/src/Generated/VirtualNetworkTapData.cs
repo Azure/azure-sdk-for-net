@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VirtualNetworkTapData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkTapData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkTapData"/>. </summary>
         public VirtualNetworkTapData()
         {
             NetworkInterfaceTapConfigurations = new ChangeTrackingList<NetworkInterfaceTapConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkTapData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkTapData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

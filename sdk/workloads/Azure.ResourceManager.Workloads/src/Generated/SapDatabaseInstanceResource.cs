@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Workloads
 {
     /// <summary>
     /// A Class representing a SapDatabaseInstance along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SapDatabaseInstanceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSapDatabaseInstanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SapVirtualInstanceResource" /> using the GetSapDatabaseInstance method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SapDatabaseInstanceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSapDatabaseInstanceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SapVirtualInstanceResource"/> using the GetSapDatabaseInstance method.
     /// </summary>
     public partial class SapDatabaseInstanceResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.Workloads
         private readonly SAPDatabaseInstancesRestOperations _sapDatabaseInstanceSapDatabaseInstancesRestClient;
         private readonly SapDatabaseInstanceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Workloads/sapVirtualInstances/databaseInstances";
+
         /// <summary> Initializes a new instance of the <see cref="SapDatabaseInstanceResource"/> class for mocking. </summary>
         protected SapDatabaseInstanceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SapDatabaseInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SapDatabaseInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SapDatabaseInstanceResource(ArmClient client, SapDatabaseInstanceData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.Workloads
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Workloads/sapVirtualInstances/databaseInstances";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

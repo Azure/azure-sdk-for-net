@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class ProtectionProfileCustomDetails
     {
-        /// <summary> Initializes a new instance of ProtectionProfileCustomDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionProfileCustomDetails"/>. </summary>
         protected ProtectionProfileCustomDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ProtectionProfileCustomDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionProfileCustomDetails"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
         internal ProtectionProfileCustomDetails(string resourceType)
         {

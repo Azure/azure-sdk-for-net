@@ -12,12 +12,12 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> The SparkSessionState. </summary>
     public partial class SparkSessionState
     {
-        /// <summary> Initializes a new instance of SparkSessionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkSessionState"/>. </summary>
         internal SparkSessionState()
         {
         }
 
-        /// <summary> Initializes a new instance of SparkSessionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkSessionState"/>. </summary>
         /// <param name="notStartedAt"></param>
         /// <param name="startingAt"></param>
         /// <param name="idleAt"></param>

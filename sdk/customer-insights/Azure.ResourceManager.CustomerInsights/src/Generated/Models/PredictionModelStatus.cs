@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The prediction model status. </summary>
     public partial class PredictionModelStatus
     {
-        /// <summary> Initializes a new instance of PredictionModelStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredictionModelStatus"/>. </summary>
         /// <param name="status"> Prediction model life cycle.  When prediction is in PendingModelConfirmation status, it is allowed to update the status to PendingFeaturing or Active through API. </param>
         public PredictionModelStatus(PredictionModelLifeCycle status)
         {
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of PredictionModelStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredictionModelStatus"/>. </summary>
         /// <param name="tenantId"> The hub name. </param>
         /// <param name="predictionName"> The prediction name. </param>
         /// <param name="predictionGuidId"> The prediction GUID ID. </param>

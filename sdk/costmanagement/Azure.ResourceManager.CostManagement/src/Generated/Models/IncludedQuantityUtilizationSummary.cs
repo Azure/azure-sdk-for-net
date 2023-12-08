@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Included Quantity utilization summary resource. </summary>
     public partial class IncludedQuantityUtilizationSummary : BenefitUtilizationSummary
     {
-        /// <summary> Initializes a new instance of IncludedQuantityUtilizationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncludedQuantityUtilizationSummary"/>. </summary>
         public IncludedQuantityUtilizationSummary()
         {
             Kind = BillingAccountBenefitKind.IncludedQuantity;
         }
 
-        /// <summary> Initializes a new instance of IncludedQuantityUtilizationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncludedQuantityUtilizationSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

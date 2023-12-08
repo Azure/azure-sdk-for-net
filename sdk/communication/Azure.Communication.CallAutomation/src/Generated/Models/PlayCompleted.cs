@@ -10,7 +10,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The PlayCompleted. </summary>
     public partial class PlayCompleted
     {
-        /// <summary> Initializes a new instance of PlayCompleted. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlayCompleted"/>. </summary>
         internal PlayCompleted()
         {
         }

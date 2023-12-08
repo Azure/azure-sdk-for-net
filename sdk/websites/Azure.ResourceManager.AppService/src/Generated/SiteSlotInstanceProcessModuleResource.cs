@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteSlotInstanceProcessModule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotInstanceProcessModuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotInstanceProcessModuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteSlotInstanceProcessResource" /> using the GetSiteSlotInstanceProcessModule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteSlotInstanceProcessModuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteSlotInstanceProcessModuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteSlotInstanceProcessResource"/> using the GetSiteSlotInstanceProcessModule method.
     /// </summary>
     public partial class SiteSlotInstanceProcessModuleResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _siteSlotInstanceProcessModuleWebAppsRestClient;
         private readonly ProcessModuleInfoData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/instances/processes/modules";
+
         /// <summary> Initializes a new instance of the <see cref="SiteSlotInstanceProcessModuleResource"/> class for mocking. </summary>
         protected SiteSlotInstanceProcessModuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteSlotInstanceProcessModuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotInstanceProcessModuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteSlotInstanceProcessModuleResource(ArmClient client, ProcessModuleInfoData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/instances/processes/modules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

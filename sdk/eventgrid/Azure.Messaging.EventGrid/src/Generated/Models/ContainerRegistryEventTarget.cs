@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> The target of the event. </summary>
     public partial class ContainerRegistryEventTarget
     {
-        /// <summary> Initializes a new instance of ContainerRegistryEventTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventTarget"/>. </summary>
         internal ContainerRegistryEventTarget()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryEventTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventTarget"/>. </summary>
         /// <param name="mediaType"> The MIME type of the referenced object. </param>
         /// <param name="size"> The number of bytes of the content. Same as Length field. </param>
         /// <param name="digest"> The digest of the content, as defined by the Registry V2 HTTP API Specification. </param>

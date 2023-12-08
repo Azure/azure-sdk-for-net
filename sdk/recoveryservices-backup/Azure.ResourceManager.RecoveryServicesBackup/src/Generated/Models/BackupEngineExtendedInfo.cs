@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Additional information on backup engine. </summary>
     public partial class BackupEngineExtendedInfo
     {
-        /// <summary> Initializes a new instance of BackupEngineExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupEngineExtendedInfo"/>. </summary>
         public BackupEngineExtendedInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupEngineExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupEngineExtendedInfo"/>. </summary>
         /// <param name="databaseName"> Database name of backup engine. </param>
         /// <param name="protectedItemsCount"> Number of protected items in the backup engine. </param>
         /// <param name="protectedServersCount"> Number of protected servers in the backup engine. </param>

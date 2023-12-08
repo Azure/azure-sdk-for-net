@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.HybridConnectivity
 {
     /// <summary>
     /// A Class representing an EndpointResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EndpointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetEndpointResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EndpointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetEndpointResource method.
     /// </summary>
     public partial class EndpointResource : ArmResource
     {
@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.HybridConnectivity
         private readonly EndpointsRestOperations _endpointResourceEndpointsRestClient;
         private readonly EndpointResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridConnectivity/endpoints";
+
         /// <summary> Initializes a new instance of the <see cref="EndpointResource"/> class for mocking. </summary>
         protected EndpointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EndpointResource(ArmClient client, EndpointResourceData data) : this(client, data.Id)
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.HybridConnectivity
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridConnectivity/endpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class AutomationPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomationPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPrivateEndpointConnectionData"/>. </summary>
         public AutomationPrivateEndpointConnectionData()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AutomationPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

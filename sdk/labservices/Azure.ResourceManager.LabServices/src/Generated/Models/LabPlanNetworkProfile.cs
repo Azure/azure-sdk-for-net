@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Profile for how to handle networking for Lab Plans. </summary>
     internal partial class LabPlanNetworkProfile
     {
-        /// <summary> Initializes a new instance of LabPlanNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabPlanNetworkProfile"/>. </summary>
         public LabPlanNetworkProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of LabPlanNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabPlanNetworkProfile"/>. </summary>
         /// <param name="subnetId"> The external subnet resource id. </param>
         internal LabPlanNetworkProfile(ResourceIdentifier subnetId)
         {

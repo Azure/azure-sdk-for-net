@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Error Field contract. </summary>
     public partial class ErrorFieldContract
     {
-        /// <summary> Initializes a new instance of ErrorFieldContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorFieldContract"/>. </summary>
         public ErrorFieldContract()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorFieldContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorFieldContract"/>. </summary>
         /// <param name="code"> Property level error code. </param>
         /// <param name="message"> Human-readable representation of property-level error. </param>
         /// <param name="target"> Property name. </param>

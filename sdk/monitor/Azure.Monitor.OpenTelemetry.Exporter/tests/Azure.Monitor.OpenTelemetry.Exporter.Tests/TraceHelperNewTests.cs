@@ -91,5 +91,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Assert
             Assert.Equal(ActivityName, result);
         }
+
+        [Fact]
+        public void DuplicateTagsOnProperties()
+        {
+            // Arrange
+            IDictionary<string, string> destination = new Dictionary<string, string>();
+            var tagObjects = AzMonList.Initialize();
+            AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>("key1", "value1"));
+            AzMonList.Add(ref tagObjects, new KeyValuePair<string, object?>("key1", "value2"));
+
+            // Act
+            TraceHelper.AddPropertiesToTelemetry(destination, ref tagObjects);
+
+            // Assert
+            Assert.True(destination.TryGetValue("key1", out var value));
+            Assert.Equal("value1", value);
+        }
     }
 }

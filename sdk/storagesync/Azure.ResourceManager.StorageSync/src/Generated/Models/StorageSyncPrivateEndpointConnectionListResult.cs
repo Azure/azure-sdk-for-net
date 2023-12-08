@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> List of private endpoint connections associated with the specified resource. </summary>
     internal partial class StorageSyncPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of StorageSyncPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncPrivateEndpointConnectionListResult"/>. </summary>
         internal StorageSyncPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<StorageSyncPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of StorageSyncPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
         internal StorageSyncPrivateEndpointConnectionListResult(IReadOnlyList<StorageSyncPrivateEndpointConnectionData> value)
         {

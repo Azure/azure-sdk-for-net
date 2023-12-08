@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.TrafficManager
 {
     /// <summary>
     /// A Class representing a TrafficManagerProfile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TrafficManagerProfileResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTrafficManagerProfileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetTrafficManagerProfile method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TrafficManagerProfileResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTrafficManagerProfileResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetTrafficManagerProfile method.
     /// </summary>
     public partial class TrafficManagerProfileResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.TrafficManager
         private readonly ProfilesRestOperations _trafficManagerProfileProfilesRestClient;
         private readonly TrafficManagerProfileData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/trafficmanagerprofiles";
+
         /// <summary> Initializes a new instance of the <see cref="TrafficManagerProfileResource"/> class for mocking. </summary>
         protected TrafficManagerProfileResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TrafficManagerProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TrafficManagerProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TrafficManagerProfileResource(ArmClient client, TrafficManagerProfileData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.TrafficManager
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/trafficmanagerprofiles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

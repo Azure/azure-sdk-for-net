@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that collects user tables for the given list of databases. </summary>
     public partial class GetUserTablesSqlSyncTaskInput
     {
-        /// <summary> Initializes a new instance of GetUserTablesSqlSyncTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlSyncTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for SQL Server. </param>
         /// <param name="targetConnectionInfo"> Connection information for SQL DB. </param>
         /// <param name="selectedSourceDatabases"> List of source database names to collect tables for. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SelectedTargetDatabases = selectedTargetDatabases.ToList();
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesSqlSyncTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlSyncTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for SQL Server. </param>
         /// <param name="targetConnectionInfo"> Connection information for SQL DB. </param>
         /// <param name="selectedSourceDatabases"> List of source database names to collect tables for. </param>

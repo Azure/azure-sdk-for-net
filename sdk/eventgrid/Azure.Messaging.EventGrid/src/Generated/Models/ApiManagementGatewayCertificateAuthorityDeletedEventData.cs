@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.GatewayCertificateAuthorityDeleted event. </summary>
     public partial class ApiManagementGatewayCertificateAuthorityDeletedEventData
     {
-        /// <summary> Initializes a new instance of ApiManagementGatewayCertificateAuthorityDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayCertificateAuthorityDeletedEventData"/>. </summary>
         internal ApiManagementGatewayCertificateAuthorityDeletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementGatewayCertificateAuthorityDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayCertificateAuthorityDeletedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/gateways/&lt;GatewayName&gt;/certificateAuthorities/&lt;ResourceName&gt;`. </param>
         internal ApiManagementGatewayCertificateAuthorityDeletedEventData(string resourceUri)
         {

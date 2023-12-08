@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary>
     /// A Class representing a VmInstanceGuestAgent along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VmInstanceGuestAgentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVmInstanceGuestAgentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VMwareVmInstanceResource" /> using the GetVmInstanceGuestAgent method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VmInstanceGuestAgentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVmInstanceGuestAgentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VMwareVmInstanceResource"/> using the GetVmInstanceGuestAgent method.
     /// </summary>
     public partial class VmInstanceGuestAgentResource : ArmResource
     {
@@ -36,12 +36,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         private readonly VMInstanceGuestAgentsRestOperations _vmInstanceGuestAgentVmInstanceGuestAgentsRestClient;
         private readonly VmInstanceGuestAgentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/guestAgents";
+
         /// <summary> Initializes a new instance of the <see cref="VmInstanceGuestAgentResource"/> class for mocking. </summary>
         protected VmInstanceGuestAgentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VmInstanceGuestAgentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VmInstanceGuestAgentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VmInstanceGuestAgentResource(ArmClient client, VmInstanceGuestAgentData data) : this(client, data.Id)
@@ -62,9 +65,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/guestAgents";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

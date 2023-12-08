@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class PrivateAccessData : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateAccessData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateAccessData"/>. </summary>
         public PrivateAccessData()
         {
             VirtualNetworks = new ChangeTrackingList<PrivateAccessVirtualNetwork>();
         }
 
-        /// <summary> Initializes a new instance of PrivateAccessData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateAccessData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

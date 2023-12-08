@@ -14,10 +14,21 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> Put tenant policy request properties. </summary>
     public partial class TenantPolicyCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of TenantPolicyCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantPolicyCreateOrUpdateContent"/>. </summary>
         public TenantPolicyCreateOrUpdateContent()
         {
             ExemptedPrincipals = new ChangeTrackingList<Guid>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TenantPolicyCreateOrUpdateContent"/>. </summary>
+        /// <param name="blockSubscriptionsLeavingTenant"> Blocks the leaving of subscriptions from user's tenant. </param>
+        /// <param name="blockSubscriptionsIntoTenant"> Blocks the entering of subscriptions into user's tenant. </param>
+        /// <param name="exemptedPrincipals"> List of user objectIds that are exempted from the set subscription tenant policies for the user's tenant. </param>
+        internal TenantPolicyCreateOrUpdateContent(bool? blockSubscriptionsLeavingTenant, bool? blockSubscriptionsIntoTenant, IList<Guid> exemptedPrincipals)
+        {
+            BlockSubscriptionsLeavingTenant = blockSubscriptionsLeavingTenant;
+            BlockSubscriptionsIntoTenant = blockSubscriptionsIntoTenant;
+            ExemptedPrincipals = exemptedPrincipals;
         }
 
         /// <summary> Blocks the leaving of subscriptions from user's tenant. </summary>

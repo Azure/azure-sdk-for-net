@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Grafana
     /// </summary>
     public partial class ManagedGrafanaData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ManagedGrafanaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ManagedGrafanaData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedGrafanaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> The details of the HTTP request. </summary>
     public partial class ResourceHttpRequest
     {
-        /// <summary> Initializes a new instance of ResourceHttpRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHttpRequest"/>. </summary>
         internal ResourceHttpRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceHttpRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHttpRequest"/>. </summary>
         /// <param name="clientRequestId"> The client request ID. </param>
         /// <param name="clientIpAddress"> The client IP address. </param>
         /// <param name="methodString"> The request method. </param>

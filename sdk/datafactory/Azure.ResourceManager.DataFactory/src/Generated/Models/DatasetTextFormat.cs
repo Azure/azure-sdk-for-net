@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The data stored in text format. </summary>
     public partial class DatasetTextFormat : DatasetStorageFormat
     {
-        /// <summary> Initializes a new instance of DatasetTextFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetTextFormat"/>. </summary>
         public DatasetTextFormat()
         {
             DatasetStorageFormatType = "TextFormat";
         }
 
-        /// <summary> Initializes a new instance of DatasetTextFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetTextFormat"/>. </summary>
         /// <param name="datasetStorageFormatType"> Type of dataset storage format. </param>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>

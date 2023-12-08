@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
     /// A Class representing an AutomanageConfigurationProfile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomanageConfigurationProfileResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutomanageConfigurationProfileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAutomanageConfigurationProfile method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomanageConfigurationProfileResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutomanageConfigurationProfileResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAutomanageConfigurationProfile method.
     /// </summary>
     public partial class AutomanageConfigurationProfileResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Automanage
         private readonly ConfigurationProfilesRestOperations _automanageConfigurationProfileConfigurationProfilesRestClient;
         private readonly AutomanageConfigurationProfileData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automanage/configurationProfiles";
+
         /// <summary> Initializes a new instance of the <see cref="AutomanageConfigurationProfileResource"/> class for mocking. </summary>
         protected AutomanageConfigurationProfileResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutomanageConfigurationProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomanageConfigurationProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomanageConfigurationProfileResource(ArmClient client, AutomanageConfigurationProfileData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Automanage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automanage/configurationProfiles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

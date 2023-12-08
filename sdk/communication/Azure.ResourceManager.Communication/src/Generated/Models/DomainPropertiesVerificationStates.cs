@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> List of VerificationStatusRecord. </summary>
     public partial class DomainPropertiesVerificationStates
     {
-        /// <summary> Initializes a new instance of DomainPropertiesVerificationStates. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainPropertiesVerificationStates"/>. </summary>
         internal DomainPropertiesVerificationStates()
         {
         }
 
-        /// <summary> Initializes a new instance of DomainPropertiesVerificationStates. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainPropertiesVerificationStates"/>. </summary>
         /// <param name="domain"> A class that represents a VerificationStatus record. </param>
         /// <param name="spf"> A class that represents a VerificationStatus record. </param>
         /// <param name="dkim"> A class that represents a VerificationStatus record. </param>

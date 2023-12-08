@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningDatastore along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningDatastoreResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningDatastoreResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource" /> using the GetMachineLearningDatastore method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningDatastoreResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningDatastoreResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetMachineLearningDatastore method.
     /// </summary>
     public partial class MachineLearningDatastoreResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly DatastoresRestOperations _machineLearningDatastoreDatastoresRestClient;
         private readonly MachineLearningDatastoreData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/datastores";
+
         /// <summary> Initializes a new instance of the <see cref="MachineLearningDatastoreResource"/> class for mocking. </summary>
         protected MachineLearningDatastoreResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MachineLearningDatastoreResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningDatastoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningDatastoreResource(ArmClient client, MachineLearningDatastoreData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.MachineLearning
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/datastores";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

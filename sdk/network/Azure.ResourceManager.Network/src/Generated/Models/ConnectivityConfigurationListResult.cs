@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Result of the request to list network manager connectivity configurations. It contains a list of configurations and a link to get the next set of results. </summary>
     internal partial class ConnectivityConfigurationListResult
     {
-        /// <summary> Initializes a new instance of ConnectivityConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityConfigurationListResult"/>. </summary>
         internal ConnectivityConfigurationListResult()
         {
             Value = new ChangeTrackingList<ConnectivityConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of ConnectivityConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityConfigurationListResult"/>. </summary>
         /// <param name="value"> Gets a page of Connectivity Configurations. </param>
         /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
         internal ConnectivityConfigurationListResult(IReadOnlyList<ConnectivityConfigurationData> value, string nextLink)

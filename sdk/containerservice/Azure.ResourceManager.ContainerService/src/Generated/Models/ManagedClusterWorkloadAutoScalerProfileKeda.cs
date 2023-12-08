@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> KEDA (Kubernetes Event-driven Autoscaling) settings for the workload auto-scaler profile. </summary>
     internal partial class ManagedClusterWorkloadAutoScalerProfileKeda
     {
-        /// <summary> Initializes a new instance of ManagedClusterWorkloadAutoScalerProfileKeda. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterWorkloadAutoScalerProfileKeda"/>. </summary>
         /// <param name="enabled"> Whether to enable KEDA. </param>
         public ManagedClusterWorkloadAutoScalerProfileKeda(bool enabled)
         {

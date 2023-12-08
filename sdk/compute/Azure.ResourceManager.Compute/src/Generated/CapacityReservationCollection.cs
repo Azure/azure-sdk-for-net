@@ -21,9 +21,9 @@ using Azure.ResourceManager.Compute.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CapacityReservationResource" /> and their operations.
-    /// Each <see cref="CapacityReservationResource" /> in the collection will belong to the same instance of <see cref="CapacityReservationGroupResource" />.
-    /// To get a <see cref="CapacityReservationCollection" /> instance call the GetCapacityReservations method from an instance of <see cref="CapacityReservationGroupResource" />.
+    /// A class representing a collection of <see cref="CapacityReservationResource"/> and their operations.
+    /// Each <see cref="CapacityReservationResource"/> in the collection will belong to the same instance of <see cref="CapacityReservationGroupResource"/>.
+    /// To get a <see cref="CapacityReservationCollection"/> instance call the GetCapacityReservations method from an instance of <see cref="CapacityReservationGroupResource"/>.
     /// </summary>
     public partial class CapacityReservationCollection : ArmCollection, IEnumerable<CapacityReservationResource>, IAsyncEnumerable<CapacityReservationResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CapacityReservationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CapacityReservationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CapacityReservationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityReservationRestClient.CreateListByCapacityReservationGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CapacityReservationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CapacityReservationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CapacityReservationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityReservationRestClient.CreateListByCapacityReservationGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

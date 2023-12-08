@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Cluster profile. </summary>
     public partial class ClusterProfile
     {
-        /// <summary> Initializes a new instance of ClusterProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterProfile"/>. </summary>
         /// <param name="clusterVersion"> Version with 3/4 part. </param>
         /// <param name="ossVersion"> Version with three part. </param>
         /// <param name="identityProfile"> Identity Profile with details of an MSI. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             ScriptActionProfiles = new ChangeTrackingList<ScriptActionProfile>();
         }
 
-        /// <summary> Initializes a new instance of ClusterProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterProfile"/>. </summary>
         /// <param name="clusterVersion"> Version with 3/4 part. </param>
         /// <param name="ossVersion"> Version with three part. </param>
         /// <param name="components"> Component list of this cluster type and version. </param>

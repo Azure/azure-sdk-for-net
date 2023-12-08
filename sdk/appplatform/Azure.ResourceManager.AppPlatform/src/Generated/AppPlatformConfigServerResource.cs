@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformConfigServer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformConfigServerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformConfigServerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource" /> using the GetAppPlatformConfigServer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformConfigServerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformConfigServerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource"/> using the GetAppPlatformConfigServer method.
     /// </summary>
     public partial class AppPlatformConfigServerResource : ArmResource
     {
@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly ConfigServersRestOperations _appPlatformConfigServerConfigServersRestClient;
         private readonly AppPlatformConfigServerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/configServers";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformConfigServerResource"/> class for mocking. </summary>
         protected AppPlatformConfigServerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformConfigServerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformConfigServerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformConfigServerResource(ArmClient client, AppPlatformConfigServerData data) : this(client, data.Id)
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/configServers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

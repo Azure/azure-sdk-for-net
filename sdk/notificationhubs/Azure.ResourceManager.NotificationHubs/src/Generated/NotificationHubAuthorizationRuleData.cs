@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.NotificationHubs
     /// </summary>
     public partial class NotificationHubAuthorizationRuleData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NotificationHubAuthorizationRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubAuthorizationRuleData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NotificationHubAuthorizationRuleData(AzureLocation location) : base(location)
         {
             Rights = new ChangeTrackingList<AuthorizationRuleAccessRight>();
         }
 
-        /// <summary> Initializes a new instance of NotificationHubAuthorizationRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubAuthorizationRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,12 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The response payload for transferring the call. </summary>
     public partial class TransferCallToParticipantResult
     {
-        /// <summary> Initializes a new instance of TransferCallToParticipantResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransferCallToParticipantResult"/>. </summary>
         internal TransferCallToParticipantResult()
         {
         }
 
-        /// <summary> Initializes a new instance of TransferCallToParticipantResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransferCallToParticipantResult"/>. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         internal TransferCallToParticipantResult(string operationContext)
         {

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> This is the storage profile of a Gallery Image Version. </summary>
     public partial class SharedGalleryImageVersionStorageProfile
     {
-        /// <summary> Initializes a new instance of SharedGalleryImageVersionStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryImageVersionStorageProfile"/>. </summary>
         internal SharedGalleryImageVersionStorageProfile()
         {
             DataDiskImages = new ChangeTrackingList<SharedGalleryDataDiskImage>();
         }
 
-        /// <summary> Initializes a new instance of SharedGalleryImageVersionStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryImageVersionStorageProfile"/>. </summary>
         /// <param name="osDiskImage"> This is the OS disk image. </param>
         /// <param name="dataDiskImages"> A list of data disk images. </param>
         internal SharedGalleryImageVersionStorageProfile(SharedGalleryOSDiskImage osDiskImage, IReadOnlyList<SharedGalleryDataDiskImage> dataDiskImages)

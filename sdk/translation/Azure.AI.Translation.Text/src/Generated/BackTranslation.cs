@@ -13,7 +13,7 @@ namespace Azure.AI.Translation.Text
     /// <summary> Back Translation. </summary>
     public partial class BackTranslation
     {
-        /// <summary> Initializes a new instance of BackTranslation. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackTranslation"/>. </summary>
         /// <param name="normalizedText">
         /// A string giving the normalized form of the source term that is a back-translation of the target.
         /// This value should be used as input to lookup examples.

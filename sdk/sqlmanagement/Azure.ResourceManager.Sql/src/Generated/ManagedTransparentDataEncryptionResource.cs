@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a ManagedTransparentDataEncryption along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedTransparentDataEncryptionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedTransparentDataEncryptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource" /> using the GetManagedTransparentDataEncryption method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedTransparentDataEncryptionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedTransparentDataEncryptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource"/> using the GetManagedTransparentDataEncryption method.
     /// </summary>
     public partial class ManagedTransparentDataEncryptionResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedDatabaseTransparentDataEncryptionRestOperations _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient;
         private readonly ManagedTransparentDataEncryptionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/transparentDataEncryption";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedTransparentDataEncryptionResource"/> class for mocking. </summary>
         protected ManagedTransparentDataEncryptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedTransparentDataEncryptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedTransparentDataEncryptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedTransparentDataEncryptionResource(ArmClient client, ManagedTransparentDataEncryptionData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/transparentDataEncryption";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

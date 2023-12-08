@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AppConfigurationStoreResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppConfigurationStoreResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationStoreResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppConfigurationStoreResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppConfigurationStoreResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationStoreResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppConfigurationStoreResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AppConfigurationStoreResource"/> object. </returns>
         public virtual AppConfigurationStoreResource GetAppConfigurationStoreResource(ResourceIdentifier id)
         {
             AppConfigurationStoreResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeletedAppConfigurationStoreResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeletedAppConfigurationStoreResource.CreateResourceIdentifier" /> to create a <see cref="DeletedAppConfigurationStoreResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DeletedAppConfigurationStoreResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeletedAppConfigurationStoreResource.CreateResourceIdentifier" /> to create a <see cref="DeletedAppConfigurationStoreResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeletedAppConfigurationStoreResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DeletedAppConfigurationStoreResource"/> object. </returns>
         public virtual DeletedAppConfigurationStoreResource GetDeletedAppConfigurationStoreResource(ResourceIdentifier id)
         {
             DeletedAppConfigurationStoreResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AppConfigurationPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppConfigurationPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppConfigurationPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppConfigurationPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppConfigurationPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AppConfigurationPrivateEndpointConnectionResource"/> object. </returns>
         public virtual AppConfigurationPrivateEndpointConnectionResource GetAppConfigurationPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             AppConfigurationPrivateEndpointConnectionResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AppConfigurationPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppConfigurationPrivateLinkResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppConfigurationPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppConfigurationPrivateLinkResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppConfigurationPrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AppConfigurationPrivateLinkResource"/> object. </returns>
         public virtual AppConfigurationPrivateLinkResource GetAppConfigurationPrivateLinkResource(ResourceIdentifier id)
         {
             AppConfigurationPrivateLinkResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AppConfigurationKeyValueResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppConfigurationKeyValueResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationKeyValueResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppConfigurationKeyValueResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppConfigurationKeyValueResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationKeyValueResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppConfigurationKeyValueResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AppConfigurationKeyValueResource"/> object. </returns>
         public virtual AppConfigurationKeyValueResource GetAppConfigurationKeyValueResource(ResourceIdentifier id)
         {
             AppConfigurationKeyValueResource.ValidateResourceId(id);

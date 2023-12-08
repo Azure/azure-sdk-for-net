@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Summary of all trained custom models. </summary>
     internal partial class ModelsSummary
     {
-        /// <summary> Initializes a new instance of ModelsSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelsSummary"/>. </summary>
         /// <param name="count"> Current count of trained custom models. </param>
         /// <param name="limit"> Max number of models that can be trained for this account. </param>
         /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the summary was last updated. </param>

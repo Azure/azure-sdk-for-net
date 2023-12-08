@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a GremlinGraph along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GremlinGraphResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGremlinGraphResource method.
-    /// Otherwise you can get one from its parent resource <see cref="GremlinDatabaseResource" /> using the GetGremlinGraph method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GremlinGraphResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGremlinGraphResource method.
+    /// Otherwise you can get one from its parent resource <see cref="GremlinDatabaseResource"/> using the GetGremlinGraph method.
     /// </summary>
     public partial class GremlinGraphResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly GremlinResourcesRestOperations _gremlinGraphGremlinResourcesRestClient;
         private readonly GremlinGraphData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs";
+
         /// <summary> Initializes a new instance of the <see cref="GremlinGraphResource"/> class for mocking. </summary>
         protected GremlinGraphResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GremlinGraphResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GremlinGraphResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GremlinGraphResource(ArmClient client, GremlinGraphData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets an object representing a GremlinGraphThroughputSettingResource along with the instance operations that can be performed on it in the GremlinGraph. </summary>
-        /// <returns> Returns a <see cref="GremlinGraphThroughputSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="GremlinGraphThroughputSettingResource"/> object. </returns>
         public virtual GremlinGraphThroughputSettingResource GetGremlinGraphThroughputSetting()
         {
             return new GremlinGraphThroughputSettingResource(Client, Id.AppendChildResource("throughputSettings", "default"));

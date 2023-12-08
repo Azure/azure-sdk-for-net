@@ -21,9 +21,9 @@ using Azure.ResourceManager.MachineLearning.Models;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningRegistryEnvironmentVersionResource" /> and their operations.
-    /// Each <see cref="MachineLearningRegistryEnvironmentVersionResource" /> in the collection will belong to the same instance of <see cref="MachineLearningRegistryEnvironmentContainerResource" />.
-    /// To get a <see cref="MachineLearningRegistryEnvironmentVersionCollection" /> instance call the GetMachineLearningRegistryEnvironmentVersions method from an instance of <see cref="MachineLearningRegistryEnvironmentContainerResource" />.
+    /// A class representing a collection of <see cref="MachineLearningRegistryEnvironmentVersionResource"/> and their operations.
+    /// Each <see cref="MachineLearningRegistryEnvironmentVersionResource"/> in the collection will belong to the same instance of <see cref="MachineLearningRegistryEnvironmentContainerResource"/>.
+    /// To get a <see cref="MachineLearningRegistryEnvironmentVersionCollection"/> instance call the GetMachineLearningRegistryEnvironmentVersions method from an instance of <see cref="MachineLearningRegistryEnvironmentContainerResource"/>.
     /// </summary>
     public partial class MachineLearningRegistryEnvironmentVersionCollection : ArmCollection, IEnumerable<MachineLearningRegistryEnvironmentVersionResource>, IAsyncEnumerable<MachineLearningRegistryEnvironmentVersionResource>
     {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
         /// <param name="stage"> Stage for including/excluding (for example) archived entities. Takes priority over listViewType. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningRegistryEnvironmentVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningRegistryEnvironmentVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningRegistryEnvironmentVersionResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, MachineLearningListViewType? listViewType = null, string stage = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningRegistryEnvironmentVersionRegistryEnvironmentVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType, stage);
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
         /// <param name="stage"> Stage for including/excluding (for example) archived entities. Takes priority over listViewType. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningRegistryEnvironmentVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningRegistryEnvironmentVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningRegistryEnvironmentVersionResource> GetAll(string orderBy = null, int? top = null, string skip = null, MachineLearningListViewType? listViewType = null, string stage = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningRegistryEnvironmentVersionRegistryEnvironmentVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType, stage);

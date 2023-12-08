@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The storage location for a packet capture session. </summary>
     public partial class PacketCaptureStorageLocation
     {
-        /// <summary> Initializes a new instance of PacketCaptureStorageLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCaptureStorageLocation"/>. </summary>
         public PacketCaptureStorageLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of PacketCaptureStorageLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCaptureStorageLocation"/>. </summary>
         /// <param name="storageId"> The ID of the storage account to save the packet capture session. Required if no local file path is provided. </param>
         /// <param name="storagePath"> The URI of the storage path to save the packet capture. Must be a well-formed URI describing the location to save the packet capture. </param>
         /// <param name="filePath"> A valid local path on the targeting VM. Must include the name of the capture file (*.cap). For linux virtual machine it must start with /var/captures. Required if no storage ID is provided, otherwise optional. </param>

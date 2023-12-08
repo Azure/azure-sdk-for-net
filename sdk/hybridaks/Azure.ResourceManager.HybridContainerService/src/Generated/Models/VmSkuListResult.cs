@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The list of supported VM SKUs. </summary>
     public partial class VmSkuListResult : ResourceData
     {
-        /// <summary> Initializes a new instance of VmSkuListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmSkuListResult"/>. </summary>
         internal VmSkuListResult()
         {
             VmSKUs = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VmSkuListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmSkuListResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

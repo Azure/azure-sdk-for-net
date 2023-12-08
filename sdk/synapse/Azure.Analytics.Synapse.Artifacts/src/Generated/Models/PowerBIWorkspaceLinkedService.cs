@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Power BI Workspace linked service. </summary>
     public partial class PowerBIWorkspaceLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of PowerBIWorkspaceLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerBIWorkspaceLinkedService"/>. </summary>
         /// <param name="workspaceId"> The Power BI workspace id. </param>
         /// <param name="tenantId"> The tenant id to which the Power BI workspace belongs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="tenantId"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "PowerBIWorkspace";
         }
 
-        /// <summary> Initializes a new instance of PowerBIWorkspaceLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerBIWorkspaceLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

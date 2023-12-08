@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ComponentResource" /> and their operations.
-    /// Each <see cref="ComponentResource" /> in the collection will belong to the same instance of <see cref="NetworkFunctionResource" />.
-    /// To get a <see cref="ComponentCollection" /> instance call the GetComponents method from an instance of <see cref="NetworkFunctionResource" />.
+    /// A class representing a collection of <see cref="ComponentResource"/> and their operations.
+    /// Each <see cref="ComponentResource"/> in the collection will belong to the same instance of <see cref="NetworkFunctionResource"/>.
+    /// To get a <see cref="ComponentCollection"/> instance call the GetComponents method from an instance of <see cref="NetworkFunctionResource"/>.
     /// </summary>
     public partial class ComponentCollection : ArmCollection, IEnumerable<ComponentResource>, IAsyncEnumerable<ComponentResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ComponentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ComponentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ComponentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _componentRestClient.CreateListByNetworkFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ComponentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ComponentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ComponentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _componentRestClient.CreateListByNetworkFunctionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> A private endpoint connection under a server. </summary>
     public partial class MySqlServerPrivateEndpointConnection
     {
-        /// <summary> Initializes a new instance of MySqlServerPrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerPrivateEndpointConnection"/>. </summary>
         internal MySqlServerPrivateEndpointConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlServerPrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerPrivateEndpointConnection"/>. </summary>
         /// <param name="id"> Resource Id of the private endpoint connection. </param>
         /// <param name="properties"> Private endpoint connection properties. </param>
         internal MySqlServerPrivateEndpointConnection(ResourceIdentifier id, MySqlServerPrivateEndpointConnectionProperties properties)

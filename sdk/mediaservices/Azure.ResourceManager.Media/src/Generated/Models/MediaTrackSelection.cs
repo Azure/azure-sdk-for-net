@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Class to select a track. </summary>
     public partial class MediaTrackSelection
     {
-        /// <summary> Initializes a new instance of MediaTrackSelection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaTrackSelection"/>. </summary>
         public MediaTrackSelection()
         {
             TrackSelections = new ChangeTrackingList<TrackPropertyCondition>();
         }
 
-        /// <summary> Initializes a new instance of MediaTrackSelection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaTrackSelection"/>. </summary>
         /// <param name="trackSelections"> TrackSelections is a track property condition list which can specify track(s). </param>
         internal MediaTrackSelection(IList<TrackPropertyCondition> trackSelections)
         {

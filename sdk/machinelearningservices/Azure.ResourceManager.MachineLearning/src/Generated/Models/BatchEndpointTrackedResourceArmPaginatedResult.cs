@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of BatchEndpoint entities. </summary>
     internal partial class BatchEndpointTrackedResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of BatchEndpointTrackedResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchEndpointTrackedResourceArmPaginatedResult"/>. </summary>
         internal BatchEndpointTrackedResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningBatchEndpointData>();
         }
 
-        /// <summary> Initializes a new instance of BatchEndpointTrackedResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchEndpointTrackedResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of BatchEndpoint objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type BatchEndpoint. </param>
         internal BatchEndpointTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningBatchEndpointData> value)

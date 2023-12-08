@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The JitNetworkAccessRequestPort. </summary>
     public partial class JitNetworkAccessRequestPort
     {
-        /// <summary> Initializes a new instance of JitNetworkAccessRequestPort. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestPort"/>. </summary>
         /// <param name="number"></param>
         /// <param name="endOn"> The date &amp; time at which the request ends in UTC. </param>
         /// <param name="status"> The status of the port. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             StatusReason = statusReason;
         }
 
-        /// <summary> Initializes a new instance of JitNetworkAccessRequestPort. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestPort"/>. </summary>
         /// <param name="number"></param>
         /// <param name="allowedSourceAddressPrefix"> Mutually exclusive with the "allowedSourceAddressPrefixes" parameter. Should be an IP address or CIDR, for example "192.168.0.3" or "192.168.0.0/16". </param>
         /// <param name="allowedSourceAddressPrefixes"> Mutually exclusive with the "allowedSourceAddressPrefix" parameter. </param>

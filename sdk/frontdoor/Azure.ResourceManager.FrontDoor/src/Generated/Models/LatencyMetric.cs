@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines the properties of a latency metric used in the latency scorecard. </summary>
     public partial class LatencyMetric
     {
-        /// <summary> Initializes a new instance of LatencyMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="LatencyMetric"/>. </summary>
         public LatencyMetric()
         {
         }
 
-        /// <summary> Initializes a new instance of LatencyMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="LatencyMetric"/>. </summary>
         /// <param name="name"> The name of the Latency Metric. </param>
         /// <param name="endOn"> The end time of the Latency Scorecard in UTC. </param>
         /// <param name="aValue"> The metric value of the A endpoint. </param>

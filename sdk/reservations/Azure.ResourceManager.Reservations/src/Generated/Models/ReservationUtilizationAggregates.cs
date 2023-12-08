@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The aggregate values of reservation utilization. </summary>
     public partial class ReservationUtilizationAggregates
     {
-        /// <summary> Initializes a new instance of ReservationUtilizationAggregates. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationUtilizationAggregates"/>. </summary>
         internal ReservationUtilizationAggregates()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationUtilizationAggregates. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationUtilizationAggregates"/>. </summary>
         /// <param name="grain"> The grain of the aggregate. </param>
         /// <param name="grainUnit"> The grain unit of the aggregate. </param>
         /// <param name="value"> The aggregate value. </param>

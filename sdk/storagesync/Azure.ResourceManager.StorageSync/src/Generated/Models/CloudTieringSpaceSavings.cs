@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Server endpoint cloud tiering status object. </summary>
     public partial class CloudTieringSpaceSavings
     {
-        /// <summary> Initializes a new instance of CloudTieringSpaceSavings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudTieringSpaceSavings"/>. </summary>
         internal CloudTieringSpaceSavings()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudTieringSpaceSavings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudTieringSpaceSavings"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="volumeSizeInBytes"> Volume size. </param>
         /// <param name="cloudTotalSizeInBytes"> Total size of content in the azure file share. </param>

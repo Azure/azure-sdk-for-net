@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Address information for domain registration. </summary>
     public partial class RegistrationAddressInfo
     {
-        /// <summary> Initializes a new instance of RegistrationAddressInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistrationAddressInfo"/>. </summary>
         /// <param name="address1"> First line of an Address. </param>
         /// <param name="city"> The city for the address. </param>
         /// <param name="country"> The country for the address. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
             State = state;
         }
 
-        /// <summary> Initializes a new instance of RegistrationAddressInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistrationAddressInfo"/>. </summary>
         /// <param name="address1"> First line of an Address. </param>
         /// <param name="address2"> The second line of the Address. Optional. </param>
         /// <param name="city"> The city for the address. </param>

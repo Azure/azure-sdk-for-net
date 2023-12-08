@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListLocalNetworkGateways API service call. </summary>
     internal partial class LocalNetworkGatewayListResult
     {
-        /// <summary> Initializes a new instance of LocalNetworkGatewayListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalNetworkGatewayListResult"/>. </summary>
         internal LocalNetworkGatewayListResult()
         {
             Value = new ChangeTrackingList<LocalNetworkGatewayData>();
         }
 
-        /// <summary> Initializes a new instance of LocalNetworkGatewayListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalNetworkGatewayListResult"/>. </summary>
         /// <param name="value"> A list of local network gateways that exists in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal LocalNetworkGatewayListResult(IReadOnlyList<LocalNetworkGatewayData> value, string nextLink)

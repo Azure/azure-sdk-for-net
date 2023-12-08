@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Target Azure File Share Info. </summary>
     public partial class TargetAfsRestoreInfo
     {
-        /// <summary> Initializes a new instance of TargetAfsRestoreInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetAfsRestoreInfo"/>. </summary>
         public TargetAfsRestoreInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of TargetAfsRestoreInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetAfsRestoreInfo"/>. </summary>
         /// <param name="name"> File share name. </param>
         /// <param name="targetResourceId"> Target file share resource ARM ID. </param>
         internal TargetAfsRestoreInfo(string name, ResourceIdentifier targetResourceId)

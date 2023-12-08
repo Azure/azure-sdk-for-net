@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for task that validates migration input for Azure SQL Database Managed Instance online migration. </summary>
     public partial class ValidateMigrationInputSqlServerSqlMISyncTaskOutput
     {
-        /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlMISyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateMigrationInputSqlServerSqlMISyncTaskOutput"/>. </summary>
         internal ValidateMigrationInputSqlServerSqlMISyncTaskOutput()
         {
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlMISyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateMigrationInputSqlServerSqlMISyncTaskOutput"/>. </summary>
         /// <param name="id"> Database identifier. </param>
         /// <param name="name"> Name of database. </param>
         /// <param name="validationErrors"> Errors associated with a selected database object. </param>

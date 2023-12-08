@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A Class representing a NetworkFabricAccessControlList along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkFabricAccessControlListResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkFabricAccessControlListResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkFabricAccessControlList method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkFabricAccessControlListResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkFabricAccessControlListResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkFabricAccessControlList method.
     /// </summary>
     public partial class NetworkFabricAccessControlListResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private readonly AccessControlListsRestOperations _networkFabricAccessControlListAccessControlListsRestClient;
         private readonly NetworkFabricAccessControlListData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/accessControlLists";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkFabricAccessControlListResource"/> class for mocking. </summary>
         protected NetworkFabricAccessControlListResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkFabricAccessControlListResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkFabricAccessControlListResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkFabricAccessControlListResource(ArmClient client, NetworkFabricAccessControlListData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/accessControlLists";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

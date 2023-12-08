@@ -10,12 +10,12 @@ namespace Azure.Maps.Search.Models
     /// <summary> Represents a date and time. </summary>
     internal partial class OperatingHoursTime
     {
-        /// <summary> Initializes a new instance of OperatingHoursTime. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperatingHoursTime"/>. </summary>
         internal OperatingHoursTime()
         {
         }
 
-        /// <summary> Initializes a new instance of OperatingHoursTime. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperatingHoursTime"/>. </summary>
         /// <param name="date"> Represents current calendar date in POI time zone, e.g. "2019-02-07". </param>
         /// <param name="hour"> Hours are in the 24 hour format in the local time of a POI; possible values are 0 - 23. </param>
         /// <param name="minute"> Minutes are in the local time of a POI; possible values are 0 - 59. </param>

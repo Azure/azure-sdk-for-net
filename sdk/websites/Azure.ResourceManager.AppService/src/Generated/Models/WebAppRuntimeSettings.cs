@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Web App runtime settings. </summary>
     public partial class WebAppRuntimeSettings
     {
-        /// <summary> Initializes a new instance of WebAppRuntimeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppRuntimeSettings"/>. </summary>
         internal WebAppRuntimeSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of WebAppRuntimeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppRuntimeSettings"/>. </summary>
         /// <param name="runtimeVersion"> Web App stack minor version (runtime only). </param>
         /// <param name="isRemoteDebuggingSupported"> &lt;code&gt;true&lt;/code&gt; if remote debugging is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="appInsightsSettings"> Application Insights settings associated with the minor version. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The baseline values for a single time series. </summary>
     public partial class MonitorTimeSeriesBaseline
     {
-        /// <summary> Initializes a new instance of MonitorTimeSeriesBaseline. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorTimeSeriesBaseline"/>. </summary>
         /// <param name="aggregation"> The aggregation type of the metric. </param>
         /// <param name="timestamps"> The list of timestamps of the baselines. </param>
         /// <param name="data"> The baseline values for each sensitivity. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
             MetadataValues = new ChangeTrackingList<MonitorBaselineMetadata>();
         }
 
-        /// <summary> Initializes a new instance of MonitorTimeSeriesBaseline. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorTimeSeriesBaseline"/>. </summary>
         /// <param name="aggregation"> The aggregation type of the metric. </param>
         /// <param name="dimensions"> The dimensions of this time series. </param>
         /// <param name="timestamps"> The list of timestamps of the baselines. </param>

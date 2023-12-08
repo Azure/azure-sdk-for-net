@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A Class representing an AlertRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AlertRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAlertRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAlertRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AlertRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAlertRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAlertRule method.
     /// </summary>
     public partial class AlertRuleResource : ArmResource
     {
@@ -44,12 +44,15 @@ namespace Azure.ResourceManager.Monitor
         private readonly AlertRuleIncidentsRestOperations _alertRuleIncidentsRestClient;
         private readonly AlertRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/alertrules";
+
         /// <summary> Initializes a new instance of the <see cref="AlertRuleResource"/> class for mocking. </summary>
         protected AlertRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AlertRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AlertRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AlertRuleResource(ArmClient client, AlertRuleData data) : this(client, data.Id)
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.Monitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/alertrules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitorIncident" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MonitorIncident"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitorIncident> GetAlertRuleIncidentsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _alertRuleIncidentsRestClient.CreateListByAlertRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitorIncident" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MonitorIncident"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitorIncident> GetAlertRuleIncidents(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _alertRuleIncidentsRestClient.CreateListByAlertRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

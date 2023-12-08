@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class AppServiceSourceControlData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceSourceControlData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceSourceControlData"/>. </summary>
         public AppServiceSourceControlData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceSourceControlData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceSourceControlData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

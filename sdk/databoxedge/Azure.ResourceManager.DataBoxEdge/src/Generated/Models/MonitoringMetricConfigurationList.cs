@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Collection of metric configurations. </summary>
     internal partial class MonitoringMetricConfigurationList
     {
-        /// <summary> Initializes a new instance of MonitoringMetricConfigurationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringMetricConfigurationList"/>. </summary>
         internal MonitoringMetricConfigurationList()
         {
             Value = new ChangeTrackingList<MonitoringMetricConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of MonitoringMetricConfigurationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringMetricConfigurationList"/>. </summary>
         /// <param name="value"> The list of metric configurations. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal MonitoringMetricConfigurationList(IReadOnlyList<MonitoringMetricConfigurationData> value, string nextLink)

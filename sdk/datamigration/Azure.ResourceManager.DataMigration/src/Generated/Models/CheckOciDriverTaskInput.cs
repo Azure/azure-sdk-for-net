@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the service task to check for OCI drivers. </summary>
     internal partial class CheckOciDriverTaskInput
     {
-        /// <summary> Initializes a new instance of CheckOciDriverTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckOciDriverTaskInput"/>. </summary>
         public CheckOciDriverTaskInput()
         {
         }
 
-        /// <summary> Initializes a new instance of CheckOciDriverTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckOciDriverTaskInput"/>. </summary>
         /// <param name="serverVersion"> Version of the source server to check against.  Optional. </param>
         internal CheckOciDriverTaskInput(string serverVersion)
         {

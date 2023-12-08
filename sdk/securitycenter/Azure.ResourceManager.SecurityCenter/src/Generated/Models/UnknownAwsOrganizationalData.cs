@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The UnknownAwsOrganizationalData. </summary>
     internal partial class UnknownAwsOrganizationalData : AwsOrganizationalInfo
     {
-        /// <summary> Initializes a new instance of UnknownAwsOrganizationalData. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAwsOrganizationalData"/>. </summary>
         /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
         internal UnknownAwsOrganizationalData(OrganizationMembershipType organizationMembershipType) : base(organizationMembershipType)
         {

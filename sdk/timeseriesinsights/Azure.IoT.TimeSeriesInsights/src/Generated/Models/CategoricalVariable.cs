@@ -14,7 +14,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Categorical variable represents signal that needs to be analyzed based on the count or duration of occurrence of limited set of defined values. </summary>
     public partial class CategoricalVariable : TimeSeriesVariable
     {
-        /// <summary> Initializes a new instance of CategoricalVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="CategoricalVariable"/>. </summary>
         /// <param name="value"> Value time series expression is used to represent the value of the signal that is going to be categorized. It can evaluate to only 'String' or 'Long' type for categorical variables. </param>
         /// <param name="defaultCategory"> Represents the default category. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> or <paramref name="defaultCategory"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Kind = "categorical";
         }
 
-        /// <summary> Initializes a new instance of CategoricalVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="CategoricalVariable"/>. </summary>
         /// <param name="kind"> Allowed "kind" values are - "numeric" or "aggregate". While "numeric" allows you to specify value of the reconstructed signal and the expression to aggregate them, the "aggregate" kind lets you directly aggregate on the event properties without specifying value. </param>
         /// <param name="filter"> Filter over the events that restricts the number of events being considered for computation. Example: "$event.Status.String='Good'". Optional. </param>
         /// <param name="value"> Value time series expression is used to represent the value of the signal that is going to be categorized. It can evaluate to only 'String' or 'Long' type for categorical variables. </param>

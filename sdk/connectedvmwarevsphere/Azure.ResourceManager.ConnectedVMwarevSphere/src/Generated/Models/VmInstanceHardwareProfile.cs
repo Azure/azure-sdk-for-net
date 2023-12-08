@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Specifies the hardware settings for the virtual machine. </summary>
     public partial class VmInstanceHardwareProfile
     {
-        /// <summary> Initializes a new instance of VmInstanceHardwareProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmInstanceHardwareProfile"/>. </summary>
         public VmInstanceHardwareProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of VmInstanceHardwareProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmInstanceHardwareProfile"/>. </summary>
         /// <param name="memorySizeMB"> Gets or sets memory size in MBs for the vm. </param>
         /// <param name="numCpus"> Gets or sets the number of vCPUs for the vm. </param>
         /// <param name="numCoresPerSocket"> Gets or sets the number of cores per socket for the vm. Defaults to 1 if unspecified. </param>

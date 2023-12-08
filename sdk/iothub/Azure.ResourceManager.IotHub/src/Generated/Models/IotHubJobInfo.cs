@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties of the Job Response object. </summary>
     public partial class IotHubJobInfo
     {
-        /// <summary> Initializes a new instance of IotHubJobInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubJobInfo"/>. </summary>
         internal IotHubJobInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubJobInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubJobInfo"/>. </summary>
         /// <param name="jobId"> The job identifier. </param>
         /// <param name="startOn"> The start time of the job. </param>
         /// <param name="endOn"> The time the job stopped processing. </param>

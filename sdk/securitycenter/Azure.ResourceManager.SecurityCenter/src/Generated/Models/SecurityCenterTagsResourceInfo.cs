@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags. </summary>
     public partial class SecurityCenterTagsResourceInfo
     {
-        /// <summary> Initializes a new instance of SecurityCenterTagsResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterTagsResourceInfo"/>. </summary>
         public SecurityCenterTagsResourceInfo()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SecurityCenterTagsResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterTagsResourceInfo"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         internal SecurityCenterTagsResourceInfo(IDictionary<string, string> tags)
         {

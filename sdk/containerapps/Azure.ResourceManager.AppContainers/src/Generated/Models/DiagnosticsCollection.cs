@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Diagnostics data collection for a resource. </summary>
     internal partial class DiagnosticsCollection
     {
-        /// <summary> Initializes a new instance of DiagnosticsCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticsCollection"/>. </summary>
         /// <param name="value"> Collection of diagnostic data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DiagnosticsCollection(IEnumerable<ContainerAppDiagnosticData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticsCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticsCollection"/>. </summary>
         /// <param name="value"> Collection of diagnostic data. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal DiagnosticsCollection(IReadOnlyList<ContainerAppDiagnosticData> value, string nextLink)

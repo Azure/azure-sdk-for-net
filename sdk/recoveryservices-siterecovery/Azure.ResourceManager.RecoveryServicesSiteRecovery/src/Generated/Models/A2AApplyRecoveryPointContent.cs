@@ -10,10 +10,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> ApplyRecoveryPoint input specific to A2A provider. </summary>
     public partial class A2AApplyRecoveryPointContent : SiteRecoveryApplyRecoveryPointProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of A2AApplyRecoveryPointContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AApplyRecoveryPointContent"/>. </summary>
         public A2AApplyRecoveryPointContent()
         {
             InstanceType = "A2A";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="A2AApplyRecoveryPointContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        internal A2AApplyRecoveryPointContent(string instanceType) : base(instanceType)
+        {
+            InstanceType = instanceType ?? "A2A";
         }
     }
 }

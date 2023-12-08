@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Egress endpoints which AKS agent nodes connect to for common purpose. </summary>
     public partial class ContainerServiceOutboundEnvironmentEndpoint
     {
-        /// <summary> Initializes a new instance of ContainerServiceOutboundEnvironmentEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceOutboundEnvironmentEndpoint"/>. </summary>
         internal ContainerServiceOutboundEnvironmentEndpoint()
         {
             Endpoints = new ChangeTrackingList<ContainerServiceEndpointDependency>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceOutboundEnvironmentEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceOutboundEnvironmentEndpoint"/>. </summary>
         /// <param name="category"> The category of endpoints accessed by the AKS agent node, e.g. azure-resource-management, apiserver, etc. </param>
         /// <param name="endpoints"> The endpoints that AKS agent nodes connect to. </param>
         internal ContainerServiceOutboundEnvironmentEndpoint(string category, IReadOnlyList<ContainerServiceEndpointDependency> endpoints)

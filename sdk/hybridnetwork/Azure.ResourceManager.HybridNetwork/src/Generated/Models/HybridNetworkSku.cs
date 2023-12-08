@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Sku, to be associated with a SiteNetworkService. </summary>
     public partial class HybridNetworkSku
     {
-        /// <summary> Initializes a new instance of HybridNetworkSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridNetworkSku"/>. </summary>
         /// <param name="name"> Name of this Sku. </param>
         public HybridNetworkSku(HybridNetworkSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of HybridNetworkSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridNetworkSku"/>. </summary>
         /// <param name="name"> Name of this Sku. </param>
         /// <param name="tier"> The SKU tier based on the SKU name. </param>
         internal HybridNetworkSku(HybridNetworkSkuName name, HybridNetworkSkuTier? tier)

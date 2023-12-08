@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A paged list of datastores. </summary>
     internal partial class DatastoreList
     {
-        /// <summary> Initializes a new instance of DatastoreList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatastoreList"/>. </summary>
         internal DatastoreList()
         {
             Value = new ChangeTrackingList<AvsPrivateCloudDatastoreData>();
         }
 
-        /// <summary> Initializes a new instance of DatastoreList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatastoreList"/>. </summary>
         /// <param name="value"> The items on a page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
         internal DatastoreList(IReadOnlyList<AvsPrivateCloudDatastoreData> value, string nextLink)

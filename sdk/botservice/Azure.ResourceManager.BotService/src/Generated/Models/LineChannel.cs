@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Line channel definition. </summary>
     public partial class LineChannel : BotChannelProperties
     {
-        /// <summary> Initializes a new instance of LineChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="LineChannel"/>. </summary>
         public LineChannel()
         {
             ChannelName = "LineChannel";
         }
 
-        /// <summary> Initializes a new instance of LineChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="LineChannel"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>

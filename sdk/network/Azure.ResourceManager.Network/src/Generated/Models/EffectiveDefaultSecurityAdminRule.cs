@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network default admin rule. </summary>
     public partial class EffectiveDefaultSecurityAdminRule : EffectiveBaseSecurityAdminRule
     {
-        /// <summary> Initializes a new instance of EffectiveDefaultSecurityAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveDefaultSecurityAdminRule"/>. </summary>
         internal EffectiveDefaultSecurityAdminRule()
         {
             Sources = new ChangeTrackingList<AddressPrefixItem>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
             Kind = EffectiveAdminRuleKind.Default;
         }
 
-        /// <summary> Initializes a new instance of EffectiveDefaultSecurityAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveDefaultSecurityAdminRule"/>. </summary>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="configurationDescription"> A description of the security admin configuration. </param>
         /// <param name="ruleCollectionDescription"> A description of the rule collection. </param>

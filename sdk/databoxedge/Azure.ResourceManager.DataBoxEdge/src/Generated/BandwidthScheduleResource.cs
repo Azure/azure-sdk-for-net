@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
     /// A Class representing a BandwidthSchedule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BandwidthScheduleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBandwidthScheduleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeDeviceResource" /> using the GetBandwidthSchedule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BandwidthScheduleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBandwidthScheduleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeDeviceResource"/> using the GetBandwidthSchedule method.
     /// </summary>
     public partial class BandwidthScheduleResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.DataBoxEdge
         private readonly BandwidthSchedulesRestOperations _bandwidthScheduleRestClient;
         private readonly BandwidthScheduleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/bandwidthSchedules";
+
         /// <summary> Initializes a new instance of the <see cref="BandwidthScheduleResource"/> class for mocking. </summary>
         protected BandwidthScheduleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BandwidthScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BandwidthScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BandwidthScheduleResource(ArmClient client, BandwidthScheduleData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DataBoxEdge
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/bandwidthSchedules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

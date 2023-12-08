@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A Class representing a SiteRecoveryFabric along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteRecoveryFabricResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteRecoveryFabricResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSiteRecoveryFabric method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteRecoveryFabricResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteRecoveryFabricResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSiteRecoveryFabric method.
     /// </summary>
     public partial class SiteRecoveryFabricResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly ReplicationFabricsRestOperations _siteRecoveryFabricReplicationFabricsRestClient;
         private readonly SiteRecoveryFabricData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics";
+
         /// <summary> Initializes a new instance of the <see cref="SiteRecoveryFabricResource"/> class for mocking. </summary>
         protected SiteRecoveryFabricResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteRecoveryFabricResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryFabricResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteRecoveryFabricResource(ArmClient client, SiteRecoveryFabricData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

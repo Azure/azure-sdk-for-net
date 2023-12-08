@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Sphere
 {
     /// <summary>
     /// A Class representing a SphereCertificate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SphereCertificateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSphereCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SphereCatalogResource" /> using the GetSphereCertificate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SphereCertificateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSphereCertificateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SphereCatalogResource"/> using the GetSphereCertificate method.
     /// </summary>
     public partial class SphereCertificateResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Sphere
         private readonly CertificatesRestOperations _sphereCertificateCertificatesRestClient;
         private readonly SphereCertificateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs/certificates";
+
         /// <summary> Initializes a new instance of the <see cref="SphereCertificateResource"/> class for mocking. </summary>
         protected SphereCertificateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SphereCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SphereCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SphereCertificateResource(ArmClient client, SphereCertificateData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Sphere
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs/certificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

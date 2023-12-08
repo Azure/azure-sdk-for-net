@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A Class representing a HealthCheckStatusDetail along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HealthCheckStatusDetailResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHealthCheckStatusDetailResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterNetworkConnectionResource" /> using the GetHealthCheckStatusDetail method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HealthCheckStatusDetailResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHealthCheckStatusDetailResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterNetworkConnectionResource"/> using the GetHealthCheckStatusDetail method.
     /// </summary>
     public partial class HealthCheckStatusDetailResource : ArmResource
     {
@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.DevCenter
         private readonly NetworkConnectionsRestOperations _healthCheckStatusDetailNetworkConnectionsRestClient;
         private readonly HealthCheckStatusDetailData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/networkConnections/healthChecks";
+
         /// <summary> Initializes a new instance of the <see cref="HealthCheckStatusDetailResource"/> class for mocking. </summary>
         protected HealthCheckStatusDetailResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HealthCheckStatusDetailResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HealthCheckStatusDetailResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HealthCheckStatusDetailResource(ArmClient client, HealthCheckStatusDetailData data) : this(client, data.Id)
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.DevCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/networkConnections/healthChecks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetAppVolumeGroupResource" /> and their operations.
-    /// Each <see cref="NetAppVolumeGroupResource" /> in the collection will belong to the same instance of <see cref="NetAppAccountResource" />.
-    /// To get a <see cref="NetAppVolumeGroupCollection" /> instance call the GetNetAppVolumeGroups method from an instance of <see cref="NetAppAccountResource" />.
+    /// A class representing a collection of <see cref="NetAppVolumeGroupResource"/> and their operations.
+    /// Each <see cref="NetAppVolumeGroupResource"/> in the collection will belong to the same instance of <see cref="NetAppAccountResource"/>.
+    /// To get a <see cref="NetAppVolumeGroupCollection"/> instance call the GetNetAppVolumeGroups method from an instance of <see cref="NetAppAccountResource"/>.
     /// </summary>
     public partial class NetAppVolumeGroupCollection : ArmCollection
     {

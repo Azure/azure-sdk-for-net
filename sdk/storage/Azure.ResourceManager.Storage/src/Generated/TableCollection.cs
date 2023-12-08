@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TableResource" /> and their operations.
-    /// Each <see cref="TableResource" /> in the collection will belong to the same instance of <see cref="TableServiceResource" />.
-    /// To get a <see cref="TableCollection" /> instance call the GetTables method from an instance of <see cref="TableServiceResource" />.
+    /// A class representing a collection of <see cref="TableResource"/> and their operations.
+    /// Each <see cref="TableResource"/> in the collection will belong to the same instance of <see cref="TableServiceResource"/>.
+    /// To get a <see cref="TableCollection"/> instance call the GetTables method from an instance of <see cref="TableServiceResource"/>.
     /// </summary>
     public partial class TableCollection : ArmCollection, IEnumerable<TableResource>, IAsyncEnumerable<TableResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Storage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TableResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TableResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TableResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tableRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Storage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TableResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TableResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TableResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tableRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);

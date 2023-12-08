@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A Class representing an EventGridNamespacePermissionBinding along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventGridNamespacePermissionBindingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventGridNamespacePermissionBindingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventGridNamespaceResource" /> using the GetEventGridNamespacePermissionBinding method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventGridNamespacePermissionBindingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventGridNamespacePermissionBindingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventGridNamespaceResource"/> using the GetEventGridNamespacePermissionBinding method.
     /// </summary>
     public partial class EventGridNamespacePermissionBindingResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.EventGrid
         private readonly PermissionBindingsRestOperations _eventGridNamespacePermissionBindingPermissionBindingsRestClient;
         private readonly EventGridNamespacePermissionBindingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/namespaces/permissionBindings";
+
         /// <summary> Initializes a new instance of the <see cref="EventGridNamespacePermissionBindingResource"/> class for mocking. </summary>
         protected EventGridNamespacePermissionBindingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventGridNamespacePermissionBindingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventGridNamespacePermissionBindingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventGridNamespacePermissionBindingResource(ArmClient client, EventGridNamespacePermissionBindingData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/namespaces/permissionBindings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

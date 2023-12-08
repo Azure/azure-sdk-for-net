@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A Class representing a SiteRecoveryMigrationItem along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteRecoveryMigrationItemResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteRecoveryMigrationItemResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryProtectionContainerResource" /> using the GetSiteRecoveryMigrationItem method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteRecoveryMigrationItemResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteRecoveryMigrationItemResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryProtectionContainerResource"/> using the GetSiteRecoveryMigrationItem method.
     /// </summary>
     public partial class SiteRecoveryMigrationItemResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly ReplicationMigrationItemsRestOperations _siteRecoveryMigrationItemReplicationMigrationItemsRestClient;
         private readonly SiteRecoveryMigrationItemData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationMigrationItems";
+
         /// <summary> Initializes a new instance of the <see cref="SiteRecoveryMigrationItemResource"/> class for mocking. </summary>
         protected SiteRecoveryMigrationItemResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteRecoveryMigrationItemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryMigrationItemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteRecoveryMigrationItemResource(ArmClient client, SiteRecoveryMigrationItemData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationMigrationItems";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

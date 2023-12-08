@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a StaticSiteBuildUserProvidedFunctionApp along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StaticSiteBuildUserProvidedFunctionAppResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStaticSiteBuildUserProvidedFunctionAppResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StaticSiteBuildResource" /> using the GetStaticSiteBuildUserProvidedFunctionApp method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StaticSiteBuildUserProvidedFunctionAppResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStaticSiteBuildUserProvidedFunctionAppResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StaticSiteBuildResource"/> using the GetStaticSiteBuildUserProvidedFunctionApp method.
     /// </summary>
     public partial class StaticSiteBuildUserProvidedFunctionAppResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.AppService
         private readonly StaticSitesRestOperations _staticSiteBuildUserProvidedFunctionAppStaticSitesRestClient;
         private readonly StaticSiteUserProvidedFunctionAppData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/staticSites/builds/userProvidedFunctionApps";
+
         /// <summary> Initializes a new instance of the <see cref="StaticSiteBuildUserProvidedFunctionAppResource"/> class for mocking. </summary>
         protected StaticSiteBuildUserProvidedFunctionAppResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StaticSiteBuildUserProvidedFunctionAppResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StaticSiteBuildUserProvidedFunctionAppResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StaticSiteBuildUserProvidedFunctionAppResource(ArmClient client, StaticSiteUserProvidedFunctionAppData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/staticSites/builds/userProvidedFunctionApps";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

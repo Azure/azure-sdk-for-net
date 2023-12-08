@@ -14,7 +14,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Statistics for the queue. </summary>
     public partial class RouterQueueStatistics
     {
-        /// <summary> Initializes a new instance of RouterQueueStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterQueueStatistics"/>. </summary>
         /// <param name="queueId"> Id of the queue these details are about. </param>
         /// <param name="length"> Length of the queue: total number of enqueued jobs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter
             _estimatedWaitTimeMinutes = new ChangeTrackingDictionary<string, double>();
         }
 
-        /// <summary> Initializes a new instance of RouterQueueStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterQueueStatistics"/>. </summary>
         /// <param name="queueId"> Id of the queue these details are about. </param>
         /// <param name="length"> Length of the queue: total number of enqueued jobs. </param>
         /// <param name="estimatedWaitTimeMinutes"> The estimated wait time of this queue rounded up to the nearest minute, grouped by job priority. </param>

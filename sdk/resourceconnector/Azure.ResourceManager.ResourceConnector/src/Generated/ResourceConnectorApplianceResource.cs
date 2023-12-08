@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ResourceConnector
 {
     /// <summary>
     /// A Class representing a ResourceConnectorAppliance along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceConnectorApplianceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetResourceConnectorApplianceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetResourceConnectorAppliance method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ResourceConnectorApplianceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetResourceConnectorApplianceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetResourceConnectorAppliance method.
     /// </summary>
     public partial class ResourceConnectorApplianceResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.ResourceConnector
         private readonly AppliancesRestOperations _resourceConnectorApplianceAppliancesRestClient;
         private readonly ResourceConnectorApplianceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ResourceConnector/appliances";
+
         /// <summary> Initializes a new instance of the <see cref="ResourceConnectorApplianceResource"/> class for mocking. </summary>
         protected ResourceConnectorApplianceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ResourceConnectorApplianceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceConnectorApplianceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ResourceConnectorApplianceResource(ArmClient client, ResourceConnectorApplianceData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ResourceConnector
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ResourceConnector/appliances";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Specifies resource limits for the migration. </summary>
     public partial class MongoDBThrottlingSettings
     {
-        /// <summary> Initializes a new instance of MongoDBThrottlingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBThrottlingSettings"/>. </summary>
         public MongoDBThrottlingSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MongoDBThrottlingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBThrottlingSettings"/>. </summary>
         /// <param name="minFreeCpu"> The percentage of CPU time that the migrator will try to avoid using, from 0 to 100. </param>
         /// <param name="minFreeMemoryMb"> The number of megabytes of RAM that the migrator will try to avoid using. </param>
         /// <param name="maxParallelism"> The maximum number of work items (e.g. collection copies) that will be processed in parallel. </param>

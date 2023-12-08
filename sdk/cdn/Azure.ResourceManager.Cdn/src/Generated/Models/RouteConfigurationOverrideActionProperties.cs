@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for the route configuration override action. </summary>
     public partial class RouteConfigurationOverrideActionProperties
     {
-        /// <summary> Initializes a new instance of RouteConfigurationOverrideActionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteConfigurationOverrideActionProperties"/>. </summary>
         /// <param name="actionType"></param>
         public RouteConfigurationOverrideActionProperties(RouteConfigurationOverrideActionType actionType)
         {
             ActionType = actionType;
         }
 
-        /// <summary> Initializes a new instance of RouteConfigurationOverrideActionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteConfigurationOverrideActionProperties"/>. </summary>
         /// <param name="actionType"></param>
         /// <param name="originGroupOverride"> A reference to the origin group override configuration. Leave empty to use the default origin group on route. </param>
         /// <param name="cacheConfiguration"> The caching configuration associated with this rule. To disable caching, do not provide a cacheConfiguration object. </param>

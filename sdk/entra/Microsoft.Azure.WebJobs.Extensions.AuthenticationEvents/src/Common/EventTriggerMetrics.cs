@@ -5,7 +5,6 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
@@ -20,9 +19,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// </summary>
         private EventTriggerMetrics()
         {
-            var assembly = AssemblyName.GetAssemblyName("Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.dll");
-
-            ProductVersion = assembly.Version.ToString();
+            ProductVersion = typeof(EventTriggerMetrics).Assembly.GetName().Version.ToString();
             Framework = RuntimeInformation.FrameworkDescription;
             Platform = RuntimeInformation.OSDescription ?? "unknown";
         }

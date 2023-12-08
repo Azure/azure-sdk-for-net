@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Migration Validation Database level summary result. </summary>
     public partial class MigrationValidationDatabaseSummaryResult
     {
-        /// <summary> Initializes a new instance of MigrationValidationDatabaseSummaryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationValidationDatabaseSummaryResult"/>. </summary>
         internal MigrationValidationDatabaseSummaryResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrationValidationDatabaseSummaryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationValidationDatabaseSummaryResult"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="migrationId"> Migration Identifier. </param>
         /// <param name="sourceDatabaseName"> Name of the source database. </param>

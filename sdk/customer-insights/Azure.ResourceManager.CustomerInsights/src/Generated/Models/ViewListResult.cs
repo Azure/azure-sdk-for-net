@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The response of list view operation. </summary>
     internal partial class ViewListResult
     {
-        /// <summary> Initializes a new instance of ViewListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ViewListResult"/>. </summary>
         internal ViewListResult()
         {
             Value = new ChangeTrackingList<ViewResourceFormatData>();
         }
 
-        /// <summary> Initializes a new instance of ViewListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ViewListResult"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal ViewListResult(IReadOnlyList<ViewResourceFormatData> value, string nextLink)

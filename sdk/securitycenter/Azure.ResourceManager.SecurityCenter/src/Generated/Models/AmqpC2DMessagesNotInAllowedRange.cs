@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Number of cloud to device messages (AMQP protocol) is not in allowed range. </summary>
     public partial class AmqpC2DMessagesNotInAllowedRange : TimeWindowCustomAlertRule
     {
-        /// <summary> Initializes a new instance of AmqpC2DMessagesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmqpC2DMessagesNotInAllowedRange"/>. </summary>
         /// <param name="isEnabled"> Status of the custom alert. </param>
         /// <param name="minThreshold"> The minimum threshold. </param>
         /// <param name="maxThreshold"> The maximum threshold. </param>
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             RuleType = "AmqpC2DMessagesNotInAllowedRange";
         }
 
-        /// <summary> Initializes a new instance of AmqpC2DMessagesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmqpC2DMessagesNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>

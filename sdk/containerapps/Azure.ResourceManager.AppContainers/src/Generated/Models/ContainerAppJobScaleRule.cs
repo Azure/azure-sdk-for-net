@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Scaling rule. </summary>
     public partial class ContainerAppJobScaleRule
     {
-        /// <summary> Initializes a new instance of ContainerAppJobScaleRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobScaleRule"/>. </summary>
         public ContainerAppJobScaleRule()
         {
             Auth = new ChangeTrackingList<ContainerAppScaleRuleAuth>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppJobScaleRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobScaleRule"/>. </summary>
         /// <param name="name"> Scale Rule Name. </param>
         /// <param name="jobScaleRuleType">
         /// Type of the scale rule

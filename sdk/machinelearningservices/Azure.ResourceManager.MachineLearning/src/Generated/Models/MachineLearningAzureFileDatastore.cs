@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Azure File datastore configuration. </summary>
     public partial class MachineLearningAzureFileDatastore : MachineLearningDatastoreProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningAzureFileDatastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAzureFileDatastore"/>. </summary>
         /// <param name="credentials">
         /// [Required] Account credentials.
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DatastoreType = DatastoreType.AzureFile;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAzureFileDatastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAzureFileDatastore"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

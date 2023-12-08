@@ -12,13 +12,24 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The DetectionAnomalyResultQuery. </summary>
     internal partial class DetectionAnomalyResultQuery
     {
-        /// <summary> Initializes a new instance of DetectionAnomalyResultQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectionAnomalyResultQuery"/>. </summary>
         /// <param name="startTime"> start time. </param>
         /// <param name="endTime"> end time. </param>
         public DetectionAnomalyResultQuery(DateTimeOffset startTime, DateTimeOffset endTime)
         {
             StartTime = startTime;
             EndTime = endTime;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DetectionAnomalyResultQuery"/>. </summary>
+        /// <param name="startTime"> start time. </param>
+        /// <param name="endTime"> end time. </param>
+        /// <param name="filter"></param>
+        internal DetectionAnomalyResultQuery(DateTimeOffset startTime, DateTimeOffset endTime, DetectionAnomalyFilterCondition filter)
+        {
+            StartTime = startTime;
+            EndTime = endTime;
+            Filter = filter;
         }
 
         /// <summary> start time. </summary>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Describes a managed rule group. </summary>
     public partial class ManagedRuleGroupDefinition
     {
-        /// <summary> Initializes a new instance of ManagedRuleGroupDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleGroupDefinition"/>. </summary>
         internal ManagedRuleGroupDefinition()
         {
             Rules = new ChangeTrackingList<ManagedRuleDefinition>();
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleGroupDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleGroupDefinition"/>. </summary>
         /// <param name="ruleGroupName"> Name of the managed rule group. </param>
         /// <param name="description"> Description of the managed rule group. </param>
         /// <param name="rules"> List of rules within the managed rule group. </param>

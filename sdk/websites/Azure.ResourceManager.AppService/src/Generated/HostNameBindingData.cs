@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class HostNameBindingData : ResourceData
     {
-        /// <summary> Initializes a new instance of HostNameBindingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostNameBindingData"/>. </summary>
         public HostNameBindingData()
         {
         }
 
-        /// <summary> Initializes a new instance of HostNameBindingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostNameBindingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

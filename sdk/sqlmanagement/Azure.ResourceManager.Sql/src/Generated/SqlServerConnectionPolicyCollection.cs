@@ -21,9 +21,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SqlServerConnectionPolicyResource" /> and their operations.
-    /// Each <see cref="SqlServerConnectionPolicyResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
-    /// To get a <see cref="SqlServerConnectionPolicyCollection" /> instance call the GetSqlServerConnectionPolicies method from an instance of <see cref="SqlServerResource" />.
+    /// A class representing a collection of <see cref="SqlServerConnectionPolicyResource"/> and their operations.
+    /// Each <see cref="SqlServerConnectionPolicyResource"/> in the collection will belong to the same instance of <see cref="SqlServerResource"/>.
+    /// To get a <see cref="SqlServerConnectionPolicyCollection"/> instance call the GetSqlServerConnectionPolicies method from an instance of <see cref="SqlServerResource"/>.
     /// </summary>
     public partial class SqlServerConnectionPolicyCollection : ArmCollection, IEnumerable<SqlServerConnectionPolicyResource>, IAsyncEnumerable<SqlServerConnectionPolicyResource>
     {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerConnectionPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlServerConnectionPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerConnectionPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerConnectionPolicyServerConnectionPoliciesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerConnectionPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlServerConnectionPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerConnectionPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerConnectionPolicyServerConnectionPoliciesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

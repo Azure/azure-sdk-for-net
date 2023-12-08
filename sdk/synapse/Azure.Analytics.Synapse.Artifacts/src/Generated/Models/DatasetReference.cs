@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Dataset reference type. </summary>
     public partial class DatasetReference
     {
-        /// <summary> Initializes a new instance of DatasetReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetReference"/>. </summary>
         /// <param name="type"> Dataset reference type. </param>
         /// <param name="referenceName"> Reference dataset name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Parameters = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of DatasetReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetReference"/>. </summary>
         /// <param name="type"> Dataset reference type. </param>
         /// <param name="referenceName"> Reference dataset name. </param>
         /// <param name="parameters"> Arguments for dataset. </param>

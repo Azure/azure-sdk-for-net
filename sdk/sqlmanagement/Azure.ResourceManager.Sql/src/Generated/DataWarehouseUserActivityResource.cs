@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a DataWarehouseUserActivity along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataWarehouseUserActivityResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataWarehouseUserActivityResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource" /> using the GetDataWarehouseUserActivity method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataWarehouseUserActivityResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataWarehouseUserActivityResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource"/> using the GetDataWarehouseUserActivity method.
     /// </summary>
     public partial class DataWarehouseUserActivityResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Sql
         private readonly DataWarehouseUserActivitiesRestOperations _dataWarehouseUserActivityRestClient;
         private readonly DataWarehouseUserActivityData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/dataWarehouseUserActivities";
+
         /// <summary> Initializes a new instance of the <see cref="DataWarehouseUserActivityResource"/> class for mocking. </summary>
         protected DataWarehouseUserActivityResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataWarehouseUserActivityResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataWarehouseUserActivityResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataWarehouseUserActivityResource(ArmClient client, DataWarehouseUserActivityData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/dataWarehouseUserActivities";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

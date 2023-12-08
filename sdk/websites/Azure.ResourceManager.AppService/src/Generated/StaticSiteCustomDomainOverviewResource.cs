@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a StaticSiteCustomDomainOverview along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StaticSiteCustomDomainOverviewResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStaticSiteCustomDomainOverviewResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StaticSiteResource" /> using the GetStaticSiteCustomDomainOverview method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StaticSiteCustomDomainOverviewResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStaticSiteCustomDomainOverviewResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StaticSiteResource"/> using the GetStaticSiteCustomDomainOverview method.
     /// </summary>
     public partial class StaticSiteCustomDomainOverviewResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.AppService
         private readonly StaticSitesRestOperations _staticSiteCustomDomainOverviewStaticSitesRestClient;
         private readonly StaticSiteCustomDomainOverviewData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/staticSites/customDomains";
+
         /// <summary> Initializes a new instance of the <see cref="StaticSiteCustomDomainOverviewResource"/> class for mocking. </summary>
         protected StaticSiteCustomDomainOverviewResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StaticSiteCustomDomainOverviewResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StaticSiteCustomDomainOverviewResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StaticSiteCustomDomainOverviewResource(ArmClient client, StaticSiteCustomDomainOverviewData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/staticSites/customDomains";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

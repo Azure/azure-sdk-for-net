@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Server version capabilities. </summary>
     public partial class MySqlFlexibleServerServerVersionCapability
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerServerVersionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerServerVersionCapability"/>. </summary>
         internal MySqlFlexibleServerServerVersionCapability()
         {
             SupportedSkus = new ChangeTrackingList<MySqlFlexibleServerSkuCapability>();
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerServerVersionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerServerVersionCapability"/>. </summary>
         /// <param name="name"> server version. </param>
         /// <param name="supportedSkus"> A list of supported Skus. </param>
         internal MySqlFlexibleServerServerVersionCapability(string name, IReadOnlyList<MySqlFlexibleServerSkuCapability> supportedSkus)

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of performance monitor counters. </summary>
     internal partial class PerfMonCounterListResult
     {
-        /// <summary> Initializes a new instance of PerfMonCounterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PerfMonCounterListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PerfMonCounterListResult(IEnumerable<PerfMonResponseInfo> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PerfMonCounterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PerfMonCounterListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal PerfMonCounterListResult(IReadOnlyList<PerfMonResponseInfo> value, string nextLink)

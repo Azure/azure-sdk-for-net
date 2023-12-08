@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged NamedValue list representation. </summary>
     internal partial class NamedValueListResult
     {
-        /// <summary> Initializes a new instance of NamedValueListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamedValueListResult"/>. </summary>
         internal NamedValueListResult()
         {
             Value = new ChangeTrackingList<ApiManagementNamedValueData>();
         }
 
-        /// <summary> Initializes a new instance of NamedValueListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamedValueListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

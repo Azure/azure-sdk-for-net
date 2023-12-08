@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The response to a list database operations request. </summary>
     internal partial class DatabaseOperationListResult
     {
-        /// <summary> Initializes a new instance of DatabaseOperationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseOperationListResult"/>. </summary>
         internal DatabaseOperationListResult()
         {
             Value = new ChangeTrackingList<DatabaseOperationData>();
         }
 
-        /// <summary> Initializes a new instance of DatabaseOperationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseOperationListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal DatabaseOperationListResult(IReadOnlyList<DatabaseOperationData> value, string nextLink)

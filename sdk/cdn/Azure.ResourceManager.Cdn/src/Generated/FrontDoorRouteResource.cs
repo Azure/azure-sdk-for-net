@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
     /// A Class representing a FrontDoorRoute along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FrontDoorRouteResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFrontDoorRouteResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FrontDoorEndpointResource" /> using the GetFrontDoorRoute method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FrontDoorRouteResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFrontDoorRouteResource method.
+    /// Otherwise you can get one from its parent resource <see cref="FrontDoorEndpointResource"/> using the GetFrontDoorRoute method.
     /// </summary>
     public partial class FrontDoorRouteResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Cdn
         private readonly FrontDoorRoutesRestOperations _frontDoorRouteRestClient;
         private readonly FrontDoorRouteData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/afdEndpoints/routes";
+
         /// <summary> Initializes a new instance of the <see cref="FrontDoorRouteResource"/> class for mocking. </summary>
         protected FrontDoorRouteResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FrontDoorRouteResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorRouteResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FrontDoorRouteResource(ArmClient client, FrontDoorRouteData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Cdn
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/afdEndpoints/routes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 {
     /// <summary>
     /// A Class representing a SqlVm along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlVmResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlVmResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSqlVm method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlVmResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlVmResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSqlVm method.
     /// </summary>
     public partial class SqlVmResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         private readonly SqlVirtualMachinesRestOperations _sqlVmSqlVirtualMachinesRestClient;
         private readonly SqlVmData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SqlVirtualMachine/sqlVirtualMachines";
+
         /// <summary> Initializes a new instance of the <see cref="SqlVmResource"/> class for mocking. </summary>
         protected SqlVmResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlVmResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlVmResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlVmResource(ArmClient client, SqlVmData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SqlVirtualMachine/sqlVirtualMachines";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

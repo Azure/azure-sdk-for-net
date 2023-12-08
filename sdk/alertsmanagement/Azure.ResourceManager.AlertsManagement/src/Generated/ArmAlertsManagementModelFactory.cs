@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmAlertsManagementModelFactory
     {
-        /// <summary> Initializes a new instance of AlertProcessingRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertsManagement.AlertProcessingRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new AlertProcessingRuleData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertMetadata"/>. </summary>
         /// <param name="properties">
         /// alert meta data property bag
         /// Please note <see cref="ServiceAlertMetadataProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new ServiceAlertMetadata(properties);
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertsManagement.ServiceAlertData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new ServiceAlertData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertProperties"/>. </summary>
         /// <param name="essentials"> This object contains consistent fields across different monitor services. </param>
         /// <param name="context"> Information specific to the monitor service that gives more contextual details about the alert. </param>
         /// <param name="egressConfig"> Config which would be used for displaying the data in portal. </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new ServiceAlertProperties(essentials, context, egressConfig);
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertEssentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertEssentials"/>. </summary>
         /// <param name="severity"> Severity of alert Sev0 being highest and Sev4 being lowest. </param>
         /// <param name="signalType"> The type of signal the alert is based on, which could be metrics, logs or activity logs. </param>
         /// <param name="alertState"> Alert object state, which can be modified by the user. </param>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new ServiceAlertEssentials(severity, signalType, alertState, monitorCondition, targetResource, targetResourceName, targetResourceGroup, targetResourceType, monitorService, alertRule, sourceCreatedId, smartGroupId, smartGroupingReason, startOn, lastModifiedOn, monitorConditionResolvedOn, lastModifiedBy, isSuppressed != null ? new ServiceAlertActionStatus(isSuppressed) : null, description);
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertModification. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertModification"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new ServiceAlertModification(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertModificationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertModificationProperties"/>. </summary>
         /// <param name="alertId"> Unique Id of the alert for which the history is being retrieved. </param>
         /// <param name="modifications"> Modification details. </param>
         /// <returns> A new <see cref="Models.ServiceAlertModificationProperties"/> instance for mocking. </returns>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new ServiceAlertModificationProperties(alertId, modifications?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new ServiceAlertSummary(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of SmartGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertsManagement.SmartGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new SmartGroupData(id, name, resourceType, systemData, alertsCount, smartGroupState, severity, startOn, lastModifiedOn, lastModifiedBy, resources?.ToList(), resourceTypes?.ToList(), resourceGroups?.ToList(), monitorServices?.ToList(), monitorConditions?.ToList(), alertStates?.ToList(), alertSeverities?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes a new instance of SmartGroupModification. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SmartGroupModification"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new SmartGroupModification(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of SmartGroupModificationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SmartGroupModificationProperties"/>. </summary>
         /// <param name="smartGroupId"> Unique Id of the smartGroup for which the history is being retrieved. </param>
         /// <param name="modifications"> Modification details. </param>
         /// <param name="nextLink"> URL to fetch the next set of results. </param>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new SmartGroupModificationProperties(smartGroupId, modifications?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes a new instance of MonitorServiceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorServiceList"/>. </summary>
         /// <param name="data"> Array of operations. </param>
         /// <returns> A new <see cref="Models.MonitorServiceList"/> instance for mocking. </returns>
         public static MonitorServiceList MonitorServiceList(IEnumerable<MonitorServiceDetails> data = null)
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new MonitorServiceList(ServiceAlertMetadataIdentifier.MonitorServiceList, data?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MonitorServiceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorServiceDetails"/>. </summary>
         /// <param name="name"> Monitor service name. </param>
         /// <param name="displayName"> Monitor service display name. </param>
         /// <returns> A new <see cref="Models.MonitorServiceDetails"/> instance for mocking. </returns>

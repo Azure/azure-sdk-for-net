@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.MixedReality
 {
     /// <summary>
     /// A Class representing a RemoteRenderingAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RemoteRenderingAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRemoteRenderingAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetRemoteRenderingAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RemoteRenderingAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRemoteRenderingAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetRemoteRenderingAccount method.
     /// </summary>
     public partial class RemoteRenderingAccountResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.MixedReality
         private readonly RemoteRenderingAccountsRestOperations _remoteRenderingAccountRestClient;
         private readonly RemoteRenderingAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MixedReality/remoteRenderingAccounts";
+
         /// <summary> Initializes a new instance of the <see cref="RemoteRenderingAccountResource"/> class for mocking. </summary>
         protected RemoteRenderingAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RemoteRenderingAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RemoteRenderingAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RemoteRenderingAccountResource(ArmClient client, RemoteRenderingAccountData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.MixedReality
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MixedReality/remoteRenderingAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

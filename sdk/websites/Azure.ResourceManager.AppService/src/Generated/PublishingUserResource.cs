@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a PublishingUser along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PublishingUserResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPublishingUserResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetPublishingUser method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PublishingUserResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPublishingUserResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetPublishingUser method.
     /// </summary>
     public partial class PublishingUserResource : ArmResource
     {
@@ -36,12 +36,15 @@ namespace Azure.ResourceManager.AppService
         private readonly WebSiteManagementRestOperations _publishingUserRestClient;
         private readonly PublishingUserData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/publishingUsers";
+
         /// <summary> Initializes a new instance of the <see cref="PublishingUserResource"/> class for mocking. </summary>
         protected PublishingUserResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PublishingUserResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PublishingUserResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PublishingUserResource(ArmClient client, PublishingUserData data) : this(client, data.Id)
@@ -62,9 +65,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/publishingUsers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

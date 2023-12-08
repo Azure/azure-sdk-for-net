@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Azure retention rule. </summary>
     public partial class DataProtectionRetentionRule : DataProtectionBasePolicyRule
     {
-        /// <summary> Initializes a new instance of DataProtectionRetentionRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionRetentionRule"/>. </summary>
         /// <param name="name"></param>
         /// <param name="lifecycles"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="lifecycles"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = "AzureRetentionRule";
         }
 
-        /// <summary> Initializes a new instance of DataProtectionRetentionRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionRetentionRule"/>. </summary>
         /// <param name="name"></param>
         /// <param name="objectType"></param>
         /// <param name="isDefault"></param>

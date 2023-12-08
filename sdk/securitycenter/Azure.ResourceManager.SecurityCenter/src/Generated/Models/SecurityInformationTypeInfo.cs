@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The information type. </summary>
     public partial class SecurityInformationTypeInfo
     {
-        /// <summary> Initializes a new instance of SecurityInformationTypeInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInformationTypeInfo"/>. </summary>
         public SecurityInformationTypeInfo()
         {
             Keywords = new ChangeTrackingList<InformationProtectionKeyword>();
         }
 
-        /// <summary> Initializes a new instance of SecurityInformationTypeInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInformationTypeInfo"/>. </summary>
         /// <param name="displayName"> The name of the information type. </param>
         /// <param name="description"> The description of the information type. </param>
         /// <param name="order"> The order of the information type. </param>

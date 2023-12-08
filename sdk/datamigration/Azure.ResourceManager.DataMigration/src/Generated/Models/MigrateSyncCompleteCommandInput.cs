@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for command that completes sync migration for a database. </summary>
     public partial class MigrateSyncCompleteCommandInput
     {
-        /// <summary> Initializes a new instance of MigrateSyncCompleteCommandInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSyncCompleteCommandInput"/>. </summary>
         /// <param name="databaseName"> Name of database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public MigrateSyncCompleteCommandInput(string databaseName)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             DatabaseName = databaseName;
         }
 
-        /// <summary> Initializes a new instance of MigrateSyncCompleteCommandInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSyncCompleteCommandInput"/>. </summary>
         /// <param name="databaseName"> Name of database. </param>
         /// <param name="commitTimeStamp"> Time stamp to complete. </param>
         internal MigrateSyncCompleteCommandInput(string databaseName, DateTimeOffset? commitTimeStamp)

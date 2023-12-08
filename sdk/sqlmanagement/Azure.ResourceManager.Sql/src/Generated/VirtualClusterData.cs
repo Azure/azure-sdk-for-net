@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class VirtualClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VirtualClusterData(AzureLocation location) : base(location)
         {
             ChildResources = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VirtualClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Result of the request to list NetworkManager. It contains a list of network managers and a URL link to get the next set of results. </summary>
     internal partial class NetworkManagerListResult
     {
-        /// <summary> Initializes a new instance of NetworkManagerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerListResult"/>. </summary>
         internal NetworkManagerListResult()
         {
             Value = new ChangeTrackingList<NetworkManagerData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkManagerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerListResult"/>. </summary>
         /// <param name="value"> Gets a page of NetworkManager. </param>
         /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
         internal NetworkManagerListResult(IReadOnlyList<NetworkManagerData> value, string nextLink)

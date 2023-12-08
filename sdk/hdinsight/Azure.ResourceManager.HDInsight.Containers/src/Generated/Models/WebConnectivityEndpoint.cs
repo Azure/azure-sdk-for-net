@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Web connectivity endpoint details. </summary>
     internal partial class WebConnectivityEndpoint
     {
-        /// <summary> Initializes a new instance of WebConnectivityEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebConnectivityEndpoint"/>. </summary>
         /// <param name="fqdn"> Web connectivity endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fqdn"/> is null. </exception>
         internal WebConnectivityEndpoint(string fqdn)

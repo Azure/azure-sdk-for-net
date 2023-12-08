@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Set of export policy rules. </summary>
     internal partial class VolumePropertiesExportPolicy
     {
-        /// <summary> Initializes a new instance of VolumePropertiesExportPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumePropertiesExportPolicy"/>. </summary>
         public VolumePropertiesExportPolicy()
         {
             Rules = new ChangeTrackingList<NetAppVolumeExportPolicyRule>();
         }
 
-        /// <summary> Initializes a new instance of VolumePropertiesExportPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumePropertiesExportPolicy"/>. </summary>
         /// <param name="rules"> Export policy rule. </param>
         internal VolumePropertiesExportPolicy(IList<NetAppVolumeExportPolicyRule> rules)
         {

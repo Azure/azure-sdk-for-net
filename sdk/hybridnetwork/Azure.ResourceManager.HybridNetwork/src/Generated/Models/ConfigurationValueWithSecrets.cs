@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The ConfigurationValue with secrets. </summary>
     public partial class ConfigurationValueWithSecrets : ConfigurationGroupValuePropertiesFormat
     {
-        /// <summary> Initializes a new instance of ConfigurationValueWithSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationValueWithSecrets"/>. </summary>
         public ConfigurationValueWithSecrets()
         {
             ConfigurationType = ConfigurationGroupValueConfigurationType.Secret;
         }
 
-        /// <summary> Initializes a new instance of ConfigurationValueWithSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationValueWithSecrets"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the site resource. </param>
         /// <param name="publisherName"> The publisher name for the configuration group schema. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>

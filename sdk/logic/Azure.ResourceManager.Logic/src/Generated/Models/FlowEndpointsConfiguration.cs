@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The endpoints configuration. </summary>
     public partial class FlowEndpointsConfiguration
     {
-        /// <summary> Initializes a new instance of FlowEndpointsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowEndpointsConfiguration"/>. </summary>
         public FlowEndpointsConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of FlowEndpointsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowEndpointsConfiguration"/>. </summary>
         /// <param name="workflow"> The workflow endpoints. </param>
         /// <param name="connector"> The connector endpoints. </param>
         internal FlowEndpointsConfiguration(FlowEndpoints workflow, FlowEndpoints connector)

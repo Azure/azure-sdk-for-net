@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 {
     /// <summary>
     /// A Class representing a HardwareSecurityModulesPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHardwareSecurityModulesPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CloudHsmClusterResource" /> using the GetHardwareSecurityModulesPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHardwareSecurityModulesPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CloudHsmClusterResource"/> using the GetHardwareSecurityModulesPrivateEndpointConnection method.
     /// </summary>
     public partial class HardwareSecurityModulesPrivateEndpointConnectionResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         private readonly CloudHsmClusterPrivateEndpointConnectionsRestOperations _hardwareSecurityModulesPrivateEndpointConnectionCloudHsmClusterPrivateEndpointConnectionsRestClient;
         private readonly HardwareSecurityModulesPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HardwareSecurityModules/cloudHsmClusters/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected HardwareSecurityModulesPrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HardwareSecurityModulesPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HardwareSecurityModulesPrivateEndpointConnectionResource(ArmClient client, HardwareSecurityModulesPrivateEndpointConnectionData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HardwareSecurityModules/cloudHsmClusters/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

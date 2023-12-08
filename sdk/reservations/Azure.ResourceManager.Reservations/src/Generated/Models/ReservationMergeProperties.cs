@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Properties of reservation merge. </summary>
     public partial class ReservationMergeProperties
     {
-        /// <summary> Initializes a new instance of ReservationMergeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationMergeProperties"/>. </summary>
         internal ReservationMergeProperties()
         {
             MergeSources = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ReservationMergeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationMergeProperties"/>. </summary>
         /// <param name="mergeDestination"> Reservation resource id Created due to the merge. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
         /// <param name="mergeSources"> Resource ids of the source reservation's merged to form this reservation. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
         internal ReservationMergeProperties(string mergeDestination, IReadOnlyList<string> mergeSources)

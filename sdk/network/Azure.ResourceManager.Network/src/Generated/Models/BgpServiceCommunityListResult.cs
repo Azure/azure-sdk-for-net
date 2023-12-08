@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for the ListServiceCommunity API service call. </summary>
     internal partial class BgpServiceCommunityListResult
     {
-        /// <summary> Initializes a new instance of BgpServiceCommunityListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpServiceCommunityListResult"/>. </summary>
         internal BgpServiceCommunityListResult()
         {
             Value = new ChangeTrackingList<BgpServiceCommunity>();
         }
 
-        /// <summary> Initializes a new instance of BgpServiceCommunityListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpServiceCommunityListResult"/>. </summary>
         /// <param name="value"> A list of service community resources. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal BgpServiceCommunityListResult(IReadOnlyList<BgpServiceCommunity> value, string nextLink)

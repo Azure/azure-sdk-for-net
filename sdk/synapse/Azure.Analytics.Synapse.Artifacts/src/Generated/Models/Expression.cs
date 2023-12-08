@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure Synapse expression definition. </summary>
     public partial class Expression
     {
-        /// <summary> Initializes a new instance of Expression. </summary>
+        /// <summary> Initializes a new instance of <see cref="Expression"/>. </summary>
         /// <param name="type"> Expression type. </param>
         /// <param name="value"> Expression value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>

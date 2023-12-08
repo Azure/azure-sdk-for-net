@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> The container settings for a task. </summary>
     public partial class BatchTaskContainerSettings
     {
-        /// <summary> Initializes a new instance of BatchTaskContainerSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchTaskContainerSettings"/>. </summary>
         /// <param name="imageName"> This is the full image reference, as would be specified to "docker pull". If no tag is provided as part of the image name, the tag ":latest" is used as a default. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public BatchTaskContainerSettings(string imageName)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Batch.Models
             ImageName = imageName;
         }
 
-        /// <summary> Initializes a new instance of BatchTaskContainerSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchTaskContainerSettings"/>. </summary>
         /// <param name="containerRunOptions"> These additional options are supplied as arguments to the "docker create" command, in addition to those controlled by the Batch Service. </param>
         /// <param name="imageName"> This is the full image reference, as would be specified to "docker pull". If no tag is provided as part of the image name, the tag ":latest" is used as a default. </param>
         /// <param name="registry"> This setting can be omitted if was already provided at pool creation. </param>

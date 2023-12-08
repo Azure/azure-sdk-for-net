@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class IngestionSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of IngestionSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionSettingData"/>. </summary>
         public IngestionSettingData()
         {
         }
 
-        /// <summary> Initializes a new instance of IngestionSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

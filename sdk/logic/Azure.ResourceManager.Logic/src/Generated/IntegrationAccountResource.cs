@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Logic
 {
     /// <summary>
     /// A Class representing an IntegrationAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IntegrationAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIntegrationAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetIntegrationAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IntegrationAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIntegrationAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetIntegrationAccount method.
     /// </summary>
     public partial class IntegrationAccountResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.Logic
         private readonly IntegrationAccountsRestOperations _integrationAccountRestClient;
         private readonly IntegrationAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Logic/integrationAccounts";
+
         /// <summary> Initializes a new instance of the <see cref="IntegrationAccountResource"/> class for mocking. </summary>
         protected IntegrationAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IntegrationAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IntegrationAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IntegrationAccountResource(ArmClient client, IntegrationAccountData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.Logic
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Logic/integrationAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="content"> The key vault parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="IntegrationAccountKeyVaultKey" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IntegrationAccountKeyVaultKey"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IntegrationAccountKeyVaultKey> GetKeyVaultKeysAsync(IntegrationAccountListKeyVaultKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="content"> The key vault parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="IntegrationAccountKeyVaultKey" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IntegrationAccountKeyVaultKey"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IntegrationAccountKeyVaultKey> GetKeyVaultKeys(IntegrationAccountListKeyVaultKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));

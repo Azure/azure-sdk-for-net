@@ -21,9 +21,9 @@ using Azure.ResourceManager.CosmosDB.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CosmosDBSqlContainerResource" /> and their operations.
-    /// Each <see cref="CosmosDBSqlContainerResource" /> in the collection will belong to the same instance of <see cref="CosmosDBSqlDatabaseResource" />.
-    /// To get a <see cref="CosmosDBSqlContainerCollection" /> instance call the GetCosmosDBSqlContainers method from an instance of <see cref="CosmosDBSqlDatabaseResource" />.
+    /// A class representing a collection of <see cref="CosmosDBSqlContainerResource"/> and their operations.
+    /// Each <see cref="CosmosDBSqlContainerResource"/> in the collection will belong to the same instance of <see cref="CosmosDBSqlDatabaseResource"/>.
+    /// To get a <see cref="CosmosDBSqlContainerCollection"/> instance call the GetCosmosDBSqlContainers method from an instance of <see cref="CosmosDBSqlDatabaseResource"/>.
     /// </summary>
     public partial class CosmosDBSqlContainerCollection : ArmCollection, IEnumerable<CosmosDBSqlContainerResource>, IAsyncEnumerable<CosmosDBSqlContainerResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CosmosDBSqlContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CosmosDBSqlContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBSqlContainerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlContainerSqlResourcesRestClient.CreateListSqlContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CosmosDBSqlContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CosmosDBSqlContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBSqlContainerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlContainerSqlResourcesRestClient.CreateListSqlContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

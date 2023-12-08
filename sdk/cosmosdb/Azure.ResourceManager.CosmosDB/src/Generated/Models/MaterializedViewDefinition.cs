@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Materialized View definition for the container. </summary>
     public partial class MaterializedViewDefinition
     {
-        /// <summary> Initializes a new instance of MaterializedViewDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaterializedViewDefinition"/>. </summary>
         /// <param name="sourceCollectionId"> The name of the source container on which the Materialized View will be created. </param>
         /// <param name="definition"> The definition should be an SQL query which would be used to fetch data from the source container to populate into the Materialized View container. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceCollectionId"/> or <paramref name="definition"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Definition = definition;
         }
 
-        /// <summary> Initializes a new instance of MaterializedViewDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaterializedViewDefinition"/>. </summary>
         /// <param name="sourceCollectionRid"> An unique identifier for the source collection. This is a system generated property. </param>
         /// <param name="sourceCollectionId"> The name of the source container on which the Materialized View will be created. </param>
         /// <param name="definition"> The definition should be an SQL query which would be used to fetch data from the source container to populate into the Materialized View container. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ProviderHubMetadata. </summary>
     public partial class ProviderHubMetadata
     {
-        /// <summary> Initializes a new instance of ProviderHubMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderHubMetadata"/>. </summary>
         public ProviderHubMetadata()
         {
             ProviderAuthorizations = new ChangeTrackingList<ResourceProviderAuthorization>();
         }
 
-        /// <summary> Initializes a new instance of ProviderHubMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderHubMetadata"/>. </summary>
         /// <param name="providerAuthorizations"></param>
         /// <param name="providerAuthentication"></param>
         /// <param name="thirdPartyProviderAuthorization"></param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Workflow model properties. </summary>
     public partial class DataReplicationWorkflowProperties
     {
-        /// <summary> Initializes a new instance of DataReplicationWorkflowProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationWorkflowProperties"/>. </summary>
         /// <param name="customProperties">
         /// Workflow model custom properties.
         /// Please note <see cref="WorkflowModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             CustomProperties = customProperties;
         }
 
-        /// <summary> Initializes a new instance of DataReplicationWorkflowProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationWorkflowProperties"/>. </summary>
         /// <param name="displayName"> Gets or sets the friendly display name. </param>
         /// <param name="state"> Gets or sets the workflow state. </param>
         /// <param name="startOn"> Gets or sets the start time. </param>

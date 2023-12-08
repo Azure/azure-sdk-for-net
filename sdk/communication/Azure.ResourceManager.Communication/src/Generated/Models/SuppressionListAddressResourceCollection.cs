@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> Collection of addresses in a suppression list. Response will include a nextLink if response contains more pages. </summary>
     internal partial class SuppressionListAddressResourceCollection
     {
-        /// <summary> Initializes a new instance of SuppressionListAddressResourceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuppressionListAddressResourceCollection"/>. </summary>
         internal SuppressionListAddressResourceCollection()
         {
             Value = new ChangeTrackingList<SuppressionListAddressResourceData>();
         }
 
-        /// <summary> Initializes a new instance of SuppressionListAddressResourceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuppressionListAddressResourceCollection"/>. </summary>
         /// <param name="value"> List of suppressed email addresses. </param>
         /// <param name="nextLink"> The URL the client should use to fetch the next page (per server side paging). </param>
         internal SuppressionListAddressResourceCollection(IReadOnlyList<SuppressionListAddressResourceData> value, string nextLink)

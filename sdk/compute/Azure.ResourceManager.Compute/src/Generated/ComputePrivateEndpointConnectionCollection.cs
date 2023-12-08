@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ComputePrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="ComputePrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="DiskAccessResource" />.
-    /// To get a <see cref="ComputePrivateEndpointConnectionCollection" /> instance call the GetComputePrivateEndpointConnections method from an instance of <see cref="DiskAccessResource" />.
+    /// A class representing a collection of <see cref="ComputePrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="ComputePrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="DiskAccessResource"/>.
+    /// To get a <see cref="ComputePrivateEndpointConnectionCollection"/> instance call the GetComputePrivateEndpointConnections method from an instance of <see cref="DiskAccessResource"/>.
     /// </summary>
     public partial class ComputePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<ComputePrivateEndpointConnectionResource>, IAsyncEnumerable<ComputePrivateEndpointConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ComputePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ComputePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ComputePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _computePrivateEndpointConnectionDiskAccessesRestClient.CreateListPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ComputePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ComputePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ComputePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _computePrivateEndpointConnectionDiskAccessesRestClient.CreateListPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

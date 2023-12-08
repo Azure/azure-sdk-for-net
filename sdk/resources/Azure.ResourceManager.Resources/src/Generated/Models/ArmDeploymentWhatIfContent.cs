@@ -13,13 +13,22 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Deployment What-if operation parameters. </summary>
     public partial class ArmDeploymentWhatIfContent
     {
-        /// <summary> Initializes a new instance of ArmDeploymentWhatIfContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentWhatIfContent"/>. </summary>
         /// <param name="properties"> The deployment properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public ArmDeploymentWhatIfContent(ArmDeploymentWhatIfProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
+            Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentWhatIfContent"/>. </summary>
+        /// <param name="location"> The location to store the deployment data, only required at the tenant and management group scope. </param>
+        /// <param name="properties"> The deployment properties. </param>
+        internal ArmDeploymentWhatIfContent(AzureLocation? location, ArmDeploymentWhatIfProperties properties)
+        {
+            Location = location;
             Properties = properties;
         }
 

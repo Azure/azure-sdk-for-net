@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Cognitive Services account commitment cost. </summary>
     public partial class CommitmentCost
     {
-        /// <summary> Initializes a new instance of CommitmentCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommitmentCost"/>. </summary>
         internal CommitmentCost()
         {
         }
 
-        /// <summary> Initializes a new instance of CommitmentCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommitmentCost"/>. </summary>
         /// <param name="commitmentMeterId"> Commitment meter Id. </param>
         /// <param name="overageMeterId"> Overage meter Id. </param>
         internal CommitmentCost(string commitmentMeterId, string overageMeterId)

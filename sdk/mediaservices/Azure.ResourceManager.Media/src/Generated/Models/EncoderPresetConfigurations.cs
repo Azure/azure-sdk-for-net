@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> An object of optional configuration settings for encoder. </summary>
     public partial class EncoderPresetConfigurations
     {
-        /// <summary> Initializes a new instance of EncoderPresetConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncoderPresetConfigurations"/>. </summary>
         public EncoderPresetConfigurations()
         {
         }
 
-        /// <summary> Initializes a new instance of EncoderPresetConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncoderPresetConfigurations"/>. </summary>
         /// <param name="complexity"> Allows you to configure the encoder settings to control the balance between speed and quality. Example: set Complexity as Speed for faster encoding but less compression efficiency. </param>
         /// <param name="interleaveOutput"> Sets the interleave mode of the output to control how audio and video are stored in the container format. Example: set InterleavedOutput as NonInterleavedOutput to produce audio-only and video-only outputs in separate MP4 files. </param>
         /// <param name="keyFrameIntervalInSeconds"> The key frame interval in seconds. Example: set KeyFrameIntervalInSeconds as 2 to reduce the playback buffering for some players. </param>

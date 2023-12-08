@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> The result of the List migrationConfigurations operation. </summary>
     internal partial class MigrationConfigListResult
     {
-        /// <summary> Initializes a new instance of MigrationConfigListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationConfigListResult"/>. </summary>
         internal MigrationConfigListResult()
         {
             Value = new ChangeTrackingList<MigrationConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of MigrationConfigListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationConfigListResult"/>. </summary>
         /// <param name="value"> List of Migration Configs. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of migrationConfigurations. </param>
         internal MigrationConfigListResult(IReadOnlyList<MigrationConfigurationData> value, string nextLink)

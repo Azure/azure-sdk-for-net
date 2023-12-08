@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.CostManagement
     /// </summary>
     public partial class CostManagementExportData : ResourceData
     {
-        /// <summary> Initializes a new instance of CostManagementExportData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementExportData"/>. </summary>
         public CostManagementExportData()
         {
         }
 
-        /// <summary> Initializes a new instance of CostManagementExportData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementExportData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

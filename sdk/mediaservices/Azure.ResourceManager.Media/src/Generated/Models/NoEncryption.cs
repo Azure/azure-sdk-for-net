@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Class for NoEncryption scheme. </summary>
     internal partial class NoEncryption
     {
-        /// <summary> Initializes a new instance of NoEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="NoEncryption"/>. </summary>
         public NoEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of NoEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="NoEncryption"/>. </summary>
         /// <param name="enabledProtocols"> Representing supported protocols. </param>
         internal NoEncryption(MediaEnabledProtocols enabledProtocols)
         {

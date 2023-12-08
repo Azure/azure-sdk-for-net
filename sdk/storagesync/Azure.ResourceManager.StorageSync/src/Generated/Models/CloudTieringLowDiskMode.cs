@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Information regarding the low disk mode state. </summary>
     public partial class CloudTieringLowDiskMode
     {
-        /// <summary> Initializes a new instance of CloudTieringLowDiskMode. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudTieringLowDiskMode"/>. </summary>
         internal CloudTieringLowDiskMode()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudTieringLowDiskMode. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudTieringLowDiskMode"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="state"> Low disk mode state. </param>
         internal CloudTieringLowDiskMode(DateTimeOffset? lastUpdatedOn, CloudTieringLowDiskModeState? state)

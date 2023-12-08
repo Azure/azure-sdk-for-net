@@ -13,13 +13,13 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Acr error response describing why the operation failed. </summary>
     internal partial class AcrErrors
     {
-        /// <summary> Initializes a new instance of AcrErrors. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcrErrors"/>. </summary>
         internal AcrErrors()
         {
             Errors = new ChangeTrackingList<AcrErrorInfo>();
         }
 
-        /// <summary> Initializes a new instance of AcrErrors. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcrErrors"/>. </summary>
         /// <param name="errors"> Array of detailed error. </param>
         internal AcrErrors(IReadOnlyList<AcrErrorInfo> errors)
         {

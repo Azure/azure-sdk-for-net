@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// </summary>
     public partial class AzureOperatorNexusNetworkFunctionApplication : NetworkFunctionApplication
     {
-        /// <summary> Initializes a new instance of AzureOperatorNexusNetworkFunctionApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusNetworkFunctionApplication"/>. </summary>
         public AzureOperatorNexusNetworkFunctionApplication()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureOperatorNexusNetworkFunctionApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusNetworkFunctionApplication"/>. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
         /// <param name="artifactType"> The artifact type. </param>

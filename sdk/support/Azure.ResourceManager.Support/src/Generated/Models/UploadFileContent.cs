@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> File content associated with the file under a workspace. </summary>
     public partial class UploadFileContent
     {
-        /// <summary> Initializes a new instance of UploadFileContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadFileContent"/>. </summary>
         public UploadFileContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UploadFileContent"/>. </summary>
+        /// <param name="content"> File Content in base64 encoded format. </param>
+        /// <param name="chunkIndex"> Index of the uploaded chunk (Index starts at 0). </param>
+        internal UploadFileContent(string content, float? chunkIndex)
+        {
+            Content = content;
+            ChunkIndex = chunkIndex;
         }
 
         /// <summary> File Content in base64 encoded format. </summary>

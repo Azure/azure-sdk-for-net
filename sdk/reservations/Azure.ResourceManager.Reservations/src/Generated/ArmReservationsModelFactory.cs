@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmReservationsModelFactory
     {
-        /// <summary> Initializes a new instance of AvailableScopesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvailableScopesProperties"/>. </summary>
         /// <param name="scopes"> The scopes checked by the available scope api. </param>
         /// <returns> A new <see cref="Models.AvailableScopesProperties"/> instance for mocking. </returns>
         public static AvailableScopesProperties AvailableScopesProperties(IEnumerable<ScopeProperties> scopes = null)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new AvailableScopesProperties(scopes != null ? new SubscriptionScopeProperties(scopes?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of ScopeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ScopeProperties"/>. </summary>
         /// <param name="scope"></param>
         /// <param name="isValid"></param>
         /// <returns> A new <see cref="Models.ScopeProperties"/> instance for mocking. </returns>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ScopeProperties(scope, isValid);
         }
 
-        /// <summary> Initializes a new instance of ReservationCatalog. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReservationCatalog"/>. </summary>
         /// <param name="appliedResourceType"> The type of resource the sku applies to. </param>
         /// <param name="skuName"> The name of sku. </param>
         /// <param name="billingPlans"> The billing plan options available for this sku. </param>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationCatalog(appliedResourceType, skuName, billingPlans, terms?.ToList(), locations?.ToList(), skuProperties?.ToList(), msrp, restrictions?.ToList(), tier, size, capabilities?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SkuProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SkuProperty"/>. </summary>
         /// <param name="name"> An invariant to describe the feature. </param>
         /// <param name="value"> An invariant if the feature is measured by quantity. </param>
         /// <returns> A new <see cref="Models.SkuProperty"/> instance for mocking. </returns>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new SkuProperty(name, value);
         }
 
-        /// <summary> Initializes a new instance of ReservationCatalogMsrp. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReservationCatalogMsrp"/>. </summary>
         /// <param name="p1Y"> Amount in pricing currency. Tax not included. </param>
         /// <param name="p3Y"> Amount in pricing currency. Tax not included. </param>
         /// <param name="p5Y"> Amount in pricing currency. Tax not included. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationCatalogMsrp(p1Y, p3Y, p5Y);
         }
 
-        /// <summary> Initializes a new instance of SkuRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SkuRestriction"/>. </summary>
         /// <param name="skuRestrictionType"> The type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the sku is restricted. </param>
         /// <param name="reasonCode"> The reason for restriction. </param>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new SkuRestriction(skuRestrictionType, values?.ToList(), reasonCode);
         }
 
-        /// <summary> Initializes a new instance of SkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SkuCapability"/>. </summary>
         /// <param name="name"> An invariant to describe the feature. </param>
         /// <param name="value"> An invariant if the feature is measured by quantity. </param>
         /// <returns> A new <see cref="Models.SkuCapability"/> instance for mocking. </returns>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new SkuCapability(name, value);
         }
 
-        /// <summary> Initializes a new instance of AppliedReservationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppliedReservationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new AppliedReservationData(id, name, resourceType, systemData, reservationOrderIds);
         }
 
-        /// <summary> Initializes a new instance of AppliedReservationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppliedReservationList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> Url to get the next page of reservations. </param>
         /// <returns> A new <see cref="Models.AppliedReservationList"/> instance for mocking. </returns>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new AppliedReservationList(value?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes a new instance of CalculatePriceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CalculatePriceResult"/>. </summary>
         /// <param name="properties"> Properties for calculate price response. </param>
         /// <returns> A new <see cref="Models.CalculatePriceResult"/> instance for mocking. </returns>
         public static CalculatePriceResult CalculatePriceResult(CalculatePriceResultProperties properties = null)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new CalculatePriceResult(properties);
         }
 
-        /// <summary> Initializes a new instance of CalculatePriceResultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CalculatePriceResultProperties"/>. </summary>
         /// <param name="billingCurrencyTotal"> Currency and amount that customer will be charged in customer's local currency. Tax is not included. </param>
         /// <param name="netTotal"> Net total amount in pricing currency. </param>
         /// <param name="taxTotal"> Tax amount in pricing currency. </param>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new CalculatePriceResultProperties(billingCurrencyTotal, netTotal, taxTotal, grandTotal, isTaxIncluded, isBillingPartnerManaged, reservationOrderId, skuTitle, skuDescription, pricingCurrencyTotal, paymentSchedule?.ToList());
         }
 
-        /// <summary> Initializes a new instance of CalculatePriceResultPropertiesBillingCurrencyTotal. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CalculatePriceResultPropertiesBillingCurrencyTotal"/>. </summary>
         /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
         /// <param name="amount"> Amount in pricing currency. Tax is not included. </param>
         /// <returns> A new <see cref="Models.CalculatePriceResultPropertiesBillingCurrencyTotal"/> instance for mocking. </returns>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new CalculatePriceResultPropertiesBillingCurrencyTotal(currencyCode, amount);
         }
 
-        /// <summary> Initializes a new instance of CalculatePriceResultPropertiesPricingCurrencyTotal. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CalculatePriceResultPropertiesPricingCurrencyTotal"/>. </summary>
         /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
         /// <param name="amount"></param>
         /// <returns> A new <see cref="Models.CalculatePriceResultPropertiesPricingCurrencyTotal"/> instance for mocking. </returns>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new CalculatePriceResultPropertiesPricingCurrencyTotal(currencyCode, amount);
         }
 
-        /// <summary> Initializes a new instance of PaymentDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PaymentDetail"/>. </summary>
         /// <param name="dueOn"> Date when the payment needs to be done. </param>
         /// <param name="payOn"> Date when the transaction is completed. Is null when it is scheduled. </param>
         /// <param name="pricingCurrencyTotal"> Amount in pricing currency. Tax not included. </param>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new PaymentDetail(dueOn, payOn, pricingCurrencyTotal, billingCurrencyTotal, billingAccount, status, extendedStatusInfo);
         }
 
-        /// <summary> Initializes a new instance of ExtendedStatusInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExtendedStatusInfo"/>. </summary>
         /// <param name="statusCode"></param>
         /// <param name="message"> The message giving detailed information about the status code. </param>
         /// <returns> A new <see cref="Models.ExtendedStatusInfo"/> instance for mocking. </returns>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ExtendedStatusInfo(statusCode, message);
         }
 
-        /// <summary> Initializes a new instance of ReservationOrderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Reservations.ReservationOrderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationOrderData(id, name, resourceType, systemData, version, displayName, requestOn, createdOn, expireOn, reservationExpireOn, benefitStartOn, originalQuantity, term, provisioningState, billingPlan, planInformation, reservations?.ToList(), reviewOn);
         }
 
-        /// <summary> Initializes a new instance of ReservationOrderBillingPlanInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReservationOrderBillingPlanInformation"/>. </summary>
         /// <param name="pricingCurrencyTotal"> Amount of money to be paid for the Order. Tax is not included. </param>
         /// <param name="startOn"> Date when the billing plan has started. </param>
         /// <param name="nextPaymentDueOn"> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </param>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationOrderBillingPlanInformation(pricingCurrencyTotal, startOn, nextPaymentDueOn, transactions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ReservationDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Reservations.ReservationDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationDetailData(id, name, resourceType, systemData, location, version, skuName != null ? new ReservationsSkuName(skuName) : null, properties, kind);
         }
 
-        /// <summary> Initializes a new instance of ReservationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReservationProperties"/>. </summary>
         /// <param name="reservedResourceType"> The type of the resource that is being reserved. </param>
         /// <param name="instanceFlexibility"> Allows reservation discount to be applied across skus within the same auto fit group. Not all skus support instance size flexibility. </param>
         /// <param name="displayName"> Friendly name for user to easily identify the reservation. </param>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationProperties(reservedResourceType, instanceFlexibility, displayName, appliedScopes?.ToList(), appliedScopeType, isArchived, capabilities, quantity, provisioningState, effectOn, benefitStartOn, lastUpdatedOn, expireOn, reservationExpireOn, reviewOn, skuDescription, extendedStatusInfo, billingPlan, displayProvisioningState, provisioningSubState, purchaseOn, reservationPurchaseOn, splitProperties, mergeProperties, swapProperties, appliedScopeProperties, billingScopeId, isRenewEnabled, renewSource, renewDestination, renewProperties, term, userFriendlyAppliedScopeType, userFriendlyRenewState, utilization);
         }
 
-        /// <summary> Initializes a new instance of ReservationSplitProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReservationSplitProperties"/>. </summary>
         /// <param name="splitDestinations"> List of destination resource id that are created due to split. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
         /// <param name="splitSource"> Resource id of the reservation from which this is split. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
         /// <returns> A new <see cref="Models.ReservationSplitProperties"/> instance for mocking. </returns>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationSplitProperties(splitDestinations?.ToList(), splitSource);
         }
 
-        /// <summary> Initializes a new instance of ReservationMergeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReservationMergeProperties"/>. </summary>
         /// <param name="mergeDestination"> Reservation resource id Created due to the merge. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
         /// <param name="mergeSources"> Resource ids of the source reservation's merged to form this reservation. Format of the resource id is /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
         /// <returns> A new <see cref="Models.ReservationMergeProperties"/> instance for mocking. </returns>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationMergeProperties(mergeDestination, mergeSources?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ReservationSwapProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReservationSwapProperties"/>. </summary>
         /// <param name="swapSource"> Resource id of the source reservation that gets swapped. Format of the resource id is /providers/microsoft.capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
         /// <param name="swapDestination"> Reservation resource id that the original resource gets swapped to. Format of the resource id is /providers/microsoft.capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
         /// <returns> A new <see cref="Models.ReservationSwapProperties"/> instance for mocking. </returns>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationSwapProperties(swapSource, swapDestination);
         }
 
-        /// <summary> Initializes a new instance of RenewProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RenewProperties"/>. </summary>
         /// <param name="purchaseProperties"> The request for reservation purchase. </param>
         /// <param name="pricingCurrencyTotal"> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. This is locked price 30 days before expiry. </param>
         /// <param name="billingCurrencyTotal"> Currency and amount that customer will be charged in customer's local currency for renewal purchase. Tax is not included. </param>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new RenewProperties(purchaseProperties, pricingCurrencyTotal, billingCurrencyTotal);
         }
 
-        /// <summary> Initializes a new instance of RenewPropertiesPricingCurrencyTotal. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RenewPropertiesPricingCurrencyTotal"/>. </summary>
         /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
         /// <param name="amount"></param>
         /// <returns> A new <see cref="Models.RenewPropertiesPricingCurrencyTotal"/> instance for mocking. </returns>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new RenewPropertiesPricingCurrencyTotal(currencyCode, amount);
         }
 
-        /// <summary> Initializes a new instance of RenewPropertiesBillingCurrencyTotal. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RenewPropertiesBillingCurrencyTotal"/>. </summary>
         /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
         /// <param name="amount"></param>
         /// <returns> A new <see cref="Models.RenewPropertiesBillingCurrencyTotal"/> instance for mocking. </returns>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new RenewPropertiesBillingCurrencyTotal(currencyCode, amount);
         }
 
-        /// <summary> Initializes a new instance of ReservationPropertiesUtilization. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReservationPropertiesUtilization"/>. </summary>
         /// <param name="trend"> last 7 day utilization trend for a reservation. </param>
         /// <param name="aggregates"> The array of aggregates of a reservation's utilization. </param>
         /// <returns> A new <see cref="Models.ReservationPropertiesUtilization"/> instance for mocking. </returns>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationPropertiesUtilization(trend, aggregates?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ReservationUtilizationAggregates. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReservationUtilizationAggregates"/>. </summary>
         /// <param name="grain"> The grain of the aggregate. </param>
         /// <param name="grainUnit"> The grain unit of the aggregate. </param>
         /// <param name="value"> The aggregate value. </param>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationUtilizationAggregates(grain, grainUnit, value, valueUnit);
         }
 
-        /// <summary> Initializes a new instance of ReservationCalculateRefundResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReservationCalculateRefundResult"/>. </summary>
         /// <param name="id"> Fully qualified identifier of the reservation being returned. </param>
         /// <param name="properties"> The refund properties of reservation. </param>
         /// <returns> A new <see cref="Models.ReservationCalculateRefundResult"/> instance for mocking. </returns>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationCalculateRefundResult(id, properties);
         }
 
-        /// <summary> Initializes a new instance of ReservationRefundResponseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReservationRefundResponseProperties"/>. </summary>
         /// <param name="sessionId"> Refund session identifier. </param>
         /// <param name="quantity"> Quantity to be returned. </param>
         /// <param name="billingRefundAmount"> Pricing information containing the amount and the currency code. </param>
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationRefundResponseProperties(sessionId, quantity, billingRefundAmount, pricingRefundAmount, policyResultProperties != null ? new RefundPolicyResult(policyResultProperties) : null, billingInformation);
         }
 
-        /// <summary> Initializes a new instance of ReservationRefundPolicyResultProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReservationRefundPolicyResultProperty"/>. </summary>
         /// <param name="consumedRefundsTotal"> Pricing information containing the amount and the currency code. </param>
         /// <param name="maxRefundLimit"> Pricing information containing the amount and the currency code. </param>
         /// <param name="policyErrors"> Refund Policy errors. </param>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationRefundPolicyResultProperty(consumedRefundsTotal, maxRefundLimit, policyErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ReservationRefundPolicyError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReservationRefundPolicyError"/>. </summary>
         /// <param name="code"> Error code describing the reason that service is not able to process the incoming request. </param>
         /// <param name="message"></param>
         /// <returns> A new <see cref="Models.ReservationRefundPolicyError"/> instance for mocking. </returns>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationRefundPolicyError(code, message);
         }
 
-        /// <summary> Initializes a new instance of ReservationRefundBillingInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReservationRefundBillingInformation"/>. </summary>
         /// <param name="billingPlan"> Represent the billing plans. </param>
         /// <param name="completedTransactions"> The number of completed transactions in this reservation's payment. </param>
         /// <param name="totalTransactions"> The number of total transactions in this reservation's payment. </param>
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationRefundBillingInformation(billingPlan, completedTransactions, totalTransactions, billingCurrencyTotalPaidAmount, billingCurrencyProratedAmount, billingCurrencyRemainingCommitmentAmount);
         }
 
-        /// <summary> Initializes a new instance of ReservationRefundResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReservationRefundResult"/>. </summary>
         /// <param name="id"> Fully qualified identifier of the reservation being returned. </param>
         /// <param name="properties"> The refund properties of reservation. </param>
         /// <returns> A new <see cref="Models.ReservationRefundResult"/> instance for mocking. </returns>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationRefundResult(id, properties);
         }
 
-        /// <summary> Initializes a new instance of CalculateExchangeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CalculateExchangeResult"/>. </summary>
         /// <param name="id"> It should match what is used to GET the operation result. </param>
         /// <param name="name"> It must match the last segment of the id field, and will typically be a GUID / system generated value. </param>
         /// <param name="status"> Status of the operation. </param>
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new CalculateExchangeResult(id, name, status, properties, error);
         }
 
-        /// <summary> Initializes a new instance of CalculateExchangeResultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CalculateExchangeResultProperties"/>. </summary>
         /// <param name="sessionId"> Exchange session identifier. </param>
         /// <param name="netPayable"> Pricing information containing the amount and the currency code. </param>
         /// <param name="refundsTotal"> Pricing information containing the amount and the currency code. </param>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new CalculateExchangeResultProperties(sessionId, netPayable, refundsTotal, purchasesTotal, reservationsToPurchase?.ToList(), savingsPlansToPurchase?.ToList(), reservationsToExchange?.ToList(), policyErrors != null ? new ExchangePolicyErrors(policyErrors?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of ReservationToPurchaseCalculateExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReservationToPurchaseCalculateExchange"/>. </summary>
         /// <param name="properties"> The request for reservation purchase. </param>
         /// <param name="billingCurrencyTotal"> Pricing information containing the amount and the currency code. </param>
         /// <returns> A new <see cref="Models.ReservationToPurchaseCalculateExchange"/> instance for mocking. </returns>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationToPurchaseCalculateExchange(properties, billingCurrencyTotal);
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanToPurchaseCalculateExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SavingsPlanToPurchaseCalculateExchange"/>. </summary>
         /// <param name="properties"> Request body for savings plan purchase. </param>
         /// <param name="billingCurrencyTotal"> Pricing information containing the amount and the currency code. </param>
         /// <returns> A new <see cref="Models.SavingsPlanToPurchaseCalculateExchange"/> instance for mocking. </returns>
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new SavingsPlanToPurchaseCalculateExchange(properties, billingCurrencyTotal);
         }
 
-        /// <summary> Initializes a new instance of ReservationToExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReservationToExchange"/>. </summary>
         /// <param name="reservationId"> Fully qualified id of the reservation being returned. </param>
         /// <param name="quantity"> Quantity to be returned. </param>
         /// <param name="billingRefundAmount"> Pricing information containing the amount and the currency code. </param>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationToExchange(reservationId, quantity, billingRefundAmount, billingInformation);
         }
 
-        /// <summary> Initializes a new instance of BillingInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingInformation"/>. </summary>
         /// <param name="billingCurrencyTotalPaidAmount"> Pricing information containing the amount and the currency code. </param>
         /// <param name="billingCurrencyProratedAmount"> Pricing information containing the amount and the currency code. </param>
         /// <param name="billingCurrencyRemainingCommitmentAmount"> Pricing information containing the amount and the currency code. </param>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new BillingInformation(billingCurrencyTotalPaidAmount, billingCurrencyProratedAmount, billingCurrencyRemainingCommitmentAmount);
         }
 
-        /// <summary> Initializes a new instance of ExchangePolicyError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExchangePolicyError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
         /// <returns> A new <see cref="Models.ExchangePolicyError"/> instance for mocking. </returns>
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ExchangePolicyError(code, message);
         }
 
-        /// <summary> Initializes a new instance of OperationResultError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationResultError"/>. </summary>
         /// <param name="code"> Required if status == failed or status == cancelled. If status == failed, provide an invariant error code used for error troubleshooting, aggregation, and analysis. </param>
         /// <param name="message"> Required if status == failed. Localized. If status == failed, provide an actionable error message indicating what error occurred, and what the user can do to address the issue. </param>
         /// <returns> A new <see cref="Models.OperationResultError"/> instance for mocking. </returns>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new OperationResultError(code, message);
         }
 
-        /// <summary> Initializes a new instance of ExchangeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExchangeResult"/>. </summary>
         /// <param name="id"> It should match what is used to GET the operation result. </param>
         /// <param name="name"> It must match the last segment of the id field, and will typically be a GUID / system generated value. </param>
         /// <param name="status"> Status of the operation. </param>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ExchangeResult(id, name, status, properties, error);
         }
 
-        /// <summary> Initializes a new instance of ExchangeResultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExchangeResultProperties"/>. </summary>
         /// <param name="sessionId"> Exchange session identifier. </param>
         /// <param name="netPayable"> Pricing information containing the amount and the currency code. </param>
         /// <param name="refundsTotal"> Pricing information containing the amount and the currency code. </param>
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ExchangeResultProperties(sessionId, netPayable, refundsTotal, purchasesTotal, reservationsToPurchase?.ToList(), savingsPlansToPurchase?.ToList(), reservationsToExchange?.ToList(), policyErrors != null ? new ExchangePolicyErrors(policyErrors?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of ReservationToPurchaseExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReservationToPurchaseExchange"/>. </summary>
         /// <param name="reservationOrderId"> Fully qualified id of the reservationOrder being purchased. </param>
         /// <param name="reservationId"> Fully qualified id of the reservation being purchased. This value is only guaranteed to be non-null if the purchase is successful. </param>
         /// <param name="properties"> The request for reservation purchase. </param>
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationToPurchaseExchange(reservationOrderId, reservationId, properties, billingCurrencyTotal, status);
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanToPurchaseExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SavingsPlanToPurchaseExchange"/>. </summary>
         /// <param name="savingsPlanOrderId"> Fully qualified id of the savings plan order being purchased. </param>
         /// <param name="savingsPlanId"> Fully qualified id of the savings plan being purchased. This value is only guaranteed to be non-null if the purchase is successful. </param>
         /// <param name="properties"> Request body for savings plan purchase. </param>
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new SavingsPlanToPurchaseExchange(savingsPlanOrderId, savingsPlanId, properties, billingCurrencyTotal, status);
         }
 
-        /// <summary> Initializes a new instance of ReservationToReturnForExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReservationToReturnForExchange"/>. </summary>
         /// <param name="reservationId"> Fully qualified id of the reservation being returned. </param>
         /// <param name="quantity"> Quantity to be returned. </param>
         /// <param name="billingRefundAmount"> Pricing information containing the amount and the currency code. </param>
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationToReturnForExchange(reservationId, quantity, billingRefundAmount, billingInformation, status);
         }
 
-        /// <summary> Initializes a new instance of ChangeDirectoryDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ChangeDirectoryDetail"/>. </summary>
         /// <param name="reservationOrder"> Change directory result for reservation order or reservation. </param>
         /// <param name="reservations"></param>
         /// <returns> A new <see cref="Models.ChangeDirectoryDetail"/> instance for mocking. </returns>
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ChangeDirectoryDetail(reservationOrder, reservations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ChangeDirectoryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ChangeDirectoryResult"/>. </summary>
         /// <param name="id"> Identifier of the reservation order or reservation. </param>
         /// <param name="name"> Name of the reservation order or reservation. </param>
         /// <param name="isSucceeded"> True if change directory operation succeeded on this reservation order or reservation. </param>
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ChangeDirectoryResult(id, name, isSucceeded, error);
         }
 
-        /// <summary> Initializes a new instance of ReservationQuotaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Reservations.ReservationQuotaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationQuotaData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of QuotaProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QuotaProperties"/>. </summary>
         /// <param name="limit"> Quota properties. </param>
         /// <param name="currentValue"> Current usage value for the resource. </param>
         /// <param name="unit"> The limit units, such as **count** and **bytes**. Use the unit field provided in the response of the GET quota operation. </param>
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new QuotaProperties(limit, currentValue, unit, resourceName, resourceTypeName, quotaPeriod, properties);
         }
 
-        /// <summary> Initializes a new instance of ReservationResourceName. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReservationResourceName"/>. </summary>
         /// <param name="value"> Resource name. </param>
         /// <param name="localizedValue"> Resource display localized name. </param>
         /// <returns> A new <see cref="Models.ReservationResourceName"/> instance for mocking. </returns>
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationResourceName(value, localizedValue);
         }
 
-        /// <summary> Initializes a new instance of QuotaRequestDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Reservations.QuotaRequestDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.Reservations.Models
             return new QuotaRequestDetailData(id, name, resourceType, systemData, provisioningState, message, requestSubmitOn, quotaRequestValue?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SubContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SubContent"/>. </summary>
         /// <param name="limit"> Quota (resource limit). </param>
         /// <param name="name"> The resource name. </param>
         /// <param name="resourceType"> Resource type for which the quota check was made. </param>

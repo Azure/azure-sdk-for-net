@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The ApiProperties. </summary>
     internal partial class ApiProperties
     {
-        /// <summary> Initializes a new instance of ApiProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiProperties"/>. </summary>
         public ApiProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiProperties"/>. </summary>
         /// <param name="serverVersion"> Describes the ServerVersion of an a MongoDB account. </param>
         internal ApiProperties(CosmosDBServerVersion? serverVersion)
         {

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="InteractionResourceFormatResource" /> and their operations.
-    /// Each <see cref="InteractionResourceFormatResource" /> in the collection will belong to the same instance of <see cref="HubResource" />.
-    /// To get an <see cref="InteractionResourceFormatCollection" /> instance call the GetInteractionResourceFormats method from an instance of <see cref="HubResource" />.
+    /// A class representing a collection of <see cref="InteractionResourceFormatResource"/> and their operations.
+    /// Each <see cref="InteractionResourceFormatResource"/> in the collection will belong to the same instance of <see cref="HubResource"/>.
+    /// To get an <see cref="InteractionResourceFormatCollection"/> instance call the GetInteractionResourceFormats method from an instance of <see cref="HubResource"/>.
     /// </summary>
     public partial class InteractionResourceFormatCollection : ArmCollection, IEnumerable<InteractionResourceFormatResource>, IAsyncEnumerable<InteractionResourceFormatResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="InteractionResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="InteractionResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<InteractionResourceFormatResource> GetAllAsync(string localeCode = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _interactionResourceFormatInteractionsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="InteractionResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="InteractionResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<InteractionResourceFormatResource> GetAll(string localeCode = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _interactionResourceFormatInteractionsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> Describes the result of the request to view descendants. </summary>
     internal partial class DescendantListResult
     {
-        /// <summary> Initializes a new instance of DescendantListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DescendantListResult"/>. </summary>
         internal DescendantListResult()
         {
             Value = new ChangeTrackingList<DescendantData>();
         }
 
-        /// <summary> Initializes a new instance of DescendantListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DescendantListResult"/>. </summary>
         /// <param name="value"> The list of descendants. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal DescendantListResult(IReadOnlyList<DescendantData> value, string nextLink)

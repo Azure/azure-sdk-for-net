@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> ARM resource for a app service plan. </summary>
     public partial class AppServicePlanPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServicePlanPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServicePlanPatch"/>. </summary>
         public AppServicePlanPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServicePlanPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServicePlanPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of VirtualMachineTemplates. </summary>
     internal partial class VMwareVmTemplateListResult
     {
-        /// <summary> Initializes a new instance of VMwareVmTemplateListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareVmTemplateListResult"/>. </summary>
         /// <param name="value"> Array of VirtualMachineTemplates. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VMwareVmTemplateListResult(IEnumerable<VMwareVmTemplateData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VMwareVmTemplateListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareVmTemplateListResult"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of VirtualMachineTemplates. </param>
         /// <param name="value"> Array of VirtualMachineTemplates. </param>
         internal VMwareVmTemplateListResult(string nextLink, IReadOnlyList<VMwareVmTemplateData> value)

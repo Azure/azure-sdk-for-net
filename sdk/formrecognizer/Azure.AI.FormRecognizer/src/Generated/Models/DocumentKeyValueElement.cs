@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> An object representing the field key or value in a key-value pair. </summary>
     public partial class DocumentKeyValueElement
     {
-        /// <summary> Initializes a new instance of DocumentKeyValueElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentKeyValueElement"/>. </summary>
         /// <param name="content"> Concatenated content of the key-value element in reading order. </param>
         /// <param name="spans"> Location of the key-value element in the reading order concatenated content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="spans"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Spans = spans.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentKeyValueElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentKeyValueElement"/>. </summary>
         /// <param name="content"> Concatenated content of the key-value element in reading order. </param>
         /// <param name="boundingRegions"> Bounding regions covering the key-value element. </param>
         /// <param name="spans"> Location of the key-value element in the reading order concatenated content. </param>

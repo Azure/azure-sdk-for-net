@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Parameters supplied to the Backup/Restore of an API Management service operation. </summary>
     public partial class ApiManagementServiceBackupRestoreContent
     {
-        /// <summary> Initializes a new instance of ApiManagementServiceBackupRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceBackupRestoreContent"/>. </summary>
         /// <param name="storageAccount"> The name of the Azure storage account (used to place/retrieve the backup). </param>
         /// <param name="containerName"> The name of the blob container (used to place/retrieve the backup). </param>
         /// <param name="backupName"> The name of the backup file to create/retrieve. </param>
@@ -27,6 +27,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
             StorageAccount = storageAccount;
             ContainerName = containerName;
             BackupName = backupName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceBackupRestoreContent"/>. </summary>
+        /// <param name="storageAccount"> The name of the Azure storage account (used to place/retrieve the backup). </param>
+        /// <param name="containerName"> The name of the blob container (used to place/retrieve the backup). </param>
+        /// <param name="backupName"> The name of the backup file to create/retrieve. </param>
+        /// <param name="accessType"> The type of access to be used for the storage account. </param>
+        /// <param name="accessKey"> Storage account access key. Required only if `accessType` is set to `AccessKey`. </param>
+        /// <param name="clientId"> The Client ID of user assigned managed identity. Required only if `accessType` is set to `UserAssignedManagedIdentity`. </param>
+        internal ApiManagementServiceBackupRestoreContent(string storageAccount, string containerName, string backupName, StorageAccountAccessType? accessType, string accessKey, string clientId)
+        {
+            StorageAccount = storageAccount;
+            ContainerName = containerName;
+            BackupName = backupName;
+            AccessType = accessType;
+            AccessKey = accessKey;
+            ClientId = clientId;
         }
 
         /// <summary> The name of the Azure storage account (used to place/retrieve the backup). </summary>

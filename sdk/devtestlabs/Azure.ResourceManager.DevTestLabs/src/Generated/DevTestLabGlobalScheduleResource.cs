@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A Class representing a DevTestLabGlobalSchedule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevTestLabGlobalScheduleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevTestLabGlobalScheduleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDevTestLabGlobalSchedule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabGlobalScheduleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabGlobalScheduleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDevTestLabGlobalSchedule method.
     /// </summary>
     public partial class DevTestLabGlobalScheduleResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly GlobalSchedulesRestOperations _devTestLabGlobalScheduleGlobalSchedulesRestClient;
         private readonly DevTestLabScheduleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/schedules";
+
         /// <summary> Initializes a new instance of the <see cref="DevTestLabGlobalScheduleResource"/> class for mocking. </summary>
         protected DevTestLabGlobalScheduleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevTestLabGlobalScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabGlobalScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevTestLabGlobalScheduleResource(ArmClient client, DevTestLabScheduleData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DevTestLabs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/schedules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

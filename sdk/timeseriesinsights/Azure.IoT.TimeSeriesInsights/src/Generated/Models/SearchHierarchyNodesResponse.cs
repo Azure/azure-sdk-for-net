@@ -13,13 +13,13 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> The hierarchy nodes which contains the instances matching the query based on the input. May be empty or null. </summary>
     internal partial class SearchHierarchyNodesResponse
     {
-        /// <summary> Initializes a new instance of SearchHierarchyNodesResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchHierarchyNodesResponse"/>. </summary>
         internal SearchHierarchyNodesResponse()
         {
             Hits = new ChangeTrackingList<HierarchyHit>();
         }
 
-        /// <summary> Initializes a new instance of SearchHierarchyNodesResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchHierarchyNodesResponse"/>. </summary>
         /// <param name="hits"> The list of hierarchy nodes which contains the instances matching the query based on the input. May be empty. </param>
         /// <param name="hitCount"> Total number of hierarchy nodes which contains the instances matching the query based on the input. </param>
         /// <param name="continuationToken"> If returned, this means that current results represent a partial result. Continuation token allows to get the next page of results. To get the next page of query results, send the same request with continuation token parameter in "x-ms-continuation" HTTP header. </param>

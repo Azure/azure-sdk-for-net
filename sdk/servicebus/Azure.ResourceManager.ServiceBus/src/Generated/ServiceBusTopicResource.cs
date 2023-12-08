@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
     /// A Class representing a ServiceBusTopic along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceBusTopicResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceBusTopicResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceBusNamespaceResource" /> using the GetServiceBusTopic method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceBusTopicResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceBusTopicResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceBusNamespaceResource"/> using the GetServiceBusTopic method.
     /// </summary>
     public partial class ServiceBusTopicResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.ServiceBus
         private readonly TopicsRestOperations _serviceBusTopicTopicsRestClient;
         private readonly ServiceBusTopicData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/topics";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceBusTopicResource"/> class for mocking. </summary>
         protected ServiceBusTopicResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceBusTopicResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusTopicResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceBusTopicResource(ArmClient client, ServiceBusTopicData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ServiceBus
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/topics";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

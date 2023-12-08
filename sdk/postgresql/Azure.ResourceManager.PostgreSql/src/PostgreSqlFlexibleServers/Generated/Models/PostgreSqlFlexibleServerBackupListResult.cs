@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> A list of server backups. </summary>
     internal partial class PostgreSqlFlexibleServerBackupListResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerBackupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerBackupListResult"/>. </summary>
         internal PostgreSqlFlexibleServerBackupListResult()
         {
             Value = new ChangeTrackingList<PostgreSqlFlexibleServerBackupData>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerBackupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerBackupListResult"/>. </summary>
         /// <param name="value"> The list of backups of a server. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         internal PostgreSqlFlexibleServerBackupListResult(IReadOnlyList<PostgreSqlFlexibleServerBackupData> value, string nextLink)

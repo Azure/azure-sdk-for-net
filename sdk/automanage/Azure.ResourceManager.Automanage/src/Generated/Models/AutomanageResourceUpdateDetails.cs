@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.Automanage.Models
     /// <summary> Represents an update resource. </summary>
     public partial class AutomanageResourceUpdateDetails
     {
-        /// <summary> Initializes a new instance of AutomanageResourceUpdateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomanageResourceUpdateDetails"/>. </summary>
         public AutomanageResourceUpdateDetails()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomanageResourceUpdateDetails"/>. </summary>
+        /// <param name="tags"> The tags of the resource. </param>
+        internal AutomanageResourceUpdateDetails(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> The tags of the resource. </summary>

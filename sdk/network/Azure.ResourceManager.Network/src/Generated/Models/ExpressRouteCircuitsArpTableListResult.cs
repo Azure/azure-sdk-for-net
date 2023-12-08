@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListArpTable associated with the Express Route Circuits API. </summary>
     public partial class ExpressRouteCircuitsArpTableListResult
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitsArpTableListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitsArpTableListResult"/>. </summary>
         internal ExpressRouteCircuitsArpTableListResult()
         {
             Value = new ChangeTrackingList<ExpressRouteCircuitArpTable>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitsArpTableListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitsArpTableListResult"/>. </summary>
         /// <param name="value"> A list of the ARP tables. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal ExpressRouteCircuitsArpTableListResult(IReadOnlyList<ExpressRouteCircuitArpTable> value, string nextLink)

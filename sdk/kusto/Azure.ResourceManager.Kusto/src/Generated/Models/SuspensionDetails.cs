@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The database suspension details. If the database is suspended, this object contains information related to the database's suspension state. </summary>
     internal partial class SuspensionDetails
     {
-        /// <summary> Initializes a new instance of SuspensionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuspensionDetails"/>. </summary>
         internal SuspensionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SuspensionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuspensionDetails"/>. </summary>
         /// <param name="suspensionStartOn"> The starting date and time of the suspension state. </param>
         internal SuspensionDetails(DateTimeOffset? suspensionStartOn)
         {

@@ -13,11 +13,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties for updating triggers. </summary>
     public partial class ContainerRegistryTriggerUpdateContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTriggerUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTriggerUpdateContent"/>. </summary>
         public ContainerRegistryTriggerUpdateContent()
         {
             TimerTriggers = new ChangeTrackingList<ContainerRegistryTimerTriggerUpdateContent>();
             SourceTriggers = new ChangeTrackingList<ContainerRegistrySourceTriggerUpdateContent>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTriggerUpdateContent"/>. </summary>
+        /// <param name="timerTriggers"> The collection of timer triggers. </param>
+        /// <param name="sourceTriggers"> The collection of triggers based on source code repository. </param>
+        /// <param name="baseImageTrigger"> The trigger based on base image dependencies. </param>
+        internal ContainerRegistryTriggerUpdateContent(IList<ContainerRegistryTimerTriggerUpdateContent> timerTriggers, IList<ContainerRegistrySourceTriggerUpdateContent> sourceTriggers, ContainerRegistryBaseImageTriggerUpdateContent baseImageTrigger)
+        {
+            TimerTriggers = timerTriggers;
+            SourceTriggers = sourceTriggers;
+            BaseImageTrigger = baseImageTrigger;
         }
 
         /// <summary> The collection of timer triggers. </summary>

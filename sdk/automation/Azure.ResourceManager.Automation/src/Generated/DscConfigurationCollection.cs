@@ -21,9 +21,9 @@ using Azure.ResourceManager.Automation.Models;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DscConfigurationResource" /> and their operations.
-    /// Each <see cref="DscConfigurationResource" /> in the collection will belong to the same instance of <see cref="AutomationAccountResource" />.
-    /// To get a <see cref="DscConfigurationCollection" /> instance call the GetDscConfigurations method from an instance of <see cref="AutomationAccountResource" />.
+    /// A class representing a collection of <see cref="DscConfigurationResource"/> and their operations.
+    /// Each <see cref="DscConfigurationResource"/> in the collection will belong to the same instance of <see cref="AutomationAccountResource"/>.
+    /// To get a <see cref="DscConfigurationCollection"/> instance call the GetDscConfigurations method from an instance of <see cref="AutomationAccountResource"/>.
     /// </summary>
     public partial class DscConfigurationCollection : ArmCollection, IEnumerable<DscConfigurationResource>, IAsyncEnumerable<DscConfigurationResource>
     {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="top"> The number of rows to take. </param>
         /// <param name="inlinecount"> Return total rows. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DscConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DscConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DscConfigurationResource> GetAllAsync(string filter = null, int? skip = null, int? top = null, string inlinecount = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscConfigurationRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount);
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="top"> The number of rows to take. </param>
         /// <param name="inlinecount"> Return total rows. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DscConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DscConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DscConfigurationResource> GetAll(string filter = null, int? skip = null, int? top = null, string inlinecount = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscConfigurationRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount);

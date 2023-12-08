@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The resource whose properties describes the allowed traffic between Azure resources. </summary>
     public partial class SecurityCenterAllowedConnection : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityCenterAllowedConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterAllowedConnection"/>. </summary>
         public SecurityCenterAllowedConnection()
         {
             ConnectableResources = new ChangeTrackingList<ConnectableResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of SecurityCenterAllowedConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterAllowedConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

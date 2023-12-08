@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Payload for execute request post call. </summary>
     public partial class ExecuteRequestContent
     {
-        /// <summary> Initializes a new instance of ExecuteRequestContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteRequestContent"/>. </summary>
         /// <param name="serviceEndpoint"> The endpoint of service to call. </param>
         /// <param name="requestMetadata"> The request metadata. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/> or <paramref name="requestMetadata"/> is null. </exception>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     /// <summary> The SupportedVersionMetadata object for appliance. </summary>
     internal partial class ApplianceSupportedVersionMetadata
     {
-        /// <summary> Initializes a new instance of ApplianceSupportedVersionMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceSupportedVersionMetadata"/>. </summary>
         internal ApplianceSupportedVersionMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplianceSupportedVersionMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceSupportedVersionMetadata"/>. </summary>
         /// <param name="catalogVersion"> The newer supported version catalog version. </param>
         internal ApplianceSupportedVersionMetadata(ApplianceSupportedVersionCatalogVersion catalogVersion)
         {

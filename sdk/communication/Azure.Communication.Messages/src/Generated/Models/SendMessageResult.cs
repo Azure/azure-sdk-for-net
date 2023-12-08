@@ -15,7 +15,7 @@ namespace Azure.Communication.Messages
     /// <summary> Result of the send message operation. </summary>
     public partial class SendMessageResult
     {
-        /// <summary> Initializes a new instance of SendMessageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SendMessageResult"/>. </summary>
         /// <param name="receipts"> Receipts of the send message operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receipts"/> is null. </exception>
         internal SendMessageResult(IEnumerable<MessageReceipt> receipts)
@@ -25,7 +25,7 @@ namespace Azure.Communication.Messages
             Receipts = receipts.ToList();
         }
 
-        /// <summary> Initializes a new instance of SendMessageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SendMessageResult"/>. </summary>
         /// <param name="receipts"> Receipts of the send message operation. </param>
         internal SendMessageResult(IReadOnlyList<MessageReceipt> receipts)
         {

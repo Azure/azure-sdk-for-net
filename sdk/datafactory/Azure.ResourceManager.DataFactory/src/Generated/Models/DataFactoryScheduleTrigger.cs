@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Trigger that creates pipeline runs periodically, on schedule. </summary>
     public partial class DataFactoryScheduleTrigger : MultiplePipelineTrigger
     {
-        /// <summary> Initializes a new instance of DataFactoryScheduleTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryScheduleTrigger"/>. </summary>
         /// <param name="recurrence"> Recurrence schedule configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recurrence"/> is null. </exception>
         public DataFactoryScheduleTrigger(ScheduleTriggerRecurrence recurrence)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             TriggerType = "ScheduleTrigger";
         }
 
-        /// <summary> Initializes a new instance of DataFactoryScheduleTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryScheduleTrigger"/>. </summary>
         /// <param name="triggerType"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>

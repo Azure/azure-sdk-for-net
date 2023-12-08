@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents an incident label. </summary>
     public partial class SecurityInsightsIncidentLabel
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentLabel. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentLabel"/>. </summary>
         /// <param name="labelName"> The name of the label. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
         public SecurityInsightsIncidentLabel(string labelName)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             LabelName = labelName;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentLabel. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentLabel"/>. </summary>
         /// <param name="labelName"> The name of the label. </param>
         /// <param name="labelType"> The type of the label. </param>
         internal SecurityInsightsIncidentLabel(string labelName, SecurityInsightsIncidentLabelType? labelType)

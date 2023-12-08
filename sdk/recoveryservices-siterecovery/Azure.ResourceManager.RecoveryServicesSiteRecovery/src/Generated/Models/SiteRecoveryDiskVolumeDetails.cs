@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Volume details. </summary>
     public partial class SiteRecoveryDiskVolumeDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryDiskVolumeDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryDiskVolumeDetails"/>. </summary>
         internal SiteRecoveryDiskVolumeDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryDiskVolumeDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryDiskVolumeDetails"/>. </summary>
         /// <param name="label"> The volume label. </param>
         /// <param name="name"> The volume name. </param>
         internal SiteRecoveryDiskVolumeDetails(string label, string name)

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Kubernetes
 {
     /// <summary>
     /// A Class representing a ConnectedCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ConnectedClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetConnectedClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetConnectedCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConnectedClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetConnectedClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetConnectedCluster method.
     /// </summary>
     public partial class ConnectedClusterResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Kubernetes
         private readonly ConnectedClusterRestOperations _connectedClusterRestClient;
         private readonly ConnectedClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Kubernetes/connectedClusters";
+
         /// <summary> Initializes a new instance of the <see cref="ConnectedClusterResource"/> class for mocking. </summary>
         protected ConnectedClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ConnectedClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConnectedClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ConnectedClusterResource(ArmClient client, ConnectedClusterData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Kubernetes
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Kubernetes/connectedClusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
