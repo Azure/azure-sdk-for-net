@@ -7,6 +7,7 @@ namespace System.ClientModel.Primitives;
 
 public abstract class PipelinePolicy
 {
+    // TODO: Take IEnumerable?
     public abstract void Process(PipelineMessage message, PipelineProcessor pipeline);
 
     public abstract ValueTask ProcessAsync(PipelineMessage message, PipelineProcessor pipeline);
