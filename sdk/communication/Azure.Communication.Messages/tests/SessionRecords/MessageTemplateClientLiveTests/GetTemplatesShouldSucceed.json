@@ -6,26 +6,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-e8e55f876fa025cb97a24a212cb6a87c-8ec6c92dc6958edf-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20231129.1 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "72516d7f44cab07c6b3e2081b2a2a549",
+        "traceparent": "00-9c48782409f644038cd8c799b98391c8-761c0ced55cd00fd-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20231207.1 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "1c70c12024f2d60873fcb468f0db5922",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Thu, 30 Nov 2023 00:53:55 GMT",
+        "x-ms-date": "Fri, 08 Dec 2023 02:03:44 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2023-02-01-preview, 2023-08-24-preview",
+        "api-supported-versions": "2023-08-24-preview, 2024-02-01",
         "Content-Length": "9833",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 30 Nov 2023 00:53:56 GMT",
-        "MS-CV": "PtqwNCoWZECO\u002BYAUrhNwcQ.0",
+        "Date": "Fri, 08 Dec 2023 02:03:46 GMT",
+        "MS-CV": "zMk/7XuSxUuUh2sGkAtwkQ.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0JN1nZQAAAAD0wDyXQEdpQZLjN4lrxXtgV1NURURHRTAxMjIAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0gnlyZQAAAABt1RGGK4zuT4EJrYcl6iKwV1NURURHRTA4MDYAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "146ms"
+        "X-Processing-Time": "521ms"
       },
       "ResponseBody": {
         "value": [
@@ -689,26 +689,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a84ba96536aaef87149a83cd9f647eca-d17904c301b2f94f-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20231129.1 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "2de394f6f2c915935c081531f3ac9bbe",
+        "traceparent": "00-f16d98a49cd4d16c1028793efa03d7d0-6c97d45eb5df4788-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20231207.1 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "d8c29a7e92b5dbdc7574939663bcb595",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Thu, 30 Nov 2023 00:53:56 GMT",
+        "x-ms-date": "Fri, 08 Dec 2023 02:03:45 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2023-02-01-preview, 2023-08-24-preview",
+        "api-supported-versions": "2023-08-24-preview, 2024-02-01",
         "Content-Length": "12",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 30 Nov 2023 00:53:57 GMT",
-        "MS-CV": "4CIIKYwz2kecDjvW1n0yuw.0",
+        "Date": "Fri, 08 Dec 2023 02:03:46 GMT",
+        "MS-CV": "3nrw0N/NoU6X3S3iafVrUw.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0Jd1nZQAAAACEqcPbI2OdQbBHH1UIAsE2V1NURURHRTAxMjIAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0g3lyZQAAAABG6PrJUZOLQ5XzZDkplnmWV1NURURHRTA4MDYAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "106ms"
+        "X-Processing-Time": "144ms"
       },
       "ResponseBody": {
         "value": []
@@ -717,7 +717,7 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1211412733",
+    "RandomSeed": "915876036",
     "SENDER_CHANNEL_REGISTRATION_ID": "59aced66-68ae-4b7a-8430-36f4c5dfa328"
   }
 }
