@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-beta.12 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-beta.11 (2023-12-07)
 
 This is a fast-following bug fix update to address some of the biggest issues reported by the community. Thank you
