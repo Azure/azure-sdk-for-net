@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies the Managed Identity used by ADE to get access token for keyvault operations. </summary>
     internal partial class EncryptionIdentity
     {
-        /// <summary> Initializes a new instance of EncryptionIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionIdentity"/>. </summary>
         public EncryptionIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionIdentity"/>. </summary>
         /// <param name="userAssignedIdentityResourceId"> Specifies ARM Resource ID of one of the user identities associated with the VM. </param>
         internal EncryptionIdentity(string userAssignedIdentityResourceId)
         {

@@ -13,11 +13,20 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies the input for attaching and detaching a list of managed data disks. </summary>
     public partial class AttachDetachDataDisksRequest
     {
-        /// <summary> Initializes a new instance of AttachDetachDataDisksRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttachDetachDataDisksRequest"/>. </summary>
         public AttachDetachDataDisksRequest()
         {
             DataDisksToAttach = new ChangeTrackingList<DataDisksToAttach>();
             DataDisksToDetach = new ChangeTrackingList<DataDisksToDetach>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AttachDetachDataDisksRequest"/>. </summary>
+        /// <param name="dataDisksToAttach"> The list of managed data disks to be attached. </param>
+        /// <param name="dataDisksToDetach"> The list of managed data disks to be detached. </param>
+        internal AttachDetachDataDisksRequest(IList<DataDisksToAttach> dataDisksToAttach, IList<DataDisksToDetach> dataDisksToDetach)
+        {
+            DataDisksToAttach = dataDisksToAttach;
+            DataDisksToDetach = dataDisksToDetach;
         }
 
         /// <summary> The list of managed data disks to be attached. </summary>

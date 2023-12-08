@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the data disk to be detached. </summary>
     public partial class DataDisksToDetach
     {
-        /// <summary> Initializes a new instance of DataDisksToDetach. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataDisksToDetach"/>. </summary>
         /// <param name="diskId"> ID of the managed data disk. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/> is null. </exception>
         public DataDisksToDetach(string diskId)
@@ -21,6 +21,15 @@ namespace Azure.ResourceManager.Compute.Models
             Argument.AssertNotNull(diskId, nameof(diskId));
 
             DiskId = diskId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataDisksToDetach"/>. </summary>
+        /// <param name="diskId"> ID of the managed data disk. </param>
+        /// <param name="detachOption"> Supported options available for Detach of a disk from a VM. Refer to DetachOption object reference for more details. </param>
+        internal DataDisksToDetach(string diskId, DiskDetachOptionType? detachOption)
+        {
+            DiskId = diskId;
+            DetachOption = detachOption;
         }
 
         /// <summary> ID of the managed data disk. </summary>

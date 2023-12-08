@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the data disk to be attached. </summary>
     public partial class DataDisksToAttach
     {
-        /// <summary> Initializes a new instance of DataDisksToAttach. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataDisksToAttach"/>. </summary>
         /// <param name="diskId"> ID of the managed data disk. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/> is null. </exception>
         public DataDisksToAttach(string diskId)
@@ -21,6 +21,15 @@ namespace Azure.ResourceManager.Compute.Models
             Argument.AssertNotNull(diskId, nameof(diskId));
 
             DiskId = diskId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataDisksToAttach"/>. </summary>
+        /// <param name="diskId"> ID of the managed data disk. </param>
+        /// <param name="lun"> The logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. If not specified, lun would be auto assigned. </param>
+        internal DataDisksToAttach(string diskId, int? lun)
+        {
+            DiskId = diskId;
+            Lun = lun;
         }
 
         /// <summary> ID of the managed data disk. </summary>

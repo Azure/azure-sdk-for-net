@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The configuration parameters used while performing resilient VM creation. </summary>
     internal partial class ResilientVmCreationPolicy
     {
-        /// <summary> Initializes a new instance of ResilientVmCreationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResilientVmCreationPolicy"/>. </summary>
         public ResilientVmCreationPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ResilientVmCreationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResilientVmCreationPolicy"/>. </summary>
         /// <param name="enabled"> Specifies whether resilient VM creation should be enabled on the virtual machine scale set. The default value is false. </param>
         internal ResilientVmCreationPolicy(bool? enabled)
         {

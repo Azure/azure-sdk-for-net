@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes an resiliency policy - resilientVMCreationPolicy and/or resilientVMDeletionPolicy. </summary>
     public partial class ResiliencyPolicy
     {
-        /// <summary> Initializes a new instance of ResiliencyPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResiliencyPolicy"/>. </summary>
         public ResiliencyPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ResiliencyPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResiliencyPolicy"/>. </summary>
         /// <param name="resilientVmCreationPolicy"> The configuration parameters used while performing resilient VM creation. </param>
         /// <param name="resilientVmDeletionPolicy"> The configuration parameters used while performing resilient VM deletion. </param>
         internal ResiliencyPolicy(ResilientVmCreationPolicy resilientVmCreationPolicy, ResilientVmDeletionPolicy resilientVmDeletionPolicy)

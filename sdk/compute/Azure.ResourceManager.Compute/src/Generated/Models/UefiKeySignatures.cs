@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Additional UEFI key signatures that will be added to the image in addition to the signature templates. </summary>
     public partial class UefiKeySignatures
     {
-        /// <summary> Initializes a new instance of UefiKeySignatures. </summary>
+        /// <summary> Initializes a new instance of <see cref="UefiKeySignatures"/>. </summary>
         public UefiKeySignatures()
         {
             Kek = new ChangeTrackingList<UefiKey>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
             Dbx = new ChangeTrackingList<UefiKey>();
         }
 
-        /// <summary> Initializes a new instance of UefiKeySignatures. </summary>
+        /// <summary> Initializes a new instance of <see cref="UefiKeySignatures"/>. </summary>
         /// <param name="pk"> The Platform Key of this image version. </param>
         /// <param name="kek"> The Key Encryption Keys of this image version. </param>
         /// <param name="db"> The database of UEFI keys for this image version. </param>

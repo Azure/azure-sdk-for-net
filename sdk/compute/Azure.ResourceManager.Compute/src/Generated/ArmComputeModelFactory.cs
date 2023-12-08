@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineScaleSetData(id, name, resourceType, systemData, tags, location, sku, plan, identity, zones?.ToList(), extendedLocation, etag, upgradePolicy, automaticRepairsPolicy, virtualMachineProfile, provisioningState, overprovision, doNotRunExtensionsOnOverprovisionedVms, uniqueId, singlePlacementGroup, zoneBalance, platformFaultDomainCount, proximityPlacementGroupId != null ? ResourceManagerModelFactory.WritableSubResource(proximityPlacementGroupId) : null, hostGroupId != null ? ResourceManagerModelFactory.WritableSubResource(hostGroupId) : null, additionalCapabilities, scaleInPolicy, orchestrationMode, spotRestorePolicy, priorityMixPolicy, timeCreated, isMaximumCapacityConstrained, resiliencyPolicy);
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineScaleSetVmProfile"/>. </summary>
         /// <param name="osProfile"> Specifies the operating system settings for the virtual machines in the scale set. </param>
         /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
         /// <param name="networkProfile"> Specifies properties of the network interfaces of the virtual machines in the scale set. </param>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineScaleSetVmProfile(osProfile, storageProfile, networkProfile, securityProfile, bootDiagnostics != null ? new DiagnosticsProfile(bootDiagnostics) : null, extensionProfile, licenseType, priority, evictionPolicy, billingMaxPrice != null ? new BillingProfile(billingMaxPrice) : null, scheduledEventsProfile, userData, capacityReservationGroupId != null ? new CapacityReservationProfile(ResourceManagerModelFactory.WritableSubResource(capacityReservationGroupId)) : null, galleryApplications != null ? new ApplicationProfile(galleryApplications?.ToList()) : null, hardwareVmSizeProperties != null ? new VirtualMachineScaleSetHardwareProfile(hardwareVmSizeProperties) : null, serviceArtifactReferenceId != null ? ResourceManagerModelFactory.WritableSubResource(serviceArtifactReferenceId) : null, securityPostureReference, timeCreated);
         }
 
-        /// <summary> Initializes a new instance of ImageReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ImageReference"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="publisher"> The image publisher. </param>
         /// <param name="offer"> Specifies the offer of the platform image or marketplace image used to create the virtual machine. </param>
@@ -1122,7 +1122,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new RestorePointSourceMetadata(hardwareProfile, storageProfile, osProfile, bootDiagnostics != null ? new DiagnosticsProfile(bootDiagnostics) : null, licenseType, vmId, securityProfile, location, userData, hyperVGeneration);
         }
 
-        /// <summary> Initializes a new instance of RestorePointSourceVmStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RestorePointSourceVmStorageProfile"/>. </summary>
         /// <param name="osDisk"> Gets the OS disk of the VM captured at the time of the restore point creation. </param>
         /// <param name="dataDiskList"> Gets the data disks of the VM captured at the time of the restore point creation. </param>
         /// <param name="diskControllerType"> Gets the disk controller type of the VM captured at the time of the restore point creation. </param>
@@ -1134,7 +1134,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new RestorePointSourceVmStorageProfile(osDisk, dataDiskList?.ToList(), diskControllerType);
         }
 
-        /// <summary> Initializes a new instance of RestorePointSourceVmOSDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RestorePointSourceVmOSDisk"/>. </summary>
         /// <param name="osType"> Gets the Operating System type. </param>
         /// <param name="encryptionSettings"> Gets the disk encryption settings. </param>
         /// <param name="name"> Gets the disk name. </param>
@@ -1227,7 +1227,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new CapacityReservationGroupData(id, name, resourceType, systemData, tags, location, zones?.ToList(), capacityReservations?.ToList(), virtualMachinesAssociated?.ToList(), instanceView, sharingSubscriptionIds != null ? new ResourceSharingProfile(sharingSubscriptionIds?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of CapacityReservationGroupInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CapacityReservationGroupInstanceView"/>. </summary>
         /// <param name="capacityReservations"> List of instance view of the capacity reservations under the capacity reservation group. </param>
         /// <param name="sharedSubscriptionIds"> List of the subscriptions that the capacity reservation group is shared with. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
         /// <returns> A new <see cref="Models.CapacityReservationGroupInstanceView"/> instance for mocking. </returns>
@@ -1825,7 +1825,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new GalleryData(id, name, resourceType, systemData, tags, location, description, identifierUniqueName != null ? new GalleryIdentifier(identifierUniqueName) : null, provisioningState, sharingProfile, isSoftDeleteEnabled != null ? new SoftDeletePolicy(isSoftDeleteEnabled) : null, sharingStatus);
         }
 
-        /// <summary> Initializes a new instance of SharingProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SharingProfile"/>. </summary>
         /// <param name="permission"> This property allows you to specify the permission of sharing gallery. Possible values are: **Private,** **Groups,** **Community.**. </param>
         /// <param name="groups"> A list of sharing profile groups. </param>
         /// <param name="communityGalleryInfo"> Information of community gallery if current gallery is shared to community. </param>
@@ -2235,7 +2235,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new CommunityGalleryData(name, location, resourceType, uniqueId, disclaimer, artifactTags, communityMetadata);
         }
 
-        /// <summary> Initializes a new instance of CommunityGalleryMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CommunityGalleryMetadata"/>. </summary>
         /// <param name="publisherUri"> The publisher URI of this community gallery. </param>
         /// <param name="publisherContact"> The publisher email id of this community gallery. </param>
         /// <param name="eula"> The end-user license agreement for this community gallery. </param>

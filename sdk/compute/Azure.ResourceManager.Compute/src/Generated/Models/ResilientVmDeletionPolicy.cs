@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The configuration parameters used while performing resilient VM deletion. </summary>
     internal partial class ResilientVmDeletionPolicy
     {
-        /// <summary> Initializes a new instance of ResilientVmDeletionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResilientVmDeletionPolicy"/>. </summary>
         public ResilientVmDeletionPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ResilientVmDeletionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResilientVmDeletionPolicy"/>. </summary>
         /// <param name="enabled"> Specifies whether resilient VM deletion should be enabled on the virtual machine scale set. The default value is false. </param>
         internal ResilientVmDeletionPolicy(bool? enabled)
         {

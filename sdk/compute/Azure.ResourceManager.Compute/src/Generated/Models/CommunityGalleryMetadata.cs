@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The metadata of community gallery. </summary>
     public partial class CommunityGalleryMetadata
     {
-        /// <summary> Initializes a new instance of CommunityGalleryMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryMetadata"/>. </summary>
         /// <param name="publisherContact"> The publisher email id of this community gallery. </param>
         /// <param name="publicNames"> A list of public names the gallery has. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherContact"/> or <paramref name="publicNames"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             PublicNames = publicNames.ToList();
         }
 
-        /// <summary> Initializes a new instance of CommunityGalleryMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryMetadata"/>. </summary>
         /// <param name="publisherUri"> The publisher URI of this community gallery. </param>
         /// <param name="publisherContact"> The publisher email id of this community gallery. </param>
         /// <param name="eula"> The end-user license agreement for this community gallery. </param>

@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Parameters for GenerateSshKeyPair. </summary>
     public partial class SshGenerateKeyPairInputContent
     {
-        /// <summary> Initializes a new instance of SshGenerateKeyPairInputContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SshGenerateKeyPairInputContent"/>. </summary>
         public SshGenerateKeyPairInputContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SshGenerateKeyPairInputContent"/>. </summary>
+        /// <param name="encryptionType"> The encryption type of the SSH keys to be generated. See SshEncryptionTypes for possible set of values. If not provided, will default to RSA. </param>
+        internal SshGenerateKeyPairInputContent(SshEncryptionType? encryptionType)
+        {
+            EncryptionType = encryptionType;
         }
 
         /// <summary> The encryption type of the SSH keys to be generated. See SshEncryptionTypes for possible set of values. If not provided, will default to RSA. </summary>

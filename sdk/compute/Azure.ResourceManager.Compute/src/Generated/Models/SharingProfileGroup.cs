@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             Ids = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SharingProfileGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharingProfileGroup"/>. </summary>
         /// <param name="groupType"> This property allows you to specify the type of sharing group. Possible values are: **Subscriptions,** **AADTenants.**. </param>
         /// <param name="ids"> A list of subscription/tenant ids the gallery is aimed to be shared to. </param>
         internal SharingProfileGroup(SharingProfileGroupType? groupType, IList<string> ids)

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The ResourceSharingProfile. </summary>
     internal partial class ResourceSharingProfile
     {
-        /// <summary> Initializes a new instance of ResourceSharingProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSharingProfile"/>. </summary>
         public ResourceSharingProfile()
         {
             SubscriptionIds = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of ResourceSharingProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSharingProfile"/>. </summary>
         /// <param name="subscriptionIds"> Specifies an array of subscription resource IDs that capacity reservation group is shared with. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
         internal ResourceSharingProfile(IList<WritableSubResource> subscriptionIds)
         {

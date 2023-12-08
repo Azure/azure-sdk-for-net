@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> A UEFI key signature. </summary>
     public partial class UefiKey
     {
-        /// <summary> Initializes a new instance of UefiKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="UefiKey"/>. </summary>
         public UefiKey()
         {
             Value = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of UefiKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="UefiKey"/>. </summary>
         /// <param name="keyType"> The type of key signature. </param>
         /// <param name="value"> The value of the key signature. </param>
         internal UefiKey(UefiKeyType? keyType, IList<string> value)

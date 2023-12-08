@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             Groups = new ChangeTrackingList<SharingProfileGroup>();
         }
 
-        /// <summary> Initializes a new instance of SharingProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharingProfile"/>. </summary>
         /// <param name="permission"> This property allows you to specify the permission of sharing gallery. Possible values are: **Private,** **Groups,** **Community.**. </param>
         /// <param name="groups"> A list of sharing profile groups. </param>
         /// <param name="communityGalleryInfo"> Information of community gallery if current gallery is shared to community. </param>
