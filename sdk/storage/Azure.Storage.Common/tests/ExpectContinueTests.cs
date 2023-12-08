@@ -137,7 +137,7 @@ namespace Azure.Storage.Tests
             TimeSpan backoff = TimeSpan.FromMilliseconds(10);
             ExpectContinueOnThrottlePolicy policy = new()
             {
-                Backoff = backoff,
+                AutoEnabledInterval = backoff,
             };
             MockRequest MakeRequest() => new()
             {

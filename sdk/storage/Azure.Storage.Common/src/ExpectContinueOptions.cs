@@ -51,9 +51,9 @@ namespace Azure.Storage
         public long ContentLengthThreshold { get; set; }
 
         /// <summary>
-        /// In mode <see cref="ApplyHeaderMode.Auto"/>, the amount of time to apply the header
+        /// In mode <see cref="ApplyHeaderMode.Auto"/>, the time interval to apply the header
         /// after recieving a triggering error. The default time is one minute.
         /// </summary>
-        public TimeSpan Backoff { get; set; } = TimeSpan.FromMinutes(1);
+        public TimeSpan AutoEnabledInterval { get; set; } = TimeSpan.FromMinutes(1);
     }
 }

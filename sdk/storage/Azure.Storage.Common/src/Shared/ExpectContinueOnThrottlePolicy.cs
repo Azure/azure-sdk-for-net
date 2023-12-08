@@ -6,15 +6,17 @@ using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
+namespace Azure.Storage;
+
 internal class ExpectContinueOnThrottlePolicy : HttpPipelineSynchronousPolicy
 {
     private long _lastThrottleTicks = 0;
 
-    private long _backoffTicks = TimeSpan.TicksPerMinute;
-    public TimeSpan Backoff
+    private long _autoEnabledIntervalTicks = TimeSpan.TicksPerMinute;
+    public TimeSpan AutoEnabledInterval
     {
-        get => TimeSpan.FromTicks(_backoffTicks);
-        set => _backoffTicks = value.Ticks;
+        get => TimeSpan.FromTicks(_autoEnabledIntervalTicks);
+        set => _autoEnabledIntervalTicks = value.Ticks;
     }
 
     public long ContentLengthThreshold { get; set; }
@@ -27,7 +29,7 @@ internal class ExpectContinueOnThrottlePolicy : HttpPipelineSynchronousPolicy
             return;
         }
         long lastThrottleTicks = Interlocked.Read(ref _lastThrottleTicks);
-        if (DateTimeOffset.UtcNow.Ticks - lastThrottleTicks < _backoffTicks)
+        if (DateTimeOffset.UtcNow.Ticks - lastThrottleTicks < _autoEnabledIntervalTicks)
         {
             message.Request.Headers.SetValue("Expect", "100-continue");
         }

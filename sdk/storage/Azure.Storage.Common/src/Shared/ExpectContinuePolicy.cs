@@ -4,6 +4,8 @@
 using Azure.Core;
 using Azure.Core.Pipeline;
 
+namespace Azure.Storage;
+
 internal class ExpectContinuePolicy : HttpPipelineSynchronousPolicy
 {
     public long ContentLengthThreshold { get; set; }

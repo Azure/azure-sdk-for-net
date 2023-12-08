@@ -132,7 +132,7 @@ namespace Azure.Storage
                 switch (expectContinue.Mode)
                 {
                     case ExpectContinueOptions.ApplyHeaderMode.Auto:
-                        pipelineOptions.PerCallPolicies.Add(new ExpectContinueOnThrottlePolicy() { Backoff = expectContinue.Backoff });
+                        pipelineOptions.PerCallPolicies.Add(new ExpectContinueOnThrottlePolicy() { AutoEnabledInterval = expectContinue.AutoEnabledInterval });
                         break;
                     case ExpectContinueOptions.ApplyHeaderMode.On:
                         pipelineOptions.PerCallPolicies.Add(new ExpectContinuePolicy());
@@ -144,7 +144,7 @@ namespace Azure.Storage
             else
             {
                 // TODO get env config for whether to disable
-                pipelineOptions.PerCallPolicies.Add(new ExpectContinueOnThrottlePolicy() { Backoff = TimeSpan.FromMinutes(1) });
+                pipelineOptions.PerCallPolicies.Add(new ExpectContinueOnThrottlePolicy() { AutoEnabledInterval = TimeSpan.FromMinutes(1) });
             }
 
             pipelineOptions.PerRetryPolicies.Add(new StorageRequestValidationPipelinePolicy());
