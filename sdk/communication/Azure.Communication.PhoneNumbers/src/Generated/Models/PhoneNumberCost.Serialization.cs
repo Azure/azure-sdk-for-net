@@ -6,11 +6,24 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    public partial class PhoneNumberCost
+    public partial class PhoneNumberCost : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("amount"u8);
+            writer.WriteNumberValue(Amount);
+            writer.WritePropertyName("currencyCode"u8);
+            writer.WriteStringValue(IsoCurrencySymbol);
+            writer.WritePropertyName("billingFrequency"u8);
+            writer.WriteStringValue(BillingFrequency.ToString());
+            writer.WriteEndObject();
+        }
+
         internal static PhoneNumberCost DeserializePhoneNumberCost(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

@@ -313,6 +313,186 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [Test]
+        [SyncOnly]
+        public async void CreateSearchPurchaseRelease()
+        {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests)
+            {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
+            var client = CreateClient();
+            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync("IT", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
+                new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
+
+            while (!searchOperation.HasCompleted)
+            {
+                SleepIfNotInPlaybackMode();
+                searchOperation.UpdateStatus();
+            }
+
+            Assert.IsTrue(searchOperation.HasCompleted);
+            Assert.AreEqual(1, searchOperation.Value.PhoneNumbers.Count);
+            Assert.AreEqual(PhoneNumberAssignmentType.Application, searchOperation.Value.AssignmentType);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+
+            var phoneNumber = searchOperation.Value.PhoneNumbers.Single();
+            var searchId = searchOperation.Value.SearchId;
+            var consentToNotResellNumbers = true;
+
+            var purchaseOperation = client.StartPurchasePhoneNumbers(searchId, consentToNotResellNumbers);
+
+            while (!purchaseOperation.HasCompleted)
+            {
+                SleepIfNotInPlaybackMode();
+                purchaseOperation.UpdateStatus();
+            }
+
+            Assert.AreEqual(purchaseOperation.GetRawResponse().Status, 200);
+
+            var releaseOperation = client.StartReleasePhoneNumber(phoneNumber);
+
+            while (!releaseOperation.HasCompleted)
+            {
+                SleepIfNotInPlaybackMode();
+                releaseOperation.UpdateStatus();
+            }
+
+            Assert.IsTrue(releaseOperation.HasCompleted);
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async void CreateSearchPurchaseReleaseAsync()
+        {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests)
+            {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
+            var client = CreateClient();
+            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync("IT", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
+                new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
+
+            while (!searchOperation.HasCompleted)
+            {
+                SleepIfNotInPlaybackMode();
+                searchOperation.UpdateStatus();
+            }
+
+            Assert.IsTrue(searchOperation.HasCompleted);
+            Assert.AreEqual(1, searchOperation.Value.PhoneNumbers.Count);
+            Assert.AreEqual(PhoneNumberAssignmentType.Application, searchOperation.Value.AssignmentType);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+
+            var phoneNumber = searchOperation.Value.PhoneNumbers.Single();
+            var searchId = searchOperation.Value.SearchId;
+            var consentToNotResellNumbers = true;
+
+            var purchaseOperation = await client.StartPurchasePhoneNumbersAsync(searchId, consentToNotResellNumbers);
+
+            while (!purchaseOperation.HasCompleted)
+            {
+                SleepIfNotInPlaybackMode();
+                purchaseOperation.UpdateStatus();
+            }
+
+            Assert.AreEqual(purchaseOperation.GetRawResponse().Status, 200);
+
+            var releaseOperation = await client.StartReleasePhoneNumberAsync(phoneNumber);
+
+            while (!releaseOperation.HasCompleted)
+            {
+                SleepIfNotInPlaybackMode();
+                releaseOperation.UpdateStatus();
+            }
+
+            Assert.IsTrue(releaseOperation.HasCompleted);
+        }
+
+
+
+                [Test]
+        [SyncOnly]
+        public async void CreateSearchPurchaseFailureDNR()
+        {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests)
+            {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
+            var client = CreateClient();
+            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync("IT", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
+                new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
+
+            while (!searchOperation.HasCompleted)
+            {
+                SleepIfNotInPlaybackMode();
+                searchOperation.UpdateStatus();
+            }
+
+            Assert.IsTrue(searchOperation.HasCompleted);
+            Assert.AreEqual(1, searchOperation.Value.PhoneNumbers.Count);
+            Assert.AreEqual(PhoneNumberAssignmentType.Application, searchOperation.Value.AssignmentType);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+
+            var phoneNumber = searchOperation.Value.PhoneNumbers.Single();
+            var searchId = searchOperation.Value.SearchId;
+            var consentToNotResellNumbers = false;
+
+            try
+            {
+                var purchaseOperation = client.StartPurchasePhoneNumbers(searchId, consentToNotResellNumbers);
+            }
+            catch (Exception ex)
+            {
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async void CreateSearchPurchaseFailureAsyncDNR()
+        {
+            if (TestEnvironment.ShouldIgnorePhoneNumbersTests)
+            {
+                Assert.Ignore("Skip phone number live tests flag is on.");
+            }
+            var client = CreateClient();
+            var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync("IT", PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application,
+                new PhoneNumberCapabilities(PhoneNumberCapabilityType.Outbound, PhoneNumberCapabilityType.None));
+
+            while (!searchOperation.HasCompleted)
+            {
+                SleepIfNotInPlaybackMode();
+                searchOperation.UpdateStatus();
+            }
+
+            Assert.IsTrue(searchOperation.HasCompleted);
+            Assert.AreEqual(1, searchOperation.Value.PhoneNumbers.Count);
+            Assert.AreEqual(PhoneNumberAssignmentType.Application, searchOperation.Value.AssignmentType);
+            Assert.AreEqual(PhoneNumberCapabilityType.Outbound, searchOperation.Value.Capabilities.Calling);
+            Assert.AreEqual(PhoneNumberCapabilityType.None, searchOperation.Value.Capabilities.Sms);
+            Assert.AreEqual(PhoneNumberType.TollFree, searchOperation.Value.PhoneNumberType);
+
+            var phoneNumber = searchOperation.Value.PhoneNumbers.Single();
+            var searchId = searchOperation.Value.SearchId;
+            var consentToNotResellNumbers = true;
+
+            try
+            {
+                var purchaseOperation = await client.StartPurchasePhoneNumbersAsync(searchId, consentToNotResellNumbers);
+            }
+            catch (Exception ex)
+            {
+                Assert.NotNull(ex.Message);
+            }
+        }
+
+        [Test]
         [AsyncOnly]
         public async Task GetPhoneNumberSearchResultWithNullSearchIdAsync()
         {

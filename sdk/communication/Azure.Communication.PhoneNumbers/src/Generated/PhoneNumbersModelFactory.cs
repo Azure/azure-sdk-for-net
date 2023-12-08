@@ -80,38 +80,27 @@ namespace Azure.Communication.PhoneNumbers
             return new PhoneNumberOffering(phoneNumberType, assignmentType, availableCapabilities, cost);
         }
 
-        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PhoneNumberCost"/>. </summary>
-        /// <param name="amount"> The cost amount. </param>
-        /// <param name="isoCurrencySymbol"> The ISO 4217 currency code for the cost amount, e.g. USD. </param>
-        /// <param name="billingFrequency"> The frequency with which the cost gets billed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="isoCurrencySymbol"/> is null. </exception>
-        /// <returns> A new <see cref="PhoneNumbers.PhoneNumberCost"/> instance for mocking. </returns>
-        public static PhoneNumberCost PhoneNumberCost(double amount = default, string isoCurrencySymbol = null, BillingFrequency billingFrequency = default)
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PhoneNumbersBrowseResult"/>. </summary>
+        /// <param name="phoneNumbers"> The phone numbers that are available for purchase. </param>
+        /// <returns> A new <see cref="PhoneNumbers.PhoneNumbersBrowseResult"/> instance for mocking. </returns>
+        public static PhoneNumbersBrowseResult PhoneNumbersBrowseResult(IEnumerable<AvailablePhoneNumber> phoneNumbers = null)
         {
-            if (isoCurrencySymbol == null)
-            {
-                throw new ArgumentNullException(nameof(isoCurrencySymbol));
-            }
+            phoneNumbers ??= new List<AvailablePhoneNumber>();
 
-            return new PhoneNumberCost(amount, isoCurrencySymbol, billingFrequency);
+            return new PhoneNumbersBrowseResult(phoneNumbers?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PhoneNumberSearchResult"/>. </summary>
-        /// <param name="searchId"> The search id. </param>
-        /// <param name="phoneNumbers"> The phone numbers that are available. Can be fewer than the desired search quantity. </param>
-        /// <param name="phoneNumberType"> The phone number's type, e.g. geographic, or tollFree. </param>
-        /// <param name="assignmentType"> Phone number's assignment type. </param>
-        /// <param name="capabilities"> Capabilities of a phone number. </param>
-        /// <param name="cost"> The incurred cost for a single phone number. </param>
-        /// <param name="searchExpiresOn"> The date that this search result expires and phone numbers are no longer on hold. A search result expires in less than 15min, e.g. 2020-11-19T16:31:49.048Z. </param>
-        /// <param name="errorCode"> The error code of the search. </param>
-        /// <param name="error"> Mapping Error Messages to Codes. </param>
-        /// <returns> A new <see cref="PhoneNumbers.PhoneNumberSearchResult"/> instance for mocking. </returns>
-        public static PhoneNumberSearchResult PhoneNumberSearchResult(string searchId = null, IEnumerable<string> phoneNumbers = null, PhoneNumberType phoneNumberType = default, PhoneNumberAssignmentType assignmentType = default, PhoneNumberCapabilities capabilities = null, PhoneNumberCost cost = null, DateTimeOffset searchExpiresOn = default, int? errorCode = null, PhoneNumberSearchResultError? error = null)
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PhoneNumbersReservation"/>. </summary>
+        /// <param name="id"> The id of the reservation. </param>
+        /// <param name="expiresAt"> The time at which the reservation will expire. If a reservation is not purchased before this time, all of the reserved phone numbers will be released and made available for others to purchase. </param>
+        /// <param name="phoneNumbers"></param>
+        /// <param name="status"></param>
+        /// <returns> A new <see cref="PhoneNumbers.PhoneNumbersReservation"/> instance for mocking. </returns>
+        public static PhoneNumbersReservation PhoneNumbersReservation(string id = null, DateTimeOffset? expiresAt = null, IEnumerable<AvailablePhoneNumber> phoneNumbers = null, ReservationStatus? status = null)
         {
-            phoneNumbers ??= new List<string>();
+            phoneNumbers ??= new List<AvailablePhoneNumber>();
 
-            return new PhoneNumberSearchResult(searchId, phoneNumbers?.ToList(), phoneNumberType, assignmentType, capabilities, cost, searchExpiresOn, errorCode, error);
+            return new PhoneNumbersReservation(id, expiresAt, phoneNumbers?.ToList(), status);
         }
     }
 }

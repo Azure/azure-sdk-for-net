@@ -18,7 +18,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="isoCurrencySymbol"> The ISO 4217 currency code for the cost amount, e.g. USD. </param>
         /// <param name="billingFrequency"> The frequency with which the cost gets billed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="isoCurrencySymbol"/> is null. </exception>
-        internal PhoneNumberCost(double amount, string isoCurrencySymbol, BillingFrequency billingFrequency)
+        public PhoneNumberCost(double amount, string isoCurrencySymbol, BillingFrequency billingFrequency)
         {
             Argument.AssertNotNull(isoCurrencySymbol, nameof(isoCurrencySymbol));
 
@@ -28,8 +28,8 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> The cost amount. </summary>
-        public double Amount { get; }
+        public double Amount { get; set; }
         /// <summary> The frequency with which the cost gets billed. </summary>
-        public BillingFrequency BillingFrequency { get; }
+        public BillingFrequency BillingFrequency { get; set; }
     }
 }

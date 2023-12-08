@@ -7,10 +7,10 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
 public-clients: true
-tag: package-phonenumber-2022-12-01
+tag: package-phonenumber-2023-10-01-preview
 model-namespace: false
 require:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/678da77c7a5932e0101d2c125e08da3540bec29f/specification/communication/data-plane/PhoneNumbers/readme.md
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/5e9b69aec73f012cd7a9ebfe2c2ff7a65aa4c189/specification/communication/data-plane/PhoneNumbers/readme.md
 title: Phone numbers
 payload-flattening-threshold: 3
 generation1-convenience-client: true
@@ -31,4 +31,18 @@ directive:
   where: $.paths.*.post.parameters[?(@.name == "countryCode")]
   transform: >
     $["x-ms-client-name"] = "twoLetterIsoCountryName";
+```
+
+### Removed Property error from PhoneNumberSearchResult
+``` yaml
+directive:
+  where-model: PhoneNumberSearchResult
+  remove-property: error
+```
+
+### Removed Property errorCode from PhoneNumberSearchResult
+``` yaml
+directive:
+  where-model: PhoneNumberSearchResult
+  remove-property: errorCode
 ```
