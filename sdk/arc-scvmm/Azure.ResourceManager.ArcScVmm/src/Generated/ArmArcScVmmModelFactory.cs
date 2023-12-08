@@ -253,5 +253,21 @@ namespace Azure.ResourceManager.ArcScVmm.Models
 
             return new ScVmmAvailabilitySetData(id, name, resourceType, systemData, tags, location, extendedLocation, availabilitySetName, vmmServerId, provisioningState);
         }
+
+        /// <summary> Initializes a new instance of <see cref="ArcScVmm.InventoryItemData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
+        /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
+        /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
+        /// <param name="provisioningState"> Gets the provisioning state. </param>
+        /// <returns> A new <see cref="ArcScVmm.InventoryItemData"/> instance for mocking. </returns>
+        public static InventoryItemData InventoryItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string managedResourceId = null, string uuid = null, string inventoryItemName = null, string provisioningState = null)
+        {
+            return new InventoryItemData(id, name, resourceType, systemData, kind, inventoryType: default, managedResourceId, uuid, inventoryItemName, provisioningState);
+        }
     }
 }
