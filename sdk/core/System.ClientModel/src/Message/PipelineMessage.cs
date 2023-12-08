@@ -48,9 +48,9 @@ public class PipelineMessage : IDisposable
 
     public CancellationToken CancellationToken { get; set; }
 
-    public MessageClassifier? MessageClassifier { get; protected internal set; }
+    public PipelineMessageClassifier? MessageClassifier { get; protected internal set; }
 
-    public void Apply(RequestOptions options, MessageClassifier? messageClassifier = default)
+    public void Apply(RequestOptions options, PipelineMessageClassifier? messageClassifier = default)
     {
         // This design moves the client-author API (options.Apply) off the
         // client-user type RequestOptions.

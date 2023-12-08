@@ -86,6 +86,6 @@ public class OpenAIClient
         return message;
     }
 
-    private static MessageClassifier _messageClassifier200;
-    private static MessageClassifier MessageClassifier200 => _messageClassifier200 ??= new ResponseStatusClassifier(stackalloc ushort[] { 200 });
+    private static PipelineMessageClassifier _messageClassifier200;
+    private static PipelineMessageClassifier MessageClassifier200 => _messageClassifier200 ??= new ResponseStatusClassifier(stackalloc ushort[] { 200 });
 }

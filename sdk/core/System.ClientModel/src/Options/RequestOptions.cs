@@ -36,7 +36,7 @@ public class RequestOptions
     }
 
     // Set options on the message before sending it through the pipeline.
-    protected internal void Apply(PipelineMessage message, MessageClassifier? messageClassifier = default)
+    protected internal void Apply(PipelineMessage message, PipelineMessageClassifier? messageClassifier = default)
     {
         // TODO: Even though we're overriding the message.CancellationToken, this
         // works today because message.CancellationToken is overridden in Azure.Core
@@ -54,7 +54,7 @@ public class RequestOptions
             messageClassifier ??
 
             // The internal global default classifier.
-            MessageClassifier.Default;
+            PipelineMessageClassifier.Default;
 
         // Copy custom pipeline policies.
         message.PerCallPolicies = _perCallPolicies;
