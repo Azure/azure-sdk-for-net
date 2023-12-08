@@ -14,9 +14,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class UpdateApplianceForReplicationProtectedItemProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of UpdateApplianceForReplicationProtectedItemProviderSpecificContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateApplianceForReplicationProtectedItemProviderSpecificContent"/>. </summary>
         protected UpdateApplianceForReplicationProtectedItemProviderSpecificContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateApplianceForReplicationProtectedItemProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        internal UpdateApplianceForReplicationProtectedItemProviderSpecificContent(string instanceType)
+        {
+            InstanceType = instanceType;
         }
 
         /// <summary> The class type. </summary>

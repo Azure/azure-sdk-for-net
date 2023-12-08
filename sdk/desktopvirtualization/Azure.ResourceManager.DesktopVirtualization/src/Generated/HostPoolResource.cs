@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
     /// A Class representing a HostPool along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HostPoolResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHostPoolResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetHostPool method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HostPoolResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHostPoolResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHostPool method.
     /// </summary>
     public partial class HostPoolResource : ArmResource
     {
@@ -50,12 +50,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly MsixImagesRestOperations _msixImagesRestClient;
         private readonly HostPoolData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/hostPools";
+
         /// <summary> Initializes a new instance of the <see cref="HostPoolResource"/> class for mocking. </summary>
         protected HostPoolResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HostPoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HostPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HostPoolResource(ArmClient client, HostPoolData data) : this(client, data.Id)
@@ -86,9 +89,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/hostPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DesktopVirtualizationPrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DesktopVirtualizationPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DesktopVirtualizationPrivateLinkResourceData> GetPrivateLinkResourcesAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByHostPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DesktopVirtualizationPrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DesktopVirtualizationPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DesktopVirtualizationPrivateLinkResourceData> GetPrivateLinkResources(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByHostPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ScalingPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScalingPlanResource> GetScalingPlansAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scalingPlanRestClient.CreateListByHostPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScalingPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScalingPlanResource> GetScalingPlans(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scalingPlanRestClient.CreateListByHostPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UserSessionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="UserSessionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<UserSessionResource> GetUserSessionsAsync(string filter = null, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _userSessionRestClient.CreateListByHostPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, pageSizeHint, isDescending, initialSkip);
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UserSessionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="UserSessionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<UserSessionResource> GetUserSessions(string filter = null, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _userSessionRestClient.CreateListByHostPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, pageSizeHint, isDescending, initialSkip);
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="msixImageUri"> Object containing URI to MSIX Image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="msixImageUri"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ExpandMsixImage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExpandMsixImage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpandMsixImage> ExpandMsixImagesAsync(MsixImageUri msixImageUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(msixImageUri, nameof(msixImageUri));
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="msixImageUri"> Object containing URI to MSIX Image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="msixImageUri"/> is null. </exception>
-        /// <returns> A collection of <see cref="ExpandMsixImage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExpandMsixImage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpandMsixImage> ExpandMsixImages(MsixImageUri msixImageUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(msixImageUri, nameof(msixImageUri));

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Representing a list of FilterTrackPropertyConditions to select a track.  The filters are combined using a logical AND operation. </summary>
     public partial class FilterTrackSelection
     {
-        /// <summary> Initializes a new instance of FilterTrackSelection. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterTrackSelection"/>. </summary>
         /// <param name="trackSelections"> The track selections. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trackSelections"/> is null. </exception>
         public FilterTrackSelection(IEnumerable<FilterTrackPropertyCondition> trackSelections)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Media.Models
             TrackSelections = trackSelections.ToList();
         }
 
-        /// <summary> Initializes a new instance of FilterTrackSelection. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterTrackSelection"/>. </summary>
         /// <param name="trackSelections"> The track selections. </param>
         internal FilterTrackSelection(IList<FilterTrackPropertyCondition> trackSelections)
         {

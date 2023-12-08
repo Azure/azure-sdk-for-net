@@ -14,10 +14,31 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update automation account operation. </summary>
     public partial class AutomationAccountCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationAccountCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountCreateOrUpdateContent"/>. </summary>
         public AutomationAccountCreateOrUpdateContent()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountCreateOrUpdateContent"/>. </summary>
+        /// <param name="name"> Gets or sets name of the resource. </param>
+        /// <param name="location"> Gets or sets the location of the resource. </param>
+        /// <param name="identity"> Sets the identity property for automation account. </param>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <param name="sku"> Gets or sets account SKU. </param>
+        /// <param name="encryption"> Set the encryption properties for the automation account. </param>
+        /// <param name="isPublicNetworkAccessAllowed"> Indicates whether traffic on the non-ARM endpoint (Webhook/Agent) is allowed from the public internet. </param>
+        /// <param name="isLocalAuthDisabled"> Indicates whether requests using non-AAD authentication are blocked. </param>
+        internal AutomationAccountCreateOrUpdateContent(string name, AzureLocation? location, ManagedServiceIdentity identity, IDictionary<string, string> tags, AutomationSku sku, AutomationEncryptionProperties encryption, bool? isPublicNetworkAccessAllowed, bool? isLocalAuthDisabled)
+        {
+            Name = name;
+            Location = location;
+            Identity = identity;
+            Tags = tags;
+            Sku = sku;
+            Encryption = encryption;
+            IsPublicNetworkAccessAllowed = isPublicNetworkAccessAllowed;
+            IsLocalAuthDisabled = isLocalAuthDisabled;
         }
 
         /// <summary> Gets or sets name of the resource. </summary>

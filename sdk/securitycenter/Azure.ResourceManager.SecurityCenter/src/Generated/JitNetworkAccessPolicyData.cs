@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary> A class representing the JitNetworkAccessPolicy data model. </summary>
     public partial class JitNetworkAccessPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of JitNetworkAccessPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyData"/>. </summary>
         /// <param name="virtualMachines"> Configurations for Microsoft.Compute/virtualMachines resource type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachines"/> is null. </exception>
         public JitNetworkAccessPolicyData(IEnumerable<JitNetworkAccessPolicyVirtualMachine> virtualMachines)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Requests = new ChangeTrackingList<JitNetworkAccessRequestInfo>();
         }
 
-        /// <summary> Initializes a new instance of JitNetworkAccessPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

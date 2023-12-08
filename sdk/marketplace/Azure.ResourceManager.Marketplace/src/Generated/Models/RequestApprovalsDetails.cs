@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Request approvals details. </summary>
     public partial class RequestApprovalsDetails
     {
-        /// <summary> Initializes a new instance of RequestApprovalsDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestApprovalsDetails"/>. </summary>
         internal RequestApprovalsDetails()
         {
             Plans = new ChangeTrackingList<PlanNotificationDetails>();
         }
 
-        /// <summary> Initializes a new instance of RequestApprovalsDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestApprovalsDetails"/>. </summary>
         /// <param name="offerId"> Gets offer id. </param>
         /// <param name="displayName"> Gets offer display name. </param>
         /// <param name="publisherId"> Gets or sets publisher id. </param>

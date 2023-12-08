@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing an EncryptionProtector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EncryptionProtectorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEncryptionProtectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetEncryptionProtector method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EncryptionProtectorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEncryptionProtectorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetEncryptionProtector method.
     /// </summary>
     public partial class EncryptionProtectorResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Sql
         private readonly EncryptionProtectorsRestOperations _encryptionProtectorRestClient;
         private readonly EncryptionProtectorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/encryptionProtector";
+
         /// <summary> Initializes a new instance of the <see cref="EncryptionProtectorResource"/> class for mocking. </summary>
         protected EncryptionProtectorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EncryptionProtectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EncryptionProtectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EncryptionProtectorResource(ArmClient client, EncryptionProtectorData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/encryptionProtector";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

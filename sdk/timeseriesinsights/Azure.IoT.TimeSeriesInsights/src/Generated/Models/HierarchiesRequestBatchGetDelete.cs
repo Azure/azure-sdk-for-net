@@ -13,11 +13,20 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Request to get or delete multiple time series hierarchies. Exactly one of "hierarchyIds" or "names" must be set. </summary>
     internal partial class HierarchiesRequestBatchGetDelete
     {
-        /// <summary> Initializes a new instance of HierarchiesRequestBatchGetDelete. </summary>
+        /// <summary> Initializes a new instance of <see cref="HierarchiesRequestBatchGetDelete"/>. </summary>
         public HierarchiesRequestBatchGetDelete()
         {
             HierarchyIds = new ChangeTrackingList<string>();
             Names = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HierarchiesRequestBatchGetDelete"/>. </summary>
+        /// <param name="hierarchyIds"> List of hierarchy IDs. </param>
+        /// <param name="names"> List of hierarchy names. </param>
+        internal HierarchiesRequestBatchGetDelete(IList<string> hierarchyIds, IList<string> names)
+        {
+            HierarchyIds = hierarchyIds;
+            Names = names;
         }
 
         /// <summary> List of hierarchy IDs. </summary>

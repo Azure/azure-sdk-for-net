@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a ProximityPlacementGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProximityPlacementGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetProximityPlacementGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetProximityPlacementGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProximityPlacementGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetProximityPlacementGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetProximityPlacementGroup method.
     /// </summary>
     public partial class ProximityPlacementGroupResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Compute
         private readonly ProximityPlacementGroupsRestOperations _proximityPlacementGroupRestClient;
         private readonly ProximityPlacementGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/proximityPlacementGroups";
+
         /// <summary> Initializes a new instance of the <see cref="ProximityPlacementGroupResource"/> class for mocking. </summary>
         protected ProximityPlacementGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ProximityPlacementGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProximityPlacementGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ProximityPlacementGroupResource(ArmClient client, ProximityPlacementGroupData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/proximityPlacementGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

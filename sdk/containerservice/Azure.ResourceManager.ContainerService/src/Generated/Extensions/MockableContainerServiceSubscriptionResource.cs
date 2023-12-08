@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerServiceManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerServiceManagedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerServiceManagedClusterResource> GetContainerServiceManagedClustersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerServiceManagedClusterManagedClustersRestClient.CreateListRequest(Id.SubscriptionId);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerServiceManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerServiceManagedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerServiceManagedClusterResource> GetContainerServiceManagedClusters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerServiceManagedClusterManagedClustersRestClient.CreateListRequest(Id.SubscriptionId);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AgentPoolSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AgentPoolSnapshotResource> GetAgentPoolSnapshotsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AgentPoolSnapshotSnapshotsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AgentPoolSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AgentPoolSnapshotResource> GetAgentPoolSnapshots(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AgentPoolSnapshotSnapshotsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedClusterSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedClusterSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedClusterSnapshotResource> GetManagedClusterSnapshotsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedClusterSnapshotRestClient.CreateListRequest(Id.SubscriptionId);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedClusterSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedClusterSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedClusterSnapshotResource> GetManagedClusterSnapshots(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedClusterSnapshotRestClient.CreateListRequest(Id.SubscriptionId);
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerServiceTrustedAccessRole" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerServiceTrustedAccessRole"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerServiceTrustedAccessRole> GetTrustedAccessRolesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TrustedAccessRolesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerServiceTrustedAccessRole" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerServiceTrustedAccessRole"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerServiceTrustedAccessRole> GetTrustedAccessRoles(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TrustedAccessRolesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerServiceFleetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerServiceFleetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerServiceFleetResource> GetContainerServiceFleetsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerServiceFleetFleetsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerServiceFleetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerServiceFleetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerServiceFleetResource> GetContainerServiceFleets(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerServiceFleetFleetsRestClient.CreateListRequest(Id.SubscriptionId);

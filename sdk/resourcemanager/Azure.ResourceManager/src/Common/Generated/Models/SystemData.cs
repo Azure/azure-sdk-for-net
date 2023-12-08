@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Models
     [PropertyReferenceType]
     public partial class SystemData
     {
-        /// <summary> Initializes a new instance of SystemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemData"/>. </summary>
         [InitializationConstructor]
         public SystemData()
         {
         }
 
-        /// <summary> Initializes a new instance of SystemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemData"/>. </summary>
         /// <param name="createdBy"> The identity that created the resource. </param>
         /// <param name="createdByType"> The type of identity that created the resource. </param>
         /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>

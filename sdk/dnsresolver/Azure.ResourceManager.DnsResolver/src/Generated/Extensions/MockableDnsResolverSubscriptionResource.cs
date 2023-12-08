@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DnsResolverResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DnsResolverResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DnsResolverResource> GetDnsResolversAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DnsResolverRestClient.CreateListRequest(Id.SubscriptionId, top);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DnsResolverResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DnsResolverResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DnsResolverResource> GetDnsResolvers(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DnsResolverRestClient.CreateListRequest(Id.SubscriptionId, top);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DnsForwardingRulesetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DnsForwardingRulesetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DnsForwardingRulesetResource> GetDnsForwardingRulesetsAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DnsForwardingRulesetRestClient.CreateListRequest(Id.SubscriptionId, top);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DnsForwardingRulesetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DnsForwardingRulesetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DnsForwardingRulesetResource> GetDnsForwardingRulesets(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DnsForwardingRulesetRestClient.CreateListRequest(Id.SubscriptionId, top);

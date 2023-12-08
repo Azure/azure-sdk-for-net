@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
     /// A Class representing a DataFactoryManagedIdentityCredential along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataFactoryManagedIdentityCredentialResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataFactoryManagedIdentityCredentialResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource" /> using the GetDataFactoryManagedIdentityCredential method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataFactoryManagedIdentityCredentialResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataFactoryManagedIdentityCredentialResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource"/> using the GetDataFactoryManagedIdentityCredential method.
     /// </summary>
     public partial class DataFactoryManagedIdentityCredentialResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.DataFactory
         private readonly CredentialRestOperations _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient;
         private readonly DataFactoryManagedIdentityCredentialData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/credentials";
+
         /// <summary> Initializes a new instance of the <see cref="DataFactoryManagedIdentityCredentialResource"/> class for mocking. </summary>
         protected DataFactoryManagedIdentityCredentialResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataFactoryManagedIdentityCredentialResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryManagedIdentityCredentialResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataFactoryManagedIdentityCredentialResource(ArmClient client, DataFactoryManagedIdentityCredentialData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DataFactory
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/credentials";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

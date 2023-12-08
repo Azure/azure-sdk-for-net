@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.ApplicationInsights
 {
     /// <summary>
     /// A Class representing an ApplicationInsightsComponent along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApplicationInsightsComponentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApplicationInsightsComponentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetApplicationInsightsComponent method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApplicationInsightsComponentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApplicationInsightsComponentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetApplicationInsightsComponent method.
     /// </summary>
     public partial class ApplicationInsightsComponentResource : ArmResource
     {
@@ -68,12 +68,15 @@ namespace Azure.ResourceManager.ApplicationInsights
         private readonly AnalyticsItemsRestOperations _analyticsItemsRestClient;
         private readonly ApplicationInsightsComponentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/components";
+
         /// <summary> Initializes a new instance of the <see cref="ApplicationInsightsComponentResource"/> class for mocking. </summary>
         protected ApplicationInsightsComponentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApplicationInsightsComponentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApplicationInsightsComponentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApplicationInsightsComponentResource(ArmClient client, ApplicationInsightsComponentData data) : this(client, data.Id)
@@ -121,9 +124,6 @@ namespace Azure.ResourceManager.ApplicationInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/components";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="end"> The end time to query for annotations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="start"/> or <paramref name="end"/> is null. </exception>
-        /// <returns> An async collection of <see cref="Annotation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="Annotation"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Annotation> GetAnnotationsAsync(string start, string end, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(start, nameof(start));
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="end"> The end time to query for annotations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="start"/> or <paramref name="end"/> is null. </exception>
-        /// <returns> A collection of <see cref="Annotation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="Annotation"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Annotation> GetAnnotations(string start, string end, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(start, nameof(start));
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="annotationProperties"> Properties that need to be specified to create an annotation of a Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="annotationProperties"/> is null. </exception>
-        /// <returns> An async collection of <see cref="Annotation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="Annotation"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Annotation> CreateAnnotationsAsync(Annotation annotationProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(annotationProperties, nameof(annotationProperties));
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="annotationProperties"> Properties that need to be specified to create an annotation of a Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="annotationProperties"/> is null. </exception>
-        /// <returns> A collection of <see cref="Annotation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="Annotation"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Annotation> CreateAnnotations(Annotation annotationProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(annotationProperties, nameof(annotationProperties));
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="annotationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="annotationId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="Annotation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="Annotation"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Annotation> GetAnnotationsAsync(string annotationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(annotationId, nameof(annotationId));
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="annotationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="annotationId"/> is null. </exception>
-        /// <returns> A collection of <see cref="Annotation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="Annotation"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Annotation> GetAnnotations(string annotationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(annotationId, nameof(annotationId));
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationInsightsComponentAPIKey" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApplicationInsightsComponentAPIKey"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationInsightsComponentAPIKey> GetAPIKeysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiKeysRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationInsightsComponentAPIKey" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationInsightsComponentAPIKey"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationInsightsComponentAPIKey> GetAPIKeys(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiKeysRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1029,7 +1029,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationInsightsComponentExportConfiguration" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApplicationInsightsComponentExportConfiguration"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationInsightsComponentExportConfiguration> GetExportConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _exportConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1050,7 +1050,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationInsightsComponentExportConfiguration" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationInsightsComponentExportConfiguration"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationInsightsComponentExportConfiguration> GetExportConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _exportConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1073,7 +1073,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="exportProperties"> Properties that need to be specified to create a Continuous Export configuration of a Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exportProperties"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ApplicationInsightsComponentExportConfiguration" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApplicationInsightsComponentExportConfiguration"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationInsightsComponentExportConfiguration> CreateExportConfigurationsAsync(ApplicationInsightsComponentExportRequest exportProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(exportProperties, nameof(exportProperties));
@@ -1098,7 +1098,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="exportProperties"> Properties that need to be specified to create a Continuous Export configuration of a Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exportProperties"/> is null. </exception>
-        /// <returns> A collection of <see cref="ApplicationInsightsComponentExportConfiguration" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationInsightsComponentExportConfiguration"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationInsightsComponentExportConfiguration> CreateExportConfigurations(ApplicationInsightsComponentExportRequest exportProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(exportProperties, nameof(exportProperties));
@@ -1643,7 +1643,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationInsightsComponentProactiveDetectionConfiguration" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApplicationInsightsComponentProactiveDetectionConfiguration"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationInsightsComponentProactiveDetectionConfiguration> GetProactiveDetectionConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _proactiveDetectionConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1664,7 +1664,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationInsightsComponentProactiveDetectionConfiguration" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationInsightsComponentProactiveDetectionConfiguration"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationInsightsComponentProactiveDetectionConfiguration> GetProactiveDetectionConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _proactiveDetectionConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1829,7 +1829,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkItemConfiguration" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WorkItemConfiguration"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkItemConfiguration> GetWorkItemConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workItemConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1850,7 +1850,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkItemConfiguration" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WorkItemConfiguration"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkItemConfiguration> GetWorkItemConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workItemConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -2217,7 +2217,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable favorite. If false, only return summary content for favorites. </param>
         /// <param name="tags"> Tags that must be present on each favorite returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationInsightsComponentFavorite" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApplicationInsightsComponentFavorite"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationInsightsComponentFavorite> GetFavoritesAsync(FavoriteType? favoriteType = null, FavoriteSourceType? sourceType = null, bool? canFetchContent = null, IEnumerable<string> tags = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _favoritesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, favoriteType, sourceType, canFetchContent, tags);
@@ -2242,7 +2242,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable favorite. If false, only return summary content for favorites. </param>
         /// <param name="tags"> Tags that must be present on each favorite returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationInsightsComponentFavorite" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationInsightsComponentFavorite"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationInsightsComponentFavorite> GetFavorites(FavoriteType? favoriteType = null, FavoriteSourceType? sourceType = null, bool? canFetchContent = null, IEnumerable<string> tags = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _favoritesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, favoriteType, sourceType, canFetchContent, tags);
@@ -2551,7 +2551,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationInsightsComponentWebTestLocation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApplicationInsightsComponentWebTestLocation"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationInsightsComponentWebTestLocation> GetWebTestLocationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webTestLocationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -2572,7 +2572,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationInsightsComponentWebTestLocation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationInsightsComponentWebTestLocation"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationInsightsComponentWebTestLocation> GetWebTestLocations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webTestLocationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -2593,7 +2593,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebTestResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WebTestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebTestResource> GetWebTestsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webTestRestClient.CreateListByComponentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -2615,7 +2615,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebTestResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebTestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebTestResource> GetWebTests(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webTestRestClient.CreateListByComponentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -2641,7 +2641,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="type"> Enum indicating the type of the Analytics item. </param>
         /// <param name="includeContent"> Flag indicating whether or not to return the content of each applicable item. If false, only return the item information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationInsightsComponentAnalyticsItem" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApplicationInsightsComponentAnalyticsItem"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationInsightsComponentAnalyticsItem> GetAnalyticsItemsAsync(ItemScopePath scopePath, ItemScope? scope = null, ItemTypeParameter? type = null, bool? includeContent = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _analyticsItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopePath, scope, type, includeContent);
@@ -2666,7 +2666,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="type"> Enum indicating the type of the Analytics item. </param>
         /// <param name="includeContent"> Flag indicating whether or not to return the content of each applicable item. If false, only return the item information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationInsightsComponentAnalyticsItem" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationInsightsComponentAnalyticsItem"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationInsightsComponentAnalyticsItem> GetAnalyticsItems(ItemScopePath scopePath, ItemScope? scope = null, ItemTypeParameter? type = null, bool? includeContent = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _analyticsItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopePath, scope, type, includeContent);

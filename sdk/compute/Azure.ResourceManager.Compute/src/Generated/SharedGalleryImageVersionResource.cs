@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a SharedGalleryImageVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SharedGalleryImageVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSharedGalleryImageVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SharedGalleryImageResource" /> using the GetSharedGalleryImageVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SharedGalleryImageVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSharedGalleryImageVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SharedGalleryImageResource"/> using the GetSharedGalleryImageVersion method.
     /// </summary>
     public partial class SharedGalleryImageVersionResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Compute
         private readonly SharedGalleryImageVersionsRestOperations _sharedGalleryImageVersionRestClient;
         private readonly SharedGalleryImageVersionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/locations/sharedGalleries/images/versions";
+
         /// <summary> Initializes a new instance of the <see cref="SharedGalleryImageVersionResource"/> class for mocking. </summary>
         protected SharedGalleryImageVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SharedGalleryImageVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SharedGalleryImageVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SharedGalleryImageVersionResource(ArmClient client, SharedGalleryImageVersionData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/locations/sharedGalleries/images/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

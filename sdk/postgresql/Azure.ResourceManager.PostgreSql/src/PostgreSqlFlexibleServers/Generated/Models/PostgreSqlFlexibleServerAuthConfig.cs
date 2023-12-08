@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Authentication configuration properties of a server. </summary>
     public partial class PostgreSqlFlexibleServerAuthConfig
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerAuthConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerAuthConfig"/>. </summary>
         public PostgreSqlFlexibleServerAuthConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerAuthConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerAuthConfig"/>. </summary>
         /// <param name="activeDirectoryAuth"> If Enabled, Azure Active Directory authentication is enabled. </param>
         /// <param name="passwordAuth"> If Enabled, Password authentication is enabled. </param>
         /// <param name="tenantId"> Tenant id of the server. </param>

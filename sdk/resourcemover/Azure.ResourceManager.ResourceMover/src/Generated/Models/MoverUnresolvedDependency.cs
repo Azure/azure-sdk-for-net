@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Unresolved dependency. </summary>
     public partial class MoverUnresolvedDependency
     {
-        /// <summary> Initializes a new instance of MoverUnresolvedDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverUnresolvedDependency"/>. </summary>
         internal MoverUnresolvedDependency()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverUnresolvedDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverUnresolvedDependency"/>. </summary>
         /// <param name="count"> Gets or sets the count. </param>
         /// <param name="id"> Gets or sets the arm id of the dependency. </param>
         internal MoverUnresolvedDependency(int? count, ResourceIdentifier id)

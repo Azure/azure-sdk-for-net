@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> The roll up count summary of savings plans in each state. </summary>
     internal partial class SavingsPlanSummaryCount
     {
-        /// <summary> Initializes a new instance of SavingsPlanSummaryCount. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanSummaryCount"/>. </summary>
         internal SavingsPlanSummaryCount()
         {
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanSummaryCount. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanSummaryCount"/>. </summary>
         /// <param name="succeededCount"> The number of savings plans in Succeeded state. </param>
         /// <param name="failedCount"> The number of savings plans in Failed state. </param>
         /// <param name="expiringCount"> The number of savings plans in Expiring state. </param>

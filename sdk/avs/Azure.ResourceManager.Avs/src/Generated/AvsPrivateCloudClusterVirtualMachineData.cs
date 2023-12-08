@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class AvsPrivateCloudClusterVirtualMachineData : ResourceData
     {
-        /// <summary> Initializes a new instance of AvsPrivateCloudClusterVirtualMachineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudClusterVirtualMachineData"/>. </summary>
         public AvsPrivateCloudClusterVirtualMachineData()
         {
         }
 
-        /// <summary> Initializes a new instance of AvsPrivateCloudClusterVirtualMachineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudClusterVirtualMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

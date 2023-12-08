@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that validates connection to Azure Database for PostgreSQL and target server requirements. </summary>
     public partial class ConnectToTargetAzureDBForPostgreSqlSyncTaskInput
     {
-        /// <summary> Initializes a new instance of ConnectToTargetAzureDBForPostgreSqlSyncTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetAzureDBForPostgreSqlSyncTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for source PostgreSQL server. </param>
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for PostgreSQL server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> or <paramref name="targetConnectionInfo"/> is null. </exception>

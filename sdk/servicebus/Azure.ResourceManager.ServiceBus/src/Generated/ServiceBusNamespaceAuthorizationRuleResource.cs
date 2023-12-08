@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
     /// A Class representing a ServiceBusNamespaceAuthorizationRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceBusNamespaceAuthorizationRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceBusNamespaceAuthorizationRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceBusNamespaceResource" /> using the GetServiceBusNamespaceAuthorizationRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceBusNamespaceAuthorizationRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceBusNamespaceAuthorizationRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceBusNamespaceResource"/> using the GetServiceBusNamespaceAuthorizationRule method.
     /// </summary>
     public partial class ServiceBusNamespaceAuthorizationRuleResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.ServiceBus
         private readonly NamespaceAuthorizationRulesRestOperations _serviceBusNamespaceAuthorizationRuleNamespaceAuthorizationRulesRestClient;
         private readonly ServiceBusAuthorizationRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/AuthorizationRules";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceBusNamespaceAuthorizationRuleResource"/> class for mocking. </summary>
         protected ServiceBusNamespaceAuthorizationRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceBusNamespaceAuthorizationRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusNamespaceAuthorizationRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceBusNamespaceAuthorizationRuleResource(ArmClient client, ServiceBusAuthorizationRuleData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ServiceBus
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/AuthorizationRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

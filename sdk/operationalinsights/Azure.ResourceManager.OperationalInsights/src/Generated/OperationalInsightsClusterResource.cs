@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
     /// A Class representing an OperationalInsightsCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OperationalInsightsClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetOperationalInsightsClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetOperationalInsightsCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OperationalInsightsClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetOperationalInsightsClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetOperationalInsightsCluster method.
     /// </summary>
     public partial class OperationalInsightsClusterResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.OperationalInsights
         private readonly ClustersRestOperations _operationalInsightsClusterClustersRestClient;
         private readonly OperationalInsightsClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/clusters";
+
         /// <summary> Initializes a new instance of the <see cref="OperationalInsightsClusterResource"/> class for mocking. </summary>
         protected OperationalInsightsClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OperationalInsightsClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OperationalInsightsClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal OperationalInsightsClusterResource(ArmClient client, OperationalInsightsClusterData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.OperationalInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/clusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The CapacityReservationGroupInstanceView. </summary>
     public partial class CapacityReservationGroupInstanceView
     {
-        /// <summary> Initializes a new instance of CapacityReservationGroupInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupInstanceView"/>. </summary>
         internal CapacityReservationGroupInstanceView()
         {
             CapacityReservations = new ChangeTrackingList<CapacityReservationInstanceViewWithName>();
             SharedSubscriptionIds = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of CapacityReservationGroupInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupInstanceView"/>. </summary>
         /// <param name="capacityReservations"> List of instance view of the capacity reservations under the capacity reservation group. </param>
         /// <param name="sharedSubscriptionIds"> List of the subscriptions that the capacity reservation group is shared with. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
         internal CapacityReservationGroupInstanceView(IReadOnlyList<CapacityReservationInstanceViewWithName> capacityReservations, IReadOnlyList<SubResource> sharedSubscriptionIds)

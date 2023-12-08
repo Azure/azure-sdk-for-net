@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Properties that define an Analytics item that is associated to an Application Insights component. </summary>
     public partial class ApplicationInsightsComponentAnalyticsItem
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentAnalyticsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentAnalyticsItem"/>. </summary>
         public ApplicationInsightsComponentAnalyticsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentAnalyticsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentAnalyticsItem"/>. </summary>
         /// <param name="id"> Internally assigned unique id of the item definition. </param>
         /// <param name="name"> The user-defined name of the item. </param>
         /// <param name="content"> The content of this item. </param>

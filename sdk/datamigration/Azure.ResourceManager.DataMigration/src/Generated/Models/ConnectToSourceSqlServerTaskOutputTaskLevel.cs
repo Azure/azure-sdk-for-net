@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Task level output for the task that validates connection to SQL Server and also validates source server requirements. </summary>
     public partial class ConnectToSourceSqlServerTaskOutputTaskLevel : ConnectToSourceSqlServerTaskOutput
     {
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskOutputTaskLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutputTaskLevel"/>. </summary>
         internal ConnectToSourceSqlServerTaskOutputTaskLevel()
         {
             ValidationErrors = new ChangeTrackingList<ReportableException>();
             ResultType = "TaskLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskOutputTaskLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutputTaskLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Type of result - database level or task level. </param>
         /// <param name="databases"> Source databases as a map from database name to database id. </param>

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MySql.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MySqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MySqlServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlServerResource> GetMySqlServersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MySqlServerServersRestClient.CreateListRequest(Id.SubscriptionId);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MySql.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MySqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MySqlServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlServerResource> GetMySqlServers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MySqlServerServersRestClient.CreateListRequest(Id.SubscriptionId);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MySql.Mocking
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MySqlPerformanceTier" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MySqlPerformanceTier"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlPerformanceTier> GetLocationBasedPerformanceTiersAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, locationName);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MySql.Mocking
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MySqlPerformanceTier" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MySqlPerformanceTier"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlPerformanceTier> GetLocationBasedPerformanceTiers(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, locationName);

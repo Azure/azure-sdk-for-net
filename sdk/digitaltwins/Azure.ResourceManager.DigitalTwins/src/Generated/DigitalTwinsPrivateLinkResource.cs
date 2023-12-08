@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DigitalTwins
 {
     /// <summary>
     /// A Class representing a DigitalTwinsPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DigitalTwinsPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDigitalTwinsPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DigitalTwinsDescriptionResource" /> using the GetDigitalTwinsPrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DigitalTwinsPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDigitalTwinsPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DigitalTwinsDescriptionResource"/> using the GetDigitalTwinsPrivateLinkResource method.
     /// </summary>
     public partial class DigitalTwinsPrivateLinkResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.DigitalTwins
         private readonly PrivateLinkResourcesRestOperations _digitalTwinsPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly DigitalTwinsPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DigitalTwins/digitalTwinsInstances/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="DigitalTwinsPrivateLinkResource"/> class for mocking. </summary>
         protected DigitalTwinsPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DigitalTwinsPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DigitalTwinsPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DigitalTwinsPrivateLinkResource(ArmClient client, DigitalTwinsPrivateLinkResourceData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DigitalTwins
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DigitalTwins/digitalTwinsInstances/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

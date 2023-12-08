@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppPlatformApiPortalResource" /> and their operations.
-    /// Each <see cref="AppPlatformApiPortalResource" /> in the collection will belong to the same instance of <see cref="AppPlatformServiceResource" />.
-    /// To get an <see cref="AppPlatformApiPortalCollection" /> instance call the GetAppPlatformApiPortals method from an instance of <see cref="AppPlatformServiceResource" />.
+    /// A class representing a collection of <see cref="AppPlatformApiPortalResource"/> and their operations.
+    /// Each <see cref="AppPlatformApiPortalResource"/> in the collection will belong to the same instance of <see cref="AppPlatformServiceResource"/>.
+    /// To get an <see cref="AppPlatformApiPortalCollection"/> instance call the GetAppPlatformApiPortals method from an instance of <see cref="AppPlatformServiceResource"/>.
     /// </summary>
     public partial class AppPlatformApiPortalCollection : ArmCollection, IEnumerable<AppPlatformApiPortalResource>, IAsyncEnumerable<AppPlatformApiPortalResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppPlatformApiPortalResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppPlatformApiPortalResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformApiPortalResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformApiPortalApiPortalsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppPlatformApiPortalResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppPlatformApiPortalResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformApiPortalResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformApiPortalApiPortalsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

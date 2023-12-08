@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Blob container storage information. </summary>
     public partial class BlobShare
     {
-        /// <summary> Initializes a new instance of BlobShare. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobShare"/>. </summary>
         public BlobShare()
         {
         }
 
-        /// <summary> Initializes a new instance of BlobShare. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobShare"/>. </summary>
         /// <param name="sasUri"> SAS URI of Azure Storage Account Container. </param>
         internal BlobShare(Uri sasUri)
         {

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
     /// A Class representing an OperationalInsightsDataSource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OperationalInsightsDataSourceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetOperationalInsightsDataSourceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceResource" /> using the GetOperationalInsightsDataSource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OperationalInsightsDataSourceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetOperationalInsightsDataSourceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceResource"/> using the GetOperationalInsightsDataSource method.
     /// </summary>
     public partial class OperationalInsightsDataSourceResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.OperationalInsights
         private readonly DataSourcesRestOperations _operationalInsightsDataSourceDataSourcesRestClient;
         private readonly OperationalInsightsDataSourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/dataSources";
+
         /// <summary> Initializes a new instance of the <see cref="OperationalInsightsDataSourceResource"/> class for mocking. </summary>
         protected OperationalInsightsDataSourceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OperationalInsightsDataSourceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OperationalInsightsDataSourceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal OperationalInsightsDataSourceResource(ArmClient client, OperationalInsightsDataSourceData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.OperationalInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/dataSources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

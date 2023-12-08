@@ -1,0 +1,123 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "baseName": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().name]",
+            "metadata": {
+                "description": "The base resource name."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "The location of the resource. By default, this is the same as the resource group."
+            }
+        },
+        "endpointPrefix": {
+            "defaultValue": "documentintelligence",
+            "type": "string"
+        },
+        "cognitiveServicesEndpointSuffix": {
+            "defaultValue": ".cognitiveservices.azure.com",
+            "type": "string"
+        },
+        "testApplicationOid": {
+            "type": "string",
+            "metadata": {
+                "description": "The principal to assign the role to. This is application object id."
+            }
+        },
+        "trainingDataAccount": {
+            "type": "string",
+            "defaultValue": "azuresdktrainingdata"
+        },
+        "trainingDataContainer": {
+            "type": "string",
+            "defaultValue": "trainingdata-v3"
+        },
+        "classifierTrainingDataContainer": {
+            "type": "string",
+            "defaultValue": "training-data-classifier"
+        },
+        "trainingDataResourceId": {
+            "type": "string",
+            "defaultValue": "[resourceId('TrainingData', 'Microsoft.Storage/storageAccounts', parameters('trainingDataAccount'))]"
+        },
+        "trainingDataSasProperties": {
+            "type": "object",
+            "defaultValue": {
+                "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('trainingDataContainer'))]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedPermission": "rl",
+                "signedResource": "c"
+            }
+        },
+        "classifierTrainingSasProperties": {
+            "type": "object",
+            "defaultValue": {
+                "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('classifierTrainingDataContainer'))]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedPermission": "rl",
+                "signedResource": "c"
+            }
+        }
+    },
+    "variables": {
+        "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/a97b65f3-24c7-4388-baec-2e87135dc908')]",
+        "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
+        "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('cognitiveServicesEndpointSuffix'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.CognitiveServices/accounts",
+            "apiVersion": "2017-04-18",
+            "name": "[variables('uniqueSubDomainName')]",
+            "location":"[parameters('location')]",
+            "sku": {
+                "name": "S0"
+            },
+            "kind": "FormRecognizer",
+            "properties": {
+                "customSubDomainName": "[variables('uniqueSubDomainName')]"
+            }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2018-09-01-preview",
+            "name": "[guid(resourceGroup().id)]",
+            "properties": {
+                "roleDefinitionId": "[variables('roleDefinitionId')]",
+                "principalId": "[parameters('testApplicationOid')]"
+            }
+        }
+    ],
+    "outputs": {
+        "API_KEY": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts',variables('uniqueSubDomainName')), '2017-04-18').key1]"
+        },
+        "ENDPOINT": {
+            "type": "string",
+            "value": "[variables('endpointValue')]"
+        },
+        "RESOURCE_ID": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.CognitiveServices/accounts', variables('uniqueSubDomainName'))]"
+        },
+        "RESOURCE_REGION": {
+            "type": "string",
+            "value": "[parameters('location')]"
+        },
+        "SINGLEPAGE_BLOB_CONTAINER_SAS_URL": {
+            "type": "string",
+            "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('trainingDataContainer'), '?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('trainingDataSasProperties')).serviceSasToken)]"
+        },
+        "CLASSIFIER_BLOB_CONTAINER_SAS_URL": {
+            "type": "string",
+            "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('classifierTrainingDataContainer'), '?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('classifierTrainingSasProperties')).serviceSasToken)]"
+        }
+    }
+}

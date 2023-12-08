@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningLabelingJobResource" /> and their operations.
-    /// Each <see cref="MachineLearningLabelingJobResource" /> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource" />.
-    /// To get a <see cref="MachineLearningLabelingJobCollection" /> instance call the GetMachineLearningLabelingJobs method from an instance of <see cref="MachineLearningWorkspaceResource" />.
+    /// A class representing a collection of <see cref="MachineLearningLabelingJobResource"/> and their operations.
+    /// Each <see cref="MachineLearningLabelingJobResource"/> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource"/>.
+    /// To get a <see cref="MachineLearningLabelingJobCollection"/> instance call the GetMachineLearningLabelingJobs method from an instance of <see cref="MachineLearningWorkspaceResource"/>.
     /// </summary>
     public partial class MachineLearningLabelingJobCollection : ArmCollection, IEnumerable<MachineLearningLabelingJobResource>, IAsyncEnumerable<MachineLearningLabelingJobResource>
     {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="top"> Number of labeling jobs to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningLabelingJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningLabelingJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningLabelingJobResource> GetAllAsync(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningLabelingJobLabelingJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="top"> Number of labeling jobs to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningLabelingJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningLabelingJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningLabelingJobResource> GetAll(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningLabelingJobLabelingJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);

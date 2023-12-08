@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class CommunityGalleryData : PirCommunityGalleryResourceData
     {
-        /// <summary> Initializes a new instance of CommunityGalleryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryData"/>. </summary>
         internal CommunityGalleryData()
         {
             ArtifactTags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of CommunityGalleryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="resourceType"> Resource type. </param>

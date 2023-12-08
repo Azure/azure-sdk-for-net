@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> SKU capacity information. </summary>
     public partial class MachineLearningSkuCapacity
     {
-        /// <summary> Initializes a new instance of MachineLearningSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSkuCapacity"/>. </summary>
         internal MachineLearningSkuCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSkuCapacity"/>. </summary>
         /// <param name="default"> Gets or sets the default capacity. </param>
         /// <param name="maximum"> Gets or sets the maximum. </param>
         /// <param name="minimum"> Gets or sets the minimum. </param>

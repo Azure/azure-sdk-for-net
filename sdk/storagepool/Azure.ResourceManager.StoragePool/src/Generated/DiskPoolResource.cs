@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.StoragePool
 {
     /// <summary>
     /// A Class representing a DiskPool along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DiskPoolResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDiskPoolResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDiskPool method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiskPoolResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDiskPoolResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDiskPool method.
     /// </summary>
     public partial class DiskPoolResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.StoragePool
         private readonly DiskPoolsRestOperations _diskPoolRestClient;
         private readonly DiskPoolData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StoragePool/diskPools";
+
         /// <summary> Initializes a new instance of the <see cref="DiskPoolResource"/> class for mocking. </summary>
         protected DiskPoolResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DiskPoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DiskPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DiskPoolResource(ArmClient client, DiskPoolData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.StoragePool
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StoragePool/diskPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.StoragePool
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StoragePoolOutboundEnvironment" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StoragePoolOutboundEnvironment"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StoragePoolOutboundEnvironment> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.StoragePool
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StoragePoolOutboundEnvironment" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StoragePoolOutboundEnvironment"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StoragePoolOutboundEnvironment> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

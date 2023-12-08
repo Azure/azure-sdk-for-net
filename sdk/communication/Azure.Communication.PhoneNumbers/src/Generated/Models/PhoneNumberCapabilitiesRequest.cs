@@ -10,9 +10,18 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Capabilities of a phone number. </summary>
     internal partial class PhoneNumberCapabilitiesRequest
     {
-        /// <summary> Initializes a new instance of PhoneNumberCapabilitiesRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberCapabilitiesRequest"/>. </summary>
         public PhoneNumberCapabilitiesRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberCapabilitiesRequest"/>. </summary>
+        /// <param name="calling"> Capability value for calling. </param>
+        /// <param name="sms"> Capability value for SMS. </param>
+        internal PhoneNumberCapabilitiesRequest(PhoneNumberCapabilityType? calling, PhoneNumberCapabilityType? sms)
+        {
+            Calling = calling;
+            Sms = sms;
         }
 
         /// <summary> Capability value for calling. </summary>

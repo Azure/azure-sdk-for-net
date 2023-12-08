@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Microsoft Access linked service. </summary>
     public partial class MicrosoftAccessLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of MicrosoftAccessLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MicrosoftAccessLinkedService"/>. </summary>
         /// <param name="connectionString"> The non-access credential portion of the connection string as well as an optional encrypted credential. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public MicrosoftAccessLinkedService(object connectionString)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "MicrosoftAccess";
         }
 
-        /// <summary> Initializes a new instance of MicrosoftAccessLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MicrosoftAccessLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Event model properties. </summary>
     public partial class DataReplicationEventProperties
     {
-        /// <summary> Initializes a new instance of DataReplicationEventProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationEventProperties"/>. </summary>
         /// <param name="customProperties">
         /// Event model custom properties.
         /// Please note <see cref="EventModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             CustomProperties = customProperties;
         }
 
-        /// <summary> Initializes a new instance of DataReplicationEventProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationEventProperties"/>. </summary>
         /// <param name="resourceType"> Gets or sets the resource type. </param>
         /// <param name="resourceName"> Gets or sets the resource name. </param>
         /// <param name="eventType"> Gets or sets the event type. </param>

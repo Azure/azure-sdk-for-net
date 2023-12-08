@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseKustoPool along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseKustoPoolResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseKustoPoolResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource" /> using the GetSynapseKustoPool method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseKustoPoolResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseKustoPoolResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource"/> using the GetSynapseKustoPool method.
     /// </summary>
     public partial class SynapseKustoPoolResource : ArmResource
     {
@@ -48,12 +48,15 @@ namespace Azure.ResourceManager.Synapse
         private readonly KustoPoolPrivateLinkResourcesRestOperations _kustoPoolPrivateLinkResourcesRestClient;
         private readonly SynapseKustoPoolData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/kustoPools";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseKustoPoolResource"/> class for mocking. </summary>
         protected SynapseKustoPoolResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseKustoPoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseKustoPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseKustoPoolResource(ArmClient client, SynapseKustoPoolData data) : this(client, data.Id)
@@ -81,9 +84,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/kustoPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseDataSourceResourceSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseDataSourceResourceSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseDataSourceResourceSku> GetSkusByResourceAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListSkusByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseDataSourceResourceSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseDataSourceResourceSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseDataSourceResourceSku> GetSkusByResource(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListSkusByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseLanguageExtension" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseLanguageExtension"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseLanguageExtension> GetLanguageExtensionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseLanguageExtension" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseLanguageExtension"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseLanguageExtension> GetLanguageExtensions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListLanguageExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -861,7 +861,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseFollowerDatabaseDefinition" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseFollowerDatabaseDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseFollowerDatabaseDefinition> GetFollowerDatabasesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -882,7 +882,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseFollowerDatabaseDefinition" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseFollowerDatabaseDefinition"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseFollowerDatabaseDefinition> GetFollowerDatabases(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKustoPoolKustoPoolsRestClient.CreateListFollowerDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -1115,7 +1115,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseKustoPoolPrivateLinkData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseKustoPoolPrivateLinkData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseKustoPoolPrivateLinkData> GetAllKustoPoolPrivateLinkDataAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPoolPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -1136,7 +1136,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseKustoPoolPrivateLinkData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseKustoPoolPrivateLinkData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseKustoPoolPrivateLinkData> GetAllKustoPoolPrivateLinkData(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPoolPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

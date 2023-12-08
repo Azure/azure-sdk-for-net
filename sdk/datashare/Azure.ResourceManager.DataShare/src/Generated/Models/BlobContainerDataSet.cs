@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> An Azure storage blob container data set. </summary>
     public partial class BlobContainerDataSet : ShareDataSetData
     {
-        /// <summary> Initializes a new instance of BlobContainerDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobContainerDataSet"/>. </summary>
         /// <param name="containerName"> BLOB Container name. </param>
         /// <param name="resourceGroup"> Resource group of storage account. </param>
         /// <param name="storageAccountName"> Storage account name of the source data set. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Kind = DataSetKind.Container;
         }
 
-        /// <summary> Initializes a new instance of BlobContainerDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobContainerDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

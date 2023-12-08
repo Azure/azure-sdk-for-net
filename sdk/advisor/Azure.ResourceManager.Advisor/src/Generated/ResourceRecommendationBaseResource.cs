@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Advisor
 {
     /// <summary>
     /// A Class representing a ResourceRecommendationBase along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceRecommendationBaseResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetResourceRecommendationBaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetResourceRecommendationBase method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ResourceRecommendationBaseResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetResourceRecommendationBaseResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetResourceRecommendationBase method.
     /// </summary>
     public partial class ResourceRecommendationBaseResource : ArmResource
     {
@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.Advisor
         private readonly RecommendationsRestOperations _resourceRecommendationBaseRecommendationsRestClient;
         private readonly ResourceRecommendationBaseData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Advisor/recommendations";
+
         /// <summary> Initializes a new instance of the <see cref="ResourceRecommendationBaseResource"/> class for mocking. </summary>
         protected ResourceRecommendationBaseResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ResourceRecommendationBaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceRecommendationBaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ResourceRecommendationBaseResource(ArmClient client, ResourceRecommendationBaseData data) : this(client, data.Id)
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Advisor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Advisor/recommendations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

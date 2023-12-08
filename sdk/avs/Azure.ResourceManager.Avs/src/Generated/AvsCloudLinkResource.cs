@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing an AvsCloudLink along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AvsCloudLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAvsCloudLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetAvsCloudLink method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AvsCloudLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAvsCloudLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetAvsCloudLink method.
     /// </summary>
     public partial class AvsCloudLinkResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Avs
         private readonly CloudLinksRestOperations _avsCloudLinkCloudLinksRestClient;
         private readonly AvsCloudLinkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/cloudLinks";
+
         /// <summary> Initializes a new instance of the <see cref="AvsCloudLinkResource"/> class for mocking. </summary>
         protected AvsCloudLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AvsCloudLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AvsCloudLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AvsCloudLinkResource(ArmClient client, AvsCloudLinkData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/cloudLinks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary>
-    /// A class representing a collection of <see cref="VCenterInventoryItemResource" /> and their operations.
-    /// Each <see cref="VCenterInventoryItemResource" /> in the collection will belong to the same instance of <see cref="VMwareVCenterResource" />.
-    /// To get a <see cref="VCenterInventoryItemCollection" /> instance call the GetVCenterInventoryItems method from an instance of <see cref="VMwareVCenterResource" />.
+    /// A class representing a collection of <see cref="VCenterInventoryItemResource"/> and their operations.
+    /// Each <see cref="VCenterInventoryItemResource"/> in the collection will belong to the same instance of <see cref="VMwareVCenterResource"/>.
+    /// To get a <see cref="VCenterInventoryItemCollection"/> instance call the GetVCenterInventoryItems method from an instance of <see cref="VMwareVCenterResource"/>.
     /// </summary>
     public partial class VCenterInventoryItemCollection : ArmCollection, IEnumerable<VCenterInventoryItemResource>, IAsyncEnumerable<VCenterInventoryItemResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VCenterInventoryItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VCenterInventoryItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VCenterInventoryItemResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vCenterInventoryItemInventoryItemsRestClient.CreateListByVCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VCenterInventoryItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VCenterInventoryItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VCenterInventoryItemResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vCenterInventoryItemInventoryItemsRestClient.CreateListByVCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

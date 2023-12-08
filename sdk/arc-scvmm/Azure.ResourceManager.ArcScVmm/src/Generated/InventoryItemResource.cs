@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ArcScVmm
 {
     /// <summary>
     /// A Class representing an InventoryItem along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="InventoryItemResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetInventoryItemResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ScVmmServerResource" /> using the GetInventoryItem method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="InventoryItemResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetInventoryItemResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ScVmmServerResource"/> using the GetInventoryItem method.
     /// </summary>
     public partial class InventoryItemResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.ArcScVmm
         private readonly InventoryItemsRestOperations _inventoryItemRestClient;
         private readonly InventoryItemData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ScVmm/vmmServers/inventoryItems";
+
         /// <summary> Initializes a new instance of the <see cref="InventoryItemResource"/> class for mocking. </summary>
         protected InventoryItemResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "InventoryItemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="InventoryItemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal InventoryItemResource(ArmClient client, InventoryItemData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ArcScVmm
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ScVmm/vmmServers/inventoryItems";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

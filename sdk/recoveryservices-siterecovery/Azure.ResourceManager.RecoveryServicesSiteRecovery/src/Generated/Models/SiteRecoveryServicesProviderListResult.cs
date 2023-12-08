@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Collection of providers. </summary>
     internal partial class SiteRecoveryServicesProviderListResult
     {
-        /// <summary> Initializes a new instance of SiteRecoveryServicesProviderListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryServicesProviderListResult"/>. </summary>
         internal SiteRecoveryServicesProviderListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryServicesProviderData>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryServicesProviderListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryServicesProviderListResult"/>. </summary>
         /// <param name="value"> The Servers details. </param>
         /// <param name="nextLink"> The value of next link. </param>
         internal SiteRecoveryServicesProviderListResult(IReadOnlyList<SiteRecoveryServicesProviderData> value, string nextLink)

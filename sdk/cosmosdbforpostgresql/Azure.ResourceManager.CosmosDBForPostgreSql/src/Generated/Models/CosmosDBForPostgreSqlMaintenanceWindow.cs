@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     /// <summary> Schedule settings for regular cluster updates. </summary>
     public partial class CosmosDBForPostgreSqlMaintenanceWindow
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlMaintenanceWindow. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlMaintenanceWindow"/>. </summary>
         public CosmosDBForPostgreSqlMaintenanceWindow()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlMaintenanceWindow. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlMaintenanceWindow"/>. </summary>
         /// <param name="customWindow"> Indicates whether custom maintenance window is enabled or not. </param>
         /// <param name="startHour"> Start hour within preferred day of the week for maintenance window. </param>
         /// <param name="startMinute"> Start minute within the start hour for maintenance window. </param>

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Logic
 {
     /// <summary>
-    /// A class representing a collection of <see cref="IntegrationAccountAssemblyDefinitionResource" /> and their operations.
-    /// Each <see cref="IntegrationAccountAssemblyDefinitionResource" /> in the collection will belong to the same instance of <see cref="IntegrationAccountResource" />.
-    /// To get an <see cref="IntegrationAccountAssemblyDefinitionCollection" /> instance call the GetIntegrationAccountAssemblyDefinitions method from an instance of <see cref="IntegrationAccountResource" />.
+    /// A class representing a collection of <see cref="IntegrationAccountAssemblyDefinitionResource"/> and their operations.
+    /// Each <see cref="IntegrationAccountAssemblyDefinitionResource"/> in the collection will belong to the same instance of <see cref="IntegrationAccountResource"/>.
+    /// To get an <see cref="IntegrationAccountAssemblyDefinitionCollection"/> instance call the GetIntegrationAccountAssemblyDefinitions method from an instance of <see cref="IntegrationAccountResource"/>.
     /// </summary>
     public partial class IntegrationAccountAssemblyDefinitionCollection : ArmCollection, IEnumerable<IntegrationAccountAssemblyDefinitionResource>, IAsyncEnumerable<IntegrationAccountAssemblyDefinitionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Logic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IntegrationAccountAssemblyDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IntegrationAccountAssemblyDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IntegrationAccountAssemblyDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Logic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IntegrationAccountAssemblyDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IntegrationAccountAssemblyDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IntegrationAccountAssemblyDefinitionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

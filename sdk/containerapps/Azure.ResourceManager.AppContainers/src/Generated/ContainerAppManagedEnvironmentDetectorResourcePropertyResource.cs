@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A Class representing a ContainerAppManagedEnvironmentDetectorResourceProperty along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerAppManagedEnvironmentDetectorResourcePropertyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppManagedEnvironmentResource" /> using the GetContainerAppManagedEnvironmentDetectorResourceProperty method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppManagedEnvironmentDetectorResourcePropertyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppManagedEnvironmentResource"/> using the GetContainerAppManagedEnvironmentDetectorResourceProperty method.
     /// </summary>
     public partial class ContainerAppManagedEnvironmentDetectorResourcePropertyResource : ArmResource
     {
@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ManagedEnvironmentsDiagnosticsRestOperations _containerAppManagedEnvironmentDetectorResourcePropertyManagedEnvironmentsDiagnosticsRestClient;
         private readonly ContainerAppManagedEnvironmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/detectorProperties";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> class for mocking. </summary>
         protected ContainerAppManagedEnvironmentDetectorResourcePropertyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerAppManagedEnvironmentDetectorResourcePropertyResource(ArmClient client, ContainerAppManagedEnvironmentData data) : this(client, data.Id)
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/detectorProperties";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

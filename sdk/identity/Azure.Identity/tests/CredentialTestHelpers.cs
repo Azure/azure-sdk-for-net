@@ -483,7 +483,7 @@ namespace Azure.Identity.Tests
         {
             var uid = objectId ?? "myuid";
             var tid = tenantId ?? "myutid";
-            return CredentialTestHelpers.MsalEncode($"{{\"uid\":\"{uid}\",\"utid\":\"{tid}\"}}");
+            return MsalEncode($"{{\"uid\":\"{uid}\",\"utid\":\"{tid}\"}}");
         }
 
         public static string CreateMsalIdToken(string uniqueId, string displayableId, string tenantId)
@@ -500,7 +500,7 @@ namespace Azure.Identity.Tests
                         "\"sub\": \"K4_SGGxKqW1SxUAmhg6C1F6VPiFzcx-Qd80ehIEdFus\"," +
                         "\"tid\": \"" + tenantId + "\"," +
                         "\"ver\": \"2.0\"}";
-            return string.Format(CultureInfo.InvariantCulture, "someheader.{0}.somesignature", CredentialTestHelpers.MsalEncode(id));
+            return string.Format(CultureInfo.InvariantCulture, "someheader.{0}.somesignature", MsalEncode(id));
         }
 
         public static bool ExtractMsalDisableInstanceDiscoveryProperty(TokenCredential cred)

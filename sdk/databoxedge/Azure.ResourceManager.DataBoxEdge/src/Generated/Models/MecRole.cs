@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> MEC role. </summary>
     public partial class MecRole : DataBoxEdgeRoleData
     {
-        /// <summary> Initializes a new instance of MecRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="MecRole"/>. </summary>
         public MecRole()
         {
             Kind = DataBoxEdgeRoleType.Mec;
         }
 
-        /// <summary> Initializes a new instance of MecRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="MecRole"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

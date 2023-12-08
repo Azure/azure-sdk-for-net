@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class DscNodeData : ResourceData
     {
-        /// <summary> Initializes a new instance of DscNodeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeData"/>. </summary>
         public DscNodeData()
         {
             ExtensionHandler = new ChangeTrackingList<DscNodeExtensionHandlerAssociationProperty>();
         }
 
-        /// <summary> Initializes a new instance of DscNodeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

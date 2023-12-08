@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     /// <summary> The Upgrade Graph for appliance. </summary>
     public partial class ApplianceUpgradeGraph
     {
-        /// <summary> Initializes a new instance of ApplianceUpgradeGraph. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceUpgradeGraph"/>. </summary>
         internal ApplianceUpgradeGraph()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplianceUpgradeGraph. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceUpgradeGraph"/>. </summary>
         /// <param name="id"> The appliance resource path. </param>
         /// <param name="name"> The release train name. </param>
         /// <param name="properties"> The properties of supported version. </param>

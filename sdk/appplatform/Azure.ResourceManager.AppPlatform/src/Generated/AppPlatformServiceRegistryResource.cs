@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformServiceRegistry along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformServiceRegistryResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformServiceRegistryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource" /> using the GetAppPlatformServiceRegistry method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformServiceRegistryResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformServiceRegistryResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource"/> using the GetAppPlatformServiceRegistry method.
     /// </summary>
     public partial class AppPlatformServiceRegistryResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly ServiceRegistriesRestOperations _appPlatformServiceRegistryServiceRegistriesRestClient;
         private readonly AppPlatformServiceRegistryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/serviceRegistries";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformServiceRegistryResource"/> class for mocking. </summary>
         protected AppPlatformServiceRegistryResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformServiceRegistryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformServiceRegistryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformServiceRegistryResource(ArmClient client, AppPlatformServiceRegistryData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/serviceRegistries";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

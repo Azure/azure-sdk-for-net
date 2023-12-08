@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> SKU properties. </summary>
     public partial class IotHubSkuDescription
     {
-        /// <summary> Initializes a new instance of IotHubSkuDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubSkuDescription"/>. </summary>
         /// <param name="sku"> The type of the resource. </param>
         /// <param name="capacity"> IotHub capacity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="capacity"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Capacity = capacity;
         }
 
-        /// <summary> Initializes a new instance of IotHubSkuDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubSkuDescription"/>. </summary>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="sku"> The type of the resource. </param>
         /// <param name="capacity"> IotHub capacity. </param>

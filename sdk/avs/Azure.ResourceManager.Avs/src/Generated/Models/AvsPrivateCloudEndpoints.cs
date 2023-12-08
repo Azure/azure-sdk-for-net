@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Endpoint addresses. </summary>
     public partial class AvsPrivateCloudEndpoints
     {
-        /// <summary> Initializes a new instance of AvsPrivateCloudEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudEndpoints"/>. </summary>
         internal AvsPrivateCloudEndpoints()
         {
         }
 
-        /// <summary> Initializes a new instance of AvsPrivateCloudEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudEndpoints"/>. </summary>
         /// <param name="nsxtManager"> Endpoint for the NSX-T Data Center manager. </param>
         /// <param name="vcsa"> Endpoint for Virtual Center Server Appliance. </param>
         /// <param name="hcxCloudManager"> Endpoint for the HCX Cloud Manager. </param>

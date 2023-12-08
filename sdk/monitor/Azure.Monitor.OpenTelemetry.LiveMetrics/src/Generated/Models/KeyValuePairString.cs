@@ -10,9 +10,18 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> The KeyValuePairString. </summary>
     internal partial class KeyValuePairString
     {
-        /// <summary> Initializes a new instance of KeyValuePairString. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyValuePairString"/>. </summary>
         public KeyValuePairString()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyValuePairString"/>. </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        internal KeyValuePairString(string key, string value)
+        {
+            Key = key;
+            Value = value;
         }
 
         /// <summary> Gets or sets the key. </summary>

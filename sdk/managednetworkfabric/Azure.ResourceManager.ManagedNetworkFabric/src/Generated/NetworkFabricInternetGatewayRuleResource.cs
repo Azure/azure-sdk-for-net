@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A Class representing a NetworkFabricInternetGatewayRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkFabricInternetGatewayRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkFabricInternetGatewayRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkFabricInternetGatewayRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkFabricInternetGatewayRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkFabricInternetGatewayRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkFabricInternetGatewayRule method.
     /// </summary>
     public partial class NetworkFabricInternetGatewayRuleResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private readonly InternetGatewayRulesRestOperations _networkFabricInternetGatewayRuleInternetGatewayRulesRestClient;
         private readonly NetworkFabricInternetGatewayRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/internetGatewayRules";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkFabricInternetGatewayRuleResource"/> class for mocking. </summary>
         protected NetworkFabricInternetGatewayRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkFabricInternetGatewayRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkFabricInternetGatewayRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkFabricInternetGatewayRuleResource(ArmClient client, NetworkFabricInternetGatewayRuleData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/internetGatewayRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseSensitivityLabel along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseSensitivityLabelResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseSensitivityLabelResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolColumnResource" /> using the GetSynapseSensitivityLabel method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseSensitivityLabelResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseSensitivityLabelResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolColumnResource"/> using the GetSynapseSensitivityLabel method.
     /// </summary>
     public partial class SynapseSensitivityLabelResource : ArmResource
     {
@@ -44,12 +44,15 @@ namespace Azure.ResourceManager.Synapse
         private readonly SqlPoolSensitivityLabelsRestOperations _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient;
         private readonly SynapseSensitivityLabelData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/schemas/tables/columns/sensitivityLabels";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseSensitivityLabelResource"/> class for mocking. </summary>
         protected SynapseSensitivityLabelResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseSensitivityLabelResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseSensitivityLabelResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseSensitivityLabelResource(ArmClient client, SynapseSensitivityLabelData data) : this(client, data.Id)
@@ -70,9 +73,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/schemas/tables/columns/sensitivityLabels";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Different types of filters supported and its values. </summary>
     public partial class FilterableProperty
     {
-        /// <summary> Initializes a new instance of FilterableProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterableProperty"/>. </summary>
         /// <param name="supportedFilterType"> Type of product filter. </param>
         /// <param name="supportedValues"> Values to be filtered. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="supportedValues"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             SupportedValues = supportedValues.ToList();
         }
 
-        /// <summary> Initializes a new instance of FilterableProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterableProperty"/>. </summary>
         /// <param name="supportedFilterType"> Type of product filter. </param>
         /// <param name="supportedValues"> Values to be filtered. </param>
         internal FilterableProperty(SupportedFilterType supportedFilterType, IList<string> supportedValues)

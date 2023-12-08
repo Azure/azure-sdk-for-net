@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Resource for a regional service location. </summary>
     public partial class MaterializedViewsBuilderRegionalService : CosmosDBRegionalService
     {
-        /// <summary> Initializes a new instance of MaterializedViewsBuilderRegionalService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaterializedViewsBuilderRegionalService"/>. </summary>
         internal MaterializedViewsBuilderRegionalService()
         {
         }
 
-        /// <summary> Initializes a new instance of MaterializedViewsBuilderRegionalService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaterializedViewsBuilderRegionalService"/>. </summary>
         /// <param name="name"> The regional service name. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="status"> Describes the status of a service. </param>

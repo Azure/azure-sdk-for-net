@@ -13,6 +13,7 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.HardwareSecurityModules;
 using Azure.ResourceManager.HardwareSecurityModules.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Samples
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CloudHsmClusterUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2022-08-31-preview/examples/CloudHsmCluster_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2023-12-10-preview/examples/CloudHsmCluster_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "CloudHsmClusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,6 +50,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 ["Environment"] = "dogfood",
 ["Slice"] = "A",
 },
+                Identity = new ManagedServiceIdentity("UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity-1")] = new UserAssignedIdentity(),
+},
+                },
+                BackupProperties = new BackupProperties()
+                {
+                    AzureStorageResourceUri = new Uri("testStorageResourceUri"),
+                },
             };
             ArmOperation<CloudHsmClusterResource> lro = await cloudHsmCluster.UpdateAsync(WaitUntil.Completed, patch);
             CloudHsmClusterResource result = lro.Value;
@@ -65,7 +77,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_CloudHsmClusterGetMaximumSetGen()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2022-08-31-preview/examples/CloudHsmCluster_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2023-12-10-preview/examples/CloudHsmCluster_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "CloudHsmClusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,7 +108,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_CloudHsmClusterDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2022-08-31-preview/examples/CloudHsmCluster_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2023-12-10-preview/examples/CloudHsmCluster_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "CloudHsmClusters_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -123,7 +135,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetCloudHsmClusters_CloudHsmClusterListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2022-08-31-preview/examples/CloudHsmCluster_ListBySubscription_MaximumSet_Gen.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2023-12-10-preview/examples/CloudHsmCluster_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "CloudHsmClusters_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -155,7 +167,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetCloudHsmClusterPrivateLinkResources_CloudHsmClusterPrivateLinkResourcesListByResourceMaximumSetGen()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2022-08-31-preview/examples/CloudHsmClusterPrivateLinkResource_ListByCloudHsmCluster_MaximumSet_Gen.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2023-12-10-preview/examples/CloudHsmClusterPrivateLinkResource_ListByCloudHsmCluster_MaximumSet_Gen.json
             // this example is just showing the usage of "CloudHsmClusterPrivateLinkResources_ListByCloudHsmCluster" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

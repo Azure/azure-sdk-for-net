@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ContainerAppData(AzureLocation location) : base(location)
         {
             OutboundIPAddressList = new ChangeTrackingList<IPAddress>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

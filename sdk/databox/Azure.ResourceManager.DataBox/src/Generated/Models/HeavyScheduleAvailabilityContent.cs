@@ -12,11 +12,20 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Request body to get the availability for scheduling heavy orders. </summary>
     public partial class HeavyScheduleAvailabilityContent : ScheduleAvailabilityContent
     {
-        /// <summary> Initializes a new instance of HeavyScheduleAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HeavyScheduleAvailabilityContent"/>. </summary>
         /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         public HeavyScheduleAvailabilityContent(AzureLocation storageLocation) : base(storageLocation)
         {
             SkuName = DataBoxSkuName.DataBoxHeavy;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HeavyScheduleAvailabilityContent"/>. </summary>
+        /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <param name="skuName"> Sku Name for which the order is to be scheduled. </param>
+        /// <param name="country"> Country in which storage location should be supported. </param>
+        internal HeavyScheduleAvailabilityContent(AzureLocation storageLocation, DataBoxSkuName skuName, string country) : base(storageLocation, skuName, country)
+        {
+            SkuName = skuName;
         }
     }
 }

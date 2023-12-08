@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Storage
 {
     /// <summary>
     /// A Class representing an ObjectReplicationPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ObjectReplicationPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetObjectReplicationPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource" /> using the GetObjectReplicationPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ObjectReplicationPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetObjectReplicationPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource"/> using the GetObjectReplicationPolicy method.
     /// </summary>
     public partial class ObjectReplicationPolicyResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Storage
         private readonly ObjectReplicationPoliciesRestOperations _objectReplicationPolicyRestClient;
         private readonly ObjectReplicationPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/objectReplicationPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="ObjectReplicationPolicyResource"/> class for mocking. </summary>
         protected ObjectReplicationPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ObjectReplicationPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ObjectReplicationPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ObjectReplicationPolicyResource(ArmClient client, ObjectReplicationPolicyData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Storage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/objectReplicationPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

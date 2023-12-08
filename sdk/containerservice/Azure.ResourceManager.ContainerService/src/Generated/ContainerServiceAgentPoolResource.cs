@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
     /// A Class representing a ContainerServiceAgentPool along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerServiceAgentPoolResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerServiceAgentPoolResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceManagedClusterResource" /> using the GetContainerServiceAgentPool method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerServiceAgentPoolResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerServiceAgentPoolResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceManagedClusterResource"/> using the GetContainerServiceAgentPool method.
     /// </summary>
     public partial class ContainerServiceAgentPoolResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.ContainerService
         private readonly AgentPoolsRestOperations _containerServiceAgentPoolAgentPoolsRestClient;
         private readonly ContainerServiceAgentPoolData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedClusters/agentPools";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerServiceAgentPoolResource"/> class for mocking. </summary>
         protected ContainerServiceAgentPoolResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerServiceAgentPoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerServiceAgentPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerServiceAgentPoolResource(ArmClient client, ContainerServiceAgentPoolData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ContainerService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedClusters/agentPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Gets an object representing a AgentPoolUpgradeProfileResource along with the instance operations that can be performed on it in the ContainerServiceAgentPool. </summary>
-        /// <returns> Returns a <see cref="AgentPoolUpgradeProfileResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AgentPoolUpgradeProfileResource"/> object. </returns>
         public virtual AgentPoolUpgradeProfileResource GetAgentPoolUpgradeProfile()
         {
             return new AgentPoolUpgradeProfileResource(Client, Id.AppendChildResource("upgradeProfiles", "default"));

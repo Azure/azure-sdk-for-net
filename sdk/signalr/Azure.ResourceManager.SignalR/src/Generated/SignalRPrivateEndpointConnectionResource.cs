@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.SignalR
 {
     /// <summary>
     /// A Class representing a SignalRPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SignalRPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSignalRPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SignalRResource" /> using the GetSignalRPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SignalRPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSignalRPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SignalRResource"/> using the GetSignalRPrivateEndpointConnection method.
     /// </summary>
     public partial class SignalRPrivateEndpointConnectionResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.SignalR
         private readonly SignalRPrivateEndpointConnectionsRestOperations _signalRPrivateEndpointConnectionRestClient;
         private readonly SignalRPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/signalR/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="SignalRPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected SignalRPrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SignalRPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SignalRPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SignalRPrivateEndpointConnectionResource(ArmClient client, SignalRPrivateEndpointConnectionData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.SignalR
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/signalR/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

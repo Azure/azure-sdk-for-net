@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Managed Network Provisioning options for managed network of a machine learning workspace. </summary>
     public partial class ManagedNetworkProvisionContent
     {
-        /// <summary> Initializes a new instance of ManagedNetworkProvisionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkProvisionContent"/>. </summary>
         public ManagedNetworkProvisionContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkProvisionContent"/>. </summary>
+        /// <param name="includeSpark"></param>
+        internal ManagedNetworkProvisionContent(bool? includeSpark)
+        {
+            IncludeSpark = includeSpark;
         }
 
         /// <summary> Gets or sets the include spark. </summary>

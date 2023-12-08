@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Properties for a Connection Setting Item. </summary>
     public partial class BotConnectionSettingProperties
     {
-        /// <summary> Initializes a new instance of BotConnectionSettingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotConnectionSettingProperties"/>. </summary>
         public BotConnectionSettingProperties()
         {
             Parameters = new ChangeTrackingList<BotConnectionSettingParameter>();
         }
 
-        /// <summary> Initializes a new instance of BotConnectionSettingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotConnectionSettingProperties"/>. </summary>
         /// <param name="clientId"> Client Id associated with the Connection Setting. </param>
         /// <param name="settingId"> Setting Id set by the service for the Connection Setting. </param>
         /// <param name="clientSecret"> Client Secret associated with the Connection Setting. </param>

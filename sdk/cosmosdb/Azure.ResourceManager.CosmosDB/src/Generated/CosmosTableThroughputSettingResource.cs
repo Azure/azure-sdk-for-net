@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a CosmosTableThroughputSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosTableThroughputSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCosmosTableThroughputSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBTableResource" /> using the GetCosmosTableThroughputSetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosTableThroughputSettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCosmosTableThroughputSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBTableResource"/> using the GetCosmosTableThroughputSetting method.
     /// </summary>
     public partial class CosmosTableThroughputSettingResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly TableResourcesRestOperations _cosmosTableThroughputSettingTableResourcesRestClient;
         private readonly ThroughputSettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/tables/throughputSettings";
+
         /// <summary> Initializes a new instance of the <see cref="CosmosTableThroughputSettingResource"/> class for mocking. </summary>
         protected CosmosTableThroughputSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CosmosTableThroughputSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosTableThroughputSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CosmosTableThroughputSettingResource(ArmClient client, ThroughputSettingData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/tables/throughputSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

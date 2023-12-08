@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The IntegrationRuntimeDataFlowCustomItem. </summary>
     public partial class IntegrationRuntimeDataFlowCustomItem
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeDataFlowCustomItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeDataFlowCustomItem"/>. </summary>
         public IntegrationRuntimeDataFlowCustomItem()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeDataFlowCustomItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeDataFlowCustomItem"/>. </summary>
         /// <param name="name"> Name of custom property. </param>
         /// <param name="value"> Value of custom property. </param>
         internal IntegrationRuntimeDataFlowCustomItem(string name, string value)

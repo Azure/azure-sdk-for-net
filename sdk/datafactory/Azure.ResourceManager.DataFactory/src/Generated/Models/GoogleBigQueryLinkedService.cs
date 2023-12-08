@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Google BigQuery service linked service. </summary>
     public partial class GoogleBigQueryLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of GoogleBigQueryLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="GoogleBigQueryLinkedService"/>. </summary>
         /// <param name="project"> The default BigQuery project to query against. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="project"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "GoogleBigQuery";
         }
 
-        /// <summary> Initializes a new instance of GoogleBigQueryLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="GoogleBigQueryLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

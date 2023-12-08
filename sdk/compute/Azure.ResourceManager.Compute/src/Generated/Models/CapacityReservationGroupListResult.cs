@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List capacity reservation group with resource group response. </summary>
     internal partial class CapacityReservationGroupListResult
     {
-        /// <summary> Initializes a new instance of CapacityReservationGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupListResult"/>. </summary>
         /// <param name="value"> The list of capacity reservation groups. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal CapacityReservationGroupListResult(IEnumerable<CapacityReservationGroupData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of CapacityReservationGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupListResult"/>. </summary>
         /// <param name="value"> The list of capacity reservation groups. </param>
         /// <param name="nextLink"> The URI to fetch the next page of capacity reservation groups. Call ListNext() with this URI to fetch the next page of capacity reservation groups. </param>
         internal CapacityReservationGroupListResult(IReadOnlyList<CapacityReservationGroupData> value, string nextLink)

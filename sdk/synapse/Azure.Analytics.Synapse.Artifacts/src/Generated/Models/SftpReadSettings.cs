@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Sftp read settings. </summary>
     public partial class SftpReadSettings : StoreReadSettings
     {
-        /// <summary> Initializes a new instance of SftpReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SftpReadSettings"/>. </summary>
         public SftpReadSettings()
         {
             Type = "SftpReadSettings";
         }
 
-        /// <summary> Initializes a new instance of SftpReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SftpReadSettings"/>. </summary>
         /// <param name="type"> The read setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

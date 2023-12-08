@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Nginx
 {
     /// <summary>
     /// A Class representing a NginxDeployment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NginxDeploymentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNginxDeploymentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNginxDeployment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NginxDeploymentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNginxDeploymentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNginxDeployment method.
     /// </summary>
     public partial class NginxDeploymentResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Nginx
         private readonly DeploymentsRestOperations _nginxDeploymentDeploymentsRestClient;
         private readonly NginxDeploymentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Nginx.NginxPlus/nginxDeployments";
+
         /// <summary> Initializes a new instance of the <see cref="NginxDeploymentResource"/> class for mocking. </summary>
         protected NginxDeploymentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NginxDeploymentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NginxDeploymentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NginxDeploymentResource(ArmClient client, NginxDeploymentData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Nginx
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Nginx.NginxPlus/nginxDeployments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Nginx
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The NginxDeploymentPatch to use. </param>
+        /// <param name="patch"> The <see cref="NginxDeploymentPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<NginxDeploymentResource>> UpdateAsync(WaitUntil waitUntil, NginxDeploymentPatch patch, CancellationToken cancellationToken = default)
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Nginx
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The NginxDeploymentPatch to use. </param>
+        /// <param name="patch"> The <see cref="NginxDeploymentPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<NginxDeploymentResource> Update(WaitUntil waitUntil, NginxDeploymentPatch patch, CancellationToken cancellationToken = default)

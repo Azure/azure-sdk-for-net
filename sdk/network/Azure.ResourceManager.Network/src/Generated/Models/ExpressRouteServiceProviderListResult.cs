@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for the ListExpressRouteServiceProvider API service call. </summary>
     internal partial class ExpressRouteServiceProviderListResult
     {
-        /// <summary> Initializes a new instance of ExpressRouteServiceProviderListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProviderListResult"/>. </summary>
         internal ExpressRouteServiceProviderListResult()
         {
             Value = new ChangeTrackingList<ExpressRouteServiceProvider>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteServiceProviderListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProviderListResult"/>. </summary>
         /// <param name="value"> A list of ExpressRouteResourceProvider resources. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal ExpressRouteServiceProviderListResult(IReadOnlyList<ExpressRouteServiceProvider> value, string nextLink)

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ApplicationGatewayAvailableSslOptions API service call. </summary>
     internal partial class ApplicationGatewayAvailableSslPredefinedPolicies
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslPredefinedPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAvailableSslPredefinedPolicies"/>. </summary>
         internal ApplicationGatewayAvailableSslPredefinedPolicies()
         {
             Value = new ChangeTrackingList<ApplicationGatewaySslPredefinedPolicy>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslPredefinedPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAvailableSslPredefinedPolicies"/>. </summary>
         /// <param name="value"> List of available Ssl predefined policy. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         internal ApplicationGatewayAvailableSslPredefinedPolicies(IReadOnlyList<ApplicationGatewaySslPredefinedPolicy> value, string nextLink)

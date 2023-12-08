@@ -290,7 +290,14 @@ function BuildDeploymentOutputs([string]$serviceName, [object]$azContext, [objec
         }
     }
 
-    return $deploymentOutputs
+    # Force capitalization of all keys to avoid Azure Pipelines confusion with
+    # variable auto-capitalization and OS env var capitalization differences
+    $capitalized = @{}
+    foreach ($item in $deploymentOutputs.GetEnumerator()) {
+        $capitalized[$item.Name.ToUpperInvariant()] = $item.Value
+    }
+
+    return $capitalized
 }
 
 function SetDeploymentOutputs(

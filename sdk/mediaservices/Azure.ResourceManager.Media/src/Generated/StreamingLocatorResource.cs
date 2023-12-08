@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Media
 {
     /// <summary>
     /// A Class representing a StreamingLocator along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StreamingLocatorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStreamingLocatorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MediaServicesAccountResource" /> using the GetStreamingLocator method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StreamingLocatorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStreamingLocatorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MediaServicesAccountResource"/> using the GetStreamingLocator method.
     /// </summary>
     public partial class StreamingLocatorResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Media
         private readonly StreamingLocatorsRestOperations _streamingLocatorRestClient;
         private readonly StreamingLocatorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaServices/streamingLocators";
+
         /// <summary> Initializes a new instance of the <see cref="StreamingLocatorResource"/> class for mocking. </summary>
         protected StreamingLocatorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StreamingLocatorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StreamingLocatorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StreamingLocatorResource(ArmClient client, StreamingLocatorData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Media
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaServices/streamingLocators";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StreamingLocatorContentKey" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StreamingLocatorContentKey"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamingLocatorContentKey> GetContentKeysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingLocatorRestClient.CreateListContentKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StreamingLocatorContentKey" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StreamingLocatorContentKey"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamingLocatorContentKey> GetContentKeys(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingLocatorRestClient.CreateListContentKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

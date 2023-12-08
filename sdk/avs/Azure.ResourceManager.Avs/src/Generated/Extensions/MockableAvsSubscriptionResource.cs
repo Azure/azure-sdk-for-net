@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvsPrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AvsPrivateCloudResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvsPrivateCloudResource> GetAvsPrivateCloudsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvsPrivateCloudPrivateCloudsRestClient.CreateListInSubscriptionRequest(Id.SubscriptionId);
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvsPrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AvsPrivateCloudResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvsPrivateCloudResource> GetAvsPrivateClouds(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvsPrivateCloudPrivateCloudsRestClient.CreateListInSubscriptionRequest(Id.SubscriptionId);

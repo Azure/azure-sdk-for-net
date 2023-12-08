@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> Information about the SKU of the IoT Central application. </summary>
     public partial class IotCentralAppSkuInfo
     {
-        /// <summary> Initializes a new instance of IotCentralAppSkuInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppSkuInfo"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         public IotCentralAppSkuInfo(IotCentralAppSku name)
         {

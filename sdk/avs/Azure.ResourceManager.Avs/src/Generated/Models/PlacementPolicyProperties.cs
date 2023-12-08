@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Avs.Models
     /// </summary>
     public abstract partial class PlacementPolicyProperties
     {
-        /// <summary> Initializes a new instance of PlacementPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlacementPolicyProperties"/>. </summary>
         protected PlacementPolicyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of PlacementPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlacementPolicyProperties"/>. </summary>
         /// <param name="policyType"> placement policy type. </param>
         /// <param name="state"> Whether the placement policy is enabled or disabled. </param>
         /// <param name="displayName"> Display name of the placement policy. </param>

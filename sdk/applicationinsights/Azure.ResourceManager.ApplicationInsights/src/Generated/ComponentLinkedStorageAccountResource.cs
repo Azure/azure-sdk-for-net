@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ApplicationInsights
 {
     /// <summary>
     /// A Class representing a ComponentLinkedStorageAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ComponentLinkedStorageAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetComponentLinkedStorageAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApplicationInsightsComponentResource" /> using the GetComponentLinkedStorageAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ComponentLinkedStorageAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetComponentLinkedStorageAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApplicationInsightsComponentResource"/> using the GetComponentLinkedStorageAccount method.
     /// </summary>
     public partial class ComponentLinkedStorageAccountResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.ApplicationInsights
         private readonly ComponentLinkedStorageAccountsRestOperations _componentLinkedStorageAccountRestClient;
         private readonly ComponentLinkedStorageAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "microsoft.insights/components/linkedStorageAccounts";
+
         /// <summary> Initializes a new instance of the <see cref="ComponentLinkedStorageAccountResource"/> class for mocking. </summary>
         protected ComponentLinkedStorageAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ComponentLinkedStorageAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ComponentLinkedStorageAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ComponentLinkedStorageAccountResource(ArmClient client, ComponentLinkedStorageAccountData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ApplicationInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "microsoft.insights/components/linkedStorageAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

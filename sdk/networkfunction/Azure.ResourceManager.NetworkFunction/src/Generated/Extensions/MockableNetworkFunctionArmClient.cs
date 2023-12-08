@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AzureTrafficCollectorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AzureTrafficCollectorResource.CreateResourceIdentifier" /> to create an <see cref="AzureTrafficCollectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AzureTrafficCollectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AzureTrafficCollectorResource.CreateResourceIdentifier" /> to create an <see cref="AzureTrafficCollectorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AzureTrafficCollectorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AzureTrafficCollectorResource"/> object. </returns>
         public virtual AzureTrafficCollectorResource GetAzureTrafficCollectorResource(ResourceIdentifier id)
         {
             AzureTrafficCollectorResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CollectorPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CollectorPolicyResource.CreateResourceIdentifier" /> to create a <see cref="CollectorPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CollectorPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CollectorPolicyResource.CreateResourceIdentifier" /> to create a <see cref="CollectorPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CollectorPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CollectorPolicyResource"/> object. </returns>
         public virtual CollectorPolicyResource GetCollectorPolicyResource(ResourceIdentifier id)
         {
             CollectorPolicyResource.ValidateResourceId(id);

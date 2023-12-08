@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a RoutingIntent along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RoutingIntentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRoutingIntentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualHubResource" /> using the GetRoutingIntent method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RoutingIntentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRoutingIntentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualHubResource"/> using the GetRoutingIntent method.
     /// </summary>
     public partial class RoutingIntentResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Network
         private readonly RoutingIntentRestOperations _routingIntentRestClient;
         private readonly RoutingIntentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs/routingIntent";
+
         /// <summary> Initializes a new instance of the <see cref="RoutingIntentResource"/> class for mocking. </summary>
         protected RoutingIntentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RoutingIntentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RoutingIntentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RoutingIntentResource(ArmClient client, RoutingIntentData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs/routingIntent";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

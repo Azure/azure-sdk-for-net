@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Workloads
     /// </summary>
     public partial class SapLandscapeMonitorData : ResourceData
     {
-        /// <summary> Initializes a new instance of SapLandscapeMonitorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapLandscapeMonitorData"/>. </summary>
         public SapLandscapeMonitorData()
         {
             TopMetricsThresholds = new ChangeTrackingList<SapLandscapeMonitorMetricThresholds>();
         }
 
-        /// <summary> Initializes a new instance of SapLandscapeMonitorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapLandscapeMonitorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

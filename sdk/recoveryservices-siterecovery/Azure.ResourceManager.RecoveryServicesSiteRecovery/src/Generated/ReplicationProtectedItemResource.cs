@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A Class representing a ReplicationProtectedItem along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ReplicationProtectedItemResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetReplicationProtectedItemResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryProtectionContainerResource" /> using the GetReplicationProtectedItem method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ReplicationProtectedItemResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetReplicationProtectedItemResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryProtectionContainerResource"/> using the GetReplicationProtectedItem method.
     /// </summary>
     public partial class ReplicationProtectedItemResource : ArmResource
     {
@@ -45,12 +45,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly TargetComputeSizesRestOperations _targetComputeSizesRestClient;
         private readonly ReplicationProtectedItemData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems";
+
         /// <summary> Initializes a new instance of the <see cref="ReplicationProtectedItemResource"/> class for mocking. </summary>
         protected ReplicationProtectedItemResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ReplicationProtectedItemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ReplicationProtectedItemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ReplicationProtectedItemResource(ArmClient client, ReplicationProtectedItemData data) : this(client, data.Id)
@@ -73,9 +76,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -1565,7 +1565,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TargetComputeSize" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TargetComputeSize"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TargetComputeSize> GetTargetComputeSizesByReplicationProtectedItemsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _targetComputeSizesRestClient.CreateListByReplicationProtectedItemsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -1587,7 +1587,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TargetComputeSize" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TargetComputeSize"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TargetComputeSize> GetTargetComputeSizesByReplicationProtectedItems(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _targetComputeSizesRestClient.CreateListByReplicationProtectedItemsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

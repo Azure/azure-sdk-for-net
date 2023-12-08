@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkFabricIPCommunityData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkFabricIPCommunityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricIPCommunityData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetworkFabricIPCommunityData(AzureLocation location) : base(location)
         {
             IPCommunityRules = new ChangeTrackingList<IPCommunityRule>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricIPCommunityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricIPCommunityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Blueprint artifact that applies a Policy assignment. </summary>
     public partial class PolicyAssignmentArtifact : ArtifactData
     {
-        /// <summary> Initializes a new instance of PolicyAssignmentArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentArtifact"/>. </summary>
         /// <param name="policyDefinitionId"> Azure resource ID of the policy definition. </param>
         /// <param name="parameters"> Parameter values for the policy definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionId"/> or <paramref name="parameters"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             Kind = ArtifactKind.PolicyAssignment;
         }
 
-        /// <summary> Initializes a new instance of PolicyAssignmentArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentArtifact"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

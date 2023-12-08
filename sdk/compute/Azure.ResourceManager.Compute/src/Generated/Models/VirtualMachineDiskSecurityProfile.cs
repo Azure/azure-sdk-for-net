@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies the security profile settings for the managed disk. **Note:** It can only be set for Confidential VMs. </summary>
     public partial class VirtualMachineDiskSecurityProfile
     {
-        /// <summary> Initializes a new instance of VirtualMachineDiskSecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineDiskSecurityProfile"/>. </summary>
         public VirtualMachineDiskSecurityProfile()
         {
         }

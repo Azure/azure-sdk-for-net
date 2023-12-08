@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class NetAppVolumeSnapshotData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetAppVolumeSnapshotData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeSnapshotData"/>. </summary>
         /// <param name="location"> Resource location. </param>
         public NetAppVolumeSnapshotData(AzureLocation location)
         {
             Location = location;
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeSnapshotData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeSnapshotData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

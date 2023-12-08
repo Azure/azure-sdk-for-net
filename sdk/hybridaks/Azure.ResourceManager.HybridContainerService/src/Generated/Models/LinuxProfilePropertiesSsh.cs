@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> SSH - SSH configuration for Linux-based VMs running on Azure. </summary>
     internal partial class LinuxProfilePropertiesSsh
     {
-        /// <summary> Initializes a new instance of LinuxProfilePropertiesSsh. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxProfilePropertiesSsh"/>. </summary>
         public LinuxProfilePropertiesSsh()
         {
             PublicKeys = new ChangeTrackingList<LinuxProfilePropertiesSshPublicKeysItem>();
         }
 
-        /// <summary> Initializes a new instance of LinuxProfilePropertiesSsh. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxProfilePropertiesSsh"/>. </summary>
         /// <param name="publicKeys"> PublicKeys - The list of SSH public keys used to authenticate with Linux-based VMs. Only expect one key specified. </param>
         internal LinuxProfilePropertiesSsh(IList<LinuxProfilePropertiesSshPublicKeysItem> publicKeys)
         {

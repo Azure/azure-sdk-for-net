@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The instance view of a virtual machine. </summary>
     public partial class VirtualMachineInstanceView
     {
-        /// <summary> Initializes a new instance of VirtualMachineInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceView"/>. </summary>
         internal VirtualMachineInstanceView()
         {
             Disks = new ChangeTrackingList<DiskInstanceView>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
             Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstanceView"/>. </summary>
         /// <param name="platformUpdateDomain"> Specifies the update domain of the virtual machine. </param>
         /// <param name="platformFaultDomain"> Specifies the fault domain of the virtual machine. </param>
         /// <param name="computerName"> The computer name assigned to the virtual machine. </param>

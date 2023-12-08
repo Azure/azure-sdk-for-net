@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a GalleryApplication along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GalleryApplicationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGalleryApplicationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="GalleryResource" /> using the GetGalleryApplication method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GalleryApplicationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGalleryApplicationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="GalleryResource"/> using the GetGalleryApplication method.
     /// </summary>
     public partial class GalleryApplicationResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Compute
         private readonly GalleryApplicationsRestOperations _galleryApplicationRestClient;
         private readonly GalleryApplicationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/galleries/applications";
+
         /// <summary> Initializes a new instance of the <see cref="GalleryApplicationResource"/> class for mocking. </summary>
         protected GalleryApplicationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GalleryApplicationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GalleryApplicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GalleryApplicationResource(ArmClient client, GalleryApplicationData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/galleries/applications";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

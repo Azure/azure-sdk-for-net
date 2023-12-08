@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The response body returned for a request to Bot Service Management to check per subscription hostSettings. </summary>
     public partial class BotServiceHostSettingsResult
     {
-        /// <summary> Initializes a new instance of BotServiceHostSettingsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServiceHostSettingsResult"/>. </summary>
         internal BotServiceHostSettingsResult()
         {
         }
 
-        /// <summary> Initializes a new instance of BotServiceHostSettingsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServiceHostSettingsResult"/>. </summary>
         /// <param name="oAuthUri"> For in-conversation bot user authentication. </param>
         /// <param name="toBotFromChannelOpenIdMetadataUri"> For verifying incoming tokens from the channels. </param>
         /// <param name="toBotFromChannelTokenIssuer"> For verifying incoming tokens from the channels. </param>

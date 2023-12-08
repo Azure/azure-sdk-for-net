@@ -1319,7 +1319,9 @@ namespace Azure.ResourceManager.Resources.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public EnforcementMode(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.EnforcementMode Default { get { throw null; } }
         public static Azure.ResourceManager.Resources.Models.EnforcementMode DoNotEnforce { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Resources.Models.EnforcementMode Enforced { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Resources.Models.EnforcementMode other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

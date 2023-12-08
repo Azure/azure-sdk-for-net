@@ -14,10 +14,31 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies information about the gallery image version that you want to update. </summary>
     public partial class GalleryImageVersionPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of GalleryImageVersionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionPatch"/>. </summary>
         public GalleryImageVersionPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="publishingProfile"> The publishing profile of a gallery image Version. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
+        /// <param name="safetyProfile"> This is the safety profile of the Gallery Image Version. </param>
+        /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal GalleryImageVersionPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        {
+            PublishingProfile = publishingProfile;
+            ProvisioningState = provisioningState;
+            StorageProfile = storageProfile;
+            SafetyProfile = safetyProfile;
+            ReplicationStatus = replicationStatus;
+            Tags = tags;
         }
 
         /// <summary> The publishing profile of a gallery image Version. </summary>

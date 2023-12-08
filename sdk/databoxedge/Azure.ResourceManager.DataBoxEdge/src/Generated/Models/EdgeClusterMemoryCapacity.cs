@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> NodeCapacityInfo defines the required information to determine the placement of a VM. </summary>
     public partial class EdgeClusterMemoryCapacity
     {
-        /// <summary> Initializes a new instance of EdgeClusterMemoryCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeClusterMemoryCapacity"/>. </summary>
         public EdgeClusterMemoryCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeClusterMemoryCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeClusterMemoryCapacity"/>. </summary>
         /// <param name="clusterFreeMemoryInMB"> The free memory in the cluster in MB. </param>
         /// <param name="clusterUsedMemoryInMB"> The used memory in the cluster in MB. </param>
         /// <param name="clusterFailoverMemoryInMB"> The failover memory in the cluster in MB. </param>

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
     /// A Class representing a DataShareSynchronizationSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataShareSynchronizationSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataShareSynchronizationSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataShareResource" /> using the GetDataShareSynchronizationSetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataShareSynchronizationSettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataShareSynchronizationSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataShareResource"/> using the GetDataShareSynchronizationSetting method.
     /// </summary>
     public partial class DataShareSynchronizationSettingResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.DataShare
         private readonly SynchronizationSettingsRestOperations _dataShareSynchronizationSettingSynchronizationSettingsRestClient;
         private readonly DataShareSynchronizationSettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shares/synchronizationSettings";
+
         /// <summary> Initializes a new instance of the <see cref="DataShareSynchronizationSettingResource"/> class for mocking. </summary>
         protected DataShareSynchronizationSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataShareSynchronizationSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataShareSynchronizationSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataShareSynchronizationSettingResource(ArmClient client, DataShareSynchronizationSettingData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DataShare
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shares/synchronizationSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

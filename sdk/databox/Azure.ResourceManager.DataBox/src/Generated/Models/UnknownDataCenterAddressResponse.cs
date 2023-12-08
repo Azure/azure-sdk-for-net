@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> The UnknownDataCenterAddressResponse. </summary>
     internal partial class UnknownDataCenterAddressResponse : DataCenterAddressResult
     {
-        /// <summary> Initializes a new instance of UnknownDataCenterAddressResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDataCenterAddressResponse"/>. </summary>
         /// <param name="dataCenterAddressType"> Data center address type. </param>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>

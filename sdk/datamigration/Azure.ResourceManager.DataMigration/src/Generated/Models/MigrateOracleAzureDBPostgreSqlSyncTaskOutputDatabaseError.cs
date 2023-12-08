@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError. </summary>
     public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError : MigrateOracleAzureDBPostgreSqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError"/>. </summary>
         internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError()
         {
             Events = new ChangeTrackingList<SyncMigrationDatabaseErrorEvent>();
             ResultType = "DatabaseLevelErrorOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="errorMessage"> Error message. </param>

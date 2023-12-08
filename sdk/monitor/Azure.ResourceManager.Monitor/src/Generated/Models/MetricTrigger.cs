@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The trigger that results in a scaling action. </summary>
     public partial class MetricTrigger
     {
-        /// <summary> Initializes a new instance of MetricTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricTrigger"/>. </summary>
         /// <param name="metricName"> the name of the metric that defines what the rule monitors. </param>
         /// <param name="metricResourceId"> the resource identifier of the resource the rule monitors. </param>
         /// <param name="timeGrain"> the granularity of metrics the rule monitors. Must be one of the predefined values returned from metric definitions for the metric. Must be between 12 hours and 1 minute. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Dimensions = new ChangeTrackingList<AutoscaleRuleMetricDimension>();
         }
 
-        /// <summary> Initializes a new instance of MetricTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricTrigger"/>. </summary>
         /// <param name="metricName"> the name of the metric that defines what the rule monitors. </param>
         /// <param name="metricNamespace"> the namespace of the metric that defines what the rule monitors. </param>
         /// <param name="metricResourceId"> the resource identifier of the resource the rule monitors. </param>

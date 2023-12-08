@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary>
     /// A Class representing an ElasticSanVolumeGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ElasticSanVolumeGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetElasticSanVolumeGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ElasticSanResource" /> using the GetElasticSanVolumeGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ElasticSanVolumeGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetElasticSanVolumeGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ElasticSanResource"/> using the GetElasticSanVolumeGroup method.
     /// </summary>
     public partial class ElasticSanVolumeGroupResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.ElasticSan
         private readonly VolumeGroupsRestOperations _elasticSanVolumeGroupVolumeGroupsRestClient;
         private readonly ElasticSanVolumeGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ElasticSan/elasticSans/volumegroups";
+
         /// <summary> Initializes a new instance of the <see cref="ElasticSanVolumeGroupResource"/> class for mocking. </summary>
         protected ElasticSanVolumeGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ElasticSanVolumeGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ElasticSanVolumeGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ElasticSanVolumeGroupResource(ArmClient client, ElasticSanVolumeGroupData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ElasticSan
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ElasticSan/elasticSans/volumegroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

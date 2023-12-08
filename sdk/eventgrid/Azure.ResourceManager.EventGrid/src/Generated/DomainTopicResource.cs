@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A Class representing a DomainTopic along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DomainTopicResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDomainTopicResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventGridDomainResource" /> using the GetDomainTopic method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DomainTopicResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDomainTopicResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventGridDomainResource"/> using the GetDomainTopic method.
     /// </summary>
     public partial class DomainTopicResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.EventGrid
         private readonly DomainTopicsRestOperations _domainTopicRestClient;
         private readonly DomainTopicData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/domains/topics";
+
         /// <summary> Initializes a new instance of the <see cref="DomainTopicResource"/> class for mocking. </summary>
         protected DomainTopicResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DomainTopicResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DomainTopicResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DomainTopicResource(ArmClient client, DomainTopicData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/domains/topics";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

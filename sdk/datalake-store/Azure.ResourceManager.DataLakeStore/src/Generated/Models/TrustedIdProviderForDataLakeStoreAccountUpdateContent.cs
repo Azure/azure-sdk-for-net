@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> The parameters used to update a trusted identity provider while updating a Data Lake Store account. </summary>
     public partial class TrustedIdProviderForDataLakeStoreAccountUpdateContent
     {
-        /// <summary> Initializes a new instance of TrustedIdProviderForDataLakeStoreAccountUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrustedIdProviderForDataLakeStoreAccountUpdateContent"/>. </summary>
         /// <param name="name"> The unique name of the trusted identity provider to update. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public TrustedIdProviderForDataLakeStoreAccountUpdateContent(string name)
@@ -21,6 +21,15 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TrustedIdProviderForDataLakeStoreAccountUpdateContent"/>. </summary>
+        /// <param name="name"> The unique name of the trusted identity provider to update. </param>
+        /// <param name="idProvider"> The URL of this trusted identity provider. </param>
+        internal TrustedIdProviderForDataLakeStoreAccountUpdateContent(string name, Uri idProvider)
+        {
+            Name = name;
+            IdProvider = idProvider;
         }
 
         /// <summary> The unique name of the trusted identity provider to update. </summary>

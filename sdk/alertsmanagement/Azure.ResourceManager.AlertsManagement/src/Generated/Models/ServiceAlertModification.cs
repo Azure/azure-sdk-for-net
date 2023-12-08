@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Alert Modification details. </summary>
     public partial class ServiceAlertModification : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceAlertModification. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertModification"/>. </summary>
         public ServiceAlertModification()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertModification. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertModification"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

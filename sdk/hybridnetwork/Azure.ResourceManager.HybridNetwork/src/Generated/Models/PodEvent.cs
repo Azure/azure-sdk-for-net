@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Pod Event  properties. </summary>
     public partial class PodEvent
     {
-        /// <summary> Initializes a new instance of PodEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PodEvent"/>. </summary>
         internal PodEvent()
         {
         }
 
-        /// <summary> Initializes a new instance of PodEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PodEvent"/>. </summary>
         /// <param name="eventType"> The type of pod event. </param>
         /// <param name="reason"> Event reason. </param>
         /// <param name="message"> Event message. </param>

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> IP configuration. </summary>
     public partial class NetworkIPConfiguration : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of NetworkIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkIPConfiguration"/>. </summary>
         public NetworkIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkIPConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

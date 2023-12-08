@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Option B configuration. </summary>
     public partial class L3OptionBProperties
     {
-        /// <summary> Initializes a new instance of L3OptionBProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="L3OptionBProperties"/>. </summary>
         public L3OptionBProperties()
         {
             ImportRouteTargets = new ChangeTrackingList<string>();
             ExportRouteTargets = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of L3OptionBProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="L3OptionBProperties"/>. </summary>
         /// <param name="importRouteTargets"> RouteTargets to be applied. This is used for the backward compatibility. </param>
         /// <param name="exportRouteTargets"> RouteTargets to be applied. This is used for the backward compatibility. </param>
         /// <param name="routeTargets"> RouteTargets to be applied. </param>

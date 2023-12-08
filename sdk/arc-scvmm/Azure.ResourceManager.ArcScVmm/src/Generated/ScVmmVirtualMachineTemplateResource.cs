@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ArcScVmm
 {
     /// <summary>
     /// A Class representing a ScVmmVirtualMachineTemplate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScVmmVirtualMachineTemplateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetScVmmVirtualMachineTemplateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetScVmmVirtualMachineTemplate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScVmmVirtualMachineTemplateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScVmmVirtualMachineTemplateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetScVmmVirtualMachineTemplate method.
     /// </summary>
     public partial class ScVmmVirtualMachineTemplateResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.ArcScVmm
         private readonly VirtualMachineTemplatesRestOperations _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient;
         private readonly ScVmmVirtualMachineTemplateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ScVmm/virtualMachineTemplates";
+
         /// <summary> Initializes a new instance of the <see cref="ScVmmVirtualMachineTemplateResource"/> class for mocking. </summary>
         protected ScVmmVirtualMachineTemplateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ScVmmVirtualMachineTemplateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScVmmVirtualMachineTemplateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScVmmVirtualMachineTemplateResource(ArmClient client, ScVmmVirtualMachineTemplateData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ArcScVmm
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ScVmm/virtualMachineTemplates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

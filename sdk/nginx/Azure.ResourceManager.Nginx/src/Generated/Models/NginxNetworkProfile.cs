@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The NginxNetworkProfile. </summary>
     public partial class NginxNetworkProfile
     {
-        /// <summary> Initializes a new instance of NginxNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxNetworkProfile"/>. </summary>
         public NginxNetworkProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxNetworkProfile"/>. </summary>
         /// <param name="frontEndIPConfiguration"></param>
         /// <param name="networkInterfaceConfiguration"></param>
         internal NginxNetworkProfile(NginxFrontendIPConfiguration frontEndIPConfiguration, NginxNetworkInterfaceConfiguration networkInterfaceConfiguration)

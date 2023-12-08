@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Automation
 {
     /// <summary>
     /// A Class representing an AutomationJobSchedule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomationJobScheduleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutomationJobScheduleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource" /> using the GetAutomationJobSchedule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomationJobScheduleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutomationJobScheduleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource"/> using the GetAutomationJobSchedule method.
     /// </summary>
     public partial class AutomationJobScheduleResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Automation
         private readonly JobScheduleRestOperations _automationJobScheduleJobScheduleRestClient;
         private readonly AutomationJobScheduleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/jobSchedules";
+
         /// <summary> Initializes a new instance of the <see cref="AutomationJobScheduleResource"/> class for mocking. </summary>
         protected AutomationJobScheduleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutomationJobScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomationJobScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomationJobScheduleResource(ArmClient client, AutomationJobScheduleData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Automation
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/jobSchedules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

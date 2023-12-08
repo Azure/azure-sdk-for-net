@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> HDInsight linked service. </summary>
     public partial class HDInsightLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of HDInsightLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightLinkedService"/>. </summary>
         /// <param name="clusterUri"> HDInsight cluster URI. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterUri"/> is null. </exception>
         public HDInsightLinkedService(DataFactoryElement<string> clusterUri)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "HDInsight";
         }
 
-        /// <summary> Initializes a new instance of HDInsightLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Response containing the quota usage information for all the supported skus of Azure Cognitive Search service. </summary>
     internal partial class QuotaUsagesListResult
     {
-        /// <summary> Initializes a new instance of QuotaUsagesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaUsagesListResult"/>. </summary>
         internal QuotaUsagesListResult()
         {
             Value = new ChangeTrackingList<QuotaUsageResult>();
         }
 
-        /// <summary> Initializes a new instance of QuotaUsagesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaUsagesListResult"/>. </summary>
         /// <param name="value"> The quota usages for the SKUs supported by Azure Cognitive Search. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of quota usages. Returned when the total number of requested quota usages exceed maximum page size. </param>
         internal QuotaUsagesListResult(IReadOnlyList<QuotaUsageResult> value, string nextLink)

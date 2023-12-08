@@ -5,8 +5,9 @@
       <example>
 This sample shows how to call GetDataDeleteJobDetailsAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+Weather client = new FarmBeatsClient(endpoint, credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.GetDataDeleteJobDetailsAsync("<jobId>", null);
 
@@ -17,8 +18,9 @@ Console.WriteLine(result.GetProperty("boundaryId").ToString());
 ]]></code>
 This sample shows how to call GetDataDeleteJobDetailsAsync with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+Weather client = new FarmBeatsClient(endpoint, credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.GetDataDeleteJobDetailsAsync("<jobId>", null);
 
@@ -50,8 +52,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call GetDataDeleteJobDetails and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+Weather client = new FarmBeatsClient(endpoint, credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.GetDataDeleteJobDetails("<jobId>", null);
 
@@ -62,8 +65,9 @@ Console.WriteLine(result.GetProperty("boundaryId").ToString());
 ]]></code>
 This sample shows how to call GetDataDeleteJobDetails with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+Weather client = new FarmBeatsClient(endpoint, credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.GetDataDeleteJobDetails("<jobId>", null);
 
@@ -95,8 +99,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call GetDataIngestionJobDetailsAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+Weather client = new FarmBeatsClient(endpoint, credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.GetDataIngestionJobDetailsAsync("<jobId>", null);
 
@@ -109,8 +114,9 @@ Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<key>").T
 ]]></code>
 This sample shows how to call GetDataIngestionJobDetailsAsync with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+Weather client = new FarmBeatsClient(endpoint, credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.GetDataIngestionJobDetailsAsync("<jobId>", null);
 
@@ -142,8 +148,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call GetDataIngestionJobDetails and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+Weather client = new FarmBeatsClient(endpoint, credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.GetDataIngestionJobDetails("<jobId>", null);
 
@@ -156,8 +163,9 @@ Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<key>").T
 ]]></code>
 This sample shows how to call GetDataIngestionJobDetails with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+Weather client = new FarmBeatsClient(endpoint, credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.GetDataIngestionJobDetails("<jobId>", null);
 
@@ -189,8 +197,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call GetWeathersAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+Weather client = new FarmBeatsClient(endpoint, credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
 await foreach (BinaryData item in client.GetWeathersAsync("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", null, null, null, null, null))
 {
@@ -208,8 +217,9 @@ await foreach (BinaryData item in client.GetWeathersAsync("<partyId>", "<boundar
 ]]></code>
 This sample shows how to call GetWeathersAsync with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+Weather client = new FarmBeatsClient(endpoint, credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
 await foreach (BinaryData item in client.GetWeathersAsync("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -266,8 +276,9 @@ await foreach (BinaryData item in client.GetWeathersAsync("<partyId>", "<boundar
       <example>
 This sample shows how to call GetWeathers and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+Weather client = new FarmBeatsClient(endpoint, credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
 foreach (BinaryData item in client.GetWeathers("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", null, null, null, null, null))
 {
@@ -285,8 +296,9 @@ foreach (BinaryData item in client.GetWeathers("<partyId>", "<boundaryId>", "<ex
 ]]></code>
 This sample shows how to call GetWeathers with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+Weather client = new FarmBeatsClient(endpoint, credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
 foreach (BinaryData item in client.GetWeathers("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -343,8 +355,9 @@ foreach (BinaryData item in client.GetWeathers("<partyId>", "<boundaryId>", "<ex
       <example>
 This sample shows how to call CreateDataDeleteJobAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+Weather client = new FarmBeatsClient(endpoint, credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -362,8 +375,9 @@ Console.WriteLine(result.GetProperty("boundaryId").ToString());
 ]]></code>
 This sample shows how to call CreateDataDeleteJobAsync with all parameters and request content and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+Weather client = new FarmBeatsClient(endpoint, credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -412,8 +426,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call CreateDataDeleteJob and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+Weather client = new FarmBeatsClient(endpoint, credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -431,8 +446,9 @@ Console.WriteLine(result.GetProperty("boundaryId").ToString());
 ]]></code>
 This sample shows how to call CreateDataDeleteJob with all parameters and request content and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+Weather client = new FarmBeatsClient(endpoint, credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -481,8 +497,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call CreateDataIngestionJobAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+Weather client = new FarmBeatsClient(endpoint, credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -507,8 +524,9 @@ Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<key>").T
 ]]></code>
 This sample shows how to call CreateDataIngestionJobAsync with all parameters and request content and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+Weather client = new FarmBeatsClient(endpoint, credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -560,8 +578,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call CreateDataIngestionJob and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+Weather client = new FarmBeatsClient(endpoint, credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -586,8 +605,9 @@ Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<key>").T
 ]]></code>
 This sample shows how to call CreateDataIngestionJob with all parameters and request content and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+Weather client = new FarmBeatsClient(endpoint, credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new
 {

@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.ModelRegistered event. </summary>
     public partial class MachineLearningServicesModelRegisteredEventData
     {
-        /// <summary> Initializes a new instance of MachineLearningServicesModelRegisteredEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesModelRegisteredEventData"/>. </summary>
         internal MachineLearningServicesModelRegisteredEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningServicesModelRegisteredEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesModelRegisteredEventData"/>. </summary>
         /// <param name="modelName"> The name of the model that was registered. </param>
         /// <param name="modelVersion"> The version of the model that was registered. </param>
         /// <param name="modelTags"> The tags of the model that was registered. </param>

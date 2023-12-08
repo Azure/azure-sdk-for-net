@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.FluidRelay
 {
     /// <summary>
     /// A Class representing a FluidRelayServer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FluidRelayServerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFluidRelayServerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetFluidRelayServer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FluidRelayServerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFluidRelayServerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetFluidRelayServer method.
     /// </summary>
     public partial class FluidRelayServerResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.FluidRelay
         private readonly FluidRelayServersRestOperations _fluidRelayServerRestClient;
         private readonly FluidRelayServerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.FluidRelay/fluidRelayServers";
+
         /// <summary> Initializes a new instance of the <see cref="FluidRelayServerResource"/> class for mocking. </summary>
         protected FluidRelayServerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FluidRelayServerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FluidRelayServerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FluidRelayServerResource(ArmClient client, FluidRelayServerData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.FluidRelay
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.FluidRelay/fluidRelayServers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

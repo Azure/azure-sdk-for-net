@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The WafRankingsResponseDataItem. </summary>
     public partial class WafRankingsResponseDataItem
     {
-        /// <summary> Initializes a new instance of WafRankingsResponseDataItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="WafRankingsResponseDataItem"/>. </summary>
         internal WafRankingsResponseDataItem()
         {
             GroupValues = new ChangeTrackingList<string>();
             Metrics = new ChangeTrackingList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems>();
         }
 
-        /// <summary> Initializes a new instance of WafRankingsResponseDataItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="WafRankingsResponseDataItem"/>. </summary>
         /// <param name="groupValues"></param>
         /// <param name="metrics"></param>
         internal WafRankingsResponseDataItem(IReadOnlyList<string> groupValues, IReadOnlyList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems> metrics)

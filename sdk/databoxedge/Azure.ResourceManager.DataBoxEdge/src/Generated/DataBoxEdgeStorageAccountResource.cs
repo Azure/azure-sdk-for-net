@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
     /// A Class representing a DataBoxEdgeStorageAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataBoxEdgeStorageAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataBoxEdgeStorageAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeDeviceResource" /> using the GetDataBoxEdgeStorageAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataBoxEdgeStorageAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataBoxEdgeStorageAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeDeviceResource"/> using the GetDataBoxEdgeStorageAccount method.
     /// </summary>
     public partial class DataBoxEdgeStorageAccountResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.DataBoxEdge
         private readonly StorageAccountsRestOperations _dataBoxEdgeStorageAccountStorageAccountsRestClient;
         private readonly DataBoxEdgeStorageAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccounts";
+
         /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeStorageAccountResource"/> class for mocking. </summary>
         protected DataBoxEdgeStorageAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataBoxEdgeStorageAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeStorageAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataBoxEdgeStorageAccountResource(ArmClient client, DataBoxEdgeStorageAccountData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DataBoxEdge
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

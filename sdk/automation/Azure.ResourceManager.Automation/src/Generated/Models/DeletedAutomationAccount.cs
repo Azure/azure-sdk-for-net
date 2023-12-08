@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the deleted automation account type. </summary>
     public partial class DeletedAutomationAccount : ResourceData
     {
-        /// <summary> Initializes a new instance of DeletedAutomationAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedAutomationAccount"/>. </summary>
         internal DeletedAutomationAccount()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedAutomationAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedAutomationAccount"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

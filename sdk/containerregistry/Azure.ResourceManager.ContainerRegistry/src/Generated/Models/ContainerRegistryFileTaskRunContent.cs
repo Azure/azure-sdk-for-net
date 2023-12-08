@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The request parameters for a scheduling run against a task file. </summary>
     public partial class ContainerRegistryFileTaskRunContent : ContainerRegistryRunContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryFileTaskRunContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryFileTaskRunContent"/>. </summary>
         /// <param name="taskFilePath"> The template/definition file path relative to the source. </param>
         /// <param name="platform"> The platform properties against which the run has to happen. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskFilePath"/> or <paramref name="platform"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             RunRequestType = "FileTaskRunRequest";
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryFileTaskRunContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryFileTaskRunContent"/>. </summary>
         /// <param name="runRequestType"> The type of the run request. </param>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled for the run or not. </param>
         /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>

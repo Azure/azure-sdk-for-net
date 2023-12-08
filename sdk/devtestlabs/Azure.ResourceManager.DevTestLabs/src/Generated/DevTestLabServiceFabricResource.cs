@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A Class representing a DevTestLabServiceFabric along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevTestLabServiceFabricResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevTestLabServiceFabricResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevTestLabUserResource" /> using the GetDevTestLabServiceFabric method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabServiceFabricResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabServiceFabricResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabUserResource"/> using the GetDevTestLabServiceFabric method.
     /// </summary>
     public partial class DevTestLabServiceFabricResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly ServiceFabricsRestOperations _devTestLabServiceFabricServiceFabricsRestClient;
         private readonly DevTestLabServiceFabricData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/users/servicefabrics";
+
         /// <summary> Initializes a new instance of the <see cref="DevTestLabServiceFabricResource"/> class for mocking. </summary>
         protected DevTestLabServiceFabricResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevTestLabServiceFabricResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabServiceFabricResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevTestLabServiceFabricResource(ArmClient client, DevTestLabServiceFabricData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.DevTestLabs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/users/servicefabrics";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

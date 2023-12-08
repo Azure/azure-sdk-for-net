@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Agent details. </summary>
     public partial class SiteRecoveryAgentDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAgentDetails"/>. </summary>
         internal SiteRecoveryAgentDetails()
         {
             Disks = new ChangeTrackingList<SiteRecoveryAgentDiskDetails>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAgentDetails"/>. </summary>
         /// <param name="agentId"> The Id of the agent running on the server. </param>
         /// <param name="machineId"> The Id of the machine to which the agent is registered. </param>
         /// <param name="biosId"> The machine BIOS Id. </param>

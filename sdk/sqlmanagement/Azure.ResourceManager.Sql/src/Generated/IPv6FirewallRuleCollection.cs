@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="IPv6FirewallRuleResource" /> and their operations.
-    /// Each <see cref="IPv6FirewallRuleResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
-    /// To get an <see cref="IPv6FirewallRuleCollection" /> instance call the GetIPv6FirewallRules method from an instance of <see cref="SqlServerResource" />.
+    /// A class representing a collection of <see cref="IPv6FirewallRuleResource"/> and their operations.
+    /// Each <see cref="IPv6FirewallRuleResource"/> in the collection will belong to the same instance of <see cref="SqlServerResource"/>.
+    /// To get an <see cref="IPv6FirewallRuleCollection"/> instance call the GetIPv6FirewallRules method from an instance of <see cref="SqlServerResource"/>.
     /// </summary>
     public partial class IPv6FirewallRuleCollection : ArmCollection, IEnumerable<IPv6FirewallRuleResource>, IAsyncEnumerable<IPv6FirewallRuleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IPv6FirewallRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IPv6FirewallRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IPv6FirewallRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iPv6FirewallRuleRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IPv6FirewallRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IPv6FirewallRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IPv6FirewallRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iPv6FirewallRuleRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

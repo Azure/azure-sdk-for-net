@@ -17,13 +17,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// </summary>
     public partial class FormatReadSettings
     {
-        /// <summary> Initializes a new instance of FormatReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FormatReadSettings"/>. </summary>
         public FormatReadSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of FormatReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FormatReadSettings"/>. </summary>
         /// <param name="type"> The read setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal FormatReadSettings(string type, IDictionary<string, object> additionalProperties)

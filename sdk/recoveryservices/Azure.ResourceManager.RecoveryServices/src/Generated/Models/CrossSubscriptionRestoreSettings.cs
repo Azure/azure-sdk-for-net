@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Settings for Cross Subscription Restore Settings. </summary>
     internal partial class CrossSubscriptionRestoreSettings
     {
-        /// <summary> Initializes a new instance of CrossSubscriptionRestoreSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CrossSubscriptionRestoreSettings"/>. </summary>
         public CrossSubscriptionRestoreSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of CrossSubscriptionRestoreSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CrossSubscriptionRestoreSettings"/>. </summary>
         /// <param name="crossSubscriptionRestoreState"></param>
         internal CrossSubscriptionRestoreSettings(CrossSubscriptionRestoreState? crossSubscriptionRestoreState)
         {

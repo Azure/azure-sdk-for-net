@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
     /// A Class representing a RoleEligibilityScheduleInstance along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RoleEligibilityScheduleInstanceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRoleEligibilityScheduleInstanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetRoleEligibilityScheduleInstance method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RoleEligibilityScheduleInstanceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRoleEligibilityScheduleInstanceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetRoleEligibilityScheduleInstance method.
     /// </summary>
     public partial class RoleEligibilityScheduleInstanceResource : ArmResource
     {
@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.Authorization
         private readonly RoleEligibilityScheduleInstancesRestOperations _roleEligibilityScheduleInstanceRestClient;
         private readonly RoleEligibilityScheduleInstanceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleEligibilityScheduleInstances";
+
         /// <summary> Initializes a new instance of the <see cref="RoleEligibilityScheduleInstanceResource"/> class for mocking. </summary>
         protected RoleEligibilityScheduleInstanceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RoleEligibilityScheduleInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RoleEligibilityScheduleInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RoleEligibilityScheduleInstanceResource(ArmClient client, RoleEligibilityScheduleInstanceData data) : this(client, data.Id)
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Authorization
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleEligibilityScheduleInstances";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

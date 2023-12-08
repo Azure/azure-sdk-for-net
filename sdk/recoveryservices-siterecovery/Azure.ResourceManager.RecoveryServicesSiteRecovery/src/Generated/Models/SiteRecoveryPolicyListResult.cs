@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Protection Profile Collection details. </summary>
     internal partial class SiteRecoveryPolicyListResult
     {
-        /// <summary> Initializes a new instance of SiteRecoveryPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPolicyListResult"/>. </summary>
         internal SiteRecoveryPolicyListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPolicyListResult"/>. </summary>
         /// <param name="value"> The policy details. </param>
         /// <param name="nextLink"> The value of next link. </param>
         internal SiteRecoveryPolicyListResult(IReadOnlyList<SiteRecoveryPolicyData> value, string nextLink)

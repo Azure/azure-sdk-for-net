@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The UnknownGcpOrganizationalData. </summary>
     internal partial class UnknownGcpOrganizationalData : GcpOrganizationalInfo
     {
-        /// <summary> Initializes a new instance of UnknownGcpOrganizationalData. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownGcpOrganizationalData"/>. </summary>
         /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
         internal UnknownGcpOrganizationalData(OrganizationMembershipType organizationMembershipType) : base(organizationMembershipType)
         {

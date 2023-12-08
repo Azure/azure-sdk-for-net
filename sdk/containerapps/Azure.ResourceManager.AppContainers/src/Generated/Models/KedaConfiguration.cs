@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Configuration properties Keda component. </summary>
     internal partial class KedaConfiguration
     {
-        /// <summary> Initializes a new instance of KedaConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="KedaConfiguration"/>. </summary>
         public KedaConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of KedaConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="KedaConfiguration"/>. </summary>
         /// <param name="version"> The version of Keda. </param>
         internal KedaConfiguration(string version)
         {

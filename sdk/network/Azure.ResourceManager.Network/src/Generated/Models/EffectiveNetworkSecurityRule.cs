@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Effective network security rules. </summary>
     public partial class EffectiveNetworkSecurityRule
     {
-        /// <summary> Initializes a new instance of EffectiveNetworkSecurityRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveNetworkSecurityRule"/>. </summary>
         internal EffectiveNetworkSecurityRule()
         {
             SourcePortRanges = new ChangeTrackingList<string>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
             ExpandedDestinationAddressPrefix = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EffectiveNetworkSecurityRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveNetworkSecurityRule"/>. </summary>
         /// <param name="name"> The name of the security rule specified by the user (if created by the user). </param>
         /// <param name="protocol"> The network protocol this rule applies to. </param>
         /// <param name="sourcePortRange"> The source port or range. </param>

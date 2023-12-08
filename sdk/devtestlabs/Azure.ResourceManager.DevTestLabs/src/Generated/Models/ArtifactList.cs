@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> The response of a list operation. </summary>
     internal partial class ArtifactList
     {
-        /// <summary> Initializes a new instance of ArtifactList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactList"/>. </summary>
         internal ArtifactList()
         {
             Value = new ChangeTrackingList<DevTestLabArtifactData>();
         }
 
-        /// <summary> Initializes a new instance of ArtifactList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactList"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
         internal ArtifactList(IReadOnlyList<DevTestLabArtifactData> value, string nextLink)

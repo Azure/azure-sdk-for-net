@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> The response to an enumeration operation on inbound endpoints for a DNS resolver. </summary>
     internal partial class InboundEndpointListResult
     {
-        /// <summary> Initializes a new instance of InboundEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundEndpointListResult"/>. </summary>
         internal InboundEndpointListResult()
         {
             Value = new ChangeTrackingList<DnsResolverInboundEndpointData>();
         }
 
-        /// <summary> Initializes a new instance of InboundEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundEndpointListResult"/>. </summary>
         /// <param name="value"> Enumeration of the inbound endpoints for a DNS resolver. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
         internal InboundEndpointListResult(IReadOnlyList<DnsResolverInboundEndpointData> value, string nextLink)

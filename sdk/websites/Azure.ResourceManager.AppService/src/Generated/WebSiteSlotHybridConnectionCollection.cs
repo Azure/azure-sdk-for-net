@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WebSiteSlotHybridConnectionResource" /> and their operations.
-    /// Each <see cref="WebSiteSlotHybridConnectionResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotResource" />.
-    /// To get a <see cref="WebSiteSlotHybridConnectionCollection" /> instance call the GetWebSiteSlotHybridConnections method from an instance of <see cref="WebSiteSlotResource" />.
+    /// A class representing a collection of <see cref="WebSiteSlotHybridConnectionResource"/> and their operations.
+    /// Each <see cref="WebSiteSlotHybridConnectionResource"/> in the collection will belong to the same instance of <see cref="WebSiteSlotResource"/>.
+    /// To get a <see cref="WebSiteSlotHybridConnectionCollection"/> instance call the GetWebSiteSlotHybridConnections method from an instance of <see cref="WebSiteSlotResource"/>.
     /// </summary>
     public partial class WebSiteSlotHybridConnectionCollection : ArmCollection
     {

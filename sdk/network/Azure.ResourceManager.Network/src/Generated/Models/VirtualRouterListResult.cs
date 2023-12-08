@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListVirtualRouters API service call. </summary>
     internal partial class VirtualRouterListResult
     {
-        /// <summary> Initializes a new instance of VirtualRouterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualRouterListResult"/>. </summary>
         internal VirtualRouterListResult()
         {
             Value = new ChangeTrackingList<VirtualRouterData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualRouterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualRouterListResult"/>. </summary>
         /// <param name="value"> List of Virtual Routers. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         internal VirtualRouterListResult(IReadOnlyList<VirtualRouterData> value, string nextLink)

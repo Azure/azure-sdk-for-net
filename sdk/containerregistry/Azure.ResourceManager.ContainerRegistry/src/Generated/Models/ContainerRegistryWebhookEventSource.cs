@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The registry node that generated the event. Put differently, while the actor initiates the event, the source generates it. </summary>
     public partial class ContainerRegistryWebhookEventSource
     {
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventSource"/>. </summary>
         internal ContainerRegistryWebhookEventSource()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventSource"/>. </summary>
         /// <param name="addr"> The IP or hostname and the port of the registry node that generated the event. Generally, this will be resolved by os.Hostname() along with the running port. </param>
         /// <param name="instanceId"> The running instance of an application. Changes after each restart. </param>
         internal ContainerRegistryWebhookEventSource(string addr, string instanceId)

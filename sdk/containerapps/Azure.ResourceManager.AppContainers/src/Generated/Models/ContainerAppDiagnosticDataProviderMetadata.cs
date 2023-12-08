@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Details of a diagnostics data provider. </summary>
     public partial class ContainerAppDiagnosticDataProviderMetadata
     {
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticDataProviderMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataProviderMetadata"/>. </summary>
         public ContainerAppDiagnosticDataProviderMetadata()
         {
             PropertyBag = new ChangeTrackingList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticDataProviderMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataProviderMetadata"/>. </summary>
         /// <param name="providerName"> Name of data provider. </param>
         /// <param name="propertyBag"> Collection of properties. </param>
         internal ContainerAppDiagnosticDataProviderMetadata(string providerName, IList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem> propertyBag)

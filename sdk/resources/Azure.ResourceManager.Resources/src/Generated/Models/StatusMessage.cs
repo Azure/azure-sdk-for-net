@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Operation status message object. </summary>
     public partial class StatusMessage
     {
-        /// <summary> Initializes a new instance of StatusMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="StatusMessage"/>. </summary>
         internal StatusMessage()
         {
         }
 
-        /// <summary> Initializes a new instance of StatusMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="StatusMessage"/>. </summary>
         /// <param name="status"> Status of the deployment operation. </param>
         /// <param name="error"> The error reported by the operation. </param>
         internal StatusMessage(string status, ResponseError error)

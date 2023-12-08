@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A Class representing a PartnerNamespace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PartnerNamespaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPartnerNamespaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetPartnerNamespace method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PartnerNamespaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPartnerNamespaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPartnerNamespace method.
     /// </summary>
     public partial class PartnerNamespaceResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.EventGrid
         private readonly PartnerNamespacesRestOperations _partnerNamespaceRestClient;
         private readonly PartnerNamespaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/partnerNamespaces";
+
         /// <summary> Initializes a new instance of the <see cref="PartnerNamespaceResource"/> class for mocking. </summary>
         protected PartnerNamespaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PartnerNamespaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PartnerNamespaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PartnerNamespaceResource(ArmClient client, PartnerNamespaceData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/partnerNamespaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -13,13 +13,13 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The IngestionStatusList. </summary>
     internal partial class IngestionStatusList
     {
-        /// <summary> Initializes a new instance of IngestionStatusList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionStatusList"/>. </summary>
         internal IngestionStatusList()
         {
             Value = new ChangeTrackingList<DataFeedIngestionStatus>();
         }
 
-        /// <summary> Initializes a new instance of IngestionStatusList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionStatusList"/>. </summary>
         /// <param name="nextLink"></param>
         /// <param name="value"></param>
         internal IngestionStatusList(string nextLink, IReadOnlyList<DataFeedIngestionStatus> value)

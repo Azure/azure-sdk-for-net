@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Linked service for Google Cloud Storage. </summary>
     public partial class GoogleCloudStorageLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of GoogleCloudStorageLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="GoogleCloudStorageLinkedService"/>. </summary>
         public GoogleCloudStorageLinkedService()
         {
             LinkedServiceType = "GoogleCloudStorage";
         }
 
-        /// <summary> Initializes a new instance of GoogleCloudStorageLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="GoogleCloudStorageLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

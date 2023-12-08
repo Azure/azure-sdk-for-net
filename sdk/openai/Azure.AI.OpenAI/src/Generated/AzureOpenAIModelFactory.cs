@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
     /// <summary> Model factory for models. </summary>
     public static partial class AzureOpenAIModelFactory
     {
-        /// <summary> Initializes a new instance of AudioTranscriptionSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AudioTranscriptionSegment"/>. </summary>
         /// <param name="id"> The 0-based index of this segment within a transcription. </param>
         /// <param name="start"> The time at which this segment started relative to the beginning of the transcribed audio. </param>
         /// <param name="end"> The time at which this segment ended relative to the beginning of the transcribed audio. </param>
@@ -40,7 +40,7 @@ namespace Azure.AI.OpenAI
             return new AudioTranscriptionSegment(id, start, end, text, temperature, averageLogProbability, compressionRatio, noSpeechProbability, tokens?.ToList(), seek);
         }
 
-        /// <summary> Initializes a new instance of AudioTranslationSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AudioTranslationSegment"/>. </summary>
         /// <param name="id"> The 0-based index of this segment within a translation. </param>
         /// <param name="start"> The time at which this segment started relative to the beginning of the translated audio. </param>
         /// <param name="end"> The time at which this segment ended relative to the beginning of the translated audio. </param>
@@ -65,7 +65,7 @@ namespace Azure.AI.OpenAI
             return new AudioTranslationSegment(id, start, end, text, temperature, averageLogProbability, compressionRatio, noSpeechProbability, tokens?.ToList(), seek);
         }
 
-        /// <summary> Initializes a new instance of Completions. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.Completions"/>. </summary>
         /// <param name="id"> A unique identifier associated with this completions response. </param>
         /// <param name="created">
         /// The first timestamp associated with generation activity for this completions response,
@@ -82,24 +82,30 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
         /// <returns> A new <see cref="OpenAI.Completions"/> instance for mocking. </returns>
-        public static Completions Completions(string id = null, DateTimeOffset created = default, IEnumerable<PromptFilterResult> promptFilterResults = null, IEnumerable<Choice> choices = null, CompletionsUsage usage = null)
+        public static Completions Completions(string id = null, DateTimeOffset created = default, IEnumerable<ContentFilterResultsForPrompt> promptFilterResults = null, IEnumerable<Choice> choices = null, CompletionsUsage usage = null)
         {
-            promptFilterResults ??= new List<PromptFilterResult>();
+            promptFilterResults ??= new List<ContentFilterResultsForPrompt>();
             choices ??= new List<Choice>();
 
             return new Completions(id, created, promptFilterResults?.ToList(), choices?.ToList(), usage);
         }
 
-        /// <summary> Initializes a new instance of PromptFilterResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterResultsForPrompt"/>. </summary>
         /// <param name="promptIndex"> The index of this prompt in the set of prompt results. </param>
         /// <param name="contentFilterResults"> Content filtering results for this prompt. </param>
-        /// <returns> A new <see cref="OpenAI.PromptFilterResult"/> instance for mocking. </returns>
-        public static PromptFilterResult PromptFilterResult(int promptIndex = default, ContentFilterResults contentFilterResults = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="contentFilterResults"/> is null. </exception>
+        /// <returns> A new <see cref="OpenAI.ContentFilterResultsForPrompt"/> instance for mocking. </returns>
+        public static ContentFilterResultsForPrompt ContentFilterResultsForPrompt(int promptIndex = default, ContentFilterResultDetailsForPrompt contentFilterResults = null)
         {
-            return new PromptFilterResult(promptIndex, contentFilterResults);
+            if (contentFilterResults == null)
+            {
+                throw new ArgumentNullException(nameof(contentFilterResults));
+            }
+
+            return new ContentFilterResultsForPrompt(promptIndex, contentFilterResults);
         }
 
-        /// <summary> Initializes a new instance of ContentFilterResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterResultDetailsForPrompt"/>. </summary>
         /// <param name="sexual">
         /// Describes language related to anatomical organs and genitals, romantic relationships,
         ///  acts portrayed in erotic or affectionate terms, physical sexual acts, including
@@ -121,17 +127,22 @@ namespace Azure.AI.OpenAI
         /// Describes language related to physical actions intended to purposely hurt, injure,
         /// or damage one’s body, or kill oneself.
         /// </param>
+        /// <param name="profanity"> Describes whether profanity was detected. </param>
+        /// <param name="customBlocklists"> Describes detection results against configured custom blocklists. </param>
         /// <param name="error">
         /// Describes an error returned if the content filtering system is
         /// down or otherwise unable to complete the operation in time.
         /// </param>
-        /// <returns> A new <see cref="OpenAI.ContentFilterResults"/> instance for mocking. </returns>
-        public static ContentFilterResults ContentFilterResults(ContentFilterResult sexual = null, ContentFilterResult violence = null, ContentFilterResult hate = null, ContentFilterResult selfHarm = null, ResponseError error = null)
+        /// <param name="jailbreak"> Whether a jailbreak attempt was detected in the prompt. </param>
+        /// <returns> A new <see cref="OpenAI.ContentFilterResultDetailsForPrompt"/> instance for mocking. </returns>
+        public static ContentFilterResultDetailsForPrompt ContentFilterResultDetailsForPrompt(ContentFilterResult sexual = null, ContentFilterResult violence = null, ContentFilterResult hate = null, ContentFilterResult selfHarm = null, ContentFilterDetectionResult profanity = null, IEnumerable<ContentFilterBlocklistIdResult> customBlocklists = null, ResponseError error = null, ContentFilterDetectionResult jailbreak = null)
         {
-            return new ContentFilterResults(sexual, violence, hate, selfHarm, error);
+            customBlocklists ??= new List<ContentFilterBlocklistIdResult>();
+
+            return new ContentFilterResultDetailsForPrompt(sexual, violence, hate, selfHarm, profanity, customBlocklists?.ToList(), error, jailbreak);
         }
 
-        /// <summary> Initializes a new instance of ContentFilterResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterResult"/>. </summary>
         /// <param name="severity"> Ratings for the intensity and risk level of filtered content. </param>
         /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
         /// <returns> A new <see cref="OpenAI.ContentFilterResult"/> instance for mocking. </returns>
@@ -140,7 +151,31 @@ namespace Azure.AI.OpenAI
             return new ContentFilterResult(severity, filtered);
         }
 
-        /// <summary> Initializes a new instance of Choice. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterDetectionResult"/>. </summary>
+        /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
+        /// <param name="detected"> A value indicating whether detection occurred, irrespective of severity or whether the content was filtered. </param>
+        /// <returns> A new <see cref="OpenAI.ContentFilterDetectionResult"/> instance for mocking. </returns>
+        public static ContentFilterDetectionResult ContentFilterDetectionResult(bool filtered = default, bool detected = default)
+        {
+            return new ContentFilterDetectionResult(filtered, detected);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterBlocklistIdResult"/>. </summary>
+        /// <param name="id"> The ID of the custom blocklist evaluated. </param>
+        /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <returns> A new <see cref="OpenAI.ContentFilterBlocklistIdResult"/> instance for mocking. </returns>
+        public static ContentFilterBlocklistIdResult ContentFilterBlocklistIdResult(string id = null, bool filtered = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            return new ContentFilterBlocklistIdResult(id, filtered);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.Choice"/>. </summary>
         /// <param name="text"> The generated text for a given completions prompt. </param>
         /// <param name="index"> The ordered index associated with this completions choice. </param>
         /// <param name="contentFilterResults">
@@ -151,12 +186,61 @@ namespace Azure.AI.OpenAI
         /// <param name="logProbabilityModel"> The log probabilities model for tokens associated with this completions choice. </param>
         /// <param name="finishReason"> Reason for finishing. </param>
         /// <returns> A new <see cref="OpenAI.Choice"/> instance for mocking. </returns>
-        public static Choice Choice(string text = null, int index = default, ContentFilterResults contentFilterResults = null, CompletionsLogProbabilityModel logProbabilityModel = null, CompletionsFinishReason? finishReason = null)
+        public static Choice Choice(string text = null, int index = default, ContentFilterResultsForChoice contentFilterResults = null, CompletionsLogProbabilityModel logProbabilityModel = null, CompletionsFinishReason? finishReason = null)
         {
             return new Choice(text, index, contentFilterResults, logProbabilityModel, finishReason);
         }
 
-        /// <summary> Initializes a new instance of CompletionsLogProbabilityModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterResultsForChoice"/>. </summary>
+        /// <param name="sexual">
+        /// Describes language related to anatomical organs and genitals, romantic relationships,
+        ///  acts portrayed in erotic or affectionate terms, physical sexual acts, including
+        ///  those portrayed as an assault or a forced sexual violent act against one’s will,
+        ///  prostitution, pornography, and abuse.
+        /// </param>
+        /// <param name="violence">
+        /// Describes language related to physical actions intended to hurt, injure, damage, or
+        /// kill someone or something; describes weapons, etc.
+        /// </param>
+        /// <param name="hate">
+        /// Describes language attacks or uses that include pejorative or discriminatory language
+        /// with reference to a person or identity group on the basis of certain differentiating
+        /// attributes of these groups including but not limited to race, ethnicity, nationality,
+        /// gender identity and expression, sexual orientation, religion, immigration status, ability
+        /// status, personal appearance, and body size.
+        /// </param>
+        /// <param name="selfHarm">
+        /// Describes language related to physical actions intended to purposely hurt, injure,
+        /// or damage one’s body, or kill oneself.
+        /// </param>
+        /// <param name="profanity"> Describes whether profanity was detected. </param>
+        /// <param name="customBlocklists"> Describes detection results against configured custom blocklists. </param>
+        /// <param name="error">
+        /// Describes an error returned if the content filtering system is
+        /// down or otherwise unable to complete the operation in time.
+        /// </param>
+        /// <param name="protectedMaterialText"> Information about detection of protected text material. </param>
+        /// <param name="protectedMaterialCode"> Information about detection of protected code material. </param>
+        /// <returns> A new <see cref="OpenAI.ContentFilterResultsForChoice"/> instance for mocking. </returns>
+        public static ContentFilterResultsForChoice ContentFilterResultsForChoice(ContentFilterResult sexual = null, ContentFilterResult violence = null, ContentFilterResult hate = null, ContentFilterResult selfHarm = null, ContentFilterDetectionResult profanity = null, IEnumerable<ContentFilterBlocklistIdResult> customBlocklists = null, ResponseError error = null, ContentFilterDetectionResult protectedMaterialText = null, ContentFilterCitedDetectionResult protectedMaterialCode = null)
+        {
+            customBlocklists ??= new List<ContentFilterBlocklistIdResult>();
+
+            return new ContentFilterResultsForChoice(sexual, violence, hate, selfHarm, profanity, customBlocklists?.ToList(), error, protectedMaterialText, protectedMaterialCode);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterCitedDetectionResult"/>. </summary>
+        /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
+        /// <param name="detected"> A value indicating whether detection occurred, irrespective of severity or whether the content was filtered. </param>
+        /// <param name="url"> The internet location associated with the detection. </param>
+        /// <param name="license"> The license description associated with the detection. </param>
+        /// <returns> A new <see cref="OpenAI.ContentFilterCitedDetectionResult"/> instance for mocking. </returns>
+        public static ContentFilterCitedDetectionResult ContentFilterCitedDetectionResult(bool filtered = default, bool detected = default, Uri url = null, string license = null)
+        {
+            return new ContentFilterCitedDetectionResult(filtered, detected, url, license);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.CompletionsLogProbabilityModel"/>. </summary>
         /// <param name="tokens"> The textual forms of tokens evaluated in this probability model. </param>
         /// <param name="tokenLogProbabilities"> A collection of log probability values for the tokens in this completions data. </param>
         /// <param name="topLogProbabilities"> A mapping of tokens to maximum log probability values in this completions data. </param>
@@ -172,7 +256,7 @@ namespace Azure.AI.OpenAI
             return new CompletionsLogProbabilityModel(tokens?.ToList(), tokenLogProbabilities?.ToList(), topLogProbabilities?.ToList(), textOffsets?.ToList());
         }
 
-        /// <summary> Initializes a new instance of CompletionsUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.CompletionsUsage"/>. </summary>
         /// <param name="completionTokens"> The number of tokens generated across all completions emissions. </param>
         /// <param name="promptTokens"> The number of tokens in the provided prompts for the completions request. </param>
         /// <param name="totalTokens"> The total number of tokens processed for the completions request and response. </param>
@@ -182,7 +266,7 @@ namespace Azure.AI.OpenAI
             return new CompletionsUsage(completionTokens, promptTokens, totalTokens);
         }
 
-        /// <summary> Initializes a new instance of ChatCompletions. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatCompletions"/>. </summary>
         /// <param name="id"> A unique identifier associated with this chat completions response. </param>
         /// <param name="created">
         /// The first timestamp associated with generation activity for this completions response,
@@ -197,42 +281,126 @@ namespace Azure.AI.OpenAI
         /// Content filtering results for zero or more prompts in the request. In a streaming request,
         /// results for different prompts may arrive at different times or in different orders.
         /// </param>
+        /// <param name="systemFingerprint">
+        /// Can be used in conjunction with the `seed` request parameter to understand when backend changes have been made that
+        /// might impact determinism.
+        /// </param>
         /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
         /// <returns> A new <see cref="OpenAI.ChatCompletions"/> instance for mocking. </returns>
-        public static ChatCompletions ChatCompletions(string id = null, DateTimeOffset created = default, IEnumerable<ChatChoice> choices = null, IEnumerable<PromptFilterResult> promptFilterResults = null, CompletionsUsage usage = null)
+        public static ChatCompletions ChatCompletions(string id = null, DateTimeOffset created = default, IEnumerable<ChatChoice> choices = null, IEnumerable<ContentFilterResultsForPrompt> promptFilterResults = null, string systemFingerprint = null, CompletionsUsage usage = null)
         {
             choices ??= new List<ChatChoice>();
-            promptFilterResults ??= new List<PromptFilterResult>();
+            promptFilterResults ??= new List<ContentFilterResultsForPrompt>();
 
-            return new ChatCompletions(id, created, choices?.ToList(), promptFilterResults?.ToList(), usage);
+            return new ChatCompletions(id, created, choices?.ToList(), promptFilterResults?.ToList(), systemFingerprint, usage);
         }
 
-        /// <summary> Initializes a new instance of ImageGenerations. </summary>
-        /// <param name="created"> A timestamp when this job or item was created (in unix epochs). </param>
-        /// <param name="data"> The images generated by the operator. </param>
-        /// <returns> A new <see cref="OpenAI.ImageGenerations"/> instance for mocking. </returns>
-        public static ImageGenerations ImageGenerations(DateTimeOffset created = default, IEnumerable<ImageLocation> data = null)
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatResponseMessage"/>. </summary>
+        /// <param name="role"> The chat role associated with the message. </param>
+        /// <param name="content"> The content of the message. </param>
+        /// <param name="toolCalls">
+        /// The tool calls that must be resolved and have their outputs appended to subsequent input messages for the chat
+        /// completions request to resolve as configured.
+        /// </param>
+        /// <param name="functionCall">
+        /// The function call that must be resolved and have its output appended to subsequent input messages for the chat
+        /// completions request to resolve as configured.
+        /// </param>
+        /// <param name="azureExtensionsContext">
+        /// If Azure OpenAI chat extensions are configured, this array represents the incremental steps performed by those
+        /// extensions while processing the chat completions request.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.ChatResponseMessage"/> instance for mocking. </returns>
+        public static ChatResponseMessage ChatResponseMessage(ChatRole role = default, string content = null, IEnumerable<ChatCompletionsToolCall> toolCalls = null, FunctionCall functionCall = null, AzureChatExtensionsMessageContext azureExtensionsContext = null)
         {
-            data ??= new List<ImageLocation>();
+            toolCalls ??= new List<ChatCompletionsToolCall>();
 
-            return new ImageGenerations(created, data?.ToList());
+            return new ChatResponseMessage(role, content, toolCalls?.ToList(), functionCall, azureExtensionsContext);
         }
 
-        /// <summary> Initializes a new instance of ImageLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AzureChatExtensionsMessageContext"/>. </summary>
+        /// <param name="messages">
+        ///   The contextual message payload associated with the Azure chat extensions used for a chat completions request.
+        ///   These messages describe the data source retrievals, plugin invocations, and other intermediate steps taken in the
+        ///   course of generating a chat completions response that was augmented by capabilities from Azure OpenAI chat
+        ///   extensions.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.AzureChatExtensionsMessageContext"/> instance for mocking. </returns>
+        public static AzureChatExtensionsMessageContext AzureChatExtensionsMessageContext(IEnumerable<ChatResponseMessage> messages = null)
+        {
+            messages ??= new List<ChatResponseMessage>();
+
+            return new AzureChatExtensionsMessageContext(messages?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AzureChatEnhancements"/>. </summary>
+        /// <param name="grounding"> The grounding enhancement that returns the bounding box of the objects detected in the image. </param>
+        /// <returns> A new <see cref="OpenAI.AzureChatEnhancements"/> instance for mocking. </returns>
+        public static AzureChatEnhancements AzureChatEnhancements(AzureGroundingEnhancement grounding = null)
+        {
+            return new AzureChatEnhancements(grounding);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AzureGroundingEnhancement"/>. </summary>
+        /// <param name="lines"> The lines of text detected by the grounding enhancement. </param>
+        /// <returns> A new <see cref="OpenAI.AzureGroundingEnhancement"/> instance for mocking. </returns>
+        public static AzureGroundingEnhancement AzureGroundingEnhancement(IEnumerable<AzureGroundingEnhancementLine> lines = null)
+        {
+            lines ??= new List<AzureGroundingEnhancementLine>();
+
+            return new AzureGroundingEnhancement(lines?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AzureGroundingEnhancementLine"/>. </summary>
+        /// <param name="text"> The text within the line. </param>
+        /// <param name="spans"> An array of spans that represent detected objects and its bounding box information. </param>
+        /// <returns> A new <see cref="OpenAI.AzureGroundingEnhancementLine"/> instance for mocking. </returns>
+        public static AzureGroundingEnhancementLine AzureGroundingEnhancementLine(string text = null, IEnumerable<AzureGroundingEnhancementLineSpan> spans = null)
+        {
+            spans ??= new List<AzureGroundingEnhancementLineSpan>();
+
+            return new AzureGroundingEnhancementLine(text, spans?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AzureGroundingEnhancementLineSpan"/>. </summary>
+        /// <param name="text"> The text content of the span that represents the detected object. </param>
+        /// <param name="offset">
+        /// The character offset within the text where the span begins. This offset is defined as the position of the first
+        /// character of the span, counting from the start of the text as Unicode codepoints.
+        /// </param>
+        /// <param name="length"> The length of the span in characters, measured in Unicode codepoints. </param>
+        /// <param name="polygon"> An array of objects representing points in the polygon that encloses the detected object. </param>
+        /// <returns> A new <see cref="OpenAI.AzureGroundingEnhancementLineSpan"/> instance for mocking. </returns>
+        public static AzureGroundingEnhancementLineSpan AzureGroundingEnhancementLineSpan(string text = null, int offset = default, int length = default, IEnumerable<AzureGroundingEnhancementCoordinatePoint> polygon = null)
+        {
+            polygon ??= new List<AzureGroundingEnhancementCoordinatePoint>();
+
+            return new AzureGroundingEnhancementLineSpan(text, offset, length, polygon?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AzureGroundingEnhancementCoordinatePoint"/>. </summary>
+        /// <param name="x"> The x-coordinate (horizontal axis) of the point. </param>
+        /// <param name="y"> The y-coordinate (vertical axis) of the point. </param>
+        /// <returns> A new <see cref="OpenAI.AzureGroundingEnhancementCoordinatePoint"/> instance for mocking. </returns>
+        public static AzureGroundingEnhancementCoordinatePoint AzureGroundingEnhancementCoordinatePoint(float x = default, float y = default)
+        {
+            return new AzureGroundingEnhancementCoordinatePoint(x, y);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ImageGenerationData"/>. </summary>
         /// <param name="url"> The URL that provides temporary access to download the generated image. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        /// <returns> A new <see cref="OpenAI.ImageLocation"/> instance for mocking. </returns>
-        public static ImageLocation ImageLocation(Uri url = null)
+        /// <param name="base64Data"> The complete data for an image, represented as a base64-encoded string. </param>
+        /// <param name="revisedPrompt">
+        /// The final prompt used by the model to generate the image.
+        /// Only provided with dall-3-models and only when revisions were made to the prompt.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.ImageGenerationData"/> instance for mocking. </returns>
+        public static ImageGenerationData ImageGenerationData(Uri url = null, string base64Data = null, string revisedPrompt = null)
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-
-            return new ImageLocation(url);
+            return new ImageGenerationData(url, base64Data, revisedPrompt);
         }
 
-        /// <summary> Initializes a new instance of Embeddings. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.Embeddings"/>. </summary>
         /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
         /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
         /// <returns> A new <see cref="OpenAI.Embeddings"/> instance for mocking. </returns>
@@ -243,7 +411,7 @@ namespace Azure.AI.OpenAI
             return new Embeddings(data?.ToList(), usage);
         }
 
-        /// <summary> Initializes a new instance of EmbeddingItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.EmbeddingItem"/>. </summary>
         /// <param name="embedding">
         /// List of embeddings value for the input prompt. These represent a measurement of the
         /// vector-based relatedness of the provided input.
@@ -255,13 +423,21 @@ namespace Azure.AI.OpenAI
             return new EmbeddingItem(embedding, index);
         }
 
-        /// <summary> Initializes a new instance of EmbeddingsUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.EmbeddingsUsage"/>. </summary>
         /// <param name="promptTokens"> Number of tokens sent in the original request. </param>
         /// <param name="totalTokens"> Total number of tokens transacted in this request/response. </param>
         /// <returns> A new <see cref="OpenAI.EmbeddingsUsage"/> instance for mocking. </returns>
         public static EmbeddingsUsage EmbeddingsUsage(int promptTokens = default, int totalTokens = default)
         {
             return new EmbeddingsUsage(promptTokens, totalTokens);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.StopFinishDetails"/>. </summary>
+        /// <param name="stop"> The token sequence that the model terminated with. </param>
+        /// <returns> A new <see cref="OpenAI.StopFinishDetails"/> instance for mocking. </returns>
+        public static StopFinishDetails StopFinishDetails(string stop = null)
+        {
+            return new StopFinishDetails("stop", stop);
         }
     }
 }

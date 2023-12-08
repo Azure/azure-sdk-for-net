@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the properties of a Virtual Machine software patch. </summary>
     public partial class VirtualMachineSoftwarePatchProperties
     {
-        /// <summary> Initializes a new instance of VirtualMachineSoftwarePatchProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineSoftwarePatchProperties"/>. </summary>
         internal VirtualMachineSoftwarePatchProperties()
         {
             Classifications = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineSoftwarePatchProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineSoftwarePatchProperties"/>. </summary>
         /// <param name="patchId"> A unique identifier for the patch. </param>
         /// <param name="name"> The friendly name of the patch. </param>
         /// <param name="version"> The version number of the patch. This property applies only to Linux patches. </param>

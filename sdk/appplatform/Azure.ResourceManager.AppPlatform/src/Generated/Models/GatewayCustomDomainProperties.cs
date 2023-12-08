@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> The properties of custom domain for Spring Cloud Gateway. </summary>
     internal partial class GatewayCustomDomainProperties
     {
-        /// <summary> Initializes a new instance of GatewayCustomDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayCustomDomainProperties"/>. </summary>
         public GatewayCustomDomainProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of GatewayCustomDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayCustomDomainProperties"/>. </summary>
         /// <param name="thumbprint"> The thumbprint of bound certificate. </param>
         internal GatewayCustomDomainProperties(string thumbprint)
         {

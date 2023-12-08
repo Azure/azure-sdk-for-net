@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BackupJobResource" /> and their operations.
-    /// Each <see cref="BackupJobResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="BackupJobCollection" /> instance call the GetBackupJobs method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="BackupJobResource"/> and their operations.
+    /// Each <see cref="BackupJobResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="BackupJobCollection"/> instance call the GetBackupJobs method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class BackupJobCollection : ArmCollection, IEnumerable<BackupJobResource>, IAsyncEnumerable<BackupJobResource>
     {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BackupJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BackupJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BackupJobResource> GetAllAsync(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupJobRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BackupJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BackupJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BackupJobResource> GetAll(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupJobRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The ManagedClusterPoolUpgradeProfileUpgradesItem. </summary>
     public partial class ManagedClusterPoolUpgradeProfileUpgradesItem
     {
-        /// <summary> Initializes a new instance of ManagedClusterPoolUpgradeProfileUpgradesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPoolUpgradeProfileUpgradesItem"/>. </summary>
         internal ManagedClusterPoolUpgradeProfileUpgradesItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterPoolUpgradeProfileUpgradesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPoolUpgradeProfileUpgradesItem"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="isPreview"> Whether the Kubernetes version is currently in preview. </param>
         internal ManagedClusterPoolUpgradeProfileUpgradesItem(string kubernetesVersion, bool? isPreview)

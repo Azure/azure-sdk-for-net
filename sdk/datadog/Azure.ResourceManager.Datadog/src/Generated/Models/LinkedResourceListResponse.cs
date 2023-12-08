@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> Response of a list operation. </summary>
     internal partial class LinkedResourceListResponse
     {
-        /// <summary> Initializes a new instance of LinkedResourceListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedResourceListResponse"/>. </summary>
         internal LinkedResourceListResponse()
         {
             Value = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of LinkedResourceListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedResourceListResponse"/>. </summary>
         /// <param name="value"> Results of a list operation. </param>
         /// <param name="nextLink"> Link to the next set of results, if any. </param>
         internal LinkedResourceListResponse(IReadOnlyList<SubResource> value, string nextLink)

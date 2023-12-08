@@ -13,13 +13,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> A metric configuration set by UX to scope the metrics it's interested in. </summary>
     internal partial class DerivedMetricInfo
     {
-        /// <summary> Initializes a new instance of DerivedMetricInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DerivedMetricInfo"/>. </summary>
         internal DerivedMetricInfo()
         {
             FilterGroups = new ChangeTrackingList<FilterConjunctionGroupInfo>();
         }
 
-        /// <summary> Initializes a new instance of DerivedMetricInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DerivedMetricInfo"/>. </summary>
         /// <param name="id"> metric configuration identifier. </param>
         /// <param name="telemetryType"> Telemetry type. </param>
         /// <param name="filterGroups"> A collection of filters to scope metrics that UX needs. </param>

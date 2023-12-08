@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                JsonSerializer.Serialize(writer, Error);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();

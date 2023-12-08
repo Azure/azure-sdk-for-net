@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the DB2 provider properties. </summary>
     public partial class DB2ProviderInstanceProperties : ProviderSpecificProperties
     {
-        /// <summary> Initializes a new instance of DB2ProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DB2ProviderInstanceProperties"/>. </summary>
         public DB2ProviderInstanceProperties()
         {
             ProviderType = "Db2";
         }
 
-        /// <summary> Initializes a new instance of DB2ProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DB2ProviderInstanceProperties"/>. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
         /// <param name="hostname"> Gets or sets the target virtual machine name. </param>
         /// <param name="dbName"> Gets or sets the db2 database name. </param>

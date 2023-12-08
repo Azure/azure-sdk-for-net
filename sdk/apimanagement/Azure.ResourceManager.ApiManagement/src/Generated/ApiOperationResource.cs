@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiOperation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiOperationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiOperationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiResource" /> using the GetApiOperation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiOperationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiOperationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiResource"/> using the GetApiOperation method.
     /// </summary>
     public partial class ApiOperationResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly ApiOperationRestOperations _apiOperationRestClient;
         private readonly ApiOperationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/operations";
+
         /// <summary> Initializes a new instance of the <see cref="ApiOperationResource"/> class for mocking. </summary>
         protected ApiOperationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiOperationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiOperationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiOperationResource(ArmClient client, ApiOperationData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/operations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

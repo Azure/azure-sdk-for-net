@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing an ExpressRouteAuthorization along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExpressRouteAuthorizationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExpressRouteAuthorizationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetExpressRouteAuthorization method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExpressRouteAuthorizationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExpressRouteAuthorizationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetExpressRouteAuthorization method.
     /// </summary>
     public partial class ExpressRouteAuthorizationResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Avs
         private readonly AuthorizationsRestOperations _expressRouteAuthorizationAuthorizationsRestClient;
         private readonly ExpressRouteAuthorizationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/authorizations";
+
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteAuthorizationResource"/> class for mocking. </summary>
         protected ExpressRouteAuthorizationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExpressRouteAuthorizationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRouteAuthorizationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExpressRouteAuthorizationResource(ArmClient client, ExpressRouteAuthorizationData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/authorizations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

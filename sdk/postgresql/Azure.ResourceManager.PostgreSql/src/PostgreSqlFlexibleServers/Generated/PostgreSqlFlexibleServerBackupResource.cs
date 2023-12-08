@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
     /// A Class representing a PostgreSqlFlexibleServerBackup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PostgreSqlFlexibleServerBackupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPostgreSqlFlexibleServerBackupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource" /> using the GetPostgreSqlFlexibleServerBackup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PostgreSqlFlexibleServerBackupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPostgreSqlFlexibleServerBackupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource"/> using the GetPostgreSqlFlexibleServerBackup method.
     /// </summary>
     public partial class PostgreSqlFlexibleServerBackupResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         private readonly BackupsRestOperations _postgreSqlFlexibleServerBackupBackupsRestClient;
         private readonly PostgreSqlFlexibleServerBackupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/backups";
+
         /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerBackupResource"/> class for mocking. </summary>
         protected PostgreSqlFlexibleServerBackupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PostgreSqlFlexibleServerBackupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerBackupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PostgreSqlFlexibleServerBackupResource(ArmClient client, PostgreSqlFlexibleServerBackupData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/backups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

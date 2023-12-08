@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
     /// A Class representing a MySqlFlexibleServer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MySqlFlexibleServerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMySqlFlexibleServerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetMySqlFlexibleServer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlFlexibleServerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMySqlFlexibleServerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetMySqlFlexibleServer method.
     /// </summary>
     public partial class MySqlFlexibleServerResource : ArmResource
     {
@@ -50,12 +50,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private readonly LogFilesRestOperations _logFilesRestClient;
         private readonly MySqlFlexibleServerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/flexibleServers";
+
         /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServerResource"/> class for mocking. </summary>
         protected MySqlFlexibleServerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MySqlFlexibleServerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MySqlFlexibleServerResource(ArmClient client, MySqlFlexibleServerData data) : this(client, data.Id)
@@ -85,9 +88,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/flexibleServers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -1229,7 +1229,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MySqlFlexibleServerLogFile" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MySqlFlexibleServerLogFile"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlFlexibleServerLogFile> GetLogFilesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logFilesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1251,7 +1251,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MySqlFlexibleServerLogFile" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MySqlFlexibleServerLogFile"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlFlexibleServerLogFile> GetLogFiles(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logFilesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

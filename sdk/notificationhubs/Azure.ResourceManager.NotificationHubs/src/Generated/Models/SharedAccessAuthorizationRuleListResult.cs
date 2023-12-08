@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> The response of the List Namespace operation. </summary>
     internal partial class SharedAccessAuthorizationRuleListResult
     {
-        /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedAccessAuthorizationRuleListResult"/>. </summary>
         internal SharedAccessAuthorizationRuleListResult()
         {
             Value = new ChangeTrackingList<NotificationHubAuthorizationRuleData>();
         }
 
-        /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedAccessAuthorizationRuleListResult"/>. </summary>
         /// <param name="value"> Result of the List AuthorizationRules operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of AuthorizationRules. </param>
         internal SharedAccessAuthorizationRuleListResult(IReadOnlyList<NotificationHubAuthorizationRuleData> value, string nextLink)

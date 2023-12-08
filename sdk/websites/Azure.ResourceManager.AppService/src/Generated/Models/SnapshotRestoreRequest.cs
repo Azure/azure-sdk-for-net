@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Details about app recovery operation. </summary>
     public partial class SnapshotRestoreRequest : ResourceData
     {
-        /// <summary> Initializes a new instance of SnapshotRestoreRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotRestoreRequest"/>. </summary>
         public SnapshotRestoreRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of SnapshotRestoreRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotRestoreRequest"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

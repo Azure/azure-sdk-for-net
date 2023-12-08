@@ -10,9 +10,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The properties that the machine learning workspace connection will be updated with. </summary>
     public partial class MachineLearningWorkspaceConnectionPatch
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionPatch"/>. </summary>
         public MachineLearningWorkspaceConnectionPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionPatch"/>. </summary>
+        /// <param name="properties">
+        /// The properties that the machine learning workspace connection will be updated with.
+        /// Please note <see cref="MachineLearningWorkspaceConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AccessKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="ApiKeyAuthWorkspaceConnectionProperties"/>, <see cref="CustomKeysWorkspaceConnectionProperties"/>, <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/>, <see cref="ServicePrincipalAuthTypeWorkspaceConnectionProperties"/> and <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>.
+        /// </param>
+        internal MachineLearningWorkspaceConnectionPatch(MachineLearningWorkspaceConnectionProperties properties)
+        {
+            Properties = properties;
         }
 
         /// <summary>

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformBuildService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformBuildServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformBuildServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource" /> using the GetAppPlatformBuildService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformBuildServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformBuildServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource"/> using the GetAppPlatformBuildService method.
     /// </summary>
     public partial class AppPlatformBuildServiceResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly BuildServiceRestOperations _appPlatformBuildServiceBuildServiceRestClient;
         private readonly AppPlatformBuildServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/buildServices";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformBuildServiceResource"/> class for mocking. </summary>
         protected AppPlatformBuildServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformBuildServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformBuildServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformBuildServiceResource(ArmClient client, AppPlatformBuildServiceData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/buildServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

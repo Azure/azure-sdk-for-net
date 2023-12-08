@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityInsightsSentinelOnboardingStateResource" /> and their operations.
-    /// Each <see cref="SecurityInsightsSentinelOnboardingStateResource" /> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" />.
-    /// To get a <see cref="SecurityInsightsSentinelOnboardingStateCollection" /> instance call the GetSecurityInsightsSentinelOnboardingStates method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" />.
+    /// A class representing a collection of <see cref="SecurityInsightsSentinelOnboardingStateResource"/> and their operations.
+    /// Each <see cref="SecurityInsightsSentinelOnboardingStateResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
+    /// To get a <see cref="SecurityInsightsSentinelOnboardingStateCollection"/> instance call the GetSecurityInsightsSentinelOnboardingStates method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
     /// </summary>
     public partial class SecurityInsightsSentinelOnboardingStateCollection : ArmCollection, IEnumerable<SecurityInsightsSentinelOnboardingStateResource>, IAsyncEnumerable<SecurityInsightsSentinelOnboardingStateResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityInsightsSentinelOnboardingStateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityInsightsSentinelOnboardingStateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityInsightsSentinelOnboardingStateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityInsightsSentinelOnboardingStateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityInsightsSentinelOnboardingStateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityInsightsSentinelOnboardingStateResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

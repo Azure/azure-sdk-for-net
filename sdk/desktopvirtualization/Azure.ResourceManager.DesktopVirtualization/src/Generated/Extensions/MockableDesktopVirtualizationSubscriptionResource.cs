@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualWorkspaceResource> GetVirtualWorkspacesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualWorkspaceResource> GetVirtualWorkspaces(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ScalingPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScalingPlanResource> GetScalingPlansAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScalingPlanRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScalingPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScalingPlanResource> GetScalingPlans(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScalingPlanRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// </summary>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are applicationGroupType. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualApplicationGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualApplicationGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualApplicationGroupResource> GetVirtualApplicationGroupsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualApplicationGroupApplicationGroupsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// </summary>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are applicationGroupType. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualApplicationGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualApplicationGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualApplicationGroupResource> GetVirtualApplicationGroups(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualApplicationGroupApplicationGroupsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HostPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HostPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HostPoolResource> GetHostPoolsAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HostPoolRestClient.CreateListRequest(Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HostPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HostPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HostPoolResource> GetHostPools(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HostPoolRestClient.CreateListRequest(Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);

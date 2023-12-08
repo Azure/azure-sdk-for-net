@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
     /// A Class representing an ExtensionValue along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExtensionValueResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExtensionValueResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetExtensionValue method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExtensionValueResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExtensionValueResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetExtensionValue method.
     /// </summary>
     public partial class ExtensionValueResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.HybridCompute
         private readonly ExtensionMetadataRestOperations _extensionValueExtensionMetadataRestClient;
         private readonly ExtensionValueData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridCompute/locations/publishers/extensionTypes/versions";
+
         /// <summary> Initializes a new instance of the <see cref="ExtensionValueResource"/> class for mocking. </summary>
         protected ExtensionValueResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExtensionValueResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExtensionValueResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExtensionValueResource(ArmClient client, ExtensionValueData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.HybridCompute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridCompute/locations/publishers/extensionTypes/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

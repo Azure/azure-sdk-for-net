@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkCloudBmcKeySetResource" /> and their operations.
-    /// Each <see cref="NetworkCloudBmcKeySetResource" /> in the collection will belong to the same instance of <see cref="NetworkCloudClusterResource" />.
-    /// To get a <see cref="NetworkCloudBmcKeySetCollection" /> instance call the GetNetworkCloudBmcKeySets method from an instance of <see cref="NetworkCloudClusterResource" />.
+    /// A class representing a collection of <see cref="NetworkCloudBmcKeySetResource"/> and their operations.
+    /// Each <see cref="NetworkCloudBmcKeySetResource"/> in the collection will belong to the same instance of <see cref="NetworkCloudClusterResource"/>.
+    /// To get a <see cref="NetworkCloudBmcKeySetCollection"/> instance call the GetNetworkCloudBmcKeySets method from an instance of <see cref="NetworkCloudClusterResource"/>.
     /// </summary>
     public partial class NetworkCloudBmcKeySetCollection : ArmCollection, IEnumerable<NetworkCloudBmcKeySetResource>, IAsyncEnumerable<NetworkCloudBmcKeySetResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudBmcKeySetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkCloudBmcKeySetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudBmcKeySetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudBmcKeySetBmcKeySetsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudBmcKeySetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudBmcKeySetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudBmcKeySetResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudBmcKeySetBmcKeySetsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

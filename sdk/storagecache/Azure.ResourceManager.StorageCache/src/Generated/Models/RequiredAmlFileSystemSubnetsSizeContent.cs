@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Information required to get the number of available IP addresses a subnet should have that will be used in AML file system create. </summary>
     public partial class RequiredAmlFileSystemSubnetsSizeContent
     {
-        /// <summary> Initializes a new instance of RequiredAmlFileSystemSubnetsSizeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequiredAmlFileSystemSubnetsSizeContent"/>. </summary>
         public RequiredAmlFileSystemSubnetsSizeContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RequiredAmlFileSystemSubnetsSizeContent"/>. </summary>
+        /// <param name="storageCapacityTiB"> The size of the AML file system, in TiB. </param>
+        /// <param name="sku"> SKU for the resource. </param>
+        internal RequiredAmlFileSystemSubnetsSizeContent(float? storageCapacityTiB, StorageCacheSkuName sku)
+        {
+            StorageCapacityTiB = storageCapacityTiB;
+            Sku = sku;
         }
 
         /// <summary> The size of the AML file system, in TiB. </summary>

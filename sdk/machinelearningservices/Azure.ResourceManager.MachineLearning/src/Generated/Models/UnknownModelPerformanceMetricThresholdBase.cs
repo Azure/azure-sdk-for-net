@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownModelPerformanceMetricThresholdBase. </summary>
     internal partial class UnknownModelPerformanceMetricThresholdBase : ModelPerformanceMetricThresholdBase
     {
-        /// <summary> Initializes a new instance of UnknownModelPerformanceMetricThresholdBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownModelPerformanceMetricThresholdBase"/>. </summary>
         /// <param name="modelType"> [Required] Specifies the data type of the metric threshold. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
         internal UnknownModelPerformanceMetricThresholdBase(MonitoringModelType modelType, MonitoringThreshold threshold) : base(modelType, threshold)

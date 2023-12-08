@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     /// <summary> The Get Telemetry Config Result appliance. </summary>
     public partial class ApplianceTelemetryConfigResult
     {
-        /// <summary> Initializes a new instance of ApplianceTelemetryConfigResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceTelemetryConfigResult"/>. </summary>
         internal ApplianceTelemetryConfigResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplianceTelemetryConfigResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceTelemetryConfigResult"/>. </summary>
         /// <param name="telemetryInstrumentationKey"> Telemetry instrumentation key. </param>
         internal ApplianceTelemetryConfigResult(string telemetryInstrumentationKey)
         {

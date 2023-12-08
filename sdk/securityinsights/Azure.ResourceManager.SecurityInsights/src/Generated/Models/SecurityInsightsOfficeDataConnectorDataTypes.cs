@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> The available data types for office data connector. </summary>
     public partial class SecurityInsightsOfficeDataConnectorDataTypes
     {
-        /// <summary> Initializes a new instance of SecurityInsightsOfficeDataConnectorDataTypes. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsOfficeDataConnectorDataTypes"/>. </summary>
         public SecurityInsightsOfficeDataConnectorDataTypes()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsOfficeDataConnectorDataTypes. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsOfficeDataConnectorDataTypes"/>. </summary>
         /// <param name="exchange"> Exchange data type connection. </param>
         /// <param name="sharePoint"> SharePoint data type connection. </param>
         /// <param name="teams"> Teams data type connection. </param>

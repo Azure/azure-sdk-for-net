@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Literal input type. </summary>
     public partial class MachineLearningLiteralJobInput : MachineLearningJobInput
     {
-        /// <summary> Initializes a new instance of MachineLearningLiteralJobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningLiteralJobInput"/>. </summary>
         /// <param name="value"> [Required] Literal value for the input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MachineLearningLiteralJobInput(string value)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobInputType = JobInputType.Literal;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningLiteralJobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningLiteralJobInput"/>. </summary>
         /// <param name="description"> Description for the input. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         /// <param name="value"> [Required] Literal value for the input. </param>

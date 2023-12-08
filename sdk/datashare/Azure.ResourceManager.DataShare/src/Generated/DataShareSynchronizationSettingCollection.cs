@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataShareSynchronizationSettingResource" /> and their operations.
-    /// Each <see cref="DataShareSynchronizationSettingResource" /> in the collection will belong to the same instance of <see cref="DataShareResource" />.
-    /// To get a <see cref="DataShareSynchronizationSettingCollection" /> instance call the GetDataShareSynchronizationSettings method from an instance of <see cref="DataShareResource" />.
+    /// A class representing a collection of <see cref="DataShareSynchronizationSettingResource"/> and their operations.
+    /// Each <see cref="DataShareSynchronizationSettingResource"/> in the collection will belong to the same instance of <see cref="DataShareResource"/>.
+    /// To get a <see cref="DataShareSynchronizationSettingCollection"/> instance call the GetDataShareSynchronizationSettings method from an instance of <see cref="DataShareResource"/>.
     /// </summary>
     public partial class DataShareSynchronizationSettingCollection : ArmCollection, IEnumerable<DataShareSynchronizationSettingResource>, IAsyncEnumerable<DataShareSynchronizationSettingResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="skipToken"> continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataShareSynchronizationSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataShareSynchronizationSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataShareSynchronizationSettingResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="skipToken"> continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataShareSynchronizationSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataShareSynchronizationSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataShareSynchronizationSettingResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);

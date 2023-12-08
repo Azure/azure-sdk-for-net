@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteSlotInstanceExtension along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotInstanceExtensionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotInstanceExtensionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteSlotInstanceResource" /> using the GetSiteSlotInstanceExtension method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteSlotInstanceExtensionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteSlotInstanceExtensionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteSlotInstanceResource"/> using the GetSiteSlotInstanceExtension method.
     /// </summary>
     public partial class SiteSlotInstanceExtensionResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _siteSlotInstanceExtensionWebAppsRestClient;
         private readonly MSDeployStatusData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/instances/extensions";
+
         /// <summary> Initializes a new instance of the <see cref="SiteSlotInstanceExtensionResource"/> class for mocking. </summary>
         protected SiteSlotInstanceExtensionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteSlotInstanceExtensionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotInstanceExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteSlotInstanceExtensionResource(ArmClient client, MSDeployStatusData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/instances/extensions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

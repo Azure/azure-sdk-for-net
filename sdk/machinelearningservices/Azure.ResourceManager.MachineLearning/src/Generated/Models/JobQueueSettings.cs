@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The JobQueueSettings. </summary>
     public partial class JobQueueSettings
     {
-        /// <summary> Initializes a new instance of JobQueueSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobQueueSettings"/>. </summary>
         public JobQueueSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of JobQueueSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobQueueSettings"/>. </summary>
         /// <param name="jobTier"> Controls the compute job tier. </param>
         /// <param name="priority"> Controls the priority of the job on a compute. </param>
         internal JobQueueSettings(JobTier? jobTier, int? priority)

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class DataProtectionBackupCriteria
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupCriteria"/>. </summary>
         protected DataProtectionBackupCriteria()
         {
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupCriteria"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         internal DataProtectionBackupCriteria(string objectType)
         {

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> The UnknownCertificateProperties. </summary>
     internal partial class UnknownCertificateProperties : AppPlatformCertificateProperties
     {
-        /// <summary> Initializes a new instance of UnknownCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCertificateProperties"/>. </summary>
         /// <param name="certificatePropertiesType"> The type of the certificate source. </param>
         /// <param name="thumbprint"> The thumbprint of certificate. </param>
         /// <param name="issuer"> The issuer of certificate. </param>

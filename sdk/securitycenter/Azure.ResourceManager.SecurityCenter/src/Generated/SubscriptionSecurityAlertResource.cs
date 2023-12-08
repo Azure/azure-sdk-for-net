@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a SubscriptionSecurityAlert along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubscriptionSecurityAlertResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionSecurityAlertResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SecurityCenterLocationResource" /> using the GetSubscriptionSecurityAlert method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SubscriptionSecurityAlertResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSubscriptionSecurityAlertResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SecurityCenterLocationResource"/> using the GetSubscriptionSecurityAlert method.
     /// </summary>
     public partial class SubscriptionSecurityAlertResource : ArmResource
     {
@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly AlertsRestOperations _subscriptionSecurityAlertAlertsRestClient;
         private readonly SecurityAlertData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/locations/alerts";
+
         /// <summary> Initializes a new instance of the <see cref="SubscriptionSecurityAlertResource"/> class for mocking. </summary>
         protected SubscriptionSecurityAlertResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SubscriptionSecurityAlertResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionSecurityAlertResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SubscriptionSecurityAlertResource(ArmClient client, SecurityAlertData data) : this(client, data.Id)
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/locations/alerts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

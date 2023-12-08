@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MySql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MySqlQueryTextResource" /> and their operations.
-    /// Each <see cref="MySqlQueryTextResource" /> in the collection will belong to the same instance of <see cref="MySqlServerResource" />.
-    /// To get a <see cref="MySqlQueryTextCollection" /> instance call the GetMySqlQueryTexts method from an instance of <see cref="MySqlServerResource" />.
+    /// A class representing a collection of <see cref="MySqlQueryTextResource"/> and their operations.
+    /// Each <see cref="MySqlQueryTextResource"/> in the collection will belong to the same instance of <see cref="MySqlServerResource"/>.
+    /// To get a <see cref="MySqlQueryTextCollection"/> instance call the GetMySqlQueryTexts method from an instance of <see cref="MySqlServerResource"/>.
     /// </summary>
     public partial class MySqlQueryTextCollection : ArmCollection
     {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="queryIds"> The query identifiers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queryIds"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MySqlQueryTextResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MySqlQueryTextResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlQueryTextResource> GetAllAsync(IEnumerable<string> queryIds, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(queryIds, nameof(queryIds));
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="queryIds"> The query identifiers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queryIds"/> is null. </exception>
-        /// <returns> A collection of <see cref="MySqlQueryTextResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MySqlQueryTextResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlQueryTextResource> GetAll(IEnumerable<string> queryIds, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(queryIds, nameof(queryIds));

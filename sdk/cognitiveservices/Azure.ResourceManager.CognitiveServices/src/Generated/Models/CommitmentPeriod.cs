@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Cognitive Services account commitment period. </summary>
     public partial class CommitmentPeriod
     {
-        /// <summary> Initializes a new instance of CommitmentPeriod. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommitmentPeriod"/>. </summary>
         public CommitmentPeriod()
         {
         }
 
-        /// <summary> Initializes a new instance of CommitmentPeriod. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommitmentPeriod"/>. </summary>
         /// <param name="tier"> Commitment period commitment tier. </param>
         /// <param name="count"> Commitment period commitment count. </param>
         /// <param name="quota"> Cognitive Services account commitment quota. </param>

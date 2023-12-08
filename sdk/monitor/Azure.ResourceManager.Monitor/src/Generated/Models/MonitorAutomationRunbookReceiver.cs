@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The Azure Automation Runbook notification receiver. </summary>
     public partial class MonitorAutomationRunbookReceiver
     {
-        /// <summary> Initializes a new instance of MonitorAutomationRunbookReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorAutomationRunbookReceiver"/>. </summary>
         /// <param name="automationAccountId"> The Azure automation account Id which holds this runbook and authenticate to Azure resource. </param>
         /// <param name="runbookName"> The name for this runbook. </param>
         /// <param name="webhookResourceId"> The resource id for webhook linked to this runbook. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
             IsGlobalRunbook = isGlobalRunbook;
         }
 
-        /// <summary> Initializes a new instance of MonitorAutomationRunbookReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorAutomationRunbookReceiver"/>. </summary>
         /// <param name="automationAccountId"> The Azure automation account Id which holds this runbook and authenticate to Azure resource. </param>
         /// <param name="runbookName"> The name for this runbook. </param>
         /// <param name="webhookResourceId"> The resource id for webhook linked to this runbook. </param>

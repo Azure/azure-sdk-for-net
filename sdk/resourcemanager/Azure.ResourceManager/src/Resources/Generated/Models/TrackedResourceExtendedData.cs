@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Specified resource. </summary>
     public partial class TrackedResourceExtendedData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of TrackedResourceExtendedData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrackedResourceExtendedData"/>. </summary>
         /// <param name="location"> The location. </param>
         public TrackedResourceExtendedData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of TrackedResourceExtendedData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrackedResourceExtendedData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Automation
 {
     /// <summary>
     /// A Class representing an AutomationRunbook along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomationRunbookResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutomationRunbookResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource" /> using the GetAutomationRunbook method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomationRunbookResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutomationRunbookResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource"/> using the GetAutomationRunbook method.
     /// </summary>
     public partial class AutomationRunbookResource : ArmResource
     {
@@ -49,12 +49,15 @@ namespace Azure.ResourceManager.Automation
         private readonly TestJobRestOperations _testJobRestClient;
         private readonly AutomationRunbookData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/runbooks";
+
         /// <summary> Initializes a new instance of the <see cref="AutomationRunbookResource"/> class for mocking. </summary>
         protected AutomationRunbookResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutomationRunbookResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomationRunbookResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomationRunbookResource(ArmClient client, AutomationRunbookData data) : this(client, data.Id)
@@ -81,9 +84,6 @@ namespace Azure.ResourceManager.Automation
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/runbooks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationJobStream" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomationJobStream"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationJobStream> GetTestJobStreamsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _testJobStreamsRestClient.CreateListByTestJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationJobStream" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomationJobStream"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationJobStream> GetTestJobStreams(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _testJobStreamsRestClient.CreateListByTestJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);

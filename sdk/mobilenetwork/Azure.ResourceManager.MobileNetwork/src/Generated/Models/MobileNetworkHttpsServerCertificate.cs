@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> HTTPS server certificate configuration. </summary>
     public partial class MobileNetworkHttpsServerCertificate
     {
-        /// <summary> Initializes a new instance of MobileNetworkHttpsServerCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkHttpsServerCertificate"/>. </summary>
         /// <param name="certificateUri"> The certificate URL, unversioned. For example: https://contosovault.vault.azure.net/certificates/ingress. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateUri"/> is null. </exception>
         public MobileNetworkHttpsServerCertificate(Uri certificateUri)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             CertificateUri = certificateUri;
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkHttpsServerCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkHttpsServerCertificate"/>. </summary>
         /// <param name="certificateUri"> The certificate URL, unversioned. For example: https://contosovault.vault.azure.net/certificates/ingress. </param>
         /// <param name="provisioning"> The provisioning state of the certificate. </param>
         internal MobileNetworkHttpsServerCertificate(Uri certificateUri, MobileNetworkCertificateProvisioning provisioning)

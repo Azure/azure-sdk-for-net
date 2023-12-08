@@ -509,12 +509,16 @@ namespace Azure.Security.KeyVault.Keys
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
 
         private static Func<RSAParameters, RSA> s_rsaFactory;
+
         private static RSA CreateRSAProvider(RSAParameters parameters)
         {
             if (s_rsaFactory is null)
             {
                 // On Framework 4.7.2 and newer, to create the CNG implementation of RSA that supports RSA-OAEP-256, we need to create it with RSAParameters.
-                MethodInfo createMethod = typeof(RSA).GetMethod(nameof(RSA.Create), BindingFlags.Public | BindingFlags.Static, null, new[] { typeof(RSAParameters) }, null);
+                [System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "Incorrectly identifies RSA.Create(String); see https://github.com/Azure/azure-sdk-for-net/issues/40175 for discussion.")]
+                static MethodInfo GetRsaCreateMethod() => typeof(RSA).GetMethod(nameof(RSA.Create), BindingFlags.Public | BindingFlags.Static, null, new[] { typeof(RSAParameters) }, null);
+
+                MethodInfo createMethod = GetRsaCreateMethod();
                 if (createMethod != null)
                 {
                     s_rsaFactory = (Func<RSAParameters, RSA>)createMethod.CreateDelegate(typeof(Func<RSAParameters, RSA>));

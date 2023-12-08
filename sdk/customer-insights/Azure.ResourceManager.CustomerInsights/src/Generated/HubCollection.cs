@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HubResource" /> and their operations.
-    /// Each <see cref="HubResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="HubCollection" /> instance call the GetHubs method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="HubResource"/> and their operations.
+    /// Each <see cref="HubResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="HubCollection"/> instance call the GetHubs method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class HubCollection : ArmCollection, IEnumerable<HubResource>, IAsyncEnumerable<HubResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HubResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hubRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HubResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hubRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

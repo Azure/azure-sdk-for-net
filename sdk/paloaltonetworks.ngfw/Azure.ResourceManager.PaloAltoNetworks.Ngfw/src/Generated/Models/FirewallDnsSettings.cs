@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> DNS Proxy settings for Firewall. </summary>
     public partial class FirewallDnsSettings
     {
-        /// <summary> Initializes a new instance of FirewallDnsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallDnsSettings"/>. </summary>
         public FirewallDnsSettings()
         {
             DnsServers = new ChangeTrackingList<IPAddressInfo>();
         }
 
-        /// <summary> Initializes a new instance of FirewallDnsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallDnsSettings"/>. </summary>
         /// <param name="enableDnsProxy"> Enable DNS proxy, disabled by default. </param>
         /// <param name="enabledDnsType"> Enabled DNS proxy type, disabled by default. </param>
         /// <param name="dnsServers"> List of IPs associated with the Firewall. </param>

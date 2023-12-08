@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network interface and its custom security rules. </summary>
     public partial class NetworkInterfaceAssociation
     {
-        /// <summary> Initializes a new instance of NetworkInterfaceAssociation. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceAssociation"/>. </summary>
         internal NetworkInterfaceAssociation()
         {
             SecurityRules = new ChangeTrackingList<SecurityRuleData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaceAssociation. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceAssociation"/>. </summary>
         /// <param name="id"> Network interface ID. </param>
         /// <param name="securityRules"> Collection of custom security rules. </param>
         internal NetworkInterfaceAssociation(ResourceIdentifier id, IReadOnlyList<SecurityRuleData> securityRules)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes the delta health policies for the cluster upgrade. </summary>
     public partial class ClusterUpgradeDeltaHealthPolicy
     {
-        /// <summary> Initializes a new instance of ClusterUpgradeDeltaHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterUpgradeDeltaHealthPolicy"/>. </summary>
         /// <param name="maxPercentDeltaUnhealthyNodes">
         /// The maximum allowed percentage of nodes health degradation allowed during cluster upgrades.
         /// The delta is measured between the state of the nodes at the beginning of upgrade and the state of the nodes at the time of the health evaluation.
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             ApplicationDeltaHealthPolicies = new ChangeTrackingDictionary<string, ApplicationDeltaHealthPolicy>();
         }
 
-        /// <summary> Initializes a new instance of ClusterUpgradeDeltaHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterUpgradeDeltaHealthPolicy"/>. </summary>
         /// <param name="maxPercentDeltaUnhealthyNodes">
         /// The maximum allowed percentage of nodes health degradation allowed during cluster upgrades.
         /// The delta is measured between the state of the nodes at the beginning of upgrade and the state of the nodes at the time of the health evaluation.

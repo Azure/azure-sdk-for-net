@@ -14,10 +14,20 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> A class representing update parameters for CommunicationService resource. </summary>
     public partial class CommunicationServiceResourcePatch : CommunicationAcceptTags
     {
-        /// <summary> Initializes a new instance of CommunicationServiceResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationServiceResourcePatch"/>. </summary>
         public CommunicationServiceResourcePatch()
         {
             LinkedDomains = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationServiceResourcePatch"/>. </summary>
+        /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
+        internal CommunicationServiceResourcePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IList<string> linkedDomains) : base(tags)
+        {
+            Identity = identity;
+            LinkedDomains = linkedDomains;
         }
 
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>

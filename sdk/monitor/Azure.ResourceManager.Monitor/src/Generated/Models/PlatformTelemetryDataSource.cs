@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Definition of platform telemetry data source configuration. </summary>
     public partial class PlatformTelemetryDataSource
     {
-        /// <summary> Initializes a new instance of PlatformTelemetryDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlatformTelemetryDataSource"/>. </summary>
         /// <param name="streams"> List of platform telemetry streams to collect. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="streams"/> is null. </exception>
         public PlatformTelemetryDataSource(IEnumerable<string> streams)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Streams = streams.ToList();
         }
 
-        /// <summary> Initializes a new instance of PlatformTelemetryDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlatformTelemetryDataSource"/>. </summary>
         /// <param name="streams"> List of platform telemetry streams to collect. </param>
         /// <param name="name">
         /// A friendly name for the data source.

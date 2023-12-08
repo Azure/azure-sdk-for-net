@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies a list of virtual machine instance IDs from the VM scale set. </summary>
     public partial class VirtualMachineScaleSetVmInstanceIds
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmInstanceIds. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmInstanceIds"/>. </summary>
         public VirtualMachineScaleSetVmInstanceIds()
         {
             InstanceIds = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmInstanceIds"/>. </summary>
+        /// <param name="instanceIds"> The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation being performed on all virtual machines in the virtual machine scale set. </param>
+        internal VirtualMachineScaleSetVmInstanceIds(IList<string> instanceIds)
+        {
+            InstanceIds = instanceIds;
         }
 
         /// <summary> The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation being performed on all virtual machines in the virtual machine scale set. </summary>

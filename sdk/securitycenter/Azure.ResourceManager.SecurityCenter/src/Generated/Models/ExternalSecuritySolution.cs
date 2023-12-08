@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// </summary>
     public partial class ExternalSecuritySolution : ResourceData
     {
-        /// <summary> Initializes a new instance of ExternalSecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExternalSecuritySolution"/>. </summary>
         public ExternalSecuritySolution()
         {
         }
 
-        /// <summary> Initializes a new instance of ExternalSecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExternalSecuritySolution"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

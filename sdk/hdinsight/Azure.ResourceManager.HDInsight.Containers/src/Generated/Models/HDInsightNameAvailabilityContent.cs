@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Details of check name availability request body. </summary>
     public partial class HDInsightNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of HDInsightNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightNameAvailabilityContent"/>. </summary>
         public HDInsightNameAvailabilityContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Name for checking availability. </param>
+        /// <param name="resourceType"> The resource type in Microsoft.HDInsight. </param>
+        internal HDInsightNameAvailabilityContent(string name, string resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> Name for checking availability. </summary>

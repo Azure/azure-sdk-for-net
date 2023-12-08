@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DevCenterEnvironmentTypeResource" /> and their operations.
-    /// Each <see cref="DevCenterEnvironmentTypeResource" /> in the collection will belong to the same instance of <see cref="DevCenterResource" />.
-    /// To get a <see cref="DevCenterEnvironmentTypeCollection" /> instance call the GetDevCenterEnvironmentTypes method from an instance of <see cref="DevCenterResource" />.
+    /// A class representing a collection of <see cref="DevCenterEnvironmentTypeResource"/> and their operations.
+    /// Each <see cref="DevCenterEnvironmentTypeResource"/> in the collection will belong to the same instance of <see cref="DevCenterResource"/>.
+    /// To get a <see cref="DevCenterEnvironmentTypeCollection"/> instance call the GetDevCenterEnvironmentTypes method from an instance of <see cref="DevCenterResource"/>.
     /// </summary>
     public partial class DevCenterEnvironmentTypeCollection : ArmCollection, IEnumerable<DevCenterEnvironmentTypeResource>, IAsyncEnumerable<DevCenterEnvironmentTypeResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterEnvironmentTypeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DevCenterEnvironmentTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterEnvironmentTypeResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterEnvironmentTypeEnvironmentTypesRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterEnvironmentTypeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevCenterEnvironmentTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterEnvironmentTypeResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterEnvironmentTypeEnvironmentTypesRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);

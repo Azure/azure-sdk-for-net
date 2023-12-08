@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Trigger based on total requests. </summary>
     public partial class RequestsBasedTrigger
     {
-        /// <summary> Initializes a new instance of RequestsBasedTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestsBasedTrigger"/>. </summary>
         public RequestsBasedTrigger()
         {
         }
 
-        /// <summary> Initializes a new instance of RequestsBasedTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestsBasedTrigger"/>. </summary>
         /// <param name="count"> Request Count. </param>
         /// <param name="timeInterval"> Time interval. </param>
         internal RequestsBasedTrigger(int? count, string timeInterval)

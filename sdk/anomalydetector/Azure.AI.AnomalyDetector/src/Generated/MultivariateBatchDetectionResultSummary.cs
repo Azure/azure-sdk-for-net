@@ -14,7 +14,7 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Multivariate anomaly detection status. </summary>
     public partial class MultivariateBatchDetectionResultSummary
     {
-        /// <summary> Initializes a new instance of MultivariateBatchDetectionResultSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultivariateBatchDetectionResultSummary"/>. </summary>
         /// <param name="status"> Status of detection results. </param>
         /// <param name="setupInfo">
         /// Detection request for batch inference. This is an asynchronous inference that
@@ -31,7 +31,7 @@ namespace Azure.AI.AnomalyDetector
             SetupInfo = setupInfo;
         }
 
-        /// <summary> Initializes a new instance of MultivariateBatchDetectionResultSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultivariateBatchDetectionResultSummary"/>. </summary>
         /// <param name="status"> Status of detection results. </param>
         /// <param name="errors"> Error message when detection fails. </param>
         /// <param name="variableStates"> Variable status. </param>

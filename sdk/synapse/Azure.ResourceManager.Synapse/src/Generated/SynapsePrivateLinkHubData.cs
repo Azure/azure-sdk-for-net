@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapsePrivateLinkHubData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SynapsePrivateLinkHubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateLinkHubData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SynapsePrivateLinkHubData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionForPrivateLinkHubBasic>();
         }
 
-        /// <summary> Initializes a new instance of SynapsePrivateLinkHubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateLinkHubData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

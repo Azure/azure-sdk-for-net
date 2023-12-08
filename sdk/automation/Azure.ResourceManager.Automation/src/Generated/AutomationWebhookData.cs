@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class AutomationWebhookData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomationWebhookData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationWebhookData"/>. </summary>
         public AutomationWebhookData()
         {
             Parameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AutomationWebhookData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationWebhookData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

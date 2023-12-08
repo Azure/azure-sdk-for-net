@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 {
     /// <summary>
     /// A Class representing a FederatedIdentityCredential along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FederatedIdentityCredentialResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFederatedIdentityCredentialResource method.
-    /// Otherwise you can get one from its parent resource <see cref="UserAssignedIdentityResource" /> using the GetFederatedIdentityCredential method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FederatedIdentityCredentialResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFederatedIdentityCredentialResource method.
+    /// Otherwise you can get one from its parent resource <see cref="UserAssignedIdentityResource"/> using the GetFederatedIdentityCredential method.
     /// </summary>
     public partial class FederatedIdentityCredentialResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         private readonly FederatedIdentityCredentialsRestOperations _federatedIdentityCredentialRestClient;
         private readonly FederatedIdentityCredentialData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials";
+
         /// <summary> Initializes a new instance of the <see cref="FederatedIdentityCredentialResource"/> class for mocking. </summary>
         protected FederatedIdentityCredentialResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FederatedIdentityCredentialResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FederatedIdentityCredentialResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FederatedIdentityCredentialResource(ArmClient client, FederatedIdentityCredentialData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Application Gateway Ssl policy. </summary>
     public partial class ApplicationGatewaySslPolicy
     {
-        /// <summary> Initializes a new instance of ApplicationGatewaySslPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslPolicy"/>. </summary>
         public ApplicationGatewaySslPolicy()
         {
             DisabledSslProtocols = new ChangeTrackingList<ApplicationGatewaySslProtocol>();
             CipherSuites = new ChangeTrackingList<ApplicationGatewaySslCipherSuite>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewaySslPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslPolicy"/>. </summary>
         /// <param name="disabledSslProtocols"> Ssl protocols to be disabled on application gateway. </param>
         /// <param name="policyType"> Type of Ssl Policy. </param>
         /// <param name="policyName"> Name of Ssl predefined policy. </param>

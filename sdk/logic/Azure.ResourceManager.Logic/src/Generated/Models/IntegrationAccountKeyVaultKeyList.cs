@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> Collection of key vault keys. </summary>
     internal partial class IntegrationAccountKeyVaultKeyList
     {
-        /// <summary> Initializes a new instance of IntegrationAccountKeyVaultKeyList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountKeyVaultKeyList"/>. </summary>
         internal IntegrationAccountKeyVaultKeyList()
         {
             Value = new ChangeTrackingList<IntegrationAccountKeyVaultKey>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountKeyVaultKeyList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountKeyVaultKeyList"/>. </summary>
         /// <param name="value"> The key vault keys. </param>
         /// <param name="skipToken"> The skip token. </param>
         internal IntegrationAccountKeyVaultKeyList(IReadOnlyList<IntegrationAccountKeyVaultKey> value, string skipToken)

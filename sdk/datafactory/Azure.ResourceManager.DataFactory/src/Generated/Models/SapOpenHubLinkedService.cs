@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> SAP Business Warehouse Open Hub Destination Linked Service. </summary>
     public partial class SapOpenHubLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of SapOpenHubLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapOpenHubLinkedService"/>. </summary>
         public SapOpenHubLinkedService()
         {
             LinkedServiceType = "SapOpenHub";
         }
 
-        /// <summary> Initializes a new instance of SapOpenHubLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapOpenHubLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Solution request trigger criterion. SolutionId/ProblemClassificationId is the only supported trigger type for Solution PUT request. ReplacementKey is the only supported trigger type for Solution PATCH request. </summary>
     public partial class TriggerCriterion
     {
-        /// <summary> Initializes a new instance of TriggerCriterion. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerCriterion"/>. </summary>
         public TriggerCriterion()
         {
         }
 
-        /// <summary> Initializes a new instance of TriggerCriterion. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerCriterion"/>. </summary>
         /// <param name="name"> Trigger criterion name. </param>
         /// <param name="value"> Trigger criterion value. </param>
         internal TriggerCriterion(SelfHelpName? name, string value)

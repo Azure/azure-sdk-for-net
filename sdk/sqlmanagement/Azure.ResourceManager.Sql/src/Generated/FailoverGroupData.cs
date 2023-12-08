@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class FailoverGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of FailoverGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailoverGroupData"/>. </summary>
         public FailoverGroupData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql
             FailoverDatabases = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of FailoverGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailoverGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

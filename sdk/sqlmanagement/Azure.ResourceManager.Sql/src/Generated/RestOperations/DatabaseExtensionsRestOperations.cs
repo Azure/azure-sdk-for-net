@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="extensionName"> The String to use. </param>
+        /// <param name="extensionName"> The <see cref="string"/> to use. </param>
         /// <param name="sqlDatabaseExtension"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="extensionName"/> or <paramref name="sqlDatabaseExtension"/> is null. </exception>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="extensionName"> The String to use. </param>
+        /// <param name="extensionName"> The <see cref="string"/> to use. </param>
         /// <param name="sqlDatabaseExtension"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="extensionName"/> or <paramref name="sqlDatabaseExtension"/> is null. </exception>

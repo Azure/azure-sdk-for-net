@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Diagnostics data column. </summary>
     public partial class ContainerAppDiagnosticDataColumn
     {
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticDataColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataColumn"/>. </summary>
         public ContainerAppDiagnosticDataColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticDataColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataColumn"/>. </summary>
         /// <param name="columnName"> Column name. </param>
         /// <param name="dataType"> Data type of the column. </param>
         /// <param name="columnType"> Column type. </param>

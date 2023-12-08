@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the command that completes online migration for an Azure SQL Database Managed Instance. </summary>
     public partial class MigrateMISyncCompleteCommandProperties : CommandProperties
     {
-        /// <summary> Initializes a new instance of MigrateMISyncCompleteCommandProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMISyncCompleteCommandProperties"/>. </summary>
         public MigrateMISyncCompleteCommandProperties()
         {
             CommandType = CommandType.MigrateSqlServerAzureDBSqlMIComplete;
         }
 
-        /// <summary> Initializes a new instance of MigrateMISyncCompleteCommandProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMISyncCompleteCommandProperties"/>. </summary>
         /// <param name="commandType"> Command type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>

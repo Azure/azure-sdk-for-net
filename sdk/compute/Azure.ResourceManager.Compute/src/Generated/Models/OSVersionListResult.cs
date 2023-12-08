@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The list operation result. </summary>
     internal partial class OSVersionListResult
     {
-        /// <summary> Initializes a new instance of OSVersionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSVersionListResult"/>. </summary>
         /// <param name="value"> The list of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal OSVersionListResult(IEnumerable<CloudServiceOSVersionData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of OSVersionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSVersionListResult"/>. </summary>
         /// <param name="value"> The list of resources. </param>
         /// <param name="nextLink"> The URI to fetch the next page of resources. Use this to get the next page of resources. Do this till nextLink is null to fetch all the resources. </param>
         internal OSVersionListResult(IReadOnlyList<CloudServiceOSVersionData> value, string nextLink)

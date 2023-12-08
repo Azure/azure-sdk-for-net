@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Batch
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BatchPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="BatchPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="BatchAccountResource" />.
-    /// To get a <see cref="BatchPrivateEndpointConnectionCollection" /> instance call the GetBatchPrivateEndpointConnections method from an instance of <see cref="BatchAccountResource" />.
+    /// A class representing a collection of <see cref="BatchPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="BatchPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="BatchAccountResource"/>.
+    /// To get a <see cref="BatchPrivateEndpointConnectionCollection"/> instance call the GetBatchPrivateEndpointConnections method from an instance of <see cref="BatchAccountResource"/>.
     /// </summary>
     public partial class BatchPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<BatchPrivateEndpointConnectionResource>, IAsyncEnumerable<BatchPrivateEndpointConnectionResource>
     {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BatchPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BatchPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BatchPrivateEndpointConnectionResource> GetAllAsync(int? maxresults = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateListByBatchAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BatchPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BatchPrivateEndpointConnectionResource> GetAll(int? maxresults = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateListByBatchAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults);

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents a list of Target Type resources and a link for pagination. </summary>
     internal partial class TargetTypeListResult
     {
-        /// <summary> Initializes a new instance of TargetTypeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetTypeListResult"/>. </summary>
         internal TargetTypeListResult()
         {
             Value = new ChangeTrackingList<TargetTypeData>();
         }
 
-        /// <summary> Initializes a new instance of TargetTypeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetTypeListResult"/>. </summary>
         /// <param name="value"> List of Target Type resources. </param>
         /// <param name="nextLink"> URL to retrieve the next page of Target Type resources. </param>
         internal TargetTypeListResult(IReadOnlyList<TargetTypeData> value, string nextLink)

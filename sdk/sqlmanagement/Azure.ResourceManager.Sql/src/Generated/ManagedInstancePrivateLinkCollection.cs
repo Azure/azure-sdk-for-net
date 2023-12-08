@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedInstancePrivateLinkResource" /> and their operations.
-    /// Each <see cref="ManagedInstancePrivateLinkResource" /> in the collection will belong to the same instance of <see cref="ManagedInstanceResource" />.
-    /// To get a <see cref="ManagedInstancePrivateLinkCollection" /> instance call the GetManagedInstancePrivateLinks method from an instance of <see cref="ManagedInstanceResource" />.
+    /// A class representing a collection of <see cref="ManagedInstancePrivateLinkResource"/> and their operations.
+    /// Each <see cref="ManagedInstancePrivateLinkResource"/> in the collection will belong to the same instance of <see cref="ManagedInstanceResource"/>.
+    /// To get a <see cref="ManagedInstancePrivateLinkCollection"/> instance call the GetManagedInstancePrivateLinks method from an instance of <see cref="ManagedInstanceResource"/>.
     /// </summary>
     public partial class ManagedInstancePrivateLinkCollection : ArmCollection, IEnumerable<ManagedInstancePrivateLinkResource>, IAsyncEnumerable<ManagedInstancePrivateLinkResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstancePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedInstancePrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedInstancePrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstancePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedInstancePrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedInstancePrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

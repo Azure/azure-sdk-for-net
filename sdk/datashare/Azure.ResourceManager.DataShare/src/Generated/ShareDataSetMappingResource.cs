@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
     /// A Class representing a ShareDataSetMapping along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ShareDataSetMappingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetShareDataSetMappingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ShareSubscriptionResource" /> using the GetShareDataSetMapping method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ShareDataSetMappingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetShareDataSetMappingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ShareSubscriptionResource"/> using the GetShareDataSetMapping method.
     /// </summary>
     public partial class ShareDataSetMappingResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.DataShare
         private readonly DataSetMappingsRestOperations _shareDataSetMappingDataSetMappingsRestClient;
         private readonly ShareDataSetMappingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shareSubscriptions/dataSetMappings";
+
         /// <summary> Initializes a new instance of the <see cref="ShareDataSetMappingResource"/> class for mocking. </summary>
         protected ShareDataSetMappingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ShareDataSetMappingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ShareDataSetMappingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ShareDataSetMappingResource(ArmClient client, ShareDataSetMappingData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DataShare
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shareSubscriptions/dataSetMappings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

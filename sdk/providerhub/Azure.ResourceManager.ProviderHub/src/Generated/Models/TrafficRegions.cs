@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The TrafficRegions. </summary>
     public partial class TrafficRegions
     {
-        /// <summary> Initializes a new instance of TrafficRegions. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficRegions"/>. </summary>
         public TrafficRegions()
         {
             Regions = new ChangeTrackingList<AzureLocation>();
         }
 
-        /// <summary> Initializes a new instance of TrafficRegions. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficRegions"/>. </summary>
         /// <param name="regions"></param>
         internal TrafficRegions(IList<AzureLocation> regions)
         {

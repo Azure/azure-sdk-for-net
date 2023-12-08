@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The VolumeDefinition. </summary>
     public partial class VolumeDefinition
     {
-        /// <summary> Initializes a new instance of VolumeDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeDefinition"/>. </summary>
         public VolumeDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of VolumeDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeDefinition"/>. </summary>
         /// <param name="definitionType"> Type of Volume Definition. Possible Values: bind,volume,tmpfs,npipe. </param>
         /// <param name="readOnly"> Indicate whether to mount volume as readOnly. Default value for this is false. </param>
         /// <param name="source"> Source of the mount. For bind mounts this is the host path. </param>

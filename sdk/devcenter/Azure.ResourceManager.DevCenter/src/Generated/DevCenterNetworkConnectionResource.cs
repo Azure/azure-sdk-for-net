@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A Class representing a DevCenterNetworkConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevCenterNetworkConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevCenterNetworkConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDevCenterNetworkConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevCenterNetworkConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevCenterNetworkConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDevCenterNetworkConnection method.
     /// </summary>
     public partial class DevCenterNetworkConnectionResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.DevCenter
         private readonly NetworkConnectionsRestOperations _devCenterNetworkConnectionNetworkConnectionsRestClient;
         private readonly DevCenterNetworkConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/networkConnections";
+
         /// <summary> Initializes a new instance of the <see cref="DevCenterNetworkConnectionResource"/> class for mocking. </summary>
         protected DevCenterNetworkConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevCenterNetworkConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevCenterNetworkConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevCenterNetworkConnectionResource(ArmClient client, DevCenterNetworkConnectionData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.DevCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/networkConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Gets an object representing a HealthCheckStatusDetailResource along with the instance operations that can be performed on it in the DevCenterNetworkConnection. </summary>
-        /// <returns> Returns a <see cref="HealthCheckStatusDetailResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HealthCheckStatusDetailResource"/> object. </returns>
         public virtual HealthCheckStatusDetailResource GetHealthCheckStatusDetail()
         {
             return new HealthCheckStatusDetailResource(Client, Id.AppendChildResource("healthChecks", "latest"));
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OutboundEnvironmentEndpoint> GetOutboundEnvironmentEndpointsAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OutboundEnvironmentEndpoint> GetOutboundEnvironmentEndpoints(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);

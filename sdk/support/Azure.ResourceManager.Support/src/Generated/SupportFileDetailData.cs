@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Support
     /// </summary>
     public partial class SupportFileDetailData : ResourceData
     {
-        /// <summary> Initializes a new instance of SupportFileDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportFileDetailData"/>. </summary>
         public SupportFileDetailData()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportFileDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportFileDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

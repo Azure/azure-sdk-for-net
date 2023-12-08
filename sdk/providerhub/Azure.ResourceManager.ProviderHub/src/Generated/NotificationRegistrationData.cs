@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ProviderHub
     /// </summary>
     public partial class NotificationRegistrationData : ResourceData
     {
-        /// <summary> Initializes a new instance of NotificationRegistrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationRegistrationData"/>. </summary>
         public NotificationRegistrationData()
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationRegistrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationRegistrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

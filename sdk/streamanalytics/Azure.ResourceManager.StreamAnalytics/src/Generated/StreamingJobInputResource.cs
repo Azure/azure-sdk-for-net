@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.StreamAnalytics
 {
     /// <summary>
     /// A Class representing a StreamingJobInput along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StreamingJobInputResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStreamingJobInputResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StreamingJobResource" /> using the GetStreamingJobInput method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StreamingJobInputResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStreamingJobInputResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StreamingJobResource"/> using the GetStreamingJobInput method.
     /// </summary>
     public partial class StreamingJobInputResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.StreamAnalytics
         private readonly InputsRestOperations _streamingJobInputInputsRestClient;
         private readonly StreamingJobInputData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StreamAnalytics/streamingjobs/inputs";
+
         /// <summary> Initializes a new instance of the <see cref="StreamingJobInputResource"/> class for mocking. </summary>
         protected StreamingJobInputResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StreamingJobInputResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StreamingJobInputResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StreamingJobInputResource(ArmClient client, StreamingJobInputData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.StreamAnalytics
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StreamAnalytics/streamingjobs/inputs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

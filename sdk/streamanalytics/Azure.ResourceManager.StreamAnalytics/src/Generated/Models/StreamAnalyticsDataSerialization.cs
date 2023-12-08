@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// </summary>
     public abstract partial class StreamAnalyticsDataSerialization
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsDataSerialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsDataSerialization"/>. </summary>
         protected StreamAnalyticsDataSerialization()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsDataSerialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsDataSerialization"/>. </summary>
         /// <param name="eventSerializationType"> Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests. </param>
         internal StreamAnalyticsDataSerialization(EventSerializationType eventSerializationType)
         {

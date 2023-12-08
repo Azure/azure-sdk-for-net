@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServiceBusQueueAuthorizationRuleResource" /> and their operations.
-    /// Each <see cref="ServiceBusQueueAuthorizationRuleResource" /> in the collection will belong to the same instance of <see cref="ServiceBusQueueResource" />.
-    /// To get a <see cref="ServiceBusQueueAuthorizationRuleCollection" /> instance call the GetServiceBusQueueAuthorizationRules method from an instance of <see cref="ServiceBusQueueResource" />.
+    /// A class representing a collection of <see cref="ServiceBusQueueAuthorizationRuleResource"/> and their operations.
+    /// Each <see cref="ServiceBusQueueAuthorizationRuleResource"/> in the collection will belong to the same instance of <see cref="ServiceBusQueueResource"/>.
+    /// To get a <see cref="ServiceBusQueueAuthorizationRuleCollection"/> instance call the GetServiceBusQueueAuthorizationRules method from an instance of <see cref="ServiceBusQueueResource"/>.
     /// </summary>
     public partial class ServiceBusQueueAuthorizationRuleCollection : ArmCollection, IEnumerable<ServiceBusQueueAuthorizationRuleResource>, IAsyncEnumerable<ServiceBusQueueAuthorizationRuleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceBusQueueAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceBusQueueAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceBusQueueAuthorizationRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceBusQueueAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceBusQueueAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceBusQueueAuthorizationRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

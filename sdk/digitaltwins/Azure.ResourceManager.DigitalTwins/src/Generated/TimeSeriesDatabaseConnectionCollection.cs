@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DigitalTwins
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TimeSeriesDatabaseConnectionResource" /> and their operations.
-    /// Each <see cref="TimeSeriesDatabaseConnectionResource" /> in the collection will belong to the same instance of <see cref="DigitalTwinsDescriptionResource" />.
-    /// To get a <see cref="TimeSeriesDatabaseConnectionCollection" /> instance call the GetTimeSeriesDatabaseConnections method from an instance of <see cref="DigitalTwinsDescriptionResource" />.
+    /// A class representing a collection of <see cref="TimeSeriesDatabaseConnectionResource"/> and their operations.
+    /// Each <see cref="TimeSeriesDatabaseConnectionResource"/> in the collection will belong to the same instance of <see cref="DigitalTwinsDescriptionResource"/>.
+    /// To get a <see cref="TimeSeriesDatabaseConnectionCollection"/> instance call the GetTimeSeriesDatabaseConnections method from an instance of <see cref="DigitalTwinsDescriptionResource"/>.
     /// </summary>
     public partial class TimeSeriesDatabaseConnectionCollection : ArmCollection, IEnumerable<TimeSeriesDatabaseConnectionResource>, IAsyncEnumerable<TimeSeriesDatabaseConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TimeSeriesDatabaseConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TimeSeriesDatabaseConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TimeSeriesDatabaseConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _timeSeriesDatabaseConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TimeSeriesDatabaseConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TimeSeriesDatabaseConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TimeSeriesDatabaseConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _timeSeriesDatabaseConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

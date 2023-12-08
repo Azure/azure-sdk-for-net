@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class StaticSiteBuildData : ResourceData
     {
-        /// <summary> Initializes a new instance of StaticSiteBuildData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteBuildData"/>. </summary>
         public StaticSiteBuildData()
         {
             UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>();
         }
 
-        /// <summary> Initializes a new instance of StaticSiteBuildData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteBuildData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

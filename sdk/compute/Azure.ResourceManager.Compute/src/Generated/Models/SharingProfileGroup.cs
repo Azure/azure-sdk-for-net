@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Group of the gallery sharing profile. </summary>
     public partial class SharingProfileGroup
     {
-        /// <summary> Initializes a new instance of SharingProfileGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharingProfileGroup"/>. </summary>
         public SharingProfileGroup()
         {
             Ids = new ChangeTrackingList<string>();

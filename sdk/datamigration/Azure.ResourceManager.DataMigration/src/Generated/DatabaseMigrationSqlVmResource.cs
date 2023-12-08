@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
     /// A Class representing a DatabaseMigrationSqlVm along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DatabaseMigrationSqlVmResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDatabaseMigrationSqlVmResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDatabaseMigrationSqlVm method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DatabaseMigrationSqlVmResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDatabaseMigrationSqlVmResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDatabaseMigrationSqlVm method.
     /// </summary>
     public partial class DatabaseMigrationSqlVmResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.DataMigration
         private readonly DatabaseMigrationsSqlVmRestOperations _databaseMigrationSqlVmDatabaseMigrationsSqlVmRestClient;
         private readonly DatabaseMigrationSqlVmData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly Core.ResourceType ResourceType = "Microsoft.DataMigration/databaseMigrations";
+
         /// <summary> Initializes a new instance of the <see cref="DatabaseMigrationSqlVmResource"/> class for mocking. </summary>
         protected DatabaseMigrationSqlVmResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DatabaseMigrationSqlVmResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DatabaseMigrationSqlVmResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DatabaseMigrationSqlVmResource(ArmClient client, DatabaseMigrationSqlVmData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DataMigration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.DataMigration/databaseMigrations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="input"> The MigrationOperationInput to use. </param>
+        /// <param name="input"> The <see cref="MigrationOperationInput"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public virtual async Task<ArmOperation> CancelAsync(WaitUntil waitUntil, MigrationOperationInput input, CancellationToken cancellationToken = default)
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="input"> The MigrationOperationInput to use. </param>
+        /// <param name="input"> The <see cref="MigrationOperationInput"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public virtual ArmOperation Cancel(WaitUntil waitUntil, MigrationOperationInput input, CancellationToken cancellationToken = default)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="input"> The MigrationOperationInput to use. </param>
+        /// <param name="input"> The <see cref="MigrationOperationInput"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public virtual async Task<ArmOperation> CutoverAsync(WaitUntil waitUntil, MigrationOperationInput input, CancellationToken cancellationToken = default)
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="input"> The MigrationOperationInput to use. </param>
+        /// <param name="input"> The <see cref="MigrationOperationInput"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public virtual ArmOperation Cutover(WaitUntil waitUntil, MigrationOperationInput input, CancellationToken cancellationToken = default)

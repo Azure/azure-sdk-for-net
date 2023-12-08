@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> A list of network service design versions. </summary>
     internal partial class NetworkServiceDesignVersionListResult
     {
-        /// <summary> Initializes a new instance of NetworkServiceDesignVersionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignVersionListResult"/>. </summary>
         internal NetworkServiceDesignVersionListResult()
         {
             Value = new ChangeTrackingList<NetworkServiceDesignVersionData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkServiceDesignVersionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignVersionListResult"/>. </summary>
         /// <param name="value"> A list of network service design versions. </param>
         /// <param name="nextLink"> The URI to get the next set of results. </param>
         internal NetworkServiceDesignVersionListResult(IReadOnlyList<NetworkServiceDesignVersionData> value, string nextLink)

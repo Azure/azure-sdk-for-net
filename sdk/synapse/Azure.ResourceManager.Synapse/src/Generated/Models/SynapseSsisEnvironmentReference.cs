@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Ssis environment reference. </summary>
     public partial class SynapseSsisEnvironmentReference
     {
-        /// <summary> Initializes a new instance of SynapseSsisEnvironmentReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisEnvironmentReference"/>. </summary>
         internal SynapseSsisEnvironmentReference()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisEnvironmentReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisEnvironmentReference"/>. </summary>
         /// <param name="id"> Environment reference id. </param>
         /// <param name="environmentFolderName"> Environment folder name. </param>
         /// <param name="environmentName"> Environment name. </param>

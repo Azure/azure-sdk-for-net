@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary>
     /// A Class representing a GuestConfigurationVmssAssignment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GuestConfigurationVmssAssignmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGuestConfigurationVmssAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetGuestConfigurationVmssAssignment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GuestConfigurationVmssAssignmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGuestConfigurationVmssAssignmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetGuestConfigurationVmssAssignment method.
     /// </summary>
     public partial class GuestConfigurationVmssAssignmentResource : ArmResource
     {
@@ -43,12 +43,15 @@ namespace Azure.ResourceManager.GuestConfiguration
         private readonly GuestConfigurationAssignmentReportsVmssRestOperations _guestConfigurationAssignmentReportsVmSSRestClient;
         private readonly GuestConfigurationAssignmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.GuestConfiguration/guestConfigurationAssignments";
+
         /// <summary> Initializes a new instance of the <see cref="GuestConfigurationVmssAssignmentResource"/> class for mocking. </summary>
         protected GuestConfigurationVmssAssignmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GuestConfigurationVmssAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GuestConfigurationVmssAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GuestConfigurationVmssAssignmentResource(ArmClient client, GuestConfigurationAssignmentData data) : this(client, data.Id)
@@ -71,9 +74,6 @@ namespace Azure.ResourceManager.GuestConfiguration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.GuestConfiguration/guestConfigurationAssignments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GuestConfigurationAssignmentReport" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GuestConfigurationAssignmentReport"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GuestConfigurationAssignmentReport> GetReportsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationAssignmentReportsVmSSRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationAssignmentReport" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GuestConfigurationAssignmentReport"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GuestConfigurationAssignmentReport> GetReports(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationAssignmentReportsVmSSRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

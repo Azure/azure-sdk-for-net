@@ -14,12 +14,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// </summary>
     public partial class DependencyReference
     {
-        /// <summary> Initializes a new instance of DependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DependencyReference"/>. </summary>
         public DependencyReference()
         {
         }
 
-        /// <summary> Initializes a new instance of DependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DependencyReference"/>. </summary>
         /// <param name="type"> The type of dependency reference. </param>
         internal DependencyReference(string type)
         {

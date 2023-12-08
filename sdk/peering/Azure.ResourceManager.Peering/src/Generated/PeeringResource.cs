@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Peering
 {
     /// <summary>
     /// A Class representing a Peering along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PeeringResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPeeringResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetPeering method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PeeringResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPeeringResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPeering method.
     /// </summary>
     public partial class PeeringResource : ArmResource
     {
@@ -46,12 +46,15 @@ namespace Azure.ResourceManager.Peering
         private readonly RpUnbilledPrefixesRestOperations _rpUnbilledPrefixesRestClient;
         private readonly PeeringData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Peering/peerings";
+
         /// <summary> Initializes a new instance of the <see cref="PeeringResource"/> class for mocking. </summary>
         protected PeeringResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PeeringResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PeeringResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PeeringResource(ArmClient client, PeeringData data) : this(client, data.Id)
@@ -76,9 +79,6 @@ namespace Azure.ResourceManager.Peering
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Peering/peerings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="rpkiValidationState"> The optional RPKI validation state that can be used to filter the routes. </param>
         /// <param name="skipToken"> The optional page continuation token that is used in the event of paginated result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PeeringReceivedRoute" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PeeringReceivedRoute"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PeeringReceivedRoute> GetReceivedRoutesAsync(string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _receivedRoutesRestClient.CreateListByPeeringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken);
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="rpkiValidationState"> The optional RPKI validation state that can be used to filter the routes. </param>
         /// <param name="skipToken"> The optional page continuation token that is used in the event of paginated result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PeeringReceivedRoute" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PeeringReceivedRoute"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PeeringReceivedRoute> GetReceivedRoutes(string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _receivedRoutesRestClient.CreateListByPeeringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken);
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="consolidate"> Flag to enable consolidation prefixes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RoutingPreferenceUnbilledPrefix" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RoutingPreferenceUnbilledPrefix"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoutingPreferenceUnbilledPrefix> GetRpUnbilledPrefixesAsync(bool? consolidate = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _rpUnbilledPrefixesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate);
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="consolidate"> Flag to enable consolidation prefixes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RoutingPreferenceUnbilledPrefix" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RoutingPreferenceUnbilledPrefix"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoutingPreferenceUnbilledPrefix> GetRpUnbilledPrefixes(bool? consolidate = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _rpUnbilledPrefixesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate);

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CognitiveServicesPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="CognitiveServicesPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="CognitiveServicesAccountResource" />.
-    /// To get a <see cref="CognitiveServicesPrivateEndpointConnectionCollection" /> instance call the GetCognitiveServicesPrivateEndpointConnections method from an instance of <see cref="CognitiveServicesAccountResource" />.
+    /// A class representing a collection of <see cref="CognitiveServicesPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="CognitiveServicesPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="CognitiveServicesAccountResource"/>.
+    /// To get a <see cref="CognitiveServicesPrivateEndpointConnectionCollection"/> instance call the GetCognitiveServicesPrivateEndpointConnections method from an instance of <see cref="CognitiveServicesAccountResource"/>.
     /// </summary>
     public partial class CognitiveServicesPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<CognitiveServicesPrivateEndpointConnectionResource>, IAsyncEnumerable<CognitiveServicesPrivateEndpointConnectionResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CognitiveServicesPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CognitiveServicesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CognitiveServicesPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CognitiveServicesPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CognitiveServicesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CognitiveServicesPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

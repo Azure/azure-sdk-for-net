@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataBoxEdgeStorageContainerResource" /> and their operations.
-    /// Each <see cref="DataBoxEdgeStorageContainerResource" /> in the collection will belong to the same instance of <see cref="DataBoxEdgeStorageAccountResource" />.
-    /// To get a <see cref="DataBoxEdgeStorageContainerCollection" /> instance call the GetDataBoxEdgeStorageContainers method from an instance of <see cref="DataBoxEdgeStorageAccountResource" />.
+    /// A class representing a collection of <see cref="DataBoxEdgeStorageContainerResource"/> and their operations.
+    /// Each <see cref="DataBoxEdgeStorageContainerResource"/> in the collection will belong to the same instance of <see cref="DataBoxEdgeStorageAccountResource"/>.
+    /// To get a <see cref="DataBoxEdgeStorageContainerCollection"/> instance call the GetDataBoxEdgeStorageContainers method from an instance of <see cref="DataBoxEdgeStorageAccountResource"/>.
     /// </summary>
     public partial class DataBoxEdgeStorageContainerCollection : ArmCollection, IEnumerable<DataBoxEdgeStorageContainerResource>, IAsyncEnumerable<DataBoxEdgeStorageContainerResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataBoxEdgeStorageContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataBoxEdgeStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeStorageContainerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeStorageContainerContainersRestClient.CreateListByStorageAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataBoxEdgeStorageContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataBoxEdgeStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeStorageContainerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeStorageContainerContainersRestClient.CreateListByStorageAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

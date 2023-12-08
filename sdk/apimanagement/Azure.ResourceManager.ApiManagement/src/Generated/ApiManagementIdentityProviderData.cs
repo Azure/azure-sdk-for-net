@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementIdentityProviderData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementIdentityProviderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementIdentityProviderData"/>. </summary>
         public ApiManagementIdentityProviderData()
         {
             AllowedTenants = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementIdentityProviderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementIdentityProviderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

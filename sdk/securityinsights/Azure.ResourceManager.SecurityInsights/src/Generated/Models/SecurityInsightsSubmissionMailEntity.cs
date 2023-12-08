@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a submission mail entity. </summary>
     public partial class SecurityInsightsSubmissionMailEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsSubmissionMailEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsSubmissionMailEntity"/>. </summary>
         public SecurityInsightsSubmissionMailEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.SubmissionMail;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsSubmissionMailEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsSubmissionMailEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

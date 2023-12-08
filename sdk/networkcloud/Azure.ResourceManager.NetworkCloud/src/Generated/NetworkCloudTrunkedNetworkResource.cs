@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
     /// A Class representing a NetworkCloudTrunkedNetwork along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkCloudTrunkedNetworkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkCloudTrunkedNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkCloudTrunkedNetwork method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudTrunkedNetworkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkCloudTrunkedNetworkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkCloudTrunkedNetwork method.
     /// </summary>
     public partial class NetworkCloudTrunkedNetworkResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.NetworkCloud
         private readonly TrunkedNetworksRestOperations _networkCloudTrunkedNetworkTrunkedNetworksRestClient;
         private readonly NetworkCloudTrunkedNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/trunkedNetworks";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkCloudTrunkedNetworkResource"/> class for mocking. </summary>
         protected NetworkCloudTrunkedNetworkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkCloudTrunkedNetworkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudTrunkedNetworkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkCloudTrunkedNetworkResource(ArmClient client, NetworkCloudTrunkedNetworkData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.NetworkCloud
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/trunkedNetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.NewRelicObservability
 {
     /// <summary>
     /// A Class representing a NewRelicMonitorResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NewRelicMonitorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNewRelicMonitorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNewRelicMonitorResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NewRelicMonitorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNewRelicMonitorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNewRelicMonitorResource method.
     /// </summary>
     public partial class NewRelicMonitorResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.NewRelicObservability
         private readonly MonitorsRestOperations _newRelicMonitorResourceMonitorsRestClient;
         private readonly NewRelicMonitorResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "NewRelic.Observability/monitors";
+
         /// <summary> Initializes a new instance of the <see cref="NewRelicMonitorResource"/> class for mocking. </summary>
         protected NewRelicMonitorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NewRelicMonitorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NewRelicMonitorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NewRelicMonitorResource(ArmClient client, NewRelicMonitorResourceData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.NewRelicObservability
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "NewRelic.Observability/monitors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="content"> The details of the app services get request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NewRelicObservabilityAppServiceInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NewRelicObservabilityAppServiceInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NewRelicObservabilityAppServiceInfo> GetAppServicesAsync(NewRelicAppServicesGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="content"> The details of the app services get request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="NewRelicObservabilityAppServiceInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NewRelicObservabilityAppServiceInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NewRelicObservabilityAppServiceInfo> GetAppServices(NewRelicAppServicesGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="content"> The details of the Hosts get request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NewRelicObservabilityVmInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NewRelicObservabilityVmInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NewRelicObservabilityVmInfo> GetHostsAsync(NewRelicHostsGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="content"> The details of the Hosts get request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="NewRelicObservabilityVmInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NewRelicObservabilityVmInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NewRelicObservabilityVmInfo> GetHosts(NewRelicHostsGetContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NewRelicResourceMonitorResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NewRelicResourceMonitorResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NewRelicResourceMonitorResult> GetMonitoredResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NewRelicResourceMonitorResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NewRelicResourceMonitorResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NewRelicResourceMonitorResult> GetMonitoredResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _newRelicMonitorResourceMonitorsRestClient.CreateListMonitoredResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

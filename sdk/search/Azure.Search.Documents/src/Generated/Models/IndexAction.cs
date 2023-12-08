@@ -13,10 +13,19 @@ namespace Azure.Search.Documents.Models
     /// <summary> Represents an index action that operates on a document. </summary>
     internal partial class IndexAction
     {
-        /// <summary> Initializes a new instance of IndexAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexAction"/>. </summary>
         public IndexAction()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IndexAction"/>. </summary>
+        /// <param name="actionType"> The operation to perform on a document in an indexing batch. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal IndexAction(IndexActionType? actionType, IDictionary<string, object> additionalProperties)
+        {
+            ActionType = actionType;
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The operation to perform on a document in an indexing batch. </summary>

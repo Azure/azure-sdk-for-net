@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RedisEnterprise
     /// </summary>
     public partial class RedisEnterpriseClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of RedisEnterpriseClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU to create, which affects price, performance, and features. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             PrivateEndpointConnections = new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

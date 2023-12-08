@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// </summary>
     public abstract partial class SynapseLinkedIntegrationRuntimeType
     {
-        /// <summary> Initializes a new instance of SynapseLinkedIntegrationRuntimeType. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseLinkedIntegrationRuntimeType"/>. </summary>
         protected SynapseLinkedIntegrationRuntimeType()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseLinkedIntegrationRuntimeType. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseLinkedIntegrationRuntimeType"/>. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
         internal SynapseLinkedIntegrationRuntimeType(string authorizationType)
         {

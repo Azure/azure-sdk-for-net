@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Input of CheckNameAvailability API. </summary>
     public partial class SupportNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of SupportNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The resource name to validate. </param>
         /// <param name="resourceType"> The type of resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

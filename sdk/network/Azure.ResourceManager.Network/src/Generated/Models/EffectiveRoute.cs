@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Effective Route. </summary>
     public partial class EffectiveRoute
     {
-        /// <summary> Initializes a new instance of EffectiveRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveRoute"/>. </summary>
         internal EffectiveRoute()
         {
             AddressPrefix = new ChangeTrackingList<string>();
             NextHopIPAddress = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EffectiveRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveRoute"/>. </summary>
         /// <param name="name"> The name of the user defined route. This is optional. </param>
         /// <param name="disableBgpRoutePropagation"> If true, on-premises routes are not propagated to the network interfaces in the subnet. </param>
         /// <param name="source"> Who created the route. </param>

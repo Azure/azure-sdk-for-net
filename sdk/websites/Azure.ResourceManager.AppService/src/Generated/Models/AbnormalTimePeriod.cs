@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Class representing Abnormal Time Period identified in diagnosis. </summary>
     public partial class AbnormalTimePeriod
     {
-        /// <summary> Initializes a new instance of AbnormalTimePeriod. </summary>
+        /// <summary> Initializes a new instance of <see cref="AbnormalTimePeriod"/>. </summary>
         public AbnormalTimePeriod()
         {
             Events = new ChangeTrackingList<DetectorAbnormalTimePeriod>();
             Solutions = new ChangeTrackingList<DiagnosticSolution>();
         }
 
-        /// <summary> Initializes a new instance of AbnormalTimePeriod. </summary>
+        /// <summary> Initializes a new instance of <see cref="AbnormalTimePeriod"/>. </summary>
         /// <param name="startOn"> Start time of the downtime. </param>
         /// <param name="endOn"> End time of the downtime. </param>
         /// <param name="events"> List of Possible Cause of downtime. </param>

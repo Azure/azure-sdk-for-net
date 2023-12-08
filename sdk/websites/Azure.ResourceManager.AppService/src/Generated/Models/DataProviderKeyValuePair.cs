@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The DataProviderKeyValuePair. </summary>
     public partial class DataProviderKeyValuePair
     {
-        /// <summary> Initializes a new instance of DataProviderKeyValuePair. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProviderKeyValuePair"/>. </summary>
         internal DataProviderKeyValuePair()
         {
         }
 
-        /// <summary> Initializes a new instance of DataProviderKeyValuePair. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProviderKeyValuePair"/>. </summary>
         /// <param name="key"></param>
         /// <param name="value"> Any object. </param>
         internal DataProviderKeyValuePair(string key, BinaryData value)

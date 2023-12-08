@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServiceServiceTaskResource" /> and their operations.
-    /// Each <see cref="ServiceServiceTaskResource" /> in the collection will belong to the same instance of <see cref="DataMigrationServiceResource" />.
-    /// To get a <see cref="ServiceServiceTaskCollection" /> instance call the GetServiceServiceTasks method from an instance of <see cref="DataMigrationServiceResource" />.
+    /// A class representing a collection of <see cref="ServiceServiceTaskResource"/> and their operations.
+    /// Each <see cref="ServiceServiceTaskResource"/> in the collection will belong to the same instance of <see cref="DataMigrationServiceResource"/>.
+    /// To get a <see cref="ServiceServiceTaskCollection"/> instance call the GetServiceServiceTasks method from an instance of <see cref="DataMigrationServiceResource"/>.
     /// </summary>
     public partial class ServiceServiceTaskCollection : ArmCollection, IEnumerable<ServiceServiceTaskResource>, IAsyncEnumerable<ServiceServiceTaskResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </summary>
         /// <param name="taskType"> Filter tasks by task type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceServiceTaskResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceServiceTaskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceServiceTaskResource> GetAllAsync(string taskType = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceServiceTaskServiceTasksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskType);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </summary>
         /// <param name="taskType"> Filter tasks by task type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceServiceTaskResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceServiceTaskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceServiceTaskResource> GetAll(string taskType = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceServiceTaskServiceTasksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, taskType);

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
     /// A Class representing a DataFactoryPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataFactoryPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataFactoryPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource" /> using the GetDataFactoryPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataFactoryPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataFactoryPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource"/> using the GetDataFactoryPrivateEndpointConnection method.
     /// </summary>
     public partial class DataFactoryPrivateEndpointConnectionResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.DataFactory
         private readonly PrivateEndpointConnectionRestOperations _dataFactoryPrivateEndpointConnectionPrivateEndpointConnectionRestClient;
         private readonly DataFactoryPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="DataFactoryPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected DataFactoryPrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataFactoryPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataFactoryPrivateEndpointConnectionResource(ArmClient client, DataFactoryPrivateEndpointConnectionData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DataFactory
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The DataFactoryPrivateEndpointConnectionCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The <see cref="DataFactoryPrivateEndpointConnectionCreateOrUpdateContent"/> to use. </param>
         /// <param name="ifMatch"> ETag of the private endpoint connection entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The DataFactoryPrivateEndpointConnectionCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The <see cref="DataFactoryPrivateEndpointConnectionCreateOrUpdateContent"/> to use. </param>
         /// <param name="ifMatch"> ETag of the private endpoint connection entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>

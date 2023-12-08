@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The NginxPrivateIPAddress. </summary>
     public partial class NginxPrivateIPAddress
     {
-        /// <summary> Initializes a new instance of NginxPrivateIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxPrivateIPAddress"/>. </summary>
         public NginxPrivateIPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxPrivateIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxPrivateIPAddress"/>. </summary>
         /// <param name="privateIPAddress"></param>
         /// <param name="privateIPAllocationMethod"></param>
         /// <param name="subnetId"></param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> The comparison expression to be used in the budgets. </summary>
     public partial class BudgetComparisonExpression
     {
-        /// <summary> Initializes a new instance of BudgetComparisonExpression. </summary>
+        /// <summary> Initializes a new instance of <see cref="BudgetComparisonExpression"/>. </summary>
         /// <param name="name"> The name of the column to use in comparison. </param>
         /// <param name="operator"> The operator to use for comparison. </param>
         /// <param name="values"> Array of values to use for comparison. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of BudgetComparisonExpression. </summary>
+        /// <summary> Initializes a new instance of <see cref="BudgetComparisonExpression"/>. </summary>
         /// <param name="name"> The name of the column to use in comparison. </param>
         /// <param name="operator"> The operator to use for comparison. </param>
         /// <param name="values"> Array of values to use for comparison. </param>

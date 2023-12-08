@@ -12,9 +12,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> BackupStatus request. </summary>
     public partial class BackupStatusContent
     {
-        /// <summary> Initializes a new instance of BackupStatusContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupStatusContent"/>. </summary>
         public BackupStatusContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupStatusContent"/>. </summary>
+        /// <param name="resourceType"> Container Type - VM, SQLPaaS, DPM, AzureFileShare... </param>
+        /// <param name="resourceId"> Entire ARM resource id of the resource. </param>
+        /// <param name="poLogicalName"> Protectable Item Logical Name. </param>
+        internal BackupStatusContent(BackupDataSourceType? resourceType, ResourceIdentifier resourceId, string poLogicalName)
+        {
+            ResourceType = resourceType;
+            ResourceId = resourceId;
+            PoLogicalName = poLogicalName;
         }
 
         /// <summary> Container Type - VM, SQLPaaS, DPM, AzureFileShare... </summary>

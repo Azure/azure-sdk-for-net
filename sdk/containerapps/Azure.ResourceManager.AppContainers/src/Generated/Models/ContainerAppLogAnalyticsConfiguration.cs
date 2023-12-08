@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Log Analytics configuration, must only be provided when destination is configured as 'log-analytics'. </summary>
     public partial class ContainerAppLogAnalyticsConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppLogAnalyticsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppLogAnalyticsConfiguration"/>. </summary>
         public ContainerAppLogAnalyticsConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppLogAnalyticsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppLogAnalyticsConfiguration"/>. </summary>
         /// <param name="customerId"> Log analytics customer id. </param>
         /// <param name="sharedKey"> Log analytics customer key. </param>
         internal ContainerAppLogAnalyticsConfiguration(string customerId, string sharedKey)

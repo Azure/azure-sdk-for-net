@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The supported capabilities. </summary>
     public partial class ContainerSupportedCapabilities
     {
-        /// <summary> Initializes a new instance of ContainerSupportedCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerSupportedCapabilities"/>. </summary>
         internal ContainerSupportedCapabilities()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerSupportedCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerSupportedCapabilities"/>. </summary>
         /// <param name="maxMemoryInGB"> The maximum allowed memory request in GB. </param>
         /// <param name="maxCpu"> The maximum allowed CPU request in cores. </param>
         /// <param name="maxGpuCount"> The maximum allowed GPU count. </param>

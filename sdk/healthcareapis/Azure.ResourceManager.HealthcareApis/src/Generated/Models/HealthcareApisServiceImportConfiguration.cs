@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> Import operation configuration information. </summary>
     public partial class HealthcareApisServiceImportConfiguration
     {
-        /// <summary> Initializes a new instance of HealthcareApisServiceImportConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceImportConfiguration"/>. </summary>
         public HealthcareApisServiceImportConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisServiceImportConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceImportConfiguration"/>. </summary>
         /// <param name="integrationDataStore"> The name of the default integration storage account. </param>
         /// <param name="isInitialImportMode"> If the FHIR service is in InitialImportMode. </param>
         /// <param name="isEnabled"> If the import operation is enabled. </param>

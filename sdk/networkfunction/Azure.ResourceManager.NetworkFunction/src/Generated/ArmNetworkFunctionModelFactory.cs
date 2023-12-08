@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmNetworkFunctionModelFactory
     {
-        /// <summary> Initializes a new instance of AzureTrafficCollectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunction.AzureTrafficCollectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             return new AzureTrafficCollectorData(id, name, resourceType, systemData, tags, location, etag, collectorPolicies?.ToList(), virtualHubId != null ? ResourceManagerModelFactory.SubResource(virtualHubId) : null, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of CollectorPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunction.CollectorPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

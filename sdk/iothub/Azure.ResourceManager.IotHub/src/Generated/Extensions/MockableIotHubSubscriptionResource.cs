@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotHubDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IotHubDescriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotHubDescriptionResource> GetIotHubDescriptionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotHubDescriptionIotHubResourceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotHubDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotHubDescriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotHubDescriptionResource> GetIotHubDescriptions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IotHubDescriptionIotHubResourceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotHubUserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IotHubUserSubscriptionQuota"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuotaAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceProviderCommonRestClient.CreateGetSubscriptionQuotaRequest(Id.SubscriptionId);
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotHubUserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotHubUserSubscriptionQuota"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuota(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceProviderCommonRestClient.CreateGetSubscriptionQuotaRequest(Id.SubscriptionId);

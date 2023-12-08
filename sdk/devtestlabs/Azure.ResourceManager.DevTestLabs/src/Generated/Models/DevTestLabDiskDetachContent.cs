@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of the disk to detach. </summary>
     public partial class DevTestLabDiskDetachContent
     {
-        /// <summary> Initializes a new instance of DevTestLabDiskDetachContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabDiskDetachContent"/>. </summary>
         public DevTestLabDiskDetachContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabDiskDetachContent"/>. </summary>
+        /// <param name="leasedByLabVmId"> The resource ID of the Lab VM to which the disk is attached. </param>
+        internal DevTestLabDiskDetachContent(ResourceIdentifier leasedByLabVmId)
+        {
+            LeasedByLabVmId = leasedByLabVmId;
         }
 
         /// <summary> The resource ID of the Lab VM to which the disk is attached. </summary>

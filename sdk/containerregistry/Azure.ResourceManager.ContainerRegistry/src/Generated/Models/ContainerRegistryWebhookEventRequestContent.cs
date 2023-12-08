@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The request that generated the event. </summary>
     public partial class ContainerRegistryWebhookEventRequestContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventRequestContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventRequestContent"/>. </summary>
         internal ContainerRegistryWebhookEventRequestContent()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookEventRequestContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventRequestContent"/>. </summary>
         /// <param name="id"> The ID of the request that initiated the event. </param>
         /// <param name="addr"> The IP or hostname and possibly port of the client connection that initiated the event. This is the RemoteAddr from the standard http request. </param>
         /// <param name="host"> The externally accessible hostname of the registry instance, as specified by the http host header on incoming requests. </param>

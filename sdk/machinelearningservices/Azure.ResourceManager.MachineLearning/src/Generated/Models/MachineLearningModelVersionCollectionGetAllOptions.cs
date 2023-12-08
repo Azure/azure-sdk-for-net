@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningModelVersionCollectionGetAllOptions. </summary>
     public partial class MachineLearningModelVersionCollectionGetAllOptions
     {
-        /// <summary> Initializes a new instance of MachineLearningModelVersionCollectionGetAllOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningModelVersionCollectionGetAllOptions"/>. </summary>
         public MachineLearningModelVersionCollectionGetAllOptions()
         {
         }

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Media
 {
     /// <summary>
     /// A Class representing a MediaLiveOutput along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MediaLiveOutputResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMediaLiveOutputResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MediaLiveEventResource" /> using the GetMediaLiveOutput method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MediaLiveOutputResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMediaLiveOutputResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MediaLiveEventResource"/> using the GetMediaLiveOutput method.
     /// </summary>
     public partial class MediaLiveOutputResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Media
         private readonly LiveOutputsRestOperations _mediaLiveOutputLiveOutputsRestClient;
         private readonly MediaLiveOutputData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaservices/liveEvents/liveOutputs";
+
         /// <summary> Initializes a new instance of the <see cref="MediaLiveOutputResource"/> class for mocking. </summary>
         protected MediaLiveOutputResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MediaLiveOutputResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MediaLiveOutputResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MediaLiveOutputResource(ArmClient client, MediaLiveOutputData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Media
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaservices/liveEvents/liveOutputs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

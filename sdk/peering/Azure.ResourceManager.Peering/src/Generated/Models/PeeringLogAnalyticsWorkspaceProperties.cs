@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The properties that define a Log Analytics Workspace. </summary>
     public partial class PeeringLogAnalyticsWorkspaceProperties
     {
-        /// <summary> Initializes a new instance of PeeringLogAnalyticsWorkspaceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringLogAnalyticsWorkspaceProperties"/>. </summary>
         public PeeringLogAnalyticsWorkspaceProperties()
         {
             ConnectedAgents = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PeeringLogAnalyticsWorkspaceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringLogAnalyticsWorkspaceProperties"/>. </summary>
         /// <param name="workspaceId"> The Workspace ID. </param>
         /// <param name="key"> The Workspace Key. </param>
         /// <param name="connectedAgents"> The list of connected agents. </param>

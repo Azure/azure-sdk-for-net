@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Api reference. </summary>
     public partial class LogicApiReference : LogicResourceReference
     {
-        /// <summary> Initializes a new instance of LogicApiReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiReference"/>. </summary>
         public LogicApiReference()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicApiReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiReference"/>. </summary>
         /// <param name="id"> The resource id. </param>
         /// <param name="name"> Gets the resource name. </param>
         /// <param name="resourceType"> Gets the resource type. </param>

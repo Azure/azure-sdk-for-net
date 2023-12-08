@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A Class representing an AttachedNetworkConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AttachedNetworkConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAttachedNetworkConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterResource" /> using the GetAttachedNetworkConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AttachedNetworkConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAttachedNetworkConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterResource"/> using the GetAttachedNetworkConnection method.
     /// </summary>
     public partial class AttachedNetworkConnectionResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.DevCenter
         private readonly AttachedNetworksRestOperations _attachedNetworkConnectionAttachedNetworksRestClient;
         private readonly AttachedNetworkConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters/attachednetworks";
+
         /// <summary> Initializes a new instance of the <see cref="AttachedNetworkConnectionResource"/> class for mocking. </summary>
         protected AttachedNetworkConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AttachedNetworkConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AttachedNetworkConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AttachedNetworkConnectionResource(ArmClient client, AttachedNetworkConnectionData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DevCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters/attachednetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

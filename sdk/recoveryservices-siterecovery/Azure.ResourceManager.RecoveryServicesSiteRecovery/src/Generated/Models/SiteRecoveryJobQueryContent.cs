@@ -12,9 +12,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Query parameter to enumerate jobs. </summary>
     public partial class SiteRecoveryJobQueryContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryJobQueryContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobQueryContent"/>. </summary>
         public SiteRecoveryJobQueryContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobQueryContent"/>. </summary>
+        /// <param name="startOn"> Date time to get jobs from. </param>
+        /// <param name="endOn"> Date time to get jobs upto. </param>
+        /// <param name="fabricId"> The Id of the fabric to search jobs under. </param>
+        /// <param name="affectedObjectTypes"> The type of objects. </param>
+        /// <param name="jobStatus"> The states of the job to be filtered can be in. </param>
+        /// <param name="jobOutputType"> The output type of the jobs. </param>
+        /// <param name="jobName"> The job Name. </param>
+        /// <param name="timezoneOffset"> The timezone offset for the location of the request (in minutes). </param>
+        internal SiteRecoveryJobQueryContent(string startOn, string endOn, ResourceIdentifier fabricId, string affectedObjectTypes, string jobStatus, ExportJobOutputSerializationType? jobOutputType, string jobName, double? timezoneOffset)
+        {
+            StartOn = startOn;
+            EndOn = endOn;
+            FabricId = fabricId;
+            AffectedObjectTypes = affectedObjectTypes;
+            JobStatus = jobStatus;
+            JobOutputType = jobOutputType;
+            JobName = jobName;
+            TimezoneOffset = timezoneOffset;
         }
 
         /// <summary> Date time to get jobs from. </summary>

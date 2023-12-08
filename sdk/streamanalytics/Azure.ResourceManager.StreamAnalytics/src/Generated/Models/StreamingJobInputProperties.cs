@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// </summary>
     public abstract partial class StreamingJobInputProperties
     {
-        /// <summary> Initializes a new instance of StreamingJobInputProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobInputProperties"/>. </summary>
         protected StreamingJobInputProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingJobInputProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobInputProperties"/>. </summary>
         /// <param name="inputPropertiesType"> Indicates whether the input is a source of reference data or stream data. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="serialization">
         /// Describes how data from an input is serialized or how data is serialized when written to an output. Required on PUT (CreateOrReplace) requests.

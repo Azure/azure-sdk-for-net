@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Sphere
 {
     /// <summary>
     /// A Class representing a SphereCatalog along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SphereCatalogResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSphereCatalogResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSphereCatalog method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SphereCatalogResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSphereCatalogResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSphereCatalog method.
     /// </summary>
     public partial class SphereCatalogResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.Sphere
         private readonly CatalogsRestOperations _sphereCatalogCatalogsRestClient;
         private readonly SphereCatalogData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs";
+
         /// <summary> Initializes a new instance of the <see cref="SphereCatalogResource"/> class for mocking. </summary>
         protected SphereCatalogResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SphereCatalogResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SphereCatalogResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SphereCatalogResource(ArmClient client, SphereCatalogData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.Sphere
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SphereDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SphereDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SphereDeploymentResource> GetDeploymentsAsync(string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SphereDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SphereDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SphereDeploymentResource> GetDeployments(string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SphereDeviceGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SphereDeviceGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SphereDeviceGroupResource> GetDeviceGroupsAsync(ListSphereDeviceGroupsContent content, string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="SphereDeviceGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SphereDeviceGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SphereDeviceGroupResource> GetDeviceGroups(ListSphereDeviceGroupsContent content, string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SphereDeviceInsight" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SphereDeviceInsight"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SphereDeviceInsight> GetDeviceInsightsAsync(string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListDeviceInsightsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SphereDeviceInsight" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SphereDeviceInsight"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SphereDeviceInsight> GetDeviceInsights(string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListDeviceInsightsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SphereDeviceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SphereDeviceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SphereDeviceResource> GetDevicesAsync(string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListDevicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SphereDeviceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SphereDeviceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SphereDeviceResource> GetDevices(string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListDevicesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);

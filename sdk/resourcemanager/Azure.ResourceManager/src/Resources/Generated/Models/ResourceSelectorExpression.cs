@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The selector expression. </summary>
     public partial class ResourceSelectorExpression
     {
-        /// <summary> Initializes a new instance of ResourceSelectorExpression. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSelectorExpression"/>. </summary>
         public ResourceSelectorExpression()
         {
             In = new ChangeTrackingList<string>();
             NotIn = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceSelectorExpression. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSelectorExpression"/>. </summary>
         /// <param name="kind"> The selector kind. </param>
         /// <param name="in"> The list of values to filter in. </param>
         /// <param name="notIn"> The list of values to filter out. </param>

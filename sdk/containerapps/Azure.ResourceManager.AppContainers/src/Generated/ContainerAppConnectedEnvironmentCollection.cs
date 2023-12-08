@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerAppConnectedEnvironmentResource" /> and their operations.
-    /// Each <see cref="ContainerAppConnectedEnvironmentResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ContainerAppConnectedEnvironmentCollection" /> instance call the GetContainerAppConnectedEnvironments method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ContainerAppConnectedEnvironmentResource"/> and their operations.
+    /// Each <see cref="ContainerAppConnectedEnvironmentResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ContainerAppConnectedEnvironmentCollection"/> instance call the GetContainerAppConnectedEnvironments method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ContainerAppConnectedEnvironmentCollection : ArmCollection, IEnumerable<ContainerAppConnectedEnvironmentResource>, IAsyncEnumerable<ContainerAppConnectedEnvironmentResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerAppConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerAppConnectedEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppConnectedEnvironmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerAppConnectedEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppConnectedEnvironmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

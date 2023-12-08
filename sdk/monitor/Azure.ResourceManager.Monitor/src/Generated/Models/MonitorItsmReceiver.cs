@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An Itsm receiver. </summary>
     public partial class MonitorItsmReceiver
     {
-        /// <summary> Initializes a new instance of MonitorItsmReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorItsmReceiver"/>. </summary>
         /// <param name="name"> The name of the Itsm receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="workspaceId"> OMS LA instance identifier. </param>
         /// <param name="connectionId"> Unique identification of ITSM connection among multiple defined in above workspace. </param>

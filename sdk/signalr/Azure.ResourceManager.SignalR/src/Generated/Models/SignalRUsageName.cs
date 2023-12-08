@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Localizable String object containing the name and a localized value. </summary>
     public partial class SignalRUsageName
     {
-        /// <summary> Initializes a new instance of SignalRUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRUsageName"/>. </summary>
         internal SignalRUsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalRUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRUsageName"/>. </summary>
         /// <param name="value"> The identifier of the usage. </param>
         /// <param name="localizedValue"> Localized name of the usage. </param>
         internal SignalRUsageName(string value, string localizedValue)

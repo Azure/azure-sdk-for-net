@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A Class representing an EventGridPartnerNamespacePrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventGridPartnerNamespacePrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PartnerNamespaceResource" /> using the GetEventGridPartnerNamespacePrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventGridPartnerNamespacePrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PartnerNamespaceResource"/> using the GetEventGridPartnerNamespacePrivateEndpointConnection method.
     /// </summary>
     public partial class EventGridPartnerNamespacePrivateEndpointConnectionResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.EventGrid
         private readonly PrivateEndpointConnectionsRestOperations _eventGridPartnerNamespacePrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly EventGridPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/partnerNamespaces/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected EventGridPartnerNamespacePrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventGridPartnerNamespacePrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventGridPartnerNamespacePrivateEndpointConnectionResource(ArmClient client, EventGridPrivateEndpointConnectionData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/partnerNamespaces/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

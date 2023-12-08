@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> List of Backup Policies. </summary>
     internal partial class BackupPoliciesList
     {
-        /// <summary> Initializes a new instance of BackupPoliciesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupPoliciesList"/>. </summary>
         internal BackupPoliciesList()
         {
             Value = new ChangeTrackingList<NetAppBackupPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of BackupPoliciesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupPoliciesList"/>. </summary>
         /// <param name="value"> A list of backup policies. </param>
         internal BackupPoliciesList(IReadOnlyList<NetAppBackupPolicyData> value)
         {

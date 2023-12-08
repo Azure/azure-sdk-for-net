@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeTriggerData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeTriggerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeTriggerData"/>. </summary>
         public DataBoxEdgeTriggerData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeTriggerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeTriggerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

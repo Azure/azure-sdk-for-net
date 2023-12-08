@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Cognitive Services resource type and SKU. </summary>
     public partial class CognitiveServicesAccountSku
     {
-        /// <summary> Initializes a new instance of CognitiveServicesAccountSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountSku"/>. </summary>
         internal CognitiveServicesAccountSku()
         {
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesAccountSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountSku"/>. </summary>
         /// <param name="resourceType"> Resource Namespace and Type. </param>
         /// <param name="sku"> The SKU of Cognitive Services account. </param>
         internal CognitiveServicesAccountSku(ResourceType? resourceType, CognitiveServicesSku sku)

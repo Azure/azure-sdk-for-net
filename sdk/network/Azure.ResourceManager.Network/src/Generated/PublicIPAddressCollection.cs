@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PublicIPAddressResource" /> and their operations.
-    /// Each <see cref="PublicIPAddressResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="PublicIPAddressCollection" /> instance call the GetPublicIPAddresses method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="PublicIPAddressResource"/> and their operations.
+    /// Each <see cref="PublicIPAddressResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="PublicIPAddressCollection"/> instance call the GetPublicIPAddresses method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class PublicIPAddressCollection : ArmCollection, IEnumerable<PublicIPAddressResource>, IAsyncEnumerable<PublicIPAddressResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PublicIPAddressResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PublicIPAddressResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PublicIPAddressResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _publicIPAddressRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PublicIPAddressResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PublicIPAddressResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PublicIPAddressResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _publicIPAddressRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);

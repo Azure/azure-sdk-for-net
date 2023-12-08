@@ -13,10 +13,25 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update node configuration operation. </summary>
     public partial class DscNodeConfigurationCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DscNodeConfigurationCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeConfigurationCreateOrUpdateContent"/>. </summary>
         public DscNodeConfigurationCreateOrUpdateContent()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DscNodeConfigurationCreateOrUpdateContent"/>. </summary>
+        /// <param name="name"> Name of the node configuration. </param>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <param name="source"> Gets or sets the source. </param>
+        /// <param name="configuration"> Gets or sets the configuration of the node. </param>
+        /// <param name="isIncrementNodeConfigurationBuildRequired"> If a new build version of NodeConfiguration is required. </param>
+        internal DscNodeConfigurationCreateOrUpdateContent(string name, IDictionary<string, string> tags, AutomationContentSource source, DscConfigurationAssociationProperty configuration, bool? isIncrementNodeConfigurationBuildRequired)
+        {
+            Name = name;
+            Tags = tags;
+            Source = source;
+            Configuration = configuration;
+            IsIncrementNodeConfigurationBuildRequired = isIncrementNodeConfigurationBuildRequired;
         }
 
         /// <summary> Name of the node configuration. </summary>

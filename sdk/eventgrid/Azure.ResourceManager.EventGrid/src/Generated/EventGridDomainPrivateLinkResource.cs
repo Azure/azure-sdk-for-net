@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A Class representing an EventGridDomainPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventGridDomainPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventGridDomainPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventGridDomainResource" /> using the GetEventGridDomainPrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventGridDomainPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventGridDomainPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventGridDomainResource"/> using the GetEventGridDomainPrivateLinkResource method.
     /// </summary>
     public partial class EventGridDomainPrivateLinkResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.EventGrid
         private readonly PrivateLinkResourcesRestOperations _eventGridDomainPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly EventGridPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/domains/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="EventGridDomainPrivateLinkResource"/> class for mocking. </summary>
         protected EventGridDomainPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventGridDomainPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventGridDomainPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventGridDomainPrivateLinkResource(ArmClient client, EventGridPrivateLinkResourceData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/domains/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

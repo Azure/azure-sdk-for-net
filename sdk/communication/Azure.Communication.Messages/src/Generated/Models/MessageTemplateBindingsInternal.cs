@@ -10,9 +10,16 @@ namespace Azure.Communication.Messages
     /// <summary> The binding object to link values to the template specific locations. </summary>
     internal partial class MessageTemplateBindingsInternal
     {
-        /// <summary> Initializes a new instance of MessageTemplateBindingsInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateBindingsInternal"/>. </summary>
         public MessageTemplateBindingsInternal()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateBindingsInternal"/>. </summary>
+        /// <param name="whatsApp"> The template bindings for WhatsApp. </param>
+        internal MessageTemplateBindingsInternal(MessageTemplateBindingsWhatsApp whatsApp)
+        {
+            WhatsApp = whatsApp;
         }
 
         /// <summary> The template bindings for WhatsApp. </summary>

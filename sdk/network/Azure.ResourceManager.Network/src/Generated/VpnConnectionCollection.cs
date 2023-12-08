@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="VpnConnectionResource" /> and their operations.
-    /// Each <see cref="VpnConnectionResource" /> in the collection will belong to the same instance of <see cref="VpnGatewayResource" />.
-    /// To get a <see cref="VpnConnectionCollection" /> instance call the GetVpnConnections method from an instance of <see cref="VpnGatewayResource" />.
+    /// A class representing a collection of <see cref="VpnConnectionResource"/> and their operations.
+    /// Each <see cref="VpnConnectionResource"/> in the collection will belong to the same instance of <see cref="VpnGatewayResource"/>.
+    /// To get a <see cref="VpnConnectionCollection"/> instance call the GetVpnConnections method from an instance of <see cref="VpnGatewayResource"/>.
     /// </summary>
     public partial class VpnConnectionCollection : ArmCollection, IEnumerable<VpnConnectionResource>, IAsyncEnumerable<VpnConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VpnConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VpnConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VpnConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vpnConnectionRestClient.CreateListByVpnGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VpnConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VpnConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VpnConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vpnConnectionRestClient.CreateListByVpnGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

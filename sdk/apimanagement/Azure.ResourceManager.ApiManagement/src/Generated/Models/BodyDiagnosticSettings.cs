@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Body logging settings. </summary>
     internal partial class BodyDiagnosticSettings
     {
-        /// <summary> Initializes a new instance of BodyDiagnosticSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BodyDiagnosticSettings"/>. </summary>
         public BodyDiagnosticSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of BodyDiagnosticSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BodyDiagnosticSettings"/>. </summary>
         /// <param name="bytes"> Number of request body bytes to log. </param>
         internal BodyDiagnosticSettings(int? bytes)
         {

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
     /// A Class representing a LogAnalyticsQuery along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LogAnalyticsQueryResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLogAnalyticsQueryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LogAnalyticsQueryPackResource" /> using the GetLogAnalyticsQuery method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogAnalyticsQueryResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLogAnalyticsQueryResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LogAnalyticsQueryPackResource"/> using the GetLogAnalyticsQuery method.
     /// </summary>
     public partial class LogAnalyticsQueryResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.OperationalInsights
         private readonly QueriesRestOperations _logAnalyticsQueryQueriesRestClient;
         private readonly LogAnalyticsQueryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/queryPacks/queries";
+
         /// <summary> Initializes a new instance of the <see cref="LogAnalyticsQueryResource"/> class for mocking. </summary>
         protected LogAnalyticsQueryResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LogAnalyticsQueryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogAnalyticsQueryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LogAnalyticsQueryResource(ArmClient client, LogAnalyticsQueryData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.OperationalInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/queryPacks/queries";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

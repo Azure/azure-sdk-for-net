@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
     /// A Class representing a DataShare along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataShareResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataShareResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataShareAccountResource" /> using the GetDataShare method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataShareResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataShareResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataShareAccountResource"/> using the GetDataShare method.
     /// </summary>
     public partial class DataShareResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.DataShare
         private readonly SharesRestOperations _dataShareSharesRestClient;
         private readonly DataShareData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shares";
+
         /// <summary> Initializes a new instance of the <see cref="DataShareResource"/> class for mocking. </summary>
         protected DataShareResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataShareResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataShareResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataShareResource(ArmClient client, DataShareData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DataShare
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shares";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareSynchronization"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SynchronizationDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynchronizationDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynchronizationDetails> GetSynchronizationDetailsAsync(ShareSynchronization shareSynchronization, string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(shareSynchronization, nameof(shareSynchronization));
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareSynchronization"/> is null. </exception>
-        /// <returns> A collection of <see cref="SynchronizationDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynchronizationDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynchronizationDetails> GetSynchronizationDetails(ShareSynchronization shareSynchronization, string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(shareSynchronization, nameof(shareSynchronization));
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ShareSynchronization" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ShareSynchronization"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ShareSynchronization> GetSynchronizationsAsync(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareSharesRestClient.CreateListSynchronizationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ShareSynchronization" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ShareSynchronization"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ShareSynchronization> GetSynchronizations(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareSharesRestClient.CreateListSynchronizationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);

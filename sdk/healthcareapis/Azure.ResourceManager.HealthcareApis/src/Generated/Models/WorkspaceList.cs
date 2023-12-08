@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> Collection of workspace object with a next link. </summary>
     internal partial class WorkspaceList
     {
-        /// <summary> Initializes a new instance of WorkspaceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceList"/>. </summary>
         internal WorkspaceList()
         {
             Value = new ChangeTrackingList<HealthcareApisWorkspaceData>();
         }
 
-        /// <summary> Initializes a new instance of WorkspaceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page. </param>
         /// <param name="value"> Collection of resources. </param>
         internal WorkspaceList(string nextLink, IReadOnlyList<HealthcareApisWorkspaceData> value)

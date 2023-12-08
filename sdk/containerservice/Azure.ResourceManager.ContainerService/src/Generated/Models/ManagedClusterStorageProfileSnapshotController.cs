@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Snapshot Controller settings for the storage profile. </summary>
     internal partial class ManagedClusterStorageProfileSnapshotController
     {
-        /// <summary> Initializes a new instance of ManagedClusterStorageProfileSnapshotController. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfileSnapshotController"/>. </summary>
         public ManagedClusterStorageProfileSnapshotController()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterStorageProfileSnapshotController. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfileSnapshotController"/>. </summary>
         /// <param name="isEnabled"> Whether to enable Snapshot Controller. The default value is true. </param>
         internal ManagedClusterStorageProfileSnapshotController(bool? isEnabled)
         {

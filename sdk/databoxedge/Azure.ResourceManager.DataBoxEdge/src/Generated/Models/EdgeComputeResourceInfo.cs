@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Compute infrastructure Resource. </summary>
     public partial class EdgeComputeResourceInfo
     {
-        /// <summary> Initializes a new instance of EdgeComputeResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeComputeResourceInfo"/>. </summary>
         /// <param name="processorCount"> Processor count. </param>
         /// <param name="memoryInGB"> Memory in GB. </param>
         public EdgeComputeResourceInfo(int processorCount, long memoryInGB)

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A class extending from the VirtualMachineScaleSetResource in Azure.ResourceManager.Network along with the instance operations that can be performed on it.
-    /// You can only construct a <see cref="VirtualMachineScaleSetNetworkResource" /> from a <see cref="ResourceIdentifier" /> with a resource type of Microsoft.Compute/virtualMachineScaleSets.
+    /// You can only construct a <see cref="VirtualMachineScaleSetNetworkResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of Microsoft.Compute/virtualMachineScaleSets.
     /// </summary>
     public partial class VirtualMachineScaleSetNetworkResource : ArmResource
     {

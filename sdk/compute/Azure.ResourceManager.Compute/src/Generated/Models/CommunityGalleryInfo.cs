@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Information of community gallery if current gallery is shared to community. </summary>
     public partial class CommunityGalleryInfo
     {
-        /// <summary> Initializes a new instance of CommunityGalleryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryInfo"/>. </summary>
         public CommunityGalleryInfo()
         {
             PublicNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CommunityGalleryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryInfo"/>. </summary>
         /// <param name="publisherUri"> The link to the publisher website. Visible to all users. </param>
         /// <param name="publisherContact"> Community gallery publisher support email. The email address of the publisher. Visible to all users. </param>
         /// <param name="eula"> End-user license agreement for community gallery image. </param>

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FarmBeatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FarmBeatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FarmBeatResource> GetFarmBeatsAsync(int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, skipToken);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FarmBeatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FarmBeatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FarmBeatResource> GetFarmBeats(int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, skipToken);

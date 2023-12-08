@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The Application Server VM Details. </summary>
     public partial class ApplicationServerVmDetails
     {
-        /// <summary> Initializes a new instance of ApplicationServerVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationServerVmDetails"/>. </summary>
         internal ApplicationServerVmDetails()
         {
             StorageDetails = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationServerVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationServerVmDetails"/>. </summary>
         /// <param name="virtualMachineType"> Defines the type of application server VM. </param>
         /// <param name="virtualMachineId"></param>
         /// <param name="storageDetails"> Storage details of all the Storage Accounts attached to the App Virtual Machine. For e.g. NFS on AFS Shared Storage. </param>

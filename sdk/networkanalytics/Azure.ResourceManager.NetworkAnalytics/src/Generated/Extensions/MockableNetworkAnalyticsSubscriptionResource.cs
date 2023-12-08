@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataProductResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataProductResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataProductResource> GetDataProductsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataProductRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataProductResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataProductResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataProductResource> GetDataProducts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataProductRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataProductsCatalogResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataProductsCatalogResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataProductsCatalogResource> GetDataProductsCatalogsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataProductsCatalogRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataProductsCatalogResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataProductsCatalogResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataProductsCatalogResource> GetDataProductsCatalogs(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataProductsCatalogRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

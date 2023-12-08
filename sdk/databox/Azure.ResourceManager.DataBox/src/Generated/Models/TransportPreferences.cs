@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Preferences related to the shipment logistics of the sku. </summary>
     public partial class TransportPreferences
     {
-        /// <summary> Initializes a new instance of TransportPreferences. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransportPreferences"/>. </summary>
         /// <param name="preferredShipmentType"> Indicates Shipment Logistics type that the customer preferred. </param>
         public TransportPreferences(TransportShipmentType preferredShipmentType)
         {
             PreferredShipmentType = preferredShipmentType;
         }
 
-        /// <summary> Initializes a new instance of TransportPreferences. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransportPreferences"/>. </summary>
         /// <param name="preferredShipmentType"> Indicates Shipment Logistics type that the customer preferred. </param>
         /// <param name="isUpdated"> Read only property which indicates whether transport preferences has been updated or not after device is prepared. </param>
         internal TransportPreferences(TransportShipmentType preferredShipmentType, bool? isUpdated)

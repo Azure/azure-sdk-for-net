@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> The response of a list operation. </summary>
     internal partial class ArmTemplateList
     {
-        /// <summary> Initializes a new instance of ArmTemplateList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmTemplateList"/>. </summary>
         internal ArmTemplateList()
         {
             Value = new ChangeTrackingList<DevTestLabArmTemplateData>();
         }
 
-        /// <summary> Initializes a new instance of ArmTemplateList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmTemplateList"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
         internal ArmTemplateList(IReadOnlyList<DevTestLabArmTemplateData> value, string nextLink)

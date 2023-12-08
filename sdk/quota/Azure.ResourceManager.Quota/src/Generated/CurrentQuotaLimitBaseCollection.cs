@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Quota
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CurrentQuotaLimitBaseResource" /> and their operations.
-    /// Each <see cref="CurrentQuotaLimitBaseResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="CurrentQuotaLimitBaseCollection" /> instance call the GetCurrentQuotaLimitBases method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="CurrentQuotaLimitBaseResource"/> and their operations.
+    /// Each <see cref="CurrentQuotaLimitBaseResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="CurrentQuotaLimitBaseCollection"/> instance call the GetCurrentQuotaLimitBases method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class CurrentQuotaLimitBaseCollection : ArmCollection, IEnumerable<CurrentQuotaLimitBaseResource>, IAsyncEnumerable<CurrentQuotaLimitBaseResource>
     {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CurrentQuotaLimitBaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CurrentQuotaLimitBaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CurrentQuotaLimitBaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _currentQuotaLimitBaseQuotaRestClient.CreateListRequest(Id);
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CurrentQuotaLimitBaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CurrentQuotaLimitBaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CurrentQuotaLimitBaseResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _currentQuotaLimitBaseQuotaRestClient.CreateListRequest(Id);

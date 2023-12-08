@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The MongoDBDatabasePropertiesConfig. </summary>
     public partial class MongoDBDatabasePropertiesConfig : CosmosDBBaseConfig
     {
-        /// <summary> Initializes a new instance of MongoDBDatabasePropertiesConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBDatabasePropertiesConfig"/>. </summary>
         public MongoDBDatabasePropertiesConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of MongoDBDatabasePropertiesConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBDatabasePropertiesConfig"/>. </summary>
         /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
         /// <param name="autoscaleSettings"> Specifies the Autoscale settings. </param>
         internal MongoDBDatabasePropertiesConfig(int? throughput, AutoscaleSettings autoscaleSettings) : base(throughput, autoscaleSettings)

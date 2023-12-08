@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The json object containing security policy waf parameters. </summary>
     public partial class SecurityPolicyWebApplicationFirewall : SecurityPolicyProperties
     {
-        /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewall. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyWebApplicationFirewall"/>. </summary>
         public SecurityPolicyWebApplicationFirewall()
         {
             Associations = new ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation>();
             PolicyType = SecurityPolicyType.WebApplicationFirewall;
         }
 
-        /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewall. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyWebApplicationFirewall"/>. </summary>
         /// <param name="policyType"> The type of the Security policy to create. </param>
         /// <param name="wafPolicy"> Resource ID. </param>
         /// <param name="associations"> Waf associations. </param>

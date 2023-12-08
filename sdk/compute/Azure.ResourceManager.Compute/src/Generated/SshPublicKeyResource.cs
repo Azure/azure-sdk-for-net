@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a SshPublicKey along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SshPublicKeyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSshPublicKeyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSshPublicKey method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SshPublicKeyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSshPublicKeyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSshPublicKey method.
     /// </summary>
     public partial class SshPublicKeyResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Compute
         private readonly SshPublicKeysRestOperations _sshPublicKeyRestClient;
         private readonly SshPublicKeyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/sshPublicKeys";
+
         /// <summary> Initializes a new instance of the <see cref="SshPublicKeyResource"/> class for mocking. </summary>
         protected SshPublicKeyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SshPublicKeyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SshPublicKeyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SshPublicKeyResource(ArmClient client, SshPublicKeyData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/sshPublicKeys";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

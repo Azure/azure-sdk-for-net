@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Range of route errors. </summary>
     public partial class RouteErrorRange
     {
-        /// <summary> Initializes a new instance of RouteErrorRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteErrorRange"/>. </summary>
         internal RouteErrorRange()
         {
         }
 
-        /// <summary> Initializes a new instance of RouteErrorRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteErrorRange"/>. </summary>
         /// <param name="start"> Start where the route error happened. </param>
         /// <param name="end"> End where the route error happened. </param>
         internal RouteErrorRange(RouteErrorPosition start, RouteErrorPosition end)

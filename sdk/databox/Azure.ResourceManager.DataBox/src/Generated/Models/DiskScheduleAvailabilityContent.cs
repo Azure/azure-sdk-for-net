@@ -12,13 +12,24 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Request body to get the availability for scheduling disk orders. </summary>
     public partial class DiskScheduleAvailabilityContent : ScheduleAvailabilityContent
     {
-        /// <summary> Initializes a new instance of DiskScheduleAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskScheduleAvailabilityContent"/>. </summary>
         /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
         public DiskScheduleAvailabilityContent(AzureLocation storageLocation, int expectedDataSizeInTerabytes) : base(storageLocation)
         {
             ExpectedDataSizeInTerabytes = expectedDataSizeInTerabytes;
             SkuName = DataBoxSkuName.DataBoxDisk;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiskScheduleAvailabilityContent"/>. </summary>
+        /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <param name="skuName"> Sku Name for which the order is to be scheduled. </param>
+        /// <param name="country"> Country in which storage location should be supported. </param>
+        /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
+        internal DiskScheduleAvailabilityContent(AzureLocation storageLocation, DataBoxSkuName skuName, string country, int expectedDataSizeInTerabytes) : base(storageLocation, skuName, country)
+        {
+            ExpectedDataSizeInTerabytes = expectedDataSizeInTerabytes;
+            SkuName = skuName;
         }
 
         /// <summary> The expected size of the data, which needs to be transferred in this job, in terabytes. </summary>

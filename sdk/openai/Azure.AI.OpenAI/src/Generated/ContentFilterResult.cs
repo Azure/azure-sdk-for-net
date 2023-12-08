@@ -10,7 +10,7 @@ namespace Azure.AI.OpenAI
     /// <summary> Information about filtered content severity level and if it has been filtered or not. </summary>
     public partial class ContentFilterResult
     {
-        /// <summary> Initializes a new instance of ContentFilterResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentFilterResult"/>. </summary>
         /// <param name="severity"> Ratings for the intensity and risk level of filtered content. </param>
         /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
         internal ContentFilterResult(ContentFilterSeverity severity, bool filtered)

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// </summary>
     public abstract partial class ConnectionInfo
     {
-        /// <summary> Initializes a new instance of ConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionInfo"/>. </summary>
         protected ConnectionInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionInfo"/>. </summary>
         /// <param name="connectionInfoType"> Type of connection info. </param>
         /// <param name="userName"> User name. </param>
         /// <param name="password"> Password credential. </param>

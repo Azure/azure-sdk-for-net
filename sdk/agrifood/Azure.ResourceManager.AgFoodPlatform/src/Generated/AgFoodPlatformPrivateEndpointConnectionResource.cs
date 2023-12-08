@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AgFoodPlatform
 {
     /// <summary>
     /// A Class representing an AgFoodPlatformPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AgFoodPlatformPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAgFoodPlatformPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FarmBeatResource" /> using the GetAgFoodPlatformPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AgFoodPlatformPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAgFoodPlatformPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="FarmBeatResource"/> using the GetAgFoodPlatformPrivateEndpointConnection method.
     /// </summary>
     public partial class AgFoodPlatformPrivateEndpointConnectionResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.AgFoodPlatform
         private readonly PrivateEndpointConnectionsRestOperations _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly AgFoodPlatformPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AgFoodPlatform/farmBeats/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="AgFoodPlatformPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected AgFoodPlatformPrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AgFoodPlatformPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AgFoodPlatformPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AgFoodPlatformPrivateEndpointConnectionResource(ArmClient client, AgFoodPlatformPrivateEndpointConnectionData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AgFoodPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AgFoodPlatform/farmBeats/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

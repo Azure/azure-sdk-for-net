@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedGrafanaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedGrafanaResource> GetManagedGrafanasAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedGrafanaGrafanaRestClient.CreateListRequest(Id.SubscriptionId);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedGrafanaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedGrafanaResource> GetManagedGrafanas(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedGrafanaGrafanaRestClient.CreateListRequest(Id.SubscriptionId);

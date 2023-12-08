@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Specific Databases to restore. </summary>
     public partial class RestorableGremlinResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of RestorableGremlinResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableGremlinResourceData"/>. </summary>
         internal RestorableGremlinResourceData()
         {
             GraphNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RestorableGremlinResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableGremlinResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

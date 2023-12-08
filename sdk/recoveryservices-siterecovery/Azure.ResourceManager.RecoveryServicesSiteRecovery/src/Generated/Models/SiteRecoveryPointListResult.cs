@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Collection of recovery point details. </summary>
     internal partial class SiteRecoveryPointListResult
     {
-        /// <summary> Initializes a new instance of SiteRecoveryPointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPointListResult"/>. </summary>
         internal SiteRecoveryPointListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryPointData>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryPointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPointListResult"/>. </summary>
         /// <param name="value"> The recovery point details. </param>
         /// <param name="nextLink"> The value of next link. </param>
         internal SiteRecoveryPointListResult(IReadOnlyList<SiteRecoveryPointData> value, string nextLink)

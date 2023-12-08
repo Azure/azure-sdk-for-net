@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementDeletedServiceData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementDeletedServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementDeletedServiceData"/>. </summary>
         public ApiManagementDeletedServiceData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementDeletedServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementDeletedServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

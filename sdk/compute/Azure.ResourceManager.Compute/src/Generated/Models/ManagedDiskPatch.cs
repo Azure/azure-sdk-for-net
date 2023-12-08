@@ -13,10 +13,59 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Disk update resource. </summary>
     public partial class ManagedDiskPatch
     {
-        /// <summary> Initializes a new instance of ManagedDiskPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDiskPatch"/>. </summary>
         public ManagedDiskPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedDiskPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sku"> The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. </param>
+        /// <param name="osType"> the Operating System type. </param>
+        /// <param name="diskSizeGB"> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size. </param>
+        /// <param name="encryptionSettingsGroup"> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </param>
+        /// <param name="diskIopsReadWrite"> The number of IOPS allowed for this disk; only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes. </param>
+        /// <param name="diskMBpsReadWrite"> The bandwidth allowed for this disk; only settable for UltraSSD disks. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </param>
+        /// <param name="diskIopsReadOnly"> The total number of IOPS that will be allowed across all VMs mounting the shared disk as ReadOnly. One operation can transfer between 4k and 256k bytes. </param>
+        /// <param name="diskMBpsReadOnly"> The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </param>
+        /// <param name="maxShares"> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </param>
+        /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
+        /// <param name="networkAccessPolicy"> Policy for accessing the disk via network. </param>
+        /// <param name="diskAccessId"> ARM id of the DiskAccess resource for using private endpoints on disks. </param>
+        /// <param name="tier"> Performance tier of the disk (e.g, P4, S10) as described here: https://azure.microsoft.com/en-us/pricing/details/managed-disks/. Does not apply to Ultra disks. </param>
+        /// <param name="burstingEnabled"> Set to true to enable bursting beyond the provisioned performance target of the disk. Bursting is disabled by default. Does not apply to Ultra disks. </param>
+        /// <param name="purchasePlan"> Purchase plan information to be added on the OS disk. </param>
+        /// <param name="supportedCapabilities"> List of supported capabilities to be added on the OS disk. </param>
+        /// <param name="propertyUpdatesInProgress"> Properties of the disk for which update is pending. </param>
+        /// <param name="supportsHibernation"> Indicates the OS on a disk supports hibernation. </param>
+        /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
+        /// <param name="dataAccessAuthMode"> Additional authentication requirements when exporting or uploading to a disk or snapshot. </param>
+        /// <param name="isOptimizedForFrequentAttach"> Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. </param>
+        internal ManagedDiskPatch(IDictionary<string, string> tags, DiskSku sku, SupportedOperatingSystemType? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsGroup, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, int? maxShares, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, string tier, bool? burstingEnabled, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? isOptimizedForFrequentAttach)
+        {
+            Tags = tags;
+            Sku = sku;
+            OSType = osType;
+            DiskSizeGB = diskSizeGB;
+            EncryptionSettingsGroup = encryptionSettingsGroup;
+            DiskIopsReadWrite = diskIopsReadWrite;
+            DiskMBpsReadWrite = diskMBpsReadWrite;
+            DiskIopsReadOnly = diskIopsReadOnly;
+            DiskMBpsReadOnly = diskMBpsReadOnly;
+            MaxShares = maxShares;
+            Encryption = encryption;
+            NetworkAccessPolicy = networkAccessPolicy;
+            DiskAccessId = diskAccessId;
+            Tier = tier;
+            BurstingEnabled = burstingEnabled;
+            PurchasePlan = purchasePlan;
+            SupportedCapabilities = supportedCapabilities;
+            PropertyUpdatesInProgress = propertyUpdatesInProgress;
+            SupportsHibernation = supportsHibernation;
+            PublicNetworkAccess = publicNetworkAccess;
+            DataAccessAuthMode = dataAccessAuthMode;
+            IsOptimizedForFrequentAttach = isOptimizedForFrequentAttach;
         }
 
         /// <summary> Resource tags. </summary>

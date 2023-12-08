@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Status of the service impacting event. </summary>
     internal partial class ServiceImpactingEventStatus
     {
-        /// <summary> Initializes a new instance of ServiceImpactingEventStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceImpactingEventStatus"/>. </summary>
         internal ServiceImpactingEventStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceImpactingEventStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceImpactingEventStatus"/>. </summary>
         /// <param name="value"> Current status of the event. </param>
         internal ServiceImpactingEventStatus(string value)
         {

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The SystemCreatedStorageAccount. </summary>
     public partial class SystemCreatedStorageAccount
     {
-        /// <summary> Initializes a new instance of SystemCreatedStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemCreatedStorageAccount"/>. </summary>
         public SystemCreatedStorageAccount()
         {
         }
 
-        /// <summary> Initializes a new instance of SystemCreatedStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemCreatedStorageAccount"/>. </summary>
         /// <param name="allowBlobPublicAccess"> Public blob access allowed. </param>
         /// <param name="armResourceIdentifier"> This is populated once the storage account is created. </param>
         /// <param name="storageAccountHnsEnabled"> HNS enabled for storage account. </param>

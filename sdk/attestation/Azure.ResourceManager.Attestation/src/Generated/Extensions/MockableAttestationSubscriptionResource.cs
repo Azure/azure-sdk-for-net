@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AttestationProviderResource> GetAttestationProvidersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListRequest(Id.SubscriptionId);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AttestationProviderResource> GetAttestationProviders(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListRequest(Id.SubscriptionId);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AttestationProviderResource> GetAttestationProvidersByDefaultProviderAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListDefaultRequest(Id.SubscriptionId);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AttestationProviderResource> GetAttestationProvidersByDefaultProvider(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListDefaultRequest(Id.SubscriptionId);

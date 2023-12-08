@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the resource group resource settings. </summary>
     public partial class ResourceGroupResourceSettings : MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of ResourceGroupResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupResourceSettings"/>. </summary>
         public ResourceGroupResourceSettings()
         {
             ResourceType = "resourceGroups";
         }
 
-        /// <summary> Initializes a new instance of ResourceGroupResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <param name="targetResourceGroupName"> Gets or sets the target resource group name. </param>

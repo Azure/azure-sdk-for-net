@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MySqlFlexibleServerBackupResource" /> and their operations.
-    /// Each <see cref="MySqlFlexibleServerBackupResource" /> in the collection will belong to the same instance of <see cref="MySqlFlexibleServerResource" />.
-    /// To get a <see cref="MySqlFlexibleServerBackupCollection" /> instance call the GetMySqlFlexibleServerBackups method from an instance of <see cref="MySqlFlexibleServerResource" />.
+    /// A class representing a collection of <see cref="MySqlFlexibleServerBackupResource"/> and their operations.
+    /// Each <see cref="MySqlFlexibleServerBackupResource"/> in the collection will belong to the same instance of <see cref="MySqlFlexibleServerResource"/>.
+    /// To get a <see cref="MySqlFlexibleServerBackupCollection"/> instance call the GetMySqlFlexibleServerBackups method from an instance of <see cref="MySqlFlexibleServerResource"/>.
     /// </summary>
     public partial class MySqlFlexibleServerBackupCollection : ArmCollection, IEnumerable<MySqlFlexibleServerBackupResource>, IAsyncEnumerable<MySqlFlexibleServerBackupResource>
     {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MySqlFlexibleServerBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MySqlFlexibleServerBackupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlFlexibleServerBackupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerBackupBackupsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MySqlFlexibleServerBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MySqlFlexibleServerBackupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlFlexibleServerBackupResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerBackupBackupsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

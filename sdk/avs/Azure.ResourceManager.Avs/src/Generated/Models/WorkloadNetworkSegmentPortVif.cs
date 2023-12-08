@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Ports and any VIF attached to segment. </summary>
     public partial class WorkloadNetworkSegmentPortVif
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkSegmentPortVif. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkSegmentPortVif"/>. </summary>
         internal WorkloadNetworkSegmentPortVif()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkSegmentPortVif. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkSegmentPortVif"/>. </summary>
         /// <param name="portName"> Name of port or VIF attached to segment. </param>
         internal WorkloadNetworkSegmentPortVif(string portName)
         {

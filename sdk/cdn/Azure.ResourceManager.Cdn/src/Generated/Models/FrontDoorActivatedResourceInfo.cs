@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Reference to another resource along with its state. </summary>
     public partial class FrontDoorActivatedResourceInfo
     {
-        /// <summary> Initializes a new instance of FrontDoorActivatedResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorActivatedResourceInfo"/>. </summary>
         public FrontDoorActivatedResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorActivatedResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorActivatedResourceInfo"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="isActive"> Whether the resource is active or inactive. </param>
         internal FrontDoorActivatedResourceInfo(ResourceIdentifier id, bool? isActive)

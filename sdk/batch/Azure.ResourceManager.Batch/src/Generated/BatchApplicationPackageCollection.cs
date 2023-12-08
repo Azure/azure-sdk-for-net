@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Batch
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BatchApplicationPackageResource" /> and their operations.
-    /// Each <see cref="BatchApplicationPackageResource" /> in the collection will belong to the same instance of <see cref="BatchApplicationResource" />.
-    /// To get a <see cref="BatchApplicationPackageCollection" /> instance call the GetBatchApplicationPackages method from an instance of <see cref="BatchApplicationResource" />.
+    /// A class representing a collection of <see cref="BatchApplicationPackageResource"/> and their operations.
+    /// Each <see cref="BatchApplicationPackageResource"/> in the collection will belong to the same instance of <see cref="BatchApplicationResource"/>.
+    /// To get a <see cref="BatchApplicationPackageCollection"/> instance call the GetBatchApplicationPackages method from an instance of <see cref="BatchApplicationResource"/>.
     /// </summary>
     public partial class BatchApplicationPackageCollection : ArmCollection, IEnumerable<BatchApplicationPackageResource>, IAsyncEnumerable<BatchApplicationPackageResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BatchApplicationPackageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BatchApplicationPackageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BatchApplicationPackageResource> GetAllAsync(int? maxresults = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchApplicationPackageApplicationPackageRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, maxresults);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchApplicationPackageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BatchApplicationPackageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BatchApplicationPackageResource> GetAll(int? maxresults = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchApplicationPackageApplicationPackageRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, maxresults);

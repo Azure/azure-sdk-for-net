@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.DataLakeStore.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataLakeStoreAccountResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataLakeStoreAccountResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeStoreAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataLakeStoreAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataLakeStoreAccountResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeStoreAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataLakeStoreAccountResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataLakeStoreAccountResource"/> object. </returns>
         public virtual DataLakeStoreAccountResource GetDataLakeStoreAccountResource(ResourceIdentifier id)
         {
             DataLakeStoreAccountResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.DataLakeStore.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataLakeStoreFirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataLakeStoreFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeStoreFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataLakeStoreFirewallRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataLakeStoreFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeStoreFirewallRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataLakeStoreFirewallRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataLakeStoreFirewallRuleResource"/> object. </returns>
         public virtual DataLakeStoreFirewallRuleResource GetDataLakeStoreFirewallRuleResource(ResourceIdentifier id)
         {
             DataLakeStoreFirewallRuleResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.DataLakeStore.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataLakeStoreVirtualNetworkRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataLakeStoreVirtualNetworkRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeStoreVirtualNetworkRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataLakeStoreVirtualNetworkRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataLakeStoreVirtualNetworkRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeStoreVirtualNetworkRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataLakeStoreVirtualNetworkRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataLakeStoreVirtualNetworkRuleResource"/> object. </returns>
         public virtual DataLakeStoreVirtualNetworkRuleResource GetDataLakeStoreVirtualNetworkRuleResource(ResourceIdentifier id)
         {
             DataLakeStoreVirtualNetworkRuleResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.DataLakeStore.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataLakeStoreTrustedIdProviderResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataLakeStoreTrustedIdProviderResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeStoreTrustedIdProviderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataLakeStoreTrustedIdProviderResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataLakeStoreTrustedIdProviderResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeStoreTrustedIdProviderResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataLakeStoreTrustedIdProviderResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataLakeStoreTrustedIdProviderResource"/> object. </returns>
         public virtual DataLakeStoreTrustedIdProviderResource GetDataLakeStoreTrustedIdProviderResource(ResourceIdentifier id)
         {
             DataLakeStoreTrustedIdProviderResource.ValidateResourceId(id);

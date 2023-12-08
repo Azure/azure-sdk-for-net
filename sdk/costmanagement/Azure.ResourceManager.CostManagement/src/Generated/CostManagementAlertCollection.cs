@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CostManagementAlertResource" /> and their operations.
-    /// Each <see cref="CostManagementAlertResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="CostManagementAlertCollection" /> instance call the GetCostManagementAlerts method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="CostManagementAlertResource"/> and their operations.
+    /// Each <see cref="CostManagementAlertResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="CostManagementAlertCollection"/> instance call the GetCostManagementAlerts method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class CostManagementAlertCollection : ArmCollection, IEnumerable<CostManagementAlertResource>, IAsyncEnumerable<CostManagementAlertResource>
     {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CostManagementAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CostManagementAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CostManagementAlertResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementAlertAlertsRestClient.CreateListRequest(Id);
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CostManagementAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CostManagementAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CostManagementAlertResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementAlertAlertsRestClient.CreateListRequest(Id);

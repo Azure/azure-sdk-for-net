@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> The available skus operation response. </summary>
     internal partial class AvailableSkusResult
     {
-        /// <summary> Initializes a new instance of AvailableSkusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableSkusResult"/>. </summary>
         internal AvailableSkusResult()
         {
             Value = new ChangeTrackingList<DataBoxSkuInformation>();
         }
 
-        /// <summary> Initializes a new instance of AvailableSkusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableSkusResult"/>. </summary>
         /// <param name="value"> List of available skus. </param>
         /// <param name="nextLink"> Link for the next set of skus. </param>
         internal AvailableSkusResult(IReadOnlyList<DataBoxSkuInformation> value, string nextLink)

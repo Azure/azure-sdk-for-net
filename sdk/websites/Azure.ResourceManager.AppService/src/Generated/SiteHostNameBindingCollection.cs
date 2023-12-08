@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteHostNameBindingResource" /> and their operations.
-    /// Each <see cref="SiteHostNameBindingResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
-    /// To get a <see cref="SiteHostNameBindingCollection" /> instance call the GetSiteHostNameBindings method from an instance of <see cref="WebSiteResource" />.
+    /// A class representing a collection of <see cref="SiteHostNameBindingResource"/> and their operations.
+    /// Each <see cref="SiteHostNameBindingResource"/> in the collection will belong to the same instance of <see cref="WebSiteResource"/>.
+    /// To get a <see cref="SiteHostNameBindingCollection"/> instance call the GetSiteHostNameBindings method from an instance of <see cref="WebSiteResource"/>.
     /// </summary>
     public partial class SiteHostNameBindingCollection : ArmCollection, IEnumerable<SiteHostNameBindingResource>, IAsyncEnumerable<SiteHostNameBindingResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteHostNameBindingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteHostNameBindingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteHostNameBindingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteHostNameBindingWebAppsRestClient.CreateListHostNameBindingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteHostNameBindingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteHostNameBindingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteHostNameBindingResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteHostNameBindingWebAppsRestClient.CreateListHostNameBindingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

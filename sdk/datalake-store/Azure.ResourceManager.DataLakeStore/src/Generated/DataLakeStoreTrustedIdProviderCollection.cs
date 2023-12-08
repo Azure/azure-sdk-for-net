@@ -21,9 +21,9 @@ using Azure.ResourceManager.DataLakeStore.Models;
 namespace Azure.ResourceManager.DataLakeStore
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataLakeStoreTrustedIdProviderResource" /> and their operations.
-    /// Each <see cref="DataLakeStoreTrustedIdProviderResource" /> in the collection will belong to the same instance of <see cref="DataLakeStoreAccountResource" />.
-    /// To get a <see cref="DataLakeStoreTrustedIdProviderCollection" /> instance call the GetDataLakeStoreTrustedIdProviders method from an instance of <see cref="DataLakeStoreAccountResource" />.
+    /// A class representing a collection of <see cref="DataLakeStoreTrustedIdProviderResource"/> and their operations.
+    /// Each <see cref="DataLakeStoreTrustedIdProviderResource"/> in the collection will belong to the same instance of <see cref="DataLakeStoreAccountResource"/>.
+    /// To get a <see cref="DataLakeStoreTrustedIdProviderCollection"/> instance call the GetDataLakeStoreTrustedIdProviders method from an instance of <see cref="DataLakeStoreAccountResource"/>.
     /// </summary>
     public partial class DataLakeStoreTrustedIdProviderCollection : ArmCollection, IEnumerable<DataLakeStoreTrustedIdProviderResource>, IAsyncEnumerable<DataLakeStoreTrustedIdProviderResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataLakeStoreTrustedIdProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataLakeStoreTrustedIdProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataLakeStoreTrustedIdProviderResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataLakeStoreTrustedIdProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataLakeStoreTrustedIdProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataLakeStoreTrustedIdProviderResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

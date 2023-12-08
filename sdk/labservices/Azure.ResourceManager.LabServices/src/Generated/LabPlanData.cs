@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.LabServices
     /// </summary>
     public partial class LabPlanData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of LabPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabPlanData"/>. </summary>
         /// <param name="location"> The location. </param>
         public LabPlanData(AzureLocation location) : base(location)
         {
             AllowedRegions = new ChangeTrackingList<AzureLocation>();
         }
 
-        /// <summary> Initializes a new instance of LabPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabPlanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

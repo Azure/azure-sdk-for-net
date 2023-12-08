@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary>
-    /// A class representing a collection of <see cref="KeyVaultPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="KeyVaultPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="KeyVaultResource" />.
-    /// To get a <see cref="KeyVaultPrivateEndpointConnectionCollection" /> instance call the GetKeyVaultPrivateEndpointConnections method from an instance of <see cref="KeyVaultResource" />.
+    /// A class representing a collection of <see cref="KeyVaultPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="KeyVaultPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="KeyVaultResource"/>.
+    /// To get a <see cref="KeyVaultPrivateEndpointConnectionCollection"/> instance call the GetKeyVaultPrivateEndpointConnections method from an instance of <see cref="KeyVaultResource"/>.
     /// </summary>
     public partial class KeyVaultPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<KeyVaultPrivateEndpointConnectionResource>, IAsyncEnumerable<KeyVaultPrivateEndpointConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KeyVaultPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KeyVaultPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KeyVaultPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KeyVaultPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KeyVaultPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KeyVaultPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

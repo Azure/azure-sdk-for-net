@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The KerberosPasswordCredentials. </summary>
     public partial class KerberosPasswordCredentials : MachineLearningDatastoreCredentials
     {
-        /// <summary> Initializes a new instance of KerberosPasswordCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="KerberosPasswordCredentials"/>. </summary>
         /// <param name="secrets"> [Required] Kerberos password secrets. </param>
         /// <param name="kerberosKdcAddress"> [Required] IP Address or DNS HostName. </param>
         /// <param name="kerberosPrincipal"> [Required] Kerberos Username. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             CredentialsType = CredentialsType.KerberosPassword;
         }
 
-        /// <summary> Initializes a new instance of KerberosPasswordCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="KerberosPasswordCredentials"/>. </summary>
         /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
         /// <param name="secrets"> [Required] Kerberos password secrets. </param>
         /// <param name="kerberosKdcAddress"> [Required] IP Address or DNS HostName. </param>

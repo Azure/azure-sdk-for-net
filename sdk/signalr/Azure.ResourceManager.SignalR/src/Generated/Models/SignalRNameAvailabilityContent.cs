@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Data POST-ed to the nameAvailability action. </summary>
     public partial class SignalRNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of SignalRNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRNameAvailabilityContent"/>. </summary>
         /// <param name="resourceType"> The resource type. Can be "Microsoft.SignalRService/SignalR" or "Microsoft.SignalRService/webPubSub". </param>
         /// <param name="name"> The resource name to validate. e.g."my-resource-name". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

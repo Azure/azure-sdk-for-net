@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
     /// A Class representing an EventHubsDisasterRecovery along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventHubsDisasterRecoveryResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventHubsDisasterRecoveryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource" /> using the GetEventHubsDisasterRecovery method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventHubsDisasterRecoveryResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventHubsDisasterRecoveryResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource"/> using the GetEventHubsDisasterRecovery method.
     /// </summary>
     public partial class EventHubsDisasterRecoveryResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.EventHubs
         private readonly DisasterRecoveryConfigsRestOperations _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient;
         private readonly EventHubsDisasterRecoveryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/disasterRecoveryConfigs";
+
         /// <summary> Initializes a new instance of the <see cref="EventHubsDisasterRecoveryResource"/> class for mocking. </summary>
         protected EventHubsDisasterRecoveryResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventHubsDisasterRecoveryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventHubsDisasterRecoveryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventHubsDisasterRecoveryResource(ArmClient client, EventHubsDisasterRecoveryData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.EventHubs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/disasterRecoveryConfigs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

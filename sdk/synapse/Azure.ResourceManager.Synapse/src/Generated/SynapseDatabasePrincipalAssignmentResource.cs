@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseDatabasePrincipalAssignment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseDatabasePrincipalAssignmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseDatabasePrincipalAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseDatabaseResource" /> using the GetSynapseDatabasePrincipalAssignment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseDatabasePrincipalAssignmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseDatabasePrincipalAssignmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseDatabaseResource"/> using the GetSynapseDatabasePrincipalAssignment method.
     /// </summary>
     public partial class SynapseDatabasePrincipalAssignmentResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Synapse
         private readonly KustoPoolDatabasePrincipalAssignmentsRestOperations _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsRestClient;
         private readonly SynapseDatabasePrincipalAssignmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseDatabasePrincipalAssignmentResource"/> class for mocking. </summary>
         protected SynapseDatabasePrincipalAssignmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseDatabasePrincipalAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseDatabasePrincipalAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseDatabasePrincipalAssignmentResource(ArmClient client, SynapseDatabasePrincipalAssignmentData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

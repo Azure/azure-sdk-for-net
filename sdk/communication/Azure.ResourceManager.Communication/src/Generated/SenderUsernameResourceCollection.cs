@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Communication
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SenderUsernameResource" /> and their operations.
-    /// Each <see cref="SenderUsernameResource" /> in the collection will belong to the same instance of <see cref="CommunicationDomainResource" />.
-    /// To get a <see cref="SenderUsernameResourceCollection" /> instance call the GetSenderUsernameResources method from an instance of <see cref="CommunicationDomainResource" />.
+    /// A class representing a collection of <see cref="SenderUsernameResource"/> and their operations.
+    /// Each <see cref="SenderUsernameResource"/> in the collection will belong to the same instance of <see cref="CommunicationDomainResource"/>.
+    /// To get a <see cref="SenderUsernameResourceCollection"/> instance call the GetSenderUsernameResources method from an instance of <see cref="CommunicationDomainResource"/>.
     /// </summary>
     public partial class SenderUsernameResourceCollection : ArmCollection, IEnumerable<SenderUsernameResource>, IAsyncEnumerable<SenderUsernameResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Communication
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SenderUsernameResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SenderUsernameResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SenderUsernameResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _senderUsernameResourceSenderUsernamesRestClient.CreateListByDomainsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Communication
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SenderUsernameResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SenderUsernameResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SenderUsernameResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _senderUsernameResourceSenderUsernamesRestClient.CreateListByDomainsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a WebSiteSlot along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteSlotResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebSiteSlotResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetWebSiteSlot method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSiteSlotResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWebSiteSlotResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetWebSiteSlot method.
     /// </summary>
     public partial class WebSiteSlotResource : ArmResource
     {
@@ -43,12 +43,15 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _webSiteSlotWebAppsRestClient;
         private readonly WebSiteData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots";
+
         /// <summary> Initializes a new instance of the <see cref="WebSiteSlotResource"/> class for mocking. </summary>
         protected WebSiteSlotResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebSiteSlotResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebSiteSlotResource(ArmClient client, WebSiteData data) : this(client, data.Id)
@@ -69,9 +72,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Gets an object representing a WebSiteSlotResourceHealthMetadataResource along with the instance operations that can be performed on it in the WebSiteSlot. </summary>
-        /// <returns> Returns a <see cref="WebSiteSlotResourceHealthMetadataResource" /> object. </returns>
+        /// <returns> Returns a <see cref="WebSiteSlotResourceHealthMetadataResource"/> object. </returns>
         public virtual WebSiteSlotResourceHealthMetadataResource GetWebSiteSlotResourceHealthMetadata()
         {
             return new WebSiteSlotResourceHealthMetadataResource(Client, Id.AppendChildResource("resourceHealthMetadata", "default"));
@@ -428,14 +428,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Gets an object representing a WebSiteSlotFtpPublishingCredentialsPolicyResource along with the instance operations that can be performed on it in the WebSiteSlot. </summary>
-        /// <returns> Returns a <see cref="WebSiteSlotFtpPublishingCredentialsPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="WebSiteSlotFtpPublishingCredentialsPolicyResource"/> object. </returns>
         public virtual WebSiteSlotFtpPublishingCredentialsPolicyResource GetWebSiteSlotFtpPublishingCredentialsPolicy()
         {
             return new WebSiteSlotFtpPublishingCredentialsPolicyResource(Client, Id.AppendChildResource("basicPublishingCredentialsPolicies", "ftp"));
         }
 
         /// <summary> Gets an object representing a ScmSiteSlotBasicPublishingCredentialsPolicyResource along with the instance operations that can be performed on it in the WebSiteSlot. </summary>
-        /// <returns> Returns a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource"/> object. </returns>
         public virtual ScmSiteSlotBasicPublishingCredentialsPolicyResource GetScmSiteSlotBasicPublishingCredentialsPolicy()
         {
             return new ScmSiteSlotBasicPublishingCredentialsPolicyResource(Client, Id.AppendChildResource("basicPublishingCredentialsPolicies", "scm"));
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionStringKey"> The String to use. </param>
+        /// <param name="connectionStringKey"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionStringKey"> The String to use. </param>
+        /// <param name="connectionStringKey"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -548,14 +548,14 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Gets an object representing a LogsSiteSlotConfigResource along with the instance operations that can be performed on it in the WebSiteSlot. </summary>
-        /// <returns> Returns a <see cref="LogsSiteSlotConfigResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LogsSiteSlotConfigResource"/> object. </returns>
         public virtual LogsSiteSlotConfigResource GetLogsSiteSlotConfig()
         {
             return new LogsSiteSlotConfigResource(Client, Id.AppendChildResource("config", "logs"));
         }
 
         /// <summary> Gets an object representing a WebSiteSlotConfigResource along with the instance operations that can be performed on it in the WebSiteSlot. </summary>
-        /// <returns> Returns a <see cref="WebSiteSlotConfigResource" /> object. </returns>
+        /// <returns> Returns a <see cref="WebSiteSlotConfigResource"/> object. </returns>
         public virtual WebSiteSlotConfigResource GetWebSiteSlotConfig()
         {
             return new WebSiteSlotConfigResource(Client, Id.AppendChildResource("config", "web"));
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Gets an object representing a SiteSlotExtensionResource along with the instance operations that can be performed on it in the WebSiteSlot. </summary>
-        /// <returns> Returns a <see cref="SiteSlotExtensionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SiteSlotExtensionResource"/> object. </returns>
         public virtual SiteSlotExtensionResource GetSiteSlotExtension()
         {
             return new SiteSlotExtensionResource(Client, Id.AppendChildResource("extensions", "MSDeploy"));
@@ -906,7 +906,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="instanceId"> The String to use. </param>
+        /// <param name="instanceId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -929,7 +929,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="instanceId"> The String to use. </param>
+        /// <param name="instanceId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -993,7 +993,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Gets an object representing a SiteSlotNetworkConfigResource along with the instance operations that can be performed on it in the WebSiteSlot. </summary>
-        /// <returns> Returns a <see cref="SiteSlotNetworkConfigResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SiteSlotNetworkConfigResource"/> object. </returns>
         public virtual SiteSlotNetworkConfigResource GetSiteSlotNetworkConfig()
         {
             return new SiteSlotNetworkConfigResource(Client, Id.AppendChildResource("networkConfig", "virtualNetwork"));
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Gets an object representing a WebSiteSlotPrivateAccessResource along with the instance operations that can be performed on it in the WebSiteSlot. </summary>
-        /// <returns> Returns a <see cref="WebSiteSlotPrivateAccessResource" /> object. </returns>
+        /// <returns> Returns a <see cref="WebSiteSlotPrivateAccessResource"/> object. </returns>
         public virtual WebSiteSlotPrivateAccessResource GetWebSiteSlotPrivateAccess()
         {
             return new WebSiteSlotPrivateAccessResource(Client, Id.AppendChildResource("privateAccess", "virtualNetworks"));
@@ -1166,7 +1166,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Gets an object representing a MigrateMySqlStatusResource along with the instance operations that can be performed on it in the WebSiteSlot. </summary>
-        /// <returns> Returns a <see cref="MigrateMySqlStatusResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MigrateMySqlStatusResource"/> object. </returns>
         public virtual MigrateMySqlStatusResource GetMigrateMySqlStatus()
         {
             return new MigrateMySqlStatusResource(Client, Id.AppendChildResource("migratemysql", "status"));
@@ -1226,7 +1226,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Gets an object representing a WebSiteSlotSourceControlResource along with the instance operations that can be performed on it in the WebSiteSlot. </summary>
-        /// <returns> Returns a <see cref="WebSiteSlotSourceControlResource" /> object. </returns>
+        /// <returns> Returns a <see cref="WebSiteSlotSourceControlResource"/> object. </returns>
         public virtual WebSiteSlotSourceControlResource GetWebSiteSlotSourceControl()
         {
             return new WebSiteSlotSourceControlResource(Client, Id.AppendChildResource("sourcecontrols", "web"));
@@ -3609,7 +3609,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="WebAppNetworkTrace" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WebAppNetworkTrace"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebAppNetworkTrace> GetNetworkTraceOperationSlotAsync(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -3635,7 +3635,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <returns> A collection of <see cref="WebAppNetworkTrace" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebAppNetworkTrace"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebAppNetworkTrace> GetNetworkTraceOperationSlot(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -3861,7 +3861,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="WebAppNetworkTrace" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WebAppNetworkTrace"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebAppNetworkTrace> GetNetworkTracesSlotAsync(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -3887,7 +3887,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <returns> A collection of <see cref="WebAppNetworkTrace" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebAppNetworkTrace"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebAppNetworkTrace> GetNetworkTracesSlot(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -3913,7 +3913,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="WebAppNetworkTrace" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WebAppNetworkTrace"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebAppNetworkTrace> GetNetworkTraceOperationSlotV2Async(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -3939,7 +3939,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <returns> A collection of <see cref="WebAppNetworkTrace" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebAppNetworkTrace"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebAppNetworkTrace> GetNetworkTraceOperationSlotV2(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -3965,7 +3965,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="WebAppNetworkTrace" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WebAppNetworkTrace"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebAppNetworkTrace> GetNetworkTracesSlotV2Async(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -3991,7 +3991,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <returns> A collection of <see cref="WebAppNetworkTrace" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebAppNetworkTrace"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebAppNetworkTrace> GetNetworkTracesSlotV2(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -4075,7 +4075,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PerfMonResponseInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PerfMonResponseInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PerfMonResponseInfo> GetPerfMonCountersSlotAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateListPerfMonCountersSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
@@ -4098,7 +4098,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PerfMonResponseInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PerfMonResponseInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PerfMonResponseInfo> GetPerfMonCountersSlot(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateListPerfMonCountersSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
@@ -4180,7 +4180,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppServicePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppServicePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServicePrivateLinkResourceData> GetPrivateLinkResourcesSlotAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateGetPrivateLinkResourcesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -4201,7 +4201,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppServicePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppServicePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServicePrivateLinkResourceData> GetPrivateLinkResourcesSlot(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateGetPrivateLinkResourcesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -4644,7 +4644,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SlotDifference" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SlotDifference"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SlotDifference> GetSlotDifferencesSlotAsync(CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(slotSwapEntity, nameof(slotSwapEntity));
@@ -4670,7 +4670,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
-        /// <returns> A collection of <see cref="SlotDifference" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SlotDifference"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SlotDifference> GetSlotDifferencesSlot(CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(slotSwapEntity, nameof(slotSwapEntity));
@@ -4770,7 +4770,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppSnapshot" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppSnapshot"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppSnapshot> GetSlotSnapshotsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateListSnapshotsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -4792,7 +4792,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppSnapshot" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppSnapshot"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppSnapshot> GetSlotSnapshots(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateListSnapshotsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -4814,7 +4814,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppSnapshot" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppSnapshot"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppSnapshot> GetSlotSnapshotsFromDRSecondaryAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateListSnapshotsFromDRSecondarySlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -4836,7 +4836,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppSnapshot" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppSnapshot"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppSnapshot> GetSlotSnapshotsFromDRSecondary(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateListSnapshotsFromDRSecondarySlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -5233,7 +5233,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CsmUsageQuota" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CsmUsageQuota"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CsmUsageQuota> GetUsagesSlotAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateListUsagesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
@@ -5256,7 +5256,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CsmUsageQuota" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CsmUsageQuota"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CsmUsageQuota> GetUsagesSlot(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotWebAppsRestClient.CreateListUsagesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);

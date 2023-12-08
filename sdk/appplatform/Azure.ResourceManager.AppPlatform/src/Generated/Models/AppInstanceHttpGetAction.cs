@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> HTTPGetAction describes an action based on HTTP Get requests. </summary>
     public partial class AppInstanceHttpGetAction : AppInstanceProbeAction
     {
-        /// <summary> Initializes a new instance of AppInstanceHttpGetAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppInstanceHttpGetAction"/>. </summary>
         public AppInstanceHttpGetAction()
         {
             ProbeActionType = ProbeActionType.HttpGetAction;
         }
 
-        /// <summary> Initializes a new instance of AppInstanceHttpGetAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppInstanceHttpGetAction"/>. </summary>
         /// <param name="probeActionType"> The type of the action to take to perform the health check. </param>
         /// <param name="path"> Path to access on the HTTP server. </param>
         /// <param name="scheme">

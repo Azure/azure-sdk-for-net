@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container Apps Job Secrets Collection ARM resource. </summary>
     internal partial class JobSecretsCollection
     {
-        /// <summary> Initializes a new instance of JobSecretsCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobSecretsCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal JobSecretsCollection(IEnumerable<ContainerAppWritableSecret> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of JobSecretsCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobSecretsCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         internal JobSecretsCollection(IReadOnlyList<ContainerAppWritableSecret> value)
         {

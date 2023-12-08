@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Edifact agreement protocol settings. </summary>
     public partial class EdifactProcessingSettings
     {
-        /// <summary> Initializes a new instance of EdifactProcessingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactProcessingSettings"/>. </summary>
         /// <param name="maskSecurityInfo"> The value indicating whether to mask security information. </param>
         /// <param name="preserveInterchange"> The value indicating whether to preserve interchange. </param>
         /// <param name="suspendInterchangeOnError"> The value indicating whether to suspend interchange on error. </param>

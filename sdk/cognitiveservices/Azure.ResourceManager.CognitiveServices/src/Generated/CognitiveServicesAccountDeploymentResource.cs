@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
     /// A Class representing a CognitiveServicesAccountDeployment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CognitiveServicesAccountDeploymentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCognitiveServicesAccountDeploymentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CognitiveServicesAccountResource" /> using the GetCognitiveServicesAccountDeployment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CognitiveServicesAccountDeploymentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCognitiveServicesAccountDeploymentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CognitiveServicesAccountResource"/> using the GetCognitiveServicesAccountDeployment method.
     /// </summary>
     public partial class CognitiveServicesAccountDeploymentResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly DeploymentsRestOperations _cognitiveServicesAccountDeploymentDeploymentsRestClient;
         private readonly CognitiveServicesAccountDeploymentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts/deployments";
+
         /// <summary> Initializes a new instance of the <see cref="CognitiveServicesAccountDeploymentResource"/> class for mocking. </summary>
         protected CognitiveServicesAccountDeploymentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CognitiveServicesAccountDeploymentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CognitiveServicesAccountDeploymentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CognitiveServicesAccountDeploymentResource(ArmClient client, CognitiveServicesAccountDeploymentData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.CognitiveServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts/deployments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

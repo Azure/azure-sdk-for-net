@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Backend address pool settings of an application gateway. </summary>
     public partial class ApplicationGatewayBackendSettings : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendSettings"/>. </summary>
         public ApplicationGatewayBackendSettings()
         {
             TrustedRootCertificates = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendSettings"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

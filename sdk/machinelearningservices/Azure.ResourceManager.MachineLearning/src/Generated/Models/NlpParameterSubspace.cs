@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Stringified search spaces for each parameter. See below examples. </summary>
     public partial class NlpParameterSubspace
     {
-        /// <summary> Initializes a new instance of NlpParameterSubspace. </summary>
+        /// <summary> Initializes a new instance of <see cref="NlpParameterSubspace"/>. </summary>
         public NlpParameterSubspace()
         {
         }
 
-        /// <summary> Initializes a new instance of NlpParameterSubspace. </summary>
+        /// <summary> Initializes a new instance of <see cref="NlpParameterSubspace"/>. </summary>
         /// <param name="gradientAccumulationSteps"> Number of steps to accumulate gradients over before running a backward pass. </param>
         /// <param name="learningRate"> The learning rate for the training procedure. </param>
         /// <param name="learningRateScheduler"> The type of learning rate schedule to use during the training procedure. </param>

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// </summary>
     public abstract partial class TargetServiceBaseInfo
     {
-        /// <summary> Initializes a new instance of TargetServiceBaseInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetServiceBaseInfo"/>. </summary>
         protected TargetServiceBaseInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of TargetServiceBaseInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetServiceBaseInfo"/>. </summary>
         /// <param name="targetServiceType"> The target service type. </param>
         internal TargetServiceBaseInfo(TargetServiceType targetServiceType)
         {

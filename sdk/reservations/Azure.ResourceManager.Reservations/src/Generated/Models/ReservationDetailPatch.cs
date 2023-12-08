@@ -14,10 +14,31 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The request for reservation patch. </summary>
     public partial class ReservationDetailPatch
     {
-        /// <summary> Initializes a new instance of ReservationDetailPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationDetailPatch"/>. </summary>
         public ReservationDetailPatch()
         {
             AppliedScopes = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReservationDetailPatch"/>. </summary>
+        /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
+        /// <param name="appliedScopes"> List of the subscriptions that the benefit will be applied. Do not specify if AppliedScopeType is Shared. This property will be deprecated and replaced by appliedScopeProperties instead for Single AppliedScopeType. </param>
+        /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </param>
+        /// <param name="instanceFlexibility"> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </param>
+        /// <param name="name"> Display name of the reservation. </param>
+        /// <param name="isRenewEnabled"> Setting this to true will automatically purchase a new reservation on the expiration date time. </param>
+        /// <param name="renewProperties"></param>
+        /// <param name="reviewOn"> This is the date-time when the Azure hybrid benefit needs to be reviewed. </param>
+        internal ReservationDetailPatch(AppliedScopeType? appliedScopeType, IList<string> appliedScopes, AppliedScopeProperties appliedScopeProperties, InstanceFlexibility? instanceFlexibility, string name, bool? isRenewEnabled, PatchPropertiesRenewProperties renewProperties, DateTimeOffset? reviewOn)
+        {
+            AppliedScopeType = appliedScopeType;
+            AppliedScopes = appliedScopes;
+            AppliedScopeProperties = appliedScopeProperties;
+            InstanceFlexibility = instanceFlexibility;
+            Name = name;
+            IsRenewEnabled = isRenewEnabled;
+            RenewProperties = renewProperties;
+            ReviewOn = reviewOn;
         }
 
         /// <summary> Type of the Applied Scope. </summary>

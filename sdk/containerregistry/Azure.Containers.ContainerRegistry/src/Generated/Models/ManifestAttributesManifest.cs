@@ -13,10 +13,17 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> List of manifest attributes. </summary>
     internal partial class ManifestAttributesManifest
     {
-        /// <summary> Initializes a new instance of ManifestAttributesManifest. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManifestAttributesManifest"/>. </summary>
         internal ManifestAttributesManifest()
         {
             References = new ChangeTrackingList<ArtifactManifestPlatform>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManifestAttributesManifest"/>. </summary>
+        /// <param name="references"> List of manifest attributes details. </param>
+        internal ManifestAttributesManifest(IReadOnlyList<ArtifactManifestPlatform> references)
+        {
+            References = references;
         }
 
         /// <summary> List of manifest attributes details. </summary>

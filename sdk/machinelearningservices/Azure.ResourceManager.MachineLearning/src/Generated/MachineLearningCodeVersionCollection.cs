@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningCodeVersionResource" /> and their operations.
-    /// Each <see cref="MachineLearningCodeVersionResource" /> in the collection will belong to the same instance of <see cref="MachineLearningCodeContainerResource" />.
-    /// To get a <see cref="MachineLearningCodeVersionCollection" /> instance call the GetMachineLearningCodeVersions method from an instance of <see cref="MachineLearningCodeContainerResource" />.
+    /// A class representing a collection of <see cref="MachineLearningCodeVersionResource"/> and their operations.
+    /// Each <see cref="MachineLearningCodeVersionResource"/> in the collection will belong to the same instance of <see cref="MachineLearningCodeContainerResource"/>.
+    /// To get a <see cref="MachineLearningCodeVersionCollection"/> instance call the GetMachineLearningCodeVersions method from an instance of <see cref="MachineLearningCodeContainerResource"/>.
     /// </summary>
     public partial class MachineLearningCodeVersionCollection : ArmCollection, IEnumerable<MachineLearningCodeVersionResource>, IAsyncEnumerable<MachineLearningCodeVersionResource>
     {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="hash"> If specified, return CodeVersion assets with specified content hash value, regardless of name. </param>
         /// <param name="hashVersion"> Hash algorithm version when listing by hash. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningCodeVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningCodeVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningCodeVersionResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, string hash = null, string hashVersion = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningCodeVersionCodeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, hash, hashVersion);
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="hash"> If specified, return CodeVersion assets with specified content hash value, regardless of name. </param>
         /// <param name="hashVersion"> Hash algorithm version when listing by hash. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningCodeVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningCodeVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningCodeVersionResource> GetAll(string orderBy = null, int? top = null, string skip = null, string hash = null, string hashVersion = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningCodeVersionCodeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, hash, hashVersion);

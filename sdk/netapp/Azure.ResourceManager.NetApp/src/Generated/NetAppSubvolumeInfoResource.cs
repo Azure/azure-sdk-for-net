@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
     /// A Class representing a NetAppSubvolumeInfo along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetAppSubvolumeInfoResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetAppSubvolumeInfoResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetAppVolumeResource" /> using the GetNetAppSubvolumeInfo method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetAppSubvolumeInfoResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetAppSubvolumeInfoResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetAppVolumeResource"/> using the GetNetAppSubvolumeInfo method.
     /// </summary>
     public partial class NetAppSubvolumeInfoResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.NetApp
         private readonly SubvolumesRestOperations _netAppSubvolumeInfoSubvolumesRestClient;
         private readonly NetAppSubvolumeInfoData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/subvolumes";
+
         /// <summary> Initializes a new instance of the <see cref="NetAppSubvolumeInfoResource"/> class for mocking. </summary>
         protected NetAppSubvolumeInfoResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetAppSubvolumeInfoResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetAppSubvolumeInfoResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetAppSubvolumeInfoResource(ArmClient client, NetAppSubvolumeInfoData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.NetApp
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/subvolumes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

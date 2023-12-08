@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> Search job execution statistics. </summary>
     public partial class OperationalInsightsTableResultStatistics
     {
-        /// <summary> Initializes a new instance of OperationalInsightsTableResultStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsTableResultStatistics"/>. </summary>
         internal OperationalInsightsTableResultStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsTableResultStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsTableResultStatistics"/>. </summary>
         /// <param name="progress"> Search job completion percentage. </param>
         /// <param name="ingestedRecords"> The number of rows that were returned by the search job. </param>
         /// <param name="scannedGB"> Search job: Amount of scanned data. </param>

@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
     /// A Class representing a DataBoxEdgeDevice along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataBoxEdgeDeviceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataBoxEdgeDeviceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDataBoxEdgeDevice method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataBoxEdgeDeviceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataBoxEdgeDeviceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataBoxEdgeDevice method.
     /// </summary>
     public partial class DataBoxEdgeDeviceResource : ArmResource
     {
@@ -50,12 +50,15 @@ namespace Azure.ResourceManager.DataBoxEdge
         private readonly SupportPackagesRestOperations _supportPackagesRestClient;
         private readonly DataBoxEdgeDeviceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices";
+
         /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeDeviceResource"/> class for mocking. </summary>
         protected DataBoxEdgeDeviceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataBoxEdgeDeviceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeDeviceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataBoxEdgeDeviceResource(ArmClient client, DataBoxEdgeDeviceData data) : this(client, data.Id)
@@ -84,9 +87,6 @@ namespace Azure.ResourceManager.DataBoxEdge
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -216,14 +216,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Gets an object representing a DiagnosticProactiveLogCollectionSettingResource along with the instance operations that can be performed on it in the DataBoxEdgeDevice. </summary>
-        /// <returns> Returns a <see cref="DiagnosticProactiveLogCollectionSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DiagnosticProactiveLogCollectionSettingResource"/> object. </returns>
         public virtual DiagnosticProactiveLogCollectionSettingResource GetDiagnosticProactiveLogCollectionSetting()
         {
             return new DiagnosticProactiveLogCollectionSettingResource(Client, Id.AppendChildResource("diagnosticProactiveLogCollectionSettings", "default"));
         }
 
         /// <summary> Gets an object representing a DiagnosticRemoteSupportSettingResource along with the instance operations that can be performed on it in the DataBoxEdgeDevice. </summary>
-        /// <returns> Returns a <see cref="DiagnosticRemoteSupportSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DiagnosticRemoteSupportSettingResource"/> object. </returns>
         public virtual DiagnosticRemoteSupportSettingResource GetDiagnosticRemoteSupportSetting()
         {
             return new DiagnosticRemoteSupportSettingResource(Client, Id.AppendChildResource("diagnosticRemoteSupportSettings", "default"));
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Gets an object representing a DataBoxEdgeOrderResource along with the instance operations that can be performed on it in the DataBoxEdgeDevice. </summary>
-        /// <returns> Returns a <see cref="DataBoxEdgeOrderResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataBoxEdgeOrderResource"/> object. </returns>
         public virtual DataBoxEdgeOrderResource GetDataBoxEdgeOrder()
         {
             return new DataBoxEdgeOrderResource(Client, Id.AppendChildResource("orders", "default"));
@@ -1615,7 +1615,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataBoxEdgeNode" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataBoxEdgeNode"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeNode> GetEdgeNodesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nodesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1637,7 +1637,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataBoxEdgeNode" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataBoxEdgeNode"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeNode> GetEdgeNodes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nodesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

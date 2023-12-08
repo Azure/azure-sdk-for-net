@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// </summary>
     public partial class WebTestData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of WebTestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebTestData"/>. </summary>
         /// <param name="location"> The location. </param>
         public WebTestData(AzureLocation location) : base(location)
         {
             Locations = new ChangeTrackingList<WebTestGeolocation>();
         }
 
-        /// <summary> Initializes a new instance of WebTestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebTestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

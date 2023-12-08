@@ -118,6 +118,7 @@
     "Vectorizable",
     "Vectorizer",
     "Vectorizers",
+    "vhdx",
     "vmss",
     "vnet",
     "westcentralus",
@@ -449,6 +450,13 @@
       "filename": "**/sdk/deviceupdate/**/*.cs",
       "words": [
         "Fqdns"
+      ]
+    },
+    {
+      "filename": "**/sdk/documentintelligence/**/*.cs",
+      "words": [
+        "UPCA",
+        "UPCE"
       ]
     },
     {
@@ -930,6 +938,12 @@
       "filename": "**/sdk/resourcehealth/**/*.cs",
       "words": [
         "occured"
+      ]
+    },
+    {
+      "filename": "**/sdk/schemaregistry/**/*.cs",
+      "words": [
+        "protobuf"
       ]
     },
     {

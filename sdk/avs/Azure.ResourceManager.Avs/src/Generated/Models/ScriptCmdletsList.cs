@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Pageable list of scripts/cmdlets. </summary>
     internal partial class ScriptCmdletsList
     {
-        /// <summary> Initializes a new instance of ScriptCmdletsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptCmdletsList"/>. </summary>
         internal ScriptCmdletsList()
         {
             Value = new ChangeTrackingList<ScriptCmdletData>();
         }
 
-        /// <summary> Initializes a new instance of ScriptCmdletsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptCmdletsList"/>. </summary>
         /// <param name="value"> List of scripts. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
         internal ScriptCmdletsList(IReadOnlyList<ScriptCmdletData> value, string nextLink)

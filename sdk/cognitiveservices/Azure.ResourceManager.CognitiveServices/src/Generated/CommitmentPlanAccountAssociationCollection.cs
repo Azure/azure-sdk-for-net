@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CommitmentPlanAccountAssociationResource" /> and their operations.
-    /// Each <see cref="CommitmentPlanAccountAssociationResource" /> in the collection will belong to the same instance of <see cref="CognitiveServicesCommitmentPlanResource" />.
-    /// To get a <see cref="CommitmentPlanAccountAssociationCollection" /> instance call the GetCommitmentPlanAccountAssociations method from an instance of <see cref="CognitiveServicesCommitmentPlanResource" />.
+    /// A class representing a collection of <see cref="CommitmentPlanAccountAssociationResource"/> and their operations.
+    /// Each <see cref="CommitmentPlanAccountAssociationResource"/> in the collection will belong to the same instance of <see cref="CognitiveServicesCommitmentPlanResource"/>.
+    /// To get a <see cref="CommitmentPlanAccountAssociationCollection"/> instance call the GetCommitmentPlanAccountAssociations method from an instance of <see cref="CognitiveServicesCommitmentPlanResource"/>.
     /// </summary>
     public partial class CommitmentPlanAccountAssociationCollection : ArmCollection, IEnumerable<CommitmentPlanAccountAssociationResource>, IAsyncEnumerable<CommitmentPlanAccountAssociationResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CommitmentPlanAccountAssociationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CommitmentPlanAccountAssociationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CommitmentPlanAccountAssociationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateListAssociationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CommitmentPlanAccountAssociationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CommitmentPlanAccountAssociationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CommitmentPlanAccountAssociationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateListAssociationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

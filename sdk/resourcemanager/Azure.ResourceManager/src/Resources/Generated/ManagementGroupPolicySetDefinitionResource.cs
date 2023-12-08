@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing a ManagementGroupPolicySetDefinition along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagementGroupPolicySetDefinitionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagementGroupPolicySetDefinitionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource" /> using the GetManagementGroupPolicySetDefinition method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagementGroupPolicySetDefinitionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagementGroupPolicySetDefinitionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource"/> using the GetManagementGroupPolicySetDefinition method.
     /// </summary>
     public partial class ManagementGroupPolicySetDefinitionResource : ArmResource
     {
@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.Resources
         private readonly PolicySetDefinitionsRestOperations _managementGroupPolicySetDefinitionPolicySetDefinitionsRestClient;
         private readonly PolicySetDefinitionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Authorization/policySetDefinitions";
+
         /// <summary> Initializes a new instance of the <see cref="ManagementGroupPolicySetDefinitionResource"/> class for mocking. </summary>
         protected ManagementGroupPolicySetDefinitionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagementGroupPolicySetDefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagementGroupPolicySetDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagementGroupPolicySetDefinitionResource(ArmClient client, PolicySetDefinitionData data) : this(client, data.Id)
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Authorization/policySetDefinitions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

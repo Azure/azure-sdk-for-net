@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Connector mapping property structure. </summary>
     public partial class ConnectorMappingStructure
     {
-        /// <summary> Initializes a new instance of ConnectorMappingStructure. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingStructure"/>. </summary>
         /// <param name="propertyName"> The property name of the mapping entity. </param>
         /// <param name="columnName"> The column name of the import file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="propertyName"/> or <paramref name="columnName"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             ColumnName = columnName;
         }
 
-        /// <summary> Initializes a new instance of ConnectorMappingStructure. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingStructure"/>. </summary>
         /// <param name="propertyName"> The property name of the mapping entity. </param>
         /// <param name="columnName"> The column name of the import file. </param>
         /// <param name="customFormatSpecifier"> Custom format specifier for input parsing. </param>

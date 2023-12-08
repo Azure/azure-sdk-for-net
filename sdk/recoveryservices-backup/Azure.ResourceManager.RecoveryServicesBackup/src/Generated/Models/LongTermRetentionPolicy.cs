@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Long term retention policy. </summary>
     public partial class LongTermRetentionPolicy : BackupRetentionPolicy
     {
-        /// <summary> Initializes a new instance of LongTermRetentionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="LongTermRetentionPolicy"/>. </summary>
         public LongTermRetentionPolicy()
         {
             RetentionPolicyType = "LongTermRetentionPolicy";
         }
 
-        /// <summary> Initializes a new instance of LongTermRetentionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="LongTermRetentionPolicy"/>. </summary>
         /// <param name="retentionPolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="dailySchedule"> Daily retention schedule of the protection policy. </param>
         /// <param name="weeklySchedule"> Weekly retention schedule of the protection policy. </param>

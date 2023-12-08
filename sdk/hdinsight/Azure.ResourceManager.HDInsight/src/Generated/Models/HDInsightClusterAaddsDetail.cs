@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The Azure active directory domain service resource details. </summary>
     public partial class HDInsightClusterAaddsDetail
     {
-        /// <summary> Initializes a new instance of HDInsightClusterAaddsDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterAaddsDetail"/>. </summary>
         internal HDInsightClusterAaddsDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterAaddsDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterAaddsDetail"/>. </summary>
         /// <param name="domainName"> The Azure active directory domain service name. </param>
         /// <param name="isInitialSyncComplete"> This indicates whether initial sync complete or not. </param>
         /// <param name="isLdapsEnabled"> This indicates whether enable ldaps or not. </param>

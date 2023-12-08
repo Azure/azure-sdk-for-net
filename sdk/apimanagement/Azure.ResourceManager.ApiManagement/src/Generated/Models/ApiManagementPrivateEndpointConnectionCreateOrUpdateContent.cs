@@ -12,9 +12,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> A request to approve or reject a private endpoint connection. </summary>
     public partial class ApiManagementPrivateEndpointConnectionCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ApiManagementPrivateEndpointConnectionCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateEndpointConnectionCreateOrUpdateContent"/>. </summary>
         public ApiManagementPrivateEndpointConnectionCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateEndpointConnectionCreateOrUpdateContent"/>. </summary>
+        /// <param name="id"> Private Endpoint Connection Resource Id. </param>
+        /// <param name="properties"> The connection state of the private endpoint connection. </param>
+        internal ApiManagementPrivateEndpointConnectionCreateOrUpdateContent(ResourceIdentifier id, PrivateEndpointConnectionRequestProperties properties)
+        {
+            Id = id;
+            Properties = properties;
         }
 
         /// <summary> Private Endpoint Connection Resource Id. </summary>

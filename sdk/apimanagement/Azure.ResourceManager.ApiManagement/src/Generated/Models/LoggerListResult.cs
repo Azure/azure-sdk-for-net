@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Logger list representation. </summary>
     internal partial class LoggerListResult
     {
-        /// <summary> Initializes a new instance of LoggerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoggerListResult"/>. </summary>
         internal LoggerListResult()
         {
             Value = new ChangeTrackingList<ApiManagementLoggerData>();
         }
 
-        /// <summary> Initializes a new instance of LoggerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoggerListResult"/>. </summary>
         /// <param name="value"> Logger values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

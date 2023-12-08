@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a GalleryApplicationVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GalleryApplicationVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGalleryApplicationVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="GalleryApplicationResource" /> using the GetGalleryApplicationVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GalleryApplicationVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGalleryApplicationVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="GalleryApplicationResource"/> using the GetGalleryApplicationVersion method.
     /// </summary>
     public partial class GalleryApplicationVersionResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.Compute
         private readonly GalleryApplicationVersionsRestOperations _galleryApplicationVersionRestClient;
         private readonly GalleryApplicationVersionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/galleries/applications/versions";
+
         /// <summary> Initializes a new instance of the <see cref="GalleryApplicationVersionResource"/> class for mocking. </summary>
         protected GalleryApplicationVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GalleryApplicationVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GalleryApplicationVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GalleryApplicationVersionResource(ArmClient client, GalleryApplicationVersionData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/galleries/applications/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

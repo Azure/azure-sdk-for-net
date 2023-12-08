@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The name of sku. </summary>
     internal partial class ReservationsSkuName
     {
-        /// <summary> Initializes a new instance of ReservationsSkuName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationsSkuName"/>. </summary>
         public ReservationsSkuName()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationsSkuName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationsSkuName"/>. </summary>
         /// <param name="name"></param>
         internal ReservationsSkuName(string name)
         {

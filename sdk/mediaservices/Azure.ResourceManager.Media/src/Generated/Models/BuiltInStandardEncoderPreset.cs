@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Describes a built-in preset for encoding the input video with the Standard Encoder. </summary>
     public partial class BuiltInStandardEncoderPreset : MediaTransformPreset
     {
-        /// <summary> Initializes a new instance of BuiltInStandardEncoderPreset. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuiltInStandardEncoderPreset"/>. </summary>
         /// <param name="presetName"> The built-in preset to be used for encoding videos. </param>
         public BuiltInStandardEncoderPreset(EncoderNamedPreset presetName)
         {
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.BuiltInStandardEncoderPreset";
         }
 
-        /// <summary> Initializes a new instance of BuiltInStandardEncoderPreset. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuiltInStandardEncoderPreset"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="configurations"> Optional configuration settings for encoder. Configurations is only supported for ContentAwareEncoding and H265ContentAwareEncoding BuiltInStandardEncoderPreset. </param>
         /// <param name="presetName"> The built-in preset to be used for encoding videos. </param>

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MySql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MySqlPrivateLinkResource" /> and their operations.
-    /// Each <see cref="MySqlPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="MySqlServerResource" />.
-    /// To get a <see cref="MySqlPrivateLinkResourceCollection" /> instance call the GetMySqlPrivateLinkResources method from an instance of <see cref="MySqlServerResource" />.
+    /// A class representing a collection of <see cref="MySqlPrivateLinkResource"/> and their operations.
+    /// Each <see cref="MySqlPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="MySqlServerResource"/>.
+    /// To get a <see cref="MySqlPrivateLinkResourceCollection"/> instance call the GetMySqlPrivateLinkResources method from an instance of <see cref="MySqlServerResource"/>.
     /// </summary>
     public partial class MySqlPrivateLinkResourceCollection : ArmCollection, IEnumerable<MySqlPrivateLinkResource>, IAsyncEnumerable<MySqlPrivateLinkResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MySql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MySqlPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MySqlPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MySql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MySqlPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MySqlPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

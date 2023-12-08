@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The NginxCertificateListResponse. </summary>
     internal partial class NginxCertificateListResponse
     {
-        /// <summary> Initializes a new instance of NginxCertificateListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxCertificateListResponse"/>. </summary>
         internal NginxCertificateListResponse()
         {
             Value = new ChangeTrackingList<NginxCertificateData>();
         }
 
-        /// <summary> Initializes a new instance of NginxCertificateListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxCertificateListResponse"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal NginxCertificateListResponse(IReadOnlyList<NginxCertificateData> value, string nextLink)

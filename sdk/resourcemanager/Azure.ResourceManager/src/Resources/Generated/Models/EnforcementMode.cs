@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Resources.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string EnforcedValue = "Enforced";
+        private const string DefaultValue = "Default";
         private const string DoNotEnforceValue = "DoNotEnforce";
 
         /// <summary> The policy effect is enforced during resource creation or update. </summary>
-        public static EnforcementMode Enforced { get; } = new EnforcementMode(EnforcedValue);
+        public static EnforcementMode Default { get; } = new EnforcementMode(DefaultValue);
         /// <summary> The policy effect is not enforced during resource creation or update. </summary>
         public static EnforcementMode DoNotEnforce { get; } = new EnforcementMode(DoNotEnforceValue);
         /// <summary> Determines if two <see cref="EnforcementMode"/> values are the same. </summary>

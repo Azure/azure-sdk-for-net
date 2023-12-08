@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
     internal partial class ApiManagementPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of ApiManagementPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateEndpointConnectionListResult"/>. </summary>
         internal ApiManagementPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<ApiManagementPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
         internal ApiManagementPrivateEndpointConnectionListResult(IReadOnlyList<ApiManagementPrivateEndpointConnectionData> value)
         {

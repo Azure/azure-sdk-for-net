@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The location info. </summary>
     public partial class DataBoxEdgeSkuLocationInfo
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSkuLocationInfo"/>. </summary>
         internal DataBoxEdgeSkuLocationInfo()
         {
             Zones = new ChangeTrackingList<string>();
             Sites = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSkuLocationInfo"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="zones"> The zones. </param>
         /// <param name="sites"> The sites. </param>

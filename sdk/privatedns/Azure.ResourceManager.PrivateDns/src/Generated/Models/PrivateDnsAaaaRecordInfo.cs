@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.PrivateDns.Models
     /// <summary> An AAAA record. </summary>
     public partial class PrivateDnsAaaaRecordInfo
     {
-        /// <summary> Initializes a new instance of PrivateDnsAaaaRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsAaaaRecordInfo"/>. </summary>
         public PrivateDnsAaaaRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateDnsAaaaRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsAaaaRecordInfo"/>. </summary>
         /// <param name="ipv6Address"> The IPv6 address of this AAAA record. </param>
         internal PrivateDnsAaaaRecordInfo(IPAddress ipv6Address)
         {

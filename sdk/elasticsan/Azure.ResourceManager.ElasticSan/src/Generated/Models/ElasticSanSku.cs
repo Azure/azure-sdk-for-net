@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> The SKU name. Required for account creation; optional for update. </summary>
     public partial class ElasticSanSku
     {
-        /// <summary> Initializes a new instance of ElasticSanSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanSku"/>. </summary>
         /// <param name="name"> The sku name. </param>
         public ElasticSanSku(ElasticSanSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ElasticSanSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanSku"/>. </summary>
         /// <param name="name"> The sku name. </param>
         /// <param name="tier"> The sku tier. </param>
         internal ElasticSanSku(ElasticSanSkuName name, ElasticSanSkuTier? tier)

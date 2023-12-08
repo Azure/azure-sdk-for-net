@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties of a certificate used for authenticating a token. </summary>
     public partial class ContainerRegistryTokenCertificate
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTokenCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenCertificate"/>. </summary>
         public ContainerRegistryTokenCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTokenCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenCertificate"/>. </summary>
         /// <param name="name"></param>
         /// <param name="expireOn"> The expiry datetime of the certificate. </param>
         /// <param name="thumbprint"> The thumbprint of the certificate. </param>
