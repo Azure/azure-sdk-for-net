@@ -11,8 +11,6 @@ internal class PipelineRequestHeaders : MessageHeaders
 {
     private ArrayBackedPropertyBag<IgnoreCaseString, object> _headers;
 
-    public override int Count => _headers.Count;
-
     public override bool Remove(string name)
         => _headers.TryRemove(new IgnoreCaseString(name));
 
@@ -61,15 +59,22 @@ internal class PipelineRequestHeaders : MessageHeaders
         return false;
     }
 
-    public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers)
-    {
-        headers = GetHeadersStringValues();
-        return true;
-    }
+    public override IEnumerator<KeyValuePair<string, string>> GetEnumerator()
+        => GetHeadersStringValues().GetEnumerator();
 
-    public override bool TryGetHeaders(out IEnumerable<KeyValuePair<string, IEnumerable<string>>> headers)
+    // Internal API provided to take advantage of performance-optimized implementation.
+    internal bool GetNextValue(int index, out string name, out object value)
     {
-        headers = GetHeadersListValues();
+        if (index >= _headers.Count)
+        {
+            name = default!;
+            value = default!;
+            return false;
+        }
+
+        _headers.GetAt(index, out IgnoreCaseString headerName, out object headerValue);
+        name = headerName;
+        value = headerValue;
         return true;
     }
 
