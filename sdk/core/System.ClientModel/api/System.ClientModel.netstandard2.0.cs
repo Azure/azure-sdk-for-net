@@ -2,8 +2,7 @@ namespace System.ClientModel
 {
     public partial class ClientRequestException : System.Exception, System.Runtime.Serialization.ISerializable
     {
-        public ClientRequestException(System.ClientModel.Primitives.PipelineResponse response) { }
-        public ClientRequestException(System.ClientModel.Primitives.PipelineResponse response, string? message, System.Exception? innerException) { }
+        public ClientRequestException(System.ClientModel.Primitives.PipelineResponse response, string? message = null, System.Exception? innerException = null) { }
         protected ClientRequestException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public ClientRequestException(string message, System.Exception? innerException = null) { }
         public int Status { get { throw null; } protected set { } }
@@ -66,17 +65,9 @@ namespace System.ClientModel
         public RequestOptions() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public System.ClientModel.Primitives.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
-        public System.ClientModel.Primitives.MessageHeaders RequestHeaders { get { throw null; } }
+        public void AddHeader(string name, string value) { }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
-        protected internal void Apply(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.MessageClassifier? messageClassifier = null) { }
-    }
-    public partial class ServiceClientOptions
-    {
-        public ServiceClientOptions() { }
-        public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
-        public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
-        public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
-        public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
+        protected internal void Apply(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineMessageClassifier? messageClassifier = null) { }
     }
 }
 namespace System.ClientModel.Primitives
@@ -84,8 +75,8 @@ namespace System.ClientModel.Primitives
     public partial class ClientPipeline
     {
         internal ClientPipeline() { }
-        public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.ServiceClientOptions options, params System.ClientModel.Primitives.PipelinePolicy[] perCallPolicies) { throw null; }
-        public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.ServiceClientOptions options, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> perTryPolicies) { throw null; }
+        public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.Primitives.PipelineOptions options, params System.ClientModel.Primitives.PipelinePolicy[] perCallPolicies) { throw null; }
+        public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.Primitives.PipelineOptions options, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> perTryPolicies) { throw null; }
         public System.ClientModel.Primitives.PipelineMessage CreateMessage() { throw null; }
         public void Send(System.ClientModel.Primitives.PipelineMessage message) { }
         public System.Threading.Tasks.ValueTask SendAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
@@ -125,11 +116,6 @@ namespace System.ClientModel.Primitives
         public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineProcessor pipeline) { }
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineProcessor pipeline) { throw null; }
     }
-    public partial class MessageClassifier
-    {
-        protected internal MessageClassifier() { }
-        public virtual bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
-    }
     public abstract partial class MessageHeaders
     {
         protected MessageHeaders() { }
@@ -161,15 +147,28 @@ namespace System.ClientModel.Primitives
     {
         protected internal PipelineMessage(System.ClientModel.Primitives.PipelineRequest request) { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
-        public System.ClientModel.Primitives.MessageClassifier? MessageClassifier { get { throw null; } protected internal set { } }
+        public System.ClientModel.Primitives.PipelineMessageClassifier? MessageClassifier { get { throw null; } protected internal set { } }
         public System.ClientModel.Primitives.PipelineRequest Request { get { throw null; } }
         public System.ClientModel.Primitives.PipelineResponse Response { get { throw null; } protected internal set { } }
-        public void Apply(System.ClientModel.RequestOptions options, System.ClientModel.Primitives.MessageClassifier? messageClassifier = null) { }
+        public void Apply(System.ClientModel.RequestOptions options, System.ClientModel.Primitives.PipelineMessageClassifier? messageClassifier = null) { }
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public void SetProperty(System.Type type, object value) { }
         public bool TryGetProperty(System.Type type, out object? value) { throw null; }
         public bool TryGetResponse(out System.ClientModel.Primitives.PipelineResponse response) { throw null; }
+    }
+    public partial class PipelineMessageClassifier
+    {
+        protected internal PipelineMessageClassifier() { }
+        public virtual bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+    }
+    public partial class PipelineOptions
+    {
+        public PipelineOptions() { }
+        public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
+        public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
+        public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
+        public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
     }
     public abstract partial class PipelinePolicy
     {
@@ -238,7 +237,7 @@ namespace System.ClientModel.Primitives
         public static bool TryGetBufferResponse(System.ClientModel.Primitives.PipelineMessage message, out bool bufferResponse) { throw null; }
         public static bool TryGetNetworkTimeout(System.ClientModel.Primitives.PipelineMessage message, out System.TimeSpan networkTimeout) { throw null; }
     }
-    public partial class ResponseStatusClassifier : System.ClientModel.Primitives.MessageClassifier
+    public partial class ResponseStatusClassifier : System.ClientModel.Primitives.PipelineMessageClassifier
     {
         public ResponseStatusClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }
         public sealed override bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }

@@ -31,11 +31,11 @@ public partial class ClientPipeline
         _perTryIndex = perTryIndex;
     }
 
-    public static ClientPipeline Create(ServiceClientOptions options, params PipelinePolicy[] perCallPolicies)
+    public static ClientPipeline Create(PipelineOptions options, params PipelinePolicy[] perCallPolicies)
         => Create(options, perCallPolicies, ReadOnlySpan<PipelinePolicy>.Empty);
 
     public static ClientPipeline Create(
-        ServiceClientOptions options,
+        PipelineOptions options,
         ReadOnlySpan<PipelinePolicy> perCallPolicies,
         ReadOnlySpan<PipelinePolicy> perTryPolicies)
     {

@@ -3,11 +3,11 @@
 
 namespace System.ClientModel.Primitives;
 
-public class MessageClassifier
+public class PipelineMessageClassifier
 {
-    internal static MessageClassifier Default { get; } = new MessageClassifier();
+    internal static PipelineMessageClassifier Default { get; } = new PipelineMessageClassifier();
 
-    protected internal MessageClassifier() { }
+    protected internal PipelineMessageClassifier() { }
 
     /// <summary>
     /// Specifies if the response contained in the <paramref name="message"/> is not successful.
