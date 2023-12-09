@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.AppService
         private readonly DiagnosticsRestOperations _siteDiagnosticDetectorDiagnosticsRestClient;
         private readonly DetectorDefinitionResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/diagnostics/detectors";
+
         /// <summary> Initializes a new instance of the <see cref="SiteDiagnosticDetectorResource"/> class for mocking. </summary>
         protected SiteDiagnosticDetectorResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/diagnostics/detectors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

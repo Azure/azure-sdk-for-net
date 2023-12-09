@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> A web application firewall rule set. </summary>
     public partial class ApplicationGatewayFirewallRuleSet : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayFirewallRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRuleSet"/>. </summary>
         public ApplicationGatewayFirewallRuleSet()
         {
             RuleGroups = new ChangeTrackingList<ApplicationGatewayFirewallRuleGroup>();
             Tiers = new ChangeTrackingList<ApplicationGatewayTierType>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayFirewallRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRuleSet"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

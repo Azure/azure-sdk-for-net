@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The IP access control for the live event preview endpoint. </summary>
     internal partial class LiveEventPreviewAccessControl
     {
-        /// <summary> Initializes a new instance of LiveEventPreviewAccessControl. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveEventPreviewAccessControl"/>. </summary>
         public LiveEventPreviewAccessControl()
         {
         }
 
-        /// <summary> Initializes a new instance of LiveEventPreviewAccessControl. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveEventPreviewAccessControl"/>. </summary>
         /// <param name="ip"> The IP access control properties. </param>
         internal LiveEventPreviewAccessControl(IPAccessControl ip)
         {

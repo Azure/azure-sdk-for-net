@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Describes the properties for producing a series of JPEG images from the input video. </summary>
     public partial class JpgImage : MediaImageBase
     {
-        /// <summary> Initializes a new instance of JpgImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="JpgImage"/>. </summary>
         /// <param name="start"> The position in the input video from where to start generating thumbnails. The value can be in ISO 8601 format (For example, PT05S to start at 5 seconds), or a frame count (For example, 10 to start at the 10th frame), or a relative value to stream duration (For example, 10% to start at 10% of stream duration). Also supports a macro {Best}, which tells the encoder to select the best thumbnail from the first few seconds of the video and will only produce one thumbnail, no matter what other settings are for Step and Range. The default value is macro {Best}. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="start"/> is null. </exception>
         public JpgImage(string start) : base(start)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.JpgImage";
         }
 
-        /// <summary> Initializes a new instance of JpgImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="JpgImage"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="label"> An optional label for the codec. The label can be used to control muxing behavior. </param>
         /// <param name="keyFrameInterval"> The distance between two key frames. The value should be non-zero in the range [0.5, 20] seconds, specified in ISO 8601 format. The default is 2 seconds(PT2S). Note that this setting is ignored if VideoSyncMode.Passthrough is set, where the KeyFrameInterval value will follow the input source setting. </param>

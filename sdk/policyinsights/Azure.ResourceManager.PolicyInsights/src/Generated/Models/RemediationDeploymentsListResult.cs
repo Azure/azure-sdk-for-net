@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> List of deployments for a remediation. </summary>
     internal partial class RemediationDeploymentsListResult
     {
-        /// <summary> Initializes a new instance of RemediationDeploymentsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemediationDeploymentsListResult"/>. </summary>
         internal RemediationDeploymentsListResult()
         {
             Value = new ChangeTrackingList<RemediationDeployment>();
         }
 
-        /// <summary> Initializes a new instance of RemediationDeploymentsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemediationDeploymentsListResult"/>. </summary>
         /// <param name="value"> Array of deployments for the remediation. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal RemediationDeploymentsListResult(IReadOnlyList<RemediationDeployment> value, string nextLink)

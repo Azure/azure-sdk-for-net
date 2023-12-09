@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Live trace category configuration of a Microsoft.SignalRService resource. </summary>
     public partial class SignalRLiveTraceCategory
     {
-        /// <summary> Initializes a new instance of SignalRLiveTraceCategory. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRLiveTraceCategory"/>. </summary>
         public SignalRLiveTraceCategory()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalRLiveTraceCategory. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRLiveTraceCategory"/>. </summary>
         /// <param name="name">
         /// Gets or sets the live trace category's name.
         /// Available values: ConnectivityLogs, MessagingLogs.

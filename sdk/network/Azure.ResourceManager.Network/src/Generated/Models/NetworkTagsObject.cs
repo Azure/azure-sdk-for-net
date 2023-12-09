@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Tags object for patch operations. </summary>
     public partial class NetworkTagsObject
     {
-        /// <summary> Initializes a new instance of NetworkTagsObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTagsObject"/>. </summary>
         public NetworkTagsObject()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkTagsObject"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal NetworkTagsObject(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

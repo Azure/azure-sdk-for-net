@@ -13,10 +13,21 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Properties required to create or update an endpoint. </summary>
     public partial class FrontDoorEndpointPatch
     {
-        /// <summary> Initializes a new instance of FrontDoorEndpointPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorEndpointPatch"/>. </summary>
         public FrontDoorEndpointPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorEndpointPatch"/>. </summary>
+        /// <param name="tags"> Endpoint tags. </param>
+        /// <param name="profileName"> The name of the profile which holds the endpoint. </param>
+        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
+        internal FrontDoorEndpointPatch(IDictionary<string, string> tags, string profileName, EnabledState? enabledState)
+        {
+            Tags = tags;
+            ProfileName = profileName;
+            EnabledState = enabledState;
         }
 
         /// <summary> Endpoint tags. </summary>

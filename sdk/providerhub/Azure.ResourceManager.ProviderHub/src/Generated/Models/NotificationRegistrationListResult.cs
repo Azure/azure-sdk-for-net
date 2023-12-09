@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The NotificationRegistrationListResult. </summary>
     internal partial class NotificationRegistrationListResult
     {
-        /// <summary> Initializes a new instance of NotificationRegistrationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationRegistrationListResult"/>. </summary>
         internal NotificationRegistrationListResult()
         {
             Value = new ChangeTrackingList<NotificationRegistrationData>();
         }
 
-        /// <summary> Initializes a new instance of NotificationRegistrationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationRegistrationListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URL to get to the next set of results, if there are any. </param>
         internal NotificationRegistrationListResult(IReadOnlyList<NotificationRegistrationData> value, string nextLink)

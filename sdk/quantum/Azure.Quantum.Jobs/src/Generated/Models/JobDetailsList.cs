@@ -13,13 +13,13 @@ namespace Azure.Quantum.Jobs.Models
     /// <summary> List of job details. </summary>
     internal partial class JobDetailsList
     {
-        /// <summary> Initializes a new instance of JobDetailsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobDetailsList"/>. </summary>
         internal JobDetailsList()
         {
             Value = new ChangeTrackingList<JobDetails>();
         }
 
-        /// <summary> Initializes a new instance of JobDetailsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobDetailsList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="count"> Total records count number. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>

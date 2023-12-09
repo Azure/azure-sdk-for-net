@@ -14,7 +14,7 @@ namespace Azure.Communication.Messages
     /// <summary> Model factory for models. </summary>
     public static partial class CommunicationMessagesModelFactory
     {
-        /// <summary> Initializes a new instance of SendMessageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Messages.SendMessageResult"/>. </summary>
         /// <param name="receipts"> Receipts of the send message operation. </param>
         /// <returns> A new <see cref="Messages.SendMessageResult"/> instance for mocking. </returns>
         public static SendMessageResult SendMessageResult(IEnumerable<MessageReceipt> receipts = null)
@@ -24,7 +24,7 @@ namespace Azure.Communication.Messages
             return new SendMessageResult(receipts?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MessageReceipt. </summary>
+        /// <summary> Initializes a new instance of <see cref="Messages.MessageReceipt"/>. </summary>
         /// <param name="messageId"> The message id. </param>
         /// <param name="to"> The native external platform user identifier of the recipient. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> or <paramref name="to"/> is null. </exception>

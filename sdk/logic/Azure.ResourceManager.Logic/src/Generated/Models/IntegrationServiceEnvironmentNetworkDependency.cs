@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The azure async operation resource. </summary>
     public partial class IntegrationServiceEnvironmentNetworkDependency
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentNetworkDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentNetworkDependency"/>. </summary>
         internal IntegrationServiceEnvironmentNetworkDependency()
         {
             Endpoints = new ChangeTrackingList<IntegrationServiceEnvironmentNetworkEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentNetworkDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentNetworkDependency"/>. </summary>
         /// <param name="category"> The network dependency category type. </param>
         /// <param name="displayName"> The display name. </param>
         /// <param name="endpoints"> The endpoints. </param>

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The parameters to provide for the Direct Line channel. </summary>
     public partial class TelephonyChannelProperties
     {
-        /// <summary> Initializes a new instance of TelephonyChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelephonyChannelProperties"/>. </summary>
         public TelephonyChannelProperties()
         {
             PhoneNumbers = new ChangeTrackingList<TelephonyPhoneNumbers>();
             ApiConfigurations = new ChangeTrackingList<TelephonyChannelResourceApiConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of TelephonyChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelephonyChannelProperties"/>. </summary>
         /// <param name="phoneNumbers"> The list of Telephony phone numbers. </param>
         /// <param name="apiConfigurations"> The list of Telephony api configuration. </param>
         /// <param name="cognitiveServiceSubscriptionKey"> The extensionKey1. </param>

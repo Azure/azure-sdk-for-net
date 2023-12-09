@@ -5,85 +5,42 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.DataFactory;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 {
     internal class DataFactoryTests : DataFactoryManagementTestBase
     {
-        private ResourceIdentifier _resourceGroupIdentifier;
-        private ResourceGroupResource _resourceGroup;
         public DataFactoryTests(bool isAsync) : base(isAsync)
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetUp()
-        {
-            string rgName = SessionRecording.GenerateAssetName("DataFactory-RG-");
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
-            _resourceGroupIdentifier = rgLro.Value.Id;
-            await StopSessionRecordingAsync();
-        }
-
-        [SetUp]
-        public async Task TestSetUp()
-        {
-            _resourceGroup = await Client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
-        }
-
         [Test]
         [RecordedTest]
-        public async Task CreateOrUpdate()
+        public async Task DataFactory_Create_Exists_Get_List_Delete()
         {
+            // Get the resource group
+            string rgName = Recording.GenerateAssetName("adf-rg-");
+            var resourceGroup = await CreateResourceGroup(rgName, AzureLocation.WestUS2);
+            // Create a DataFactory
             string dataFactoryName = Recording.GenerateAssetName("dataFactory-");
-            DataFactoryData data = new DataFactoryData(_resourceGroup.Data.Location);
-            var dataFactory = await _resourceGroup.GetDataFactories().CreateOrUpdateAsync(WaitUntil.Completed, dataFactoryName, data);
+            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
             Assert.IsNotNull(dataFactory);
-            Assert.AreEqual(dataFactoryName, dataFactory.Value.Data.Name);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task Exist()
-        {
-            string dataFactoryName = Recording.GenerateAssetName("dataFactory-");
-            var dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            bool flag = await _resourceGroup.GetDataFactories().ExistsAsync(dataFactoryName);
+            Assert.AreEqual(dataFactoryName, dataFactory.Data.Name);
+            // Exist
+            bool flag = await resourceGroup.GetDataFactories().ExistsAsync(dataFactoryName);
             Assert.IsTrue(flag);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task Get()
-        {
-            string dataFactoryName = Recording.GenerateAssetName("dataFactory-");
-            await CreateDataFactory(_resourceGroup, dataFactoryName);
-            var dataFactory = await _resourceGroup.GetDataFactories().GetAsync(dataFactoryName);
-            Assert.IsNotNull(dataFactory);
-            Assert.AreEqual(dataFactoryName, dataFactory.Value.Data.Name);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task GetAll()
-        {
-            string dataFactoryName = Recording.GenerateAssetName("dataFactory-");
-            await CreateDataFactory(_resourceGroup, dataFactoryName);
-            var list = await _resourceGroup.GetDataFactories().GetAllAsync().ToEnumerableAsync();
+            // Get
+            var dataFactoryGet = await resourceGroup.GetDataFactories().GetAsync(dataFactoryName);
+            Assert.IsNotNull(dataFactoryGet);
+            Assert.AreEqual(dataFactoryName, dataFactoryGet.Value.Data.Name);
+            // GetAll
+            var list = await resourceGroup.GetDataFactories().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task Delete()
-        {
-            string dataFactoryName = Recording.GenerateAssetName("dataFactory-");
-            var dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            bool flag = await _resourceGroup.GetDataFactories().ExistsAsync(dataFactoryName);
-            Assert.IsTrue(flag);
+            // Delete
             await dataFactory.DeleteAsync(WaitUntil.Completed);
-            flag = await _resourceGroup.GetDataFactories().ExistsAsync(dataFactoryName);
+            flag = await resourceGroup.GetDataFactories().ExistsAsync(dataFactoryName);
             Assert.IsFalse(flag);
         }
     }

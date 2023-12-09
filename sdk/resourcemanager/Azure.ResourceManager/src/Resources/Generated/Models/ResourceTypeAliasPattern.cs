@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The type of the pattern for an alias path. </summary>
     public partial class ResourceTypeAliasPattern
     {
-        /// <summary> Initializes a new instance of ResourceTypeAliasPattern. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeAliasPattern"/>. </summary>
         internal ResourceTypeAliasPattern()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeAliasPattern. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeAliasPattern"/>. </summary>
         /// <param name="phrase"> The alias pattern phrase. </param>
         /// <param name="variable"> The alias pattern variable. </param>
         /// <param name="patternType"> The type of alias pattern. </param>

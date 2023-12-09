@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> SQL pool reference type. </summary>
     public partial class SqlPoolReference
     {
-        /// <summary> Initializes a new instance of SqlPoolReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlPoolReference"/>. </summary>
         /// <param name="type"> SQL pool reference type. </param>
         /// <param name="referenceName"> Reference SQL pool name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>

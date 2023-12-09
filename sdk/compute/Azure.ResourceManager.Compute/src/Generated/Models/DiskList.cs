@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Disks operation response. </summary>
     internal partial class DiskList
     {
-        /// <summary> Initializes a new instance of DiskList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskList"/>. </summary>
         /// <param name="value"> A list of disks. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DiskList(IEnumerable<ManagedDiskData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DiskList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskList"/>. </summary>
         /// <param name="value"> A list of disks. </param>
         /// <param name="nextLink"> The uri to fetch the next page of disks. Call ListNext() with this to fetch the next page of disks. </param>
         internal DiskList(IReadOnlyList<ManagedDiskData> value, string nextLink)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The status of the operation. </summary>
     public partial class SynapseSsisObjectMetadataStatusResult
     {
-        /// <summary> Initializes a new instance of SynapseSsisObjectMetadataStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisObjectMetadataStatusResult"/>. </summary>
         internal SynapseSsisObjectMetadataStatusResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisObjectMetadataStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisObjectMetadataStatusResult"/>. </summary>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="name"> The operation name. </param>
         /// <param name="properties"> The operation properties. </param>

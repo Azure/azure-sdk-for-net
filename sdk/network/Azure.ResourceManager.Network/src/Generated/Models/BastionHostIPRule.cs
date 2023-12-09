@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The BastionHostIPRule. </summary>
     public partial class BastionHostIPRule
     {
-        /// <summary> Initializes a new instance of BastionHostIPRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="BastionHostIPRule"/>. </summary>
         public BastionHostIPRule()
         {
         }
 
-        /// <summary> Initializes a new instance of BastionHostIPRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="BastionHostIPRule"/>. </summary>
         /// <param name="addressPrefix"> Specifies the IP or IP range in CIDR format. Only IPV4 address is allowed. </param>
         internal BastionHostIPRule(string addressPrefix)
         {

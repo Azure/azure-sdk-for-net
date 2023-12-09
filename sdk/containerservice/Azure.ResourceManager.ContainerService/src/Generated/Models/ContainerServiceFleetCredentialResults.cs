@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The list credential result response. </summary>
     public partial class ContainerServiceFleetCredentialResults
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetCredentialResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetCredentialResults"/>. </summary>
         internal ContainerServiceFleetCredentialResults()
         {
             Kubeconfigs = new ChangeTrackingList<ContainerServiceFleetCredentialResult>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetCredentialResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetCredentialResults"/>. </summary>
         /// <param name="kubeconfigs"> Base64-encoded Kubernetes configuration file. </param>
         internal ContainerServiceFleetCredentialResults(IReadOnlyList<ContainerServiceFleetCredentialResult> kubeconfigs)
         {

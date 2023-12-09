@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> Represents a StartMenuItem definition. </summary>
     public partial class DesktopVirtualizationStartMenuItem : ResourceData
     {
-        /// <summary> Initializes a new instance of DesktopVirtualizationStartMenuItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationStartMenuItem"/>. </summary>
         public DesktopVirtualizationStartMenuItem()
         {
         }
 
-        /// <summary> Initializes a new instance of DesktopVirtualizationStartMenuItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationStartMenuItem"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

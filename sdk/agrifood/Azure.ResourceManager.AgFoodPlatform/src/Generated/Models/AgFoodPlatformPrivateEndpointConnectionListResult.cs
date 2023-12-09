@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
     internal partial class AgFoodPlatformPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of AgFoodPlatformPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgFoodPlatformPrivateEndpointConnectionListResult"/>. </summary>
         internal AgFoodPlatformPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<AgFoodPlatformPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of AgFoodPlatformPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgFoodPlatformPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
         internal AgFoodPlatformPrivateEndpointConnectionListResult(IReadOnlyList<AgFoodPlatformPrivateEndpointConnectionData> value)
         {

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Appliance details of the migration item. </summary>
     public partial class ApplianceMonitoringDetails
     {
-        /// <summary> Initializes a new instance of ApplianceMonitoringDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceMonitoringDetails"/>. </summary>
         internal ApplianceMonitoringDetails()
         {
             DatastoreSnapshot = new ChangeTrackingList<DataStoreUtilizationDetails>();
         }
 
-        /// <summary> Initializes a new instance of ApplianceMonitoringDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceMonitoringDetails"/>. </summary>
         /// <param name="cpuDetails"> The appliance CPU details. </param>
         /// <param name="ramDetails"> The appliance RAM details. </param>
         /// <param name="datastoreSnapshot"> The appliance datastore snapshot details. </param>

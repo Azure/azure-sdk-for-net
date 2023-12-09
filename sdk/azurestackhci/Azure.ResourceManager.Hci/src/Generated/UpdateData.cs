@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class UpdateData : ResourceData
     {
-        /// <summary> Initializes a new instance of UpdateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateData"/>. </summary>
         public UpdateData()
         {
             Prerequisites = new ChangeTrackingList<UpdatePrerequisite>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Hci
             HealthCheckResult = new ChangeTrackingList<HciPrecheckResult>();
         }
 
-        /// <summary> Initializes a new instance of UpdateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

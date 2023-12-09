@@ -47,6 +47,9 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly OperationRestOperations _operationRestClient;
         private readonly ApiData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis";
+
         /// <summary> Initializes a new instance of the <see cref="ApiResource"/> class for mocking. </summary>
         protected ApiResource()
         {
@@ -79,9 +82,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

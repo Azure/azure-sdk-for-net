@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.SignalR
         private readonly SignalRSharedPrivateLinkResourcesRestOperations _signalRSharedPrivateLinkResourceRestClient;
         private readonly SignalRSharedPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/signalR/sharedPrivateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="SignalRSharedPrivateLinkResource"/> class for mocking. </summary>
         protected SignalRSharedPrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.SignalR
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/signalR/sharedPrivateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

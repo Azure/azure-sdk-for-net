@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> A collective group of information about the record set information. </summary>
     public partial class RecordSet
     {
-        /// <summary> Initializes a new instance of RecordSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecordSet"/>. </summary>
         internal RecordSet()
         {
             IPAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RecordSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecordSet"/>. </summary>
         /// <param name="recordType"> Resource record type. </param>
         /// <param name="recordSetName"> Recordset name. </param>
         /// <param name="fqdn"> Fqdn that resolves to private endpoint ip address. </param>

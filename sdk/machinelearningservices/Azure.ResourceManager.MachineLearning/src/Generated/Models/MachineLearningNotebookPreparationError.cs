@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningNotebookPreparationError. </summary>
     public partial class MachineLearningNotebookPreparationError
     {
-        /// <summary> Initializes a new instance of MachineLearningNotebookPreparationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningNotebookPreparationError"/>. </summary>
         internal MachineLearningNotebookPreparationError()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningNotebookPreparationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningNotebookPreparationError"/>. </summary>
         /// <param name="errorMessage"></param>
         /// <param name="statusCode"></param>
         internal MachineLearningNotebookPreparationError(string errorMessage, int? statusCode)

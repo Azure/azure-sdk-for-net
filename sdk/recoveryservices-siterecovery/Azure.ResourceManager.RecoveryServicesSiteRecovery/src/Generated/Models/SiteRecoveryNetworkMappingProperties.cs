@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Network Mapping Properties. </summary>
     public partial class SiteRecoveryNetworkMappingProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryNetworkMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryNetworkMappingProperties"/>. </summary>
         internal SiteRecoveryNetworkMappingProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryNetworkMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryNetworkMappingProperties"/>. </summary>
         /// <param name="state"> The pairing state for network mapping. </param>
         /// <param name="primaryNetworkFriendlyName"> The primary network friendly name. </param>
         /// <param name="primaryNetworkId"> The primary network id for network mapping. </param>

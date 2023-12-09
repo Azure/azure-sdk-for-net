@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.FrontDoor
     /// </summary>
     public partial class FrontDoorWebApplicationFirewallPolicyData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorWebApplicationFirewallPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicyData"/>. </summary>
         /// <param name="location"> The location. </param>
         public FrontDoorWebApplicationFirewallPolicyData(AzureLocation location) : base(location)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.FrontDoor
             SecurityPolicyLinks = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of FrontDoorWebApplicationFirewallPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

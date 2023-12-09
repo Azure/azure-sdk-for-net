@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         private readonly SourceControlConfigurationsRestOperations _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient;
         private readonly KubernetesSourceControlConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.KubernetesConfiguration/sourceControlConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="KubernetesSourceControlConfigurationResource"/> class for mocking. </summary>
         protected KubernetesSourceControlConfigurationResource()
         {
@@ -69,9 +72,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.KubernetesConfiguration/sourceControlConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

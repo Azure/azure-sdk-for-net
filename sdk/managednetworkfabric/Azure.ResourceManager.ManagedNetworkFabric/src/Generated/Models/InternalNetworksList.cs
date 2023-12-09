@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of Internal Networks. </summary>
     internal partial class InternalNetworksList
     {
-        /// <summary> Initializes a new instance of InternalNetworksList. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalNetworksList"/>. </summary>
         internal InternalNetworksList()
         {
             Value = new ChangeTrackingList<NetworkFabricInternalNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of InternalNetworksList. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalNetworksList"/>. </summary>
         /// <param name="value"> List of Internal Network resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal InternalNetworksList(IReadOnlyList<NetworkFabricInternalNetworkData> value, string nextLink)

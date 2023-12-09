@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> The available data types for MCAS (Microsoft Cloud App Security) data connector. </summary>
     public partial class McasDataConnectorDataTypes : SecurityInsightsAlertsDataTypeOfDataConnector
     {
-        /// <summary> Initializes a new instance of McasDataConnectorDataTypes. </summary>
+        /// <summary> Initializes a new instance of <see cref="McasDataConnectorDataTypes"/>. </summary>
         public McasDataConnectorDataTypes()
         {
         }
 
-        /// <summary> Initializes a new instance of McasDataConnectorDataTypes. </summary>
+        /// <summary> Initializes a new instance of <see cref="McasDataConnectorDataTypes"/>. </summary>
         /// <param name="alerts"> Alerts data type connection. </param>
         /// <param name="discoveryLogs"> Discovery log data type connection. </param>
         internal McasDataConnectorDataTypes(DataConnectorDataTypeCommon alerts, DataConnectorDataTypeCommon discoveryLogs) : base(alerts)

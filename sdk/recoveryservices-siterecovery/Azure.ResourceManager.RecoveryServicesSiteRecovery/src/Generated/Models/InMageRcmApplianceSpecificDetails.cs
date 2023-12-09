@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm appliance specific details. </summary>
     public partial class InMageRcmApplianceSpecificDetails : SiteRecoveryApplianceSpecificDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmApplianceSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmApplianceSpecificDetails"/>. </summary>
         internal InMageRcmApplianceSpecificDetails()
         {
             Appliances = new ChangeTrackingList<InMageRcmApplianceDetails>();
             InstanceType = "InMageRcm";
         }
 
-        /// <summary> Initializes a new instance of InMageRcmApplianceSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmApplianceSpecificDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="appliances"> The list of appliances. </param>
         internal InMageRcmApplianceSpecificDetails(string instanceType, IReadOnlyList<InMageRcmApplianceDetails> appliances) : base(instanceType)

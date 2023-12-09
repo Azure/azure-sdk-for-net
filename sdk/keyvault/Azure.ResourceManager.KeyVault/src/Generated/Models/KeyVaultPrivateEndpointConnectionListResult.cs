@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> List of private endpoint connections. </summary>
     internal partial class KeyVaultPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of KeyVaultPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateEndpointConnectionListResult"/>. </summary>
         internal KeyVaultPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<KeyVaultPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of KeyVaultPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> The list of private endpoint connections. </param>
         /// <param name="nextLink"> The URL to get the next set of private endpoint connections. </param>
         internal KeyVaultPrivateEndpointConnectionListResult(IReadOnlyList<KeyVaultPrivateEndpointConnectionData> value, string nextLink)

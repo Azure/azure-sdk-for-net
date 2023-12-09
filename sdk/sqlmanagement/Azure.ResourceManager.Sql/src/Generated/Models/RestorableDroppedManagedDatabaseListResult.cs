@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of restorable dropped managed databases. </summary>
     internal partial class RestorableDroppedManagedDatabaseListResult
     {
-        /// <summary> Initializes a new instance of RestorableDroppedManagedDatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableDroppedManagedDatabaseListResult"/>. </summary>
         internal RestorableDroppedManagedDatabaseListResult()
         {
             Value = new ChangeTrackingList<RestorableDroppedManagedDatabaseData>();
         }
 
-        /// <summary> Initializes a new instance of RestorableDroppedManagedDatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableDroppedManagedDatabaseListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal RestorableDroppedManagedDatabaseListResult(IReadOnlyList<RestorableDroppedManagedDatabaseData> value, string nextLink)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Support topic information. </summary>
     public partial class ContainerAppDiagnosticSupportTopic
     {
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticSupportTopic. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticSupportTopic"/>. </summary>
         public ContainerAppDiagnosticSupportTopic()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticSupportTopic. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticSupportTopic"/>. </summary>
         /// <param name="id"> Unique topic identifier. </param>
         /// <param name="pesId"> PES identifier. </param>
         internal ContainerAppDiagnosticSupportTopic(string id, string pesId)

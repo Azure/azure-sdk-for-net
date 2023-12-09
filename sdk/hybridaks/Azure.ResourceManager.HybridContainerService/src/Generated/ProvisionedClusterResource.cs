@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.HybridContainerService
         private readonly ProvisionedClustersRestOperations _provisionedClusterRestClient;
         private readonly ProvisionedClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/provisionedClusters";
+
         /// <summary> Initializes a new instance of the <see cref="ProvisionedClusterResource"/> class for mocking. </summary>
         protected ProvisionedClusterResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.HybridContainerService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/provisionedClusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The ProvisionedClusterPatch to use. </param>
+        /// <param name="patch"> The <see cref="ProvisionedClusterPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<ProvisionedClusterResource>> UpdateAsync(WaitUntil waitUntil, ProvisionedClusterPatch patch, CancellationToken cancellationToken = default)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The ProvisionedClusterPatch to use. </param>
+        /// <param name="patch"> The <see cref="ProvisionedClusterPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<ProvisionedClusterResource> Update(WaitUntil waitUntil, ProvisionedClusterPatch patch, CancellationToken cancellationToken = default)

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> This class represents the fabric replication group task details. </summary>
     public partial class FabricReplicationGroupTaskDetails : SiteRecoveryJobTaskDetails
     {
-        /// <summary> Initializes a new instance of FabricReplicationGroupTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricReplicationGroupTaskDetails"/>. </summary>
         internal FabricReplicationGroupTaskDetails()
         {
             InstanceType = "FabricReplicationGroupTaskDetails";
         }
 
-        /// <summary> Initializes a new instance of FabricReplicationGroupTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricReplicationGroupTaskDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
         /// <param name="jobTask"> The job entity. </param>
         /// <param name="skippedReason"> The skipped reason. </param>

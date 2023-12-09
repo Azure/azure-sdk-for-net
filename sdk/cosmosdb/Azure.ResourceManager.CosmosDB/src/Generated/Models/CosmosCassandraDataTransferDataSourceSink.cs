@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> A CosmosDB Cassandra API data source/sink. </summary>
     public partial class CosmosCassandraDataTransferDataSourceSink : DataTransferDataSourceSink
     {
-        /// <summary> Initializes a new instance of CosmosCassandraDataTransferDataSourceSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosCassandraDataTransferDataSourceSink"/>. </summary>
         /// <param name="keyspaceName"></param>
         /// <param name="tableName"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> or <paramref name="tableName"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Component = DataTransferComponent.CosmosDBCassandra;
         }
 
-        /// <summary> Initializes a new instance of CosmosCassandraDataTransferDataSourceSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosCassandraDataTransferDataSourceSink"/>. </summary>
         /// <param name="component"></param>
         /// <param name="keyspaceName"></param>
         /// <param name="tableName"></param>

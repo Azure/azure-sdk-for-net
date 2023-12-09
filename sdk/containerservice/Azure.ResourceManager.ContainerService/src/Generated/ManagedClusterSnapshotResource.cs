@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ContainerService
         private readonly ManagedClusterSnapshotsRestOperations _managedClusterSnapshotRestClient;
         private readonly ManagedClusterSnapshotData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedclustersnapshots";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedClusterSnapshotResource"/> class for mocking. </summary>
         protected ManagedClusterSnapshotResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ContainerService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedclustersnapshots";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

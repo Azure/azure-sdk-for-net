@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The ExtendedThroughputSettingsResourceInfo. </summary>
     public partial class ExtendedThroughputSettingsResourceInfo : ThroughputSettingsResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedThroughputSettingsResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedThroughputSettingsResourceInfo"/>. </summary>
         public ExtendedThroughputSettingsResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtendedThroughputSettingsResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedThroughputSettingsResourceInfo"/>. </summary>
         /// <param name="throughput"> Value of the Cosmos DB resource throughput. Either throughput is required or autoscaleSettings is required, but not both. </param>
         /// <param name="autoscaleSettings"> Cosmos DB resource for autoscale settings. Either throughput is required or autoscaleSettings is required, but not both. </param>
         /// <param name="minimumThroughput"> The minimum throughput of the resource. </param>

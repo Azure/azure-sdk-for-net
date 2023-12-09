@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> The PrivateStorePlan. </summary>
     public partial class PrivateStorePlan
     {
-        /// <summary> Initializes a new instance of PrivateStorePlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStorePlan"/>. </summary>
         public PrivateStorePlan()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateStorePlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStorePlan"/>. </summary>
         /// <param name="skuId"> Identifier for this plan. </param>
         /// <param name="planId"> Text identifier for this plan. </param>
         /// <param name="planDisplayName"> Friendly name for the plan for display in the marketplace. </param>

@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Storage
         private readonly ManagementPoliciesRestOperations _storageAccountManagementPolicyManagementPoliciesRestClient;
         private readonly StorageAccountManagementPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/managementPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="StorageAccountManagementPolicyResource"/> class for mocking. </summary>
         protected StorageAccountManagementPolicyResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Storage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/managementPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

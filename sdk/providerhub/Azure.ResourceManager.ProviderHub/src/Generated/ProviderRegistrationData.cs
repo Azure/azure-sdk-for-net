@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.ProviderHub
     /// <summary> A class representing the ProviderRegistration data model. </summary>
     public partial class ProviderRegistrationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProviderRegistrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderRegistrationData"/>. </summary>
         public ProviderRegistrationData()
         {
         }
 
-        /// <summary> Initializes a new instance of ProviderRegistrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderRegistrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

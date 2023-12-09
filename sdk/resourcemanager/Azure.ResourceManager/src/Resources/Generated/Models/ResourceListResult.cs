@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of resource groups. </summary>
     internal partial class ResourceListResult
     {
-        /// <summary> Initializes a new instance of ResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceListResult"/>. </summary>
         internal ResourceListResult()
         {
             Value = new ChangeTrackingList<GenericResourceData>();
         }
 
-        /// <summary> Initializes a new instance of ResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceListResult"/>. </summary>
         /// <param name="value"> An array of resources. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal ResourceListResult(IReadOnlyList<GenericResourceData> value, string nextLink)

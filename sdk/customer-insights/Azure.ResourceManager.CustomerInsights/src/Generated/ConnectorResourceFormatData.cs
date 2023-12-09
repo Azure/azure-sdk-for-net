@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class ConnectorResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of ConnectorResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorResourceFormatData"/>. </summary>
         public ConnectorResourceFormatData()
         {
             ConnectorProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ConnectorResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

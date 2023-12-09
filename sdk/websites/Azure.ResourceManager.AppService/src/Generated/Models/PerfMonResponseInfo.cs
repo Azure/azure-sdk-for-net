@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Performance monitor API response. </summary>
     public partial class PerfMonResponseInfo
     {
-        /// <summary> Initializes a new instance of PerfMonResponseInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PerfMonResponseInfo"/>. </summary>
         internal PerfMonResponseInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PerfMonResponseInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PerfMonResponseInfo"/>. </summary>
         /// <param name="code"> The response code. </param>
         /// <param name="message"> The message. </param>
         /// <param name="data"> The performance monitor counters. </param>

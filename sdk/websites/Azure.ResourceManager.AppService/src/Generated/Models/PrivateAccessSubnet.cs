@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Description of a Virtual Network subnet that is useable for private site access. </summary>
     public partial class PrivateAccessSubnet
     {
-        /// <summary> Initializes a new instance of PrivateAccessSubnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateAccessSubnet"/>. </summary>
         public PrivateAccessSubnet()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateAccessSubnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateAccessSubnet"/>. </summary>
         /// <param name="name"> The name of the subnet. </param>
         /// <param name="key"> The key (ID) of the subnet. </param>
         internal PrivateAccessSubnet(string name, int? key)

@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Linked service for PostgreSQL data source. </summary>
     public partial class PostgreSqlLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of PostgreSqlLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlLinkedService"/>. </summary>
         /// <param name="connectionString"> The connection string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public PostgreSqlLinkedService(object connectionString)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "PostgreSql";
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

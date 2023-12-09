@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> The response of the List NotificationHub operation. </summary>
     internal partial class NotificationHubListResult
     {
-        /// <summary> Initializes a new instance of NotificationHubListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubListResult"/>. </summary>
         internal NotificationHubListResult()
         {
             Value = new ChangeTrackingList<NotificationHubData>();
         }
 
-        /// <summary> Initializes a new instance of NotificationHubListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubListResult"/>. </summary>
         /// <param name="value"> Result of the List NotificationHub operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of NotificationHub. </param>
         internal NotificationHubListResult(IReadOnlyList<NotificationHubData> value, string nextLink)

@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly TenantAccessGitRestOperations _tenantAccessGitRestClient;
         private readonly TenantAccessInfoData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/tenant";
+
         /// <summary> Initializes a new instance of the <see cref="TenantAccessInfoResource"/> class for mocking. </summary>
         protected TenantAccessInfoResource()
         {
@@ -70,9 +73,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/tenant";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

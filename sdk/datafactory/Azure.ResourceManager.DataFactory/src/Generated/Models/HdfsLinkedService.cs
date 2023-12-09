@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Hadoop Distributed File System (HDFS) linked service. </summary>
     public partial class HdfsLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of HdfsLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HdfsLinkedService"/>. </summary>
         /// <param name="uri"> The URL of the HDFS service endpoint, e.g. http://myhostname:50070/webhdfs/v1 . Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public HdfsLinkedService(DataFactoryElement<string> uri)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "Hdfs";
         }
 
-        /// <summary> Initializes a new instance of HdfsLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HdfsLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

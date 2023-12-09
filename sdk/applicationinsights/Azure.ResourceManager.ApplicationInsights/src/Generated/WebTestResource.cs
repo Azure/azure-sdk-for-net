@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ApplicationInsights
         private readonly WebTestsRestOperations _webTestRestClient;
         private readonly WebTestData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/webtests";
+
         /// <summary> Initializes a new instance of the <see cref="WebTestResource"/> class for mocking. </summary>
         protected WebTestResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ApplicationInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/webtests";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

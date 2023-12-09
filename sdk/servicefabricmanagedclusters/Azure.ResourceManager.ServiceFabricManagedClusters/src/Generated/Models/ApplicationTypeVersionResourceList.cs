@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> The list of application type version resources for the specified application type name resource. </summary>
     internal partial class ApplicationTypeVersionResourceList
     {
-        /// <summary> Initializes a new instance of ApplicationTypeVersionResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationTypeVersionResourceList"/>. </summary>
         internal ApplicationTypeVersionResourceList()
         {
             Value = new ChangeTrackingList<ServiceFabricManagedApplicationTypeVersionData>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationTypeVersionResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationTypeVersionResourceList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of application type version list results if there are any. </param>
         internal ApplicationTypeVersionResourceList(IReadOnlyList<ServiceFabricManagedApplicationTypeVersionData> value, string nextLink)

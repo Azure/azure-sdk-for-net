@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DnsResolver
         private readonly OutboundEndpointsRestOperations _dnsResolverOutboundEndpointOutboundEndpointsRestClient;
         private readonly DnsResolverOutboundEndpointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/dnsResolvers/outboundEndpoints";
+
         /// <summary> Initializes a new instance of the <see cref="DnsResolverOutboundEndpointResource"/> class for mocking. </summary>
         protected DnsResolverOutboundEndpointResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DnsResolver
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/dnsResolvers/outboundEndpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

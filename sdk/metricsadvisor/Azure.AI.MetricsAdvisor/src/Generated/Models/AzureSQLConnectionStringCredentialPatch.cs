@@ -10,10 +10,21 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureSQLConnectionStringCredentialPatch. </summary>
     internal partial class AzureSQLConnectionStringCredentialPatch : DataSourceCredentialPatch
     {
-        /// <summary> Initializes a new instance of AzureSQLConnectionStringCredentialPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSQLConnectionStringCredentialPatch"/>. </summary>
         public AzureSQLConnectionStringCredentialPatch()
         {
             DataSourceCredentialType = DataSourceCredentialKind.SqlConnectionString;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureSQLConnectionStringCredentialPatch"/>. </summary>
+        /// <param name="dataSourceCredentialType"> Type of data source credential. </param>
+        /// <param name="dataSourceCredentialName"> Name of data source credential. </param>
+        /// <param name="dataSourceCredentialDescription"> Description of data source credential. </param>
+        /// <param name="parameters"></param>
+        internal AzureSQLConnectionStringCredentialPatch(DataSourceCredentialKind dataSourceCredentialType, string dataSourceCredentialName, string dataSourceCredentialDescription, AzureSQLConnectionStringParamPatch parameters) : base(dataSourceCredentialType, dataSourceCredentialName, dataSourceCredentialDescription)
+        {
+            Parameters = parameters;
+            DataSourceCredentialType = dataSourceCredentialType;
         }
 
         /// <summary> Gets or sets the parameters. </summary>

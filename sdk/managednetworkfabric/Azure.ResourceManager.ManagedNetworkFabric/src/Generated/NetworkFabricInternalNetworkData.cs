@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkFabricInternalNetworkData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetworkFabricInternalNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricInternalNetworkData"/>. </summary>
         /// <param name="vlanId"> Vlan identifier. Example: 1001. </param>
         public NetworkFabricInternalNetworkData(int vlanId)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             VlanId = vlanId;
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricInternalNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricInternalNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

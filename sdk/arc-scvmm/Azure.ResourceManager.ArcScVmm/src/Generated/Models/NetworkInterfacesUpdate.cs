@@ -10,9 +10,28 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> Network Interface model. </summary>
     public partial class NetworkInterfacesUpdate
     {
-        /// <summary> Initializes a new instance of NetworkInterfacesUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfacesUpdate"/>. </summary>
         public NetworkInterfacesUpdate()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfacesUpdate"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the network interface. </param>
+        /// <param name="macAddress"> Gets or sets the nic MAC address. </param>
+        /// <param name="virtualNetworkId"> Gets or sets the ARM Id of the Microsoft.ScVmm/virtualNetwork resource to connect the nic. </param>
+        /// <param name="ipv4AddressType"> Gets or sets the ipv4 address type. </param>
+        /// <param name="ipv6AddressType"> Gets or sets the ipv6 address type. </param>
+        /// <param name="macAddressType"> Gets or sets the mac address type. </param>
+        /// <param name="nicId"> Gets or sets the nic id. </param>
+        internal NetworkInterfacesUpdate(string name, string macAddress, string virtualNetworkId, AllocationMethod? ipv4AddressType, AllocationMethod? ipv6AddressType, AllocationMethod? macAddressType, string nicId)
+        {
+            Name = name;
+            MacAddress = macAddress;
+            VirtualNetworkId = virtualNetworkId;
+            IPv4AddressType = ipv4AddressType;
+            IPv6AddressType = ipv6AddressType;
+            MacAddressType = macAddressType;
+            NicId = nicId;
         }
 
         /// <summary> Gets or sets the name of the network interface. </summary>

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// </summary>
     public abstract partial class NFVIs
     {
-        /// <summary> Initializes a new instance of NFVIs. </summary>
+        /// <summary> Initializes a new instance of <see cref="NFVIs"/>. </summary>
         protected NFVIs()
         {
         }
 
-        /// <summary> Initializes a new instance of NFVIs. </summary>
+        /// <summary> Initializes a new instance of <see cref="NFVIs"/>. </summary>
         /// <param name="name"> Name of the nfvi. </param>
         /// <param name="nfviType"> The NFVI type. </param>
         internal NFVIs(string name, NfviType nfviType)

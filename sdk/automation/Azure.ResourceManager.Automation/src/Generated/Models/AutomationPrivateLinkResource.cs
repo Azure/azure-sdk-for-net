@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> A private link resource. </summary>
     public partial class AutomationPrivateLinkResource : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomationPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPrivateLinkResource"/>. </summary>
         public AutomationPrivateLinkResource()
         {
             RequiredMembers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AutomationPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

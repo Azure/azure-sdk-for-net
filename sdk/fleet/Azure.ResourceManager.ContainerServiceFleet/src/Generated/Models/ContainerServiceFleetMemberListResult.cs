@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The response of a FleetMember list operation. </summary>
     internal partial class ContainerServiceFleetMemberListResult
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetMemberListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberListResult"/>. </summary>
         /// <param name="value"> The FleetMember items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ContainerServiceFleetMemberListResult(IEnumerable<ContainerServiceFleetMemberData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetMemberListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberListResult"/>. </summary>
         /// <param name="value"> The FleetMember items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal ContainerServiceFleetMemberListResult(IReadOnlyList<ContainerServiceFleetMemberData> value, Uri nextLink)

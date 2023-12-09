@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Represents the software inventory of the virtual machine. </summary>
     internal partial class SoftwaresList
     {
-        /// <summary> Initializes a new instance of SoftwaresList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwaresList"/>. </summary>
         internal SoftwaresList()
         {
             Value = new ChangeTrackingList<SoftwareInventoryData>();
         }
 
-        /// <summary> Initializes a new instance of SoftwaresList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwaresList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal SoftwaresList(IReadOnlyList<SoftwareInventoryData> value, string nextLink)

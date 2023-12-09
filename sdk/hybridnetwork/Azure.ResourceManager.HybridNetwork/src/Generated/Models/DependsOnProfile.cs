@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Depends on profile definition. </summary>
     public partial class DependsOnProfile
     {
-        /// <summary> Initializes a new instance of DependsOnProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="DependsOnProfile"/>. </summary>
         public DependsOnProfile()
         {
             InstallDependsOn = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             UpdateDependsOn = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DependsOnProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="DependsOnProfile"/>. </summary>
         /// <param name="installDependsOn"> Application installation operation dependency. </param>
         /// <param name="uninstallDependsOn"> Application deletion operation dependency. </param>
         /// <param name="updateDependsOn"> Application update operation dependency. </param>

@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.ManagedNetwork
         private readonly ScopeAssignmentsRestOperations _scopeAssignmentRestClient;
         private readonly ScopeAssignmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetwork/scopeAssignments";
+
         /// <summary> Initializes a new instance of the <see cref="ScopeAssignmentResource"/> class for mocking. </summary>
         protected ScopeAssignmentResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.ManagedNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetwork/scopeAssignments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

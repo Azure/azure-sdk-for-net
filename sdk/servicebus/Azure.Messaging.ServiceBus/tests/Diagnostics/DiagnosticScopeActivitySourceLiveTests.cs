@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         [TestCase(false)]
         public async Task SenderReceiverActivitiesDisabled(bool useSessions)
         {
-            using var listener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
 
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: useSessions))
             {
@@ -72,7 +72,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 }
                 else
                 {
-                    await receiver.RenewMessageLockAsync(received[-1]);
+                    await receiver.RenewMessageLockAsync(received[1]);
                 }
 
                 // schedule
@@ -262,7 +262,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var messages = ServiceBusTestUtilities.GetMessages(messageCt);
 
             using var listener = new TestActivitySourceListener(
-                DiagnosticProperty.DiagnosticNamespace,
+                source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace),
                 activityStartedCallback: activity =>
                 {
                     if (activity.OperationName == DiagnosticProperty.ProcessMessageActivityName)
@@ -321,7 +321,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var messages = ServiceBusTestUtilities.GetMessages(messageCt, "sessionId");
 
             using var listener = new TestActivitySourceListener(
-                DiagnosticProperty.DiagnosticNamespace,
+                source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace),
                 activityStartedCallback: activity =>
                 {
                     if (activity.OperationName == DiagnosticProperty.ProcessSessionMessageActivityName)
@@ -374,7 +374,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         public async Task RuleManagerActivities()
         {
             using var _ = SetAppConfigSwitch();
-            using var listener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
 
             await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
             {

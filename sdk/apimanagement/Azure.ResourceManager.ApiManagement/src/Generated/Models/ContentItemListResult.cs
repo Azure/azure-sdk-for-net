@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged list of content items. </summary>
     internal partial class ContentItemListResult
     {
-        /// <summary> Initializes a new instance of ContentItemListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentItemListResult"/>. </summary>
         internal ContentItemListResult()
         {
             Value = new ChangeTrackingList<ApiManagementContentItem>();
         }
 
-        /// <summary> Initializes a new instance of ContentItemListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentItemListResult"/>. </summary>
         /// <param name="value"> Collection of content items. </param>
         /// <param name="nextLink"> Next page link, if any. </param>
         internal ContentItemListResult(IReadOnlyList<ApiManagementContentItem> value, string nextLink)

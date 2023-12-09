@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly GovernanceRulesRestOperations _governanceRuleRestClient;
         private readonly GovernanceRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/governanceRules";
+
         /// <summary> Initializes a new instance of the <see cref="GovernanceRuleResource"/> class for mocking. </summary>
         protected GovernanceRuleResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/governanceRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

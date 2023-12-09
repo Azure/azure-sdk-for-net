@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.StorageMover
         private readonly AgentsRestOperations _storageMoverAgentAgentsRestClient;
         private readonly StorageMoverAgentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StorageMover/storageMovers/agents";
+
         /// <summary> Initializes a new instance of the <see cref="StorageMoverAgentResource"/> class for mocking. </summary>
         protected StorageMoverAgentResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.StorageMover
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StorageMover/storageMovers/agents";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The StorageMoverAgentPatch to use. </param>
+        /// <param name="patch"> The <see cref="StorageMoverAgentPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<StorageMoverAgentResource>> UpdateAsync(StorageMoverAgentPatch patch, CancellationToken cancellationToken = default)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The StorageMoverAgentPatch to use. </param>
+        /// <param name="patch"> The <see cref="StorageMoverAgentPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<StorageMoverAgentResource> Update(StorageMoverAgentPatch patch, CancellationToken cancellationToken = default)

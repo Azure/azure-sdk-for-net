@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties of the fallback route. IoT Hub uses these properties when it routes messages to the fallback endpoint. </summary>
     public partial class IotHubFallbackRouteProperties
     {
-        /// <summary> Initializes a new instance of IotHubFallbackRouteProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubFallbackRouteProperties"/>. </summary>
         /// <param name="source"> The source to which the routing rule is to be applied to. For example, DeviceMessages. </param>
         /// <param name="endpointNames"> The list of endpoints to which the messages that satisfy the condition are routed to. Currently only 1 endpoint is allowed. </param>
         /// <param name="isEnabled"> Used to specify whether the fallback route is enabled. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.IotHub.Models
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of IotHubFallbackRouteProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubFallbackRouteProperties"/>. </summary>
         /// <param name="name"> The name of the route. The name can only include alphanumeric characters, periods, underscores, hyphens, has a maximum length of 64 characters, and must be unique. </param>
         /// <param name="source"> The source to which the routing rule is to be applied to. For example, DeviceMessages. </param>
         /// <param name="condition"> The condition which is evaluated in order to apply the fallback route. If the condition is not provided it will evaluate to true by default. For grammar, See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language. </param>

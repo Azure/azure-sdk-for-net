@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> Subscription Accept Ownership Response. </summary>
     public partial class AcceptOwnershipStatus
     {
-        /// <summary> Initializes a new instance of AcceptOwnershipStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcceptOwnershipStatus"/>. </summary>
         internal AcceptOwnershipStatus()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AcceptOwnershipStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcceptOwnershipStatus"/>. </summary>
         /// <param name="subscriptionId"> Newly created subscription Id. </param>
         /// <param name="acceptOwnershipState"> The accept ownership state of the resource. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>

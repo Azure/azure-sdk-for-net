@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Represents an Azure resource group. </summary>
     public partial class ResourceGroupValue
     {
-        /// <summary> Initializes a new instance of ResourceGroupValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupValue"/>. </summary>
         public ResourceGroupValue()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceGroupValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupValue"/>. </summary>
         /// <param name="name"> Name of the resource group. </param>
         /// <param name="location"> Location of the resource group. </param>
         internal ResourceGroupValue(string name, AzureLocation? location)

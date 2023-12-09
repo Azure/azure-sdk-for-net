@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The request for a migrateToIpBased API. </summary>
     public partial class MigrateLoadBalancerToIPBasedContent
     {
-        /// <summary> Initializes a new instance of MigrateLoadBalancerToIPBasedContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateLoadBalancerToIPBasedContent"/>. </summary>
         public MigrateLoadBalancerToIPBasedContent()
         {
             Pools = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MigrateLoadBalancerToIPBasedContent"/>. </summary>
+        /// <param name="pools"> A list of pool names that should be migrated from Nic based to IP based pool. </param>
+        internal MigrateLoadBalancerToIPBasedContent(IList<string> pools)
+        {
+            Pools = pools;
         }
 
         /// <summary> A list of pool names that should be migrated from Nic based to IP based pool. </summary>

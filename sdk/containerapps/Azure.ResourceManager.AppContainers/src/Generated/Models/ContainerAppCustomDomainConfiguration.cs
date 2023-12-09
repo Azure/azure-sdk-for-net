@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Configuration properties for apps environment custom domain. </summary>
     public partial class ContainerAppCustomDomainConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppCustomDomainConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomDomainConfiguration"/>. </summary>
         public ContainerAppCustomDomainConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCustomDomainConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomDomainConfiguration"/>. </summary>
         /// <param name="customDomainVerificationId"> Id used to verify domain name ownership. </param>
         /// <param name="dnsSuffix"> Dns suffix for the environment domain. </param>
         /// <param name="certificateValue"> PFX or PEM blob. </param>

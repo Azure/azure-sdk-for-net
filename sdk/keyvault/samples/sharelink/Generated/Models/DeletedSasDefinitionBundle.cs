@@ -13,12 +13,12 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> A deleted SAS definition bundle consisting of its previous id, attributes and its tags, as well as information on when it will be purged. </summary>
     public partial class DeletedSasDefinitionBundle : SasDefinitionBundle
     {
-        /// <summary> Initializes a new instance of DeletedSasDefinitionBundle. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedSasDefinitionBundle"/>. </summary>
         internal DeletedSasDefinitionBundle()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedSasDefinitionBundle. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedSasDefinitionBundle"/>. </summary>
         /// <param name="id"> The SAS definition id. </param>
         /// <param name="secretId"> Storage account SAS definition secret id. </param>
         /// <param name="templateUri"> The SAS definition token template signed with an arbitrary key.  Tokens created according to the SAS definition will have the same properties as the template. </param>

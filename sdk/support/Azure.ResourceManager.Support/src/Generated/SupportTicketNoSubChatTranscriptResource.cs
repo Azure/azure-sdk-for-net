@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Support
         private readonly ChatTranscriptsNoSubscriptionRestOperations _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionRestClient;
         private readonly ChatTranscriptDetailData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Support/supportTickets/chatTranscripts";
+
         /// <summary> Initializes a new instance of the <see cref="SupportTicketNoSubChatTranscriptResource"/> class for mocking. </summary>
         protected SupportTicketNoSubChatTranscriptResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Support
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Support/supportTickets/chatTranscripts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

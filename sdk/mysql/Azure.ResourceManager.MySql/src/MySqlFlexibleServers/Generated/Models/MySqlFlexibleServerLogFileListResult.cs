@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> A List of logFiles. </summary>
     internal partial class MySqlFlexibleServerLogFileListResult
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerLogFileListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerLogFileListResult"/>. </summary>
         internal MySqlFlexibleServerLogFileListResult()
         {
             Value = new ChangeTrackingList<MySqlFlexibleServerLogFile>();
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerLogFileListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerLogFileListResult"/>. </summary>
         /// <param name="value"> The list of logFiles in a server. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         internal MySqlFlexibleServerLogFileListResult(IReadOnlyList<MySqlFlexibleServerLogFile> value, string nextLink)

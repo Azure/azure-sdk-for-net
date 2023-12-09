@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Work item configuration list result. </summary>
     internal partial class WorkItemConfigurationsListResult
     {
-        /// <summary> Initializes a new instance of WorkItemConfigurationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkItemConfigurationsListResult"/>. </summary>
         internal WorkItemConfigurationsListResult()
         {
             Value = new ChangeTrackingList<WorkItemConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of WorkItemConfigurationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkItemConfigurationsListResult"/>. </summary>
         /// <param name="value"> An array of work item configurations. </param>
         internal WorkItemConfigurationsListResult(IReadOnlyList<WorkItemConfiguration> value)
         {

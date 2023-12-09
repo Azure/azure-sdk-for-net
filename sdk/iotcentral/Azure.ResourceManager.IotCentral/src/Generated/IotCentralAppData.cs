@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.IotCentral
     /// </summary>
     public partial class IotCentralAppData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of IotCentralAppData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> A valid instance SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.IotCentral
             PrivateEndpointConnections = new ChangeTrackingList<IotCentralPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of IotCentralAppData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

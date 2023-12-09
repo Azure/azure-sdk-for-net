@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Cluster HTTP proxy configuration. </summary>
     public partial class ManagedClusterHttpProxyConfig
     {
-        /// <summary> Initializes a new instance of ManagedClusterHttpProxyConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterHttpProxyConfig"/>. </summary>
         public ManagedClusterHttpProxyConfig()
         {
             NoProxy = new ChangeTrackingList<string>();
             EffectiveNoProxy = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterHttpProxyConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterHttpProxyConfig"/>. </summary>
         /// <param name="httpProxy"> The HTTP proxy server endpoint to use. </param>
         /// <param name="httpsProxy"> The HTTPS proxy server endpoint to use. </param>
         /// <param name="noProxy"> The endpoints that should not go through proxy. </param>

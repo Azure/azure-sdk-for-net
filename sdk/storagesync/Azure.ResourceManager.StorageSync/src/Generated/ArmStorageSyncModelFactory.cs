@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmStorageSyncModelFactory
     {
-        /// <summary> Initializes a new instance of StorageSyncNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageSyncNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Gets a boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or invalid and cannot be used. </param>
         /// <param name="reason"> Gets the reason that a Storage Sync Service name could not be used. The Reason element is only returned if NameAvailable is false. </param>
         /// <param name="message"> Gets an error message explaining the Reason value in more detail. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new StorageSyncNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of StorageSyncServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSync.StorageSyncServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new StorageSyncServiceData(id, name, resourceType, systemData, tags, location, incomingTrafficPolicy, storageSyncServiceStatus, storageSyncServiceUid, provisioningState, lastWorkflowId, lastOperationName, privateEndpointConnections?.ToList());
         }
 
-        /// <summary> Initializes a new instance of StorageSyncPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSync.StorageSyncPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new StorageSyncPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of StorageSyncPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageSyncPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new StorageSyncPrivateLinkResource(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
         }
 
-        /// <summary> Initializes a new instance of StorageSyncGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSync.StorageSyncGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new StorageSyncGroupData(id, name, resourceType, systemData, uniqueId, syncGroupStatus);
         }
 
-        /// <summary> Initializes a new instance of StorageSyncGroupCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageSyncGroupCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new StorageSyncGroupCreateOrUpdateContent(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of CloudEndpointCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CloudEndpointCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudEndpointCreateOrUpdateContent(id, name, resourceType, systemData, storageAccountResourceId, azureFileShareName, storageAccountTenantId, friendlyName);
         }
 
-        /// <summary> Initializes a new instance of CloudEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSync.CloudEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudEndpointData(id, name, resourceType, systemData, storageAccountResourceId, azureFileShareName, storageAccountTenantId, partnershipId, friendlyName, isBackupEnabled, provisioningState, lastWorkflowId, lastOperationName, changeEnumerationStatus);
         }
 
-        /// <summary> Initializes a new instance of CloudEndpointChangeEnumerationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CloudEndpointChangeEnumerationStatus"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="lastEnumerationStatus"> Status of last completed change enumeration. </param>
         /// <param name="activity"> Change enumeration activity. </param>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudEndpointChangeEnumerationStatus(lastUpdatedOn, lastEnumerationStatus, activity);
         }
 
-        /// <summary> Initializes a new instance of CloudEndpointLastChangeEnumerationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CloudEndpointLastChangeEnumerationStatus"/>. </summary>
         /// <param name="startedOn"> Timestamp when change enumeration started. </param>
         /// <param name="completedOn"> Timestamp when change enumeration completed. </param>
         /// <param name="namespaceFilesCount"> Count of files in the namespace. </param>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudEndpointLastChangeEnumerationStatus(startedOn, completedOn, namespaceFilesCount, namespaceDirectoriesCount, namespaceSizeInBytes, nextRunTimestamp);
         }
 
-        /// <summary> Initializes a new instance of CloudEndpointChangeEnumerationActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CloudEndpointChangeEnumerationActivity"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="operationState"> Change enumeration operation state. </param>
         /// <param name="statusCode"> When non-zero, indicates an issue that is delaying change enumeration. </param>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudEndpointChangeEnumerationActivity(lastUpdatedOn, operationState, statusCode, startedOn, processedFilesCount, processedDirectoriesCount, totalFilesCount, totalDirectoriesCount, totalSizeInBytes, progressPercent, minutesRemaining, totalCountsState, deletesProgressPercent);
         }
 
-        /// <summary> Initializes a new instance of CloudEndpointPostBackupResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CloudEndpointPostBackupResult"/>. </summary>
         /// <param name="cloudEndpointName"> cloud endpoint Name. </param>
         /// <returns> A new <see cref="Models.CloudEndpointPostBackupResult"/> instance for mocking. </returns>
         public static CloudEndpointPostBackupResult CloudEndpointPostBackupResult(string cloudEndpointName = null)
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudEndpointPostBackupResult(cloudEndpointName);
         }
 
-        /// <summary> Initializes a new instance of CloudEndpointAfsShareMetadataCertificatePublicKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CloudEndpointAfsShareMetadataCertificatePublicKeys"/>. </summary>
         /// <param name="firstKey"> The first public key. </param>
         /// <param name="secondKey"> The second public key. </param>
         /// <returns> A new <see cref="Models.CloudEndpointAfsShareMetadataCertificatePublicKeys"/> instance for mocking. </returns>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudEndpointAfsShareMetadataCertificatePublicKeys(firstKey, secondKey);
         }
 
-        /// <summary> Initializes a new instance of StorageSyncServerEndpointCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageSyncServerEndpointCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new StorageSyncServerEndpointCreateOrUpdateContent(id, name, resourceType, systemData, serverLocalPath, cloudTiering, volumeFreeSpacePercent, tierFilesOlderThanDays, friendlyName, serverResourceId, offlineDataTransfer, offlineDataTransferShareName, initialDownloadPolicy, localCacheMode, initialUploadPolicy);
         }
 
-        /// <summary> Initializes a new instance of StorageSyncServerEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSync.StorageSyncServerEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new StorageSyncServerEndpointData(id, name, resourceType, systemData, serverLocalPath, cloudTiering, volumeFreeSpacePercent, tierFilesOlderThanDays, friendlyName, serverResourceId, provisioningState, lastWorkflowId, lastOperationName, syncStatus, offlineDataTransfer, offlineDataTransferStorageAccountResourceId, offlineDataTransferStorageAccountTenantId, offlineDataTransferShareName, cloudTieringStatus, recallStatus, initialDownloadPolicy, localCacheMode, initialUploadPolicy, serverName);
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointSyncStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServerEndpointSyncStatus"/>. </summary>
         /// <param name="downloadHealth"> Download Health Status. </param>
         /// <param name="uploadHealth"> Upload Health Status. </param>
         /// <param name="combinedHealth"> Combined Health Status. </param>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointSyncStatus(downloadHealth, uploadHealth, combinedHealth, syncActivity, totalPersistentFilesNotSyncingCount, lastUpdatedOn, uploadStatus, downloadStatus, uploadActivity, downloadActivity, offlineDataTransferStatus, backgroundDataDownloadActivity);
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointSyncSessionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServerEndpointSyncSessionStatus"/>. </summary>
         /// <param name="lastSyncResult"> Last sync result (HResult). </param>
         /// <param name="lastSyncTimestamp"> Last sync timestamp. </param>
         /// <param name="lastSyncSuccessTimestamp"> Last sync success timestamp. </param>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointSyncSessionStatus(lastSyncResult, lastSyncTimestamp, lastSyncSuccessTimestamp, lastSyncPerItemErrorCount, persistentFilesNotSyncingCount, transientFilesNotSyncingCount, filesNotSyncingErrors?.ToList(), lastSyncMode);
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointFilesNotSyncingError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServerEndpointFilesNotSyncingError"/>. </summary>
         /// <param name="errorCode"> Error code (HResult). </param>
         /// <param name="persistentCount"> Count of persistent files not syncing with the specified error code. </param>
         /// <param name="transientCount"> Count of transient files not syncing with the specified error code. </param>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointFilesNotSyncingError(errorCode, persistentCount, transientCount);
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointSyncActivityStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServerEndpointSyncActivityStatus"/>. </summary>
         /// <param name="timestamp"> Timestamp when properties were updated. </param>
         /// <param name="perItemErrorCount"> Per item error count. </param>
         /// <param name="appliedItemCount"> Applied item count. </param>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointSyncActivityStatus(timestamp, perItemErrorCount, appliedItemCount, totalItemCount, appliedBytes, totalBytes, syncMode, sessionMinutesRemaining);
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointBackgroundDataDownloadActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServerEndpointBackgroundDataDownloadActivity"/>. </summary>
         /// <param name="timestamp"> Timestamp when properties were updated. </param>
         /// <param name="startedOn"> Timestamp when the operation started. </param>
         /// <param name="percentProgress"> Progress percentage. </param>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointBackgroundDataDownloadActivity(timestamp, startedOn, percentProgress, downloadedBytes);
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointCloudTieringStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServerEndpointCloudTieringStatus"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="health"> Cloud tiering health state. </param>
         /// <param name="healthLastUpdatedOn"> The last updated timestamp of health state. </param>
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointCloudTieringStatus(lastUpdatedOn, health, healthLastUpdatedOn, lastCloudTieringResult, lastSuccessTimestamp, spaceSavings, cachePerformance, filesNotTiering, volumeFreeSpacePolicyStatus, datePolicyStatus, lowDiskMode);
         }
 
-        /// <summary> Initializes a new instance of CloudTieringSpaceSavings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CloudTieringSpaceSavings"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="volumeSizeInBytes"> Volume size. </param>
         /// <param name="cloudTotalSizeInBytes"> Total size of content in the azure file share. </param>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudTieringSpaceSavings(lastUpdatedOn, volumeSizeInBytes, cloudTotalSizeInBytes, cachedSizeInBytes, spaceSavingsPercent, spaceSavingsInBytes);
         }
 
-        /// <summary> Initializes a new instance of CloudTieringCachePerformance. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CloudTieringCachePerformance"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="cacheHitBytes"> Count of bytes that were served from the local server. </param>
         /// <param name="cacheMissBytes"> Count of bytes that were served from the cloud. </param>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudTieringCachePerformance(lastUpdatedOn, cacheHitBytes, cacheMissBytes, cacheHitBytesPercent);
         }
 
-        /// <summary> Initializes a new instance of CloudTieringFilesNotTiering. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CloudTieringFilesNotTiering"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="totalFileCount"> Last cloud tiering result (HResult). </param>
         /// <param name="errors"> Array of tiering errors. </param>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudTieringFilesNotTiering(lastUpdatedOn, totalFileCount, errors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of FilesNotTieringError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FilesNotTieringError"/>. </summary>
         /// <param name="errorCode"> Error code (HResult). </param>
         /// <param name="fileCount"> Count of files with this error. </param>
         /// <returns> A new <see cref="Models.FilesNotTieringError"/> instance for mocking. </returns>
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new FilesNotTieringError(errorCode, fileCount);
         }
 
-        /// <summary> Initializes a new instance of CloudTieringVolumeFreeSpacePolicyStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CloudTieringVolumeFreeSpacePolicyStatus"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="effectiveVolumeFreeSpacePolicy"> In the case where multiple server endpoints are present in a volume, an effective free space policy is applied. </param>
         /// <param name="currentVolumeFreeSpacePercent"> Current volume free space percentage. </param>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudTieringVolumeFreeSpacePolicyStatus(lastUpdatedOn, effectiveVolumeFreeSpacePolicy, currentVolumeFreeSpacePercent);
         }
 
-        /// <summary> Initializes a new instance of CloudTieringDatePolicyStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CloudTieringDatePolicyStatus"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="tieredFilesMostRecentAccessTimestamp"> Most recent access time of tiered files. </param>
         /// <returns> A new <see cref="Models.CloudTieringDatePolicyStatus"/> instance for mocking. </returns>
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudTieringDatePolicyStatus(lastUpdatedOn, tieredFilesMostRecentAccessTimestamp);
         }
 
-        /// <summary> Initializes a new instance of CloudTieringLowDiskMode. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CloudTieringLowDiskMode"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="state"> Low disk mode state. </param>
         /// <returns> A new <see cref="Models.CloudTieringLowDiskMode"/> instance for mocking. </returns>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudTieringLowDiskMode(lastUpdatedOn, state);
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointRecallStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServerEndpointRecallStatus"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="totalRecallErrorsCount"> Total count of recall errors. </param>
         /// <param name="recallErrors"> Array of recall errors. </param>
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointRecallStatus(lastUpdatedOn, totalRecallErrorsCount, recallErrors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointRecallError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServerEndpointRecallError"/>. </summary>
         /// <param name="errorCode"> Error code (HResult). </param>
         /// <param name="count"> Count of occurences of the error. </param>
         /// <returns> A new <see cref="Models.ServerEndpointRecallError"/> instance for mocking. </returns>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointRecallError(errorCode, count);
         }
 
-        /// <summary> Initializes a new instance of StorageSyncRegisteredServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSync.StorageSyncRegisteredServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new StorageSyncRegisteredServerData(id, name, resourceType, systemData, serverCertificate, agentVersion, agentVersionStatus, agentVersionExpireOn, serverOSVersion, serverManagementErrorCode, lastHeartbeat, provisioningState, serverRole, clusterId, clusterName, serverId, storageSyncServiceUid, lastWorkflowId, lastOperationName, discoveryEndpointUri, resourceLocation, serviceLocation, friendlyName, managementEndpointUri, monitoringEndpointUri, monitoringConfiguration, serverName);
         }
 
-        /// <summary> Initializes a new instance of StorageSyncRegisteredServerCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageSyncRegisteredServerCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new StorageSyncRegisteredServerCreateOrUpdateContent(id, name, resourceType, systemData, serverCertificate, agentVersion, serverOSVersion, lastHeartbeat, serverRole, clusterId, clusterName, serverId, friendlyName);
         }
 
-        /// <summary> Initializes a new instance of StorageSyncWorkflowData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSync.StorageSyncWorkflowData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

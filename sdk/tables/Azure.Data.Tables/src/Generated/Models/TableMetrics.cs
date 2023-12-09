@@ -12,14 +12,14 @@ namespace Azure.Data.Tables.Models
     /// <summary> The Metrics. </summary>
     public partial class TableMetrics
     {
-        /// <summary> Initializes a new instance of TableMetrics. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableMetrics"/>. </summary>
         /// <param name="enabled"> Indicates whether metrics are enabled for the Table service. </param>
         public TableMetrics(bool enabled)
         {
             Enabled = enabled;
         }
 
-        /// <summary> Initializes a new instance of TableMetrics. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableMetrics"/>. </summary>
         /// <param name="version"> The version of Analytics to configure. </param>
         /// <param name="enabled"> Indicates whether metrics are enabled for the Table service. </param>
         /// <param name="includeApis"> Indicates whether metrics should generate summary statistics for called API operations. </param>

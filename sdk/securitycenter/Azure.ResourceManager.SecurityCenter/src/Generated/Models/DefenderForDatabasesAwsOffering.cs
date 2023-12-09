@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The Defender for Databases AWS offering. </summary>
     public partial class DefenderForDatabasesAwsOffering : SecurityCenterCloudOffering
     {
-        /// <summary> Initializes a new instance of DefenderForDatabasesAwsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesAwsOffering"/>. </summary>
         public DefenderForDatabasesAwsOffering()
         {
             OfferingType = OfferingType.DefenderForDatabasesAws;
         }
 
-        /// <summary> Initializes a new instance of DefenderForDatabasesAwsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesAwsOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
         /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>

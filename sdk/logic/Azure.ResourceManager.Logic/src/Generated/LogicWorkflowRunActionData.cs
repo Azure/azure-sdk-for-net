@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class LogicWorkflowRunActionData : ResourceData
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRunActionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunActionData"/>. </summary>
         internal LogicWorkflowRunActionData()
         {
             RetryHistory = new ChangeTrackingList<LogicWorkRetryHistory>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRunActionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunActionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

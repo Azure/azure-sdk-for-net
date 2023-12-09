@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> The private link service connection state of the private endpoint connection. </summary>
     public partial class BatchPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of BatchPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The status of the Batch private endpoint connection. </param>
         public BatchPrivateLinkServiceConnectionState(BatchPrivateLinkServiceConnectionStatus status)
         {
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of BatchPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The status of the Batch private endpoint connection. </param>
         /// <param name="description"> Description of the private Connection state. </param>
         /// <param name="actionRequired"> Action required on the private connection state. </param>

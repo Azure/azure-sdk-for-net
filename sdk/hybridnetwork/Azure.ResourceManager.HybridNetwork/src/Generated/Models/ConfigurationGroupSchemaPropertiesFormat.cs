@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Configuration group schema properties. </summary>
     public partial class ConfigurationGroupSchemaPropertiesFormat
     {
-        /// <summary> Initializes a new instance of ConfigurationGroupSchemaPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationGroupSchemaPropertiesFormat"/>. </summary>
         public ConfigurationGroupSchemaPropertiesFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfigurationGroupSchemaPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationGroupSchemaPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the Configuration group schema resource. </param>
         /// <param name="versionState"> The configuration group schema version state. </param>
         /// <param name="description"> Description of what schema can contain. </param>

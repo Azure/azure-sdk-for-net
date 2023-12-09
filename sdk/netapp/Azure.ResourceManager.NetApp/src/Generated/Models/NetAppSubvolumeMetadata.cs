@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Result of the post subvolume and action is to get metadata of the subvolume. </summary>
     public partial class NetAppSubvolumeMetadata : ResourceData
     {
-        /// <summary> Initializes a new instance of NetAppSubvolumeMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppSubvolumeMetadata"/>. </summary>
         internal NetAppSubvolumeMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppSubvolumeMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppSubvolumeMetadata"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

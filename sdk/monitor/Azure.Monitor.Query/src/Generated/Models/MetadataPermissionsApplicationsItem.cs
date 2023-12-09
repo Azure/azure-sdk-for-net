@@ -13,7 +13,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The MetadataPermissionsApplicationsItem. </summary>
     internal partial class MetadataPermissionsApplicationsItem
     {
-        /// <summary> Initializes a new instance of MetadataPermissionsApplicationsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataPermissionsApplicationsItem"/>. </summary>
         /// <param name="resourceId"> The resource ID on the permission indication. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         internal MetadataPermissionsApplicationsItem(string resourceId)

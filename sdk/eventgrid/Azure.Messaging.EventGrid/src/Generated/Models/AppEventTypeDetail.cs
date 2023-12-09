@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Detail of action on the app. </summary>
     public partial class AppEventTypeDetail
     {
-        /// <summary> Initializes a new instance of AppEventTypeDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppEventTypeDetail"/>. </summary>
         internal AppEventTypeDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of AppEventTypeDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppEventTypeDetail"/>. </summary>
         /// <param name="action"> Type of action of the operation. </param>
         internal AppEventTypeDetail(AppAction? action)
         {

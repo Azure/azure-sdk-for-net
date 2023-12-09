@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmContainerServiceFleetModelFactory
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.ContainerServiceFleetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new ContainerServiceFleetData(id, name, resourceType, systemData, tags, location, eTag, identity, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of FleetCredentialResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FleetCredentialResults"/>. </summary>
         /// <param name="kubeconfigs"> Array of base64-encoded Kubernetes configuration files. </param>
         /// <returns> A new <see cref="Models.FleetCredentialResults"/> instance for mocking. </returns>
         public static FleetCredentialResults FleetCredentialResults(IEnumerable<FleetCredentialResult> kubeconfigs = null)
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new FleetCredentialResults(kubeconfigs?.ToList());
         }
 
-        /// <summary> Initializes a new instance of FleetCredentialResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FleetCredentialResult"/>. </summary>
         /// <param name="name"> The name of the credential. </param>
         /// <param name="value"> Base64-encoded Kubernetes configuration file. </param>
         /// <returns> A new <see cref="Models.FleetCredentialResult"/> instance for mocking. </returns>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new FleetCredentialResult(name, value);
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetMemberData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.ContainerServiceFleetMemberData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new ContainerServiceFleetMemberData(id, name, resourceType, systemData, eTag, clusterResourceId, group, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.ContainerServiceFleetUpdateRunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new ContainerServiceFleetUpdateRunData(id, name, resourceType, systemData, eTag, provisioningState, updateStrategyId, strategyStages != null ? new ContainerServiceFleetUpdateRunStrategy(strategyStages?.ToList()) : null, managedClusterUpdate, status);
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateRunStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerServiceFleetUpdateRunStatus"/>. </summary>
         /// <param name="status"> The status of the UpdateRun. </param>
         /// <param name="stages"> The stages composing an update run. Stages are run sequentially withing an UpdateRun. </param>
         /// <param name="selectedNodeImageVersions"> The node image upgrade specs for the update run. It is only set in update run when `NodeImageSelection.type` is `Consistent`. </param>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new ContainerServiceFleetUpdateRunStatus(status, stages?.ToList(), selectedNodeImageVersions != null ? new NodeImageSelectionStatus(selectedNodeImageVersions?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerServiceFleetUpdateStatus"/>. </summary>
         /// <param name="startOn"> The time the operation or group was started. </param>
         /// <param name="completedOn"> The time the operation or group was completed. </param>
         /// <param name="state"> The State of the operation or group. </param>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new ContainerServiceFleetUpdateStatus(startOn, completedOn, state, error);
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateStageStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerServiceFleetUpdateStageStatus"/>. </summary>
         /// <param name="status"> The status of the UpdateStage. </param>
         /// <param name="name"> The name of the UpdateStage. </param>
         /// <param name="groups"> The list of groups to be updated as part of this UpdateStage. </param>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new ContainerServiceFleetUpdateStageStatus(status, name, groups?.ToList(), afterStageWaitStatus);
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateGroupStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerServiceFleetUpdateGroupStatus"/>. </summary>
         /// <param name="status"> The status of the UpdateGroup. </param>
         /// <param name="name"> The name of the UpdateGroup. </param>
         /// <param name="members"> The list of member this UpdateGroup updates. </param>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new ContainerServiceFleetUpdateGroupStatus(status, name, members?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MemberUpdateStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MemberUpdateStatus"/>. </summary>
         /// <param name="status"> The status of the MemberUpdate operation. </param>
         /// <param name="name"> The name of the FleetMember. </param>
         /// <param name="clusterResourceId"> The Azure resource id of the target Kubernetes cluster. </param>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new MemberUpdateStatus(status, name, clusterResourceId, operationId, message);
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetWaitStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerServiceFleetWaitStatus"/>. </summary>
         /// <param name="status"> The status of the wait duration. </param>
         /// <param name="waitDurationInSeconds"> The wait duration configured in seconds. </param>
         /// <returns> A new <see cref="Models.ContainerServiceFleetWaitStatus"/> instance for mocking. </returns>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new ContainerServiceFleetWaitStatus(status, waitDurationInSeconds);
         }
 
-        /// <summary> Initializes a new instance of NodeImageVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NodeImageVersion"/>. </summary>
         /// <param name="version"> The image version to upgrade the nodes to (e.g., 'AKSUbuntu-1804gen2containerd-2022.12.13'). </param>
         /// <returns> A new <see cref="Models.NodeImageVersion"/> instance for mocking. </returns>
         public static NodeImageVersion NodeImageVersion(string version = null)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new NodeImageVersion(version);
         }
 
-        /// <summary> Initializes a new instance of FleetUpdateStrategyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleet.FleetUpdateStrategyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

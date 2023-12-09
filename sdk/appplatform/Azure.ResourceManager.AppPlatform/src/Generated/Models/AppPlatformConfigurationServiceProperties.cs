@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Application Configuration Service properties payload. </summary>
     public partial class AppPlatformConfigurationServiceProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceProperties"/>. </summary>
         public AppPlatformConfigurationServiceProperties()
         {
             Instances = new ChangeTrackingList<AppPlatformConfigurationServiceInstance>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceProperties"/>. </summary>
         /// <param name="provisioningState"> State of the Application Configuration Service. </param>
         /// <param name="resourceRequests"> The requested resource quantity for required CPU and Memory. </param>
         /// <param name="instances"> Collection of instances belong to Application Configuration Service. </param>

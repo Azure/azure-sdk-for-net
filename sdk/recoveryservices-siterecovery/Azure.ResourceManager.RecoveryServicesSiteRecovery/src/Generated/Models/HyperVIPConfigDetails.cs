@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The HyperVIPConfigDetails. </summary>
     public partial class HyperVIPConfigDetails
     {
-        /// <summary> Initializes a new instance of HyperVIPConfigDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVIPConfigDetails"/>. </summary>
         internal HyperVIPConfigDetails()
         {
             RecoveryLBBackendAddressPoolIds = new ChangeTrackingList<string>();
             TfoLBBackendAddressPoolIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HyperVIPConfigDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVIPConfigDetails"/>. </summary>
         /// <param name="name"></param>
         /// <param name="isPrimary"></param>
         /// <param name="subnetName"></param>

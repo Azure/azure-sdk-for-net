@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> This is the OS disk image. </summary>
     public partial class SharedGalleryOSDiskImage : SharedGalleryDiskImage
     {
-        /// <summary> Initializes a new instance of SharedGalleryOSDiskImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryOSDiskImage"/>. </summary>
         internal SharedGalleryOSDiskImage()
         {
         }
 
-        /// <summary> Initializes a new instance of SharedGalleryOSDiskImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryOSDiskImage"/>. </summary>
         /// <param name="diskSizeGB"> This property indicates the size of the VHD to be created. </param>
         /// <param name="hostCaching"> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </param>
         internal SharedGalleryOSDiskImage(int? diskSizeGB, SharedGalleryHostCaching? hostCaching) : base(diskSizeGB, hostCaching)

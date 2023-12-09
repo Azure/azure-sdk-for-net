@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The EntitiesDocumentResult. </summary>
     internal partial class EntitiesDocumentResult : DocumentResult
     {
-        /// <summary> Initializes a new instance of EntitiesDocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntitiesDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Models
             Entities = entities.ToList();
         }
 
-        /// <summary> Initializes a new instance of EntitiesDocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntitiesDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>

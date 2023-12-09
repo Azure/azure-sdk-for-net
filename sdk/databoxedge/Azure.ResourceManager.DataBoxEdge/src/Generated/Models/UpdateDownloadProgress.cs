@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Details about the download progress of update. </summary>
     public partial class UpdateDownloadProgress
     {
-        /// <summary> Initializes a new instance of UpdateDownloadProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateDownloadProgress"/>. </summary>
         internal UpdateDownloadProgress()
         {
         }
 
-        /// <summary> Initializes a new instance of UpdateDownloadProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateDownloadProgress"/>. </summary>
         /// <param name="downloadPhase"> The download phase. </param>
         /// <param name="percentComplete"> Percentage of completion. </param>
         /// <param name="totalBytesToDownload"> Total bytes to download. </param>

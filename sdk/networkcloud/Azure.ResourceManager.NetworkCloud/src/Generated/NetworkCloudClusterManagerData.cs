@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudClusterManagerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkCloudClusterManagerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterManagerData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="fabricControllerId"> The resource ID of the fabric controller that has one to one mapping with the cluster manager. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fabricControllerId"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkCloud
             FabricControllerId = fabricControllerId;
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudClusterManagerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterManagerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

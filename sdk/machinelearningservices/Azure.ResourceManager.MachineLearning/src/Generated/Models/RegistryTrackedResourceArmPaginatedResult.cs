@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of Registry entities. </summary>
     internal partial class RegistryTrackedResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of RegistryTrackedResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistryTrackedResourceArmPaginatedResult"/>. </summary>
         internal RegistryTrackedResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningRegistryData>();
         }
 
-        /// <summary> Initializes a new instance of RegistryTrackedResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistryTrackedResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of Registry objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type Registry. </param>
         internal RegistryTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningRegistryData> value)

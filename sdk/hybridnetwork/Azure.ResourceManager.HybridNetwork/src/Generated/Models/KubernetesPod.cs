@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Helm Pod status properties. </summary>
     public partial class KubernetesPod
     {
-        /// <summary> Initializes a new instance of KubernetesPod. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesPod"/>. </summary>
         internal KubernetesPod()
         {
             Events = new ChangeTrackingList<PodEvent>();
         }
 
-        /// <summary> Initializes a new instance of KubernetesPod. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesPod"/>. </summary>
         /// <param name="name"> The name of the Pod. </param>
         /// <param name="namespace"> The namespace of the Pod. </param>
         /// <param name="desiredNumberOfContainers"> Desired number of containers. </param>

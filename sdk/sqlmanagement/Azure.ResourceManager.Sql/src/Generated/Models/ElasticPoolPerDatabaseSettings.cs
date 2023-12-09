@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Per database settings of an elastic pool. </summary>
     public partial class ElasticPoolPerDatabaseSettings
     {
-        /// <summary> Initializes a new instance of ElasticPoolPerDatabaseSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolPerDatabaseSettings"/>. </summary>
         public ElasticPoolPerDatabaseSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolPerDatabaseSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolPerDatabaseSettings"/>. </summary>
         /// <param name="minCapacity"> The minimum capacity all databases are guaranteed. </param>
         /// <param name="maxCapacity"> The maximum capacity any one database can consume. </param>
         internal ElasticPoolPerDatabaseSettings(double? minCapacity, double? maxCapacity)

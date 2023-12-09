@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                 string vectorSearchProfileName = "my-vector-profile";
                 string vectorSearchHnswConfig = "my-hsnw-vector-config";
 
-                string indexName = "MyDocument";
+                string indexName = "my-document";
 #if !SNIPPET
                 indexName = Recording.Random.GetName();
                 resources.IndexName = indexName;

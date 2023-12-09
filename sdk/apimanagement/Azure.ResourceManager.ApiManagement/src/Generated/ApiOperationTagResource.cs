@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly TagRestOperations _apiOperationTagTagRestClient;
         private readonly TagContractData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/operations/tags";
+
         /// <summary> Initializes a new instance of the <see cref="ApiOperationTagResource"/> class for mocking. </summary>
         protected ApiOperationTagResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/operations/tags";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

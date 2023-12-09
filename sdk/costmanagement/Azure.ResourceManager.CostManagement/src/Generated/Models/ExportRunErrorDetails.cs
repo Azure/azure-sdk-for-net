@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The details of the error. </summary>
     public partial class ExportRunErrorDetails
     {
-        /// <summary> Initializes a new instance of ExportRunErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportRunErrorDetails"/>. </summary>
         public ExportRunErrorDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ExportRunErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportRunErrorDetails"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message indicating why the operation failed. </param>
         internal ExportRunErrorDetails(string code, string message)

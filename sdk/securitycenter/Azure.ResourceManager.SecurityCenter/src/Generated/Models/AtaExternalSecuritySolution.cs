@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Represents an ATA security solution which sends logs to an OMS workspace. </summary>
     public partial class AtaExternalSecuritySolution : ExternalSecuritySolution
     {
-        /// <summary> Initializes a new instance of AtaExternalSecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="AtaExternalSecuritySolution"/>. </summary>
         public AtaExternalSecuritySolution()
         {
             Kind = ExternalSecuritySolutionKind.Ata;
         }
 
-        /// <summary> Initializes a new instance of AtaExternalSecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="AtaExternalSecuritySolution"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

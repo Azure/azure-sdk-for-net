@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CosmosDBAccountData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CosmosDBAccountData(AzureLocation location) : base(location)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB
             NetworkAclBypassResourceIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

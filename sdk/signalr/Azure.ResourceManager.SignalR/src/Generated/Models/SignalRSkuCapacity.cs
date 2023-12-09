@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Describes scaling information of a sku. </summary>
     public partial class SignalRSkuCapacity
     {
-        /// <summary> Initializes a new instance of SignalRSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRSkuCapacity"/>. </summary>
         internal SignalRSkuCapacity()
         {
             AllowedValues = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Initializes a new instance of SignalRSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRSkuCapacity"/>. </summary>
         /// <param name="minimum"> The lowest permitted capacity for this resource. </param>
         /// <param name="maximum"> The highest permitted capacity for this resource. </param>
         /// <param name="default"> The default capacity. </param>

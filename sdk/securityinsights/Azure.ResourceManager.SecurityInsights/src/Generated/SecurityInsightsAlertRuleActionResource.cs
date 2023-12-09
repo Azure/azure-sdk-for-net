@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.SecurityInsights
         private readonly ActionsRestOperations _securityInsightsAlertRuleActionActionsRestClient;
         private readonly SecurityInsightsAlertRuleActionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/alertRules/actions";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityInsightsAlertRuleActionResource"/> class for mocking. </summary>
         protected SecurityInsightsAlertRuleActionResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.SecurityInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/alertRules/actions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

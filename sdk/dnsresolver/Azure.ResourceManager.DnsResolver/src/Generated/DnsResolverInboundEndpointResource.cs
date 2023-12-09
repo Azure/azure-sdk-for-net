@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DnsResolver
         private readonly InboundEndpointsRestOperations _dnsResolverInboundEndpointInboundEndpointsRestClient;
         private readonly DnsResolverInboundEndpointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/dnsResolvers/inboundEndpoints";
+
         /// <summary> Initializes a new instance of the <see cref="DnsResolverInboundEndpointResource"/> class for mocking. </summary>
         protected DnsResolverInboundEndpointResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DnsResolver
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/dnsResolvers/inboundEndpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> Collection of runs. </summary>
     internal partial class ContainerRegistryRunListResult
     {
-        /// <summary> Initializes a new instance of ContainerRegistryRunListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunListResult"/>. </summary>
         internal ContainerRegistryRunListResult()
         {
             Value = new ChangeTrackingList<ContainerRegistryRunData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryRunListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunListResult"/>. </summary>
         /// <param name="value"> The collection value. </param>
         /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
         internal ContainerRegistryRunListResult(IReadOnlyList<ContainerRegistryRunData> value, string nextLink)

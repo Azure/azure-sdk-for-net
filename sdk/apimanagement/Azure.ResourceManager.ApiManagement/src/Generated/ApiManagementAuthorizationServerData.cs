@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementAuthorizationServerData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementAuthorizationServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementAuthorizationServerData"/>. </summary>
         public ApiManagementAuthorizationServerData()
         {
             AuthorizationMethods = new ChangeTrackingList<AuthorizationMethod>();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement
             GrantTypes = new ChangeTrackingList<GrantType>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementAuthorizationServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementAuthorizationServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

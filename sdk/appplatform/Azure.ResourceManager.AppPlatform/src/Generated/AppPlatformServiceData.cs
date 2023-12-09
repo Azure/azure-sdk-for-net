@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.AppPlatform
     /// </summary>
     public partial class AppPlatformServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AppPlatformServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AppPlatformServiceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

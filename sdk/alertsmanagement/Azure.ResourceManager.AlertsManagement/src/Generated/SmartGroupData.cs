@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AlertsManagement
     /// </summary>
     public partial class SmartGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of SmartGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupData"/>. </summary>
         public SmartGroupData()
         {
             Resources = new ChangeTrackingList<SmartGroupAggregatedProperty>();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AlertsManagement
             AlertSeverities = new ChangeTrackingList<SmartGroupAggregatedProperty>();
         }
 
-        /// <summary> Initializes a new instance of SmartGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

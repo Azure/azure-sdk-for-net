@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> The connection state of the private endpoint connection. </summary>
     internal partial class PrivateEndpointConnectionRequestProperties
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionRequestProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionRequestProperties"/>. </summary>
         public PrivateEndpointConnectionRequestProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionRequestProperties"/>. </summary>
+        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        internal PrivateEndpointConnectionRequestProperties(ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        {
+            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>

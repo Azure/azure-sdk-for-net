@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A class that contains database statistics information. </summary>
     internal partial class DatabaseStatistics
     {
-        /// <summary> Initializes a new instance of DatabaseStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseStatistics"/>. </summary>
         internal DatabaseStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseStatistics"/>. </summary>
         /// <param name="size"> The database size - the total size of compressed data and index in bytes. </param>
         internal DatabaseStatistics(float? size)
         {

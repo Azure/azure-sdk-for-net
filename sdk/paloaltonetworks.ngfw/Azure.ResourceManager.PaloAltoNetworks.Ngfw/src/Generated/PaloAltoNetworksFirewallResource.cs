@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private readonly FirewallsRestOperations _paloAltoNetworksFirewallFirewallsRestClient;
         private readonly PaloAltoNetworksFirewallData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/firewalls";
+
         /// <summary> Initializes a new instance of the <see cref="PaloAltoNetworksFirewallResource"/> class for mocking. </summary>
         protected PaloAltoNetworksFirewallResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/firewalls";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="logSettings"> The FirewallLogSettings to use. </param>
+        /// <param name="logSettings"> The <see cref="FirewallLogSettings"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> SaveLogProfileAsync(FirewallLogSettings logSettings = null, CancellationToken cancellationToken = default)
         {
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="logSettings"> The FirewallLogSettings to use. </param>
+        /// <param name="logSettings"> The <see cref="FirewallLogSettings"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response SaveLogProfile(FirewallLogSettings logSettings = null, CancellationToken cancellationToken = default)
         {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents a branch in the step. </summary>
     public partial class Branch
     {
-        /// <summary> Initializes a new instance of Branch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Branch"/>. </summary>
         /// <param name="name"> String of the branch name. </param>
         /// <param name="actions">
         /// List of actions.
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Chaos.Models
             Actions = actions.ToList();
         }
 
-        /// <summary> Initializes a new instance of Branch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Branch"/>. </summary>
         /// <param name="name"> String of the branch name. </param>
         /// <param name="actions">
         /// List of actions.

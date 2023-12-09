@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Protection profile custom data details. </summary>
     public partial class SiteRecoveryProtectionContainerProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryProtectionContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProtectionContainerProperties"/>. </summary>
         internal SiteRecoveryProtectionContainerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryProtectionContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProtectionContainerProperties"/>. </summary>
         /// <param name="fabricFriendlyName"> Fabric friendly name. </param>
         /// <param name="friendlyName"> The name. </param>
         /// <param name="fabricType"> The fabric type. </param>

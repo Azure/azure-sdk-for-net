@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Azure ML online inferencing configurations. </summary>
     public partial class AzureMLOnlineInferencingServer : InferencingServer
     {
-        /// <summary> Initializes a new instance of AzureMLOnlineInferencingServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLOnlineInferencingServer"/>. </summary>
         public AzureMLOnlineInferencingServer()
         {
             ServerType = InferencingServerType.AzureMLOnline;
         }
 
-        /// <summary> Initializes a new instance of AzureMLOnlineInferencingServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLOnlineInferencingServer"/>. </summary>
         /// <param name="serverType"> [Required] Inferencing server type for various targets. </param>
         /// <param name="codeConfiguration"> Code configuration for AML inferencing server. </param>
         internal AzureMLOnlineInferencingServer(InferencingServerType serverType, MachineLearningCodeConfiguration codeConfiguration) : base(serverType)

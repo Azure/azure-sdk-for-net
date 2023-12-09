@@ -12,9 +12,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Parameters supplied to the Create TagDescription operation. </summary>
     public partial class ApiTagDescriptionCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ApiTagDescriptionCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiTagDescriptionCreateOrUpdateContent"/>. </summary>
         public ApiTagDescriptionCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiTagDescriptionCreateOrUpdateContent"/>. </summary>
+        /// <param name="description"> Description of the Tag. </param>
+        /// <param name="externalDocsUri"> Absolute URL of external resources describing the tag. </param>
+        /// <param name="externalDocsDescription"> Description of the external resources describing the tag. </param>
+        internal ApiTagDescriptionCreateOrUpdateContent(string description, Uri externalDocsUri, string externalDocsDescription)
+        {
+            Description = description;
+            ExternalDocsUri = externalDocsUri;
+            ExternalDocsDescription = externalDocsDescription;
         }
 
         /// <summary> Description of the Tag. </summary>

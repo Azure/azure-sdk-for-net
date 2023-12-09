@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Data used when creating a disk. </summary>
     public partial class DiskCreationData
     {
-        /// <summary> Initializes a new instance of DiskCreationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskCreationData"/>. </summary>
         /// <param name="createOption"> This enumerates the possible sources of a disk's creation. </param>
         public DiskCreationData(DiskCreateOption createOption)
         {
             CreateOption = createOption;
         }
 
-        /// <summary> Initializes a new instance of DiskCreationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskCreationData"/>. </summary>
         /// <param name="createOption"> This enumerates the possible sources of a disk's creation. </param>
         /// <param name="storageAccountId"> Required if createOption is Import. The Azure Resource Manager identifier of the storage account containing the blob to import as a disk. </param>
         /// <param name="imageReference"> Disk source information for PIR or user images. </param>

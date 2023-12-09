@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Azure Lab Services resource SKUs. </summary>
     public partial class AvailableLabServicesSku
     {
-        /// <summary> Initializes a new instance of AvailableLabServicesSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableLabServicesSku"/>. </summary>
         internal AvailableLabServicesSku()
         {
             Capabilities = new ChangeTrackingList<AvailableLabServicesSkuCapability>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LabServices.Models
             Restrictions = new ChangeTrackingList<AvailableLabServicesSkuRestrictions>();
         }
 
-        /// <summary> Initializes a new instance of AvailableLabServicesSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableLabServicesSku"/>. </summary>
         /// <param name="resourceType"> The lab services resource type. </param>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="tier"> The tier of the SKU. </param>

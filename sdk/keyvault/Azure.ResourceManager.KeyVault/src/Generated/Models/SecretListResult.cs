@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> List of secrets. </summary>
     internal partial class SecretListResult
     {
-        /// <summary> Initializes a new instance of SecretListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretListResult"/>. </summary>
         internal SecretListResult()
         {
             Value = new ChangeTrackingList<KeyVaultSecretData>();
         }
 
-        /// <summary> Initializes a new instance of SecretListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretListResult"/>. </summary>
         /// <param name="value"> The list of secrets. </param>
         /// <param name="nextLink"> The URL to get the next set of secrets. </param>
         internal SecretListResult(IReadOnlyList<KeyVaultSecretData> value, string nextLink)

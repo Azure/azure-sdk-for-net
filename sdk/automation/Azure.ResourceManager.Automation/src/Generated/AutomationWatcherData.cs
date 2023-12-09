@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class AutomationWatcherData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AutomationWatcherData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationWatcherData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AutomationWatcherData(AzureLocation location) : base(location)
         {
             ScriptParameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AutomationWatcherData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationWatcherData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

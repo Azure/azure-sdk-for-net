@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> An Application Insights component available features. </summary>
     public partial class ApplicationInsightsComponentAvailableFeatures
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentAvailableFeatures. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentAvailableFeatures"/>. </summary>
         internal ApplicationInsightsComponentAvailableFeatures()
         {
             Result = new ChangeTrackingList<ApplicationInsightsComponentFeature>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentAvailableFeatures. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentAvailableFeatures"/>. </summary>
         /// <param name="result"> A list of Application Insights component feature. </param>
         internal ApplicationInsightsComponentAvailableFeatures(IReadOnlyList<ApplicationInsightsComponentFeature> result)
         {

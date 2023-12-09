@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Specifies target network access settings for disks of VM to be restored. </summary>
     public partial class BackupTargetDiskNetworkAccessSettings
     {
-        /// <summary> Initializes a new instance of BackupTargetDiskNetworkAccessSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupTargetDiskNetworkAccessSettings"/>. </summary>
         public BackupTargetDiskNetworkAccessSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupTargetDiskNetworkAccessSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupTargetDiskNetworkAccessSettings"/>. </summary>
         /// <param name="targetDiskNetworkAccessOption"> Network access settings to be used for restored disks. </param>
         /// <param name="targetDiskAccessId"> Gets or sets the ARM resource ID of the target disk access to be used when TargetDiskNetworkAccessOption is set to TargetDiskNetworkAccessOption.UseNew. </param>
         internal BackupTargetDiskNetworkAccessSettings(BackupTargetDiskNetworkAccessOption? targetDiskNetworkAccessOption, ResourceIdentifier targetDiskAccessId)

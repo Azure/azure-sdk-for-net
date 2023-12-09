@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly DeploymentsRestOperations _cognitiveServicesAccountDeploymentDeploymentsRestClient;
         private readonly CognitiveServicesAccountDeploymentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts/deployments";
+
         /// <summary> Initializes a new instance of the <see cref="CognitiveServicesAccountDeploymentResource"/> class for mocking. </summary>
         protected CognitiveServicesAccountDeploymentResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.CognitiveServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts/deployments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

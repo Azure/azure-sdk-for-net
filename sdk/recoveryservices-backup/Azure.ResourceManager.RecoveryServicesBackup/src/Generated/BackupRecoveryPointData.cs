@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     /// </summary>
     public partial class BackupRecoveryPointData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of BackupRecoveryPointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupRecoveryPointData"/>. </summary>
         /// <param name="location"> The location. </param>
         public BackupRecoveryPointData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of BackupRecoveryPointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupRecoveryPointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

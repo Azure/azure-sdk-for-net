@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> An IPSec parameters for a virtual network gateway P2S connection. </summary>
     public partial class VpnClientIPsecParameters
     {
-        /// <summary> Initializes a new instance of VpnClientIPsecParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnClientIPsecParameters"/>. </summary>
         /// <param name="saLifeTimeSeconds"> The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for P2S client. </param>
         /// <param name="saDataSizeKilobytes"> The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for P2S client.. </param>
         /// <param name="ipsecEncryption"> The IPSec encryption algorithm (IKE phase 1). </param>

@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// </summary>
     public abstract partial class ContainerRegistryTaskStepProperties
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTaskStepProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskStepProperties"/>. </summary>
         protected ContainerRegistryTaskStepProperties()
         {
             BaseImageDependencies = new ChangeTrackingList<ContainerRegistryBaseImageDependency>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTaskStepProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskStepProperties"/>. </summary>
         /// <param name="containerRegistryTaskStepType"> The type of the step. </param>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>

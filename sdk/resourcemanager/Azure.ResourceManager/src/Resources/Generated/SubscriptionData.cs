@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class SubscriptionData
     {
-        /// <summary> Initializes a new instance of SubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionData"/>. </summary>
         internal SubscriptionData()
         {
             ManagedByTenants = new ChangeTrackingList<ManagedByTenant>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionData"/>. </summary>
         /// <param name="id"> The fully qualified ID for the subscription. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="displayName"> The subscription display name. </param>

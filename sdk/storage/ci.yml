@@ -50,6 +50,8 @@ extends:
       safeName: AzureStorageDataMovement
     - name: Azure.Storage.DataMovement.Blobs
       safeName: AzureStorageDataMovementBlobs
+    - name: Azure.Storage.DataMovement.Files.Shares
+      safeName: AzureStorageDataMovementFilesShares
     - name: Microsoft.Azure.WebJobs.Extensions.Storage
       safeName: MicrosoftAzureWebJobsExtensionsStorage
     - name: Microsoft.Azure.WebJobs.Extensions.Storage.Blobs

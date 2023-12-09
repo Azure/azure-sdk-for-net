@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedServices.Models
     /// <summary> The list of registration definitions. </summary>
     internal partial class ManagedServicesRegistrationListResult
     {
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationListResult"/>. </summary>
         internal ManagedServicesRegistrationListResult()
         {
             Value = new ChangeTrackingList<ManagedServicesRegistrationData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationListResult"/>. </summary>
         /// <param name="value"> The list of registration definitions. </param>
         /// <param name="nextLink"> The link to the next page of registration definitions. </param>
         internal ManagedServicesRegistrationListResult(IReadOnlyList<ManagedServicesRegistrationData> value, string nextLink)

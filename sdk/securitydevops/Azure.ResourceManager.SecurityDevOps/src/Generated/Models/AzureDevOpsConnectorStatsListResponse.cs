@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> The AzureDevOpsConnectorStatsListResponse. </summary>
     internal partial class AzureDevOpsConnectorStatsListResponse
     {
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorStatsListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsConnectorStatsListResponse"/>. </summary>
         internal AzureDevOpsConnectorStatsListResponse()
         {
             Value = new ChangeTrackingList<AzureDevOpsConnectorStats>();
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorStatsListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsConnectorStatsListResponse"/>. </summary>
         /// <param name="value"> Gets or sets list of resources. </param>
         /// <param name="nextLink"> Gets or sets next link to scroll over the results. </param>
         internal AzureDevOpsConnectorStatsListResponse(IReadOnlyList<AzureDevOpsConnectorStats> value, string nextLink)

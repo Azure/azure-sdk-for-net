@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.AgFoodPlatform
         private readonly FarmBeatsModelsRestOperations _farmBeatFarmBeatsModelsRestClient;
         private readonly FarmBeatData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AgFoodPlatform/farmBeats";
+
         /// <summary> Initializes a new instance of the <see cref="FarmBeatResource"/> class for mocking. </summary>
         protected FarmBeatResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.AgFoodPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AgFoodPlatform/farmBeats";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

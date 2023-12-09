@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     /// </summary>
     public partial class ArmAsyncOperation
     {
-        /// <summary> Initializes a new instance of ArmAsyncOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmAsyncOperation"/>. </summary>
         internal ArmAsyncOperation()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmAsyncOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmAsyncOperation"/>. </summary>
         /// <param name="status"> Status of the async operation. </param>
         internal ArmAsyncOperation(string status)
         {

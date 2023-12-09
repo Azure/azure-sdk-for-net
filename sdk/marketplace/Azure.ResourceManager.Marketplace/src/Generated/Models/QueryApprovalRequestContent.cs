@@ -13,10 +13,21 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> The details to get the request plans statuses. </summary>
     public partial class QueryApprovalRequestContent
     {
-        /// <summary> Initializes a new instance of QueryApprovalRequestContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryApprovalRequestContent"/>. </summary>
         public QueryApprovalRequestContent()
         {
             PlanIds = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryApprovalRequestContent"/>. </summary>
+        /// <param name="publisherId"> The offer's publisher id. </param>
+        /// <param name="planIds"> Current plans list. </param>
+        /// <param name="subscriptionId"> Gets or sets the subscription id. </param>
+        internal QueryApprovalRequestContent(string publisherId, IList<string> planIds, string subscriptionId)
+        {
+            PublisherId = publisherId;
+            PlanIds = planIds;
+            SubscriptionId = subscriptionId;
         }
 
         /// <summary> The offer's publisher id. </summary>

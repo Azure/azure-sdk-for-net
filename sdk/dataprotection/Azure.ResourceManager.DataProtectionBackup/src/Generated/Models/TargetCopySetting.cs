@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Target copy settings. </summary>
     public partial class TargetCopySetting
     {
-        /// <summary> Initializes a new instance of TargetCopySetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetCopySetting"/>. </summary>
         /// <param name="copyAfter">
         /// It can be CustomCopyOption or ImmediateCopyOption.
         /// Please note <see cref="DataProtectionBackupCopySetting"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

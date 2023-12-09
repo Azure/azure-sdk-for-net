@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> In some cases the start task may be re-run even though the node was not rebooted. Due to this, start tasks should be idempotent and exit gracefully if the setup they're performing has already been done. Special care should be taken to avoid start tasks which create breakaway process or install/launch services from the start task working directory, as this will block Batch from being able to re-run the start task. </summary>
     public partial class BatchAccountPoolStartTask
     {
-        /// <summary> Initializes a new instance of BatchAccountPoolStartTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountPoolStartTask"/>. </summary>
         public BatchAccountPoolStartTask()
         {
             ResourceFiles = new ChangeTrackingList<BatchResourceFile>();
             EnvironmentSettings = new ChangeTrackingList<BatchEnvironmentSetting>();
         }
 
-        /// <summary> Initializes a new instance of BatchAccountPoolStartTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountPoolStartTask"/>. </summary>
         /// <param name="commandLine"> The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. Required if any other properties of the startTask are specified. </param>
         /// <param name="resourceFiles"> A list of files that the Batch service will download to the compute node before running the command line. </param>
         /// <param name="environmentSettings"> A list of environment variable settings for the start task. </param>

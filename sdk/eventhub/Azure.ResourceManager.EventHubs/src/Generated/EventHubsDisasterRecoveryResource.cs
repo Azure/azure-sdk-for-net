@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.EventHubs
         private readonly DisasterRecoveryConfigsRestOperations _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient;
         private readonly EventHubsDisasterRecoveryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/disasterRecoveryConfigs";
+
         /// <summary> Initializes a new instance of the <see cref="EventHubsDisasterRecoveryResource"/> class for mocking. </summary>
         protected EventHubsDisasterRecoveryResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.EventHubs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/disasterRecoveryConfigs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

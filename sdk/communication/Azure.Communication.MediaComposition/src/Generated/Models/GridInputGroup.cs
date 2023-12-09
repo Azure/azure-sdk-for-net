@@ -16,7 +16,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Configure grid-based input group to be used in custom layouts. </summary>
     public partial class GridInputGroup : InputGroup
     {
-        /// <summary> Initializes a new instance of GridInputGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="GridInputGroup"/>. </summary>
         /// <param name="inputIds"> Input and input group ids to be included in this input group. </param>
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
@@ -31,7 +31,7 @@ namespace Azure.Communication.MediaComposition
             Kind = InputGroupType.GridBased;
         }
 
-        /// <summary> Initializes a new instance of GridInputGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="GridInputGroup"/>. </summary>
         /// <param name="kind"> Kind of input group. </param>
         /// <param name="position"> The (x,y) position on scene or input group. </param>
         /// <param name="width"> The width of the input group container. Can be defined as pixels or percentage. </param>

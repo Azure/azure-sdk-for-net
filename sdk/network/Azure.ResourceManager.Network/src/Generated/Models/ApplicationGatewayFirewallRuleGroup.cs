@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> A web application firewall rule group. </summary>
     public partial class ApplicationGatewayFirewallRuleGroup
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayFirewallRuleGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRuleGroup"/>. </summary>
         /// <param name="ruleGroupName"> The name of the web application firewall rule group. </param>
         /// <param name="rules"> The rules of the web application firewall rule group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleGroupName"/> or <paramref name="rules"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             Rules = rules.ToList();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayFirewallRuleGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRuleGroup"/>. </summary>
         /// <param name="ruleGroupName"> The name of the web application firewall rule group. </param>
         /// <param name="description"> The description of the web application firewall rule group. </param>
         /// <param name="rules"> The rules of the web application firewall rule group. </param>

@@ -16,7 +16,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Configure the autogrid layout. </summary>
     public partial class AutoGridLayout : MediaCompositionLayout
     {
-        /// <summary> Initializes a new instance of AutoGridLayout. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoGridLayout"/>. </summary>
         /// <param name="inputIds"> Input ids to be included in the layout. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputIds"/> is null. </exception>
         public AutoGridLayout(IEnumerable<string> inputIds)
@@ -27,7 +27,7 @@ namespace Azure.Communication.MediaComposition
             Kind = LayoutType.AutoGrid;
         }
 
-        /// <summary> Initializes a new instance of AutoGridLayout. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoGridLayout"/>. </summary>
         /// <param name="kind"> Kind of layout. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>

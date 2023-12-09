@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A paged list of global reach connections. </summary>
     internal partial class GlobalReachConnectionList
     {
-        /// <summary> Initializes a new instance of GlobalReachConnectionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalReachConnectionList"/>. </summary>
         internal GlobalReachConnectionList()
         {
             Value = new ChangeTrackingList<GlobalReachConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of GlobalReachConnectionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalReachConnectionList"/>. </summary>
         /// <param name="value"> The items on a page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
         internal GlobalReachConnectionList(IReadOnlyList<GlobalReachConnectionData> value, string nextLink)

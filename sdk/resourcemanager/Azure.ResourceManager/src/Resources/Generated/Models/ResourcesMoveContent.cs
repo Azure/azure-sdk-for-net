@@ -13,10 +13,19 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Parameters of move resources. </summary>
     public partial class ResourcesMoveContent
     {
-        /// <summary> Initializes a new instance of ResourcesMoveContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcesMoveContent"/>. </summary>
         public ResourcesMoveContent()
         {
             Resources = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourcesMoveContent"/>. </summary>
+        /// <param name="resources"> The IDs of the resources. </param>
+        /// <param name="targetResourceGroupId"> The target resource group. </param>
+        internal ResourcesMoveContent(IList<string> resources, ResourceIdentifier targetResourceGroupId)
+        {
+            Resources = resources;
+            TargetResourceGroupId = targetResourceGroupId;
         }
 
         /// <summary> The IDs of the resources. </summary>

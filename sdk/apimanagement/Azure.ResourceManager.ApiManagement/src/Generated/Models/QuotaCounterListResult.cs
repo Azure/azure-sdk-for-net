@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Quota Counter list representation. </summary>
     internal partial class QuotaCounterListResult
     {
-        /// <summary> Initializes a new instance of QuotaCounterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaCounterListResult"/>. </summary>
         internal QuotaCounterListResult()
         {
             Value = new ChangeTrackingList<QuotaCounterContract>();
         }
 
-        /// <summary> Initializes a new instance of QuotaCounterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaCounterListResult"/>. </summary>
         /// <param name="value"> Quota counter values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

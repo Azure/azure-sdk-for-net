@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Paged list of Lab services virtual machine images. </summary>
     internal partial class PagedImages
     {
-        /// <summary> Initializes a new instance of PagedImages. </summary>
+        /// <summary> Initializes a new instance of <see cref="PagedImages"/>. </summary>
         internal PagedImages()
         {
             Value = new ChangeTrackingList<LabVirtualMachineImageData>();
         }
 
-        /// <summary> Initializes a new instance of PagedImages. </summary>
+        /// <summary> Initializes a new instance of <see cref="PagedImages"/>. </summary>
         /// <param name="value"> The array page of virtual machine images. </param>
         /// <param name="nextLink"> The link to get the next page of image results. </param>
         internal PagedImages(IReadOnlyList<LabVirtualMachineImageData> value, string nextLink)

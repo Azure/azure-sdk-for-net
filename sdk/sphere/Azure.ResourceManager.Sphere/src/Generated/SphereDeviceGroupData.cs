@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Sphere
     /// </summary>
     public partial class SphereDeviceGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of SphereDeviceGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereDeviceGroupData"/>. </summary>
         public SphereDeviceGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of SphereDeviceGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereDeviceGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

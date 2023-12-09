@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Server endpoint recall error object. </summary>
     public partial class ServerEndpointRecallError
     {
-        /// <summary> Initializes a new instance of ServerEndpointRecallError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointRecallError"/>. </summary>
         internal ServerEndpointRecallError()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointRecallError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointRecallError"/>. </summary>
         /// <param name="errorCode"> Error code (HResult). </param>
         /// <param name="count"> Count of occurences of the error. </param>
         internal ServerEndpointRecallError(int? errorCode, long? count)

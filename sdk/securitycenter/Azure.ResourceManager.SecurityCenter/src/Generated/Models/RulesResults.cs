@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> A list of rules results. </summary>
     internal partial class RulesResults
     {
-        /// <summary> Initializes a new instance of RulesResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulesResults"/>. </summary>
         internal RulesResults()
         {
             Value = new ChangeTrackingList<SqlVulnerabilityAssessmentBaselineRuleData>();
         }
 
-        /// <summary> Initializes a new instance of RulesResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulesResults"/>. </summary>
         /// <param name="value"> List of rule results. </param>
         internal RulesResults(IReadOnlyList<SqlVulnerabilityAssessmentBaselineRuleData> value)
         {

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The current state of a private endpoint connection. </summary>
     public partial class IotHubPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of IotHubPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The status of a private endpoint connection. </param>
         /// <param name="description"> The description for the current state of a private endpoint connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="description"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Description = description;
         }
 
-        /// <summary> Initializes a new instance of IotHubPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The status of a private endpoint connection. </param>
         /// <param name="description"> The description for the current state of a private endpoint connection. </param>
         /// <param name="actionsRequired"> Actions required for a private endpoint connection. </param>

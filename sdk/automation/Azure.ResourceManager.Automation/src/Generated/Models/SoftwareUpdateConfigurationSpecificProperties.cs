@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Update specific properties of the software update configuration. </summary>
     public partial class SoftwareUpdateConfigurationSpecificProperties
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationSpecificProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationSpecificProperties"/>. </summary>
         /// <param name="operatingSystem"> operating system of target machines. </param>
         public SoftwareUpdateConfigurationSpecificProperties(SoftwareUpdateConfigurationOperatingSystemType operatingSystem)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Automation.Models
             NonAzureComputerNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationSpecificProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationSpecificProperties"/>. </summary>
         /// <param name="operatingSystem"> operating system of target machines. </param>
         /// <param name="windows"> Windows specific update configuration. </param>
         /// <param name="linux"> Linux specific update configuration. </param>

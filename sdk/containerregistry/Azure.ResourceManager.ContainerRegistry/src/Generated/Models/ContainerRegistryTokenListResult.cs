@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The result of a request to list tokens for a container registry. </summary>
     internal partial class ContainerRegistryTokenListResult
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTokenListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenListResult"/>. </summary>
         internal ContainerRegistryTokenListResult()
         {
             Value = new ChangeTrackingList<ContainerRegistryTokenData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTokenListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenListResult"/>. </summary>
         /// <param name="value"> The list of tokens. Since this list may be incomplete, the nextLink field should be used to request the next list of tokens. </param>
         /// <param name="nextLink"> The URI that can be used to request the next list of tokens. </param>
         internal ContainerRegistryTokenListResult(IReadOnlyList<ContainerRegistryTokenData> value, string nextLink)

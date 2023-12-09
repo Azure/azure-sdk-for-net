@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Action for alert rule. </summary>
     public partial class SecurityInsightsAlertRuleActionCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAlertRuleActionCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertRuleActionCreateOrUpdateContent"/>. </summary>
         public SecurityInsightsAlertRuleActionCreateOrUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAlertRuleActionCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertRuleActionCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

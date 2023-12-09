@@ -14,11 +14,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BmcKeySetPatchParameters represents the body of the request to patch the baseboard management controller key set. </summary>
     public partial class NetworkCloudBmcKeySetPatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudBmcKeySetPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudBmcKeySetPatch"/>. </summary>
         public NetworkCloudBmcKeySetPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             UserList = new ChangeTrackingList<KeySetUser>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudBmcKeySetPatch"/>. </summary>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="expireOn"> The date and time after which the users in this key set will be removed from the baseboard management controllers. </param>
+        /// <param name="userList"> The unique list of permitted users. </param>
+        internal NetworkCloudBmcKeySetPatch(IDictionary<string, string> tags, DateTimeOffset? expireOn, IList<KeySetUser> userList)
+        {
+            Tags = tags;
+            ExpireOn = expireOn;
+            UserList = userList;
         }
 
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>

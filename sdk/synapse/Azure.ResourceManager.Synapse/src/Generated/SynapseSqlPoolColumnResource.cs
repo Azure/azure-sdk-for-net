@@ -45,6 +45,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly SqlPoolSensitivityLabelsRestOperations _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient;
         private readonly SynapseSqlPoolColumnData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/schemas/tables/columns";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseSqlPoolColumnResource"/> class for mocking. </summary>
         protected SynapseSqlPoolColumnResource()
         {
@@ -74,9 +77,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/schemas/tables/columns";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

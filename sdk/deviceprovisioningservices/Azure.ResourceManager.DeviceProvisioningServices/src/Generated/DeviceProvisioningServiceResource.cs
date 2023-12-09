@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         private readonly IotDpsResourceRestOperations _deviceProvisioningServiceIotDpsResourceRestClient;
         private readonly DeviceProvisioningServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Devices/provisioningServices";
+
         /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServiceResource"/> class for mocking. </summary>
         protected DeviceProvisioningServiceResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Devices/provisioningServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

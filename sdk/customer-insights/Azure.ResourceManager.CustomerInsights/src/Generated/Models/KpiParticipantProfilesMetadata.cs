@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The KPI participant profile metadata. </summary>
     public partial class KpiParticipantProfilesMetadata
     {
-        /// <summary> Initializes a new instance of KpiParticipantProfilesMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="KpiParticipantProfilesMetadata"/>. </summary>
         /// <param name="typeName"> Name of the type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         internal KpiParticipantProfilesMetadata(string typeName)

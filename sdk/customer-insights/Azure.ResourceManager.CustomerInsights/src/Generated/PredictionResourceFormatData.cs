@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class PredictionResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of PredictionResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredictionResourceFormatData"/>. </summary>
         public PredictionResourceFormatData()
         {
             Description = new ChangeTrackingDictionary<string, string>();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CustomerInsights
             Grades = new ChangeTrackingList<PredictionGradesItem>();
         }
 
-        /// <summary> Initializes a new instance of PredictionResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredictionResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

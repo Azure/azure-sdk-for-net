@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// </summary>
     public abstract partial class AlertProcessingRuleRecurrence
     {
-        /// <summary> Initializes a new instance of AlertProcessingRuleRecurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleRecurrence"/>. </summary>
         protected AlertProcessingRuleRecurrence()
         {
         }
 
-        /// <summary> Initializes a new instance of AlertProcessingRuleRecurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleRecurrence"/>. </summary>
         /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
         /// <param name="startOn"> Start time for recurrence. </param>
         /// <param name="endOn"> End time for recurrence. </param>

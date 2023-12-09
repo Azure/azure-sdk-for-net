@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The UnknownRunRequest. </summary>
     internal partial class UnknownRunRequest : ContainerRegistryRunContent
     {
-        /// <summary> Initializes a new instance of UnknownRunRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownRunRequest"/>. </summary>
         /// <param name="runRequestType"> The type of the run request. </param>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled for the run or not. </param>
         /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>

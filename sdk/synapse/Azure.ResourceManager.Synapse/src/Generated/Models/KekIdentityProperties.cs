@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Key encryption key properties. </summary>
     public partial class KekIdentityProperties
     {
-        /// <summary> Initializes a new instance of KekIdentityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KekIdentityProperties"/>. </summary>
         public KekIdentityProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of KekIdentityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KekIdentityProperties"/>. </summary>
         /// <param name="userAssignedIdentityId"> User assigned identity resource Id. </param>
         /// <param name="useSystemAssignedIdentity"> Boolean specifying whether to use system assigned identity or not. </param>
         internal KekIdentityProperties(ResourceIdentifier userAssignedIdentityId, BinaryData useSystemAssignedIdentity)

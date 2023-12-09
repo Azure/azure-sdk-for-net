@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Network
         private readonly PrivateLinkServicesRestOperations _privateLinkServiceRestClient;
         private readonly PrivateLinkServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/privateLinkServices";
+
         /// <summary> Initializes a new instance of the <see cref="PrivateLinkServiceResource"/> class for mocking. </summary>
         protected PrivateLinkServiceResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/privateLinkServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

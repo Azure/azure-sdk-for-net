@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> List of physical partitions and their properties returned by a merge operation. </summary>
     public partial class PhysicalPartitionStorageInfoCollection
     {
-        /// <summary> Initializes a new instance of PhysicalPartitionStorageInfoCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhysicalPartitionStorageInfoCollection"/>. </summary>
         internal PhysicalPartitionStorageInfoCollection()
         {
             PhysicalPartitionStorageInfoCollectionValue = new ChangeTrackingList<PhysicalPartitionStorageInfo>();
         }
 
-        /// <summary> Initializes a new instance of PhysicalPartitionStorageInfoCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhysicalPartitionStorageInfoCollection"/>. </summary>
         /// <param name="physicalPartitionStorageInfoCollectionValue"> List of physical partitions and their properties. </param>
         internal PhysicalPartitionStorageInfoCollection(IReadOnlyList<PhysicalPartitionStorageInfo> physicalPartitionStorageInfoCollectionValue)
         {

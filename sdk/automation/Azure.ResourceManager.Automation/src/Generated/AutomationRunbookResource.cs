@@ -49,6 +49,9 @@ namespace Azure.ResourceManager.Automation
         private readonly TestJobRestOperations _testJobRestClient;
         private readonly AutomationRunbookData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/runbooks";
+
         /// <summary> Initializes a new instance of the <see cref="AutomationRunbookResource"/> class for mocking. </summary>
         protected AutomationRunbookResource()
         {
@@ -81,9 +84,6 @@ namespace Azure.ResourceManager.Automation
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/runbooks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

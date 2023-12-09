@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Subscription keys. </summary>
     public partial class SubscriptionKeysContract
     {
-        /// <summary> Initializes a new instance of SubscriptionKeysContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionKeysContract"/>. </summary>
         internal SubscriptionKeysContract()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionKeysContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionKeysContract"/>. </summary>
         /// <param name="primaryKey"> Subscription primary key. </param>
         /// <param name="secondaryKey"> Subscription secondary key. </param>
         internal SubscriptionKeysContract(string primaryKey, string secondaryKey)

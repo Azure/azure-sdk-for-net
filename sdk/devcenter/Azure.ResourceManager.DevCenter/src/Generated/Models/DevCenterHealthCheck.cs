@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> An individual health check item. </summary>
     public partial class DevCenterHealthCheck
     {
-        /// <summary> Initializes a new instance of DevCenterHealthCheck. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterHealthCheck"/>. </summary>
         internal DevCenterHealthCheck()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterHealthCheck. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterHealthCheck"/>. </summary>
         /// <param name="status"> The status of the health check item. </param>
         /// <param name="displayName"> The display name of this health check item. </param>
         /// <param name="startOn"> Start time of health check item. </param>

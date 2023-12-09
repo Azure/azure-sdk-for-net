@@ -10,12 +10,12 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The job statistics regarding execution status. </summary>
     public partial class DeviceJobStatistics
     {
-        /// <summary> Initializes a new instance of DeviceJobStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceJobStatistics"/>. </summary>
         internal DeviceJobStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceJobStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceJobStatistics"/>. </summary>
         /// <param name="deviceCount"> The number of devices targeted by the job. </param>
         /// <param name="failedCount"> The number of failed jobs. </param>
         /// <param name="succeededCount"> The number of succeeded jobs. </param>

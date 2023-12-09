@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The error management. </summary>
     public partial class ConnectorMappingErrorManagement
     {
-        /// <summary> Initializes a new instance of ConnectorMappingErrorManagement. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingErrorManagement"/>. </summary>
         /// <param name="errorManagementType"> The type of error management to use for the mapping. </param>
         public ConnectorMappingErrorManagement(ErrorManagementType errorManagementType)
         {
             ErrorManagementType = errorManagementType;
         }
 
-        /// <summary> Initializes a new instance of ConnectorMappingErrorManagement. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingErrorManagement"/>. </summary>
         /// <param name="errorManagementType"> The type of error management to use for the mapping. </param>
         /// <param name="errorLimit"> The error limit allowed while importing data. </param>
         internal ConnectorMappingErrorManagement(ErrorManagementType errorManagementType, int? errorLimit)

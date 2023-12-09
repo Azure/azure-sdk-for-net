@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> The result of a Filter Blobs API call. </summary>
     internal partial class FilterBlobSegment
     {
-        /// <summary> Initializes a new instance of FilterBlobSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterBlobSegment"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="where"></param>
         /// <param name="blobs"></param>
@@ -31,7 +31,7 @@ namespace Azure.Storage.Blobs.Models
             Blobs = blobs.ToList();
         }
 
-        /// <summary> Initializes a new instance of FilterBlobSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterBlobSegment"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="where"></param>
         /// <param name="blobs"></param>

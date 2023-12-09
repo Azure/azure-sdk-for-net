@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> Savings plans list summary. </summary>
     internal partial class SavingsPlanSummary
     {
-        /// <summary> Initializes a new instance of SavingsPlanSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanSummary"/>. </summary>
         internal SavingsPlanSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanSummary"/>. </summary>
         /// <param name="name"> This property has value 'summary'. </param>
         /// <param name="value"> The roll up count summary of savings plans in each state. </param>
         internal SavingsPlanSummary(string name, SavingsPlanSummaryCount value)

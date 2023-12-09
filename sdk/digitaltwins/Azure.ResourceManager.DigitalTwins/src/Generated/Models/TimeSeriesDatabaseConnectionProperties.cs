@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// </summary>
     public abstract partial class TimeSeriesDatabaseConnectionProperties
     {
-        /// <summary> Initializes a new instance of TimeSeriesDatabaseConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesDatabaseConnectionProperties"/>. </summary>
         protected TimeSeriesDatabaseConnectionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesDatabaseConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesDatabaseConnectionProperties"/>. </summary>
         /// <param name="connectionType"> The type of time series connection resource. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="identity"> Managed identity properties for the time series database connection resource. </param>

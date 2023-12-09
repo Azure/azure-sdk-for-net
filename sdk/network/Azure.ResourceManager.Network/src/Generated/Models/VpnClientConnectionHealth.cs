@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> VpnClientConnectionHealth properties. </summary>
     public partial class VpnClientConnectionHealth
     {
-        /// <summary> Initializes a new instance of VpnClientConnectionHealth. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnClientConnectionHealth"/>. </summary>
         internal VpnClientConnectionHealth()
         {
             AllocatedIPAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VpnClientConnectionHealth. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnClientConnectionHealth"/>. </summary>
         /// <param name="totalIngressBytesTransferred"> Total of the Ingress Bytes Transferred in this P2S Vpn connection. </param>
         /// <param name="totalEgressBytesTransferred"> Total of the Egress Bytes Transferred in this connection. </param>
         /// <param name="vpnClientConnectionsCount"> The total of p2s vpn clients connected at this time to this P2SVpnGateway. </param>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class ArmApplicationData : ArmApplicationResourceData
     {
-        /// <summary> Initializes a new instance of ArmApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="kind"> The kind of the managed application. Allowed values are MarketPlace and ServiceCatalog. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kind"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources
             Artifacts = new ChangeTrackingList<ArmApplicationArtifact>();
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

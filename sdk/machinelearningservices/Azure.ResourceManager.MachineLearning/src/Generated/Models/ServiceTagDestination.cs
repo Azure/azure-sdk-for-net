@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Service Tag destination for a Service Tag Outbound Rule for the managed network of a machine learning workspace. </summary>
     public partial class ServiceTagDestination
     {
-        /// <summary> Initializes a new instance of ServiceTagDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTagDestination"/>. </summary>
         public ServiceTagDestination()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ServiceTagDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTagDestination"/>. </summary>
         /// <param name="action"> The action enum for networking rule. </param>
         /// <param name="addressPrefixes"> Optional, if provided, the ServiceTag property will be ignored. </param>
         /// <param name="portRanges"></param>

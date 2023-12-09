@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Result of the request to list networkManagerEffectiveSecurityAdminRules. It contains a list of groups and a skiptoken to get the next set of results. </summary>
     internal partial class NetworkManagerEffectiveSecurityAdminRulesListResult
     {
-        /// <summary> Initializes a new instance of NetworkManagerEffectiveSecurityAdminRulesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerEffectiveSecurityAdminRulesListResult"/>. </summary>
         internal NetworkManagerEffectiveSecurityAdminRulesListResult()
         {
             Value = new ChangeTrackingList<EffectiveBaseSecurityAdminRule>();
         }
 
-        /// <summary> Initializes a new instance of NetworkManagerEffectiveSecurityAdminRulesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerEffectiveSecurityAdminRulesListResult"/>. </summary>
         /// <param name="value">
         /// Gets a page of NetworkManagerEffectiveSecurityAdminRules
         /// Please note <see cref="EffectiveBaseSecurityAdminRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.PostgreSql
     /// </summary>
     public partial class PostgreSqlPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateLinkResourceData"/>. </summary>
         public PostgreSqlPrivateLinkResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

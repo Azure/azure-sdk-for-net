@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Migration validation report result, contains the url for downloading the generated report. </summary>
     public partial class MigrationReportResult
     {
-        /// <summary> Initializes a new instance of MigrationReportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationReportResult"/>. </summary>
         internal MigrationReportResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrationReportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationReportResult"/>. </summary>
         /// <param name="id"> Migration validation result identifier. </param>
         /// <param name="reportUri"> The url of the report. </param>
         internal MigrationReportResult(string id, Uri reportUri)

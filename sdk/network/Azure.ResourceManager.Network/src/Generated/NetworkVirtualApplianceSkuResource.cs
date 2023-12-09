@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Network
         private readonly VirtualApplianceSkusRestOperations _networkVirtualApplianceSkuVirtualApplianceSkusRestClient;
         private readonly NetworkVirtualApplianceSkuData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/networkVirtualApplianceSkus";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkVirtualApplianceSkuResource"/> class for mocking. </summary>
         protected NetworkVirtualApplianceSkuResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/networkVirtualApplianceSkus";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

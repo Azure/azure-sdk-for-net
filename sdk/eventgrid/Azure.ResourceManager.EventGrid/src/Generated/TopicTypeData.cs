@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class TopicTypeData : ResourceData
     {
-        /// <summary> Initializes a new instance of TopicTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopicTypeData"/>. </summary>
         public TopicTypeData()
         {
             SupportedLocations = new ChangeTrackingList<string>();
             SupportedScopesForSource = new ChangeTrackingList<TopicTypeSourceScope>();
         }
 
-        /// <summary> Initializes a new instance of TopicTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopicTypeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

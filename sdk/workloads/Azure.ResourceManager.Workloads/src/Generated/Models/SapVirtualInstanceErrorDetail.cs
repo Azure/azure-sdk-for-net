@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Error definition. </summary>
     public partial class SapVirtualInstanceErrorDetail
     {
-        /// <summary> Initializes a new instance of SapVirtualInstanceErrorDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceErrorDetail"/>. </summary>
         internal SapVirtualInstanceErrorDetail()
         {
             Details = new ChangeTrackingList<SapVirtualInstanceErrorDetail>();
         }
 
-        /// <summary> Initializes a new instance of SapVirtualInstanceErrorDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceErrorDetail"/>. </summary>
         /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
         /// <param name="message"> Description of the error. </param>
         /// <param name="details"> Internal error details. </param>

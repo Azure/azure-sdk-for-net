@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The response to a list data masking rules request. </summary>
     internal partial class DataMaskingRuleListResult
     {
-        /// <summary> Initializes a new instance of DataMaskingRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMaskingRuleListResult"/>. </summary>
         internal DataMaskingRuleListResult()
         {
             Value = new ChangeTrackingList<DataMaskingRule>();
         }
 
-        /// <summary> Initializes a new instance of DataMaskingRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMaskingRuleListResult"/>. </summary>
         /// <param name="value"> The list of database data masking rules. </param>
         internal DataMaskingRuleListResult(IReadOnlyList<DataMaskingRule> value)
         {

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> Describes the Resource Usage. </summary>
     public partial class DataLakeStoreUsage
     {
-        /// <summary> Initializes a new instance of DataLakeStoreUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreUsage"/>. </summary>
         internal DataLakeStoreUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreUsage"/>. </summary>
         /// <param name="unit"> Gets the unit of measurement. </param>
         /// <param name="id"> Resource identifier. </param>
         /// <param name="currentValue"> Gets the current count of the allocated resources in the subscription. </param>

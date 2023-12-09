@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the activity parameter validation set. </summary>
     public partial class AutomationActivityParameterValidationSet
     {
-        /// <summary> Initializes a new instance of AutomationActivityParameterValidationSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationActivityParameterValidationSet"/>. </summary>
         internal AutomationActivityParameterValidationSet()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationActivityParameterValidationSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationActivityParameterValidationSet"/>. </summary>
         /// <param name="memberValue"> Gets or sets the name of the activity parameter validation set member. </param>
         internal AutomationActivityParameterValidationSet(string memberValue)
         {

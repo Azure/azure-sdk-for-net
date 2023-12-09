@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Refund policy result. </summary>
     internal partial class RefundPolicyResult
     {
-        /// <summary> Initializes a new instance of RefundPolicyResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RefundPolicyResult"/>. </summary>
         internal RefundPolicyResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RefundPolicyResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RefundPolicyResult"/>. </summary>
         /// <param name="properties"> Refund policy result property. </param>
         internal RefundPolicyResult(ReservationRefundPolicyResultProperty properties)
         {

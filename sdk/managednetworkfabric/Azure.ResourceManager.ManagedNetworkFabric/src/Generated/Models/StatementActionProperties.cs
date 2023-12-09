@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Route policy action properties. </summary>
     public partial class StatementActionProperties
     {
-        /// <summary> Initializes a new instance of StatementActionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StatementActionProperties"/>. </summary>
         /// <param name="actionType"> Action type. Example: Permit | Deny | Continue. </param>
         public StatementActionProperties(RoutePolicyActionType actionType)
         {
             ActionType = actionType;
         }
 
-        /// <summary> Initializes a new instance of StatementActionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StatementActionProperties"/>. </summary>
         /// <param name="localPreference"> Local Preference of the route policy. </param>
         /// <param name="actionType"> Action type. Example: Permit | Deny | Continue. </param>
         /// <param name="ipCommunityProperties"> IP Community Properties. </param>

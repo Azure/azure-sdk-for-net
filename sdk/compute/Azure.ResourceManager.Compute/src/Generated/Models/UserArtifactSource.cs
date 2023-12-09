@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The source image from which the Image Version is going to be created. </summary>
     public partial class UserArtifactSource
     {
-        /// <summary> Initializes a new instance of UserArtifactSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserArtifactSource"/>. </summary>
         /// <param name="mediaLink"> Required. The mediaLink of the artifact, must be a readable storage page blob. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaLink"/> is null. </exception>
         public UserArtifactSource(string mediaLink)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             MediaLink = mediaLink;
         }
 
-        /// <summary> Initializes a new instance of UserArtifactSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserArtifactSource"/>. </summary>
         /// <param name="mediaLink"> Required. The mediaLink of the artifact, must be a readable storage page blob. </param>
         /// <param name="defaultConfigurationLink"> Optional. The defaultConfigurationLink of the artifact, must be a readable storage page blob. </param>
         internal UserArtifactSource(string mediaLink, string defaultConfigurationLink)

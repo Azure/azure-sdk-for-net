@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> The list skus operation response. </summary>
     internal partial class SignalRSkuListResult
     {
-        /// <summary> Initializes a new instance of SignalRSkuListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRSkuListResult"/>. </summary>
         internal SignalRSkuListResult()
         {
             Value = new ChangeTrackingList<SignalRSku>();
         }
 
-        /// <summary> Initializes a new instance of SignalRSkuListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRSkuListResult"/>. </summary>
         /// <param name="value"> The list of skus available for the resource. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).

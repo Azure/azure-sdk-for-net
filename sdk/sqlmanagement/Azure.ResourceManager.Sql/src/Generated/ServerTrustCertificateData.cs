@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ServerTrustCertificateData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServerTrustCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerTrustCertificateData"/>. </summary>
         public ServerTrustCertificateData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerTrustCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerTrustCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

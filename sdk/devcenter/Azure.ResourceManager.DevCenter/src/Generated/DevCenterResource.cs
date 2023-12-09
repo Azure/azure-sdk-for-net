@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.DevCenter
         private readonly ImagesRestOperations _devCenterImageImagesRestClient;
         private readonly DevCenterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters";
+
         /// <summary> Initializes a new instance of the <see cref="DevCenterResource"/> class for mocking. </summary>
         protected DevCenterResource()
         {
@@ -73,9 +76,6 @@ namespace Azure.ResourceManager.DevCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> List of networks. </summary>
     internal partial class SiteRecoveryNetworkListResult
     {
-        /// <summary> Initializes a new instance of SiteRecoveryNetworkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryNetworkListResult"/>. </summary>
         internal SiteRecoveryNetworkListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryNetworkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryNetworkListResult"/>. </summary>
         /// <param name="value"> The Networks list details. </param>
         /// <param name="nextLink"> The value of next link. </param>
         internal SiteRecoveryNetworkListResult(IReadOnlyList<SiteRecoveryNetworkData> value, string nextLink)

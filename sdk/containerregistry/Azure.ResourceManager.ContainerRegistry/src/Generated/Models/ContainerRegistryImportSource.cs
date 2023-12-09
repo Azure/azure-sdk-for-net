@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The ContainerRegistryImportSource. </summary>
     public partial class ContainerRegistryImportSource
     {
-        /// <summary> Initializes a new instance of ContainerRegistryImportSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImportSource"/>. </summary>
         /// <param name="sourceImage">
         /// Repository name of the source image.
         /// Specify an image by repository ('hello-world'). This will use the 'latest' tag.
@@ -25,6 +25,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             Argument.AssertNotNull(sourceImage, nameof(sourceImage));
 
+            SourceImage = sourceImage;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImportSource"/>. </summary>
+        /// <param name="resourceId"> The resource identifier of the source Azure Container Registry. </param>
+        /// <param name="registryAddress"> The address of the source registry (e.g. 'mcr.microsoft.com'). </param>
+        /// <param name="credentials"> Credentials used when importing from a registry uri. </param>
+        /// <param name="sourceImage">
+        /// Repository name of the source image.
+        /// Specify an image by repository ('hello-world'). This will use the 'latest' tag.
+        /// Specify an image by tag ('hello-world:latest').
+        /// Specify an image by sha256-based manifest digest ('hello-world@sha256:abc123').
+        /// </param>
+        internal ContainerRegistryImportSource(ResourceIdentifier resourceId, string registryAddress, ContainerRegistryImportSourceCredentials credentials, string sourceImage)
+        {
+            ResourceId = resourceId;
+            RegistryAddress = registryAddress;
+            Credentials = credentials;
             SourceImage = sourceImage;
         }
 

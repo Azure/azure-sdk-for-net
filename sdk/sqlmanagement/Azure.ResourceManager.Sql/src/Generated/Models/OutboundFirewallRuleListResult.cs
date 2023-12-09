@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of outbound rules. </summary>
     internal partial class OutboundFirewallRuleListResult
     {
-        /// <summary> Initializes a new instance of OutboundFirewallRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundFirewallRuleListResult"/>. </summary>
         internal OutboundFirewallRuleListResult()
         {
             Value = new ChangeTrackingList<OutboundFirewallRuleData>();
         }
 
-        /// <summary> Initializes a new instance of OutboundFirewallRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundFirewallRuleListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal OutboundFirewallRuleListResult(IReadOnlyList<OutboundFirewallRuleData> value, string nextLink)

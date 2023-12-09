@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Parquet write settings. </summary>
     public partial class ParquetWriteSettings : FormatWriteSettings
     {
-        /// <summary> Initializes a new instance of ParquetWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParquetWriteSettings"/>. </summary>
         public ParquetWriteSettings()
         {
             Type = "ParquetWriteSettings";
         }
 
-        /// <summary> Initializes a new instance of ParquetWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParquetWriteSettings"/>. </summary>
         /// <param name="type"> The write setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="maxRowsPerFile"> Limit the written file's row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </param>

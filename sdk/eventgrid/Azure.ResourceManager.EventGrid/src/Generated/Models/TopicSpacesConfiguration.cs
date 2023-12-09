@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the Topic Spaces Configuration. </summary>
     public partial class TopicSpacesConfiguration
     {
-        /// <summary> Initializes a new instance of TopicSpacesConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopicSpacesConfiguration"/>. </summary>
         public TopicSpacesConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of TopicSpacesConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopicSpacesConfiguration"/>. </summary>
         /// <param name="state"> Indicate if Topic Spaces Configuration is enabled for the namespace. Default is Disabled. </param>
         /// <param name="routeTopicResourceId">
         /// Fully qualified Azure Resource Id for the Event Grid Topic to which events will be routed to from TopicSpaces under a namespace.

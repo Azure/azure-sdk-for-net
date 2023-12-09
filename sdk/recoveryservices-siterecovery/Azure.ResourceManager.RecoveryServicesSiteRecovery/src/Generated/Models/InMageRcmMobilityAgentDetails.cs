@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm mobility agent details. </summary>
     public partial class InMageRcmMobilityAgentDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmMobilityAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmMobilityAgentDetails"/>. </summary>
         internal InMageRcmMobilityAgentDetails()
         {
             ReasonsBlockingUpgrade = new ChangeTrackingList<AgentUpgradeBlockedReason>();
         }
 
-        /// <summary> Initializes a new instance of InMageRcmMobilityAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmMobilityAgentDetails"/>. </summary>
         /// <param name="version"> The agent version. </param>
         /// <param name="latestVersion"> The latest agent version available. </param>
         /// <param name="latestAgentReleaseDate"> The latest agent version release date. </param>

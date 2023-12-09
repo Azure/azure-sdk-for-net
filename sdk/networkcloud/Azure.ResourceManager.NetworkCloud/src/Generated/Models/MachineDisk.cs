@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> Disk represents the properties of the disk. </summary>
     public partial class MachineDisk
     {
-        /// <summary> Initializes a new instance of MachineDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineDisk"/>. </summary>
         internal MachineDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineDisk"/>. </summary>
         /// <param name="capacityGB"> The maximum amount of storage in GB. </param>
         /// <param name="connection"> The connection type of the rack SKU resource. </param>
         /// <param name="diskType"> The disk type of rack SKU resource. </param>

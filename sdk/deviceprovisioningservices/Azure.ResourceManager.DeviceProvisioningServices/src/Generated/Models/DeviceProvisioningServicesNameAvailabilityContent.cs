@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> Input values for operation results call. </summary>
     public partial class DeviceProvisioningServicesNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name of the Provisioning Service to check. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DeviceProvisioningServicesNameAvailabilityContent(string name)

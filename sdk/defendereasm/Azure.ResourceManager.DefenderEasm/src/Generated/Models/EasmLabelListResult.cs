@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DefenderEasm.Models
     /// <summary> The list of labels. </summary>
     internal partial class EasmLabelListResult
     {
-        /// <summary> Initializes a new instance of EasmLabelListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EasmLabelListResult"/>. </summary>
         internal EasmLabelListResult()
         {
             Value = new ChangeTrackingList<EasmLabelData>();
         }
 
-        /// <summary> Initializes a new instance of EasmLabelListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EasmLabelListResult"/>. </summary>
         /// <param name="value"> The list of labels. </param>
         /// <param name="nextLink"> The link used to get the next page of Label list. </param>
         internal EasmLabelListResult(IReadOnlyList<EasmLabelData> value, string nextLink)

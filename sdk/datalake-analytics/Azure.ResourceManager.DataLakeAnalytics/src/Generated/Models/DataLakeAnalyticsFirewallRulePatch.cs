@@ -15,9 +15,24 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsFirewallRulePatch
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsFirewallRulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsFirewallRulePatch"/>. </summary>
         public DataLakeAnalyticsFirewallRulePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsFirewallRulePatch"/>. </summary>
+        /// <param name="startIPAddress">
+        /// The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
+        /// Serialized Name: UpdateFirewallRuleParameters.properties.startIpAddress
+        /// </param>
+        /// <param name="endIPAddress">
+        /// The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
+        /// Serialized Name: UpdateFirewallRuleParameters.properties.endIpAddress
+        /// </param>
+        internal DataLakeAnalyticsFirewallRulePatch(IPAddress startIPAddress, IPAddress endIPAddress)
+        {
+            StartIPAddress = startIPAddress;
+            EndIPAddress = endIPAddress;
         }
 
         /// <summary>

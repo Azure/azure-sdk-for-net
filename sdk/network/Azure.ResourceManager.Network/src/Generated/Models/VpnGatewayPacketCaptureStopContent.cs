@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Stop packet capture parameters. </summary>
     public partial class VpnGatewayPacketCaptureStopContent
     {
-        /// <summary> Initializes a new instance of VpnGatewayPacketCaptureStopContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnGatewayPacketCaptureStopContent"/>. </summary>
         public VpnGatewayPacketCaptureStopContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VpnGatewayPacketCaptureStopContent"/>. </summary>
+        /// <param name="sasUri"> SAS url for packet capture on vpn gateway. </param>
+        internal VpnGatewayPacketCaptureStopContent(Uri sasUri)
+        {
+            SasUri = sasUri;
         }
 
         /// <summary> SAS url for packet capture on vpn gateway. </summary>

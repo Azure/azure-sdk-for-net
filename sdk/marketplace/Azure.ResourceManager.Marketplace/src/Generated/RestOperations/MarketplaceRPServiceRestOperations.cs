@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> All rules approved in the private store that are relevant for user subscriptions. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="content"> The QueryUserRulesContent to use. </param>
+        /// <param name="content"> The <see cref="QueryUserRulesContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<MarketplaceRuleListResult>> QueryUserRulesAsync(Guid privateStoreId, QueryUserRulesContent content = null, CancellationToken cancellationToken = default)
         {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> All rules approved in the private store that are relevant for user subscriptions. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="content"> The QueryUserRulesContent to use. </param>
+        /// <param name="content"> The <see cref="QueryUserRulesContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<MarketplaceRuleListResult> QueryUserRules(Guid privateStoreId, QueryUserRulesContent content = null, CancellationToken cancellationToken = default)
         {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Set rule for specific private store and collection. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
-        /// <param name="content"> The SetRulesContent to use. </param>
+        /// <param name="content"> The <see cref="SetRulesContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response> SetCollectionRulesAsync(Guid privateStoreId, Guid collectionId, SetRulesContent content = null, CancellationToken cancellationToken = default)
         {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Set rule for specific private store and collection. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
-        /// <param name="content"> The SetRulesContent to use. </param>
+        /// <param name="content"> The <see cref="SetRulesContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response SetCollectionRules(Guid privateStoreId, Guid collectionId, SetRulesContent content = null, CancellationToken cancellationToken = default)
         {

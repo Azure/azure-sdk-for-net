@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Batch
         private readonly BatchAccountRestOperations _batchAccountRestClient;
         private readonly BatchAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Batch/batchAccounts";
+
         /// <summary> Initializes a new instance of the <see cref="BatchAccountResource"/> class for mocking. </summary>
         protected BatchAccountResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.Batch
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Batch/batchAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

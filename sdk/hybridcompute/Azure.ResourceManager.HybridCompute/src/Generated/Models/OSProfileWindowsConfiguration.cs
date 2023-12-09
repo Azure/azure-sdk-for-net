@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Specifies the windows configuration for update management. </summary>
     public partial class OSProfileWindowsConfiguration
     {
-        /// <summary> Initializes a new instance of OSProfileWindowsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSProfileWindowsConfiguration"/>. </summary>
         public OSProfileWindowsConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of OSProfileWindowsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSProfileWindowsConfiguration"/>. </summary>
         /// <param name="assessmentMode"> Specifies the assessment mode. </param>
         /// <param name="patchMode"> Specifies the patch mode. </param>
         internal OSProfileWindowsConfiguration(AssessmentModeType? assessmentMode, PatchModeType? patchMode)

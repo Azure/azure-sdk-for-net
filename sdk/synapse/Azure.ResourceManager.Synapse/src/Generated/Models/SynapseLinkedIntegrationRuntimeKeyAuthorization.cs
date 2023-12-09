@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The key authorization type integration runtime. </summary>
     public partial class SynapseLinkedIntegrationRuntimeKeyAuthorization : SynapseLinkedIntegrationRuntimeType
     {
-        /// <summary> Initializes a new instance of SynapseLinkedIntegrationRuntimeKeyAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseLinkedIntegrationRuntimeKeyAuthorization"/>. </summary>
         /// <param name="key"> The key used for authorization. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public SynapseLinkedIntegrationRuntimeKeyAuthorization(SynapseSecureString key)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Synapse.Models
             AuthorizationType = "Key";
         }
 
-        /// <summary> Initializes a new instance of SynapseLinkedIntegrationRuntimeKeyAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseLinkedIntegrationRuntimeKeyAuthorization"/>. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
         /// <param name="key"> The key used for authorization. </param>
         internal SynapseLinkedIntegrationRuntimeKeyAuthorization(string authorizationType, SynapseSecureString key) : base(authorizationType)

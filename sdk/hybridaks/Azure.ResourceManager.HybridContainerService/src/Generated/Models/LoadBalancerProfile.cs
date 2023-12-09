@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> LoadBalancerProfile - Profile of the cluster load balancer. </summary>
     public partial class LoadBalancerProfile : NamedAgentPoolProfile
     {
-        /// <summary> Initializes a new instance of LoadBalancerProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerProfile"/>. </summary>
         public LoadBalancerProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of LoadBalancerProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerProfile"/>. </summary>
         /// <param name="count"> Count - Number of agents to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </param>
         /// <param name="availabilityZones"> AvailabilityZones - The list of Availability zones to use for nodes. Datacenter racks modelled as zones. </param>
         /// <param name="maxCount"> The maximum number of nodes for auto-scaling. </param>

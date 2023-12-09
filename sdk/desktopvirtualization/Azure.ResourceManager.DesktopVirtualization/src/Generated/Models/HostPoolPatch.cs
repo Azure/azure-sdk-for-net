@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> HostPool properties that can be patched. </summary>
     public partial class HostPoolPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of HostPoolPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostPoolPatch"/>. </summary>
         public HostPoolPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of HostPoolPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostPoolPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

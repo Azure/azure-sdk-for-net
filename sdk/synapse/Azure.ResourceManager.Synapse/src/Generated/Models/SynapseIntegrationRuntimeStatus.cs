@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// </summary>
     public partial class SynapseIntegrationRuntimeStatus
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeStatus"/>. </summary>
         internal SynapseIntegrationRuntimeStatus()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeStatus"/>. </summary>
         /// <param name="runtimeType"> Type of integration runtime. </param>
         /// <param name="dataFactoryName"> The workspace name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>

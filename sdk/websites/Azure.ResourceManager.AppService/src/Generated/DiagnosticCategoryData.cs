@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class DiagnosticCategoryData : ResourceData
     {
-        /// <summary> Initializes a new instance of DiagnosticCategoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticCategoryData"/>. </summary>
         public DiagnosticCategoryData()
         {
         }
 
-        /// <summary> Initializes a new instance of DiagnosticCategoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticCategoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

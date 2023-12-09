@@ -10,7 +10,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> a summary of request statistics grouped by API in hour or minute aggregates for blobs. </summary>
     public partial class BlobMetrics
     {
-        /// <summary> Initializes a new instance of BlobMetrics. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobMetrics"/>. </summary>
         /// <param name="version"> The version of Storage Analytics to configure. </param>
         /// <param name="enabled"> Indicates whether metrics are enabled for the Blob service. </param>
         /// <param name="includeApis"> Indicates whether metrics should generate summary statistics for called API operations. </param>

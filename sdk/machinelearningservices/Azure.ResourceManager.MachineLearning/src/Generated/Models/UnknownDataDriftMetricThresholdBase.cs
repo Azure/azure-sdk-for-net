@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownDataDriftMetricThresholdBase. </summary>
     internal partial class UnknownDataDriftMetricThresholdBase : DataDriftMetricThresholdBase
     {
-        /// <summary> Initializes a new instance of UnknownDataDriftMetricThresholdBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDataDriftMetricThresholdBase"/>. </summary>
         /// <param name="dataType"> [Required] Specifies the data type of the metric threshold. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
         internal UnknownDataDriftMetricThresholdBase(MonitoringFeatureDataType dataType, MonitoringThreshold threshold) : base(dataType, threshold)

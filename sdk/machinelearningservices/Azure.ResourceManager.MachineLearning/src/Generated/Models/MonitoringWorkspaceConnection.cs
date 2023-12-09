@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Monitoring workspace connection definition. </summary>
     public partial class MonitoringWorkspaceConnection
     {
-        /// <summary> Initializes a new instance of MonitoringWorkspaceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringWorkspaceConnection"/>. </summary>
         public MonitoringWorkspaceConnection()
         {
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
             Secrets = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MonitoringWorkspaceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringWorkspaceConnection"/>. </summary>
         /// <param name="environmentVariables">
         /// The properties of a workspace service connection to store as environment variables in the submitted jobs.
         /// Key is workspace connection property path, name is environment variable key.

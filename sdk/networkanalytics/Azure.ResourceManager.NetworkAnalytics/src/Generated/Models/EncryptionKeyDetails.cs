@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> Encryption key details. </summary>
     public partial class EncryptionKeyDetails
     {
-        /// <summary> Initializes a new instance of EncryptionKeyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionKeyDetails"/>. </summary>
         /// <param name="keyVaultUri"> The Uri of the key vault. </param>
         /// <param name="keyName"> The name of the key vault key. </param>
         /// <param name="keyVersion"> The version of the key vault key. </param>

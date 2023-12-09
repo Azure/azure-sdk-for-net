@@ -10,12 +10,12 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> Contact Information. </summary>
     public partial class ContactInformation
     {
-        /// <summary> Initializes a new instance of ContactInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContactInformation"/>. </summary>
         public ContactInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of ContactInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContactInformation"/>. </summary>
         /// <param name="name"> Name of authorized user for purposes of submitting the Program Brief. </param>
         /// <param name="phone"> Contact phone number for the authorized user for the customer. Use E164 format. e.g. +14086111111. </param>
         /// <param name="email"> Contact email address number for the authorized user for the customer. </param>

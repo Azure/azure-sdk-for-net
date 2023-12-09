@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ServiceBus
     /// </summary>
     public partial class ServiceBusDisasterRecoveryData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceBusDisasterRecoveryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusDisasterRecoveryData"/>. </summary>
         public ServiceBusDisasterRecoveryData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusDisasterRecoveryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusDisasterRecoveryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

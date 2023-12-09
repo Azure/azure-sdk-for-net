@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The version capability. </summary>
     public partial class HDInsightVersionsCapability
     {
-        /// <summary> Initializes a new instance of HDInsightVersionsCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightVersionsCapability"/>. </summary>
         internal HDInsightVersionsCapability()
         {
             Available = new ChangeTrackingList<HDInsightVersionSpec>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightVersionsCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightVersionsCapability"/>. </summary>
         /// <param name="available"> The list of version capabilities. </param>
         internal HDInsightVersionsCapability(IReadOnlyList<HDInsightVersionSpec> available)
         {

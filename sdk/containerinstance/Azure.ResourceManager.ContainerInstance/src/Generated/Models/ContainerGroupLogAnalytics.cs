@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> Container group log analytics information. </summary>
     public partial class ContainerGroupLogAnalytics
     {
-        /// <summary> Initializes a new instance of ContainerGroupLogAnalytics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupLogAnalytics"/>. </summary>
         /// <param name="workspaceId"> The workspace id for log analytics. </param>
         /// <param name="workspaceKey"> The workspace key for log analytics. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="workspaceKey"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupLogAnalytics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupLogAnalytics"/>. </summary>
         /// <param name="workspaceId"> The workspace id for log analytics. </param>
         /// <param name="workspaceKey"> The workspace key for log analytics. </param>
         /// <param name="logType"> The log type to be used. </param>

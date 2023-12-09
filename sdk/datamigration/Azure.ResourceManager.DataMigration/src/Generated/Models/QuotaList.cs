@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> OData page of quota objects. </summary>
     internal partial class QuotaList
     {
-        /// <summary> Initializes a new instance of QuotaList. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaList"/>. </summary>
         internal QuotaList()
         {
             Value = new ChangeTrackingList<Quota>();
         }
 
-        /// <summary> Initializes a new instance of QuotaList. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaList"/>. </summary>
         /// <param name="value"> List of quotas. </param>
         /// <param name="nextLink"> URL to load the next page of quotas, or null or missing if this is the last page. </param>
         internal QuotaList(IReadOnlyList<Quota> value, string nextLink)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> This represents the blob storage account location where exports of costs will be delivered. There are two ways to configure the destination. The approach recommended for most customers is to specify the resourceId of the storage account. This requires a one-time registration of the account's subscription with the Microsoft.CostManagementExports resource provider in order to give Cost Management services access to the storage. When creating an export in the Azure portal this registration is performed automatically but API users may need to register the subscription explicitly (for more information see https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-supported-services ). Another way to configure the destination is available ONLY to Partners with a Microsoft Partner Agreement plan who are global admins of their billing account. These Partners, instead of specifying the resourceId of a storage account, can specify the storage account name along with a SAS token for the account. This allows exports of costs to a storage account in any tenant. The SAS token should be created for the blob service with Service/Container/Object resource types and with Read/Write/Delete/List/Add/Create permissions (for more information see https://docs.microsoft.com/en-us/azure/cost-management-billing/costs/export-cost-data-storage-account-sas-key ). </summary>
     public partial class ExportDeliveryDestination
     {
-        /// <summary> Initializes a new instance of ExportDeliveryDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportDeliveryDestination"/>. </summary>
         /// <param name="container"> The name of the container where exports will be uploaded. If the container does not exist it will be created. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="container"/> is null. </exception>
         public ExportDeliveryDestination(string container)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Container = container;
         }
 
-        /// <summary> Initializes a new instance of ExportDeliveryDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportDeliveryDestination"/>. </summary>
         /// <param name="resourceId"> The resource id of the storage account where exports will be delivered. This is not required if a sasToken and storageAccount are specified. </param>
         /// <param name="container"> The name of the container where exports will be uploaded. If the container does not exist it will be created. </param>
         /// <param name="rootFolderPath"> The name of the directory where exports will be uploaded. </param>

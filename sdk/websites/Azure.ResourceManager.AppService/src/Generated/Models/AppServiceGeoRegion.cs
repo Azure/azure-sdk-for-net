@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Geographical region. </summary>
     public partial class AppServiceGeoRegion : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceGeoRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceGeoRegion"/>. </summary>
         public AppServiceGeoRegion()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceGeoRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceGeoRegion"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

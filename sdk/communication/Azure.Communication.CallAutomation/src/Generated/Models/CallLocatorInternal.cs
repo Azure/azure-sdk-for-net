@@ -10,9 +10,20 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The locator used for joining or taking action on a call. </summary>
     internal partial class CallLocatorInternal
     {
-        /// <summary> Initializes a new instance of CallLocatorInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallLocatorInternal"/>. </summary>
         public CallLocatorInternal()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallLocatorInternal"/>. </summary>
+        /// <param name="groupCallId"> The group call id. </param>
+        /// <param name="serverCallId"> The server call id. </param>
+        /// <param name="kind"> The call locator kind. </param>
+        internal CallLocatorInternal(string groupCallId, string serverCallId, CallLocatorKindInternal? kind)
+        {
+            GroupCallId = groupCallId;
+            ServerCallId = serverCallId;
+            Kind = kind;
         }
 
         /// <summary> The group call id. </summary>

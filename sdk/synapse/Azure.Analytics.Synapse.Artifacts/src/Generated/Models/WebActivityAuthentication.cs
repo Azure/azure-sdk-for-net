@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Web activity authentication properties. </summary>
     public partial class WebActivityAuthentication
     {
-        /// <summary> Initializes a new instance of WebActivityAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebActivityAuthentication"/>. </summary>
         /// <param name="type"> Web activity authentication (Basic/ClientCertificate/MSI). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
         public WebActivityAuthentication(string type)
@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type;
         }
 
-        /// <summary> Initializes a new instance of WebActivityAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebActivityAuthentication"/>. </summary>
         /// <param name="type"> Web activity authentication (Basic/ClientCertificate/MSI). </param>
         /// <param name="pfx">
         /// Base64-encoded contents of a PFX file.

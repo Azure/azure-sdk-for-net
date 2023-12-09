@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Object that includes an array of API portal custom domain resources and a possible link for next set. </summary>
     internal partial class ApiPortalCustomDomainResourceList
     {
-        /// <summary> Initializes a new instance of ApiPortalCustomDomainResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiPortalCustomDomainResourceList"/>. </summary>
         internal ApiPortalCustomDomainResourceList()
         {
             Value = new ChangeTrackingList<AppPlatformApiPortalCustomDomainData>();
         }
 
-        /// <summary> Initializes a new instance of ApiPortalCustomDomainResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiPortalCustomDomainResourceList"/>. </summary>
         /// <param name="value"> Collection of API portal custom domain resources. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).

@@ -13,7 +13,7 @@ namespace Azure.Communication.Identity.Models
     /// <summary> A communication identity. </summary>
     internal partial class CommunicationIdentity
     {
-        /// <summary> Initializes a new instance of CommunicationIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentity"/>. </summary>
         /// <param name="id"> Identifier of the identity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         internal CommunicationIdentity(string id)

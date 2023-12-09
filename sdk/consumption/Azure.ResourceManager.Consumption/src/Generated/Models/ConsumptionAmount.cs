@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> The amount plus currency . </summary>
     public partial class ConsumptionAmount
     {
-        /// <summary> Initializes a new instance of ConsumptionAmount. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionAmount"/>. </summary>
         internal ConsumptionAmount()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionAmount. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionAmount"/>. </summary>
         /// <param name="currency"> Amount currency. </param>
         /// <param name="value"> Amount. </param>
         internal ConsumptionAmount(string currency, decimal? value)

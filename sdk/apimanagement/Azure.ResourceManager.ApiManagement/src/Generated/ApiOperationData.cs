@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiOperationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiOperationData"/>. </summary>
         public ApiOperationData()
         {
             TemplateParameters = new ChangeTrackingList<ParameterContract>();
             Responses = new ChangeTrackingList<ResponseContract>();
         }
 
-        /// <summary> Initializes a new instance of ApiOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiOperationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

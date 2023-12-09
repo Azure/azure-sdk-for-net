@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Workloads
         private readonly ProviderInstancesRestOperations _sapProviderInstanceProviderInstancesRestClient;
         private readonly SapProviderInstanceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Workloads/monitors/providerInstances";
+
         /// <summary> Initializes a new instance of the <see cref="SapProviderInstanceResource"/> class for mocking. </summary>
         protected SapProviderInstanceResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Workloads
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Workloads/monitors/providerInstances";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

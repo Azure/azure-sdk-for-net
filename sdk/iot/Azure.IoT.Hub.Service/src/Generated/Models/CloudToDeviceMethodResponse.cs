@@ -10,12 +10,12 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> Represents the Device Method Invocation Results. </summary>
     public partial class CloudToDeviceMethodResponse
     {
-        /// <summary> Initializes a new instance of CloudToDeviceMethodResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudToDeviceMethodResponse"/>. </summary>
         internal CloudToDeviceMethodResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudToDeviceMethodResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudToDeviceMethodResponse"/>. </summary>
         /// <param name="status"> Method invocation result status. </param>
         /// <param name="payload"> Method invocation result payload. </param>
         internal CloudToDeviceMethodResponse(int? status, object payload)

@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.DataFactory
         private readonly ManagedPrivateEndpointsRestOperations _dataFactoryPrivateEndpointManagedPrivateEndpointsRestClient;
         private readonly DataFactoryPrivateEndpointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints";
+
         /// <summary> Initializes a new instance of the <see cref="DataFactoryPrivateEndpointResource"/> class for mocking. </summary>
         protected DataFactoryPrivateEndpointResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DataFactory
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

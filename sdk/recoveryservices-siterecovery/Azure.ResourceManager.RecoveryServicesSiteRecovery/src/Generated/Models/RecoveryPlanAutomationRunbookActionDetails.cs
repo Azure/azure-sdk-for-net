@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan Automation runbook action details. </summary>
     public partial class RecoveryPlanAutomationRunbookActionDetails : RecoveryPlanActionDetails
     {
-        /// <summary> Initializes a new instance of RecoveryPlanAutomationRunbookActionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanAutomationRunbookActionDetails"/>. </summary>
         /// <param name="fabricLocation"> The fabric location. </param>
         public RecoveryPlanAutomationRunbookActionDetails(RecoveryPlanActionLocation fabricLocation)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "AutomationRunbookActionDetails";
         }
 
-        /// <summary> Initializes a new instance of RecoveryPlanAutomationRunbookActionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanAutomationRunbookActionDetails"/>. </summary>
         /// <param name="instanceType"> Gets the type of action details (see RecoveryPlanActionDetailsTypes enum for possible values). </param>
         /// <param name="runbookId"> The runbook ARM Id. </param>
         /// <param name="timeout"> The runbook timeout. </param>

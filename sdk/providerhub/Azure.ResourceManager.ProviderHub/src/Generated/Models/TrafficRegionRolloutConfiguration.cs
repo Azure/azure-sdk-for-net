@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The TrafficRegionRolloutConfiguration. </summary>
     public partial class TrafficRegionRolloutConfiguration : TrafficRegions
     {
-        /// <summary> Initializes a new instance of TrafficRegionRolloutConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficRegionRolloutConfiguration"/>. </summary>
         public TrafficRegionRolloutConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of TrafficRegionRolloutConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficRegionRolloutConfiguration"/>. </summary>
         /// <param name="regions"></param>
         /// <param name="waitDuration"></param>
         internal TrafficRegionRolloutConfiguration(IList<AzureLocation> regions, TimeSpan? waitDuration) : base(regions)

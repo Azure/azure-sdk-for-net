@@ -12,7 +12,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The IngestionProgressResetOptions. </summary>
     internal partial class IngestionProgressResetOptions
     {
-        /// <summary> Initializes a new instance of IngestionProgressResetOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionProgressResetOptions"/>. </summary>
         /// <param name="startTime"> the start point of time range to reset data ingestion status. </param>
         /// <param name="endTime"> the end point of time range to reset data ingestion status. </param>
         public IngestionProgressResetOptions(DateTimeOffset startTime, DateTimeOffset endTime)

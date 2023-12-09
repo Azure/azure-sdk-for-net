@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public abstract partial class RestoreContent
     {
-        /// <summary> Initializes a new instance of RestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreContent"/>. </summary>
         protected RestoreContent()
         {
         }
 
-        /// <summary> Initializes a new instance of RestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         internal RestoreContent(string objectType)
         {

@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.PostgreSql
         private readonly PrivateEndpointConnectionsRestOperations _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly PostgreSqlPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/servers/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="PostgreSqlPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected PostgreSqlPrivateEndpointConnectionResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.PostgreSql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/servers/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

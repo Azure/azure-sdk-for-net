@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The configuration settings of the Azure Active Directory app registration. </summary>
     public partial class ContainerAppAzureActiveDirectoryRegistrationConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppAzureActiveDirectoryRegistrationConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAzureActiveDirectoryRegistrationConfiguration"/>. </summary>
         public ContainerAppAzureActiveDirectoryRegistrationConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppAzureActiveDirectoryRegistrationConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAzureActiveDirectoryRegistrationConfiguration"/>. </summary>
         /// <param name="openIdIssuer">
         /// The OpenID Connect Issuer URI that represents the entity which issues access tokens for this application.
         /// When using Azure Active Directory, this value is the URI of the directory tenant, e.g. https://login.microsoftonline.com/v2.0/{tenant-guid}/.

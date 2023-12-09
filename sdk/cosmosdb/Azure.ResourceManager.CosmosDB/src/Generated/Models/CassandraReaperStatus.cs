@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The CassandraReaperStatus. </summary>
     public partial class CassandraReaperStatus
     {
-        /// <summary> Initializes a new instance of CassandraReaperStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraReaperStatus"/>. </summary>
         internal CassandraReaperStatus()
         {
             RepairRunIds = new ChangeTrackingDictionary<string, string>();
             RepairSchedules = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of CassandraReaperStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraReaperStatus"/>. </summary>
         /// <param name="isHealthy"></param>
         /// <param name="repairRunIds"> Dictionary of &lt;string&gt;. </param>
         /// <param name="repairSchedules"> Dictionary of &lt;string&gt;. </param>

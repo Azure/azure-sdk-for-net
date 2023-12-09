@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Relay
         private readonly PrivateLinkResourcesRestOperations _relayPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly RelayPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="RelayPrivateLinkResource"/> class for mocking. </summary>
         protected RelayPrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Relay
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

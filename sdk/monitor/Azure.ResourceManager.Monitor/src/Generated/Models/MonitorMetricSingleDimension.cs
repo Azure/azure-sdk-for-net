@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The metric dimension name and value. </summary>
     public partial class MonitorMetricSingleDimension
     {
-        /// <summary> Initializes a new instance of MonitorMetricSingleDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorMetricSingleDimension"/>. </summary>
         /// <param name="name"> Name of the dimension. </param>
         /// <param name="value"> Value of the dimension. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>

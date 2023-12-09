@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Cluster GPU Data. </summary>
     public partial class EdgeClusterGpuCapacity
     {
-        /// <summary> Initializes a new instance of EdgeClusterGpuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeClusterGpuCapacity"/>. </summary>
         public EdgeClusterGpuCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeClusterGpuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeClusterGpuCapacity"/>. </summary>
         /// <param name="gpuType"> The cluster GPU Type. </param>
         /// <param name="gpuUsedUnitsCount"> The used GPU units count in the cluster. </param>
         /// <param name="gpuFreeUnitsCount"> The free GPU units count in the cluster. </param>

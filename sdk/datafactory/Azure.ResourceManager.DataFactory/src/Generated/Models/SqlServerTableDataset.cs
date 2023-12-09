@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The on-premises SQL Server dataset. </summary>
     public partial class SqlServerTableDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of SqlServerTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public SqlServerTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "SqlServerTable";
         }
 
-        /// <summary> Initializes a new instance of SqlServerTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerTableDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

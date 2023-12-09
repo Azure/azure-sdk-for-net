@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Resources.Models
     [PropertyReferenceType]
     public partial class ExtendedLocation
     {
-        /// <summary> Initializes a new instance of ExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
         [InitializationConstructor]
         public ExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
         /// <param name="extendedLocationType"> The extended location type. </param>
         /// <param name="name"> The extended location name. </param>
         [SerializationConstructor]

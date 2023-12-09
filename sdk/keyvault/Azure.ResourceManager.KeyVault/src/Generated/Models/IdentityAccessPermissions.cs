@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Permissions the identity has for keys, secrets, certificates and storage. </summary>
     public partial class IdentityAccessPermissions
     {
-        /// <summary> Initializes a new instance of IdentityAccessPermissions. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityAccessPermissions"/>. </summary>
         public IdentityAccessPermissions()
         {
             Keys = new ChangeTrackingList<IdentityAccessKeyPermission>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Storage = new ChangeTrackingList<IdentityAccessStoragePermission>();
         }
 
-        /// <summary> Initializes a new instance of IdentityAccessPermissions. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityAccessPermissions"/>. </summary>
         /// <param name="keys"> Permissions to keys. </param>
         /// <param name="secrets"> Permissions to secrets. </param>
         /// <param name="certificates"> Permissions to certificates. </param>

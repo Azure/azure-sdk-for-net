@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Kubernetes cluster configuration. </summary>
     public partial class EdgeKubernetesClusterInfo
     {
-        /// <summary> Initializes a new instance of EdgeKubernetesClusterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesClusterInfo"/>. </summary>
         /// <param name="version"> Kubernetes cluster version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public EdgeKubernetesClusterInfo(string version)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Version = version;
         }
 
-        /// <summary> Initializes a new instance of EdgeKubernetesClusterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesClusterInfo"/>. </summary>
         /// <param name="etcdInfo"> Etcd configuration. </param>
         /// <param name="nodes"> Kubernetes cluster nodes. </param>
         /// <param name="version"> Kubernetes cluster version. </param>

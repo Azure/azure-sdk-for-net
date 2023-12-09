@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Policy evaluation details. </summary>
     public partial class PolicyEvaluationDetails
     {
-        /// <summary> Initializes a new instance of PolicyEvaluationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyEvaluationDetails"/>. </summary>
         internal PolicyEvaluationDetails()
         {
             EvaluatedExpressions = new ChangeTrackingList<ExpressionEvaluationDetails>();
         }
 
-        /// <summary> Initializes a new instance of PolicyEvaluationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyEvaluationDetails"/>. </summary>
         /// <param name="evaluatedExpressions"> Details of the evaluated expressions. </param>
         /// <param name="ifNotExistsDetails"> Evaluation details of IfNotExists effect. </param>
         internal PolicyEvaluationDetails(IReadOnlyList<ExpressionEvaluationDetails> evaluatedExpressions, IfNotExistsEvaluationDetails ifNotExistsDetails)

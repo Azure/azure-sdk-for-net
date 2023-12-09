@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Network and credential configuration currently applied on terminal server. </summary>
     public partial class VpnConfigurationPatchableProperties
     {
-        /// <summary> Initializes a new instance of VpnConfigurationPatchableProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnConfigurationPatchableProperties"/>. </summary>
         public VpnConfigurationPatchableProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnConfigurationPatchableProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnConfigurationPatchableProperties"/>. </summary>
         /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the Network To Network Interconnect. </param>
         /// <param name="peeringOption"> Peering option list. </param>
         /// <param name="optionBProperties"> option B properties. </param>

@@ -14,13 +14,13 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The configuration for Iot Hub device and module twins. </summary>
     public partial class TwinConfiguration
     {
-        /// <summary> Initializes a new instance of TwinConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TwinConfiguration"/>. </summary>
         public TwinConfiguration()
         {
             Labels = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of TwinConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TwinConfiguration"/>. </summary>
         /// <param name="id"> The unique identifier of the configuration. </param>
         /// <param name="schemaVersion"> The schema version of the configuration. </param>
         /// <param name="labels"> The key-value pairs used to describe the configuration. </param>

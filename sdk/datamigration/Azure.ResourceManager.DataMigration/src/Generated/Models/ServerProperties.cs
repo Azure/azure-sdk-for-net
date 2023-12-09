@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Server properties for MySQL type source. </summary>
     public partial class ServerProperties
     {
-        /// <summary> Initializes a new instance of ServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerProperties"/>. </summary>
         internal ServerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerProperties"/>. </summary>
         /// <param name="serverPlatform"> Name of the server platform. </param>
         /// <param name="serverName"> Name of the server. </param>
         /// <param name="serverVersion"> Version of the database server. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A copy activity Drill server source. </summary>
     public partial class DrillSource : TabularSource
     {
-        /// <summary> Initializes a new instance of DrillSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DrillSource"/>. </summary>
         public DrillSource()
         {
             CopySourceType = "DrillSource";
         }
 
-        /// <summary> Initializes a new instance of DrillSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DrillSource"/>. </summary>
         /// <param name="copySourceType"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

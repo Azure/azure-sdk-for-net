@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.NetApp
         private readonly SnapshotPoliciesRestOperations _snapshotPolicyRestClient;
         private readonly SnapshotPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/snapshotPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="SnapshotPolicyResource"/> class for mocking. </summary>
         protected SnapshotPolicyResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.NetApp
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/snapshotPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

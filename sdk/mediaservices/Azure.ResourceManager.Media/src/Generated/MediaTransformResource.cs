@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Media
         private readonly TransformsRestOperations _mediaTransformTransformsRestClient;
         private readonly MediaTransformData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaServices/transforms";
+
         /// <summary> Initializes a new instance of the <see cref="MediaTransformResource"/> class for mocking. </summary>
         protected MediaTransformResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Media
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaServices/transforms";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Get monitoring data response. </summary>
     public partial class IntegrationRuntimeMonitoringData
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeMonitoringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeMonitoringData"/>. </summary>
         internal IntegrationRuntimeMonitoringData()
         {
             Nodes = new ChangeTrackingList<IntegrationRuntimeNodeMonitoringData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeMonitoringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeMonitoringData"/>. </summary>
         /// <param name="name"> Integration runtime name. </param>
         /// <param name="nodes"> Integration runtime node monitoring data. </param>
         internal IntegrationRuntimeMonitoringData(string name, IReadOnlyList<IntegrationRuntimeNodeMonitoringData> nodes)

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Filter group. </summary>
     internal partial class FilterGroup
     {
-        /// <summary> Initializes a new instance of FilterGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterGroup"/>. </summary>
         public FilterGroup()
         {
             Filter = new ChangeTrackingList<SelfHelpFilter>();
         }
 
-        /// <summary> Initializes a new instance of FilterGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterGroup"/>. </summary>
         /// <param name="filter"> List of filters. </param>
         internal FilterGroup(IList<SelfHelpFilter> filter)
         {

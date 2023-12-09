@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> App resource properties payload. </summary>
     public partial class AppPlatformAppProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformAppProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformAppProperties"/>. </summary>
         public AppPlatformAppProperties()
         {
             AddonConfigs = new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             LoadedCertificates = new ChangeTrackingList<AppLoadedCertificate>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformAppProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformAppProperties"/>. </summary>
         /// <param name="isPublic"> Indicates whether the App exposes public endpoint. </param>
         /// <param name="uriString"> URL of the App. </param>
         /// <param name="addonConfigs"> Collection of addons. </param>

@@ -13,10 +13,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Email Template update Parameters. </summary>
     public partial class ApiManagementEmailTemplateCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ApiManagementEmailTemplateCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementEmailTemplateCreateOrUpdateContent"/>. </summary>
         public ApiManagementEmailTemplateCreateOrUpdateContent()
         {
             Parameters = new ChangeTrackingList<EmailTemplateParametersContractProperties>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementEmailTemplateCreateOrUpdateContent"/>. </summary>
+        /// <param name="subject"> Subject of the Template. </param>
+        /// <param name="title"> Title of the Template. </param>
+        /// <param name="description"> Description of the Email Template. </param>
+        /// <param name="body"> Email Template Body. This should be a valid XDocument. </param>
+        /// <param name="parameters"> Email Template Parameter values. </param>
+        internal ApiManagementEmailTemplateCreateOrUpdateContent(string subject, string title, string description, string body, IList<EmailTemplateParametersContractProperties> parameters)
+        {
+            Subject = subject;
+            Title = title;
+            Description = description;
+            Body = body;
+            Parameters = parameters;
         }
 
         /// <summary> Subject of the Template. </summary>

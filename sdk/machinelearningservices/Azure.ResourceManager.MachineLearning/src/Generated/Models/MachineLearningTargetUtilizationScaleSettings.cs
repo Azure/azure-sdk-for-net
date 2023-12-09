@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningTargetUtilizationScaleSettings. </summary>
     public partial class MachineLearningTargetUtilizationScaleSettings : MachineLearningOnlineScaleSettings
     {
-        /// <summary> Initializes a new instance of MachineLearningTargetUtilizationScaleSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTargetUtilizationScaleSettings"/>. </summary>
         public MachineLearningTargetUtilizationScaleSettings()
         {
             ScaleType = ScaleType.TargetUtilization;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningTargetUtilizationScaleSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTargetUtilizationScaleSettings"/>. </summary>
         /// <param name="scaleType"> [Required] Type of deployment scaling algorithm. </param>
         /// <param name="maxInstances"> The maximum number of instances that the deployment can scale to. The quota will be reserved for max_instances. </param>
         /// <param name="minInstances"> The minimum number of instances to always be present. </param>

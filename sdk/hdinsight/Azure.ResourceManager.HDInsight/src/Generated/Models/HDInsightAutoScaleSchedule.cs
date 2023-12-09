@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> Parameters for a schedule-based autoscale rule, consisting of an array of days + a time and capacity. </summary>
     public partial class HDInsightAutoScaleSchedule
     {
-        /// <summary> Initializes a new instance of HDInsightAutoScaleSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAutoScaleSchedule"/>. </summary>
         public HDInsightAutoScaleSchedule()
         {
             Days = new ChangeTrackingList<HDInsightDayOfWeek>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightAutoScaleSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAutoScaleSchedule"/>. </summary>
         /// <param name="days"> Days of the week for a schedule-based autoscale rule. </param>
         /// <param name="timeAndCapacity"> Time and capacity for a schedule-based autoscale rule. </param>
         internal HDInsightAutoScaleSchedule(IList<HDInsightDayOfWeek> days, HDInsightAutoScaleTimeAndCapacity timeAndCapacity)

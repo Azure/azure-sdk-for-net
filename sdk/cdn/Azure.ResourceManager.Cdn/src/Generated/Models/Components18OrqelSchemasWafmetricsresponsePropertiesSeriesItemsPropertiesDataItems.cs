@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems. </summary>
     public partial class Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems
     {
-        /// <summary> Initializes a new instance of Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems. </summary>
+        /// <summary> Initializes a new instance of <see cref="Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems"/>. </summary>
         internal Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems()
         {
         }
 
-        /// <summary> Initializes a new instance of Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems. </summary>
+        /// <summary> Initializes a new instance of <see cref="Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems"/>. </summary>
         /// <param name="dateOn"></param>
         /// <param name="value"></param>
         internal Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems(DateTimeOffset? dateOn, float? value)

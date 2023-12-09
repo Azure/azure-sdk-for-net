@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> A container group or container instance event. </summary>
     public partial class ContainerEvent
     {
-        /// <summary> Initializes a new instance of ContainerEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerEvent"/>. </summary>
         internal ContainerEvent()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerEvent"/>. </summary>
         /// <param name="count"> The count of the event. </param>
         /// <param name="firstTimestamp"> The date-time of the earliest logged event. </param>
         /// <param name="lastTimestamp"> The date-time of the latest logged event. </param>

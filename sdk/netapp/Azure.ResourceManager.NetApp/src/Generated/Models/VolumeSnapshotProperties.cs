@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Volume Snapshot Properties. </summary>
     internal partial class VolumeSnapshotProperties
     {
-        /// <summary> Initializes a new instance of VolumeSnapshotProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeSnapshotProperties"/>. </summary>
         public VolumeSnapshotProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of VolumeSnapshotProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeSnapshotProperties"/>. </summary>
         /// <param name="snapshotPolicyId"> Snapshot Policy ResourceId. </param>
         internal VolumeSnapshotProperties(ResourceIdentifier snapshotPolicyId)
         {

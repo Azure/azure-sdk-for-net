@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Configures the Play Right in the PlayReady license. </summary>
     public partial class ContentKeyPolicyPlayReadyPlayRight
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyPlayReadyPlayRight. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyPlayRight"/>. </summary>
         /// <param name="hasDigitalVideoOnlyContentRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
         /// <param name="hasImageConstraintForAnalogComponentVideoRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
         /// <param name="hasImageConstraintForAnalogComputerMonitorRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Media.Models
             AllowPassingVideoContentToUnknownOutput = allowPassingVideoContentToUnknownOutput;
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyPlayReadyPlayRight. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyPlayRight"/>. </summary>
         /// <param name="firstPlayExpiration"> The amount of time that the license is valid after the license is first used to play content. </param>
         /// <param name="scmsRestriction"> Configures the Serial Copy Management System (SCMS) in the license. Must be between 0 and 3 inclusive. </param>
         /// <param name="agcAndColorStripeRestriction"> Configures Automatic Gain Control (AGC) and Color Stripe in the license. Must be between 0 and 3 inclusive. </param>

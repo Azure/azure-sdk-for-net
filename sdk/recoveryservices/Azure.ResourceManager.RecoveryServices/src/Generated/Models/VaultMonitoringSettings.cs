@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Monitoring Settings of the vault. </summary>
     public partial class VaultMonitoringSettings
     {
-        /// <summary> Initializes a new instance of VaultMonitoringSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultMonitoringSettings"/>. </summary>
         public VaultMonitoringSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of VaultMonitoringSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultMonitoringSettings"/>. </summary>
         /// <param name="azureMonitorAlertSettings"> Settings for Azure Monitor based alerts. </param>
         /// <param name="classicAlertSettings"> Settings for classic alerts. </param>
         internal VaultMonitoringSettings(AzureMonitorAlertSettings azureMonitorAlertSettings, ClassicAlertSettings classicAlertSettings)

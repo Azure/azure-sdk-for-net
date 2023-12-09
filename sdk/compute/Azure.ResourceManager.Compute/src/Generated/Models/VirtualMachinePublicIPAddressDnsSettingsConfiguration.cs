@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machines network configuration's DNS settings. </summary>
     public partial class VirtualMachinePublicIPAddressDnsSettingsConfiguration
     {
-        /// <summary> Initializes a new instance of VirtualMachinePublicIPAddressDnsSettingsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinePublicIPAddressDnsSettingsConfiguration"/>. </summary>
         /// <param name="domainNameLabel"> The Domain name label prefix of the PublicIPAddress resources that will be created. The generated name label is the concatenation of the domain name label and vm network profile unique ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainNameLabel"/> is null. </exception>
         public VirtualMachinePublicIPAddressDnsSettingsConfiguration(string domainNameLabel)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             DomainNameLabel = domainNameLabel;
         }
 
-        /// <summary> Initializes a new instance of VirtualMachinePublicIPAddressDnsSettingsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinePublicIPAddressDnsSettingsConfiguration"/>. </summary>
         /// <param name="domainNameLabel"> The Domain name label prefix of the PublicIPAddress resources that will be created. The generated name label is the concatenation of the domain name label and vm network profile unique ID. </param>
         /// <param name="domainNameLabelScope"> The Domain name label scope of the PublicIPAddress resources that will be created. The generated name label is the concatenation of the hashed domain name label with policy according to the domain name label scope and vm network profile unique ID. </param>
         internal VirtualMachinePublicIPAddressDnsSettingsConfiguration(string domainNameLabel, DomainNameLabelScopeType? domainNameLabelScope)

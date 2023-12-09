@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Collection of all the containers on the Data Box Edge/Gateway device. </summary>
     internal partial class ContainerList
     {
-        /// <summary> Initializes a new instance of ContainerList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerList"/>. </summary>
         internal ContainerList()
         {
             Value = new ChangeTrackingList<DataBoxEdgeStorageContainerData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerList"/>. </summary>
         /// <param name="value"> The list of containers. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal ContainerList(IReadOnlyList<DataBoxEdgeStorageContainerData> value, string nextLink)

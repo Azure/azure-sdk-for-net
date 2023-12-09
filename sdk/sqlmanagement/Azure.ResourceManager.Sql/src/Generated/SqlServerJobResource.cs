@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Sql
         private readonly JobExecutionsRestOperations _sqlServerJobExecutionJobExecutionsRestClient;
         private readonly SqlServerJobData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/jobAgents/jobs";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerJobResource"/> class for mocking. </summary>
         protected SqlServerJobResource()
         {
@@ -71,9 +74,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/jobAgents/jobs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

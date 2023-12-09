@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of all MDE onboarding data resources. </summary>
     internal partial class MdeOnboardingDataList
     {
-        /// <summary> Initializes a new instance of MdeOnboardingDataList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MdeOnboardingDataList"/>. </summary>
         internal MdeOnboardingDataList()
         {
             Value = new ChangeTrackingList<MdeOnboarding>();
         }
 
-        /// <summary> Initializes a new instance of MdeOnboardingDataList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MdeOnboardingDataList"/>. </summary>
         /// <param name="value"> List of the resources of the configuration or data needed to onboard the machine to MDE. </param>
         internal MdeOnboardingDataList(IReadOnlyList<MdeOnboarding> value)
         {

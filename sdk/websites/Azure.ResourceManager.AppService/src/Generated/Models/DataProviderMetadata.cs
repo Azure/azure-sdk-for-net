@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Additional configuration for a data providers. </summary>
     public partial class DataProviderMetadata
     {
-        /// <summary> Initializes a new instance of DataProviderMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProviderMetadata"/>. </summary>
         public DataProviderMetadata()
         {
             PropertyBag = new ChangeTrackingList<DataProviderKeyValuePair>();
         }
 
-        /// <summary> Initializes a new instance of DataProviderMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProviderMetadata"/>. </summary>
         /// <param name="providerName"></param>
         /// <param name="propertyBag"> Settings for the data provider. </param>
         internal DataProviderMetadata(string providerName, IReadOnlyList<DataProviderKeyValuePair> propertyBag)

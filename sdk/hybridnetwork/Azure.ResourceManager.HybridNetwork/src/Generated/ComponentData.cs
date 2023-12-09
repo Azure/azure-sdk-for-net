@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.HybridNetwork
     /// </summary>
     public partial class ComponentData : ResourceData
     {
-        /// <summary> Initializes a new instance of ComponentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentData"/>. </summary>
         public ComponentData()
         {
         }
 
-        /// <summary> Initializes a new instance of ComponentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

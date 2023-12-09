@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Copy activity. </summary>
     public partial class CopyActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of CopyActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="source">
         /// Copy activity source.
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "Copy";
         }
 
-        /// <summary> Initializes a new instance of CopyActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

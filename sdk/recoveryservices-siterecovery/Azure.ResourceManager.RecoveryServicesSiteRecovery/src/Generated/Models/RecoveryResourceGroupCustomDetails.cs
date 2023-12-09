@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class RecoveryResourceGroupCustomDetails
     {
-        /// <summary> Initializes a new instance of RecoveryResourceGroupCustomDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryResourceGroupCustomDetails"/>. </summary>
         protected RecoveryResourceGroupCustomDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryResourceGroupCustomDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryResourceGroupCustomDetails"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
         internal RecoveryResourceGroupCustomDetails(string resourceType)
         {

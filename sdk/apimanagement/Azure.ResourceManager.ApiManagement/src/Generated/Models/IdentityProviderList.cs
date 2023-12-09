@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> List of all the Identity Providers configured on the service instance. </summary>
     internal partial class IdentityProviderList
     {
-        /// <summary> Initializes a new instance of IdentityProviderList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityProviderList"/>. </summary>
         internal IdentityProviderList()
         {
             Value = new ChangeTrackingList<ApiManagementIdentityProviderData>();
         }
 
-        /// <summary> Initializes a new instance of IdentityProviderList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityProviderList"/>. </summary>
         /// <param name="value"> Identity Provider configuration values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

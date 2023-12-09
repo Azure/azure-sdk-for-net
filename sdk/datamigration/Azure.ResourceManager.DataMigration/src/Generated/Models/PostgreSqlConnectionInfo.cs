@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Information for connecting to PostgreSQL server. </summary>
     public partial class PostgreSqlConnectionInfo : ConnectionInfo
     {
-        /// <summary> Initializes a new instance of PostgreSqlConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlConnectionInfo"/>. </summary>
         /// <param name="serverName"> Name of the server. </param>
         /// <param name="port"> Port for Server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ConnectionInfoType = "PostgreSqlConnectionInfo";
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlConnectionInfo"/>. </summary>
         /// <param name="connectionInfoType"> Type of connection info. </param>
         /// <param name="userName"> User name. </param>
         /// <param name="password"> Password credential. </param>

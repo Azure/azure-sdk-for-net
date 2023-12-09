@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> This data object type contains the properties of a SCSI controller device attached to a virtual machine that is reported by the controller. </summary>
     public partial class VirtualScsiController
     {
-        /// <summary> Initializes a new instance of VirtualScsiController. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualScsiController"/>. </summary>
         internal VirtualScsiController()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualScsiController. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualScsiController"/>. </summary>
         /// <param name="scsiControllerType"> Gets or sets the controller type. </param>
         /// <param name="controllerKey"> Gets or sets the key of the controller. </param>
         /// <param name="busNumber"> Gets or sets the bus number of the controller. </param>

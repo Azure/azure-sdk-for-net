@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Group Users list representation. </summary>
     internal partial class ApiManagementGroupUserListResult
     {
-        /// <summary> Initializes a new instance of ApiManagementGroupUserListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGroupUserListResult"/>. </summary>
         internal ApiManagementGroupUserListResult()
         {
             Value = new ChangeTrackingList<ApiManagementGroupUserData>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementGroupUserListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGroupUserListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

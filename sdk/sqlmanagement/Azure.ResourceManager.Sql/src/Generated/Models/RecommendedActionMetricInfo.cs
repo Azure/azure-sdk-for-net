@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains time series of various impacted metrics for an Azure SQL Database, Server or Elastic Pool Recommended Action. </summary>
     public partial class RecommendedActionMetricInfo
     {
-        /// <summary> Initializes a new instance of RecommendedActionMetricInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedActionMetricInfo"/>. </summary>
         internal RecommendedActionMetricInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RecommendedActionMetricInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedActionMetricInfo"/>. </summary>
         /// <param name="metricName"> Gets the name of the metric. e.g., CPU, Number of Queries. </param>
         /// <param name="unit"> Gets the unit in which metric is measured. e.g., DTU, Frequency. </param>
         /// <param name="timeGrain"> Gets the duration of time interval for the value given by this MetricInfo. e.g., PT1H (1 hour). </param>

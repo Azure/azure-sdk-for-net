@@ -13,11 +13,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Represents a mongo cluster resource for updates. </summary>
     public partial class MongoClusterPatch
     {
-        /// <summary> Initializes a new instance of MongoClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterPatch"/>. </summary>
         public MongoClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             NodeGroupSpecs = new ChangeTrackingList<NodeGroupSpec>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoClusterPatch"/>. </summary>
+        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
+        /// <param name="createMode"> The mode to create a mongo cluster. </param>
+        /// <param name="restoreParameters"> Parameters used for restore operations. </param>
+        /// <param name="administratorLogin"> The administrator's login for the mongo cluster. </param>
+        /// <param name="administratorLoginPassword"> The password of the administrator login. </param>
+        /// <param name="serverVersion"> The Mongo DB server version. Defaults to the latest available version if not specified. </param>
+        /// <param name="connectionString"> The default mongo connection string for the cluster. </param>
+        /// <param name="earliestRestoreTime"> Earliest restore timestamp in UTC ISO8601 format. </param>
+        /// <param name="provisioningState"> A provisioning state of the mongo cluster. </param>
+        /// <param name="clusterStatus"> A status of the mongo cluster. </param>
+        /// <param name="nodeGroupSpecs"> The list of node group specs in the cluster. </param>
+        internal MongoClusterPatch(IDictionary<string, string> tags, CosmosDBAccountCreateMode? createMode, MongoClusterRestoreParameters restoreParameters, string administratorLogin, string administratorLoginPassword, string serverVersion, string connectionString, string earliestRestoreTime, CosmosDBProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, IList<NodeGroupSpec> nodeGroupSpecs)
+        {
+            Tags = tags;
+            CreateMode = createMode;
+            RestoreParameters = restoreParameters;
+            AdministratorLogin = administratorLogin;
+            AdministratorLoginPassword = administratorLoginPassword;
+            ServerVersion = serverVersion;
+            ConnectionString = connectionString;
+            EarliestRestoreTime = earliestRestoreTime;
+            ProvisioningState = provisioningState;
+            ClusterStatus = clusterStatus;
+            NodeGroupSpecs = nodeGroupSpecs;
         }
 
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>

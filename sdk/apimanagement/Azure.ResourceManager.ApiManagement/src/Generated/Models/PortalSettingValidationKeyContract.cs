@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Client or app secret used in IdentityProviders, Aad, OpenID or OAuth. </summary>
     public partial class PortalSettingValidationKeyContract
     {
-        /// <summary> Initializes a new instance of PortalSettingValidationKeyContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="PortalSettingValidationKeyContract"/>. </summary>
         internal PortalSettingValidationKeyContract()
         {
         }
 
-        /// <summary> Initializes a new instance of PortalSettingValidationKeyContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="PortalSettingValidationKeyContract"/>. </summary>
         /// <param name="validationKey"> This is secret value of the validation key in portal settings. </param>
         internal PortalSettingValidationKeyContract(string validationKey)
         {

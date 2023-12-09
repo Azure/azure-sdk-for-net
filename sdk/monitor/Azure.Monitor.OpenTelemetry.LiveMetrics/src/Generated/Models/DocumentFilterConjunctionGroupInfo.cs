@@ -10,12 +10,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> A collection of filters for a specificy telemetry type. </summary>
     internal partial class DocumentFilterConjunctionGroupInfo
     {
-        /// <summary> Initializes a new instance of DocumentFilterConjunctionGroupInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentFilterConjunctionGroupInfo"/>. </summary>
         internal DocumentFilterConjunctionGroupInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DocumentFilterConjunctionGroupInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentFilterConjunctionGroupInfo"/>. </summary>
         /// <param name="telemetryType"> Telemetry type. </param>
         /// <param name="filters"> An AND-connected group of FilterInfo objects. </param>
         internal DocumentFilterConjunctionGroupInfo(DocumentFilterConjunctionGroupInfoTelemetryType? telemetryType, FilterConjunctionGroupInfo filters)

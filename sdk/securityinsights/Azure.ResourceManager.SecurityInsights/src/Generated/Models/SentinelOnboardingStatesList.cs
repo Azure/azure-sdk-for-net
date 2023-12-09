@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> List of the Sentinel onboarding states. </summary>
     internal partial class SentinelOnboardingStatesList
     {
-        /// <summary> Initializes a new instance of SentinelOnboardingStatesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentinelOnboardingStatesList"/>. </summary>
         /// <param name="value"> Array of Sentinel onboarding states. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SentinelOnboardingStatesList(IEnumerable<SecurityInsightsSentinelOnboardingStateData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SentinelOnboardingStatesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentinelOnboardingStatesList"/>. </summary>
         /// <param name="value"> Array of Sentinel onboarding states. </param>
         internal SentinelOnboardingStatesList(IReadOnlyList<SecurityInsightsSentinelOnboardingStateData> value)
         {

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class EncryptionProtectorData : ResourceData
     {
-        /// <summary> Initializes a new instance of EncryptionProtectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionProtectorData"/>. </summary>
         public EncryptionProtectorData()
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionProtectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionProtectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

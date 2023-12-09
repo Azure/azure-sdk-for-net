@@ -16,7 +16,7 @@ namespace Azure.Communication.MediaComposition.Models
     /// </summary>
     public abstract partial class MediaCompositionLayout
     {
-        /// <summary> Initializes a new instance of MediaCompositionLayout. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaCompositionLayout"/>. </summary>
         /// <param name="kind"> Kind of layout. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>

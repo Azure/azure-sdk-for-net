@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A object which contains list of tables and connection details for a target connection. </summary>
     public partial class MapperTargetConnectionsInfo
     {
-        /// <summary> Initializes a new instance of MapperTargetConnectionsInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperTargetConnectionsInfo"/>. </summary>
         public MapperTargetConnectionsInfo()
         {
             TargetEntities = new ChangeTrackingList<MapperTable>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Relationships = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of MapperTargetConnectionsInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperTargetConnectionsInfo"/>. </summary>
         /// <param name="targetEntities"> List of source tables for a target connection. </param>
         /// <param name="connection"> Source connection details. </param>
         /// <param name="dataMapperMappings"> List of table mappings. </param>

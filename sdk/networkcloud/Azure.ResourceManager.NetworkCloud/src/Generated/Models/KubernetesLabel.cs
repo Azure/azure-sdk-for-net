@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> KubernetesLabel represents a single entry for a Kubernetes label or taint such as those used on a node or pod. </summary>
     public partial class KubernetesLabel
     {
-        /// <summary> Initializes a new instance of KubernetesLabel. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesLabel"/>. </summary>
         /// <param name="key"> The name of the label or taint. </param>
         /// <param name="value"> The value of the label or taint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>

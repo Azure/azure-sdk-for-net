@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Details of node to be deleted. </summary>
     public partial class DeleteNode
     {
-        /// <summary> Initializes a new instance of DeleteNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeleteNode"/>. </summary>
         public DeleteNode()
         {
         }
 
-        /// <summary> Initializes a new instance of DeleteNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeleteNode"/>. </summary>
         /// <param name="nodeName"> The name of node to delete. </param>
         /// <param name="integrationRuntimeName"> The name of integration runtime. </param>
         internal DeleteNode(string nodeName, string integrationRuntimeName)

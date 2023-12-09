@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.IotHub
     /// </summary>
     public partial class IotHubDescriptionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of IotHubDescriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubDescriptionData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> IotHub SKU info. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.IotHub
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of IotHubDescriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubDescriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

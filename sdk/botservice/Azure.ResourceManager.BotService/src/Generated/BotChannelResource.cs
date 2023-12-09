@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.BotService
         private readonly ChannelsRestOperations _botChannelChannelsRestClient;
         private readonly BotChannelData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.BotService/botServices/channels";
+
         /// <summary> Initializes a new instance of the <see cref="BotChannelResource"/> class for mocking. </summary>
         protected BotChannelResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.BotService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.BotService/botServices/channels";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

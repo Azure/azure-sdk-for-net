@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Result of the list of all private endpoint connections operation. </summary>
     internal partial class EventGridPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of EventGridPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridPrivateEndpointConnectionListResult"/>. </summary>
         internal EventGridPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<EventGridPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of EventGridPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> A collection of private endpoint connection resources. </param>
         /// <param name="nextLink"> A link for the next page of private endpoint connection resources. </param>
         internal EventGridPrivateEndpointConnectionListResult(IReadOnlyList<EventGridPrivateEndpointConnectionData> value, string nextLink)

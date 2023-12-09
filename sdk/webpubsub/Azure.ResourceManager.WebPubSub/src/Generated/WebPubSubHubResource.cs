@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.WebPubSub
         private readonly WebPubSubHubsRestOperations _webPubSubHubRestClient;
         private readonly WebPubSubHubData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/webPubSub/hubs";
+
         /// <summary> Initializes a new instance of the <see cref="WebPubSubHubResource"/> class for mocking. </summary>
         protected WebPubSubHubResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.WebPubSub
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/webPubSub/hubs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

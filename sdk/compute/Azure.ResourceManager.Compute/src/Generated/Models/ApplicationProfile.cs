@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Contains the list of gallery applications that should be made available to the VM/VMSS. </summary>
     internal partial class ApplicationProfile
     {
-        /// <summary> Initializes a new instance of ApplicationProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationProfile"/>. </summary>
         public ApplicationProfile()
         {
             GalleryApplications = new ChangeTrackingList<VirtualMachineGalleryApplication>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationProfile"/>. </summary>
         /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
         internal ApplicationProfile(IList<VirtualMachineGalleryApplication> galleryApplications)
         {

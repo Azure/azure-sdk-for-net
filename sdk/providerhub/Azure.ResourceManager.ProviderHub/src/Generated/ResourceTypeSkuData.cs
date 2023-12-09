@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.ProviderHub
     /// <summary> A class representing the ResourceTypeSku data model. </summary>
     public partial class ResourceTypeSkuData : ResourceData
     {
-        /// <summary> Initializes a new instance of ResourceTypeSkuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuData"/>. </summary>
         public ResourceTypeSkuData()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeSkuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

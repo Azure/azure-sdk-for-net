@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> VpnClientConfiguration for P2S client. </summary>
     public partial class VpnClientConfiguration
     {
-        /// <summary> Initializes a new instance of VpnClientConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnClientConfiguration"/>. </summary>
         public VpnClientConfiguration()
         {
             VpnClientRootCertificates = new ChangeTrackingList<VpnClientRootCertificate>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
             VngClientConnectionConfigurations = new ChangeTrackingList<VngClientConnectionConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of VpnClientConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnClientConfiguration"/>. </summary>
         /// <param name="vpnClientAddressPool"> The reference to the address space resource which represents Address space for P2S VpnClient. </param>
         /// <param name="vpnClientRootCertificates"> VpnClientRootCertificate for virtual network gateway. </param>
         /// <param name="vpnClientRevokedCertificates"> VpnClientRevokedCertificate for Virtual network gateway. </param>

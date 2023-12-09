@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Details of the customer managed key associated with the workspace. </summary>
     public partial class CustomerManagedKeyDetails
     {
-        /// <summary> Initializes a new instance of CustomerManagedKeyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerManagedKeyDetails"/>. </summary>
         public CustomerManagedKeyDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of CustomerManagedKeyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerManagedKeyDetails"/>. </summary>
         /// <param name="status"> The customer managed key status on the workspace. </param>
         /// <param name="key"> The key object of the workspace. </param>
         internal CustomerManagedKeyDetails(string status, WorkspaceKeyDetails key)

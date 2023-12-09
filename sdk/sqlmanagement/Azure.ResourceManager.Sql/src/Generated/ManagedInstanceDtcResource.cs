@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedInstanceDtcsRestOperations _managedInstanceDtcRestClient;
         private readonly ManagedInstanceDtcData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/dtc";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceDtcResource"/> class for mocking. </summary>
         protected ManagedInstanceDtcResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/dtc";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

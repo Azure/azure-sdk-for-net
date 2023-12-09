@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The serviceName of an AvailableDelegation indicates a possible delegation for a subnet. </summary>
     public partial class AvailableDelegation : ResourceData
     {
-        /// <summary> Initializes a new instance of AvailableDelegation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableDelegation"/>. </summary>
         internal AvailableDelegation()
         {
             Actions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AvailableDelegation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableDelegation"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

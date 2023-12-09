@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Properties to configure keyVault Properties. </summary>
     public partial class CognitiveServicesKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of CognitiveServicesKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesKeyVaultProperties"/>. </summary>
         public CognitiveServicesKeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesKeyVaultProperties"/>. </summary>
         /// <param name="keyName"> Name of the Key from KeyVault. </param>
         /// <param name="keyVersion"> Version of the Key from KeyVault. </param>
         /// <param name="keyVaultUri"> Uri of KeyVault. </param>

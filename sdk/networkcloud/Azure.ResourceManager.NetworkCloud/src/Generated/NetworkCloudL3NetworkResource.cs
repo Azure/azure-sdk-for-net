@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.NetworkCloud
         private readonly L3NetworksRestOperations _networkCloudL3NetworkL3NetworksRestClient;
         private readonly NetworkCloudL3NetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/l3Networks";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkCloudL3NetworkResource"/> class for mocking. </summary>
         protected NetworkCloudL3NetworkResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.NetworkCloud
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/l3Networks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

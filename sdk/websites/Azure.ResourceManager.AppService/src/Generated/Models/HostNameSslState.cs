@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> SSL-enabled hostname. </summary>
     public partial class HostNameSslState
     {
-        /// <summary> Initializes a new instance of HostNameSslState. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostNameSslState"/>. </summary>
         public HostNameSslState()
         {
         }
 
-        /// <summary> Initializes a new instance of HostNameSslState. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostNameSslState"/>. </summary>
         /// <param name="name"> Hostname. </param>
         /// <param name="sslState"> SSL type. </param>
         /// <param name="virtualIP"> Virtual IP address assigned to the hostname if IP based SSL is enabled. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Details about inquired protectable items under a given container. </summary>
     public partial class WorkloadContainerInquiryInfo
     {
-        /// <summary> Initializes a new instance of WorkloadContainerInquiryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadContainerInquiryInfo"/>. </summary>
         public WorkloadContainerInquiryInfo()
         {
             InquiryDetails = new ChangeTrackingList<WorkloadInquiryDetails>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadContainerInquiryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadContainerInquiryInfo"/>. </summary>
         /// <param name="status">
         /// Inquiry Status for this container such as
         /// InProgress | Failed | Succeeded

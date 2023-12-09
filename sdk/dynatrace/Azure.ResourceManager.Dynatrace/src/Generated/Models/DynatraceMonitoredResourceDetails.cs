@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Details of resource being monitored by Dynatrace monitor resource. </summary>
     public partial class DynatraceMonitoredResourceDetails
     {
-        /// <summary> Initializes a new instance of DynatraceMonitoredResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitoredResourceDetails"/>. </summary>
         internal DynatraceMonitoredResourceDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DynatraceMonitoredResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitoredResourceDetails"/>. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
         /// <param name="sendingMetricsStatus"> Flag indicating if resource is sending metrics to Dynatrace. </param>
         /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>

@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.ExtendedLocations
         private readonly CustomLocationsRestOperations _customLocationRestClient;
         private readonly CustomLocationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ExtendedLocation/customLocations";
+
         /// <summary> Initializes a new instance of the <see cref="CustomLocationResource"/> class for mocking. </summary>
         protected CustomLocationResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.ExtendedLocations
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ExtendedLocation/customLocations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

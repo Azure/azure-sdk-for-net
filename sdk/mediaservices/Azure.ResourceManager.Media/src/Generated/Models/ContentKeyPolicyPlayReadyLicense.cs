@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The PlayReady license. </summary>
     public partial class ContentKeyPolicyPlayReadyLicense
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyPlayReadyLicense. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyLicense"/>. </summary>
         /// <param name="allowTestDevices"> A flag indicating whether test devices can use the license. </param>
         /// <param name="licenseType"> The license type. </param>
         /// <param name="contentKeyLocation">
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Models
             ContentType = contentType;
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyPlayReadyLicense. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyLicense"/>. </summary>
         /// <param name="allowTestDevices"> A flag indicating whether test devices can use the license. </param>
         /// <param name="securityLevel"> The security level. </param>
         /// <param name="beginOn"> The begin date of license. </param>

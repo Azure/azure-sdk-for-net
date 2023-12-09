@@ -13,7 +13,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Solutions can group tables and functions that are associated with a certain Azure Log Analytics offering. </summary>
     internal partial class MetadataSolution
     {
-        /// <summary> Initializes a new instance of MetadataSolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataSolution"/>. </summary>
         /// <param name="id"> The ID of the Log Analytics solution. </param>
         /// <param name="name"> The name of the Log Analytics solution. </param>
         /// <param name="related"> The related metadata items for the Log Analytics solution. </param>
@@ -26,6 +26,25 @@ namespace Azure.Monitor.Query.Models
 
             Id = id;
             Name = name;
+            Related = related;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataSolution"/>. </summary>
+        /// <param name="id"> The ID of the Log Analytics solution. </param>
+        /// <param name="name"> The name of the Log Analytics solution. </param>
+        /// <param name="displayName"> The display name of the Log Analytics solution. </param>
+        /// <param name="description"> The description of the Log Analytics solution. </param>
+        /// <param name="tags"> The tags that are associated with the Log Analytics solution. </param>
+        /// <param name="properties"> The properties of the Log Analytics solution. </param>
+        /// <param name="related"> The related metadata items for the Log Analytics solution. </param>
+        internal MetadataSolution(string id, string name, string displayName, string description, object tags, object properties, MetadataSolutionRelated related)
+        {
+            Id = id;
+            Name = name;
+            DisplayName = displayName;
+            Description = description;
+            Tags = tags;
+            Properties = properties;
             Related = related;
         }
 

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Volume resource. </summary>
     public partial class NetAppVolumeGroupVolume
     {
-        /// <summary> Initializes a new instance of NetAppVolumeGroupVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupVolume"/>. </summary>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
         /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. Minimum size is 100 GiB. Upper limit is 100TiB, 500Tib for LargeVolume or 2400Tib for LargeVolume on exceptional basis. Specified in bytes. </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetApp.Models
             PlacementRules = new ChangeTrackingList<NetAppVolumePlacementRule>();
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeGroupVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupVolume"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

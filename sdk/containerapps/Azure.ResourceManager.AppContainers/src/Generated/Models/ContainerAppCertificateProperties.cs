@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Certificate resource specific properties. </summary>
     public partial class ContainerAppCertificateProperties
     {
-        /// <summary> Initializes a new instance of ContainerAppCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCertificateProperties"/>. </summary>
         public ContainerAppCertificateProperties()
         {
             SubjectAlternativeNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCertificateProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the certificate. </param>
         /// <param name="password"> Certificate password. </param>
         /// <param name="subjectName"> Subject name of the certificate. </param>

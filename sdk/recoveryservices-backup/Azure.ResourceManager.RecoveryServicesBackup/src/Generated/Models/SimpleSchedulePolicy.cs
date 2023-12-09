@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Simple policy schedule. </summary>
     public partial class SimpleSchedulePolicy : BackupSchedulePolicy
     {
-        /// <summary> Initializes a new instance of SimpleSchedulePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimpleSchedulePolicy"/>. </summary>
         public SimpleSchedulePolicy()
         {
             ScheduleRunDays = new ChangeTrackingList<BackupDayOfWeek>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             SchedulePolicyType = "SimpleSchedulePolicy";
         }
 
-        /// <summary> Initializes a new instance of SimpleSchedulePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimpleSchedulePolicy"/>. </summary>
         /// <param name="schedulePolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="scheduleRunFrequency"> Frequency of the schedule operation of this policy. </param>
         /// <param name="scheduleRunDays"> List of days of week this schedule has to be run. </param>
