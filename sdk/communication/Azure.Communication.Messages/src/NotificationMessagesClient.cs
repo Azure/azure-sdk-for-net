@@ -15,7 +15,7 @@ namespace Azure.Communication.Messages
     /// The Azure Communication Services Notification Messages client.
     /// </summary>
     [CodeGenSuppress("NotificationMessagesClient", typeof(Uri))]
-    [CodeGenSuppress("NotificationMessagesClient", typeof(Uri), typeof(AzureCommunicationMessagesClientOptions))]
+    [CodeGenSuppress("NotificationMessagesClient", typeof(Uri), typeof(CommunicationMessagesClientOptions))]
     public partial class NotificationMessagesClient
     {
         #region public constructors
@@ -81,7 +81,7 @@ namespace Azure.Communication.Messages
         /// <summary> Initializes a new instance of NotificationMessagesClient. </summary>
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        internal NotificationMessagesClient(Uri endpoint) : this(endpoint, new AzureCommunicationMessagesClientOptions())
+        internal NotificationMessagesClient(Uri endpoint) : this(endpoint, new CommunicationMessagesClientOptions())
         {
         }
 
@@ -89,10 +89,10 @@ namespace Azure.Communication.Messages
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        internal NotificationMessagesClient(Uri endpoint, AzureCommunicationMessagesClientOptions options)
+        internal NotificationMessagesClient(Uri endpoint, CommunicationMessagesClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            options ??= new AzureCommunicationMessagesClientOptions();
+            options ??= new CommunicationMessagesClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
