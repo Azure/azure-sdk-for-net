@@ -17,36 +17,36 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="NotificationMessagesClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
-        public static IAzureClientBuilder<NotificationMessagesClient, AzureCommunicationMessagesClientOptions> AddNotificationMessagesClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<NotificationMessagesClient, CommunicationMessagesClientOptions> AddNotificationMessagesClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<NotificationMessagesClient, AzureCommunicationMessagesClientOptions>((options) => new NotificationMessagesClient(endpoint, options));
+            return builder.RegisterClientFactory<NotificationMessagesClient, CommunicationMessagesClientOptions>((options) => new NotificationMessagesClient(endpoint, options));
         }
 
         /// <summary> Registers a <see cref="MessageTemplateClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
-        public static IAzureClientBuilder<MessageTemplateClient, AzureCommunicationMessagesClientOptions> AddMessageTemplateClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<MessageTemplateClient, CommunicationMessagesClientOptions> AddMessageTemplateClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<MessageTemplateClient, AzureCommunicationMessagesClientOptions>((options) => new MessageTemplateClient(endpoint, options));
+            return builder.RegisterClientFactory<MessageTemplateClient, CommunicationMessagesClientOptions>((options) => new MessageTemplateClient(endpoint, options));
         }
 
         /// <summary> Registers a <see cref="NotificationMessagesClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<NotificationMessagesClient, AzureCommunicationMessagesClientOptions> AddNotificationMessagesClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<NotificationMessagesClient, CommunicationMessagesClientOptions> AddNotificationMessagesClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<NotificationMessagesClient, AzureCommunicationMessagesClientOptions>(configuration);
+            return builder.RegisterClientFactory<NotificationMessagesClient, CommunicationMessagesClientOptions>(configuration);
         }
         /// <summary> Registers a <see cref="MessageTemplateClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<MessageTemplateClient, AzureCommunicationMessagesClientOptions> AddMessageTemplateClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<MessageTemplateClient, CommunicationMessagesClientOptions> AddMessageTemplateClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<MessageTemplateClient, AzureCommunicationMessagesClientOptions>(configuration);
+            return builder.RegisterClientFactory<MessageTemplateClient, CommunicationMessagesClientOptions>(configuration);
         }
     }
 }
