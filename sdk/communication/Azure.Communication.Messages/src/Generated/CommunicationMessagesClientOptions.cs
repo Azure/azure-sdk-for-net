@@ -14,7 +14,7 @@ namespace Azure.Communication.Messages
     public partial class CommunicationMessagesClientOptions : ClientOptions
     {
         /// <summary> The version of the service to use. </summary>
-        internal enum ServiceVersion
+        public enum ServiceVersion
         {
             /// <summary> Service version "2024-02-01". </summary>
             V2024_02_01 = 1,

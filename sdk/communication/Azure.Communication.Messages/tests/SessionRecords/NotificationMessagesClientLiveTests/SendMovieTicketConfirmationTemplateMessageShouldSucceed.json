@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sanitized.communication.azure.com/messages/notifications/:send?api-version=2023-08-24-preview",
+      "RequestUri": "https://sanitized.communication.azure.com/messages/notifications/:send?api-version=2024-02-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -10,11 +10,11 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-eab384b91724ecd4d7a5ae763635b9eb-fe35bf630011ea35-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20231208.1 (.NET 6.0.25; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "3b3910acda7054ae7bb4c2db6c539a48",
+        "traceparent": "00-dcf27dee37901e6a2c34bd3ec406b04e-bcf7b6259b105cd9-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20231209.1 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "41da3768bd7ac9acff610d104eb16a20",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Sat, 09 Dec 2023 07:26:27 GMT",
+        "x-ms-date": "Sat, 09 Dec 2023 08:08:13 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -88,18 +88,18 @@
         "api-supported-versions": "2023-08-24-preview, 2024-02-01",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 09 Dec 2023 07:26:30 GMT",
-        "MS-CV": "T7ChIyf7bEyvUOvCuWDleQ.0",
+        "Date": "Sat, 09 Dec 2023 08:08:14 GMT",
+        "MS-CV": "om3aL84caE\u002BkbrQW4Wtx6Q.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0phZ0ZQAAAAATDEYFSGD1QZA5GrbP7am/V1NURURHRTA4MTQAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0bSB0ZQAAAADwgcfEeegnR7oQdBp0nnZ7V1NURURHRTA4MDgAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "295ms"
+        "X-Processing-Time": "324ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "3ea068ad-5d45-4bcd-ba3a-663ef1ae5c75",
+            "messageId": "54b96848-4a55-4a92-9a0e-d4fc1b70384a",
             "to": "\u002B16041234567"
           }
         ]
@@ -108,7 +108,7 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1532074911",
+    "RandomSeed": "1103954421",
     "RECIPIENT_IDENTIFIER": "\u002B16041234567",
     "SENDER_CHANNEL_REGISTRATION_ID": "59aced66-68ae-4b7a-8430-36f4c5dfa328"
   }
