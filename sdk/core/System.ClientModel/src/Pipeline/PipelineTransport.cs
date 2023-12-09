@@ -76,7 +76,7 @@ public abstract class PipelineTransport : PipelinePolicy
         Debug.Assert(ProcessNext(message, pipeline) == false);
     }
 
-    public sealed override async ValueTask ProcessAsync(PipelineMessage message, IAsyncEnumerable<PipelinePolicy> pipeline)
+    public sealed override async ValueTask ProcessAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
     {
         await ProcessAsync(message).ConfigureAwait(false);
 

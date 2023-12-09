@@ -1,7 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading.Tasks;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace System.ClientModel.Primitives;
 
@@ -11,10 +12,8 @@ public partial class ClientPipeline
     /// Pipeline processor to advance through policies for pipeline customized
     /// per-request by passing RequestOptions to a protocol method.
     /// </summary>
-    internal class RequestOptionsProcessor : PipelineProcessor
+    internal class RequestOptionsProcessor : IEnumerable<PipelinePolicy>
     {
-        private readonly PipelineMessage _message;
-
         private readonly int _perCallIndex;
         private readonly int _perTryIndex;
         private readonly int _beforeTransportIndex;
@@ -34,7 +33,7 @@ public partial class ClientPipeline
 
         private int _current;
 
-        public RequestOptionsProcessor(PipelineMessage message,
+        public RequestOptionsProcessor(
             ReadOnlyMemory<PipelinePolicy> fixedPolicies,
             ReadOnlyMemory<PipelinePolicy> perCallPolicies,
             ReadOnlyMemory<PipelinePolicy> perTryPolicies,
@@ -48,8 +47,6 @@ public partial class ClientPipeline
             if (beforeTransportIndex > fixedPolicies.Length) throw new ArgumentOutOfRangeException(nameof(beforeTransportIndex), "beforeTransportIndex cannot be greater than pipeline length.");
             if (perCallIndex > perTryIndex) throw new ArgumentOutOfRangeException(nameof(perCallIndex), "perCallIndex cannot be greater than perTryIndex.");
             if (perTryIndex > beforeTransportIndex) throw new ArgumentOutOfRangeException(nameof(perTryIndex), "perTryIndex cannot be greater than beforeTransportIndex.");
-
-            _message = message;
 
             _fixedPolicies = fixedPolicies;
             _customPerCallPolicies = perCallPolicies;
@@ -66,26 +63,16 @@ public partial class ClientPipeline
                 _customBeforeTransportPolicies.Length;
         }
 
-        public override bool ProcessNext()
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public IEnumerator<PipelinePolicy> GetEnumerator()
         {
-            if (TryGetNextPolicy(out PipelinePolicy next))
+            for (int i = 0; i < _length; i++)
             {
-                next.Process(_message, this);
-                return true;
+                // TODO: we should be able to rework this so it's not a try-get.
+                TryGetNextPolicy(out PipelinePolicy policy);
+                yield return policy;
             }
-
-            return false;
-        }
-
-        public override async ValueTask<bool> ProcessNextAsync()
-        {
-            if (TryGetNextPolicy(out PipelinePolicy next))
-            {
-                await next.ProcessAsync(_message, this).ConfigureAwait(false);
-                return true;
-            }
-
-            return false;
         }
 
         /// <summary>

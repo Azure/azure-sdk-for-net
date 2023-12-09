@@ -3,6 +3,7 @@
 
 using System.Buffers;
 using System.ClientModel.Internal;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,16 +34,16 @@ public class ResponseBufferingPolicy : PipelinePolicy
         _networkTimeout = networkTimeout;
     }
 
-    public sealed override void Process(PipelineMessage message, PipelineProcessor pipeline)
+    public sealed override void Process(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
 
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
         => ProcessSyncOrAsync(message, pipeline, async: false).AsTask().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 
-    public sealed override async ValueTask ProcessAsync(PipelineMessage message, PipelineProcessor pipeline)
+    public sealed override async ValueTask ProcessAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
         => await ProcessSyncOrAsync(message, pipeline, async: true).ConfigureAwait(false);
 
-    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, PipelineProcessor pipeline, bool async)
+    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline, bool async)
     {
         CancellationToken oldToken = message.CancellationToken;
         using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
@@ -63,11 +64,11 @@ public class ResponseBufferingPolicy : PipelinePolicy
             message.CancellationToken = cts.Token;
             if (async)
             {
-                await pipeline.ProcessNextAsync().ConfigureAwait(false);
+                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
             }
             else
             {
-                pipeline.ProcessNext();
+                ProcessNext(message, pipeline);
             }
         }
         catch (OperationCanceledException ex)

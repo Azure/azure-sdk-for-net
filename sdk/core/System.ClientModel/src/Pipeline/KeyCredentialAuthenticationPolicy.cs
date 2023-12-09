@@ -43,7 +43,7 @@ public class KeyCredentialAuthenticationPolicy : PipelinePolicy
         ProcessNext(message, pipeline);
     }
 
-    public sealed override async ValueTask ProcessAsync(PipelineMessage message, IAsyncEnumerable<PipelinePolicy> pipeline)
+    public sealed override async ValueTask ProcessAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
     {
         string key = _credential.GetValue();
 
