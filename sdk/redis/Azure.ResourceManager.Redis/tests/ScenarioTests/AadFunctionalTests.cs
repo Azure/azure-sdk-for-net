@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.Redis.Tests.ScenarioTests
             {
                 RedisConfiguration = new RedisCommonConfiguration()
                 {
-                    AadEnabled = "true"
+                    IsAadEnabled = "true"
                 }
             };
             RedisResource redisResource = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName, redisCreationParameters)).Value;
 
             // Verify cache is aad enabled
-            Assert.IsTrue(string.Equals(redisResource.Data.RedisConfiguration.AadEnabled, "true", StringComparison.OrdinalIgnoreCase));
+            Assert.IsTrue(string.Equals(redisResource.Data.RedisConfiguration.IsAadEnabled, "true", StringComparison.OrdinalIgnoreCase));
 
             // List access polices
             RedisCacheAccessPolicyCollection accessPolicyCollection = redisResource.GetRedisCacheAccessPolicies();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Redis.Tests.ScenarioTests
             string accessPolicyAssignmentName = "accessPolicyAssignmentName1";
             RedisCacheAccessPolicyAssignmentData accessPolicyAssignmentData = new RedisCacheAccessPolicyAssignmentData()
             {
-                ObjectId = "69d700c5-ca77-4335-947e-4f823dd00e1a",
+                ObjectId = new Guid("69d700c5-ca77-4335-947e-4f823dd00e1a"),
                 ObjectIdAlias = "kj-aad-testing",
                 AccessPolicyName = "accessPolicy1"
             };
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Redis.Tests.ScenarioTests
             // Update access policy assignment
             accessPolicyAssignmentData = new RedisCacheAccessPolicyAssignmentData()
             {
-                ObjectId = "69d700c5-ca77-4335-947e-4f823dd00e1a",
+                ObjectId = new Guid("69d700c5-ca77-4335-947e-4f823dd00e1a"),
                 ObjectIdAlias = "aad testing app",
                 AccessPolicyName = "accessPolicy1"
             };
@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.Redis.Tests.ScenarioTests
             {
                 RedisConfiguration = new RedisCommonConfiguration()
                 {
-                    AadEnabled = "false"
+                    IsAadEnabled = "false"
                 }
             };
             redisResource = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisCacheName, redisCreationParameters)).Value;
 
             // Verify cache is aad disabled
-            Assert.IsTrue(string.Equals(redisResource.Data.RedisConfiguration.AadEnabled, "false", StringComparison.OrdinalIgnoreCase));
+            Assert.IsTrue(string.Equals(redisResource.Data.RedisConfiguration.IsAadEnabled, "false", StringComparison.OrdinalIgnoreCase));
         }
     }
 }
