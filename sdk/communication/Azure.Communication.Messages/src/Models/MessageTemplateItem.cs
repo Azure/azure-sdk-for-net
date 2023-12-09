@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text.Json;
+
 namespace Azure.Communication.Messages
 {
     /// <summary> The Template Response. </summary>
@@ -9,6 +11,12 @@ namespace Azure.Communication.Messages
         /// <summary> Initializes a new instance of MessageTemplateItem. </summary>
         internal MessageTemplateItem()
         {
+        }
+
+        internal static MessageTemplateItem DeserializeMessageTemplateResponseInternal(JsonElement element)
+        {
+            var messageTemplateResponseInternal = MessageTemplateResponseInternal.DeserializeMessageTemplateResponseInternal(element);
+            return new MessageTemplateItem(messageTemplateResponseInternal);
         }
 
         /// <summary> Initializes a new instance of MessageTemplateItem. </summary>

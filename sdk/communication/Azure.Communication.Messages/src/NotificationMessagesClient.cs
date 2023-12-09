@@ -14,12 +14,10 @@ namespace Azure.Communication.Messages
     /// <summary>
     /// The Azure Communication Services Notification Messages client.
     /// </summary>
-    public class NotificationMessagesClient
+    [CodeGenSuppress("NotificationMessagesClient", typeof(Uri))]
+    [CodeGenSuppress("NotificationMessagesClient", typeof(Uri), typeof(AzureCommunicationMessagesClientOptions))]
+    public partial class NotificationMessagesClient
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly NotificationMessagesRestClient _notificationMessagesRestClient;
-        private readonly StreamRestClient _streamRestClient;
-
         #region public constructors
 
         /// <summary>
@@ -72,19 +70,40 @@ namespace Azure.Communication.Messages
 
         private NotificationMessagesClient(Uri endpoint, HttpPipeline httpPipeline, CommunicationMessagesClientOptions options)
         {
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _notificationMessagesRestClient = new NotificationMessagesRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            _streamRestClient = new StreamRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            ClientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = httpPipeline;
+            _endpoint = endpoint;
+            _apiVersion = options.ApiVersion;
         }
 
         #endregion
 
+        /// <summary> Initializes a new instance of NotificationMessagesClient. </summary>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        internal NotificationMessagesClient(Uri endpoint) : this(endpoint, new AzureCommunicationMessagesClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of NotificationMessagesClient. </summary>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        internal NotificationMessagesClient(Uri endpoint, AzureCommunicationMessagesClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            options ??= new AzureCommunicationMessagesClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
         /// <summary>Initializes a new instance of <see cref="NotificationMessagesClient"/> for mocking.</summary>
         protected NotificationMessagesClient()
         {
-            _clientDiagnostics = null!;
-            _notificationMessagesRestClient = null!;
-            _streamRestClient = null!;
+            ClientDiagnostics = null!;
         }
 
         #region Send Message Operations
@@ -94,13 +113,14 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<SendMessageResult>> SendMessageAsync(SendMessageOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(SendMessage)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(SendMessage)}");
             scope.Start();
              _ = options ?? throw new ArgumentNullException(nameof(options));
 
             try
             {
-                return await _notificationMessagesRestClient.SendMessageAsync(options.ChannelRegistrationId, options.To, options.MessageType, options.Content, options.MediaUri?.AbsoluteUri, options.Template?.ToMessageTemplateInternal(), cancellationToken).ConfigureAwait(false);
+                SendNotificationRequest request = new SendNotificationRequest(options.ChannelRegistrationId, options.To, options.MessageType, options.Content, options.MediaUri?.AbsoluteUri, options.Template?.ToMessageTemplateInternal());
+                return await PostMessageAsync(request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -115,13 +135,14 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<SendMessageResult> SendMessage(SendMessageOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(SendMessage)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(SendMessage)}");
             scope.Start();
             _ = options ?? throw new ArgumentNullException(nameof(options));
 
             try
             {
-                return _notificationMessagesRestClient.SendMessage(options.ChannelRegistrationId, options.To, options.MessageType, options.Content, options.MediaUri?.AbsoluteUri, options.Template?.ToMessageTemplateInternal(), cancellationToken);
+                SendNotificationRequest request = new SendNotificationRequest(options.ChannelRegistrationId, options.To, options.MessageType, options.Content, options.MediaUri?.AbsoluteUri, options.Template?.ToMessageTemplateInternal());
+                return PostMessage(request, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -138,13 +159,14 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<Stream>> DownloadMediaAsync(string mediaContentId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(StreamRestClient)}.{nameof(DownloadMediaAsync)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMediaAsync)}");
             scope.Start();
-             _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
+            _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
 
             try
             {
-                return await _streamRestClient.DownloadMediaAsync(mediaContentId, cancellationToken).ConfigureAwait(false);
+                var binaryDataResponse = await GetMediaAsync(mediaContentId, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(binaryDataResponse.Value.ToStream(), binaryDataResponse.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -162,13 +184,14 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<Stream> DownloadMedia(string mediaContentId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(StreamRestClient)}.{nameof(DownloadMedia)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMedia)}");
             scope.Start();
-             _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
+            _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
 
             try
             {
-                return _streamRestClient.DownloadMedia(mediaContentId, cancellationToken);
+                var binaryDataResponse = GetMedia(mediaContentId, cancellationToken);
+                return Response.FromValue(binaryDataResponse.Value.ToStream(), binaryDataResponse.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -187,9 +210,9 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> DownloadMediaToAsync(string mediaContentId, Stream destinationStream, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(StreamRestClient)}.{nameof(DownloadMediaAsync)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMediaAsync)}");
             scope.Start();
-             _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
+            _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
 
             try
             {
@@ -212,9 +235,9 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response DownloadMediaTo(string mediaContentId, Stream destinationStream, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(StreamRestClient)}.{nameof(DownloadMedia)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMedia)}");
             scope.Start();
-             _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
+            _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
 
             try
             {
@@ -237,9 +260,9 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> DownloadMediaToAsync(string mediaContentId, string destinationPath, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(StreamRestClient)}.{nameof(DownloadMediaAsync)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMediaAsync)}");
             scope.Start();
-             _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
+            _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
 
             using Stream destinationStream = File.Create(destinationPath);
 
@@ -264,9 +287,9 @@ namespace Azure.Communication.Messages
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response DownloadMediaTo(string mediaContentId, string destinationPath, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(StreamRestClient)}.{nameof(DownloadMedia)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMedia)}");
             scope.Start();
-             _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
+            _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
 
             using Stream destinationStream = File.Create(destinationPath);
 
@@ -283,7 +306,8 @@ namespace Azure.Communication.Messages
 
         private async Task<Response> DownloadMediaToAsyncInternal(string mediaContentId, Stream destinationStream, CancellationToken cancellationToken = default)
         {
-            Response<Stream> initialResponse = await _streamRestClient.DownloadMediaAsync(mediaContentId, cancellationToken).ConfigureAwait(false);
+            var binaryDataResponse = await GetMediaAsync(mediaContentId, cancellationToken).ConfigureAwait(false);
+            Response<Stream> initialResponse = Response.FromValue(binaryDataResponse.Value.ToStream(), binaryDataResponse.GetRawResponse());
 
             await CopyToAsync(initialResponse, destinationStream).ConfigureAwait(false);
 
@@ -292,7 +316,8 @@ namespace Azure.Communication.Messages
 
         private Response DownloadMediaToInternal(string mediaContentId, Stream destinationStream, CancellationToken cancellationToken = default)
         {
-            Response<Stream> initialResponse = _streamRestClient.DownloadMedia(mediaContentId, cancellationToken);
+            var binaryDataResponse = GetMedia(mediaContentId, cancellationToken);
+            Response<Stream> initialResponse = Response.FromValue(binaryDataResponse.Value.ToStream(), binaryDataResponse.GetRawResponse());
 
             CopyTo(initialResponse, destinationStream, cancellationToken);
 
@@ -311,7 +336,6 @@ namespace Azure.Communication.Messages
             result.Dispose();
         }
         #endregion
-
         private static HttpPipeline CreatePipelineFromOptions(ConnectionString connectionString, CommunicationMessagesClientOptions options)
         {
             return options.BuildHttpPipeline(connectionString);

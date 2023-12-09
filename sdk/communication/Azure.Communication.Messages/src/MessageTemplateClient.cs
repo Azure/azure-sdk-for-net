@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using Azure.Communication.Messages.Models.Channels;
+using Autorest.CSharp.Core;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -16,12 +13,11 @@ namespace Azure.Communication.Messages
     /// <summary>
     /// The Azure Communication Services Message Template client.
     /// </summary>
-    public class MessageTemplateClient
-    {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly TemplateRestClient _templateRestClient;
-        private readonly StreamRestClient _streamRestClient;
+    [CodeGenSuppress("MessageTemplateClient", typeof(Uri))]
+    [CodeGenSuppress("MessageTemplateClient", typeof(Uri), typeof(AzureCommunicationMessagesClientOptions))]
 
+    public partial class MessageTemplateClient
+    {
         #region public constructors
 
         /// <summary>
@@ -74,19 +70,40 @@ namespace Azure.Communication.Messages
 
         private MessageTemplateClient(Uri endpoint, HttpPipeline httpPipeline, CommunicationMessagesClientOptions options)
         {
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _templateRestClient = new TemplateRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            _streamRestClient = new StreamRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            ClientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = httpPipeline;
+            _endpoint = endpoint;
+            _apiVersion = options.ApiVersion;
         }
 
         #endregion
 
+        /// <summary> Initializes a new instance of MessageTemplateClient. </summary>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        internal MessageTemplateClient(Uri endpoint) : this(endpoint, new AzureCommunicationMessagesClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of MessageTemplateClient. </summary>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        internal MessageTemplateClient(Uri endpoint, AzureCommunicationMessagesClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            options ??= new AzureCommunicationMessagesClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
         /// <summary>Initializes a new instance of <see cref="MessageTemplateClient"/> for mocking.</summary>
         protected MessageTemplateClient()
         {
-            _clientDiagnostics = null!;
-            _templateRestClient = null!;
-            _streamRestClient = null!;
+            ClientDiagnostics = null!;
         }
 
         #region List Templates Operations
@@ -98,50 +115,10 @@ namespace Azure.Communication.Messages
         {
             _ = channelRegistrationId ?? throw new ArgumentNullException(nameof(channelRegistrationId));
 
-            async Task<Page<MessageTemplateItem>> FirstPageFunc(int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MessageTemplateClient)}.{nameof(GetTemplates)}");
-                scope.Start();
-
-                try
-                {
-                    Response<ListTemplatesResponse> response = await _templateRestClient.ListAsync(new Guid(channelRegistrationId), pageSizeHint, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(x => x.ChannelType.ToString() switch {
-                        "whatsApp" => new WhatsAppMessageTemplateItem(x),
-                        _ => new MessageTemplateItem(x),
-                    }), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            async Task<Page<MessageTemplateItem>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MessageTemplateClient)}.{nameof(GetTemplates)}");
-                scope.Start();
-
-                try
-                {
-                    Response<ListTemplatesResponse> response = await _templateRestClient.ListNextPageAsync(nextLink, new Guid(channelRegistrationId), pageSizeHint, cancellationToken).ConfigureAwait(false);
-                    if (response.Value.Value == null || response.Value.Value.Count == 0)
-                    {
-                        return Page.FromValues(new List<MessageTemplateItem>(), null, response.GetRawResponse());
-                    }
-                    return Page.FromValues(response.Value.Value.Select(x => x.ChannelType.ToString() switch {
-                        "whatsApp" => new WhatsAppMessageTemplateItem(x),
-                        _ => new MessageTemplateItem(x),
-                    }), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTemplatesRequest(new Guid(channelRegistrationId), pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTemplatesNextPageRequest(nextLink, new Guid(channelRegistrationId), pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MessageTemplateItem.DeserializeMessageTemplateResponseInternal, ClientDiagnostics, _pipeline, "MessageTemplateClient.GetTemplates", "value", "nextLink", context);
         }
 
         /// <summary> List all templates for given ACS channel. </summary>
@@ -152,50 +129,10 @@ namespace Azure.Communication.Messages
         {
             _ = channelRegistrationId ?? throw new ArgumentNullException(nameof(channelRegistrationId));
 
-            Page<MessageTemplateItem> FirstPageFunc(int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MessageTemplateClient)}.{nameof(GetTemplates)}");
-                scope.Start();
-
-                try
-                {
-                    Response<ListTemplatesResponse> response = _templateRestClient.List(new Guid(channelRegistrationId), pageSizeHint, cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(x => x.ChannelType.ToString() switch {
-                        "whatsApp" => new WhatsAppMessageTemplateItem(x),
-                        _ => new MessageTemplateItem(x),
-                    }), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            Page<MessageTemplateItem> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MessageTemplateClient)}.{nameof(GetTemplates)}");
-                scope.Start();
-
-                try
-                {
-                    Response<ListTemplatesResponse> response = _templateRestClient.ListNextPage(nextLink, new Guid(channelRegistrationId), pageSizeHint, cancellationToken);
-                    if (response.Value.Value == null || response.Value.Value.Count == 0)
-                    {
-                        return Page.FromValues(new List<MessageTemplateItem>(), null, response.GetRawResponse());
-                    }
-                    return Page.FromValues(response.Value.Value.Select(x => x.ChannelType.ToString() switch {
-                        "whatsApp" => new WhatsAppMessageTemplateItem(x),
-                        _ => new MessageTemplateItem(x),
-                    }), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTemplatesRequest(new Guid(channelRegistrationId), pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTemplatesNextPageRequest(nextLink, new Guid(channelRegistrationId), pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MessageTemplateItem.DeserializeMessageTemplateResponseInternal, ClientDiagnostics, _pipeline, "MessageTemplateClient.GetTemplates", "value", "nextLink", context);
         }
         #endregion
 
