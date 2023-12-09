@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -68,17 +69,17 @@ public abstract class PipelineTransport : PipelinePolicy
 
     // These methods from PipelinePolicy just say "you've reached the end
     // of the line", i.e. they stop the invocation of the policy chain.
-    public sealed override void Process(PipelineMessage message, PipelineProcessor pipeline)
+    public sealed override void Process(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
     {
         Process(message);
 
-        Debug.Assert(pipeline.ProcessNext() == false);
+        Debug.Assert(ProcessNext(message, pipeline) == false);
     }
 
-    public sealed override async ValueTask ProcessAsync(PipelineMessage message, PipelineProcessor pipeline)
+    public sealed override async ValueTask ProcessAsync(PipelineMessage message, IAsyncEnumerable<PipelinePolicy> pipeline)
     {
         await ProcessAsync(message).ConfigureAwait(false);
 
-        Debug.Assert(await pipeline.ProcessNextAsync().ConfigureAwait(false) == false);
+        Debug.Assert(await ProcessNextAsync(message, pipeline).ConfigureAwait(false) == false);
     }
 }

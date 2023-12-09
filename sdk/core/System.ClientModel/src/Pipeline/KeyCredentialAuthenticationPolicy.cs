@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
@@ -33,21 +34,21 @@ public class KeyCredentialAuthenticationPolicy : PipelinePolicy
         _keyPrefix = keyPrefix;
     }
 
-    public sealed override void Process(PipelineMessage message, PipelineProcessor pipeline)
+    public sealed override void Process(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
     {
         string key = _credential.GetValue();
 
         message.Request.Headers.Set(_headerName, _keyPrefix != null ? $"{_keyPrefix} {key}" : key);
 
-        pipeline.ProcessNext();
+        ProcessNext(message, pipeline);
     }
 
-    public sealed override async ValueTask ProcessAsync(PipelineMessage message, PipelineProcessor pipeline)
+    public sealed override async ValueTask ProcessAsync(PipelineMessage message, IAsyncEnumerable<PipelinePolicy> pipeline)
     {
         string key = _credential.GetValue();
 
         message.Request.Headers.Set(_headerName, _keyPrefix != null ? $"{_keyPrefix} {key}" : key);
 
-        await pipeline.ProcessNextAsync().ConfigureAwait(false);
+        await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
     }
 }

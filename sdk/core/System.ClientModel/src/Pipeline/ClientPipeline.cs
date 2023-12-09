@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
@@ -132,17 +133,17 @@ public partial class ClientPipeline
 
     public void Send(PipelineMessage message)
     {
-        PipelineProcessor processor = GetProcessor(message);
-        processor.ProcessNext();
+        IEnumerable<PipelinePolicy> policies = GetProcessor(message);
+        policies.GetEnumerator().Current.Process(message, policies);
     }
 
     public async ValueTask SendAsync(PipelineMessage message)
     {
-        PipelineProcessor processor = GetProcessor(message);
-        await processor.ProcessNextAsync().ConfigureAwait(false);
+        IEnumerable<PipelinePolicy> policies = GetProcessor(message);
+        await policies.GetEnumerator().Current.ProcessNextAsync(message, policies).ConfigureAwait(false);
     }
 
-    private PipelineProcessor GetProcessor(PipelineMessage message)
+    private IEnumerable<PipelinePolicy> GetProcessor(PipelineMessage message)
     {
         if (message.CustomRequestPipeline)
         {
@@ -156,49 +157,94 @@ public partial class ClientPipeline
                 _beforeTransportIndex);
         }
 
-        return new ClientPipelineProcessor(message, _policies);
+        return GetEnumerable(_policies);
     }
 
-    private class ClientPipelineProcessor : PipelineProcessor
+    private IEnumerable<PipelinePolicy> GetEnumerable(ReadOnlyMemory<PipelinePolicy> policies)
     {
-        private readonly PipelineMessage _message;
-        private ReadOnlyMemory<PipelinePolicy> _policies;
-
-        public ClientPipelineProcessor(PipelineMessage message,
-            ReadOnlyMemory<PipelinePolicy> policies)
+        int i = 0;
+        for (; i < policies.Length; i++)
         {
-            _message = message;
-            _policies = policies;
-        }
-
-        public override bool ProcessNext()
-        {
-            if (_policies.Length == 0)
-            {
-                return false;
-            }
-
-            var next = _policies.Span[0];
-            _policies = _policies.Slice(1);
-
-            next.Process(_message, this);
-
-            return _policies.Length > 0;
-        }
-
-        public override async ValueTask<bool> ProcessNextAsync()
-        {
-            if (_policies.Length == 0)
-            {
-                return false;
-            }
-
-            var next = _policies.Span[0];
-            _policies = _policies.Slice(1);
-
-            await next.ProcessAsync(_message, this).ConfigureAwait(false);
-
-            return _policies.Length > 0;
+            yield return policies.Span[i];
         }
     }
+
+    //private class ClientPipelineProcessor : IEnumerable<PipelinePolicy>
+    //{
+    //    private readonly PipelineMessage _message;
+
+    //    public ClientPipelineProcessor(PipelineMessage message,
+    //        ReadOnlyMemory<PipelinePolicy> policies)
+    //    {
+    //        _message = message;
+    //        _policies = policies;
+    //    }
+
+    //    public override bool ProcessNext()
+    //    {
+    //        if (_policies.Length == 0)
+    //        {
+    //            return false;
+    //        }
+
+    //        var next = _policies.Span[0];
+    //        _policies = _policies.Slice(1);
+
+    //        next.Process(_message, this);
+
+    //        return _policies.Length > 0;
+    //    }
+
+    //    public override async ValueTask<bool> ProcessNextAsync()
+    //    {
+    //        if (_policies.Length == 0)
+    //        {
+    //            return false;
+    //        }
+
+    //        var next = _policies.Span[0];
+    //        _policies = _policies.Slice(1);
+
+    //        await next.ProcessAsync(_message, this).ConfigureAwait(false);
+
+    //        return _policies.Length > 0;
+    //    }
+
+    //    public IEnumerator<PipelinePolicy> GetEnumerator()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    IEnumerator IEnumerable.GetEnumerator()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    private class ClientPipelineEnumerator : IEnumerator<PipelinePolicy>
+    //    {
+    //        private int _index;
+    //        private readonly ReadOnlyMemory<PipelinePolicy> _policies;
+
+    //        public ClientPipelineEnumerator(ReadOnlyMemory<PipelinePolicy>                >)
+
+    //        public PipelinePolicy Current => throw new NotImplementedException();
+
+    //        object IEnumerator.Current => throw new NotImplementedException();
+
+    //        public void Dispose()
+    //        {
+    //            throw new NotImplementedException();
+    //        }
+
+    //        public bool MoveNext()
+    //        {
+    //            throw new NotImplementedException();
+    //        }
+
+    //        public void Reset()
+    //        {
+    //            throw new NotImplementedException();
+    //        }
+    //    }
+    //}
 }
