@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Redis
     /// </summary>
     public partial class RedisCacheAccessPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of RedisCacheAccessPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisCacheAccessPolicyData"/>. </summary>
         public RedisCacheAccessPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of RedisCacheAccessPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisCacheAccessPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

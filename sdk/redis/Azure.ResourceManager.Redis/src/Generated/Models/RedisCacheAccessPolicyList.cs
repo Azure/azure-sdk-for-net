@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> List of access policies (with properties) of a Redis cache. </summary>
     internal partial class RedisCacheAccessPolicyList
     {
-        /// <summary> Initializes a new instance of RedisCacheAccessPolicyList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisCacheAccessPolicyList"/>. </summary>
         internal RedisCacheAccessPolicyList()
         {
             Value = new ChangeTrackingList<RedisCacheAccessPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of RedisCacheAccessPolicyList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisCacheAccessPolicyList"/>. </summary>
         /// <param name="value"> List of access policies (with properties) of a Redis cache. </param>
         /// <param name="nextLink"> Link for next set. </param>
         internal RedisCacheAccessPolicyList(IReadOnlyList<RedisCacheAccessPolicyData> value, string nextLink)

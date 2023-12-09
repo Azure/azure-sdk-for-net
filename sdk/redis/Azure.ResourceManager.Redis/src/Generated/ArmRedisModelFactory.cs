@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisOperationStatus(id, name, status, percentComplete, startOn, endOn, operations?.ToList(), error, properties);
         }
 
-        /// <summary> Initializes a new instance of RedisCacheAccessPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Redis.RedisCacheAccessPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisCacheAccessPolicyData(id, name, resourceType, systemData, provisioningState, typePropertiesType, permissions);
         }
 
-        /// <summary> Initializes a new instance of RedisCacheAccessPolicyAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Redis.RedisCacheAccessPolicyAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

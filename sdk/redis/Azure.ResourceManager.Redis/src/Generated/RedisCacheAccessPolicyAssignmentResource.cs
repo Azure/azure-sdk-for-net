@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Redis
         private readonly AccessPolicyAssignmentRestOperations _redisCacheAccessPolicyAssignmentAccessPolicyAssignmentRestClient;
         private readonly RedisCacheAccessPolicyAssignmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cache/redis/accessPolicyAssignments";
+
         /// <summary> Initializes a new instance of the <see cref="RedisCacheAccessPolicyAssignmentResource"/> class for mocking. </summary>
         protected RedisCacheAccessPolicyAssignmentResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Redis
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cache/redis/accessPolicyAssignments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
