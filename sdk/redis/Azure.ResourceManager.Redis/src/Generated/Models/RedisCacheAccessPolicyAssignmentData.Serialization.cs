@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Redis
             if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
-                writer.WriteStringValue(ObjectId);
+                writer.WriteStringValue(ObjectId.Value);
             }
             if (Optional.IsDefined(ObjectIdAlias))
             {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Redis
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<AccessPolicyAssignmentProvisioningState> provisioningState = default;
-            Optional<string> objectId = default;
+            Optional<Guid> objectId = default;
             Optional<string> objectIdAlias = default;
             Optional<string> accessPolicyName = default;
             foreach (var property in element.EnumerateObject())
@@ -98,7 +99,11 @@ namespace Azure.ResourceManager.Redis
                         }
                         if (property0.NameEquals("objectId"u8))
                         {
-                            objectId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            objectId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("objectIdAlias"u8))
@@ -115,7 +120,7 @@ namespace Azure.ResourceManager.Redis
                     continue;
                 }
             }
-            return new RedisCacheAccessPolicyAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), objectId.Value, objectIdAlias.Value, accessPolicyName.Value);
+            return new RedisCacheAccessPolicyAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(objectId), objectIdAlias.Value, accessPolicyName.Value);
         }
     }
 }

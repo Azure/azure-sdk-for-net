@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Redis.Samples
             // invoke the operation
             RedisCacheAccessPolicyAssignmentData data = new RedisCacheAccessPolicyAssignmentData()
             {
-                ObjectId = "6497c918-11ad-41e7-1b0f-7c518a87d0b0",
+                ObjectId = Guid.Parse("6497c918-11ad-41e7-1b0f-7c518a87d0b0"),
                 ObjectIdAlias = "TestAADAppRedis",
                 AccessPolicyName = "accessPolicy1",
             };

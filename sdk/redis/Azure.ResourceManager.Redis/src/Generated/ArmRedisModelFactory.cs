@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="zonalConfiguration"> Zonal Configuration. </param>
         /// <param name="authNotRequired"> Specifies whether the authentication is disabled. Setting this property is highly discouraged from security point of view. </param>
         /// <param name="storageSubscriptionId"> SubscriptionId of the storage account for persistence (aof/rdb) using ManagedIdentity. </param>
-        /// <param name="aadEnabled"> Specifies whether AAD based authentication has been enabled or disabled for the cache. </param>
+        /// <param name="isAadEnabled"> Specifies whether AAD based authentication has been enabled or disabled for the cache. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.RedisCommonConfiguration"/> instance for mocking. </returns>
-        public static RedisCommonConfiguration RedisCommonConfiguration(bool? isRdbBackupEnabled = null, string rdbBackupFrequency = null, int? rdbBackupMaxSnapshotCount = null, string rdbStorageConnectionString = null, bool? isAofBackupEnabled = null, string aofStorageConnectionString0 = null, string aofStorageConnectionString1 = null, string maxFragmentationMemoryReserved = null, string maxMemoryPolicy = null, string maxMemoryReserved = null, string maxMemoryDelta = null, string maxClients = null, string preferredDataArchiveAuthMethod = null, string preferredDataPersistenceAuthMethod = null, string zonalConfiguration = null, string authNotRequired = null, string storageSubscriptionId = null, string aadEnabled = null, IDictionary<string, BinaryData> additionalProperties = null)
+        public static RedisCommonConfiguration RedisCommonConfiguration(bool? isRdbBackupEnabled = null, string rdbBackupFrequency = null, int? rdbBackupMaxSnapshotCount = null, string rdbStorageConnectionString = null, bool? isAofBackupEnabled = null, string aofStorageConnectionString0 = null, string aofStorageConnectionString1 = null, string maxFragmentationMemoryReserved = null, string maxMemoryPolicy = null, string maxMemoryReserved = null, string maxMemoryDelta = null, string maxClients = null, string preferredDataArchiveAuthMethod = null, string preferredDataPersistenceAuthMethod = null, string zonalConfiguration = null, string authNotRequired = null, string storageSubscriptionId = null, string isAadEnabled = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new RedisCommonConfiguration(isRdbBackupEnabled, rdbBackupFrequency, rdbBackupMaxSnapshotCount, rdbStorageConnectionString, isAofBackupEnabled, aofStorageConnectionString0, aofStorageConnectionString1, maxFragmentationMemoryReserved, maxMemoryPolicy, maxMemoryReserved, maxMemoryDelta, maxClients, preferredDataArchiveAuthMethod, preferredDataPersistenceAuthMethod, zonalConfiguration, authNotRequired, storageSubscriptionId, aadEnabled, additionalProperties);
+            return new RedisCommonConfiguration(isRdbBackupEnabled, rdbBackupFrequency, rdbBackupMaxSnapshotCount, rdbStorageConnectionString, isAofBackupEnabled, aofStorageConnectionString0, aofStorageConnectionString1, maxFragmentationMemoryReserved, maxMemoryPolicy, maxMemoryReserved, maxMemoryDelta, maxClients, preferredDataArchiveAuthMethod, preferredDataPersistenceAuthMethod, zonalConfiguration, authNotRequired, storageSubscriptionId, isAadEnabled, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of RedisData. </summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="objectIdAlias"> User friendly name for object id. Also represents username for token based authentication. </param>
         /// <param name="accessPolicyName"> The name of the access policy that is being assigned. </param>
         /// <returns> A new <see cref="Redis.RedisCacheAccessPolicyAssignmentData"/> instance for mocking. </returns>
-        public static RedisCacheAccessPolicyAssignmentData RedisCacheAccessPolicyAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AccessPolicyAssignmentProvisioningState? provisioningState = null, string objectId = null, string objectIdAlias = null, string accessPolicyName = null)
+        public static RedisCacheAccessPolicyAssignmentData RedisCacheAccessPolicyAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AccessPolicyAssignmentProvisioningState? provisioningState = null, Guid? objectId = null, string objectIdAlias = null, string accessPolicyName = null)
         {
             return new RedisCacheAccessPolicyAssignmentData(id, name, resourceType, systemData, provisioningState, objectId, objectIdAlias, accessPolicyName);
         }

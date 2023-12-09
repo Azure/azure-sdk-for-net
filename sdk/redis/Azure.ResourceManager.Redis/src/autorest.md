@@ -43,6 +43,8 @@ rename-mapping:
   RedisCommonPropertiesRedisConfiguration.aof-backup-enabled: IsAofBackupEnabled|boolean
   RedisCommonPropertiesRedisConfiguration.rdb-backup-max-snapshot-count: -|integer
   RedisForceRebootResponse: RedisForceRebootResult
+  RedisCacheAccessPolicyAssignment.properties.objectId: -|uuid
+  RedisCommonPropertiesRedisConfiguration.aad-enabled: IsAadEnabled
 
 prepend-rp-prefix:
   - OperationStatus
