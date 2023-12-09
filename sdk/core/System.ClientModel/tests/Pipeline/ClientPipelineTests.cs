@@ -193,20 +193,20 @@ public class ClientPipelineTests
             Id = id;
         }
 
-        public override void Process(PipelineMessage message, PipelineProcessor pipeline)
+        public override void Process(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
         {
             Stamp(message, "Request");
 
-            pipeline.ProcessNext();
+            ProcessNext(message, pipeline);
 
             Stamp(message, "Response");
         }
 
-        public override async ValueTask ProcessAsync(PipelineMessage message, PipelineProcessor pipeline)
+        public override async ValueTask ProcessAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
         {
             Stamp(message, "Request");
 
-            await pipeline.ProcessNextAsync().ConfigureAwait(false);
+            await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
 
             Stamp(message, "Response");
         }

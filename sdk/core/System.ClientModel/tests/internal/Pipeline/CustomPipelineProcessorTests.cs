@@ -16,7 +16,7 @@ public class CustomPipelineProcessorTests
         PipelineRequest request = new MockRequest();
         PipelineMessage message = new PipelineMessage(request);
 
-        ClientPipeline.RequestOptionsProcessor processor = new(message,
+        ClientPipeline.RequestOptionsProcessor processor = new(
             fixedPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
@@ -25,7 +25,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 0,
             beforeTransportIndex: 0);
 
-        Assert.IsFalse(processor.ProcessNext());
+        processor.GetEnumerator().Current.ProcessAsync(message, processor);
     }
 
     [Test]
@@ -36,7 +36,7 @@ public class CustomPipelineProcessorTests
 
         var perCallEx = Assert.Throws<ArgumentOutOfRangeException>(() =>
         {
-            ClientPipeline.RequestOptionsProcessor processor = new(message,
+            ClientPipeline.RequestOptionsProcessor processor = new(
             fixedPolicies: new PipelinePolicy[1],
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
@@ -50,7 +50,7 @@ public class CustomPipelineProcessorTests
 
         perCallEx = Assert.Throws<ArgumentOutOfRangeException>(() =>
         {
-            ClientPipeline.RequestOptionsProcessor processor = new(message,
+            ClientPipeline.RequestOptionsProcessor processor = new(
             fixedPolicies: new PipelinePolicy[1],
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
@@ -64,7 +64,7 @@ public class CustomPipelineProcessorTests
 
         var perTryEx = Assert.Throws<ArgumentOutOfRangeException>(() =>
         {
-            ClientPipeline.RequestOptionsProcessor processor = new(message,
+            ClientPipeline.RequestOptionsProcessor processor = new(
             fixedPolicies: new PipelinePolicy[1],
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
@@ -86,7 +86,7 @@ public class CustomPipelineProcessorTests
         PipelinePolicy[] policies = new PipelinePolicy[1];
         policies[0] = new ObservablePolicy("A");
 
-        ClientPipeline.RequestOptionsProcessor processor = new(message,
+        ClientPipeline.RequestOptionsProcessor processor = new(
             fixedPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallPolicies: policies,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
@@ -95,7 +95,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 0,
             beforeTransportIndex: 0);
 
-        Assert.IsTrue(processor.ProcessNext());
+        processor.GetEnumerator().Current.ProcessAsync(message, processor);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -113,7 +113,7 @@ public class CustomPipelineProcessorTests
         PipelinePolicy[] policies = new PipelinePolicy[1];
         policies[0] = new ObservablePolicy("A");
 
-        ClientPipeline.RequestOptionsProcessor processor = new(message,
+        ClientPipeline.RequestOptionsProcessor processor = new(
             fixedPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
@@ -122,7 +122,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 0,
             beforeTransportIndex: 0);
 
-        Assert.IsTrue(processor.ProcessNext());
+        processor.GetEnumerator().Current.ProcessAsync(message, processor);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -143,7 +143,7 @@ public class CustomPipelineProcessorTests
         PipelinePolicy[] perTry = new PipelinePolicy[1];
         perTry[0] = new ObservablePolicy("B");
 
-        ClientPipeline.RequestOptionsProcessor processor = new(message,
+        ClientPipeline.RequestOptionsProcessor processor = new(
             fixedPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallPolicies: perCall,
             perTryPolicies: perTry,
@@ -152,7 +152,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 0,
             beforeTransportIndex: 0);
 
-        Assert.IsTrue(processor.ProcessNext());
+        processor.GetEnumerator().Current.ProcessAsync(message, processor);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -178,7 +178,7 @@ public class CustomPipelineProcessorTests
         policies[1] = new ObservablePolicy("D");
         policies[2] = new ObservablePolicy("E");
 
-        ClientPipeline.RequestOptionsProcessor processor = new(message,
+        ClientPipeline.RequestOptionsProcessor processor = new(
             fixedPolicies: original,
             perCallPolicies: policies,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
@@ -187,7 +187,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 0,
             beforeTransportIndex: 0);
 
-        Assert.IsTrue(processor.ProcessNext());
+        processor.GetEnumerator().Current.ProcessAsync(message, processor);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -220,7 +220,7 @@ public class CustomPipelineProcessorTests
         policies[1] = new ObservablePolicy("D");
         policies[2] = new ObservablePolicy("E");
 
-        ClientPipeline.RequestOptionsProcessor processor = new(message,
+        ClientPipeline.RequestOptionsProcessor processor = new(
             fixedPolicies: original,
             perCallPolicies: policies,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
@@ -229,7 +229,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 2,
             beforeTransportIndex: 2);
 
-        Assert.IsTrue(processor.ProcessNext());
+        processor.GetEnumerator().Current.ProcessAsync(message, processor);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -262,7 +262,7 @@ public class CustomPipelineProcessorTests
         policies[0] = new ObservablePolicy("D");
         policies[1] = new ObservablePolicy("E");
 
-        ClientPipeline.RequestOptionsProcessor processor = new(message,
+        ClientPipeline.RequestOptionsProcessor processor = new(
             fixedPolicies: original,
             perCallPolicies: policies,
             perTryPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
@@ -271,7 +271,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 2,
             beforeTransportIndex: 2);
 
-        Assert.IsTrue(processor.ProcessNext());
+        processor.GetEnumerator().Current.ProcessAsync(message, processor);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -304,7 +304,7 @@ public class CustomPipelineProcessorTests
         policies[1] = new ObservablePolicy("D");
         policies[2] = new ObservablePolicy("E");
 
-        ClientPipeline.RequestOptionsProcessor processor = new(message,
+        ClientPipeline.RequestOptionsProcessor processor = new(
             fixedPolicies: original,
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perTryPolicies: policies,
@@ -313,7 +313,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 0,
             beforeTransportIndex: 0);
 
-        Assert.IsTrue(processor.ProcessNext());
+        processor.GetEnumerator().Current.ProcessAsync(message, processor);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -346,7 +346,7 @@ public class CustomPipelineProcessorTests
         policies[1] = new ObservablePolicy("D");
         policies[2] = new ObservablePolicy("E");
 
-        ClientPipeline.RequestOptionsProcessor processor = new(message,
+        ClientPipeline.RequestOptionsProcessor processor = new(
             fixedPolicies: original,
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
@@ -355,7 +355,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 2,
             beforeTransportIndex: 2);
 
-        Assert.IsTrue(processor.ProcessNext());
+        processor.GetEnumerator().Current.ProcessAsync(message, processor);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -388,7 +388,7 @@ public class CustomPipelineProcessorTests
         policies[0] = new ObservablePolicy("D");
         policies[1] = new ObservablePolicy("E");
 
-        ClientPipeline.RequestOptionsProcessor processor = new(message,
+        ClientPipeline.RequestOptionsProcessor processor = new(
             fixedPolicies: original,
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             beforeTransportPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
@@ -397,7 +397,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 2,
             beforeTransportIndex: 2);
 
-        Assert.IsTrue(processor.ProcessNext());
+        processor.GetEnumerator().Current.ProcessAsync(message, processor);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -433,7 +433,7 @@ public class CustomPipelineProcessorTests
         perTry[0] = new ObservablePolicy("E");
         perTry[1] = new ObservablePolicy("F");
 
-        ClientPipeline.RequestOptionsProcessor processor = new(message,
+        ClientPipeline.RequestOptionsProcessor processor = new(
             fixedPolicies: original,
             perCallPolicies: perCall,
             perTryPolicies: perTry,
@@ -442,7 +442,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 0,
             beforeTransportIndex: 0);
 
-        Assert.IsTrue(processor.ProcessNext());
+        processor.GetEnumerator().Current.ProcessAsync(message, processor);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -480,7 +480,7 @@ public class CustomPipelineProcessorTests
         perTry[0] = new ObservablePolicy("E");
         perTry[1] = new ObservablePolicy("F");
 
-        ClientPipeline.RequestOptionsProcessor processor = new(message,
+        ClientPipeline.RequestOptionsProcessor processor = new(
             fixedPolicies: original,
             perCallPolicies: perCall,
             perTryPolicies: perTry,
@@ -489,7 +489,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 2,
             beforeTransportIndex: 2);
 
-        Assert.IsTrue(processor.ProcessNext());
+        processor.GetEnumerator().Current.ProcessAsync(message, processor);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -529,7 +529,7 @@ public class CustomPipelineProcessorTests
         perTry[0] = new ObservablePolicy("G");
         perTry[1] = new ObservablePolicy("H");
 
-        ClientPipeline.RequestOptionsProcessor processor = new(message,
+        ClientPipeline.RequestOptionsProcessor processor = new(
             fixedPolicies: original,
             perCallPolicies: perCall,
             perTryPolicies: perTry,
@@ -538,7 +538,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 2,
             beforeTransportIndex: 2);
 
-        Assert.IsTrue(processor.ProcessNext());
+        processor.GetEnumerator().Current.ProcessAsync(message, processor);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -572,20 +572,20 @@ public class CustomPipelineProcessorTests
             Id = id;
         }
 
-        public override void Process(PipelineMessage message, PipelineProcessor pipeline)
+        public override void Process(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
         {
             Stamp(message, "Request");
 
-            pipeline.ProcessNext();
+            ProcessNext(message, pipeline);
 
             Stamp(message, "Response");
         }
 
-        public override async ValueTask ProcessAsync(PipelineMessage message, PipelineProcessor pipeline)
+        public override async ValueTask ProcessAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
         {
             Stamp(message, "Request");
 
-            await pipeline.ProcessNextAsync().ConfigureAwait(false);
+            await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
 
             Stamp(message, "Response");
         }
