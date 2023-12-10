@@ -81,6 +81,11 @@ public partial class StreamingChatCompletionsUpdate
                         }
                         if (choiceProperty.NameEquals("finish_reason"u8))
                         {
+                            if (choiceProperty.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                finishReason = null;
+                                continue;
+                            }
                             finishReason = new CompletionsFinishReason(choiceProperty.Value.GetString());
                             continue;
                         }
