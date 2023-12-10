@@ -23,7 +23,7 @@ public partial class ImageGenerationOptions
 
     // CUSTOM CODE NOTE:
     // Mark the `response_format` property as internal. This functionality will be handled by unique
-    // method signatures for the differing response types (i.e. separate URL and b64 methods).
+    // method signatures for the different response types (i.e. blob URL versus base64 methods).
 
     internal ImageGenerationResponseFormat? ResponseFormat { get; set; }
 

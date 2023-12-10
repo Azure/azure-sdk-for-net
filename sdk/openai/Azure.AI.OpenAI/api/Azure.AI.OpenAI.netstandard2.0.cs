@@ -265,7 +265,7 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.AzureGroundingEnhancementCoordinatePoint AzureGroundingEnhancementCoordinatePoint(float x = 0f, float y = 0f) { throw null; }
         public static Azure.AI.OpenAI.AzureGroundingEnhancementLine AzureGroundingEnhancementLine(string text = null, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.AzureGroundingEnhancementLineSpan> spans = null) { throw null; }
         public static Azure.AI.OpenAI.AzureGroundingEnhancementLineSpan AzureGroundingEnhancementLineSpan(string text = null, int offset = 0, int length = 0, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.AzureGroundingEnhancementCoordinatePoint> polygon = null) { throw null; }
-        public static Azure.AI.OpenAI.ChatChoice ChatChoice(Azure.AI.OpenAI.ChatResponseMessage message = null, int index = 0, Azure.AI.OpenAI.CompletionsFinishReason finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason), Azure.AI.OpenAI.ChatFinishDetails finishDetails = null, Azure.AI.OpenAI.ChatResponseMessage deltaMessage = null, Azure.AI.OpenAI.ContentFilterResultsForChoice contentFilterResults = null, Azure.AI.OpenAI.AzureChatEnhancements enhancements = null) { throw null; }
+        public static Azure.AI.OpenAI.ChatChoice ChatChoice(Azure.AI.OpenAI.ChatResponseMessage message = null, int index = 0, Azure.AI.OpenAI.CompletionsFinishReason? finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason?), Azure.AI.OpenAI.ChatFinishDetails finishDetails = null, Azure.AI.OpenAI.ChatResponseMessage deltaMessage = null, Azure.AI.OpenAI.ContentFilterResultsForChoice contentFilterResults = null, Azure.AI.OpenAI.AzureChatEnhancements enhancements = null) { throw null; }
         public static Azure.AI.OpenAI.ChatCompletions ChatCompletions(string id = null, System.DateTimeOffset created = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatChoice> choices = null, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ContentFilterResultsForPrompt> promptFilterResults = null, string systemFingerprint = null, Azure.AI.OpenAI.CompletionsUsage usage = null) { throw null; }
         public static Azure.AI.OpenAI.ChatResponseMessage ChatResponseMessage(Azure.AI.OpenAI.ChatRole role = default(Azure.AI.OpenAI.ChatRole), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatCompletionsToolCall> toolCalls = null, Azure.AI.OpenAI.FunctionCall functionCall = null, Azure.AI.OpenAI.AzureChatExtensionsMessageContext azureExtensionsContext = null) { throw null; }
         public static Azure.AI.OpenAI.Choice Choice(string text = null, int index = 0, Azure.AI.OpenAI.ContentFilterResultsForChoice contentFilterResults = null, Azure.AI.OpenAI.CompletionsLogProbabilityModel logProbabilityModel = null, Azure.AI.OpenAI.CompletionsFinishReason? finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason?)) { throw null; }
@@ -325,7 +325,6 @@ namespace Azure.AI.OpenAI
     public partial class ChatCompletionsOptions
     {
         public ChatCompletionsOptions() { }
-        public ChatCompletionsOptions(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatRequestMessage> messages) { }
         public ChatCompletionsOptions(string deploymentName, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatRequestMessage> messages) { }
         public Azure.AI.OpenAI.AzureChatExtensionsOptions AzureExtensionsOptions { get { throw null; } set { } }
         public int? ChoiceCount { get { throw null; } set { } }
@@ -695,7 +694,7 @@ namespace Azure.AI.OpenAI
         public EmbeddingsOptions() { }
         public EmbeddingsOptions(string deploymentName, System.Collections.Generic.IEnumerable<string> input) { }
         public string DeploymentName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Input { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Input { get { throw null; } }
         public string User { get { throw null; } set { } }
     }
     public partial class EmbeddingsUsage
