@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="extendedLocation"> Extended Location definition. </param>
         /// <param name="properties"></param>
-        internal KubernetesVersionProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExtendedLocation extendedLocation, KubernetesVersionProfileProperties properties) : base(id, name, resourceType, systemData)
+        internal KubernetesVersionProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridContainerServiceExtendedLocation extendedLocation, KubernetesVersionProfileProperties properties) : base(id, name, resourceType, systemData)
         {
             ExtendedLocation = extendedLocation;
             Properties = properties;
         }
 
         /// <summary> Extended Location definition. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
+        public HybridContainerServiceExtendedLocation ExtendedLocation { get; set; }
         /// <summary> Gets the properties. </summary>
         public KubernetesVersionProfileProperties Properties { get; }
     }

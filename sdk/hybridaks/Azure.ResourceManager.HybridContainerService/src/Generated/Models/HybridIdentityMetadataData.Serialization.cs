@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HybridContainerService
             Optional<SystemData> systemData = default;
             Optional<string> resourceUid = default;
             Optional<string> publicKey = default;
-            Optional<ResourceProvisioningState> provisioningState = default;
+            Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HybridContainerService
                             {
                                 continue;
                             }
-                            provisioningState = new ResourceProvisioningState(property0.Value.GetString());
+                            provisioningState = new HybridContainerServiceResourceProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

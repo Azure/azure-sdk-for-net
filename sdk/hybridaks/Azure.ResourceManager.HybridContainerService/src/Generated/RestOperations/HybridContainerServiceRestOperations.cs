@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="customLocationResourceUri"> The fully qualified Azure Resource manager identifier of the custom location resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> is null. </exception>
-        public async Task<Response<VmSkuProfileData>> GetVmSkusAsync(string customLocationResourceUri, CancellationToken cancellationToken = default)
+        public async Task<Response<HybridContainerServiceVmSkuData>> GetVmSkusAsync(string customLocationResourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
 
@@ -258,13 +258,13 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 case 200:
                     {
-                        VmSkuProfileData value = default;
+                        HybridContainerServiceVmSkuData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmSkuProfileData.DeserializeVmSkuProfileData(document.RootElement);
+                        value = HybridContainerServiceVmSkuData.DeserializeHybridContainerServiceVmSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VmSkuProfileData)null, message.Response);
+                    return Response.FromValue((HybridContainerServiceVmSkuData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="customLocationResourceUri"> The fully qualified Azure Resource manager identifier of the custom location resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> is null. </exception>
-        public Response<VmSkuProfileData> GetVmSkus(string customLocationResourceUri, CancellationToken cancellationToken = default)
+        public Response<HybridContainerServiceVmSkuData> GetVmSkus(string customLocationResourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
 
@@ -284,19 +284,19 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 case 200:
                     {
-                        VmSkuProfileData value = default;
+                        HybridContainerServiceVmSkuData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmSkuProfileData.DeserializeVmSkuProfileData(document.RootElement);
+                        value = HybridContainerServiceVmSkuData.DeserializeHybridContainerServiceVmSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VmSkuProfileData)null, message.Response);
+                    return Response.FromValue((HybridContainerServiceVmSkuData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreatePutVmSkusRequest(string customLocationResourceUri, VmSkuProfileData data)
+        internal HttpMessage CreatePutVmSkusRequest(string customLocationResourceUri, HybridContainerServiceVmSkuData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="data"> VM SKUs resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> or <paramref name="data"/> is null. </exception>
-        public async Task<Response> PutVmSkusAsync(string customLocationResourceUri, VmSkuProfileData data, CancellationToken cancellationToken = default)
+        public async Task<Response> PutVmSkusAsync(string customLocationResourceUri, HybridContainerServiceVmSkuData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
             Argument.AssertNotNull(data, nameof(data));
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="data"> VM SKUs resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> or <paramref name="data"/> is null. </exception>
-        public Response PutVmSkus(string customLocationResourceUri, VmSkuProfileData data, CancellationToken cancellationToken = default)
+        public Response PutVmSkus(string customLocationResourceUri, HybridContainerServiceVmSkuData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
             Argument.AssertNotNull(data, nameof(data));

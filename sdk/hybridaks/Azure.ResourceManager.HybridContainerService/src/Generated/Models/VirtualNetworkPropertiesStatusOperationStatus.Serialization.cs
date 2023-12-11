@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<VirtualNetworkPropertiesStatusOperationStatusError> error = default;
+            Optional<HybridContainerServiceNetworkOperationError> error = default;
             Optional<string> operationId = default;
             Optional<string> phase = default;
             Optional<string> status = default;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    error = VirtualNetworkPropertiesStatusOperationStatusError.DeserializeVirtualNetworkPropertiesStatusOperationStatusError(property.Value);
+                    error = HybridContainerServiceNetworkOperationError.DeserializeHybridContainerServiceNetworkOperationError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationId"u8))

@@ -378,14 +378,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ListCredentialResponse>> GetUserKubeconfigAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HybridContainerServiceCredentialListResult>> GetUserKubeconfigAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _provisionedClusterprovisionedClusterInstancesClientDiagnostics.CreateScope("ProvisionedClusterResource.GetUserKubeconfig");
             scope.Start();
             try
             {
                 var response = await _provisionedClusterprovisionedClusterInstancesRestClient.ListUserKubeconfigAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridContainerServiceArmOperation<ListCredentialResponse>(new ListCredentialResponseOperationSource(), _provisionedClusterprovisionedClusterInstancesClientDiagnostics, Pipeline, _provisionedClusterprovisionedClusterInstancesRestClient.CreateListUserKubeconfigRequest(Id.Parent).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult>(new HybridContainerServiceCredentialListResultOperationSource(), _provisionedClusterprovisionedClusterInstancesClientDiagnostics, Pipeline, _provisionedClusterprovisionedClusterInstancesRestClient.CreateListUserKubeconfigRequest(Id.Parent).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -412,14 +412,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ListCredentialResponse> GetUserKubeconfig(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HybridContainerServiceCredentialListResult> GetUserKubeconfig(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _provisionedClusterprovisionedClusterInstancesClientDiagnostics.CreateScope("ProvisionedClusterResource.GetUserKubeconfig");
             scope.Start();
             try
             {
                 var response = _provisionedClusterprovisionedClusterInstancesRestClient.ListUserKubeconfig(Id.Parent, cancellationToken);
-                var operation = new HybridContainerServiceArmOperation<ListCredentialResponse>(new ListCredentialResponseOperationSource(), _provisionedClusterprovisionedClusterInstancesClientDiagnostics, Pipeline, _provisionedClusterprovisionedClusterInstancesRestClient.CreateListUserKubeconfigRequest(Id.Parent).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult>(new HybridContainerServiceCredentialListResultOperationSource(), _provisionedClusterprovisionedClusterInstancesClientDiagnostics, Pipeline, _provisionedClusterprovisionedClusterInstancesRestClient.CreateListUserKubeconfigRequest(Id.Parent).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -446,14 +446,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ListCredentialResponse>> GetAdminKubeconfigAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HybridContainerServiceCredentialListResult>> GetAdminKubeconfigAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _provisionedClusterprovisionedClusterInstancesClientDiagnostics.CreateScope("ProvisionedClusterResource.GetAdminKubeconfig");
             scope.Start();
             try
             {
                 var response = await _provisionedClusterprovisionedClusterInstancesRestClient.ListAdminKubeconfigAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridContainerServiceArmOperation<ListCredentialResponse>(new ListCredentialResponseOperationSource(), _provisionedClusterprovisionedClusterInstancesClientDiagnostics, Pipeline, _provisionedClusterprovisionedClusterInstancesRestClient.CreateListAdminKubeconfigRequest(Id.Parent).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult>(new HybridContainerServiceCredentialListResultOperationSource(), _provisionedClusterprovisionedClusterInstancesClientDiagnostics, Pipeline, _provisionedClusterprovisionedClusterInstancesRestClient.CreateListAdminKubeconfigRequest(Id.Parent).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -480,14 +480,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ListCredentialResponse> GetAdminKubeconfig(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HybridContainerServiceCredentialListResult> GetAdminKubeconfig(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _provisionedClusterprovisionedClusterInstancesClientDiagnostics.CreateScope("ProvisionedClusterResource.GetAdminKubeconfig");
             scope.Start();
             try
             {
                 var response = _provisionedClusterprovisionedClusterInstancesRestClient.ListAdminKubeconfig(Id.Parent, cancellationToken);
-                var operation = new HybridContainerServiceArmOperation<ListCredentialResponse>(new ListCredentialResponseOperationSource(), _provisionedClusterprovisionedClusterInstancesClientDiagnostics, Pipeline, _provisionedClusterprovisionedClusterInstancesRestClient.CreateListAdminKubeconfigRequest(Id.Parent).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult>(new HybridContainerServiceCredentialListResultOperationSource(), _provisionedClusterprovisionedClusterInstancesClientDiagnostics, Pipeline, _provisionedClusterprovisionedClusterInstancesRestClient.CreateListAdminKubeconfigRequest(Id.Parent).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

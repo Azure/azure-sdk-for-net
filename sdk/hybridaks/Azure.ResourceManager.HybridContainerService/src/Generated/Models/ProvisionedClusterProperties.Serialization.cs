@@ -66,13 +66,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 return null;
             }
             Optional<LinuxProfileProperties> linuxProfile = default;
-            Optional<ControlPlaneProfile> controlPlane = default;
+            Optional<ProvisionedClusterControlPlaneProfile> controlPlane = default;
             Optional<string> kubernetesVersion = default;
-            Optional<NetworkProfile> networkProfile = default;
-            Optional<IList<NamedAgentPoolProfile>> agentPoolProfiles = default;
-            Optional<CloudProviderProfile> cloudProviderProfile = default;
-            Optional<ResourceProvisioningState> provisioningState = default;
-            Optional<ProvisionedClusterPropertiesStatus> status = default;
+            Optional<ProvisionedClusterNetworkProfile> networkProfile = default;
+            Optional<IList<HybridContainerServiceNamedAgentPoolProfile>> agentPoolProfiles = default;
+            Optional<ProvisionedClusterCloudProviderProfile> cloudProviderProfile = default;
+            Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
+            Optional<ProvisionedClusterStatus> status = default;
             Optional<ProvisionedClusterLicenseProfile> licenseProfile = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    controlPlane = ControlPlaneProfile.DeserializeControlPlaneProfile(property.Value);
+                    controlPlane = ProvisionedClusterControlPlaneProfile.DeserializeProvisionedClusterControlPlaneProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kubernetesVersion"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    networkProfile = NetworkProfile.DeserializeNetworkProfile(property.Value);
+                    networkProfile = ProvisionedClusterNetworkProfile.DeserializeProvisionedClusterNetworkProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("agentPoolProfiles"u8))
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    List<NamedAgentPoolProfile> array = new List<NamedAgentPoolProfile>();
+                    List<HybridContainerServiceNamedAgentPoolProfile> array = new List<HybridContainerServiceNamedAgentPoolProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NamedAgentPoolProfile.DeserializeNamedAgentPoolProfile(item));
+                        array.Add(HybridContainerServiceNamedAgentPoolProfile.DeserializeHybridContainerServiceNamedAgentPoolProfile(item));
                     }
                     agentPoolProfiles = array;
                     continue;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    cloudProviderProfile = CloudProviderProfile.DeserializeCloudProviderProfile(property.Value);
+                    cloudProviderProfile = ProvisionedClusterCloudProviderProfile.DeserializeProvisionedClusterCloudProviderProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    provisioningState = new ResourceProvisioningState(property.Value.GetString());
+                    provisioningState = new HybridContainerServiceResourceProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    status = ProvisionedClusterPropertiesStatus.DeserializeProvisionedClusterPropertiesStatus(property.Value);
+                    status = ProvisionedClusterStatus.DeserializeProvisionedClusterStatus(property.Value);
                     continue;
                 }
                 if (property.NameEquals("licenseProfile"u8))

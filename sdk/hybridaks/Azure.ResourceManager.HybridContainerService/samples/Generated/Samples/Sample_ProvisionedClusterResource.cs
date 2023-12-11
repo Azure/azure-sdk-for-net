@@ -73,49 +73,49 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
                 {
                     SshPublicKeys =
 {
-new LinuxProfilePropertiesSshPublicKeysItem()
+new LinuxSshPublicKey()
 {
 KeyData = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCY.......",
 }
 },
-                    ControlPlane = new ControlPlaneProfile()
+                    ControlPlane = new ProvisionedClusterControlPlaneProfile()
                     {
                         SshPublicKeys =
 {
-new LinuxProfilePropertiesSshPublicKeysItem()
+new LinuxSshPublicKey()
 {
 KeyData = "ssh-rsa AAAAB1NzaC1yc2EAAAADAQABAAACAQCY......",
 }
 },
                         Count = 1,
                         VmSize = "Standard_A4_v2",
-                        OSType = OSType.Linux,
+                        OSType = HybridContainerServiceOSType.Linux,
                     },
                     KubernetesVersion = "v1.20.5",
-                    NetworkProfile = new NetworkProfile()
+                    NetworkProfile = new ProvisionedClusterNetworkProfile()
                     {
-                        NetworkPolicy = NetworkPolicy.Calico,
+                        NetworkPolicy = ProvisionedClusterNetworkPolicy.Calico,
                         PodCidr = "10.244.0.0/16",
                     },
                     AgentPoolProfiles =
 {
-new NamedAgentPoolProfile()
+new HybridContainerServiceNamedAgentPoolProfile()
 {
 Count = 1,
 VmSize = "Standard_A4_v2",
 Name = "default-nodepool-1",
-OSType = OSType.Linux,
+OSType = HybridContainerServiceOSType.Linux,
 }
 },
                     InfraNetworkVnetSubnetIds =
 {
 new ResourceIdentifier("/subscriptions/a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b/resourceGroups/test-arcappliance-resgrp/providers/Microsoft.AzureStackHCI/logicalNetworks/test-vnet-static")
 },
-                    LicenseAzureHybridBenefit = AzureHybridBenefit.NotApplicable,
+                    LicenseAzureHybridBenefit = ProvisionedClusterAzureHybridBenefit.NotApplicable,
                 },
-                ExtendedLocation = new ExtendedLocation()
+                ExtendedLocation = new HybridContainerServiceExtendedLocation()
                 {
-                    ExtendedLocationType = ExtendedLocationType.CustomLocation,
+                    ExtendedLocationType = HybridContainerServiceExtendedLocationType.CustomLocation,
                     Name = "/subscriptions/a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b/resourcegroups/test-arcappliance-resgrp/providers/microsoft.extendedlocation/customlocations/testcustomlocation",
                 },
             };
@@ -174,8 +174,8 @@ new ResourceIdentifier("/subscriptions/a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b/reso
             ProvisionedClusterResource provisionedCluster = client.GetProvisionedClusterResource(provisionedClusterResourceId);
 
             // invoke the operation
-            ArmOperation<ListCredentialResponse> lro = await provisionedCluster.GetUserKubeconfigAsync(WaitUntil.Completed);
-            ListCredentialResponse result = lro.Value;
+            ArmOperation<HybridContainerServiceCredentialListResult> lro = await provisionedCluster.GetUserKubeconfigAsync(WaitUntil.Completed);
+            HybridContainerServiceCredentialListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -200,8 +200,8 @@ new ResourceIdentifier("/subscriptions/a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b/reso
             ProvisionedClusterResource provisionedCluster = client.GetProvisionedClusterResource(provisionedClusterResourceId);
 
             // invoke the operation
-            ArmOperation<ListCredentialResponse> lro = await provisionedCluster.GetAdminKubeconfigAsync(WaitUntil.Completed);
-            ListCredentialResponse result = lro.Value;
+            ArmOperation<HybridContainerServiceCredentialListResult> lro = await provisionedCluster.GetAdminKubeconfigAsync(WaitUntil.Completed);
+            HybridContainerServiceCredentialListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

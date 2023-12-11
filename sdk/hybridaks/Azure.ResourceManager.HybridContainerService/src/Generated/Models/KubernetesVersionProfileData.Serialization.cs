@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<HybridContainerServiceExtendedLocation> extendedLocation = default;
             Optional<KubernetesVersionProfileProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = HybridContainerServiceExtendedLocation.DeserializeHybridContainerServiceExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

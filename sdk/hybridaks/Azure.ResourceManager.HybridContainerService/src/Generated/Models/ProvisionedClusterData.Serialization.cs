@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 return null;
             }
             Optional<ProvisionedClusterProperties> properties = default;
-            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<HybridContainerServiceExtendedLocation> extendedLocation = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = HybridContainerServiceExtendedLocation.DeserializeHybridContainerServiceExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

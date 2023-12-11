@@ -31,19 +31,19 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
         {
             HybridContainerServiceVirtualNetworkCollection vnetCollection = new HybridContainerServiceVirtualNetworkCollection(Client, ResourceGroup.Id);
             HybridContainerServiceVirtualNetworkData vnetData = new HybridContainerServiceVirtualNetworkData(DefaultLocation);
-            vnetData.ExtendedLocation = new VirtualNetworksExtendedLocation();
-            vnetData.ExtendedLocation.VirtualNetworksExtendedLocationType = "CustomLocation";
+            vnetData.ExtendedLocation = new HybridContainerServiceExtendedLocation();
+            vnetData.ExtendedLocation.ExtendedLocationType = "CustomLocation";
             vnetData.ExtendedLocation.Name = "/subscriptions/0709bd7a-8383-4e1d-98c8-f81d1b3443fc/resourcegroups/hybridaksresgrp-1945484400/providers/microsoft.extendedlocation/customlocations/applhybridaks-1945484400-hybridaks-cl";
-            vnetData.Properties = new VirtualNetworksProperties();
-            vnetData.Properties.InfraVnetProfile = new VirtualNetworksPropertiesInfraVnetProfile();
-            vnetData.Properties.InfraVnetProfile.Hci = new VirtualNetworksPropertiesInfraVnetProfileHci();
+            vnetData.Properties = new HybridContainerServiceVirtualNetworkProperties();
+            vnetData.Properties.InfraVnetProfile = new InfraVnetProfile();
+            vnetData.Properties.InfraVnetProfile.Hci = new HciInfraVnetProfile();
             vnetData.Properties.InfraVnetProfile.Hci.MocVnetName = "hybridaks-vnet";
             vnetData.Properties.InfraVnetProfile.Hci.MocGroup = "target-group";
             vnetData.Properties.InfraVnetProfile.Hci.MocLocation = "MocLocation";
             var vnet = vnetCollection.CreateOrUpdate(WaitUntil.Completed, "azvnet-sdk", vnetData);
-            Assert.AreEqual(vnet.Value.Data.Properties.ProvisioningState, ProvisioningState.Succeeded);
+            Assert.AreEqual(vnet.Value.Data.Properties.ProvisioningState, HybridContainerServiceProvisioningState.Succeeded);
         }
-
+        /* The provisioned cluster is singleton.
         [TestCase]
         [RecordedTest]
         [Ignore("Test exceeds global time limit of 15 seconds")]
@@ -52,22 +52,22 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
             // Create Vnet
             HybridContainerServiceVirtualNetworkCollection vnetCollection = new HybridContainerServiceVirtualNetworkCollection(Client, ResourceGroup.Id);
             HybridContainerServiceVirtualNetworkData vnetData = new HybridContainerServiceVirtualNetworkData(DefaultLocation);
-            vnetData.ExtendedLocation = new VirtualNetworksExtendedLocation();
-            vnetData.ExtendedLocation.VirtualNetworksExtendedLocationType = "CustomLocation";
+            vnetData.ExtendedLocation = new HybridContainerServiceExtendedLocation();
+            vnetData.ExtendedLocation.ExtendedLocationType = "CustomLocation";
             vnetData.ExtendedLocation.Name = "/subscriptions/0709bd7a-8383-4e1d-98c8-f81d1b3443fc/resourcegroups/hybridaksresgrp-1945484400/providers/microsoft.extendedlocation/customlocations/applhybridaks-1945484400-hybridaks-cl";
-            vnetData.Properties = new VirtualNetworksProperties();
-            vnetData.Properties.InfraVnetProfile = new VirtualNetworksPropertiesInfraVnetProfile();
-            vnetData.Properties.InfraVnetProfile.Hci = new VirtualNetworksPropertiesInfraVnetProfileHci();
+            vnetData.Properties = new HybridContainerServiceVirtualNetworkProperties();
+            vnetData.Properties.InfraVnetProfile = new InfraVnetProfile();
+            vnetData.Properties.InfraVnetProfile.Hci = new HciInfraVnetProfile();
             vnetData.Properties.InfraVnetProfile.Hci.MocVnetName = "hybridaks-vnet";
             vnetData.Properties.InfraVnetProfile.Hci.MocGroup = "target-group";
             vnetData.Properties.InfraVnetProfile.Hci.MocLocation = "MocLocation";
             var vnet = vnetCollection.CreateOrUpdate(WaitUntil.Completed, "azvnet-netsdk", vnetData);
-            Assert.AreEqual(vnet.Value.Data.Properties.ProvisioningState, ProvisioningState.Succeeded);
+            Assert.AreEqual(vnet.Value.Data.Properties.ProvisioningState, HybridContainerServiceProvisioningState.Succeeded);
 
             // Create Provisioned Cluster
             var clusterCollection = new ProvisionedClusterCollection(Client, ResourceGroup.Id);
             var clusterData = new ProvisionedClusterCreateOrUpdateContent(DefaultLocation);
-            clusterData.ExtendedLocation = new ProvisionedClustersExtendedLocation();
+            clusterData.ExtendedLocation = new HybridContainerServiceExtendedLocation();
             clusterData.ExtendedLocation.ProvisionedClustersExtendedLocationType = "CustomLocation";
             clusterData.ExtendedLocation.Name = "/subscriptions/0709bd7a-8383-4e1d-98c8-f81d1b3443fc/resourcegroups/hybridaksresgrp-1945484400/providers/microsoft.extendedlocation/customlocations/applhybridaks-1945484400-hybridaks-cl";
 
@@ -110,6 +110,6 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
 
             var cluster = clusterCollection.CreateOrUpdate(WaitUntil.Completed, "cluster-netsdk", clusterData);
             Assert.AreEqual(cluster.Value.Data.Properties.ProvisioningState, ProvisioningState.Succeeded);
-        }
+        }*/
     }
 }

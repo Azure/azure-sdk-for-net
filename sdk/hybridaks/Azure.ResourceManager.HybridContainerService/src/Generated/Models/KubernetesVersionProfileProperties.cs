@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of <see cref="KubernetesVersionProfileProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="values"> List of supported Kubernetes versions. </param>
-        internal KubernetesVersionProfileProperties(ResourceProvisioningState? provisioningState, IReadOnlyList<KubernetesVersionProperties> values)
+        internal KubernetesVersionProfileProperties(HybridContainerServiceResourceProvisioningState? provisioningState, IReadOnlyList<KubernetesVersionProperties> values)
         {
             ProvisioningState = provisioningState;
             Values = values;
         }
 
         /// <summary> Provisioning state of the resource. </summary>
-        public ResourceProvisioningState? ProvisioningState { get; }
+        public HybridContainerServiceResourceProvisioningState? ProvisioningState { get; }
         /// <summary> List of supported Kubernetes versions. </summary>
         public IReadOnlyList<KubernetesVersionProperties> Values { get; }
     }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<AzureHybridBenefit> azureHybridBenefit = default;
+            Optional<ProvisionedClusterAzureHybridBenefit> azureHybridBenefit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureHybridBenefit"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    azureHybridBenefit = new AzureHybridBenefit(property.Value.GetString());
+                    azureHybridBenefit = new ProvisionedClusterAzureHybridBenefit(property.Value.GetString());
                     continue;
                 }
             }

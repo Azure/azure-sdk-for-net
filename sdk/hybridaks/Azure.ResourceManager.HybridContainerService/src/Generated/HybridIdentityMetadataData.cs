@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="resourceUid"> Unique id of the parent provisioned cluster resource. </param>
         /// <param name="publicKey"> Onboarding public key for provisioning the Managed identity for the HybridAKS cluster. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal HybridIdentityMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string resourceUid, string publicKey, ResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal HybridIdentityMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string resourceUid, string publicKey, HybridContainerServiceResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             ResourceUid = resourceUid;
             PublicKey = publicKey;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <summary> Onboarding public key for provisioning the Managed identity for the HybridAKS cluster. </summary>
         public string PublicKey { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ResourceProvisioningState? ProvisioningState { get; }
+        public HybridContainerServiceResourceProvisioningState? ProvisioningState { get; }
     }
 }

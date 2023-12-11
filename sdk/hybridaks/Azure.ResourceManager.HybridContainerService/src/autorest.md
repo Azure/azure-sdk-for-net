@@ -22,6 +22,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+#mgmt-debug: 
+#  show-serialized-names: true
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -30,7 +33,37 @@ format-by-name-rules:
   '*Uris': 'Uri'
 
 rename-mapping:
-  ProvisionedClustersResponse: ProvisionedCluster
+  AddonPhase: ProvisionedClusterAddonPhase
+  AddonStatusProfile: ProvisionedClusterAddonStatusProfile
+  AgentPool.properties.osSKU: OSSku
+  AgentPoolProfile.osSKU: OSSku
+  AgentPoolProvisioningStatusOperationStatus: AgentPoolOperationStatus
+  AgentPoolProvisioningStatusOperationStatusError: AgentPoolOperationError
+  AzureHybridBenefit: ProvisionedClusterAzureHybridBenefit
+  CloudProviderProfile: ProvisionedClusterCloudProviderProfile
+  CloudProviderProfileInfraNetworkProfile: ProvisionedClusterInfraNetworkProfile
+  ControlPlaneEndpointProfileControlPlaneEndpoint: ProvisionedClusterControlPlaneEndpoint
+  ControlPlaneProfile: ProvisionedClusterControlPlaneProfile
+  CredentialResult: HybridContainerServiceCredential
+  LinuxProfilePropertiesSsh: LinuxSshConfiguration
+  LinuxProfilePropertiesSshPublicKeysItem: LinuxSshPublicKey
+  ListCredentialResponse: HybridContainerServiceCredentialListResult
+  ListCredentialResponseError: HybridContainerServiceCredentialListError
+  NetworkPolicy: ProvisionedClusterNetworkPolicy
+  NetworkProfile: ProvisionedClusterNetworkProfile
+  NetworkProfileLoadBalancerProfile: ProvisionedClusterLoadBalancerProfile
+  Ossku: HybridContainerServiceOSSku
+  ProvisionedClusterPropertiesStatus: ProvisionedClusterStatus
+  ProvisionedClusterPropertiesStatusOperationStatus: ProvisionedClusterOperationStatus
+  ProvisionedClusterPropertiesStatusOperationStatusError: ProvisionedClusterOperationError
+  VirtualNetworkPropertiesInfraVnetProfile: InfraVnetProfile
+  VirtualNetworkPropertiesInfraVnetProfileHci: HciInfraVnetProfile
+  VirtualNetworkPropertiesInfraVnetProfileVmware: VMwareInfraVnetProfile
+  VirtualNetworkPropertiesStatus: HybridContainerServiceNetworkStatus
+  VirtualNetworkPropertiesStatusOperationStatusError: HybridContainerServiceNetworkOperationError
+  VirtualNetworkPropertiesVipPoolItem: KubernetesVirtualIPItem
+  VirtualNetworkPropertiesVmipPoolItem: VirtualMachineIPItem
+  VmSkuProfile: HybridContainerServiceVmSku
 
 acronym-mapping:
   CPU: Cpu
@@ -56,6 +89,29 @@ acronym-mapping:
   Etag: ETag|etag
 
 prepend-rp-prefix:
+  - AgentPoolProfile
   - AgentPool
-  - VirtualNetworks
+  - ExtendedLocation
+  - ExtendedLocationTypes
+  - NamedAgentPoolProfile
+  - VirtualNetwork
+  - VirtualNetworkProperties
+  - OsType
+  - ProvisioningState
+  - ResourceProvisioningState
+  - VmSkuProperties
+  - VmSkuCapabilities
+
+directive:
+  - from: provisionedClusterInstances.json
+    where: $.definitions
+    transform: >
+      $.VmSkuProfile.properties.properties['x-ms-client-flatten'] = true;
+      $.agentPoolProvisioningStatus['x-ms-client-name'] = 'HybridaksAgentPoolProvisioningStatus';
+  - from: virtualNetworks.json
+    where: $.definitions
+    transform: >
+      $.virtualNetwork.properties.extendedLocation = {
+        "$ref": "./provisionedClusterInstances.json#/definitions/ExtendedLocation"
+      };
 ```

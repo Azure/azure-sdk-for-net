@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="controlPlaneProfile"> The list of available upgrade versions for the control plane. </param>
         /// <param name="agentPoolProfiles"> The list of available upgrade versions for agent pools. </param>
-        internal ProvisionedClusterUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceProvisioningState? provisioningState, ProvisionedClusterPoolUpgradeProfile controlPlaneProfile, IList<ProvisionedClusterPoolUpgradeProfile> agentPoolProfiles) : base(id, name, resourceType, systemData)
+        internal ProvisionedClusterUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridContainerServiceResourceProvisioningState? provisioningState, ProvisionedClusterPoolUpgradeProfile controlPlaneProfile, IList<ProvisionedClusterPoolUpgradeProfile> agentPoolProfiles) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ControlPlaneProfile = controlPlaneProfile;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary> Provisioning state of the resource. </summary>
-        public ResourceProvisioningState? ProvisioningState { get; }
+        public HybridContainerServiceResourceProvisioningState? ProvisioningState { get; }
         /// <summary> The list of available upgrade versions for the control plane. </summary>
         public ProvisionedClusterPoolUpgradeProfile ControlPlaneProfile { get; set; }
         /// <summary> The list of available upgrade versions for agent pools. </summary>

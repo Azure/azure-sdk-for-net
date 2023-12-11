@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.HybridContainerService
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (Optional.IsDefined(OSSKU))
+            if (Optional.IsDefined(OSSku))
             {
                 writer.WritePropertyName("osSKU"u8);
-                writer.WriteStringValue(OSSKU.Value.ToString());
+                writer.WriteStringValue(OSSku.Value.ToString());
             }
             if (Optional.IsDefined(NodeImageVersion))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<HybridContainerServiceExtendedLocation> extendedLocation = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -96,13 +96,13 @@ namespace Azure.ResourceManager.HybridContainerService
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<IList<string>> availabilityZones = default;
-            Optional<OSType> osType = default;
-            Optional<Ossku> ossku = default;
+            Optional<HybridContainerServiceOSType> osType = default;
+            Optional<HybridContainerServiceOSSku> ossku = default;
             Optional<string> nodeImageVersion = default;
             Optional<int> count = default;
             Optional<string> vmSize = default;
-            Optional<ResourceProvisioningState> provisioningState = default;
-            Optional<AgentPoolProvisioningStatusStatus> status = default;
+            Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
+            Optional<AgentPoolProvisioningStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = HybridContainerServiceExtendedLocation.DeserializeHybridContainerServiceExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.HybridContainerService
                             {
                                 continue;
                             }
-                            osType = new OSType(property0.Value.GetString());
+                            osType = new HybridContainerServiceOSType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("osSKU"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.HybridContainerService
                             {
                                 continue;
                             }
-                            ossku = new Ossku(property0.Value.GetString());
+                            ossku = new HybridContainerServiceOSSku(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("nodeImageVersion"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HybridContainerService
                             {
                                 continue;
                             }
-                            provisioningState = new ResourceProvisioningState(property0.Value.GetString());
+                            provisioningState = new HybridContainerServiceResourceProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.HybridContainerService
                             {
                                 continue;
                             }
-                            status = AgentPoolProvisioningStatusStatus.DeserializeAgentPoolProvisioningStatusStatus(property0.Value);
+                            status = AgentPoolProvisioningStatus.DeserializeAgentPoolProvisioningStatus(property0.Value);
                             continue;
                         }
                     }

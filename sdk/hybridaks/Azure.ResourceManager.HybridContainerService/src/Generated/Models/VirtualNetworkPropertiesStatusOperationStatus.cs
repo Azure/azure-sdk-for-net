@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="operationId"></param>
         /// <param name="phase"> Phase represents the current phase of the virtual network provisioning. E.g. Pending, Running, Terminating, Failed etc. </param>
         /// <param name="status"></param>
-        internal VirtualNetworkPropertiesStatusOperationStatus(VirtualNetworkPropertiesStatusOperationStatusError error, string operationId, string phase, string status)
+        internal VirtualNetworkPropertiesStatusOperationStatus(HybridContainerServiceNetworkOperationError error, string operationId, string phase, string status)
         {
             Error = error;
             OperationId = operationId;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Gets the error. </summary>
-        public VirtualNetworkPropertiesStatusOperationStatusError Error { get; }
+        public HybridContainerServiceNetworkOperationError Error { get; }
         /// <summary> Gets the operation id. </summary>
         public string OperationId { get; }
         /// <summary> Phase represents the current phase of the virtual network provisioning. E.g. Pending, Running, Terminating, Failed etc. </summary>

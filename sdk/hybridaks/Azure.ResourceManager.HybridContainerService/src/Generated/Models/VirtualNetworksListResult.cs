@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of <see cref="VirtualNetworksListResult"/>. </summary>
         internal VirtualNetworksListResult()
         {
-            Value = new ChangeTrackingList<VirtualNetworkData>();
+            Value = new ChangeTrackingList<HybridContainerServiceVirtualNetworkData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworksListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal VirtualNetworksListResult(IReadOnlyList<VirtualNetworkData> value, string nextLink)
+        internal VirtualNetworksListResult(IReadOnlyList<HybridContainerServiceVirtualNetworkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<VirtualNetworkData> Value { get; }
+        public IReadOnlyList<HybridContainerServiceVirtualNetworkData> Value { get; }
         /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }

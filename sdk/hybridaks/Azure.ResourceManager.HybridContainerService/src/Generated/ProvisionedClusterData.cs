@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> All properties of the provisioned cluster. </param>
         /// <param name="extendedLocation"> Extended Location definition. </param>
-        internal ProvisionedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisionedClusterProperties properties, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData)
+        internal ProvisionedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisionedClusterProperties properties, HybridContainerServiceExtendedLocation extendedLocation) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ExtendedLocation = extendedLocation;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <summary> All properties of the provisioned cluster. </summary>
         public ProvisionedClusterProperties Properties { get; set; }
         /// <summary> Extended Location definition. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
+        public HybridContainerServiceExtendedLocation ExtendedLocation { get; set; }
     }
 }

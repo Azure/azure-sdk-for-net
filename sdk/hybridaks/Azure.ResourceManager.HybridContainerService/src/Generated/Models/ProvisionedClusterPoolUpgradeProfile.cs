@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="name"> The Agent Pool name. </param>
         /// <param name="osType"> The particular KubernetesVersion's Image's OS Type (Linux, Windows). </param>
         /// <param name="upgrades"> List of orchestrator types and versions available for upgrade. </param>
-        internal ProvisionedClusterPoolUpgradeProfile(string kubernetesVersion, string name, OSType? osType, IList<ProvisionedClusterPoolUpgradeProfileProperties> upgrades)
+        internal ProvisionedClusterPoolUpgradeProfile(string kubernetesVersion, string name, HybridContainerServiceOSType? osType, IList<ProvisionedClusterPoolUpgradeProfileProperties> upgrades)
         {
             KubernetesVersion = kubernetesVersion;
             Name = name;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> The Agent Pool name. </summary>
         public string Name { get; }
         /// <summary> The particular KubernetesVersion's Image's OS Type (Linux, Windows). </summary>
-        public OSType? OSType { get; }
+        public HybridContainerServiceOSType? OSType { get; }
         /// <summary> List of orchestrator types and versions available for upgrade. </summary>
         public IList<ProvisionedClusterPoolUpgradeProfileProperties> Upgrades { get; }
     }

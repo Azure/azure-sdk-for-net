@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<ResourceProvisioningState> provisioningState = default;
+            Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<KubernetesVersionProperties>> values = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    provisioningState = new ResourceProvisioningState(property.Value.GetString());
+                    provisioningState = new HybridContainerServiceResourceProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("values"u8))

@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
             string agentPoolName = "test-hybridaksnodepool";
             HybridContainerServiceAgentPoolData data = new HybridContainerServiceAgentPoolData(new AzureLocation("westus"))
             {
-                OSType = OSType.Linux,
+                OSType = HybridContainerServiceOSType.Linux,
                 Count = 1,
                 VmSize = "Standard_A4_v2",
             };

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </param>
         /// <param name="ready"> Whether or not the given image is ready. </param>
         /// <param name="errorMessage"> If image is not ready, the error message for version not being ready. </param>
-        internal KubernetesVersionReadiness(OSType? osType, Ossku? osSku, bool? ready, string errorMessage)
+        internal KubernetesVersionReadiness(HybridContainerServiceOSType? osType, HybridContainerServiceOSSku? osSku, bool? ready, string errorMessage)
         {
             OSType = osType;
             OSSku = osSku;
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> The particular KubernetesVersion's Image's OS Type (Linux, Windows). </summary>
-        public OSType? OSType { get; }
+        public HybridContainerServiceOSType? OSType { get; }
         /// <summary> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </summary>
-        public Ossku? OSSku { get; }
+        public HybridContainerServiceOSSku? OSSku { get; }
         /// <summary> Whether or not the given image is ready. </summary>
         public bool? Ready { get; }
         /// <summary> If image is not ready, the error message for version not being ready. </summary>

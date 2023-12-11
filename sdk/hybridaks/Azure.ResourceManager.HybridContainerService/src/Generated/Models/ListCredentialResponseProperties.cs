@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ListCredentialResponseProperties"/>. </summary>
         internal ListCredentialResponseProperties()
         {
-            Kubeconfigs = new ChangeTrackingList<CredentialResult>();
+            Kubeconfigs = new ChangeTrackingList<HybridContainerServiceCredential>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListCredentialResponseProperties"/>. </summary>
         /// <param name="kubeconfigs"> Base64-encoded Kubernetes configuration file. </param>
-        internal ListCredentialResponseProperties(IReadOnlyList<CredentialResult> kubeconfigs)
+        internal ListCredentialResponseProperties(IReadOnlyList<HybridContainerServiceCredential> kubeconfigs)
         {
             Kubeconfigs = kubeconfigs;
         }
 
         /// <summary> Base64-encoded Kubernetes configuration file. </summary>
-        public IReadOnlyList<CredentialResult> Kubeconfigs { get; }
+        public IReadOnlyList<HybridContainerServiceCredential> Kubeconfigs { get; }
     }
 }

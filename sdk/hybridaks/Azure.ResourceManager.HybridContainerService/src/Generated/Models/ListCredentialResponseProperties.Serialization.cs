@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CredentialResult>> kubeconfigs = default;
+            Optional<IReadOnlyList<HybridContainerServiceCredential>> kubeconfigs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kubeconfigs"u8))
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    List<CredentialResult> array = new List<CredentialResult>();
+                    List<HybridContainerServiceCredential> array = new List<HybridContainerServiceCredential>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CredentialResult.DeserializeCredentialResult(item));
+                        array.Add(HybridContainerServiceCredential.DeserializeHybridContainerServiceCredential(item));
                     }
                     kubeconfigs = array;
                     continue;

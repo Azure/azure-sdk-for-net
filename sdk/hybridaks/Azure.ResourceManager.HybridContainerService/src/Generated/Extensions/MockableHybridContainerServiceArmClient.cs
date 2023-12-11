@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
             return new KubernetesVersionProfileResource(Client, scope.AppendProviderResource("Microsoft.HybridContainerService", "kubernetesVersions", "default"));
         }
 
-        /// <summary> Gets an object representing a VmSkuProfileResource along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <summary> Gets an object representing a HybridContainerServiceVmSkuResource along with the instance operations that can be performed on it in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="VmSkuProfileResource"/> object. </returns>
-        public virtual VmSkuProfileResource GetVmSkuProfile(ResourceIdentifier scope)
+        /// <returns> Returns a <see cref="HybridContainerServiceVmSkuResource"/> object. </returns>
+        public virtual HybridContainerServiceVmSkuResource GetHybridContainerServiceVmSku(ResourceIdentifier scope)
         {
-            return new VmSkuProfileResource(Client, scope.AppendProviderResource("Microsoft.HybridContainerService", "skus", "default"));
+            return new HybridContainerServiceVmSkuResource(Client, scope.AppendProviderResource("Microsoft.HybridContainerService", "skus", "default"));
         }
 
         /// <summary>
@@ -121,27 +121,27 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VmSkuProfileResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VmSkuProfileResource.CreateResourceIdentifier" /> to create a <see cref="VmSkuProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="HybridContainerServiceVmSkuResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridContainerServiceVmSkuResource.CreateResourceIdentifier" /> to create a <see cref="HybridContainerServiceVmSkuResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VmSkuProfileResource"/> object. </returns>
-        public virtual VmSkuProfileResource GetVmSkuProfileResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridContainerServiceVmSkuResource"/> object. </returns>
+        public virtual HybridContainerServiceVmSkuResource GetHybridContainerServiceVmSkuResource(ResourceIdentifier id)
         {
-            VmSkuProfileResource.ValidateResourceId(id);
-            return new VmSkuProfileResource(Client, id);
+            HybridContainerServiceVmSkuResource.ValidateResourceId(id);
+            return new HybridContainerServiceVmSkuResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualNetworkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="HybridContainerServiceVirtualNetworkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridContainerServiceVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="HybridContainerServiceVirtualNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkResource"/> object. </returns>
-        public virtual VirtualNetworkResource GetVirtualNetworkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridContainerServiceVirtualNetworkResource"/> object. </returns>
+        public virtual HybridContainerServiceVirtualNetworkResource GetHybridContainerServiceVirtualNetworkResource(ResourceIdentifier id)
         {
-            VirtualNetworkResource.ValidateResourceId(id);
-            return new VirtualNetworkResource(Client, id);
+            HybridContainerServiceVirtualNetworkResource.ValidateResourceId(id);
+            return new HybridContainerServiceVirtualNetworkResource(Client, id);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<LinuxProfilePropertiesSsh> ssh = default;
+            Optional<LinuxSshConfiguration> ssh = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ssh"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    ssh = LinuxProfilePropertiesSsh.DeserializeLinuxProfilePropertiesSsh(property.Value);
+                    ssh = LinuxSshConfiguration.DeserializeLinuxSshConfiguration(property.Value);
                     continue;
                 }
             }

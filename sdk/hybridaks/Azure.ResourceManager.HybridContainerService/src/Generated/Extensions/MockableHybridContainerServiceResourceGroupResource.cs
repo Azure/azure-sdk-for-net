@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of VirtualNetworkResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualNetworkResources and their operations over a VirtualNetworkResource. </returns>
-        public virtual VirtualNetworkCollection GetVirtualNetworks()
+        /// <summary> Gets a collection of HybridContainerServiceVirtualNetworkResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HybridContainerServiceVirtualNetworkResources and their operations over a HybridContainerServiceVirtualNetworkResource. </returns>
+        public virtual HybridContainerServiceVirtualNetworkCollection GetHybridContainerServiceVirtualNetworks()
         {
-            return GetCachedClient(client => new VirtualNetworkCollection(client, Id));
+            return GetCachedClient(client => new HybridContainerServiceVirtualNetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualNetworkResource>> GetVirtualNetworkAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridContainerServiceVirtualNetworkResource>> GetHybridContainerServiceVirtualNetworkAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            return await GetVirtualNetworks().GetAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
+            return await GetHybridContainerServiceVirtualNetworks().GetAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VirtualNetworkResource> GetVirtualNetwork(string virtualNetworkName, CancellationToken cancellationToken = default)
+        public virtual Response<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetwork(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            return GetVirtualNetworks().Get(virtualNetworkName, cancellationToken);
+            return GetHybridContainerServiceVirtualNetworks().Get(virtualNetworkName, cancellationToken);
         }
     }
 }

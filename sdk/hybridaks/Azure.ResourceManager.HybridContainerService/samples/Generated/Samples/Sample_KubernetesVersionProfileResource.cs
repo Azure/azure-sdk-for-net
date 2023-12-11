@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
             // invoke the operation
             KubernetesVersionProfileData data = new KubernetesVersionProfileData()
             {
-                ExtendedLocation = new ExtendedLocation()
+                ExtendedLocation = new HybridContainerServiceExtendedLocation()
                 {
-                    ExtendedLocationType = ExtendedLocationType.CustomLocation,
+                    ExtendedLocationType = HybridContainerServiceExtendedLocationType.CustomLocation,
                     Name = "/subscriptions/a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b/resourcegroups/test-arcappliance-resgrp/providers/microsoft.extendedlocation/customlocations/testcustomlocation",
                 },
             };

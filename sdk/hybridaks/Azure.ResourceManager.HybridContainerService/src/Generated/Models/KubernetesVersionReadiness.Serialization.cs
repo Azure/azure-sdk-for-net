@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<OSType> osType = default;
-            Optional<Ossku> osSku = default;
+            Optional<HybridContainerServiceOSType> osType = default;
+            Optional<HybridContainerServiceOSSku> osSku = default;
             Optional<bool> ready = default;
             Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    osType = new OSType(property.Value.GetString());
+                    osType = new HybridContainerServiceOSType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("osSku"u8))
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     {
                         continue;
                     }
-                    osSku = new Ossku(property.Value.GetString());
+                    osSku = new HybridContainerServiceOSSku(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ready"u8))
