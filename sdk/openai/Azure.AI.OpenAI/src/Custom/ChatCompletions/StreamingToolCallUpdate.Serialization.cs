@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,8 +13,10 @@ namespace Azure.AI.OpenAI;
 public abstract partial class StreamingToolCallUpdate : IUtf8JsonSerializable
 {
     // CUSTOM CODE NOTE:
-    //   This customization allows us to infer that a tool call is of "function" type in streaming scenarios where
-    //   the "type" discriminator is omitted. We instead use the presence of the "function" key in those situations.
+    //   Like StreamingChatCompletionsUpdate, StreamingToolCallUpdate is an entirely custom abstraction for streamed
+    //   response content related to Chat Completions -- this instance, for tool calls. Its deserialization defers to
+    //   the appropriate concrete type and its serialization (unused) writes common/partial contents before deferring
+    //   to concrete types' additional data serialization.
 
     internal static StreamingToolCallUpdate DeserializeStreamingToolCallUpdate(JsonElement element)
     {
@@ -25,6 +26,15 @@ public abstract partial class StreamingToolCallUpdate : IUtf8JsonSerializable
         }
         foreach (JsonProperty property in element.EnumerateObject())
         {
+            // CUSTOM CODE NOTE:
+            //   "type" is superficially the JSON discriminator for possible tool call categories, but it does not
+            //   appear on every streamed delta message. To account for this without maintaining state, we instead
+            //   allow the deserialization to infer the type based on the presence of the named/typed key. This is
+            //   consistent across all existing patterns of the form:
+            //   {
+            //     "type": "<foo>"
+            //     "<foo>": { ... }
+            //   }
             if (property.NameEquals("type"u8))
             {
                 if (property.Value.GetString() == "function")

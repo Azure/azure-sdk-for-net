@@ -317,7 +317,8 @@ if (responseChoice.FinishReason == CompletionsFinishReason.ToolCalls)
 
 When using tool calls with streaming responses, accumulate tool call details much like you'd accumulate the other
 portions of streamed choices, in this case using the accumulated `StreamingToolCallUpdate` data to instantiate new
-tool call messages for assistant message history:
+tool call messages for assistant message history. Note that the model will ignore `ChoiceCount` when providing tools
+and that all streamed responses should map to a single, common choice index in the range of `[0..(ChoiceCount - 1)]`.
 
 ```C# Snippet:ChatTools:StreamingChatTools
 Dictionary<int, string> toolCallIdsByIndex = new();

@@ -101,6 +101,9 @@ public partial class StreamingChatCompletionsUpdate
     /// </summary>
     /// <remarks>
     /// <para>
+    /// Corresponds to e.g. $.choices[0].delta.tool_calls[0].index in the REST API schema.
+    /// </para>
+    /// <para>
     /// To differentiate between parallel streaming tool calls within a single streaming choice, use the value of the
     /// <see cref="StreamingToolCallUpdate.ToolCallIndex"/> property.
     /// </para>

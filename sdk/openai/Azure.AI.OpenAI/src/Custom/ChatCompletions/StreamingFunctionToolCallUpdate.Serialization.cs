@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -13,6 +12,9 @@ namespace Azure.AI.OpenAI;
 [CodeGenSuppress("ToRequestContent")]
 public partial class StreamingFunctionToolCallUpdate
 {
+    // CUSTOM CODE NOTE:
+    //   This is an entirely custom-code-only type created to handle tool call details within a streaming chat
+    //   completions response.
     internal static StreamingFunctionToolCallUpdate DeserializeStreamingFunctionToolCallUpdate(JsonElement element)
     {
         if (element.ValueKind == JsonValueKind.Null)

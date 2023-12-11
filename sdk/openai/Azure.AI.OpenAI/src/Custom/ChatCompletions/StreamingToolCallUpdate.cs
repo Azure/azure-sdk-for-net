@@ -8,9 +8,12 @@ using System.Text.Json;
 namespace Azure.AI.OpenAI;
 
 /// <summary>
-/// Represents an incremental update to a streamed tool call that is part of a streamed chat completions choice.
+/// Represents an incremental update to a streaming tool call that is part of a streaming chat completions choice.
 /// </summary>
 /// <remarks>
+/// <para>
+/// This type encapsulates the payload located in e.g. $.choices[0].delta.tool_calls[] in the REST API schema.
+/// </para>
 /// <para>
 /// To differentiate between parallel streaming tool calls within a single streaming choice, use the value of the
 /// <see cref="ToolCallIndex"/> property.
@@ -29,8 +32,11 @@ public abstract partial class StreamingToolCallUpdate
     /// </summary>
     /// <remarks>
     /// <para>
-    /// This value appears once for each streamed tool call, typically on the first update message for each
-    /// <see cref="ToolCallIndex"/>. Callers should retain the value when it arrives to accumulate the comlete tool
+    /// Corresponds to e.g. $.choices[0].delta.tool_calls[0].id in the REST API schema.
+    /// </para>
+    /// <para>
+    /// This value appears once for each streaming tool call, typically on the first update message for each
+    /// <see cref="ToolCallIndex"/>. Callers should retain the value when it arrives to accumulate the complete tool
     /// call information.
     /// </para>
     /// <para>
@@ -43,6 +49,9 @@ public abstract partial class StreamingToolCallUpdate
     /// Gets the tool call index associated with this <see cref="StreamingToolCallUpdate"/>.
     /// </summary>
     /// <remarks>
+    /// <para>
+    /// Corresponds to e.g. $.choices[0].delta.tool_calls[0].index in the REST API schema.
+    /// </para>
     /// <para>
     /// This value appears on every streaming tool call update. When multiple tool calls occur within the same
     /// streaming chat choice, this index specifies which tool call that this update contains new information for.
