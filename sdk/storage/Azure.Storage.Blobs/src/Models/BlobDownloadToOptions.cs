@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
-using System.ComponentModel;
 
 namespace Azure.Storage.Blobs.Models
 {

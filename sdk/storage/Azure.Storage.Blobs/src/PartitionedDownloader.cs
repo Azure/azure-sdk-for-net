@@ -136,7 +136,6 @@ namespace Azure.Storage.Blobs
         public async Task<Response> DownloadToInternal(
             Stream destination,
             BlobRequestConditions conditions,
-            bool? userPrincipalName,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -163,7 +162,7 @@ namespace Azure.Storage.Blobs
                         ValidationOptions,
                         _progress,
                         _innerOperationName,
-                        userPrincipalName,
+                        null,
                         async,
                         cancellationToken).ConfigureAwait(false);
                 }
@@ -175,7 +174,7 @@ namespace Azure.Storage.Blobs
                         ValidationOptions,
                         _progress,
                         _innerOperationName,
-                        userPrincipalName,
+                        null,
                         async,
                         cancellationToken).ConfigureAwait(false);
                 }
@@ -265,7 +264,7 @@ namespace Azure.Storage.Blobs
                             ValidationOptions,
                             _progress,
                             _innerOperationName,
-                            userPrincipalName,
+                            null,
                             async,
                             cancellationToken);
                     if (runningTasks != null)
