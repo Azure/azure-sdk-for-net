@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         private const string WebSocketsSecureUriScheme = "wss";
 
         /// <summary>The URI scheme to apply when using web sockets for service communication.</summary>
-        private const string WebSocketsInsecureUriScheme = "wss";
+        private const string WebSocketsInsecureUriScheme = "ws";
 
         /// <summary>The string formatting mask to apply to the service endpoint to consume events for a given consumer group and partition.</summary>
         private const string ConsumerPathSuffixMask = "{0}/ConsumerGroups/{1}/Partitions/{2}";
