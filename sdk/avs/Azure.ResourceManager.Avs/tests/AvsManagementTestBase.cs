@@ -19,6 +19,10 @@ namespace Azure.ResourceManager.Avs.Tests
 
         protected AzureLocation DefaultLocation => AzureLocation.EastUS;
 
+        public const string RESOURCE_GROUP_NAME = "avs-sdk-test";
+        public const string PRIVATE_CLOUD_NAME = "avs-sdk-test";
+        public const string CLUSTER1_NAME = "Cluster-1";
+
         protected AvsManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
