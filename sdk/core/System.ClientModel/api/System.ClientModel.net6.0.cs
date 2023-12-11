@@ -175,8 +175,8 @@ namespace System.ClientModel.Primitives
         protected PipelinePolicy() { }
         public abstract void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PipelinePolicy> pipeline);
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PipelinePolicy> pipeline);
-        public bool ProcessNext(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PipelinePolicy> pipeline) { throw null; }
-        public System.Threading.Tasks.Task<bool> ProcessNextAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PipelinePolicy> pipeline) { throw null; }
+        protected bool ProcessNext(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PipelinePolicy> pipeline) { throw null; }
+        protected System.Threading.Tasks.Task<bool> ProcessNextAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PipelinePolicy> pipeline) { throw null; }
     }
     public enum PipelinePosition
     {

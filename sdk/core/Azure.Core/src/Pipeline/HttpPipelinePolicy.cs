@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
@@ -11,7 +11,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represent an extension point for the <see cref="HttpPipeline"/> that can mutate the <see cref="Request"/> and react to received <see cref="Response"/>.
     /// </summary>
-    public abstract class HttpPipelinePolicy
+    public abstract class HttpPipelinePolicy : PipelinePolicy
     {
         /// <summary>
         /// Applies the policy to the <paramref name="message"/>. Implementers are expected to mutate <see cref="HttpMessage.Request"/> before calling <see cref="ProcessNextAsync"/> and observe the <see cref="HttpMessage.Response"/> changes after.
@@ -47,6 +47,29 @@ namespace Azure.Core.Pipeline
         protected static void ProcessNext(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             pipeline.Span[0].Process(message, pipeline.Slice(1));
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="pipeline"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public override ValueTask ProcessAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="pipeline"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        public override void Process(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+        {
+            throw new NotImplementedException();
         }
     }
 }

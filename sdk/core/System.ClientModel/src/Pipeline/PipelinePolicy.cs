@@ -12,7 +12,7 @@ public abstract class PipelinePolicy
 
     public abstract ValueTask ProcessAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline);
 
-    public bool ProcessNext(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+    protected bool ProcessNext(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
     {
         IEnumerator<PipelinePolicy> enumerator = pipeline.GetEnumerator();
 
@@ -25,7 +25,7 @@ public abstract class PipelinePolicy
         return false;
     }
 
-    public async Task<bool> ProcessNextAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+    protected async Task<bool> ProcessNextAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
     {
         IEnumerator<PipelinePolicy> enumerator = pipeline.GetEnumerator();
 
