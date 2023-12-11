@@ -28,7 +28,7 @@ pr:
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    SDKType: client
+    SDKType: functions
     ServiceDirectory: eventhub
     ArtifactName: packages
     Artifacts:
