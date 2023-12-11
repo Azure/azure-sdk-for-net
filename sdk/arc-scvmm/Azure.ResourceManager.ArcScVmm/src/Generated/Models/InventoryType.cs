@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
     /// <summary> The inventory type. </summary>
-    public readonly partial struct InventoryType : IEquatable<InventoryType>
+    internal readonly partial struct InventoryType : IEquatable<InventoryType>
     {
         private readonly string _value;
 
