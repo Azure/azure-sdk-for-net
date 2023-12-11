@@ -18,6 +18,94 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmStorageSyncModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="StorageSync.StorageSyncServiceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="incomingTrafficPolicy"> Incoming Traffic Policy. </param>
+        /// <param name="storageSyncServiceStatus"> Storage Sync service status. </param>
+        /// <param name="storageSyncServiceUid"> Storage Sync service Uid. </param>
+        /// <param name="provisioningState"> StorageSyncService Provisioning State. </param>
+        /// <param name="lastWorkflowId"> StorageSyncService lastWorkflowId. </param>
+        /// <param name="lastOperationName"> Resource Last Operation Name. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified storage sync service. </param>
+        /// <returns> A new <see cref="StorageSync.StorageSyncServiceData"/> instance for mocking. </returns>
+        public static StorageSyncServiceData StorageSyncServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IncomingTrafficPolicy? incomingTrafficPolicy = null, int? storageSyncServiceStatus = null, Guid? storageSyncServiceUid = null, string provisioningState = null, string lastWorkflowId = null, string lastOperationName = null, IEnumerable<StorageSyncPrivateEndpointConnectionData> privateEndpointConnections = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            privateEndpointConnections ??= new List<StorageSyncPrivateEndpointConnectionData>();
+
+            return new StorageSyncServiceData(id, name, resourceType, systemData, tags, location, null, incomingTrafficPolicy, storageSyncServiceStatus, storageSyncServiceUid, provisioningState, null, lastWorkflowId, lastOperationName, privateEndpointConnections?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageSync.StorageSyncServerEndpointData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="serverLocalPath"> Server Local path. </param>
+        /// <param name="cloudTiering"> Cloud Tiering. </param>
+        /// <param name="volumeFreeSpacePercent"> Level of free space to be maintained by Cloud Tiering if it is enabled. </param>
+        /// <param name="tierFilesOlderThanDays"> Tier files older than days. </param>
+        /// <param name="friendlyName"> Friendly Name. </param>
+        /// <param name="serverResourceId"> Server Resource Id. </param>
+        /// <param name="provisioningState"> ServerEndpoint Provisioning State. </param>
+        /// <param name="lastWorkflowId"> ServerEndpoint lastWorkflowId. </param>
+        /// <param name="lastOperationName"> Resource Last Operation Name. </param>
+        /// <param name="syncStatus"> Server Endpoint sync status. </param>
+        /// <param name="offlineDataTransfer"> Offline data transfer. </param>
+        /// <param name="offlineDataTransferStorageAccountResourceId"> Offline data transfer storage account resource ID. </param>
+        /// <param name="offlineDataTransferStorageAccountTenantId"> Offline data transfer storage account tenant ID. </param>
+        /// <param name="offlineDataTransferShareName"> Offline data transfer share name. </param>
+        /// <param name="cloudTieringStatus"> Cloud tiering status. Only populated if cloud tiering is enabled. </param>
+        /// <param name="recallStatus"> Recall status. Only populated if cloud tiering is enabled. </param>
+        /// <param name="initialDownloadPolicy"> Policy for how namespace and files are recalled during FastDr. </param>
+        /// <param name="localCacheMode"> Policy for enabling follow-the-sun business models: link local cache to cloud behavior to pre-populate before local access. </param>
+        /// <param name="initialUploadPolicy"> Policy for how the initial upload sync session is performed. </param>
+        /// <param name="serverName"> Server name. </param>
+        /// <returns> A new <see cref="StorageSync.StorageSyncServerEndpointData"/> instance for mocking. </returns>
+        public static StorageSyncServerEndpointData StorageSyncServerEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string serverLocalPath = null, StorageSyncFeatureStatus? cloudTiering = null, int? volumeFreeSpacePercent = null, int? tierFilesOlderThanDays = null, string friendlyName = null, ResourceIdentifier serverResourceId = null, string provisioningState = null, string lastWorkflowId = null, string lastOperationName = null, ServerEndpointSyncStatus syncStatus = null, StorageSyncFeatureStatus? offlineDataTransfer = null, ResourceIdentifier offlineDataTransferStorageAccountResourceId = null, Guid? offlineDataTransferStorageAccountTenantId = null, string offlineDataTransferShareName = null, ServerEndpointCloudTieringStatus cloudTieringStatus = null, ServerEndpointRecallStatus recallStatus = null, InitialDownloadPolicy? initialDownloadPolicy = null, LocalCacheMode? localCacheMode = null, InitialUploadPolicy? initialUploadPolicy = null, string serverName = null)
+        {
+            return new StorageSyncServerEndpointData(id, name, resourceType, systemData, serverLocalPath, cloudTiering, volumeFreeSpacePercent, tierFilesOlderThanDays, friendlyName, serverResourceId, provisioningState, lastWorkflowId, lastOperationName, syncStatus, offlineDataTransfer, offlineDataTransferStorageAccountResourceId, offlineDataTransferStorageAccountTenantId, offlineDataTransferShareName, cloudTieringStatus, recallStatus, initialDownloadPolicy, localCacheMode, initialUploadPolicy, serverName, null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageSync.StorageSyncRegisteredServerData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="serverCertificate"> Registered Server Certificate. </param>
+        /// <param name="agentVersion"> Registered Server Agent Version. </param>
+        /// <param name="agentVersionStatus"> Registered Server Agent Version Status. </param>
+        /// <param name="agentVersionExpireOn"> Registered Server Agent Version Expiration Date. </param>
+        /// <param name="serverOSVersion"> Registered Server OS Version. </param>
+        /// <param name="serverManagementErrorCode"> Registered Server Management Error Code. </param>
+        /// <param name="lastHeartbeat"> Registered Server last heart beat. </param>
+        /// <param name="provisioningState"> Registered Server Provisioning State. </param>
+        /// <param name="serverRole"> Registered Server serverRole. </param>
+        /// <param name="clusterId"> Registered Server clusterId. </param>
+        /// <param name="clusterName"> Registered Server clusterName. </param>
+        /// <param name="serverId"> Registered Server serverId. </param>
+        /// <param name="storageSyncServiceUid"> Registered Server storageSyncServiceUid. </param>
+        /// <param name="lastWorkflowId"> Registered Server lastWorkflowId. </param>
+        /// <param name="lastOperationName"> Resource Last Operation Name. </param>
+        /// <param name="discoveryEndpointUri"> Resource discoveryEndpointUri. </param>
+        /// <param name="resourceLocation"> Resource Location. </param>
+        /// <param name="serviceLocation"> Service Location. </param>
+        /// <param name="friendlyName"> Friendly Name. </param>
+        /// <param name="managementEndpointUri"> Management Endpoint Uri. </param>
+        /// <param name="monitoringEndpointUri"> Telemetry Endpoint Uri. </param>
+        /// <param name="monitoringConfiguration"> Monitoring Configuration. </param>
+        /// <param name="serverName"> Server name. </param>
+        /// <returns> A new <see cref="StorageSync.StorageSyncRegisteredServerData"/> instance for mocking. </returns>
+        public static StorageSyncRegisteredServerData StorageSyncRegisteredServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData serverCertificate = null, string agentVersion = null, RegisteredServerAgentVersionStatus? agentVersionStatus = null, DateTimeOffset? agentVersionExpireOn = null, string serverOSVersion = null, int? serverManagementErrorCode = null, string lastHeartbeat = null, string provisioningState = null, string serverRole = null, Guid? clusterId = null, string clusterName = null, Guid? serverId = null, Guid? storageSyncServiceUid = null, string lastWorkflowId = null, string lastOperationName = null, Uri discoveryEndpointUri = null, AzureLocation? resourceLocation = null, AzureLocation? serviceLocation = null, string friendlyName = null, Uri managementEndpointUri = null, Uri monitoringEndpointUri = null, string monitoringConfiguration = null, string serverName = null)
+        {
+            return new StorageSyncRegisteredServerData(id, name, resourceType, systemData, serverCertificate, agentVersion, agentVersionStatus, agentVersionExpireOn, serverOSVersion, serverManagementErrorCode, lastHeartbeat, provisioningState, serverRole, clusterId, clusterName, serverId, storageSyncServiceUid, lastWorkflowId, lastOperationName, discoveryEndpointUri, resourceLocation, serviceLocation, friendlyName, managementEndpointUri, monitoringEndpointUri, monitoringConfiguration, serverName, null, null, null, null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="StorageSync.StorageSyncPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
