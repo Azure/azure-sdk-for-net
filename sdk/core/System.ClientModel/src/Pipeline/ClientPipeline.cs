@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -156,14 +157,55 @@ public partial class ClientPipeline
                 _beforeTransportIndex);
         }
 
-        return GetEnumerable(_policies);
+        return new PipelineProcessor(_policies);
     }
 
-    private IEnumerable<PipelinePolicy> GetEnumerable(ReadOnlyMemory<PipelinePolicy> policies)
+    private readonly struct PipelineProcessor : IEnumerable<PipelinePolicy>
     {
-        for (int i = 0; i < policies.Length; i++)
+        private readonly PolicyEnumerator _enumerator;
+
+        public PipelineProcessor(ReadOnlyMemory<PipelinePolicy> policies)
         {
-            yield return policies.Span[i];
+            _enumerator = new(policies);
         }
+
+        public readonly IEnumerator<PipelinePolicy> GetEnumerator()
+            => _enumerator;
+
+        readonly IEnumerator IEnumerable.GetEnumerator()
+            => _enumerator;
+    }
+
+    private struct PolicyEnumerator : IEnumerator<PipelinePolicy>
+    {
+        private readonly ReadOnlyMemory<PipelinePolicy> _policies;
+        private int _current;
+
+        public PolicyEnumerator(ReadOnlyMemory<PipelinePolicy> policies)
+        {
+            _policies = policies;
+            _current = 0;
+        }
+
+        public readonly PolicyEnumerator GetEnumerator() => this;
+
+        public bool MoveNext()
+        {
+            _current++;
+
+            // TODO: validate this contract
+            return _current < _policies.Length;
+        }
+
+        public void Reset()
+        {
+            _current = 0;
+        }
+
+        public readonly void Dispose() { }
+
+        public readonly PipelinePolicy Current => _policies.Span[_current];
+
+        readonly object IEnumerator.Current => Current;
     }
 }

@@ -12,13 +12,30 @@ namespace System.ClientModel.Tests;
 public class ClientPipelineTests
 {
     [Test]
+    public void CanEnumeratePipeline()
+    {
+        PipelineOptions options = new();
+        options.Transport = new ObservableTransport("Transport");
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+
+        PipelineMessage message = pipeline.CreateMessage();
+        pipeline.Send(message);
+
+        List<string> observations = ObservablePolicy.GetData(message);
+
+        int index = 0;
+        Assert.AreEqual(1, observations.Count);
+        Assert.AreEqual("Transport:Transport", observations[index++]);
+    }
+
+    [Test]
     public void RequestOptionsCanCustomizePipeline()
     {
-        PipelineOptions clientOptions = new SimpleClientOptions();
-        clientOptions.RetryPolicy = new ObservablePolicy("RetryPolicy");
-        clientOptions.Transport = new ObservableTransport("Transport");
+        PipelineOptions pipelineOptions = new SimpleClientOptions();
+        pipelineOptions.RetryPolicy = new ObservablePolicy("RetryPolicy");
+        pipelineOptions.Transport = new ObservableTransport("Transport");
 
-        ClientPipeline pipeline = ClientPipeline.Create(clientOptions);
+        ClientPipeline pipeline = ClientPipeline.Create(pipelineOptions);
 
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.AddPolicy(new ObservablePolicy("A"), PipelinePosition.PerCall);
