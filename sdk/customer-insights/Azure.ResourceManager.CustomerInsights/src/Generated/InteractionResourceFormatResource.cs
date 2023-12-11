@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.CustomerInsights
         private readonly InteractionsRestOperations _interactionResourceFormatInteractionsRestClient;
         private readonly InteractionResourceFormatData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/interactions";
+
         /// <summary> Initializes a new instance of the <see cref="InteractionResourceFormatResource"/> class for mocking. </summary>
         protected InteractionResourceFormatResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.CustomerInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/interactions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

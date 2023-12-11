@@ -21,6 +21,24 @@ namespace Azure.ResourceManager.Compute.Models
             Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="AvailabilitySetPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sku"> Sku of the availability set. </param>
+        /// <param name="platformUpdateDomainCount"> Update Domain count. </param>
+        /// <param name="platformFaultDomainCount"> Fault Domain count. </param>
+        /// <param name="virtualMachines"> A list of references to all virtual machines in the availability set. </param>
+        /// <param name="proximityPlacementGroup"> Specifies information about the proximity placement group that the availability set should be assigned to. Minimum api-version: 2018-04-01. </param>
+        /// <param name="statuses"> The resource status information. </param>
+        internal AvailabilitySetPatch(IDictionary<string, string> tags, ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IList<WritableSubResource> virtualMachines, WritableSubResource proximityPlacementGroup, IReadOnlyList<InstanceViewStatus> statuses) : base(tags)
+        {
+            Sku = sku;
+            PlatformUpdateDomainCount = platformUpdateDomainCount;
+            PlatformFaultDomainCount = platformFaultDomainCount;
+            VirtualMachines = virtualMachines;
+            ProximityPlacementGroup = proximityPlacementGroup;
+            Statuses = statuses;
+        }
+
         /// <summary> Sku of the availability set. </summary>
         public ComputeSku Sku { get; set; }
         /// <summary> Update Domain count. </summary>

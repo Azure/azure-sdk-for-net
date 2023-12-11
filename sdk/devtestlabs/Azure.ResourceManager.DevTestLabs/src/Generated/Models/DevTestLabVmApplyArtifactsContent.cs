@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Artifacts = new ChangeTrackingList<DevTestLabArtifactInstallInfo>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVmApplyArtifactsContent"/>. </summary>
+        /// <param name="artifacts"> The list of artifacts to apply. </param>
+        internal DevTestLabVmApplyArtifactsContent(IList<DevTestLabArtifactInstallInfo> artifacts)
+        {
+            Artifacts = artifacts;
+        }
+
         /// <summary> The list of artifacts to apply. </summary>
         public IList<DevTestLabArtifactInstallInfo> Artifacts { get; }
     }

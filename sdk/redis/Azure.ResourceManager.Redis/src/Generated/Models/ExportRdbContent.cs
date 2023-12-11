@@ -26,6 +26,21 @@ namespace Azure.ResourceManager.Redis.Models
             Container = container;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExportRdbContent"/>. </summary>
+        /// <param name="format"> File format. </param>
+        /// <param name="prefix"> Prefix to use for exported files. </param>
+        /// <param name="container"> Container name to export to. </param>
+        /// <param name="preferredDataArchiveAuthMethod"> Preferred auth method to communicate to storage account used for data archive, specify SAS or ManagedIdentity, default value is SAS. </param>
+        /// <param name="storageSubscriptionId"> Subscription id of the storage container for data to be exported using ManagedIdentity. </param>
+        internal ExportRdbContent(string format, string prefix, string container, string preferredDataArchiveAuthMethod, string storageSubscriptionId)
+        {
+            Format = format;
+            Prefix = prefix;
+            Container = container;
+            PreferredDataArchiveAuthMethod = preferredDataArchiveAuthMethod;
+            StorageSubscriptionId = storageSubscriptionId;
+        }
+
         /// <summary> File format. </summary>
         public string Format { get; set; }
         /// <summary> Prefix to use for exported files. </summary>

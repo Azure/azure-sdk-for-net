@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.DataFactory
         private readonly ManagedVirtualNetworksRestOperations _dataFactoryManagedVirtualNetworkManagedVirtualNetworksRestClient;
         private readonly DataFactoryManagedVirtualNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/managedVirtualNetworks";
+
         /// <summary> Initializes a new instance of the <see cref="DataFactoryManagedVirtualNetworkResource"/> class for mocking. </summary>
         protected DataFactoryManagedVirtualNetworkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DataFactory
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/managedVirtualNetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

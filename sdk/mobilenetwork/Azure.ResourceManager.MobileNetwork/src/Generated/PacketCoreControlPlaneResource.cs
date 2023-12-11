@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.MobileNetwork
         private readonly PacketCoreControlPlanesRestOperations _packetCoreControlPlaneRestClient;
         private readonly PacketCoreControlPlaneData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/packetCoreControlPlanes";
+
         /// <summary> Initializes a new instance of the <see cref="PacketCoreControlPlaneResource"/> class for mocking. </summary>
         protected PacketCoreControlPlaneResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.MobileNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/packetCoreControlPlanes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

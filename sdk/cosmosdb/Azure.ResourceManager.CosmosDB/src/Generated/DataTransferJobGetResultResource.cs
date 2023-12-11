@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly DataTransferJobsRestOperations _dataTransferJobGetResultDataTransferJobsRestClient;
         private readonly DataTransferJobGetResultData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/dataTransferJobs";
+
         /// <summary> Initializes a new instance of the <see cref="DataTransferJobGetResultResource"/> class for mocking. </summary>
         protected DataTransferJobGetResultResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/dataTransferJobs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

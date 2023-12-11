@@ -20,6 +20,19 @@ namespace Azure.ResourceManager.FluidRelay.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="FluidRelayServerPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The type of identity used for the resource. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="encryption"> All encryption configuration for a resource. </param>
+        internal FluidRelayServerPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, AzureLocation? location, EncryptionProperties encryption)
+        {
+            Tags = tags;
+            Identity = identity;
+            Location = location;
+            Encryption = encryption;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The type of identity used for the resource. </summary>

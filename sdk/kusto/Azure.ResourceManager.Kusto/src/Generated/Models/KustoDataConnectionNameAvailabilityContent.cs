@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.Kusto.Models
             ResourceType = KustoDataConnectionType.MicrosoftKustoClustersDatabasesDataConnections;
         }
 
+        /// <summary> Initializes a new instance of <see cref="KustoDataConnectionNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Data Connection name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters/databases/dataConnections. </param>
+        internal KustoDataConnectionNameAvailabilityContent(string name, KustoDataConnectionType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> Data Connection name. </summary>
         public string Name { get; }
         /// <summary> The type of resource, Microsoft.Kusto/clusters/databases/dataConnections. </summary>

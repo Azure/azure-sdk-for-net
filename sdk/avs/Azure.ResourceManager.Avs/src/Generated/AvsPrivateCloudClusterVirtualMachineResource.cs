@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Avs
         private readonly VirtualMachinesRestOperations _avsPrivateCloudClusterVirtualMachineVirtualMachinesRestClient;
         private readonly AvsPrivateCloudClusterVirtualMachineData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/clusters/virtualMachines";
+
         /// <summary> Initializes a new instance of the <see cref="AvsPrivateCloudClusterVirtualMachineResource"/> class for mocking. </summary>
         protected AvsPrivateCloudClusterVirtualMachineResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/clusters/virtualMachines";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.Maintenance
         private readonly ApplyUpdatesRestOperations _maintenanceApplyUpdateApplyUpdatesRestClient;
         private readonly MaintenanceApplyUpdateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Maintenance/applyUpdates";
+
         /// <summary> Initializes a new instance of the <see cref="MaintenanceApplyUpdateResource"/> class for mocking. </summary>
         protected MaintenanceApplyUpdateResource()
         {
@@ -69,9 +72,6 @@ namespace Azure.ResourceManager.Maintenance
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Maintenance/applyUpdates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -26,7 +26,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         internal static bool? s_isAzureWebApp = null;
 
         internal readonly State _state = new();
-        internal readonly MetricsContainer _metricsContainer; // TODO: WE COULD REMOVE THE READONLY AND DISPOSE THIS WHENEVER LIVEMETRICS IS OFF.
 
         public Manager(LiveMetricsExporterOptions options, IPlatform platform)
         {
@@ -36,8 +35,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             _quickPulseSDKClientAPIsRestClient = InitializeRestClient(options, _connectionVars, out _isAadEnabled);
 
             _timer = new Timer(callback: OnCallback, state: null, dueTime: Timeout.Infinite, period: Timeout.Infinite);
-
-            _metricsContainer = new MetricsContainer();
 
             if (options.EnableLiveMetrics)
             {
@@ -167,38 +164,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             {
                 Debug.WriteLine($"{DateTime.Now}: OnPost invoked.");
 
-                var dataPoint = new MonitoringDataPoint
-                {
-                    Version = SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength),
-                    InvariantVersion = 5,
-                    Instance = liveMetricsResource?.RoleInstance ?? "UNKNOWN_INSTANCE",
-                    RoleName = liveMetricsResource?.RoleName,
-                    MachineName = Environment.MachineName, // TODO: MOVE TO PLATFORM
-                    // TODO: Is the Stream ID expected to be unique per post? Testing suggests this is not necessary.
-                    StreamId = _streamId,
-                    Timestamp = DateTime.UtcNow,
-                    //TODO: Provide feedback to service team to get this removed, it not a part of AI SDK.
-                    TransmissionTime = DateTime.UtcNow,
-                    IsWebApp = IsWebAppRunningInAzure(),
-                    PerformanceCollectionSupported = true,
-                    // AI SDK relies on PerformanceCounter to collect CPU and Memory metrics.
-                    // Follow up with service team to get this removed for OTEL based live metrics.
-                    // TopCpuProcesses = null,
-                    // TODO: Configuration errors are thrown when filter is applied.
-                    // CollectionConfigurationErrors = null,
-                };
-
-                DocumentBuffer filledBuffer = _metricsContainer._doubleBuffer.FlipDocumentBuffers();
-                foreach (var item in filledBuffer.ReadAllAndClear())
-                {
-                    dataPoint.Documents.Add(item);
-                }
-
-                var metricPoints = _metricsContainer.Collect();
-                foreach (var metricPoint in metricPoints)
-                {
-                    dataPoint.Metrics.Add(metricPoint);
-                }
+                var dataPoint = GetDataPoint();
 
                 var response = _quickPulseSDKClientAPIsRestClient.PostCustom(
                     ikey: _connectionVars.InstrumentationKey,

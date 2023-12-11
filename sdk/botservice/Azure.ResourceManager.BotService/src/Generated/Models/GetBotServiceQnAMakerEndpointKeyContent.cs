@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.BotService.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="GetBotServiceQnAMakerEndpointKeyContent"/>. </summary>
+        /// <param name="hostname"> the host name of the QnA Maker endpoint. </param>
+        /// <param name="authkey"> Subscription key which provides access to this API. </param>
+        internal GetBotServiceQnAMakerEndpointKeyContent(string hostname, string authkey)
+        {
+            Hostname = hostname;
+            Authkey = authkey;
+        }
+
         /// <summary> the host name of the QnA Maker endpoint. </summary>
         public string Hostname { get; set; }
         /// <summary> Subscription key which provides access to this API. </summary>

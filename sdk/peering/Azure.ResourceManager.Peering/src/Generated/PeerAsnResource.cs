@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Peering
         private readonly PeerAsnsRestOperations _peerAsnRestClient;
         private readonly PeerAsnData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Peering/peerAsns";
+
         /// <summary> Initializes a new instance of the <see cref="PeerAsnResource"/> class for mocking. </summary>
         protected PeerAsnResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Peering
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Peering/peerAsns";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

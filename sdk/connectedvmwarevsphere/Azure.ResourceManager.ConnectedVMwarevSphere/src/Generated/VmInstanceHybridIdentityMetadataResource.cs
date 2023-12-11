@@ -36,6 +36,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         private readonly VmInstanceHybridIdentityMetadataRestOperations _vmInstanceHybridIdentityMetadataVmInstanceHybridIdentityMetadataRestClient;
         private readonly VmInstanceHybridIdentityMetadataData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/hybridIdentityMetadata";
+
         /// <summary> Initializes a new instance of the <see cref="VmInstanceHybridIdentityMetadataResource"/> class for mocking. </summary>
         protected VmInstanceHybridIdentityMetadataResource()
         {
@@ -62,9 +65,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/hybridIdentityMetadata";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

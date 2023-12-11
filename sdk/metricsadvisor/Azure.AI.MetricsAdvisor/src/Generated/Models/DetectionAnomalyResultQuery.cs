@@ -21,6 +21,17 @@ namespace Azure.AI.MetricsAdvisor.Models
             EndTime = endTime;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DetectionAnomalyResultQuery"/>. </summary>
+        /// <param name="startTime"> start time. </param>
+        /// <param name="endTime"> end time. </param>
+        /// <param name="filter"></param>
+        internal DetectionAnomalyResultQuery(DateTimeOffset startTime, DateTimeOffset endTime, DetectionAnomalyFilterCondition filter)
+        {
+            StartTime = startTime;
+            EndTime = endTime;
+            Filter = filter;
+        }
+
         /// <summary> start time. </summary>
         public DateTimeOffset StartTime { get; }
         /// <summary> end time. </summary>

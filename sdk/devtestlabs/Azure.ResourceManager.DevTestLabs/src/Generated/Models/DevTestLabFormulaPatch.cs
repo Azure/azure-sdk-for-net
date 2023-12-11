@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> A formula for creating a VM, specifying an image base and other parameters. </summary>
@@ -12,6 +14,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         /// <summary> Initializes a new instance of <see cref="DevTestLabFormulaPatch"/>. </summary>
         public DevTestLabFormulaPatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabFormulaPatch"/>. </summary>
+        /// <param name="tags"> The tags of the resource. </param>
+        internal DevTestLabFormulaPatch(IDictionary<string, string> tags) : base(tags)
         {
         }
     }

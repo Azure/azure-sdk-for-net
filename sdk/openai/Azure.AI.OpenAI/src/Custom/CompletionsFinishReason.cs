@@ -3,18 +3,17 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
+namespace Azure.AI.OpenAI;
 
-namespace Azure.AI.OpenAI
+public readonly partial struct CompletionsFinishReason
 {
-    /// <summary> Representation of the manner in which a completions response concluded. </summary>
-    public readonly partial struct CompletionsFinishReason
+    // CUSTOM CODE NOTE:
+    //   This allows us to properly represent a nullable enum-like type, where we don't want to assert on null
+    //   string inputs.
+
+    /// <summary> Initializes a new instance of <see cref="CompletionsFinishReason"/>. </summary>
+    public CompletionsFinishReason(string value)
     {
-        /// <summary> Initializes a new instance of <see cref="CompletionsFinishReason"/>. </summary>
-        public CompletionsFinishReason(string value)
-        {
-            _value = value;
-        }
+        _value = value;
     }
 }

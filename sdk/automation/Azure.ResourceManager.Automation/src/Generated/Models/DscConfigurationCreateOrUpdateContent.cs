@@ -26,6 +26,27 @@ namespace Azure.ResourceManager.Automation.Models
             Parameters = new ChangeTrackingDictionary<string, DscConfigurationParameterDefinition>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DscConfigurationCreateOrUpdateContent"/>. </summary>
+        /// <param name="name"> Gets or sets name of the resource. </param>
+        /// <param name="location"> Gets or sets the location of the resource. </param>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <param name="isLogVerboseEnabled"> Gets or sets verbose log option. </param>
+        /// <param name="isLogProgressEnabled"> Gets or sets progress log option. </param>
+        /// <param name="source"> Gets or sets the source. </param>
+        /// <param name="parameters"> Gets or sets the configuration parameters. </param>
+        /// <param name="description"> Gets or sets the description of the configuration. </param>
+        internal DscConfigurationCreateOrUpdateContent(string name, AzureLocation? location, IDictionary<string, string> tags, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, AutomationContentSource source, IDictionary<string, DscConfigurationParameterDefinition> parameters, string description)
+        {
+            Name = name;
+            Location = location;
+            Tags = tags;
+            IsLogVerboseEnabled = isLogVerboseEnabled;
+            IsLogProgressEnabled = isLogProgressEnabled;
+            Source = source;
+            Parameters = parameters;
+            Description = description;
+        }
+
         /// <summary> Gets or sets name of the resource. </summary>
         public string Name { get; set; }
         /// <summary> Gets or sets the location of the resource. </summary>

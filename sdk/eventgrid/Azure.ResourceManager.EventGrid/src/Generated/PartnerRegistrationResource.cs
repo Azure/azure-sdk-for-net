@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.EventGrid
         private readonly PartnerRegistrationsRestOperations _partnerRegistrationRestClient;
         private readonly PartnerRegistrationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/partnerRegistrations";
+
         /// <summary> Initializes a new instance of the <see cref="PartnerRegistrationResource"/> class for mocking. </summary>
         protected PartnerRegistrationResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/partnerRegistrations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

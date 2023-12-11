@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Blueprint
         private readonly AssignmentRestOperations _assignmentOperationRestClient;
         private readonly AssignmentOperationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Blueprint/blueprintAssignments/assignmentOperations";
+
         /// <summary> Initializes a new instance of the <see cref="AssignmentOperationResource"/> class for mocking. </summary>
         protected AssignmentOperationResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Blueprint
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Blueprint/blueprintAssignments/assignmentOperations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

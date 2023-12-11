@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.Logic.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountTrackingEventErrorInfo"/>. </summary>
+        /// <param name="message"> The message. </param>
+        /// <param name="code"> The code. </param>
+        internal IntegrationAccountTrackingEventErrorInfo(string message, string code)
+        {
+            Message = message;
+            Code = code;
+        }
+
         /// <summary> The message. </summary>
         public string Message { get; set; }
         /// <summary> The code. </summary>

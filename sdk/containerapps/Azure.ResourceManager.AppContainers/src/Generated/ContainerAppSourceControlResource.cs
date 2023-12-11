@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ContainerAppsSourceControlsRestOperations _containerAppSourceControlContainerAppsSourceControlsRestClient;
         private readonly ContainerAppSourceControlData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/sourcecontrols";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppSourceControlResource"/> class for mocking. </summary>
         protected ContainerAppSourceControlResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/sourcecontrols";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

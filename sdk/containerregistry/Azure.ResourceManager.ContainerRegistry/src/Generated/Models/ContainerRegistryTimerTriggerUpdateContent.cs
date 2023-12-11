@@ -23,6 +23,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Name = name;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTimerTriggerUpdateContent"/>. </summary>
+        /// <param name="schedule"> The CRON expression for the task schedule. </param>
+        /// <param name="status"> The current status of trigger. </param>
+        /// <param name="name"> The name of the trigger. </param>
+        internal ContainerRegistryTimerTriggerUpdateContent(string schedule, ContainerRegistryTriggerStatus? status, string name)
+        {
+            Schedule = schedule;
+            Status = status;
+            Name = name;
+        }
+
         /// <summary> The CRON expression for the task schedule. </summary>
         public string Schedule { get; set; }
         /// <summary> The current status of trigger. </summary>

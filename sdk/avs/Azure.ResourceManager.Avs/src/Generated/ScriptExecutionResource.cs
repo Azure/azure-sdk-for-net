@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Avs
         private readonly ScriptExecutionsRestOperations _scriptExecutionRestClient;
         private readonly ScriptExecutionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/scriptExecutions";
+
         /// <summary> Initializes a new instance of the <see cref="ScriptExecutionResource"/> class for mocking. </summary>
         protected ScriptExecutionResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/scriptExecutions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

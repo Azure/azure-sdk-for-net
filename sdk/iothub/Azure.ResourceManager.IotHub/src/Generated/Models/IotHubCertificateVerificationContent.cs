@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.IotHub.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificateVerificationContent"/>. </summary>
+        /// <param name="certificate"> base-64 representation of X509 certificate .cer file or just .pem file content. </param>
+        internal IotHubCertificateVerificationContent(BinaryData certificate)
+        {
+            Certificate = certificate;
+        }
+
         /// <summary>
         /// base-64 representation of X509 certificate .cer file or just .pem file content.
         /// <para>

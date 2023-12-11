@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Subscription.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="AcceptOwnershipContent"/>. </summary>
+        /// <param name="properties"> Accept subscription ownership request properties. </param>
+        internal AcceptOwnershipContent(AcceptOwnershipRequestProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Accept subscription ownership request properties. </summary>
         public AcceptOwnershipRequestProperties Properties { get; set; }
     }

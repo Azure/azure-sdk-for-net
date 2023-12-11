@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         private readonly DpsCertificateRestOperations _deviceProvisioningServicesCertificateDpsCertificateRestClient;
         private readonly DeviceProvisioningServicesCertificateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Devices/provisioningServices/certificates";
+
         /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServicesCertificateResource"/> class for mocking. </summary>
         protected DeviceProvisioningServicesCertificateResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Devices/provisioningServices/certificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Avs.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudClusterVirtualMachineRestrictMovement"/>. </summary>
+        /// <param name="restrictMovement"> Whether VM DRS-driven movement is restricted (enabled) or not (disabled). </param>
+        internal AvsPrivateCloudClusterVirtualMachineRestrictMovement(VirtualMachineRestrictMovementState? restrictMovement)
+        {
+            RestrictMovement = restrictMovement;
+        }
+
         /// <summary> Whether VM DRS-driven movement is restricted (enabled) or not (disabled). </summary>
         public VirtualMachineRestrictMovementState? RestrictMovement { get; set; }
     }

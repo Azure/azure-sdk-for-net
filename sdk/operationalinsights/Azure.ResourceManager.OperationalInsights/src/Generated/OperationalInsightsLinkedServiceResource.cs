@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.OperationalInsights
         private readonly LinkedServicesRestOperations _operationalInsightsLinkedServiceLinkedServicesRestClient;
         private readonly OperationalInsightsLinkedServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/linkedServices";
+
         /// <summary> Initializes a new instance of the <see cref="OperationalInsightsLinkedServiceResource"/> class for mocking. </summary>
         protected OperationalInsightsLinkedServiceResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.OperationalInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/linkedServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

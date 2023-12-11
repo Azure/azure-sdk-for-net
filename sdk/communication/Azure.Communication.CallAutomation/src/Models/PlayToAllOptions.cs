@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -12,9 +13,9 @@ namespace Azure.Communication.CallAutomation
     public class PlayToAllOptions
     {
         /// <summary>
-        /// A PlaySource object representing the source to play.
+        /// PlaySource objects representing the sources to play.
         /// </summary>
-        public PlaySource PlaySource { get; }
+        public IReadOnlyList<PlaySource> PlaySources { get; }
 
         /// <summary>
         /// The option to play the provided audio source in loop when set to true.
@@ -27,16 +28,25 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
 
         /// <summary>
-        /// The callback URI override for this transfer call request.
+        /// The callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </summary>
-        public Uri CallbackUri { get; set; }
+        public Uri OperationCallbackUri { get; set; }
+
+        /// <summary>
+        /// Creates a new PlayToAllOptions object.
+        /// </summary>
+        public PlayToAllOptions(IEnumerable<PlaySource> playSources)
+        {
+            PlaySources = playSources.ToList();
+        }
 
         /// <summary>
         /// Creates a new PlayToAllOptions object.
         /// </summary>
         public PlayToAllOptions(PlaySource playSource)
         {
-            PlaySource = playSource;
+            PlaySources = new List<PlaySource> { playSource };
         }
     }
 }

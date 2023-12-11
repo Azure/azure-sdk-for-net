@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.Synapse.Models
             ResourceType = SynapseDatabasePrincipalAssignmentType.MicrosoftSynapseWorkspacesKustoPoolsDatabasesPrincipalAssignments;
         }
 
+        /// <summary> Initializes a new instance of <see cref="KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Principal Assignment resource name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments. </param>
+        internal KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent(string name, SynapseDatabasePrincipalAssignmentType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
+        }
+
         /// <summary> Principal Assignment resource name. </summary>
         public string Name { get; }
         /// <summary> The type of resource, Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments. </summary>

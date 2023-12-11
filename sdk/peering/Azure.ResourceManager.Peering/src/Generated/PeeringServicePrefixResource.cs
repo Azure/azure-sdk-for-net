@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Peering
         private readonly PrefixesRestOperations _peeringServicePrefixPrefixesRestClient;
         private readonly PeeringServicePrefixData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Peering/peeringServices/prefixes";
+
         /// <summary> Initializes a new instance of the <see cref="PeeringServicePrefixResource"/> class for mocking. </summary>
         protected PeeringServicePrefixResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Peering
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Peering/peeringServices/prefixes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -17,6 +17,29 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ApiManagementBackendPatch"/>. </summary>
+        /// <param name="title"> Backend Title. </param>
+        /// <param name="description"> Backend Description. </param>
+        /// <param name="resourceUri"> Management Uri of the Resource in External System. This url can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </param>
+        /// <param name="properties"> Backend Properties contract. </param>
+        /// <param name="credentials"> Backend Credentials Contract Properties. </param>
+        /// <param name="proxy"> Backend Proxy Contract Properties. </param>
+        /// <param name="tls"> Backend TLS Properties. </param>
+        /// <param name="uri"> Runtime Url of the Backend. </param>
+        /// <param name="protocol"> Backend communication protocol. </param>
+        internal ApiManagementBackendPatch(string title, string description, Uri resourceUri, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, Uri uri, BackendProtocol? protocol)
+        {
+            Title = title;
+            Description = description;
+            ResourceUri = resourceUri;
+            Properties = properties;
+            Credentials = credentials;
+            Proxy = proxy;
+            Tls = tls;
+            Uri = uri;
+            Protocol = protocol;
+        }
+
         /// <summary> Backend Title. </summary>
         public string Title { get; set; }
         /// <summary> Backend Description. </summary>

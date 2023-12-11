@@ -11,19 +11,6 @@ namespace Azure.AI.Language.QuestionAnswering
 {
     public partial class AnswersFromTextOptions
     {
-        /// <summary> Initializes a new instance of AnswersFromTextOptions. </summary>
-        /// <param name="question"> User question to query against the given text documents. </param>
-        /// <param name="textDocuments"> Text documents to be searched for given question. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="question"/> or <paramref name="textDocuments"/> is null. </exception>
-        public AnswersFromTextOptions(string question, IEnumerable<TextDocument> textDocuments)
-        {
-            Argument.AssertNotNull(question, nameof(question));
-            Argument.AssertNotNull(textDocuments, nameof(textDocuments));
-
-            Question = question;
-            TextDocuments = textDocuments.ToList();
-        }
-
         /// <summary>
         /// User question to query against the given text documents.
         /// </summary>
@@ -46,7 +33,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// Gets the method used to interpret string offsets, which always returns <see cref="QuestionAnsweringClientOptions.DefaultStringIndexType"/> for .NET.
         /// </summary>
 #pragma warning disable CA1822 // Mark members as static
-        internal StringIndexType? StringIndexType => QuestionAnsweringClientOptions.DefaultStringIndexType;
+        internal StringIndexType? StringIndexType { get; private set; } = QuestionAnsweringClientOptions.DefaultStringIndexType;
 #pragma warning restore CA1822 // Mark members as static
 
         /// <summary>

@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Resources.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExpressionEvaluationOptions"/>. </summary>
+        /// <param name="scope"> The scope to be used for evaluation of parameters, variables and functions in a nested template. </param>
+        internal ExpressionEvaluationOptions(ExpressionEvaluationScope? scope)
+        {
+            Scope = scope;
+        }
+
         /// <summary> The scope to be used for evaluation of parameters, variables and functions in a nested template. </summary>
         public ExpressionEvaluationScope? Scope { get; set; }
     }

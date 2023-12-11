@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         private readonly TransformationsRestOperations _streamingJobTransformationTransformationsRestClient;
         private readonly StreamingJobTransformationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StreamAnalytics/streamingjobs/transformations";
+
         /// <summary> Initializes a new instance of the <see cref="StreamingJobTransformationResource"/> class for mocking. </summary>
         protected StreamingJobTransformationResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.StreamAnalytics
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StreamAnalytics/streamingjobs/transformations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

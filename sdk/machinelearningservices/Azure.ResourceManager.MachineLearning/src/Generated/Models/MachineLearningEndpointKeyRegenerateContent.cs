@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             KeyType = keyType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointKeyRegenerateContent"/>. </summary>
+        /// <param name="keyType"> [Required] Specification for which type of key to generate. Primary or Secondary. </param>
+        /// <param name="keyValue"> The value the key is set to. </param>
+        internal MachineLearningEndpointKeyRegenerateContent(MachineLearningKeyType keyType, string keyValue)
+        {
+            KeyType = keyType;
+            KeyValue = keyValue;
+        }
+
         /// <summary> [Required] Specification for which type of key to generate. Primary or Secondary. </summary>
         public MachineLearningKeyType KeyType { get; }
         /// <summary> The value the key is set to. </summary>

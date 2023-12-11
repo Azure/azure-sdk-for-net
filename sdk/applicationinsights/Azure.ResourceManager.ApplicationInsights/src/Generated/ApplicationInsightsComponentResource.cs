@@ -68,6 +68,9 @@ namespace Azure.ResourceManager.ApplicationInsights
         private readonly AnalyticsItemsRestOperations _analyticsItemsRestClient;
         private readonly ApplicationInsightsComponentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/components";
+
         /// <summary> Initializes a new instance of the <see cref="ApplicationInsightsComponentResource"/> class for mocking. </summary>
         protected ApplicationInsightsComponentResource()
         {
@@ -121,9 +124,6 @@ namespace Azure.ResourceManager.ApplicationInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/components";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

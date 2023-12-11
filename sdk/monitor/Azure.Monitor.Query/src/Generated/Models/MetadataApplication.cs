@@ -32,6 +32,21 @@ namespace Azure.Monitor.Query.Models
             Region = region;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MetadataApplication"/>. </summary>
+        /// <param name="id"> The ID of the Application Insights app. </param>
+        /// <param name="resourceId"> The ARM resource ID of the Application Insights app. </param>
+        /// <param name="name"> The name of the Application Insights app. </param>
+        /// <param name="region"> The Azure region of the Application Insights app. </param>
+        /// <param name="related"> The related metadata items for the Application Insights app. </param>
+        internal MetadataApplication(string id, string resourceId, string name, string region, MetadataApplicationRelated related)
+        {
+            Id = id;
+            ResourceId = resourceId;
+            Name = name;
+            Region = region;
+            Related = related;
+        }
+
         /// <summary> The ID of the Application Insights app. </summary>
         public string Id { get; }
         /// <summary> The ARM resource ID of the Application Insights app. </summary>

@@ -25,6 +25,15 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             PendingFields = new ChangeTrackingList<PendingField>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="CheckPolicyRestrictionsContent"/>. </summary>
+        /// <param name="resourceDetails"> The information about the resource that will be evaluated. </param>
+        /// <param name="pendingFields"> The list of fields and values that should be evaluated for potential restrictions. </param>
+        internal CheckPolicyRestrictionsContent(CheckRestrictionsResourceDetails resourceDetails, IList<PendingField> pendingFields)
+        {
+            ResourceDetails = resourceDetails;
+            PendingFields = pendingFields;
+        }
+
         /// <summary> The information about the resource that will be evaluated. </summary>
         public CheckRestrictionsResourceDetails ResourceDetails { get; }
         /// <summary> The list of fields and values that should be evaluated for potential restrictions. </summary>

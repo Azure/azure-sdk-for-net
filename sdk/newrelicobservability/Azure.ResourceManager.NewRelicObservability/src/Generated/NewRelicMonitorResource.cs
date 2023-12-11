@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.NewRelicObservability
         private readonly MonitorsRestOperations _newRelicMonitorResourceMonitorsRestClient;
         private readonly NewRelicMonitorResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "NewRelic.Observability/monitors";
+
         /// <summary> Initializes a new instance of the <see cref="NewRelicMonitorResource"/> class for mocking. </summary>
         protected NewRelicMonitorResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.NewRelicObservability
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "NewRelic.Observability/monitors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

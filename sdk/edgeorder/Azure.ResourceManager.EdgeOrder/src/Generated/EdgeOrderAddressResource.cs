@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.EdgeOrder
         private readonly EdgeOrderManagementRestOperations _edgeOrderAddressRestClient;
         private readonly EdgeOrderAddressData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EdgeOrder/addresses";
+
         /// <summary> Initializes a new instance of the <see cref="EdgeOrderAddressResource"/> class for mocking. </summary>
         protected EdgeOrderAddressResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.EdgeOrder
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EdgeOrder/addresses";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

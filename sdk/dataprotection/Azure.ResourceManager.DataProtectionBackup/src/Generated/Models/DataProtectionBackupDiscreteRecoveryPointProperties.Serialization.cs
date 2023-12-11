@@ -64,6 +64,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("retentionTagVersion"u8);
                 writer.WriteStringValue(RetentionTagVersion);
             }
+            if (Optional.IsDefined(RecoveryPointState))
+            {
+                writer.WritePropertyName("recoveryPointState"u8);
+                writer.WriteStringValue(RecoveryPointState.Value.ToString());
+            }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
@@ -85,6 +90,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<string> retentionTagName = default;
             Optional<string> retentionTagVersion = default;
             Optional<DateTimeOffset> expiryTime = default;
+            Optional<DataProtectionBackupRecoveryPointCompletionState> recoveryPointState = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -151,13 +157,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     expiryTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("recoveryPointState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryPointState = new DataProtectionBackupRecoveryPointCompletionState(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;
                 }
             }
-            return new DataProtectionBackupDiscreteRecoveryPointProperties(objectType, friendlyName.Value, Optional.ToList(recoveryPointDataStoresDetails), recoveryPointTime, policyName.Value, policyVersion.Value, recoveryPointId.Value, recoveryPointType.Value, retentionTagName.Value, retentionTagVersion.Value, Optional.ToNullable(expiryTime));
+            return new DataProtectionBackupDiscreteRecoveryPointProperties(objectType, friendlyName.Value, Optional.ToList(recoveryPointDataStoresDetails), recoveryPointTime, policyName.Value, policyVersion.Value, recoveryPointId.Value, recoveryPointType.Value, retentionTagName.Value, retentionTagVersion.Value, Optional.ToNullable(expiryTime), Optional.ToNullable(recoveryPointState));
         }
     }
 }

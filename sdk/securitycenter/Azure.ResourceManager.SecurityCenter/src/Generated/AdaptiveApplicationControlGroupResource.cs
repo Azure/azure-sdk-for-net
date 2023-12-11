@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly AdaptiveApplicationControlsRestOperations _adaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient;
         private readonly AdaptiveApplicationControlGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/locations/applicationWhitelistings";
+
         /// <summary> Initializes a new instance of the <see cref="AdaptiveApplicationControlGroupResource"/> class for mocking. </summary>
         protected AdaptiveApplicationControlGroupResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/locations/applicationWhitelistings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

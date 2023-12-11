@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private readonly NetworkInterfacesRestOperations _networkDeviceInterfaceNetworkInterfacesRestClient;
         private readonly NetworkDeviceInterfaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/networkDevices/networkInterfaces";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkDeviceInterfaceResource"/> class for mocking. </summary>
         protected NetworkDeviceInterfaceResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/networkDevices/networkInterfaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
