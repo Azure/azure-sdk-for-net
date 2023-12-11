@@ -360,7 +360,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var connection = new ReadableOptionsMock(fakeConnection);
             var options = connection.Options;
 
-            Assert.That(options.UseTls, Is.False, "The options should not use TLS for the development emulator.");
+            Assert.That(connection.UseTls.HasValue, Is.True, "The connection should have initialized the TLS flag.");
+            Assert.That(connection.UseTls.Value, Is.False, "The options should not use TLS for the development emulator.");
             Assert.That(options.CustomEndpointAddress, Is.Not.Null, "The custom endpoint address should have been implicitly set.");
             Assert.That(options.CustomEndpointAddress, Is.EqualTo(endpoint), "The custom endpoint address should match the connection string endpoint.");
         }
@@ -379,7 +380,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var connection = new ReadableOptionsMock(fakeConnection, constructorOptions);
             var options = connection.Options;
 
-            Assert.That(options.UseTls, Is.False, "The options should not use TLS for the development emulator.");
+            Assert.That(connection.UseTls.HasValue, Is.True, "The connection should have initialized the TLS flag.");
+            Assert.That(connection.UseTls.Value, Is.False, "The options should not use TLS for the development emulator.");
             Assert.That(options.CustomEndpointAddress, Is.EqualTo(endpoint), "The custom endpoint address should match the explicitly provided value.");
         }
 
@@ -928,6 +930,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             public EventHubConnectionOptions TransportClientOptions;
 
+            public bool? UseTls;
+
             private ObservableTransportClientMock _transportClient;
 
             public ReadableOptionsMock(string connectionString,
@@ -956,8 +960,9 @@ namespace Azure.Messaging.EventHubs.Tests
             {
             }
 
-            internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace, string eventHubName, TimeSpan operationTimeout, EventHubTokenCredential credential, EventHubConnectionOptions options)
+            internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace, string eventHubName, TimeSpan operationTimeout, EventHubTokenCredential credential, EventHubConnectionOptions options, bool useTls = true)
             {
+                UseTls = useTls;
                 TransportClientOptions = options;
                 _transportClient = new ObservableTransportClientMock();
                 return _transportClient;
@@ -1056,7 +1061,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                    string eventHubName,
                                                                    TimeSpan operationTimeout,
                                                                    EventHubTokenCredential credential,
-                                                                   EventHubConnectionOptions options)
+                                                                   EventHubConnectionOptions options,
+                                                                   bool useTls = true)
             {
                 TransportClientCredential = credential;
                 return TransportClient;
@@ -1114,7 +1120,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                              bool invalidateConsumerWhenPartitionIsStolen = false,
                                                              long? ownerLevel = default,
                                                              uint? prefetchCount = default,
-                                                             long? prefechSize = default)
+                                                             long? prefetchSize = default)
             {
                 CreateConsumerCalledWith = (consumerGroup, partitionId, consumerIdentifier, eventPosition, retryPolicy, trackLastEnqueuedEventProperties, invalidateConsumerWhenPartitionIsStolen, ownerLevel, prefetchCount);
                 return default;
