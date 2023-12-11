@@ -63,9 +63,14 @@ public partial class ClientPipeline
                 _customBeforeTransportPolicies.Length;
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumeratorImpl();
 
         public IEnumerator<PipelinePolicy> GetEnumerator()
+        {
+            return GetEnumeratorImpl();
+        }
+
+        private IEnumerator<PipelinePolicy> GetEnumeratorImpl()
         {
             for (int i = 0; i < _length; i++)
             {

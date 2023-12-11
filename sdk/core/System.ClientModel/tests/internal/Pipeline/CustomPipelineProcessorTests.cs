@@ -95,7 +95,12 @@ public class CustomPipelineProcessorTests
             perTryIndex: 0,
             beforeTransportIndex: 0);
 
-        processor.GetEnumerator().Current.ProcessAsync(message, processor);
+        IEnumerator<PipelinePolicy> enumerator = processor.GetEnumerator();
+        enumerator.MoveNext();
+        PipelinePolicy policy = enumerator.Current;
+        policy.ProcessAsync(message, processor);
+
+        //processor.GetEnumerator().Current.ProcessAsync(message, processor);
 
         List<string> observations = ObservablePolicy.GetData(message);
 

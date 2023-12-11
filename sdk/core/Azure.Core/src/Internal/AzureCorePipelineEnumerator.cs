@@ -2,12 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
-    internal class AzureCorePipelineEnumerator : PipelineProcessor
+    internal class AzureCorePipelineEnumerator //: PipelineProcessor
     {
         private readonly HttpMessage _message;
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _policies;
@@ -18,7 +17,7 @@ namespace Azure.Core.Pipeline
             _message = message;
         }
 
-        public override bool ProcessNext()
+        public bool ProcessNext()
         {
             if (_policies.Length == 0)
             {
@@ -30,7 +29,7 @@ namespace Azure.Core.Pipeline
             return _policies.Length > 0;
         }
 
-        public override async ValueTask<bool> ProcessNextAsync()
+        public async ValueTask<bool> ProcessNextAsync()
         {
             if (_policies.Length == 0)
             {

@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,9 +30,39 @@ namespace Azure.Core.Pipeline
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
             => ProcessSyncOrAsync(message, pipeline, async: false).EnsureCompleted();
 
+        private IEnumerable<PipelinePolicy> GetEnumerable(ReadOnlyMemory<HttpPipelinePolicy> policies)
+        {
+            for (int i = 0; i < policies.Length; i++)
+            {
+                yield return new PipelinePolicyAdapter(policies.Span[i]);
+            }
+        }
+
+        private class PipelinePolicyAdapter : PipelinePolicy
+        {
+            private readonly HttpPipelinePolicy _policy;
+
+            public PipelinePolicyAdapter(HttpPipelinePolicy policy)
+            {
+                _policy = policy;
+            }
+
+            public override void Process(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+            {
+                throw new NotImplementedException();
+                //_policy.Process()
+            }
+
+            public override ValueTask ProcessAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         private async ValueTask ProcessSyncOrAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            AzureCorePipelineEnumerator executor = new(message, pipeline);
+            //AzureCorePipelineEnumerator executor = new(message, pipeline);
+            IEnumerable<PipelinePolicy> policies = GetEnumerable(pipeline);
 
             // Get the network timeout for this particular invocation of the pipeline.
             // We either use the default that the policy was constructed with at
@@ -47,11 +78,11 @@ namespace Azure.Core.Pipeline
             {
                 if (async)
                 {
-                    await _policy.ProcessAsync(message, executor).ConfigureAwait(false);
+                    await _policy.ProcessAsync(message, policies).ConfigureAwait(false);
                 }
                 else
                 {
-                    _policy.Process(message, executor);
+                    _policy.Process(message, policies);
                 }
 
                 if (!ResponseBufferingPolicy.TryGetBufferResponse(message, out bool bufferResponse))
