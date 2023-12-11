@@ -1373,64 +1373,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ProgressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 async: false,
-                false,
-                cancellationToken).EnsureCompleted();
-        }
-
-        /// <summary>
-        /// The <see cref="DownloadStreaming(BlobDownloadOptions, CancellationToken)"/>
-        /// operation downloads a blob from the service, including its metadata
-        /// and properties.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
-        /// Get Blob</see>.
-        /// </summary>
-        /// <param name="options">
-        /// Optional parameters.
-        /// </param>
-        /// <param name="userPrincipalName">
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{BlobDownloadStreamingResult}"/> describing the
-        /// downloaded blob.  <see cref="BlobDownloadStreamingResult.Content"/> contains
-        /// the blob's data.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        ///
-        /// This API gives access directly to network stream that should be disposed after usage.
-        /// Consider the following alternatives:
-        /// <list type="bullet">
-        ///     <item>
-        ///         <term>DownloadContentAsync</term>
-        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
-        ///     </item>
-        ///     <item>
-        ///         <term>DownloadToAsync</term>
-        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
-        ///     </item>
-        /// </list>
-        /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<BlobDownloadStreamingResult> DownloadStreaming(
-            BlobDownloadOptions options = default,
-            bool? userPrincipalName = default,
-            CancellationToken cancellationToken = default)
-        {
-            return DownloadStreamingDirect(
-                options?.Range ?? default,
-                options?.Conditions,
-                options?.TransferValidation,
-                options?.ProgressHandler,
-                $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
-                async: false,
-                userPrincipalName,
+                options?.UserPrincipalName,
                 cancellationToken).EnsureCompleted();
         }
 
@@ -1478,58 +1421,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ProgressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 async: true,
-                false,
-                cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// The <see cref="DownloadStreamingAsync(BlobDownloadOptions, CancellationToken)"/>
-        /// operation downloads a blob from the service, including its metadata
-        /// and properties.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob">
-        /// Get Blob</see>.
-        /// </summary>
-        /// <param name="options">Optional parameters.</param>
-        /// <param name="userPrincipalName"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>
-        /// A <see cref="Response{BlobDownloadStreamingResult}"/> describing the
-        /// downloaded blob.  <see cref="BlobDownloadStreamingResult.Content"/> contains
-        /// the blob's data.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        ///
-        /// This API gives access directly to network stream that should be disposed after usage.
-        /// Consider the following alternatives:
-        /// <list type="bullet">
-        ///     <item>
-        ///         <term>DownloadContentAsync</term>
-        ///         <description>as a prefered way of downloading small blobs that can fit into memory</description>
-        ///     </item>
-        ///     <item>
-        ///         <term>DownloadToAsync</term>
-        ///         <description>to stream blob content to a path or a <see cref="Stream"/></description>
-        ///     </item>
-        /// </list>
-        /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingAsync(
-            BlobDownloadOptions options = default,
-            bool? userPrincipalName = default,
-            CancellationToken cancellationToken = default)
-        {
-            return await DownloadStreamingDirect(
-                options?.Range ?? default,
-                options?.Conditions,
-                options?.TransferValidation,
-                options?.ProgressHandler,
-                $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
-                async: true,
-                userPrincipalName,
+                options?.UserPrincipalName,
                 cancellationToken).ConfigureAwait(false);
         }
 
@@ -2626,55 +2518,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.TransferOptions ?? default,
                 options?.TransferValidation,
                 async: false,
-                cancellationToken: cancellationToken)
-                .EnsureCompleted();
-        }
-
-        /// <summary>
-        /// The <see cref="DownloadTo(string, BlobRequestConditions, StorageTransferOptions, CancellationToken)"/>
-        /// operation downloads a blob using parallel requests,
-        /// and writes the content to <paramref name="options.Path"/> or <paramref name="options.Stream"/>.
-        /// </summary>
-        /// <param name="destination">
-        /// Stream to write download content to.
-        /// </param>
-        /// <param name="options">
-        /// Parameters for download.
-        /// </param>
-        /// <param name="userPrincipalName">
-        /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
-        /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
-        /// headers will be transformed from Azure Active Directory Object IDs to User Principal Names.
-        /// If "false", the values will be returned as Azure Active Directory Object IDs.The default
-        /// value is false. Note that group and application Object IDs are not translated because they
-        /// do not have unique friendly names.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response"/> describing the operation.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response DownloadTo(
-            Stream destination,
-            BlobDownloadToOptions options,
-            bool? userPrincipalName = default,
-            CancellationToken cancellationToken = default)
-        {
-            return StagedDownloadAsync(
-                destination,
-                options?.Conditions,
-                options?.ProgressHandler,
-                options?.TransferOptions ?? default,
-                options?.TransferValidation,
-                async: false,
-                userPrincipalName: userPrincipalName,
+                options?.UserPrincipalName,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
         }
@@ -2714,56 +2558,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.TransferOptions ?? default,
                 options?.TransferValidation,
                 async: false,
-                cancellationToken: cancellationToken)
-                .EnsureCompleted();
-        }
-
-        /// <summary>
-        /// The <see cref="DownloadTo(string, BlobRequestConditions, StorageTransferOptions, CancellationToken)"/>
-        /// operation downloads a blob using parallel requests,
-        /// and writes the content to <paramref name="options.Path"/> or <paramref name="options.Stream"/>.
-        /// </summary>
-        /// <param name="path">
-        /// File path to write download content to.
-        /// </param>
-        /// <param name="options">
-        /// Parameters for download.
-        /// </param>
-        /// <param name="userPrincipalName">
-        /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
-        /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
-        /// headers will be transformed from Azure Active Directory Object IDs to User Principal Names.
-        /// If "false", the values will be returned as Azure Active Directory Object IDs.The default
-        /// value is false. Note that group and application Object IDs are not translated because they
-        /// do not have unique friendly names.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response"/> describing the operation.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response DownloadTo(
-            string path,
-            BlobDownloadToOptions options,
-            bool? userPrincipalName = default,
-            CancellationToken cancellationToken = default)
-        {
-            using Stream destination = File.Create(path);
-            return StagedDownloadAsync(
-                destination,
-                options?.Conditions,
-                options?.ProgressHandler,
-                options?.TransferOptions ?? default,
-                options?.TransferValidation,
-                async: false,
-                userPrincipalName: userPrincipalName,
+                options?.UserPrincipalName,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
         }
@@ -2802,55 +2597,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.TransferOptions ?? default,
                 options?.TransferValidation,
                 async: true,
-                cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// The <see cref="DownloadToAsync(Stream, BlobRequestConditions, StorageTransferOptions, CancellationToken)"/>
-        /// operation downloads a blob using parallel requests,
-        /// and writes the content to <paramref name="options.Path"/> or <paramref name="options.Stream"/>.
-        /// </summary>
-        /// <param name="destination">
-        /// Stream to write download content to.
-        /// </param>
-        /// <param name="options">
-        /// Parameters for download.
-        /// </param>
-        /// <param name="userPrincipalName">
-        /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
-        /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
-        /// headers will be transformed from Azure Active Directory Object IDs to User Principal Names.
-        /// If "false", the values will be returned as Azure Active Directory Object IDs.The default
-        /// value is false. Note that group and application Object IDs are not translated because they
-        /// do not have
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response"/> describing the operation.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response> DownloadToAsync(
-            Stream destination,
-            BlobDownloadToOptions options,
-            bool? userPrincipalName = default,
-            CancellationToken cancellationToken = default)
-        {
-            return await StagedDownloadAsync(
-                destination,
-                options?.Conditions,
-                options?.ProgressHandler,
-                options?.TransferOptions ?? default,
-                options?.TransferValidation,
-                async: true,
-                userPrincipalName: userPrincipalName,
+                options?.UserPrincipalName,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         }
@@ -2890,56 +2637,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.TransferOptions ?? default,
                 options?.TransferValidation,
                 async: true,
-                cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// The <see cref="DownloadToAsync(Stream, BlobRequestConditions, StorageTransferOptions, CancellationToken)"/>
-        /// operation downloads a blob using parallel requests,
-        /// and writes the content to <paramref name="options.Path"/> or <paramref name="options.Stream"/>.
-        /// </summary>
-        /// <param name="path">
-        /// File path to write download content to.
-        /// </param>
-        /// <param name="options">
-        /// Parameters for download.
-        /// </param>
-        /// <param name="userPrincipalName">
-        /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
-        /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
-        /// headers will be transformed from Azure Active Directory Object IDs to User Principal Names.
-        /// If "false", the values will be returned as Azure Active Directory Object IDs.The default
-        /// value is false. Note that group and application Object IDs are not translated because they
-        /// do not have unique friendly names.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response"/> describing the operation.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response> DownloadToAsync(
-            string path,
-            BlobDownloadToOptions options,
-            bool? userPrincipalName = default,
-            CancellationToken cancellationToken = default)
-        {
-            using Stream destination = File.Create(path);
-            return await StagedDownloadAsync(
-                destination,
-                options?.Conditions,
-                options?.ProgressHandler,
-                options?.TransferOptions ?? default,
-                options?.TransferValidation,
-                async: true,
-                userPrincipalName: userPrincipalName,
+                options?.UserPrincipalName,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         }

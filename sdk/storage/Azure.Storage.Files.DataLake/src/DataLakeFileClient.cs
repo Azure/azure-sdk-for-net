@@ -3192,7 +3192,6 @@ namespace Azure.Storage.Files.DataLake
 
                 Response<Blobs.Models.BlobDownloadStreamingResult> response = _blockBlobClient.DownloadStreaming(
                     options: options.ToBlobBaseDownloadOptions(),
-                    userPrincipalName: options?.UserPrincipalName,
                     cancellationToken: cancellationToken);
 
                 return Response.FromValue(
@@ -3247,7 +3246,6 @@ namespace Azure.Storage.Files.DataLake
 
                 Response<Blobs.Models.BlobDownloadStreamingResult> response = await _blockBlobClient.DownloadStreamingAsync(
                     options: options.ToBlobBaseDownloadOptions(),
-                    userPrincipalName: options?.UserPrincipalName,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
@@ -3304,7 +3302,6 @@ namespace Azure.Storage.Files.DataLake
                 return _blockBlobClient.DownloadTo(
                     destination,
                     options.ToBlobBaseDownloadToOptions(),
-                    options?.UserPrincipalName,
                     cancellationToken: cancellationToken);
             }
             catch (Exception ex)
@@ -3354,7 +3351,6 @@ namespace Azure.Storage.Files.DataLake
                 return _blockBlobClient.DownloadTo(
                     path,
                     options.ToBlobBaseDownloadToOptions(),
-                    options?.UserPrincipalName,
                     cancellationToken: cancellationToken);
             }
             catch (Exception ex)
@@ -3403,7 +3399,6 @@ namespace Azure.Storage.Files.DataLake
                 return await _blockBlobClient.DownloadToAsync(
                     destination,
                     options.ToBlobBaseDownloadToOptions(),
-                    options?.UserPrincipalName,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -3454,7 +3449,6 @@ namespace Azure.Storage.Files.DataLake
                 return await _blockBlobClient.DownloadToAsync(
                     path,
                     options.ToBlobBaseDownloadToOptions(),
-                    options?.UserPrincipalName,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             }

@@ -570,7 +570,8 @@ namespace Azure.Storage.Files.DataLake
             {
                 Range = options.Range,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
-                TransferValidation = options.TransferValidation
+                TransferValidation = options.TransferValidation,
+                UserPrincipalName = options.UserPrincipalName
             };
         }
 
@@ -584,7 +585,8 @@ namespace Azure.Storage.Files.DataLake
             {
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 TransferOptions = options.TransferOptions,
-                TransferValidation = options.TransferValidation
+                TransferValidation = options.TransferValidation,
+                UserPrincipalName = options.UserPrincipalName
             };
         }
 
