@@ -625,6 +625,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
         public Azure.HttpRange Range { get { throw null; } set { } }
         public Azure.Storage.DownloadTransferValidationOptions TransferValidation { get { throw null; } set { } }
+        public bool? UserPrincipalName { get { throw null; } set { } }
     }
     public partial class DataLakeFileReadToOptions
     {
@@ -632,6 +633,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
         public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
         public Azure.Storage.DownloadTransferValidationOptions TransferValidation { get { throw null; } set { } }
+        public bool? UserPrincipalName { get { throw null; } set { } }
     }
     public partial class DataLakeFileScheduleDeletionOptions
     {
@@ -878,7 +880,7 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         internal FileDownloadDetails() { }
         public string AcceptRanges { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> AccessControlList { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> AccessControlList { get { throw null; } }
         public string CacheControl { get { throw null; } }
         public string ContentDisposition { get { throw null; } }
         public string ContentEncoding { get { throw null; } }
