@@ -1,10 +1,16 @@
 # Release History
 
-## 1.2.0-beta.5 (Unreleased)
+## 1.3.0 (2023-12-11)
 
 ### Features Added
 
+- Switch to use tag `package-dotnet-sdk` for autorest generation
+- Add `securityConnectorsDevOps` at `2023-09-01-preview`
+- Add `apiCollections` at `2023-11-15`
+
 ### Breaking Changes
+
+- Removed IngestionSettings (deprecated)
 
 ### Bugs Fixed
 
