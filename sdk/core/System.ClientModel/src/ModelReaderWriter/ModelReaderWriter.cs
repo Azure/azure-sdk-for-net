@@ -4,6 +4,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.ClientModel.Primitives;
 using System.ClientModel.Internal;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace System.ClientModel
 {
@@ -31,7 +33,7 @@ namespace System.ClientModel
 
             options ??= ModelReaderWriterOptions.Json;
 
-            if ((options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J")) && model is IJsonModel<T> jsonModel)
+            if (IsJsonFormatRequested(model, options) && model is IJsonModel<T> jsonModel)
             {
                 using (ModelWriter<T> writer = new ModelWriter<T>(jsonModel, options))
                 {
@@ -68,7 +70,7 @@ namespace System.ClientModel
                 throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IPersistableModel<object>)}");
             }
 
-            if ((options.Format == "J" || (options.Format == "W" && iModel.GetFormatFromOptions(options) == "J")) && model is IJsonModel<object> jsonModel)
+            if (IsJsonFormatRequested(iModel, options) && model is IJsonModel<object> jsonModel)
             {
                 using (ModelWriter<object> writer = new ModelWriter<object>(jsonModel, options))
                 {
@@ -171,5 +173,13 @@ namespace System.ClientModel
             }
             return obj;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool IsJsonFormatRequested<T>(IPersistableModel<T> model, ModelReaderWriterOptions options)
+            => options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J");
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool IsJsonFormatRequested(IPersistableModel<object> model, ModelReaderWriterOptions options)
+            => IsJsonFormatRequested<object>(model, options);
     }
 }
