@@ -26,50 +26,13 @@ namespace Azure.Core.Pipeline
         IEnumerator IEnumerable.GetEnumerator()
             => _enumerator;
 
-        //private class PolicyEnumerator : IEnumerator<PipelinePolicy>
-        //{
-        //    private readonly ReadOnlyMemory<HttpPipelinePolicy> _policies;
-        //    private int _current;
-
-        //    public PolicyEnumerator(ReadOnlyMemory<HttpPipelinePolicy> policies)
-        //    {
-        //        _policies = policies;
-        //        _current = -1;
-        //    }
-
-        //    public ReadOnlyMemory<HttpPipelinePolicy> Policies
-        //        => _policies.Slice(_current);
-
-        //    public PolicyEnumerator GetEnumerator() => this;
-
-        //    public bool MoveNext()
-        //    {
-        //        _current++;
-        //        return _current < _policies.Length;
-        //    }
-
-        //    public PipelinePolicy Current => _policies.Span[_current];
-
-        //    object IEnumerator.Current => Current;
-
-        //    public void Reset()
-        //    {
-        //        _current = 0;
-        //    }
-
-        //    public void Dispose() { }
-        //}
-
         private class PolicyEnumerator : IEnumerator<PipelinePolicy>
         {
-            //private readonly ReadOnlyMemory<HttpPipelinePolicy> _original;
             private ReadOnlyMemory<HttpPipelinePolicy> _policies;
-
             private bool _first = true;
 
             public PolicyEnumerator(ReadOnlyMemory<HttpPipelinePolicy> policies)
             {
-                //_original = policies;
                 _policies = policies;
             }
 

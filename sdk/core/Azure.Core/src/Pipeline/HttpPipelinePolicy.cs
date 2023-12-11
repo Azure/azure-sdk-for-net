@@ -14,7 +14,7 @@ namespace Azure.Core.Pipeline
     public abstract class HttpPipelinePolicy : PipelinePolicy
     {
         /// <summary>
-        /// Applies the policy to the <paramref name="message"/>. Implementers are expected to mutate <see cref="HttpMessage.Request"/> before calling <see cref="ProcessNextAsync"/> and observe the <see cref="HttpMessage.Response"/> changes after.
+        /// Applies the policy to the <paramref name="message"/>. Implementers are expected to mutate <see cref="HttpMessage.Request"/> before calling <see cref="ProcessNextAsync(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> and observe the <see cref="HttpMessage.Response"/> changes after.
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
         /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after current one.</param>
@@ -22,7 +22,7 @@ namespace Azure.Core.Pipeline
         public abstract ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline);
 
         /// <summary>
-        /// Applies the policy to the <paramref name="message"/>. Implementers are expected to mutate <see cref="HttpMessage.Request"/> before calling <see cref="ProcessNextAsync"/> and observe the <see cref="HttpMessage.Response"/> changes after.
+        /// Applies the policy to the <paramref name="message"/>. Implementers are expected to mutate <see cref="ProcessNextAsync(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> and observe the <see cref="HttpMessage.Response"/> changes after.
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
         /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after current one.</param>
@@ -90,6 +90,40 @@ namespace Azure.Core.Pipeline
             }
 
             Process(httpMessage, processor.Policies);
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="pipeline"></param>
+        /// <returns></returns>
+        protected sealed override bool ProcessNext(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+        {
+            IEnumerator<PipelinePolicy> enumerator = pipeline.GetEnumerator();
+
+            PipelinePolicy policy = enumerator.Current;
+            bool more = enumerator.MoveNext();
+            policy.ProcessAsync(message, pipeline);
+
+            return more;
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="pipeline"></param>
+        /// <returns></returns>
+        protected async sealed override Task<bool> ProcessNextAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+        {
+            IEnumerator<PipelinePolicy> enumerator = pipeline.GetEnumerator();
+
+            PipelinePolicy policy = enumerator.Current;
+            bool more = enumerator.MoveNext();
+            await policy.ProcessAsync(message, pipeline).ConfigureAwait(false);
+
+            return more;
         }
     }
 }

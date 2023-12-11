@@ -12,45 +12,45 @@ public abstract class PipelinePolicy
 
     public abstract ValueTask ProcessAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline);
 
-    protected static bool ProcessNext(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+    protected virtual bool ProcessNext(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
     {
-        IEnumerator<PipelinePolicy> enumerator = pipeline.GetEnumerator();
-
-        PipelinePolicy policy = enumerator.Current;
-        bool more = enumerator.MoveNext();
-        policy.ProcessAsync(message, pipeline);
-
-        return more;
-
         //IEnumerator<PipelinePolicy> enumerator = pipeline.GetEnumerator();
 
-        //if (enumerator.MoveNext())
-        //{
-        //    enumerator.Current.Process(message, pipeline);
-        //    return true;
-        //}
+        //PipelinePolicy policy = enumerator.Current;
+        //bool more = enumerator.MoveNext();
+        //policy.ProcessAsync(message, pipeline);
 
-        //return false;
+        //return more;
+
+        IEnumerator<PipelinePolicy> enumerator = pipeline.GetEnumerator();
+
+        if (enumerator.MoveNext())
+        {
+            enumerator.Current.Process(message, pipeline);
+            return true;
+        }
+
+        return false;
     }
 
-    protected static async Task<bool> ProcessNextAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+    protected virtual async Task<bool> ProcessNextAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
     {
-        IEnumerator<PipelinePolicy> enumerator = pipeline.GetEnumerator();
-
-        PipelinePolicy policy = enumerator.Current;
-        bool more = enumerator.MoveNext();
-        await policy.ProcessAsync(message, pipeline).ConfigureAwait(false);
-
-        return more;
-
         //IEnumerator<PipelinePolicy> enumerator = pipeline.GetEnumerator();
 
-        //if (enumerator.MoveNext())
-        //{
-        //    await enumerator.Current.ProcessAsync(message, pipeline).ConfigureAwait(false);
-        //    return true;
-        //}
+        //PipelinePolicy policy = enumerator.Current;
+        //bool more = enumerator.MoveNext();
+        //await policy.ProcessAsync(message, pipeline).ConfigureAwait(false);
 
-        //return false;
+        //return more;
+
+        IEnumerator<PipelinePolicy> enumerator = pipeline.GetEnumerator();
+
+        if (enumerator.MoveNext())
+        {
+            await enumerator.Current.ProcessAsync(message, pipeline).ConfigureAwait(false);
+            return true;
+        }
+
+        return false;
     }
 }
