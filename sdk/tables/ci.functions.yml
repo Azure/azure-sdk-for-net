@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/tables/Microsoft.Azure.WebJobs.Extensions.Tables
+    - sdk/tables/service.projects
 
 pr:
   branches:
@@ -20,6 +21,7 @@ pr:
   paths:
     include:
       - sdk/tables/Microsoft.Azure.WebJobs.Extensions.Tables
+      - sdk/tables/service.projects
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

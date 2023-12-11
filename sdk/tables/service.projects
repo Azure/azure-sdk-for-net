@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(SDKType)' == 'client'">
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Data.Tables.*\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Data.Tables\**\*.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(SDKType)' == 'functions'">
