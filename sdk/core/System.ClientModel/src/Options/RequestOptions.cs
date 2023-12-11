@@ -35,7 +35,7 @@ public class RequestOptions
         => _requestHeaders.Add(name, value);
 
     // Set options on the message before sending it through the pipeline.
-    protected internal void Apply(PipelineMessage message, PipelineMessageClassifier? messageClassifier = default)
+    internal void Apply(PipelineMessage message, PipelineMessageClassifier? messageClassifier = default)
     {
         // TODO: Even though we're overriding the message.CancellationToken, this
         // works today because message.CancellationToken is overridden in Azure.Core
