@@ -90,16 +90,16 @@ public class KeyCredentialAuthenticationPolicy : PipelinePolicy
 
     private void AddQueryParameter(PipelineMessage message)
     {
-        UriBuilder uriBuilder = new(message.Request.Uri);
+        // TODO: optimize using Span APIs
 
         string key = _credential.GetValue();
 
-        // TODO: optimize using Span APIs
         StringBuilder query = new StringBuilder();
         query.Append(_name);
         query.Append('=');
         query.Append(Uri.EscapeDataString(key));
 
+        UriBuilder uriBuilder = new(message.Request.Uri);
         uriBuilder.Query = (uriBuilder.Query != null && uriBuilder.Query.Length > 1) ?
             uriBuilder.Query.Substring(1) + "&" + query.ToString() :
             query.ToString();
