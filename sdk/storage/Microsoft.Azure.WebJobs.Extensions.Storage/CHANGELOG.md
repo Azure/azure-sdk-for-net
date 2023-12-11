@@ -1,14 +1,7 @@
 # Release History
 
-## 5.3.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+## 5.2.2 (2023-12-12)
+Please refer to [`Microsoft.Azure.WebJobs.Extension.Storage.Blobs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs/CHANGELOG.md) and [`Microsoft.Azure.WebJobs.Extension.Storage.Queues`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Queues/CHANGELOG.md) for detailed list of changes.
 
 ## 5.2.1 (2023-09-25)
 Please refer to [`Microsoft.Azure.WebJobs.Extension.Storage.Blobs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs/CHANGELOG.md) and [`Microsoft.Azure.WebJobs.Extension.Storage.Queues`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Queues/CHANGELOG.md) for detailed list of changes.
