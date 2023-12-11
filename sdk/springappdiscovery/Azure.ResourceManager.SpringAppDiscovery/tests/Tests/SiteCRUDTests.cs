@@ -18,10 +18,6 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
     [TestFixture]
     public class SiteCRUDTests : SpringAppDiscoveryManagementTestBase
     {
-        public const string subId = "bf85658b-2e17-4390-8a60-1772d27ff80d";
-
-        public const string rgName = "sdk-migration-test";
-        public const string siteName = "springboot-sites-crud-site-for-server";
         public const string migrationProject = "springboot-sites-crud-migrationprj";
         public AzureLocation defaultResourceLocation = AzureLocation.SoutheastAsia;
 
@@ -33,7 +29,6 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
 
         public SiteCRUDTests() : base(true)
         {
-            Mode = RecordedTestMode.Playback;
         }
 
         [SetUp]
@@ -56,6 +51,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
 
             siteProperties.MasterSiteId="1234";
             siteProperties.MigrateProjectId="5678";
+
             SpringbootsitesModelData modelData = new SpringbootsitesModelData(null, siteName, resourceType, null, new Dictionary<string, string>(),
                 defaultResourceLocation, siteProperties, extendLocation);
 

@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
     [TestFixture]
     public class ServerCRUDTests : SpringAppDiscoveryManagementTestBase
     {
-        public const string rgName = "sdk-migration-test";
-        public const string siteName = "springboot-sites-crud-site-for-server";
-
-        public const string serverName = "test-swagger-api-server";
-
         public const string serverIp = "10.150.221.94";
 
         public const string machineId = "test-swagger-marchine-id";
@@ -30,7 +25,6 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
 
         public ServerCRUDTests() : base(true)
         {
-            Mode = RecordedTestMode.Playback;
         }
 
         [SetUp]

@@ -18,15 +18,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
     [TestFixture]
     public class ErrorSummaryCRUDTests : SpringAppDiscoveryManagementTestBase
     {
-        public const string subId = "bf85658b-2e17-4390-8a60-1772d27ff80d";
-
-        public const string rgName = "sdk-migration-test";
-
-        public const string siteName = "springboot-sites-crud-site-for-server";
-
         public ErrorSummaryCRUDTests() : base(true)
         {
-            Mode = RecordedTestMode.Playback;
         }
 
         [SetUp]

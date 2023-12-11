@@ -18,15 +18,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
     [TestFixture]
     public class AppCRUDTests : SpringAppDiscoveryManagementTestBase
     {
-        public const string rgName = "sdk-migration-test";
-
-        public const string siteName = "springboot-sites-crud-site-for-server";
-
-        public const string appName = "73e1b34eb8e5edef53838453c261544269ee28c878751619c460bca663650b6d";
-
         public AppCRUDTests() : base(true)
         {
-            Mode = RecordedTestMode.Playback;
         }
 
         [SetUp]
