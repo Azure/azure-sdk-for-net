@@ -1,0 +1,6940 @@
+{
+ "$id": "1",
+ "Name": "DevCenterService",
+ "Description": "DevCenter service",
+ "ApiVersions": [
+  "2023-04-01"
+ ],
+ "Enums": [
+  {
+   "$id": "2",
+   "Name": "OsType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "3",
+     "Name": "Windows",
+     "Value": "Windows",
+     "Description": "The Windows operating system."
+    }
+   ],
+   "Namespace": "DevCenterService",
+   "Description": "",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "4",
+   "Name": "HibernateSupport",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "5",
+     "Name": "Enabled",
+     "Value": "Enabled",
+     "Description": "Hibernate is enabled."
+    },
+    {
+     "$id": "6",
+     "Name": "Disabled",
+     "Value": "Disabled",
+     "Description": "Hibernate is not enabled."
+    },
+    {
+     "$id": "7",
+     "Name": "OsUnsupported",
+     "Value": "OsUnsupported",
+     "Description": "Hibernate is not supported by the operating system."
+    }
+   ],
+   "Namespace": "DevCenterService",
+   "Description": "",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "8",
+   "Name": "LocalAdminStatus",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "9",
+     "Name": "Enabled",
+     "Value": "Enabled",
+     "Description": "Owners of Dev Boxes in the pool are local administrators on the Dev Boxes."
+    },
+    {
+     "$id": "10",
+     "Name": "Disabled",
+     "Value": "Disabled",
+     "Description": "Owners of Dev Boxes in the pool are not local administrators on the Dev Boxes."
+    }
+   ],
+   "Namespace": "DevCenterService",
+   "Description": "",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "11",
+   "Name": "StopOnDisconnectEnableStatus",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "12",
+     "Name": "Enabled",
+     "Value": "Enabled",
+     "Description": "Stop on disconnect is enabled on the Dev Box."
+    },
+    {
+     "$id": "13",
+     "Name": "Disabled",
+     "Value": "Disabled",
+     "Description": "Stop on disconnect is not enabled on the Dev Box."
+    }
+   ],
+   "Namespace": "DevCenterService",
+   "Description": "",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "14",
+   "Name": "PoolHealthStatus",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "15",
+     "Name": "Unknown",
+     "Value": "Unknown",
+     "Description": "The pool health status is not known."
+    },
+    {
+     "$id": "16",
+     "Name": "Pending",
+     "Value": "Pending",
+     "Description": "The pool health status waiting for health checks to run."
+    },
+    {
+     "$id": "17",
+     "Name": "Healthy",
+     "Value": "Healthy",
+     "Description": "The pool health status is healthy."
+    },
+    {
+     "$id": "18",
+     "Name": "Warning",
+     "Value": "Warning",
+     "Description": "The pool health status has one or more warnings."
+    },
+    {
+     "$id": "19",
+     "Name": "Unhealthy",
+     "Value": "Unhealthy",
+     "Description": "The pool health status is not healthy."
+    }
+   ],
+   "Namespace": "DevCenterService",
+   "Description": "",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "20",
+   "Name": "ScheduledType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "21",
+     "Name": "StopDevBox",
+     "Value": "StopDevBox",
+     "Description": "The scheduled task will stop impacted Dev Boxes."
+    }
+   ],
+   "Namespace": "DevCenterService",
+   "Description": "",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "22",
+   "Name": "ScheduledFrequency",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "23",
+     "Name": "Daily",
+     "Value": "Daily",
+     "Description": "The scheduled task will run every day."
+    }
+   ],
+   "Namespace": "DevCenterService",
+   "Description": "",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "24",
+   "Name": "PowerState",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "25",
+     "Name": "Unknown",
+     "Value": "Unknown",
+     "Description": "The Dev Box power state is not known."
+    },
+    {
+     "$id": "26",
+     "Name": "Running",
+     "Value": "Running",
+     "Description": "The Dev Box is running."
+    },
+    {
+     "$id": "27",
+     "Name": "Deallocated",
+     "Value": "Deallocated",
+     "Description": "The Dev Box is deallocated."
+    },
+    {
+     "$id": "28",
+     "Name": "PoweredOff",
+     "Value": "PoweredOff",
+     "Description": "The Dev Box is powered off."
+    },
+    {
+     "$id": "29",
+     "Name": "Hibernated",
+     "Value": "Hibernated",
+     "Description": "The Dev Box is hibernated."
+    }
+   ],
+   "Namespace": "DevCenterService",
+   "Description": "",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "30",
+   "Name": "OperationStatusValue",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "31",
+     "Name": "Running",
+     "Value": "Running"
+    },
+    {
+     "$id": "32",
+     "Name": "Completed",
+     "Value": "Completed"
+    },
+    {
+     "$id": "33",
+     "Name": "Canceled",
+     "Value": "Canceled"
+    },
+    {
+     "$id": "34",
+     "Name": "Failed",
+     "Value": "Failed"
+    }
+   ],
+   "Namespace": "DevCenterService",
+   "Description": "",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "35",
+   "Name": "DevBoxActionType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "36",
+     "Name": "Stop",
+     "Value": "Stop",
+     "Description": "The action will stop the Dev Box."
+    }
+   ],
+   "Namespace": "DevCenterService",
+   "Description": "",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "37",
+   "Name": "DevBoxActionDelayResultStatus",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "38",
+     "Name": "Succeeded",
+     "Value": "Succeeded",
+     "Description": "The delay operation succeeded."
+    },
+    {
+     "$id": "39",
+     "Name": "Failed",
+     "Value": "Failed",
+     "Description": "The delay operation failed."
+    }
+   ],
+   "Namespace": "DevCenterService",
+   "Description": "",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "40",
+   "Name": "ParameterType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "41",
+     "Name": "array",
+     "Value": "array",
+     "Description": "The parameter accepts an array of values."
+    },
+    {
+     "$id": "42",
+     "Name": "boolean",
+     "Value": "boolean",
+     "Description": "The parameter accepts a boolean value."
+    },
+    {
+     "$id": "43",
+     "Name": "integer",
+     "Value": "integer",
+     "Description": "The parameter accepts an integer value."
+    },
+    {
+     "$id": "44",
+     "Name": "number",
+     "Value": "number",
+     "Description": "The parameter accepts a number value."
+    },
+    {
+     "$id": "45",
+     "Name": "object",
+     "Value": "object",
+     "Description": "The parameter accepts an object value."
+    },
+    {
+     "$id": "46",
+     "Name": "string",
+     "Value": "string",
+     "Description": "The parameter accepts a string value."
+    }
+   ],
+   "Namespace": "DevCenterService",
+   "Description": "",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "47",
+   "Name": "EnvironmentTypeEnableStatus",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "48",
+     "Name": "Enabled",
+     "Value": "Enabled",
+     "Description": "The environment type is enabled for use in the project."
+    },
+    {
+     "$id": "49",
+     "Name": "Disabled",
+     "Value": "Disabled",
+     "Description": "The environment type is not enabled for use in the project."
+    }
+   ],
+   "Namespace": "DevCenterService",
+   "Description": "",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "50",
+   "Name": "APIVersions",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "51",
+     "Name": "v2023_04_01",
+     "Value": "2023-04-01",
+     "Description": "The 2023-04-01 service API version"
+    }
+   ],
+   "Namespace": "DevCenterService",
+   "Description": "DevCenter API versions",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  }
+ ],
+ "Models": [
+  {
+   "$id": "52",
+   "Name": "PagedProject",
+   "Namespace": "DevCenterService",
+   "Description": "Results of the project list operation.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "53",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The Project items on this page",
+     "Type": {
+      "$id": "54",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "55",
+       "Name": "Project",
+       "Namespace": "DevCenterService",
+       "Description": "Project details.",
+       "IsNullable": false,
+       "Usage": "None",
+       "Properties": [
+        {
+         "$id": "56",
+         "Name": "name",
+         "SerializedName": "name",
+         "Description": "Name of the project",
+         "Type": {
+          "$id": "57",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "58",
+         "Name": "description",
+         "SerializedName": "description",
+         "Description": "Description of the project.",
+         "Type": {
+          "$id": "59",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "60",
+         "Name": "maxDevBoxesPerUser",
+         "SerializedName": "maxDevBoxesPerUser",
+         "Description": "When specified, indicates the maximum number of Dev Boxes a single user can\ncreate across all pools in the project.",
+         "Type": {
+          "$id": "61",
+          "Name": "int32",
+          "Kind": "Int32",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "62",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "The link to the next page of items",
+     "Type": {
+      "$id": "63",
+      "Name": "ResourceLocation",
+      "Kind": "Uri",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "55"
+  },
+  {
+   "$id": "64",
+   "Name": "PagedPool",
+   "Namespace": "DevCenterService",
+   "Description": "The Pool list result",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "65",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The Pool items on this page",
+     "Type": {
+      "$id": "66",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "67",
+       "Name": "Pool",
+       "Namespace": "DevCenterService",
+       "Description": "A pool of Dev Boxes.",
+       "IsNullable": false,
+       "Usage": "None",
+       "Properties": [
+        {
+         "$id": "68",
+         "Name": "name",
+         "SerializedName": "name",
+         "Description": "Pool name",
+         "Type": {
+          "$id": "69",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "70",
+         "Name": "location",
+         "SerializedName": "location",
+         "Description": "Azure region where Dev Boxes in the pool are located",
+         "Type": {
+          "$id": "71",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "72",
+         "Name": "osType",
+         "SerializedName": "osType",
+         "Description": "The operating system type of Dev Boxes in this pool",
+         "Type": {
+          "$ref": "2"
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "73",
+         "Name": "hardwareProfile",
+         "SerializedName": "hardwareProfile",
+         "Description": "Hardware settings for the Dev Boxes created in this pool",
+         "Type": {
+          "$id": "74",
+          "Name": "HardwareProfile",
+          "Namespace": "DevCenterService",
+          "Description": "Hardware specifications for the Dev Box.",
+          "IsNullable": false,
+          "Usage": "None",
+          "Properties": [
+           {
+            "$id": "75",
+            "Name": "skuName",
+            "SerializedName": "skuName",
+            "Description": "The name of the SKU",
+            "Type": {
+             "$id": "76",
+             "Name": "string",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": true
+           },
+           {
+            "$id": "77",
+            "Name": "vCPUs",
+            "SerializedName": "vCPUs",
+            "Description": "The number of vCPUs available for the Dev Box.",
+            "Type": {
+             "$id": "78",
+             "Name": "int32",
+             "Kind": "Int32",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": true
+           },
+           {
+            "$id": "79",
+            "Name": "memoryGB",
+            "SerializedName": "memoryGB",
+            "Description": "The amount of memory available for the Dev Box.",
+            "Type": {
+             "$id": "80",
+             "Name": "int32",
+             "Kind": "Int32",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": true
+           }
+          ]
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "81",
+         "Name": "hibernateSupport",
+         "SerializedName": "hibernateSupport",
+         "Description": "Indicates whether hibernate is enabled/disabled or unknown.",
+         "Type": {
+          "$ref": "4"
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "82",
+         "Name": "storageProfile",
+         "SerializedName": "storageProfile",
+         "Description": "Storage settings for Dev Box created in this pool",
+         "Type": {
+          "$id": "83",
+          "Name": "StorageProfile",
+          "Namespace": "DevCenterService",
+          "Description": "Storage settings for the Dev Box's disks",
+          "IsNullable": false,
+          "Usage": "None",
+          "Properties": [
+           {
+            "$id": "84",
+            "Name": "osDisk",
+            "SerializedName": "osDisk",
+            "Description": "Settings for the operating system disk.",
+            "Type": {
+             "$id": "85",
+             "Name": "OSDisk",
+             "Namespace": "DevCenterService",
+             "Description": "Settings for the operating system disk.",
+             "IsNullable": false,
+             "Usage": "None",
+             "Properties": [
+              {
+               "$id": "86",
+               "Name": "diskSizeGB",
+               "SerializedName": "diskSizeGB",
+               "Description": "The size of the OS Disk in gigabytes.",
+               "Type": {
+                "$id": "87",
+                "Name": "int32",
+                "Kind": "Int32",
+                "IsNullable": false
+               },
+               "IsRequired": false,
+               "IsReadOnly": true
+              }
+             ]
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "88",
+         "Name": "imageReference",
+         "SerializedName": "imageReference",
+         "Description": "Image settings for Dev Boxes create in this pool",
+         "Type": {
+          "$id": "89",
+          "Name": "ImageReference",
+          "Namespace": "DevCenterService",
+          "Description": "Specifies information about the image used",
+          "IsNullable": false,
+          "Usage": "None",
+          "Properties": [
+           {
+            "$id": "90",
+            "Name": "name",
+            "SerializedName": "name",
+            "Description": "The name of the image used.",
+            "Type": {
+             "$id": "91",
+             "Name": "string",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": true
+           },
+           {
+            "$id": "92",
+            "Name": "version",
+            "SerializedName": "version",
+            "Description": "The version of the image.",
+            "Type": {
+             "$id": "93",
+             "Name": "string",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": true
+           },
+           {
+            "$id": "94",
+            "Name": "operatingSystem",
+            "SerializedName": "operatingSystem",
+            "Description": "The operating system of the image.",
+            "Type": {
+             "$id": "95",
+             "Name": "string",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": true
+           },
+           {
+            "$id": "96",
+            "Name": "osBuildNumber",
+            "SerializedName": "osBuildNumber",
+            "Description": "The operating system build number of the image.",
+            "Type": {
+             "$id": "97",
+             "Name": "string",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": true
+           },
+           {
+            "$id": "98",
+            "Name": "publishedDate",
+            "SerializedName": "publishedDate",
+            "Description": "The datetime that the backing image version was published.",
+            "Type": {
+             "$id": "99",
+             "Name": "utcDateTime",
+             "Kind": "DateTime",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": true
+           }
+          ]
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "100",
+         "Name": "localAdministrator",
+         "SerializedName": "localAdministrator",
+         "Description": "Indicates whether owners of Dev Boxes in this pool are local administrators on\nthe Dev Boxes.",
+         "Type": {
+          "$ref": "8"
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "101",
+         "Name": "stopOnDisconnect",
+         "SerializedName": "stopOnDisconnect",
+         "Description": "Stop on disconnect configuration settings for Dev Boxes created in this pool.",
+         "Type": {
+          "$id": "102",
+          "Name": "StopOnDisconnectConfiguration",
+          "Namespace": "DevCenterService",
+          "Description": "Stop on disconnect configuration settings for Dev Boxes created in this pool.",
+          "IsNullable": false,
+          "Usage": "None",
+          "Properties": [
+           {
+            "$id": "103",
+            "Name": "status",
+            "SerializedName": "status",
+            "Description": "Indicates whether the feature to stop the devbox on disconnect once the grace\nperiod has lapsed is enabled.",
+            "Type": {
+             "$ref": "11"
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "104",
+            "Name": "gracePeriodMinutes",
+            "SerializedName": "gracePeriodMinutes",
+            "Description": "The specified time in minutes to wait before stopping a Dev Box once disconnect\nis detected.",
+            "Type": {
+             "$id": "105",
+             "Name": "int32",
+             "Kind": "Int32",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "106",
+         "Name": "healthStatus",
+         "SerializedName": "healthStatus",
+         "Description": "Overall health status of the Pool. Indicates whether or not the Pool is\navailable to create Dev Boxes.",
+         "Type": {
+          "$ref": "14"
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "107",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "The link to the next page of items",
+     "Type": {
+      "$id": "108",
+      "Name": "ResourceLocation",
+      "Kind": "Uri",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "67"
+  },
+  {
+   "$ref": "74"
+  },
+  {
+   "$ref": "83"
+  },
+  {
+   "$ref": "85"
+  },
+  {
+   "$ref": "89"
+  },
+  {
+   "$ref": "102"
+  },
+  {
+   "$id": "109",
+   "Name": "PagedSchedule",
+   "Namespace": "DevCenterService",
+   "Description": "The Schedule list result",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "110",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The Schedule items on this page",
+     "Type": {
+      "$id": "111",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "112",
+       "Name": "Schedule",
+       "Namespace": "DevCenterService",
+       "Description": "A Schedule to execute action.",
+       "IsNullable": false,
+       "Usage": "None",
+       "Properties": [
+        {
+         "$id": "113",
+         "Name": "name",
+         "SerializedName": "name",
+         "Description": "Display name for the Schedule",
+         "Type": {
+          "$id": "114",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "115",
+         "Name": "type",
+         "SerializedName": "type",
+         "Description": "Supported type this scheduled task represents.",
+         "Type": {
+          "$ref": "20"
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "116",
+         "Name": "frequency",
+         "SerializedName": "frequency",
+         "Description": "The frequency of this scheduled task.",
+         "Type": {
+          "$ref": "22"
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "117",
+         "Name": "time",
+         "SerializedName": "time",
+         "Description": "The target time to trigger the action. The format is HH:MM.",
+         "Type": {
+          "$id": "118",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "119",
+         "Name": "timeZone",
+         "SerializedName": "timeZone",
+         "Description": "The IANA timezone id at which the schedule should execute.",
+         "Type": {
+          "$id": "120",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "121",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "The link to the next page of items",
+     "Type": {
+      "$id": "122",
+      "Name": "ResourceLocation",
+      "Kind": "Uri",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "112"
+  },
+  {
+   "$id": "123",
+   "Name": "PagedDevBox",
+   "Namespace": "DevCenterService",
+   "Description": "The Dev Box list result",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "124",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The DevBox items on this page",
+     "Type": {
+      "$id": "125",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "126",
+       "Name": "DevBox",
+       "Namespace": "DevCenterService",
+       "Description": "A Dev Box",
+       "IsNullable": false,
+       "Usage": "None",
+       "Properties": [
+        {
+         "$id": "127",
+         "Name": "name",
+         "SerializedName": "name",
+         "Description": "Display name for the Dev Box",
+         "Type": {
+          "$id": "128",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "129",
+         "Name": "projectName",
+         "SerializedName": "projectName",
+         "Description": "Name of the project this Dev Box belongs to",
+         "Type": {
+          "$id": "130",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "131",
+         "Name": "poolName",
+         "SerializedName": "poolName",
+         "Description": "The name of the Dev Box pool this machine belongs to.",
+         "Type": {
+          "$id": "132",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "133",
+         "Name": "hibernateSupport",
+         "SerializedName": "hibernateSupport",
+         "Description": "Indicates whether hibernate is enabled/disabled or unknown.",
+         "Type": {
+          "$ref": "4"
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "134",
+         "Name": "provisioningState",
+         "SerializedName": "provisioningState",
+         "Description": "The current provisioning state of the Dev Box.",
+         "Type": {
+          "$id": "135",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "136",
+         "Name": "actionState",
+         "SerializedName": "actionState",
+         "Description": "The current action state of the Dev Box. This is state is based on previous\naction performed by user.",
+         "Type": {
+          "$id": "137",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "138",
+         "Name": "powerState",
+         "SerializedName": "powerState",
+         "Description": "The current power state of the Dev Box.",
+         "Type": {
+          "$ref": "24"
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "139",
+         "Name": "uniqueId",
+         "SerializedName": "uniqueId",
+         "Description": "A unique identifier for the Dev Box. This is a GUID-formatted string (e.g.\n00000000-0000-0000-0000-000000000000).",
+         "Type": {
+          "$id": "140",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "141",
+         "Name": "error",
+         "SerializedName": "error",
+         "Description": "Provisioning or action error details. Populated only for error states.",
+         "Type": {
+          "$id": "142",
+          "Name": "Error",
+          "Namespace": "Azure.Core.Foundations",
+          "Description": "The error object.",
+          "IsNullable": false,
+          "Usage": "None",
+          "Properties": [
+           {
+            "$id": "143",
+            "Name": "code",
+            "SerializedName": "code",
+            "Description": "One of a server-defined set of error codes.",
+            "Type": {
+             "$id": "144",
+             "Name": "string",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "145",
+            "Name": "message",
+            "SerializedName": "message",
+            "Description": "A human-readable representation of the error.",
+            "Type": {
+             "$id": "146",
+             "Name": "string",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "147",
+            "Name": "target",
+            "SerializedName": "target",
+            "Description": "The target of the error.",
+            "Type": {
+             "$id": "148",
+             "Name": "string",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "149",
+            "Name": "details",
+            "SerializedName": "details",
+            "Description": "An array of details about specific errors that led to this reported error.",
+            "Type": {
+             "$id": "150",
+             "Name": "Array",
+             "ElementType": {
+              "$ref": "142"
+             },
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "151",
+            "Name": "innererror",
+            "SerializedName": "innererror",
+            "Description": "An object containing more specific information than the current object about the error.",
+            "Type": {
+             "$id": "152",
+             "Name": "InnerError",
+             "Namespace": "Azure.Core.Foundations",
+             "Description": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.",
+             "IsNullable": false,
+             "Usage": "None",
+             "Properties": [
+              {
+               "$id": "153",
+               "Name": "code",
+               "SerializedName": "code",
+               "Description": "One of a server-defined set of error codes.",
+               "Type": {
+                "$id": "154",
+                "Name": "string",
+                "Kind": "String",
+                "IsNullable": false
+               },
+               "IsRequired": false,
+               "IsReadOnly": false
+              },
+              {
+               "$id": "155",
+               "Name": "InnerErrorObject",
+               "SerializedName": "innererror",
+               "Description": "Inner error.",
+               "Type": {
+                "$ref": "152"
+               },
+               "IsRequired": false,
+               "IsReadOnly": false
+              }
+             ]
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "156",
+         "Name": "location",
+         "SerializedName": "location",
+         "Description": "Azure region where this Dev Box is located. This will be the same region as the\nVirtual Network it is attached to.",
+         "Type": {
+          "$id": "157",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "158",
+         "Name": "osType",
+         "SerializedName": "osType",
+         "Description": "The operating system type of this Dev Box.",
+         "Type": {
+          "$ref": "2"
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "159",
+         "Name": "user",
+         "SerializedName": "user",
+         "Description": "The AAD object id of the user this Dev Box is assigned to.",
+         "Type": {
+          "$id": "160",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "161",
+         "Name": "hardwareProfile",
+         "SerializedName": "hardwareProfile",
+         "Description": "Information about the Dev Box's hardware resources",
+         "Type": {
+          "$ref": "74"
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "162",
+         "Name": "storageProfile",
+         "SerializedName": "storageProfile",
+         "Description": "Storage settings for this Dev Box",
+         "Type": {
+          "$ref": "83"
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "163",
+         "Name": "imageReference",
+         "SerializedName": "imageReference",
+         "Description": "Information about the image used for this Dev Box",
+         "Type": {
+          "$ref": "89"
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "164",
+         "Name": "createdTime",
+         "SerializedName": "createdTime",
+         "Description": "Creation time of this Dev Box",
+         "Type": {
+          "$id": "165",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "166",
+         "Name": "localAdministrator",
+         "SerializedName": "localAdministrator",
+         "Description": "Indicates whether the owner of the Dev Box is a local administrator.",
+         "Type": {
+          "$ref": "8"
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "167",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "The link to the next page of items",
+     "Type": {
+      "$id": "168",
+      "Name": "ResourceLocation",
+      "Kind": "Uri",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "126"
+  },
+  {
+   "$ref": "142"
+  },
+  {
+   "$ref": "152"
+  },
+  {
+   "$id": "169",
+   "Name": "OperationStatus",
+   "Namespace": "DevCenterService",
+   "Description": "The current status of an async operation",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "170",
+     "Name": "id",
+     "SerializedName": "id",
+     "Description": "Fully qualified ID for the operation status.",
+     "Type": {
+      "$id": "171",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "172",
+     "Name": "name",
+     "SerializedName": "name",
+     "Description": "The operation id name",
+     "Type": {
+      "$id": "173",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "174",
+     "Name": "status",
+     "SerializedName": "status",
+     "Description": "Provisioning state of the resource.",
+     "Type": {
+      "$ref": "30"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "175",
+     "Name": "resourceId",
+     "SerializedName": "resourceId",
+     "Description": "The id of the resource.",
+     "Type": {
+      "$id": "176",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "177",
+     "Name": "startTime",
+     "SerializedName": "startTime",
+     "Description": "The start time of the operation",
+     "Type": {
+      "$id": "178",
+      "Name": "utcDateTime",
+      "Kind": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "179",
+     "Name": "endTime",
+     "SerializedName": "endTime",
+     "Description": "The end time of the operation",
+     "Type": {
+      "$id": "180",
+      "Name": "utcDateTime",
+      "Kind": "DateTime",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "181",
+     "Name": "percentComplete",
+     "SerializedName": "percentComplete",
+     "Description": "Percent of the operation that is complete",
+     "Type": {
+      "$id": "182",
+      "Name": "float32",
+      "Kind": "Float32",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "183",
+     "Name": "properties",
+     "SerializedName": "properties",
+     "Description": "Custom operation properties, populated only for a successful operation.",
+     "Type": {
+      "$id": "184",
+      "Name": "Intrinsic",
+      "Kind": "unknown",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "185",
+     "Name": "error",
+     "SerializedName": "error",
+     "Description": "Operation Error message",
+     "Type": {
+      "$id": "186",
+      "Name": "OperationStatusError",
+      "Namespace": "DevCenterService",
+      "Description": "Operation Error message",
+      "IsNullable": false,
+      "Usage": "None",
+      "Properties": [
+       {
+        "$id": "187",
+        "Name": "code",
+        "SerializedName": "code",
+        "Description": "The error code.",
+        "Type": {
+         "$id": "188",
+         "Name": "string",
+         "Kind": "String",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "189",
+        "Name": "message",
+        "SerializedName": "message",
+        "Description": "The error message.",
+        "Type": {
+         "$id": "190",
+         "Name": "string",
+         "Kind": "String",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "186"
+  },
+  {
+   "$id": "191",
+   "Name": "Anon_1",
+   "Namespace": "DevCenterService",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "192",
+     "Name": "body",
+     "SerializedName": "body",
+     "Description": "",
+     "Type": {
+      "$ref": "169"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "193",
+   "Name": "RemoteConnection",
+   "Namespace": "DevCenterService",
+   "Description": "Provides remote connection information for a Dev Box.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "194",
+     "Name": "webUrl",
+     "SerializedName": "webUrl",
+     "Description": "URL to open a browser based RDP session.",
+     "Type": {
+      "$id": "195",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "196",
+     "Name": "rdpConnectionUrl",
+     "SerializedName": "rdpConnectionUrl",
+     "Description": "Link to open a Remote Desktop session.",
+     "Type": {
+      "$id": "197",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "198",
+   "Name": "PagedDevBoxAction",
+   "Namespace": "DevCenterService",
+   "Description": "The actions list result",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "199",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The DevBoxAction items on this page",
+     "Type": {
+      "$id": "200",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "201",
+       "Name": "DevBoxAction",
+       "Namespace": "DevCenterService",
+       "Description": "An action which will take place on a Dev Box.",
+       "IsNullable": false,
+       "Usage": "None",
+       "Properties": [
+        {
+         "$id": "202",
+         "Name": "name",
+         "SerializedName": "name",
+         "Description": "The name of the action.",
+         "Type": {
+          "$id": "203",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "204",
+         "Name": "actionType",
+         "SerializedName": "actionType",
+         "Description": "The action that will be taken.",
+         "Type": {
+          "$ref": "35"
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "205",
+         "Name": "sourceId",
+         "SerializedName": "sourceId",
+         "Description": "The id of the resource which triggered this action",
+         "Type": {
+          "$id": "206",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "207",
+         "Name": "suspendedUntil",
+         "SerializedName": "suspendedUntil",
+         "Description": "The earliest time that the action could occur (UTC).",
+         "Type": {
+          "$id": "208",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "209",
+         "Name": "next",
+         "SerializedName": "next",
+         "Description": "Details about the next run of this action.",
+         "Type": {
+          "$id": "210",
+          "Name": "DevBoxNextAction",
+          "Namespace": "DevCenterService",
+          "Description": "Details about the next run of an action.",
+          "IsNullable": false,
+          "Usage": "None",
+          "Properties": [
+           {
+            "$id": "211",
+            "Name": "scheduledTime",
+            "SerializedName": "scheduledTime",
+            "Description": "The time the action will be triggered (UTC).",
+            "Type": {
+             "$id": "212",
+             "Name": "utcDateTime",
+             "Kind": "DateTime",
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "213",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "The link to the next page of items",
+     "Type": {
+      "$id": "214",
+      "Name": "ResourceLocation",
+      "Kind": "Uri",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "201"
+  },
+  {
+   "$ref": "210"
+  },
+  {
+   "$id": "215",
+   "Name": "PagedDevBoxActionDelayResult",
+   "Namespace": "DevCenterService",
+   "Description": "The actions list result",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "216",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The DevBoxActionDelayResult items on this page",
+     "Type": {
+      "$id": "217",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "218",
+       "Name": "DevBoxActionDelayResult",
+       "Namespace": "DevCenterService",
+       "Description": "The action delay result",
+       "IsNullable": false,
+       "Usage": "None",
+       "Properties": [
+        {
+         "$id": "219",
+         "Name": "name",
+         "SerializedName": "name",
+         "Description": "The name of the action.",
+         "Type": {
+          "$id": "220",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "221",
+         "Name": "result",
+         "SerializedName": "result",
+         "Description": "The result of the delay operation on this action.",
+         "Type": {
+          "$ref": "37"
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "222",
+         "Name": "action",
+         "SerializedName": "action",
+         "Description": "The delayed action",
+         "Type": {
+          "$ref": "201"
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "223",
+         "Name": "error",
+         "SerializedName": "error",
+         "Description": "Information about the error that occurred. Only populated on error.",
+         "Type": {
+          "$ref": "142"
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "224",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "The link to the next page of items",
+     "Type": {
+      "$id": "225",
+      "Name": "ResourceLocation",
+      "Kind": "Uri",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "218"
+  },
+  {
+   "$id": "226",
+   "Name": "PagedEnvironment",
+   "Namespace": "DevCenterService",
+   "Description": "Results of the environment list operation.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "227",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The Environment items on this page",
+     "Type": {
+      "$id": "228",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "229",
+       "Name": "Environment",
+       "Namespace": "DevCenterService",
+       "Description": "Properties of an environment.",
+       "IsNullable": false,
+       "Usage": "None",
+       "Properties": [
+        {
+         "$id": "230",
+         "Name": "parameters",
+         "SerializedName": "parameters",
+         "Description": "Parameters object for the environment.",
+         "Type": {
+          "$id": "231",
+          "Name": "Intrinsic",
+          "Kind": "unknown",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "232",
+         "Name": "name",
+         "SerializedName": "name",
+         "Description": "Environment name.",
+         "Type": {
+          "$id": "233",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "234",
+         "Name": "environmentType",
+         "SerializedName": "environmentType",
+         "Description": "Environment type.",
+         "Type": {
+          "$id": "235",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "236",
+         "Name": "user",
+         "SerializedName": "user",
+         "Description": "The AAD object id of the owner of this Environment.",
+         "Type": {
+          "$id": "237",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "238",
+         "Name": "provisioningState",
+         "SerializedName": "provisioningState",
+         "Description": "The provisioning state of the environment.",
+         "Type": {
+          "$id": "239",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "240",
+         "Name": "resourceGroupId",
+         "SerializedName": "resourceGroupId",
+         "Description": "The identifier of the resource group containing the environment's resources.",
+         "Type": {
+          "$id": "241",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        },
+        {
+         "$id": "242",
+         "Name": "catalogName",
+         "SerializedName": "catalogName",
+         "Description": "Name of the catalog.",
+         "Type": {
+          "$id": "243",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "244",
+         "Name": "environmentDefinitionName",
+         "SerializedName": "environmentDefinitionName",
+         "Description": "Name of the environment definition.",
+         "Type": {
+          "$id": "245",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "246",
+         "Name": "error",
+         "SerializedName": "error",
+         "Description": "Provisioning error details. Populated only for error states.",
+         "Type": {
+          "$ref": "142"
+         },
+         "IsRequired": false,
+         "IsReadOnly": true
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "247",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "The link to the next page of items",
+     "Type": {
+      "$id": "248",
+      "Name": "ResourceLocation",
+      "Kind": "Uri",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "229"
+  },
+  {
+   "$id": "249",
+   "Name": "Anon_2",
+   "Namespace": "DevCenterService",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "250",
+     "Name": "body",
+     "SerializedName": "body",
+     "Description": "",
+     "Type": {
+      "$ref": "169"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "251",
+   "Name": "PagedCatalog",
+   "Namespace": "DevCenterService",
+   "Description": "Results of the catalog list operation.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "252",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The Catalog items on this page",
+     "Type": {
+      "$id": "253",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "254",
+       "Name": "Catalog",
+       "Namespace": "DevCenterService",
+       "Description": "A catalog.",
+       "IsNullable": false,
+       "Usage": "None",
+       "Properties": [
+        {
+         "$id": "255",
+         "Name": "name",
+         "SerializedName": "name",
+         "Description": "Name of the catalog.",
+         "Type": {
+          "$id": "256",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "257",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "The link to the next page of items",
+     "Type": {
+      "$id": "258",
+      "Name": "ResourceLocation",
+      "Kind": "Uri",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "254"
+  },
+  {
+   "$id": "259",
+   "Name": "PagedEnvironmentDefinition",
+   "Namespace": "DevCenterService",
+   "Description": "Results of the environment definition list operation.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "260",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The EnvironmentDefinition items on this page",
+     "Type": {
+      "$id": "261",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "262",
+       "Name": "EnvironmentDefinition",
+       "Namespace": "DevCenterService",
+       "Description": "An environment definition.",
+       "IsNullable": false,
+       "Usage": "None",
+       "Properties": [
+        {
+         "$id": "263",
+         "Name": "id",
+         "SerializedName": "id",
+         "Description": "The ID of the environment definition.",
+         "Type": {
+          "$id": "264",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "265",
+         "Name": "name",
+         "SerializedName": "name",
+         "Description": "Name of the environment definition.",
+         "Type": {
+          "$id": "266",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "267",
+         "Name": "catalogName",
+         "SerializedName": "catalogName",
+         "Description": "Name of the catalog.",
+         "Type": {
+          "$id": "268",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "269",
+         "Name": "description",
+         "SerializedName": "description",
+         "Description": "A short description of the environment definition.",
+         "Type": {
+          "$id": "270",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "271",
+         "Name": "parameters",
+         "SerializedName": "parameters",
+         "Description": "Input parameters passed to an environment.",
+         "Type": {
+          "$id": "272",
+          "Name": "Array",
+          "ElementType": {
+           "$id": "273",
+           "Name": "EnvironmentDefinitionParameter",
+           "Namespace": "DevCenterService",
+           "Description": "Properties of an Environment Definition parameter",
+           "IsNullable": false,
+           "Usage": "None",
+           "Properties": [
+            {
+             "$id": "274",
+             "Name": "id",
+             "SerializedName": "id",
+             "Description": "Unique ID of the parameter",
+             "Type": {
+              "$id": "275",
+              "Name": "string",
+              "Kind": "String",
+              "IsNullable": false
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "276",
+             "Name": "name",
+             "SerializedName": "name",
+             "Description": "Display name of the parameter",
+             "Type": {
+              "$id": "277",
+              "Name": "string",
+              "Kind": "String",
+              "IsNullable": false
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "278",
+             "Name": "description",
+             "SerializedName": "description",
+             "Description": "Description of the parameter",
+             "Type": {
+              "$id": "279",
+              "Name": "string",
+              "Kind": "String",
+              "IsNullable": false
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "280",
+             "Name": "default",
+             "SerializedName": "default",
+             "Description": "Default value of the parameter",
+             "Type": {
+              "$id": "281",
+              "Name": "string",
+              "Kind": "String",
+              "IsNullable": false
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "282",
+             "Name": "type",
+             "SerializedName": "type",
+             "Description": "A string of one of the basic JSON types (number, integer, array, object,\nboolean, string)",
+             "Type": {
+              "$ref": "40"
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "283",
+             "Name": "readOnly",
+             "SerializedName": "readOnly",
+             "Description": "Whether or not this parameter is read-only.  If true, default should have a\nvalue.",
+             "Type": {
+              "$id": "284",
+              "Name": "boolean",
+              "Kind": "Boolean",
+              "IsNullable": false
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "285",
+             "Name": "required",
+             "SerializedName": "required",
+             "Description": "Whether or not this parameter is required",
+             "Type": {
+              "$id": "286",
+              "Name": "boolean",
+              "Kind": "Boolean",
+              "IsNullable": false
+             },
+             "IsRequired": true,
+             "IsReadOnly": false
+            },
+            {
+             "$id": "287",
+             "Name": "allowed",
+             "SerializedName": "allowed",
+             "Description": "An array of allowed values",
+             "Type": {
+              "$id": "288",
+              "Name": "Array",
+              "ElementType": {
+               "$id": "289",
+               "Name": "string",
+               "Kind": "String",
+               "IsNullable": false
+              },
+              "IsNullable": false
+             },
+             "IsRequired": false,
+             "IsReadOnly": false
+            }
+           ]
+          },
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "290",
+         "Name": "parametersSchema",
+         "SerializedName": "parametersSchema",
+         "Description": "JSON schema defining the parameters object passed to an environment.",
+         "Type": {
+          "$id": "291",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "292",
+         "Name": "templatePath",
+         "SerializedName": "templatePath",
+         "Description": "Path to the Environment Definition entrypoint file.",
+         "Type": {
+          "$id": "293",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": false,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "294",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "The link to the next page of items",
+     "Type": {
+      "$id": "295",
+      "Name": "ResourceLocation",
+      "Kind": "Uri",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "262"
+  },
+  {
+   "$ref": "273"
+  },
+  {
+   "$id": "296",
+   "Name": "PagedEnvironmentType",
+   "Namespace": "DevCenterService",
+   "Description": "Result of the environment type list operation.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "297",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The EnvironmentType items on this page",
+     "Type": {
+      "$id": "298",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "299",
+       "Name": "EnvironmentType",
+       "Namespace": "DevCenterService",
+       "Description": "Properties of an environment type.",
+       "IsNullable": false,
+       "Usage": "None",
+       "Properties": [
+        {
+         "$id": "300",
+         "Name": "name",
+         "SerializedName": "name",
+         "Description": "Name of the environment type",
+         "Type": {
+          "$id": "301",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "302",
+         "Name": "deploymentTargetId",
+         "SerializedName": "deploymentTargetId",
+         "Description": "Id of a subscription or management group that the environment type will be\nmapped to. The environment's resources will be deployed into this subscription\nor management group.",
+         "Type": {
+          "$id": "303",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "304",
+         "Name": "status",
+         "SerializedName": "status",
+         "Description": "Indicates whether this environment type is enabled for use in this project.",
+         "Type": {
+          "$ref": "47"
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "305",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "The link to the next page of items",
+     "Type": {
+      "$id": "306",
+      "Name": "ResourceLocation",
+      "Kind": "Uri",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "299"
+  },
+  {
+   "$id": "307",
+   "Name": "User",
+   "Namespace": "DevCenterService",
+   "Description": "Project user",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "308",
+     "Name": "name",
+     "SerializedName": "name",
+     "Description": "User name",
+     "Type": {
+      "$id": "309",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": true
+    }
+   ]
+  },
+  {
+   "$id": "310",
+   "Name": "EnvironmentUpdateProperties",
+   "Namespace": "DevCenterService",
+   "Description": "Properties of an environment. These properties can be updated after the\nresource has been created.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "311",
+     "Name": "parameters",
+     "SerializedName": "parameters",
+     "Description": "Parameters object for the environment.",
+     "Type": {
+      "$id": "312",
+      "Name": "Intrinsic",
+      "Kind": "unknown",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "313",
+   "Name": "DevCenterClient",
+   "Description": "",
+   "Operations": [
+    {
+     "$id": "314",
+     "Name": "ListProjects",
+     "ResourceName": "DevCenterClientOperations",
+     "Description": "Lists all projects.",
+     "Parameters": [
+      {
+       "$id": "315",
+       "Name": "devCenterEndpoint",
+       "NameInRequest": "devCenterEndpoint",
+       "Description": "The DevCenter-specific URI to operate on.",
+       "Type": {
+        "$id": "316",
+        "Name": "Uri",
+        "Kind": "Uri",
+        "IsNullable": false
+       },
+       "Location": "Uri",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": true,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "317",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "",
+       "Type": {
+        "$id": "318",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "IsResourceParameter": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "319",
+        "Type": {
+         "$id": "320",
+         "Name": "String",
+         "Kind": "String",
+         "IsNullable": false
+        },
+        "Value": "2023-04-01"
+       }
+      },
+      {
+       "$id": "321",
+       "Name": "filter",
+       "NameInRequest": "filter",
+       "Description": "An OData filter clause to apply to the operation.",
+       "Type": {
+        "$id": "322",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "323",
+       "Name": "top",
+       "NameInRequest": "top",
+       "Description": "The maximum number of resources to return from the operation. Example: 'top=10'.",
+       "Type": {
+        "$id": "324",
+        "Name": "int32",
+        "Kind": "Int32",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "325",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "326",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "327",
+        "Type": {
+         "$ref": "326"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "328",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "52"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "329",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "330",
+     "Name": "GetProject",
+     "ResourceName": "DevCenterClientOperations",
+     "Description": "Gets a project.",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "331",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "332",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "333",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "334",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "335",
+        "Type": {
+         "$ref": "334"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "336",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "55"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    }
+   ],
+   "Protocol": {
+    "$id": "337"
+   },
+   "Creatable": true
+  },
+  {
+   "$id": "338",
+   "Name": "DevBoxesClient",
+   "Description": "",
+   "Operations": [
+    {
+     "$id": "339",
+     "Name": "ListPools",
+     "ResourceName": "DevBoxesClientOperations",
+     "Description": "Lists available pools",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "340",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "341",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "342",
+       "Name": "filter",
+       "NameInRequest": "filter",
+       "Description": "An OData filter clause to apply to the operation.",
+       "Type": {
+        "$id": "343",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "344",
+       "Name": "top",
+       "NameInRequest": "top",
+       "Description": "The maximum number of resources to return from the operation. Example: 'top=10'.",
+       "Type": {
+        "$id": "345",
+        "Name": "int32",
+        "Kind": "Int32",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "346",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "347",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "348",
+        "Type": {
+         "$ref": "347"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "349",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "64"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/pools",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "350",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "351",
+     "Name": "GetPool",
+     "ResourceName": "DevBoxesClientOperations",
+     "Description": "Gets a pool",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "352",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "353",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "354",
+       "Name": "poolName",
+       "NameInRequest": "poolName",
+       "Description": "The name of a pool of Dev Boxes.",
+       "Type": {
+        "$id": "355",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "356",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "357",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "358",
+        "Type": {
+         "$ref": "357"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "359",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "67"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/pools/{poolName}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "360",
+     "Name": "ListSchedules",
+     "ResourceName": "DevBoxesClientOperations",
+     "Description": "Lists available schedules for a pool.",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "361",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "362",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "363",
+       "Name": "poolName",
+       "NameInRequest": "poolName",
+       "Description": "The name of a pool of Dev Boxes.",
+       "Type": {
+        "$id": "364",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "365",
+       "Name": "filter",
+       "NameInRequest": "filter",
+       "Description": "An OData filter clause to apply to the operation.",
+       "Type": {
+        "$id": "366",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "367",
+       "Name": "top",
+       "NameInRequest": "top",
+       "Description": "The maximum number of resources to return from the operation. Example: 'top=10'.",
+       "Type": {
+        "$id": "368",
+        "Name": "int32",
+        "Kind": "Int32",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "369",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "370",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "371",
+        "Type": {
+         "$ref": "370"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "372",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "109"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/pools/{poolName}/schedules",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "373",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "374",
+     "Name": "GetSchedule",
+     "ResourceName": "DevBoxesClientOperations",
+     "Description": "Gets a schedule.",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "375",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "376",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "377",
+       "Name": "poolName",
+       "NameInRequest": "poolName",
+       "Description": "The name of a pool of Dev Boxes.",
+       "Type": {
+        "$id": "378",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "379",
+       "Name": "scheduleName",
+       "NameInRequest": "scheduleName",
+       "Description": "The name of a schedule.",
+       "Type": {
+        "$id": "380",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "381",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "382",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "383",
+        "Type": {
+         "$ref": "382"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "384",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "112"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/pools/{poolName}/schedules/{scheduleName}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "385",
+     "Name": "ListAllDevBoxes",
+     "ResourceName": "DevBoxesClientOperations",
+     "Description": "Lists Dev Boxes that the caller has access to in the DevCenter.",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "386",
+       "Name": "filter",
+       "NameInRequest": "filter",
+       "Description": "An OData filter clause to apply to the operation.",
+       "Type": {
+        "$id": "387",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "388",
+       "Name": "top",
+       "NameInRequest": "top",
+       "Description": "The maximum number of resources to return from the operation. Example: 'top=10'.",
+       "Type": {
+        "$id": "389",
+        "Name": "int32",
+        "Kind": "Int32",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "390",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "391",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "392",
+        "Type": {
+         "$ref": "391"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "393",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "123"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/devboxes",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "394",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "395",
+     "Name": "ListAllDevBoxesByUser",
+     "ResourceName": "DevBoxesClientOperations",
+     "Description": "Lists Dev Boxes in the Dev Center for a particular user.",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "396",
+       "Name": "filter",
+       "NameInRequest": "filter",
+       "Description": "An OData filter clause to apply to the operation.",
+       "Type": {
+        "$id": "397",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "398",
+       "Name": "top",
+       "NameInRequest": "top",
+       "Description": "The maximum number of resources to return from the operation. Example: 'top=10'.",
+       "Type": {
+        "$id": "399",
+        "Name": "int32",
+        "Kind": "Int32",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "400",
+       "Name": "userId",
+       "NameInRequest": "userId",
+       "Description": "The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.",
+       "Type": {
+        "$id": "401",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "402",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "403",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "404",
+        "Type": {
+         "$ref": "403"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "405",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "123"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/users/{userId}/devboxes",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "406",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "407",
+     "Name": "ListDevBoxes",
+     "ResourceName": "DevBoxesClientOperations",
+     "Description": "Lists Dev Boxes in the project for a particular user.",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "408",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "409",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "410",
+       "Name": "userId",
+       "NameInRequest": "userId",
+       "Description": "The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.",
+       "Type": {
+        "$id": "411",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "412",
+       "Name": "filter",
+       "NameInRequest": "filter",
+       "Description": "An OData filter clause to apply to the operation.",
+       "Type": {
+        "$id": "413",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "414",
+       "Name": "top",
+       "NameInRequest": "top",
+       "Description": "The maximum number of resources to return from the operation. Example: 'top=10'.",
+       "Type": {
+        "$id": "415",
+        "Name": "int32",
+        "Kind": "Int32",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "416",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "417",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "418",
+        "Type": {
+         "$ref": "417"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "419",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "123"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/users/{userId}/devboxes",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "420",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "421",
+     "Name": "GetDevBox",
+     "ResourceName": "DevBoxesClientOperations",
+     "Description": "Gets a Dev Box",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "422",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "423",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "424",
+       "Name": "userId",
+       "NameInRequest": "userId",
+       "Description": "The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.",
+       "Type": {
+        "$id": "425",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "426",
+       "Name": "devBoxName",
+       "NameInRequest": "devBoxName",
+       "Description": "The name of a Dev Box.",
+       "Type": {
+        "$id": "427",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "428",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "429",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "430",
+        "Type": {
+         "$ref": "429"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "431",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "126"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/users/{userId}/devboxes/{devBoxName}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "432",
+     "Name": "CreateDevBox",
+     "ResourceName": "DevBoxesClientOperations",
+     "Description": "Creates or replaces a Dev Box.",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "433",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "434",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "435",
+       "Name": "userId",
+       "NameInRequest": "userId",
+       "Description": "The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.",
+       "Type": {
+        "$id": "436",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "437",
+       "Name": "devBoxName",
+       "NameInRequest": "devBoxName",
+       "Description": "The name of a Dev Box.",
+       "Type": {
+        "$id": "438",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "439",
+       "Name": "body",
+       "NameInRequest": "body",
+       "Description": "Represents a environment.",
+       "Type": {
+        "$ref": "126"
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "440",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Type": {
+        "$id": "441",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "442",
+        "Type": {
+         "$ref": "441"
+        },
+        "Value": "application/json"
+       }
+      },
+      {
+       "$id": "443",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "444",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "445",
+        "Type": {
+         "$ref": "444"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "446",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "126"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      },
+      {
+       "$id": "447",
+       "StatusCodes": [
+        201
+       ],
+       "BodyType": {
+        "$ref": "126"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "448",
+         "Name": "Location",
+         "NameInResponse": "location",
+         "Description": "",
+         "Type": {
+          "$id": "449",
+          "Name": "ResourceLocation",
+          "Kind": "Uri",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "450",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "",
+         "Type": {
+          "$id": "451",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "PUT",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/users/{userId}/devboxes/{devBoxName}",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "452",
+      "FinalStateVia": 2,
+      "FinalResponse": {
+       "$id": "453",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "126"
+       },
+       "BodyMediaType": "Json"
+      }
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "454",
+     "Name": "DeleteDevBox",
+     "ResourceName": "DevBoxesClientOperations",
+     "Description": "Deletes a Dev Box.",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "455",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "456",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "457",
+       "Name": "userId",
+       "NameInRequest": "userId",
+       "Description": "The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.",
+       "Type": {
+        "$id": "458",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "459",
+       "Name": "devBoxName",
+       "NameInRequest": "devBoxName",
+       "Description": "The name of a Dev Box.",
+       "Type": {
+        "$id": "460",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "461",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "462",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "463",
+        "Type": {
+         "$ref": "462"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "464",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "169"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "465",
+         "Name": "Location",
+         "NameInResponse": "location",
+         "Description": "",
+         "Type": {
+          "$id": "466",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "467",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "",
+         "Type": {
+          "$id": "468",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      },
+      {
+       "$id": "469",
+       "StatusCodes": [
+        204
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "DELETE",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/users/{userId}/devboxes/{devBoxName}",
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "470",
+      "FinalStateVia": 2,
+      "FinalResponse": {
+       "$id": "471",
+       "StatusCodes": [
+        204
+       ],
+       "BodyType": {
+        "$ref": "191"
+       },
+       "BodyMediaType": "Json"
+      }
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "472",
+     "Name": "StartDevBox",
+     "ResourceName": "DevBoxesClientOperations",
+     "Description": "Starts a Dev Box",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "473",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "474",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "475",
+       "Name": "userId",
+       "NameInRequest": "userId",
+       "Description": "The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.",
+       "Type": {
+        "$id": "476",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "477",
+       "Name": "devBoxName",
+       "NameInRequest": "devBoxName",
+       "Description": "The name of a Dev Box.",
+       "Type": {
+        "$id": "478",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "479",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "480",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "481",
+        "Type": {
+         "$ref": "480"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "482",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "169"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "483",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "484",
+          "Name": "ResourceLocation",
+          "Kind": "Uri",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/users/{userId}/devboxes/{devBoxName}:start",
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "485",
+      "FinalStateVia": 3,
+      "FinalResponse": {
+       "$id": "486",
+       "StatusCodes": [
+        200
+       ],
+       "BodyMediaType": "Json"
+      }
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "487",
+     "Name": "StopDevBox",
+     "ResourceName": "DevBoxesClientOperations",
+     "Description": "Stops a Dev Box",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "488",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "489",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "490",
+       "Name": "userId",
+       "NameInRequest": "userId",
+       "Description": "The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.",
+       "Type": {
+        "$id": "491",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "492",
+       "Name": "devBoxName",
+       "NameInRequest": "devBoxName",
+       "Description": "The name of a Dev Box.",
+       "Type": {
+        "$id": "493",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "494",
+       "Name": "hibernate",
+       "NameInRequest": "hibernate",
+       "Description": "Optional parameter to hibernate the dev box.",
+       "Type": {
+        "$id": "495",
+        "Name": "boolean",
+        "Kind": "Boolean",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "496",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "497",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "498",
+        "Type": {
+         "$ref": "497"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "499",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "169"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "500",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "501",
+          "Name": "ResourceLocation",
+          "Kind": "Uri",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/users/{userId}/devboxes/{devBoxName}:stop",
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "502",
+      "FinalStateVia": 3,
+      "FinalResponse": {
+       "$id": "503",
+       "StatusCodes": [
+        200
+       ],
+       "BodyMediaType": "Json"
+      }
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "504",
+     "Name": "RestartDevBox",
+     "ResourceName": "DevBoxesClientOperations",
+     "Description": "Restarts a Dev Box",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "505",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "506",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "507",
+       "Name": "userId",
+       "NameInRequest": "userId",
+       "Description": "The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.",
+       "Type": {
+        "$id": "508",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "509",
+       "Name": "devBoxName",
+       "NameInRequest": "devBoxName",
+       "Description": "The name of a Dev Box.",
+       "Type": {
+        "$id": "510",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "511",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "512",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "513",
+        "Type": {
+         "$ref": "512"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "514",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "169"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "515",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "516",
+          "Name": "ResourceLocation",
+          "Kind": "Uri",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/users/{userId}/devboxes/{devBoxName}:restart",
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "517",
+      "FinalStateVia": 3,
+      "FinalResponse": {
+       "$id": "518",
+       "StatusCodes": [
+        200
+       ],
+       "BodyMediaType": "Json"
+      }
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "519",
+     "Name": "GetRemoteConnection",
+     "ResourceName": "DevBoxesClientOperations",
+     "Description": "Gets RDP Connection info",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "520",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "521",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "522",
+       "Name": "userId",
+       "NameInRequest": "userId",
+       "Description": "The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.",
+       "Type": {
+        "$id": "523",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "524",
+       "Name": "devBoxName",
+       "NameInRequest": "devBoxName",
+       "Description": "The name of a Dev Box.",
+       "Type": {
+        "$id": "525",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "526",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "527",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "528",
+        "Type": {
+         "$ref": "527"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "529",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "193"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/users/{userId}/devboxes/{devBoxName}/remoteConnection",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "530",
+     "Name": "ListDevBoxActions",
+     "ResourceName": "DevBoxesClientOperations",
+     "Description": "Lists actions on a Dev Box.",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "531",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "532",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "533",
+       "Name": "userId",
+       "NameInRequest": "userId",
+       "Description": "The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.",
+       "Type": {
+        "$id": "534",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "535",
+       "Name": "devBoxName",
+       "NameInRequest": "devBoxName",
+       "Description": "The name of a Dev Box.",
+       "Type": {
+        "$id": "536",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "537",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "538",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "539",
+        "Type": {
+         "$ref": "538"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "540",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "198"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/users/{userId}/devboxes/{devBoxName}/actions",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "541",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "542",
+     "Name": "GetDevBoxAction",
+     "ResourceName": "DevBoxesClientOperations",
+     "Description": "Gets an action.",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "543",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "544",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "545",
+       "Name": "userId",
+       "NameInRequest": "userId",
+       "Description": "The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.",
+       "Type": {
+        "$id": "546",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "547",
+       "Name": "devBoxName",
+       "NameInRequest": "devBoxName",
+       "Description": "The name of a Dev Box.",
+       "Type": {
+        "$id": "548",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "549",
+       "Name": "actionName",
+       "NameInRequest": "actionName",
+       "Description": "The name of an action that will take place on a Dev Box.",
+       "Type": {
+        "$id": "550",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "551",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "552",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "553",
+        "Type": {
+         "$ref": "552"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "554",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "201"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/users/{userId}/devboxes/{devBoxName}/actions/{actionName}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "555",
+     "Name": "SkipAction",
+     "ResourceName": "DevBoxesClientOperations",
+     "Description": "Skips an occurrence of an action.",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "556",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "557",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "558",
+       "Name": "userId",
+       "NameInRequest": "userId",
+       "Description": "The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.",
+       "Type": {
+        "$id": "559",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "560",
+       "Name": "devBoxName",
+       "NameInRequest": "devBoxName",
+       "Description": "The name of a Dev Box.",
+       "Type": {
+        "$id": "561",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "562",
+       "Name": "actionName",
+       "NameInRequest": "actionName",
+       "Description": "The name of an action that will take place on a Dev Box.",
+       "Type": {
+        "$id": "563",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "564",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "565",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "566",
+        "Type": {
+         "$ref": "565"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "567",
+       "StatusCodes": [
+        204
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/users/{userId}/devboxes/{devBoxName}/actions/{actionName}:skip",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "568",
+     "Name": "DelayAction",
+     "ResourceName": "DevBoxesClientOperations",
+     "Description": "Delays the occurrence of an action.",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "569",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "570",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "571",
+       "Name": "userId",
+       "NameInRequest": "userId",
+       "Description": "The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.",
+       "Type": {
+        "$id": "572",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "573",
+       "Name": "devBoxName",
+       "NameInRequest": "devBoxName",
+       "Description": "The name of a Dev Box.",
+       "Type": {
+        "$id": "574",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "575",
+       "Name": "actionName",
+       "NameInRequest": "actionName",
+       "Description": "The name of an action that will take place on a Dev Box.",
+       "Type": {
+        "$id": "576",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "577",
+       "Name": "delayUntil",
+       "NameInRequest": "until",
+       "Description": "The time to delay the Dev Box action or actions until.",
+       "Type": {
+        "$id": "578",
+        "Name": "utcDateTime",
+        "Kind": "DateTime",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "579",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "580",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "581",
+        "Type": {
+         "$ref": "580"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "582",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "201"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/users/{userId}/devboxes/{devBoxName}/actions/{actionName}:delay",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "583",
+     "Name": "DelayAllActions",
+     "ResourceName": "DevBoxesClientOperations",
+     "Description": "Delays all actions.",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "584",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "585",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "586",
+       "Name": "userId",
+       "NameInRequest": "userId",
+       "Description": "The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.",
+       "Type": {
+        "$id": "587",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "588",
+       "Name": "devBoxName",
+       "NameInRequest": "devBoxName",
+       "Description": "The name of a Dev Box.",
+       "Type": {
+        "$id": "589",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "590",
+       "Name": "delayUntil",
+       "NameInRequest": "until",
+       "Description": "The time to delay the Dev Box action or actions until.",
+       "Type": {
+        "$id": "591",
+        "Name": "utcDateTime",
+        "Kind": "DateTime",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "592",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "593",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "594",
+        "Type": {
+         "$ref": "593"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "595",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "215"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/users/{userId}/devboxes/{devBoxName}/actions:delay",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "596",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    }
+   ],
+   "Protocol": {
+    "$id": "597"
+   },
+   "Creatable": true
+  },
+  {
+   "$id": "598",
+   "Name": "DeploymentEnvironmentsClient",
+   "Description": "",
+   "Operations": [
+    {
+     "$id": "599",
+     "Name": "ListAllEnvironments",
+     "ResourceName": "EnvironmentClientOperations",
+     "Description": "Lists the environments for a project.",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "600",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "601",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "602",
+       "Name": "top",
+       "NameInRequest": "top",
+       "Description": "The maximum number of resources to return from the operation. Example: 'top=10'.",
+       "Type": {
+        "$id": "603",
+        "Name": "int32",
+        "Kind": "Int32",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "604",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "605",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "606",
+        "Type": {
+         "$ref": "605"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "607",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "226"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/environments",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "608",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "609",
+     "Name": "ListEnvironments",
+     "ResourceName": "EnvironmentClientOperations",
+     "Description": "Lists the environments for a project and user.",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "610",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "611",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "612",
+       "Name": "userId",
+       "NameInRequest": "userId",
+       "Description": "The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.",
+       "Type": {
+        "$id": "613",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "614",
+       "Name": "top",
+       "NameInRequest": "top",
+       "Description": "The maximum number of resources to return from the operation. Example: 'top=10'.",
+       "Type": {
+        "$id": "615",
+        "Name": "int32",
+        "Kind": "Int32",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "616",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "617",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "618",
+        "Type": {
+         "$ref": "617"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "619",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "226"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/users/{userId}/environments",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "620",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "621",
+     "Name": "GetEnvironment",
+     "ResourceName": "EnvironmentClientOperations",
+     "Description": "Gets an environment",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "622",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "623",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "624",
+       "Name": "userId",
+       "NameInRequest": "userId",
+       "Description": "The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.",
+       "Type": {
+        "$id": "625",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "626",
+       "Name": "environmentName",
+       "NameInRequest": "environmentName",
+       "Description": "The name of the environment.",
+       "Type": {
+        "$id": "627",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "628",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "629",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "630",
+        "Type": {
+         "$ref": "629"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "631",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "229"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/users/{userId}/environments/{environmentName}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "632",
+     "Name": "CreateOrUpdateEnvironment",
+     "ResourceName": "EnvironmentClientOperations",
+     "Description": "Creates or updates an environment.",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "633",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "634",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "635",
+       "Name": "userId",
+       "NameInRequest": "userId",
+       "Description": "The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.",
+       "Type": {
+        "$id": "636",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "637",
+       "Name": "environmentName",
+       "NameInRequest": "environmentName",
+       "Description": "The name of the environment.",
+       "Type": {
+        "$id": "638",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "639",
+       "Name": "body",
+       "NameInRequest": "body",
+       "Description": "Represents an environment.",
+       "Type": {
+        "$ref": "229"
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "640",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Type": {
+        "$id": "641",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "642",
+        "Type": {
+         "$ref": "641"
+        },
+        "Value": "application/json"
+       }
+      },
+      {
+       "$id": "643",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "644",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "645",
+        "Type": {
+         "$ref": "644"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "646",
+       "StatusCodes": [
+        201
+       ],
+       "BodyType": {
+        "$ref": "229"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "647",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "",
+         "Type": {
+          "$id": "648",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "PUT",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/users/{userId}/environments/{environmentName}",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "649",
+      "FinalStateVia": 2,
+      "FinalResponse": {
+       "$id": "650",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "229"
+       },
+       "BodyMediaType": "Json"
+      }
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "651",
+     "Name": "DeleteEnvironment",
+     "ResourceName": "EnvironmentClientOperations",
+     "Description": "Deletes an environment and all its associated resources",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "652",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "653",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "654",
+       "Name": "userId",
+       "NameInRequest": "userId",
+       "Description": "The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.",
+       "Type": {
+        "$id": "655",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "656",
+       "Name": "environmentName",
+       "NameInRequest": "environmentName",
+       "Description": "The name of the environment.",
+       "Type": {
+        "$id": "657",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "658",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "659",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "660",
+        "Type": {
+         "$ref": "659"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "661",
+       "StatusCodes": [
+        202
+       ],
+       "BodyType": {
+        "$ref": "169"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "662",
+         "Name": "Location",
+         "NameInResponse": "location",
+         "Description": "",
+         "Type": {
+          "$id": "663",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "664",
+         "Name": "Operation-Location",
+         "NameInResponse": "operationLocation",
+         "Description": "",
+         "Type": {
+          "$id": "665",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      },
+      {
+       "$id": "666",
+       "StatusCodes": [
+        204
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "DELETE",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/users/{userId}/environments/{environmentName}",
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "667",
+      "FinalStateVia": 2,
+      "FinalResponse": {
+       "$id": "668",
+       "StatusCodes": [
+        204
+       ],
+       "BodyType": {
+        "$ref": "249"
+       },
+       "BodyMediaType": "Json"
+      }
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "669",
+     "Name": "ListCatalogs",
+     "ResourceName": "EnvironmentClientOperations",
+     "Description": "Lists all of the catalogs available for a project.",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "670",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "671",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "672",
+       "Name": "top",
+       "NameInRequest": "top",
+       "Description": "The maximum number of resources to return from the operation. Example: 'top=10'.",
+       "Type": {
+        "$id": "673",
+        "Name": "int32",
+        "Kind": "Int32",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "674",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "675",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "676",
+        "Type": {
+         "$ref": "675"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "677",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "251"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/catalogs",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "678",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "679",
+     "Name": "GetCatalog",
+     "ResourceName": "EnvironmentClientOperations",
+     "Description": "Gets the specified catalog within the project",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "680",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "681",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "682",
+       "Name": "catalogName",
+       "NameInRequest": "catalogName",
+       "Description": "The name of the catalog",
+       "Type": {
+        "$id": "683",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "684",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "685",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "686",
+        "Type": {
+         "$ref": "685"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "687",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "254"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/catalogs/{catalogName}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "688",
+     "Name": "ListEnvironmentDefinitions",
+     "ResourceName": "EnvironmentClientOperations",
+     "Description": "Lists all environment definitions available for a project.",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "689",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "690",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "691",
+       "Name": "top",
+       "NameInRequest": "top",
+       "Description": "The maximum number of resources to return from the operation. Example: 'top=10'.",
+       "Type": {
+        "$id": "692",
+        "Name": "int32",
+        "Kind": "Int32",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "693",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "694",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "695",
+        "Type": {
+         "$ref": "694"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "696",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "259"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/environmentDefinitions",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "697",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "698",
+     "Name": "ListEnvironmentDefinitionsByCatalog",
+     "ResourceName": "EnvironmentClientOperations",
+     "Description": "Lists all environment definitions available within a catalog.",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "699",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "700",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "701",
+       "Name": "catalogName",
+       "NameInRequest": "catalogName",
+       "Description": "The name of the catalog",
+       "Type": {
+        "$id": "702",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "703",
+       "Name": "top",
+       "NameInRequest": "top",
+       "Description": "The maximum number of resources to return from the operation. Example: 'top=10'.",
+       "Type": {
+        "$id": "704",
+        "Name": "int32",
+        "Kind": "Int32",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "705",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "706",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "707",
+        "Type": {
+         "$ref": "706"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "708",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "259"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/catalogs/{catalogName}/environmentDefinitions",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "709",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "710",
+     "Name": "GetEnvironmentDefinition",
+     "ResourceName": "EnvironmentClientOperations",
+     "Description": "Get an environment definition from a catalog.",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "711",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "712",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "713",
+       "Name": "catalogName",
+       "NameInRequest": "catalogName",
+       "Description": "The name of the catalog",
+       "Type": {
+        "$id": "714",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "715",
+       "Name": "definitionName",
+       "NameInRequest": "definitionName",
+       "Description": "The name of the environment definition",
+       "Type": {
+        "$id": "716",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "717",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "718",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "719",
+        "Type": {
+         "$ref": "718"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "720",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "262"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/catalogs/{catalogName}/environmentDefinitions/{definitionName}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "721",
+     "Name": "ListEnvironmentTypes",
+     "ResourceName": "EnvironmentClientOperations",
+     "Description": "Lists all environment types configured for a project.",
+     "Parameters": [
+      {
+       "$ref": "315"
+      },
+      {
+       "$ref": "317"
+      },
+      {
+       "$id": "722",
+       "Name": "projectName",
+       "NameInRequest": "projectName",
+       "Description": "The DevCenter Project upon which to execute operations.",
+       "Type": {
+        "$id": "723",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "724",
+       "Name": "top",
+       "NameInRequest": "top",
+       "Description": "The maximum number of resources to return from the operation. Example: 'top=10'.",
+       "Type": {
+        "$id": "725",
+        "Name": "int32",
+        "Kind": "Int32",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "726",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "727",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "728",
+        "Type": {
+         "$ref": "727"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "729",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "296"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{devCenterEndpoint}",
+     "Path": "/projects/{projectName}/environmentTypes",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "730",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    }
+   ],
+   "Protocol": {
+    "$id": "731"
+   },
+   "Creatable": true
+  }
+ ],
+ "Auth": {
+  "$id": "732",
+  "OAuth2": {
+   "$id": "733",
+   "Scopes": [
+    "https://devcenter.azure.com/.default"
+   ]
+  }
+ }
+}
