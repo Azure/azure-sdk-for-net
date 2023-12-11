@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ExperimentStatusResource" /> and their operations.
-    /// Each <see cref="ExperimentStatusResource" /> in the collection will belong to the same instance of <see cref="ExperimentResource" />.
-    /// To get an <see cref="ExperimentStatusCollection" /> instance call the GetExperimentStatuses method from an instance of <see cref="ExperimentResource" />.
+    /// A class representing a collection of <see cref="ExperimentStatusResource"/> and their operations.
+    /// Each <see cref="ExperimentStatusResource"/> in the collection will belong to the same instance of <see cref="ExperimentResource"/>.
+    /// To get an <see cref="ExperimentStatusCollection"/> instance call the GetExperimentStatuses method from an instance of <see cref="ExperimentResource"/>.
     /// </summary>
     public partial class ExperimentStatusCollection : ArmCollection, IEnumerable<ExperimentStatusResource>, IAsyncEnumerable<ExperimentStatusResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Chaos
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExperimentStatusResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExperimentStatusResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExperimentStatusResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _experimentStatusExperimentsRestClient.CreateListAllStatusesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Chaos
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExperimentStatusResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExperimentStatusResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExperimentStatusResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _experimentStatusExperimentsRestClient.CreateListAllStatusesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Hub setting list. </summary>
     internal partial class WebPubSubHubList
     {
-        /// <summary> Initializes a new instance of WebPubSubHubList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubHubList"/>. </summary>
         internal WebPubSubHubList()
         {
             Value = new ChangeTrackingList<WebPubSubHubData>();
         }
 
-        /// <summary> Initializes a new instance of WebPubSubHubList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubHubList"/>. </summary>
         /// <param name="value"> List of hub settings to this resource. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).

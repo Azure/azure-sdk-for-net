@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Phoenix server linked service. </summary>
     public partial class PhoenixLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of PhoenixLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoenixLinkedService"/>. </summary>
         /// <param name="host"> The IP address or host name of the Phoenix server. (i.e. 192.168.222.160). </param>
         /// <param name="authenticationType"> The authentication mechanism used to connect to the Phoenix server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "Phoenix";
         }
 
-        /// <summary> Initializes a new instance of PhoenixLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoenixLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The network resource usage. </summary>
     public partial class NetworkUsage
     {
-        /// <summary> Initializes a new instance of NetworkUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkUsage"/>. </summary>
         /// <param name="unit"> An enum describing the unit of measurement. </param>
         /// <param name="currentValue"> The current value of the usage. </param>
         /// <param name="limit"> The limit of usage. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of NetworkUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkUsage"/>. </summary>
         /// <param name="id"> Resource identifier. </param>
         /// <param name="unit"> An enum describing the unit of measurement. </param>
         /// <param name="currentValue"> The current value of the usage. </param>

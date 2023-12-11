@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Ssis parameter. </summary>
     public partial class SynapseSsisParameter
     {
-        /// <summary> Initializes a new instance of SynapseSsisParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisParameter"/>. </summary>
         internal SynapseSsisParameter()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisParameter"/>. </summary>
         /// <param name="id"> Parameter id. </param>
         /// <param name="name"> Parameter name. </param>
         /// <param name="description"> Parameter description. </param>

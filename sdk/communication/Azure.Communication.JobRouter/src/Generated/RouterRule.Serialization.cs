@@ -22,11 +22,11 @@ namespace Azure.Communication.JobRouter
             {
                 switch (discriminator.GetString())
                 {
-                    case "direct-map-rule": return DirectMapRouterRule.DeserializeDirectMapRouterRule(element);
-                    case "expression-rule": return ExpressionRouterRule.DeserializeExpressionRouterRule(element);
-                    case "azure-function-rule": return FunctionRouterRule.DeserializeFunctionRouterRule(element);
-                    case "static-rule": return StaticRouterRule.DeserializeStaticRouterRule(element);
-                    case "webhook-rule": return WebhookRouterRule.DeserializeWebhookRouterRule(element);
+                    case "directMap": return DirectMapRouterRule.DeserializeDirectMapRouterRule(element);
+                    case "expression": return ExpressionRouterRule.DeserializeExpressionRouterRule(element);
+                    case "function": return FunctionRouterRule.DeserializeFunctionRouterRule(element);
+                    case "static": return StaticRouterRule.DeserializeStaticRouterRule(element);
+                    case "webhook": return WebhookRouterRule.DeserializeWebhookRouterRule(element);
                 }
             }
             return UnknownRouterRule.DeserializeUnknownRouterRule(element);

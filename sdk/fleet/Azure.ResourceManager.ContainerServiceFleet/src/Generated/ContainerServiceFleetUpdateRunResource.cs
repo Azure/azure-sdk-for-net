@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 {
     /// <summary>
     /// A Class representing a ContainerServiceFleetUpdateRun along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerServiceFleetUpdateRunResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerServiceFleetUpdateRunResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceFleetResource" /> using the GetContainerServiceFleetUpdateRun method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerServiceFleetUpdateRunResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerServiceFleetUpdateRunResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceFleetResource"/> using the GetContainerServiceFleetUpdateRun method.
     /// </summary>
     public partial class ContainerServiceFleetUpdateRunResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerServiceFleetUpdateRunResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="fleetName"> The fleetName. </param>
+        /// <param name="updateRunName"> The updateRunName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string fleetName, string updateRunName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         private readonly UpdateRunsRestOperations _containerServiceFleetUpdateRunUpdateRunsRestClient;
         private readonly ContainerServiceFleetUpdateRunData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/fleets/updateRuns";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerServiceFleetUpdateRunResource"/> class for mocking. </summary>
         protected ContainerServiceFleetUpdateRunResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerServiceFleetUpdateRunResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerServiceFleetUpdateRunResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerServiceFleetUpdateRunResource(ArmClient client, ContainerServiceFleetUpdateRunData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/fleets/updateRuns";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

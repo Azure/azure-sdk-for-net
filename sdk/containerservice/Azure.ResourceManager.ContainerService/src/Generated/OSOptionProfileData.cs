@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerService
     /// </summary>
     public partial class OSOptionProfileData : ResourceData
     {
-        /// <summary> Initializes a new instance of OSOptionProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSOptionProfileData"/>. </summary>
         /// <param name="osOptionPropertyList"> The list of OS options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="osOptionPropertyList"/> is null. </exception>
         internal OSOptionProfileData(IEnumerable<ContainerServiceOSOptionProperty> osOptionPropertyList)
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerService
             OSOptionPropertyList = osOptionPropertyList.ToList();
         }
 
-        /// <summary> Initializes a new instance of OSOptionProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSOptionProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

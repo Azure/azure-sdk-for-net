@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMonitorModelFactory
     {
-        /// <summary> Initializes a new instance of AutoscaleSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Monitor.AutoscaleSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new AutoscaleSettingData(id, name, resourceType, systemData, tags, location, profiles?.ToList(), notifications?.ToList(), isEnabled, predictiveAutoscalePolicy, autoscaleSettingName, targetResourceId, targetResourceLocation);
         }
 
-        /// <summary> Initializes a new instance of AutoscaleNotification. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AutoscaleNotification"/>. </summary>
         /// <param name="operation"> the operation associated with the notification and its value must be "scale". </param>
         /// <param name="email"> the email notification. </param>
         /// <param name="webhooks"> the collection of webhook notifications. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new AutoscaleNotification(operation, email, webhooks?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AutoscaleSettingPredicativeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AutoscaleSettingPredicativeResult"/>. </summary>
         /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
         /// <param name="metricName"> The metrics being queried. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new AutoscaleSettingPredicativeResult(timespan, interval, metricName, targetResourceId, data?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PredictiveValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PredictiveValue"/>. </summary>
         /// <param name="timeStamp"> the timestamp for the metric value in ISO 8601 format. </param>
         /// <param name="value"> Predictive value in this time bucket. </param>
         /// <returns> A new <see cref="Models.PredictiveValue"/> instance for mocking. </returns>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new PredictiveValue(timeStamp, value);
         }
 
-        /// <summary> Initializes a new instance of MonitorIncident. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorIncident"/>. </summary>
         /// <param name="name"> Incident name. </param>
         /// <param name="ruleName"> Rule name that is associated with the incident. </param>
         /// <param name="isActive"> A boolean to indicate whether the incident is active or resolved. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorIncident(name, ruleName, isActive, activatedOn, resolvedOn);
         }
 
-        /// <summary> Initializes a new instance of AlertRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Monitor.AlertRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new AlertRuleData(id, name, resourceType, systemData, tags, location, alertRuleName, description, provisioningState, isEnabled, condition, action, actions?.ToList(), lastUpdatedOn);
         }
 
-        /// <summary> Initializes a new instance of LogProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Monitor.LogProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new LogProfileData(id, name, resourceType, systemData, tags, location, storageAccountId, serviceBusRuleId, locations?.ToList(), categories?.ToList(), retentionPolicy);
         }
 
-        /// <summary> Initializes a new instance of DiagnosticSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Monitor.DiagnosticSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new DiagnosticSettingData(id, name, resourceType, systemData, storageAccountId, serviceBusRuleId, eventHubAuthorizationRuleId, eventHubName, metrics?.ToList(), logs?.ToList(), workspaceId, marketplacePartnerId, logAnalyticsDestinationType);
         }
 
-        /// <summary> Initializes a new instance of DiagnosticSettingsCategoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Monitor.DiagnosticSettingsCategoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new DiagnosticSettingsCategoryData(id, name, resourceType, systemData, categoryType, categoryGroups?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ActionGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Monitor.ActionGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new ActionGroupData(id, name, resourceType, systemData, tags, location, groupShortName, isEnabled, emailReceivers?.ToList(), smsReceivers?.ToList(), webhookReceivers?.ToList(), itsmReceivers?.ToList(), azureAppPushReceivers?.ToList(), automationRunbookReceivers?.ToList(), voiceReceivers?.ToList(), logicAppReceivers?.ToList(), azureFunctionReceivers?.ToList(), armRoleReceivers?.ToList(), eventHubReceivers?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MonitorEmailReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorEmailReceiver"/>. </summary>
         /// <param name="name"> The name of the email receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="emailAddress"> The email address of this receiver. </param>
         /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorEmailReceiver(name, emailAddress, useCommonAlertSchema, status);
         }
 
-        /// <summary> Initializes a new instance of MonitorSmsReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorSmsReceiver"/>. </summary>
         /// <param name="name"> The name of the SMS receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="countryCode"> The country code of the SMS receiver. </param>
         /// <param name="phoneNumber"> The phone number of the SMS receiver. </param>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorSmsReceiver(name, countryCode, phoneNumber, status);
         }
 
-        /// <summary> Initializes a new instance of NotificationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NotificationStatus"/>. </summary>
         /// <param name="context"> The context info. </param>
         /// <param name="state"> The overall state. </param>
         /// <param name="completedOn"> The completed time. </param>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new NotificationStatus(context, state, completedOn, createdOn, actionDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of NotificationContext. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NotificationContext"/>. </summary>
         /// <param name="notificationSource"> The source of the notification request. </param>
         /// <param name="contextType"> The context id type. </param>
         /// <returns> A new <see cref="Models.NotificationContext"/> instance for mocking. </returns>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new NotificationContext(notificationSource, contextType);
         }
 
-        /// <summary> Initializes a new instance of NotificationActionDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NotificationActionDetail"/>. </summary>
         /// <param name="mechanismType"> The mechanism type. </param>
         /// <param name="name"> The name of the action. </param>
         /// <param name="status"> The status of the action. </param>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new NotificationActionDetail(mechanismType, name, status, subState, sendOn, detail);
         }
 
-        /// <summary> Initializes a new instance of EventDataInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EventDataInfo"/>. </summary>
         /// <param name="authorization"> The sender authorization information. </param>
         /// <param name="claims"> key value pairs to identify ARM permissions. </param>
         /// <param name="caller"> the email address of the user who has performed the operation, the UPN claim or SPN claim based on availability. </param>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new EventDataInfo(authorization, claims, caller, description, id, eventDataId, correlationId, eventName, category, httpRequest, level, resourceGroupName, resourceProviderName, resourceId, resourceType, operationId, operationName, properties, status, subStatus, eventTimestamp, submissionTimestamp, subscriptionId, tenantId);
         }
 
-        /// <summary> Initializes a new instance of SenderAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SenderAuthorization"/>. </summary>
         /// <param name="action"> the permissible actions. For instance: microsoft.support/supporttickets/write. </param>
         /// <param name="role"> the role of the user. For instance: Subscription Admin. </param>
         /// <param name="scope"> the scope. </param>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new SenderAuthorization(action, role, scope);
         }
 
-        /// <summary> Initializes a new instance of MonitorLocalizableString. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorLocalizableString"/>. </summary>
         /// <param name="value"> the invariant value. </param>
         /// <param name="localizedValue"> the locale specific value. </param>
         /// <returns> A new <see cref="Models.MonitorLocalizableString"/> instance for mocking. </returns>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorLocalizableString(value, localizedValue);
         }
 
-        /// <summary> Initializes a new instance of EventDataHttpRequestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EventDataHttpRequestInfo"/>. </summary>
         /// <param name="clientRequestId"> the client request id. </param>
         /// <param name="clientIPAddress"> the client Ip Address. </param>
         /// <param name="method"> the Http request method. </param>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new EventDataHttpRequestInfo(clientRequestId, clientIPAddress, method, uri);
         }
 
-        /// <summary> Initializes a new instance of MonitorMetricDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorMetricDefinition"/>. </summary>
         /// <param name="isDimensionRequired"> Flag to indicate whether the dimension is required. </param>
         /// <param name="resourceId"> the resource identifier of the resource that emitted the metric. </param>
         /// <param name="namespace"> the namespace the metric belongs to. </param>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorMetricDefinition(isDimensionRequired, resourceId, @namespace, name, displayDescription, category, metricClass, unit, primaryAggregationType, supportedAggregationTypes?.ToList(), metricAvailabilities?.ToList(), id, dimensions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MonitorMetricAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorMetricAvailability"/>. </summary>
         /// <param name="timeGrain"> the time grain specifies the aggregation interval for the metric. Expressed as a duration 'PT1M', 'P1D', etc. </param>
         /// <param name="retention"> the retention period for the metric at the specified timegrain.  Expressed as a duration 'PT1M', 'P1D', etc. </param>
         /// <returns> A new <see cref="Models.MonitorMetricAvailability"/> instance for mocking. </returns>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorMetricAvailability(timeGrain, retention);
         }
 
-        /// <summary> Initializes a new instance of SubscriptionMonitorMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SubscriptionMonitorMetric"/>. </summary>
         /// <param name="id"> the metric Id. </param>
         /// <param name="subscriptionScopeMetricType"> the resource type of the metric resource. </param>
         /// <param name="name"> the name and the display name of the metric, i.e. it is localizable string. </param>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new SubscriptionMonitorMetric(id, subscriptionScopeMetricType, name, displayDescription, errorCode, errorMessage, unit, timeseries?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MonitorTimeSeriesElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorTimeSeriesElement"/>. </summary>
         /// <param name="metadatavalues"> the metadata values returned if $filter was specified in the call. </param>
         /// <param name="data"> An array of data points representing the metric values.  This is only returned if a result type of data is specified. </param>
         /// <returns> A new <see cref="Models.MonitorTimeSeriesElement"/> instance for mocking. </returns>
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorTimeSeriesElement(metadatavalues?.ToList(), data?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MonitorMetadataValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorMetadataValue"/>. </summary>
         /// <param name="name"> the name of the metadata. </param>
         /// <param name="value"> the value of the metadata. </param>
         /// <returns> A new <see cref="Models.MonitorMetadataValue"/> instance for mocking. </returns>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorMetadataValue(name, value);
         }
 
-        /// <summary> Initializes a new instance of MonitorMetricValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorMetricValue"/>. </summary>
         /// <param name="timeStamp"> the timestamp for the metric value in ISO 8601 format. </param>
         /// <param name="average"> the average value in the time range. </param>
         /// <param name="minimum"> the least value in the time range. </param>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorMetricValue(timeStamp, average, minimum, maximum, total, count);
         }
 
-        /// <summary> Initializes a new instance of MonitorMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorMetric"/>. </summary>
         /// <param name="id"> the metric Id. </param>
         /// <param name="metricType"> the resource type of the metric resource. </param>
         /// <param name="name"> the name and the display name of the metric, i.e. it is localizable string. </param>
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorMetric(id, metricType, name, displayDescription, errorCode, errorMessage, unit, timeseries?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MonitorSingleMetricBaseline. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorSingleMetricBaseline"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorSingleMetricBaseline(id, name, resourceType, systemData, timespan, interval, @namespace, baselines?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MonitorTimeSeriesBaseline. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorTimeSeriesBaseline"/>. </summary>
         /// <param name="aggregation"> The aggregation type of the metric. </param>
         /// <param name="dimensions"> The dimensions of this time series. </param>
         /// <param name="timestamps"> The list of timestamps of the baselines. </param>
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorTimeSeriesBaseline(aggregation, dimensions?.ToList(), timestamps?.ToList(), data?.ToList(), metadataValues?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MonitorMetricSingleDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorMetricSingleDimension"/>. </summary>
         /// <param name="name"> Name of the dimension. </param>
         /// <param name="value"> Value of the dimension. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorMetricSingleDimension(name, value);
         }
 
-        /// <summary> Initializes a new instance of MonitorSingleBaseline. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorSingleBaseline"/>. </summary>
         /// <param name="sensitivity"> the sensitivity of the baseline. </param>
         /// <param name="lowThresholds"> The low thresholds of the baseline. </param>
         /// <param name="highThresholds"> The high thresholds of the baseline. </param>
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorSingleBaseline(sensitivity, lowThresholds?.ToList(), highThresholds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MonitorBaselineMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorBaselineMetadata"/>. </summary>
         /// <param name="name"> Name of the baseline metadata. </param>
         /// <param name="value"> Value of the baseline metadata. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorBaselineMetadata(name, value);
         }
 
-        /// <summary> Initializes a new instance of MetricAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Monitor.MetricAlertData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MetricAlertData(id, name, resourceType, systemData, tags, location, description, severity, isEnabled, scopes?.ToList(), evaluationFrequency, windowSize, targetResourceType, targetResourceRegion, criteria, isAutoMitigateEnabled, actions?.ToList(), lastUpdatedOn, isMigrated);
         }
 
-        /// <summary> Initializes a new instance of MetricAlertStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MetricAlertStatus"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MetricAlertStatus(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of MetricAlertStatusProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MetricAlertStatusProperties"/>. </summary>
         /// <param name="dimensions"> An object describing the type of the dimensions. </param>
         /// <param name="status"> status value. </param>
         /// <param name="timestamp"> UTC time when the status was checked. </param>
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MetricAlertStatusProperties(dimensions, status, timestamp);
         }
 
-        /// <summary> Initializes a new instance of ScheduledQueryRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Monitor.ScheduledQueryRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new ScheduledQueryRuleData(id, name, resourceType, systemData, tags, location, kind, etag, createdWithApiVersion, isLegacyLogAnalyticsRule, description, displayName, severity, isEnabled, scopes?.ToList(), evaluationFrequency, windowSize, overrideQueryTimeRange, targetResourceTypes?.ToList(), criteriaAllOf != null ? new ScheduledQueryRuleCriteria(criteriaAllOf?.ToList()) : null, muteActionsDuration, actions, isWorkspaceAlertsStorageConfigured, checkWorkspaceAlertsStorageConfigured, skipQueryValidation, autoMitigate);
         }
 
-        /// <summary> Initializes a new instance of MonitorMetricNamespace. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorMetricNamespace"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorMetricNamespace(id, name, resourceType, systemData, classification, metricNamespaceNameValue != null ? new MetricNamespaceName(metricNamespaceNameValue) : null);
         }
 
-        /// <summary> Initializes a new instance of VmInsightsOnboardingStatusData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Monitor.VmInsightsOnboardingStatusData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new VmInsightsOnboardingStatusData(id, name, resourceType, systemData, resourceId, onboardingStatus, dataStatus, data?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataContainer"/>. </summary>
         /// <param name="workspace"> Log Analytics workspace information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspace"/> is null. </exception>
         /// <returns> A new <see cref="Models.DataContainer"/> instance for mocking. </returns>
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new DataContainer(workspace);
         }
 
-        /// <summary> Initializes a new instance of DataContainerWorkspace. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataContainerWorkspace"/>. </summary>
         /// <param name="id"> Azure Resource Manager identifier of the Log Analytics Workspace. </param>
         /// <param name="location"> Location of the Log Analytics workspace. </param>
         /// <param name="customerId"> Log Analytics workspace identifier. </param>
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new DataContainerWorkspace(id, location, customerId);
         }
 
-        /// <summary> Initializes a new instance of MonitorPrivateLinkScopeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Monitor.MonitorPrivateLinkScopeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorPrivateLinkScopeData(id, name, resourceType, systemData, tags, location, provisioningState, privateEndpointConnections?.ToList(), accessModeSettings);
         }
 
-        /// <summary> Initializes a new instance of MonitorPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Monitor.MonitorPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of MonitorPrivateLinkScopeOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorPrivateLinkScopeOperationStatus"/>. </summary>
         /// <param name="id"> The operation Id. </param>
         /// <param name="name"> The operation name. </param>
         /// <param name="startOn"> Start time of the job in standard ISO8601 format. </param>
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorPrivateLinkScopeOperationStatus(id, name, startOn, endOn, status, error);
         }
 
-        /// <summary> Initializes a new instance of MonitorPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Monitor.MonitorPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MonitorPrivateLinkScopedResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Monitor.MonitorPrivateLinkScopedResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorPrivateLinkScopedResourceData(id, name, resourceType, systemData, linkedResourceId, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ActivityLogAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Monitor.ActivityLogAlertData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new ActivityLogAlertData(id, name, resourceType, systemData, tags, location, scopes?.ToList(), conditionAllOf != null ? new AlertRuleAllOfCondition(conditionAllOf?.ToList()) : null, actionsActionGroups != null ? new ActionList(actionsActionGroups?.ToList()) : null, isEnabled, description);
         }
 
-        /// <summary> Initializes a new instance of DataCollectionEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Monitor.DataCollectionEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new DataCollectionEndpointData(id, name, resourceType, systemData, tags, location, kind, identity, etag, description, immutableId, configurationAccessEndpoint != null ? new DataCollectionEndpointConfigurationAccess(configurationAccessEndpoint) : null, logsIngestionEndpoint != null ? new DataCollectionEndpointLogsIngestion(logsIngestionEndpoint) : null, metricsIngestionEndpoint != null ? new DataCollectionEndpointMetricsIngestion(metricsIngestionEndpoint) : null, publicNetworkAccess != null ? new DataCollectionEndpointNetworkAcls(publicNetworkAccess) : null, provisioningState, privateLinkScopedResources?.ToList(), failoverConfiguration, metadata);
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRulePrivateLinkScopedResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataCollectionRulePrivateLinkScopedResourceInfo"/>. </summary>
         /// <param name="resourceId"> The resourceId of the Azure Monitor Private Link Scope Scoped Resource through which this DCE is associated with a Azure Monitor Private Link Scope. </param>
         /// <param name="scopeId"> The immutableId of the Azure Monitor Private Link Scope Resource to which the association is. </param>
         /// <returns> A new <see cref="Models.DataCollectionRulePrivateLinkScopedResourceInfo"/> instance for mocking. </returns>
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new DataCollectionRulePrivateLinkScopedResourceInfo(resourceId, scopeId);
         }
 
-        /// <summary> Initializes a new instance of DataCollectionEndpointFailoverConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataCollectionEndpointFailoverConfiguration"/>. </summary>
         /// <param name="activeLocation"> Active location where data flow will occur. </param>
         /// <param name="locations"> Locations that are configured for failover. </param>
         /// <returns> A new <see cref="Models.DataCollectionEndpointFailoverConfiguration"/> instance for mocking. </returns>
@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new DataCollectionEndpointFailoverConfiguration(activeLocation, locations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleBcdrFailoverConfigurationSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataCollectionRuleBcdrFailoverConfigurationSpec"/>. </summary>
         /// <param name="activeLocation"> Active location where data flow will occur. </param>
         /// <param name="locations"> Locations that are configured for failover. </param>
         /// <returns> A new <see cref="Models.DataCollectionRuleBcdrFailoverConfigurationSpec"/> instance for mocking. </returns>
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new DataCollectionRuleBcdrFailoverConfigurationSpec(activeLocation, locations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleBcdrLocationSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataCollectionRuleBcdrLocationSpec"/>. </summary>
         /// <param name="location"> Name of location. </param>
         /// <param name="provisioningStatus"> The resource provisioning state in this location. </param>
         /// <returns> A new <see cref="Models.DataCollectionRuleBcdrLocationSpec"/> instance for mocking. </returns>
@@ -861,7 +861,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new DataCollectionRuleBcdrLocationSpec(location, provisioningStatus);
         }
 
-        /// <summary> Initializes a new instance of DataCollectionEndpointMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataCollectionEndpointMetadata"/>. </summary>
         /// <param name="provisionedBy"> Azure offering managing this resource on-behalf-of customer. </param>
         /// <param name="provisionedByResourceId"> Resource Id of azure offering managing this resource on-behalf-of customer. </param>
         /// <returns> A new <see cref="Models.DataCollectionEndpointMetadata"/> instance for mocking. </returns>
@@ -870,7 +870,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new DataCollectionEndpointMetadata(provisionedBy, provisionedByResourceId);
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleRelatedResourceMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataCollectionRuleRelatedResourceMetadata"/>. </summary>
         /// <param name="provisionedBy"> Azure offering managing this resource on-behalf-of customer. </param>
         /// <param name="provisionedByResourceId"> Resource Id of azure offering managing this resource on-behalf-of customer. </param>
         /// <returns> A new <see cref="Models.DataCollectionRuleRelatedResourceMetadata"/> instance for mocking. </returns>
@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new DataCollectionRuleRelatedResourceMetadata(provisionedBy, provisionedByResourceId);
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleAssociationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Monitor.DataCollectionRuleAssociationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -896,7 +896,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new DataCollectionRuleAssociationData(id, name, resourceType, systemData, etag, description, dataCollectionRuleId, dataCollectionEndpointId, provisioningState, metadata);
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleAssociationMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataCollectionRuleAssociationMetadata"/>. </summary>
         /// <param name="provisionedBy"> Azure offering managing this resource on-behalf-of customer. </param>
         /// <param name="provisionedByResourceId"> Resource Id of azure offering managing this resource on-behalf-of customer. </param>
         /// <returns> A new <see cref="Models.DataCollectionRuleAssociationMetadata"/> instance for mocking. </returns>
@@ -905,7 +905,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new DataCollectionRuleAssociationMetadata(provisionedBy, provisionedByResourceId);
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Monitor.DataCollectionRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -937,7 +937,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new DataCollectionRuleData(id, name, resourceType, systemData, tags, location, kind, identity, etag, description, immutableId, dataCollectionEndpointId, metadata, streamDeclarations, dataSources, destinations, dataFlows?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataCollectionRuleMetadata"/>. </summary>
         /// <param name="provisionedBy"> Azure offering managing this resource on-behalf-of customer. </param>
         /// <param name="provisionedByResourceId"> Resource Id of azure offering managing this resource on-behalf-of customer. </param>
         /// <returns> A new <see cref="Models.DataCollectionRuleMetadata"/> instance for mocking. </returns>
@@ -946,7 +946,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new DataCollectionRuleMetadata(provisionedBy, provisionedByResourceId);
         }
 
-        /// <summary> Initializes a new instance of LogAnalyticsDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogAnalyticsDestination"/>. </summary>
         /// <param name="workspaceResourceId"> The resource ID of the Log Analytics workspace. </param>
         /// <param name="workspaceId"> The Customer ID of the Log Analytics workspace. </param>
         /// <param name="name">
@@ -959,7 +959,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new LogAnalyticsDestination(workspaceResourceId, workspaceId, name);
         }
 
-        /// <summary> Initializes a new instance of MonitoringAccountDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitoringAccountDestination"/>. </summary>
         /// <param name="accountResourceId"> The resource ID of the monitoring account. </param>
         /// <param name="accountId"> The immutable ID  of the account. </param>
         /// <param name="name">
@@ -972,7 +972,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitoringAccountDestination(accountResourceId, accountId, name);
         }
 
-        /// <summary> Initializes a new instance of MonitorWorkspaceResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Monitor.MonitorWorkspaceResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -995,7 +995,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorWorkspaceResourceData(id, name, resourceType, systemData, tags, location, etag, accountId, metrics, provisioningState, defaultIngestionSettings, privateEndpointConnections?.ToList(), publicNetworkAccess);
         }
 
-        /// <summary> Initializes a new instance of MonitorWorkspaceMetrics. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorWorkspaceMetrics"/>. </summary>
         /// <param name="prometheusQueryEndpoint"> The Prometheus query endpoint for the workspace. </param>
         /// <param name="internalId"> An internal identifier for the metrics container. Only to be used by the system. </param>
         /// <returns> A new <see cref="Models.MonitorWorkspaceMetrics"/> instance for mocking. </returns>
@@ -1004,7 +1004,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorWorkspaceMetrics(prometheusQueryEndpoint, internalId);
         }
 
-        /// <summary> Initializes a new instance of MonitorWorkspaceMetricProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorWorkspaceMetricProperties"/>. </summary>
         /// <param name="prometheusQueryEndpoint"> The Prometheus query endpoint for the workspace. </param>
         /// <param name="internalId"> An internal identifier for the metrics container. Only to be used by the system. </param>
         /// <returns> A new <see cref="Models.MonitorWorkspaceMetricProperties"/> instance for mocking. </returns>
@@ -1013,7 +1013,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorWorkspaceMetricProperties(prometheusQueryEndpoint, internalId);
         }
 
-        /// <summary> Initializes a new instance of MonitorWorkspaceDefaultIngestionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorWorkspaceDefaultIngestionSettings"/>. </summary>
         /// <param name="dataCollectionRuleResourceId"> The Azure resource Id of the default data collection rule for this workspace. </param>
         /// <param name="dataCollectionEndpointResourceId"> The Azure resource Id of the default data collection endpoint for this workspace. </param>
         /// <returns> A new <see cref="Models.MonitorWorkspaceDefaultIngestionSettings"/> instance for mocking. </returns>
@@ -1022,7 +1022,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorWorkspaceDefaultIngestionSettings(dataCollectionRuleResourceId, dataCollectionEndpointResourceId);
         }
 
-        /// <summary> Initializes a new instance of MonitorWorkspaceIngestionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorWorkspaceIngestionSettings"/>. </summary>
         /// <param name="dataCollectionRuleResourceId"> The Azure resource Id of the default data collection rule for this workspace. </param>
         /// <param name="dataCollectionEndpointResourceId"> The Azure resource Id of the default data collection endpoint for this workspace. </param>
         /// <returns> A new <see cref="Models.MonitorWorkspaceIngestionSettings"/> instance for mocking. </returns>
@@ -1031,7 +1031,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorWorkspaceIngestionSettings(dataCollectionRuleResourceId, dataCollectionEndpointResourceId);
         }
 
-        /// <summary> Initializes a new instance of MonitorWorkspacePrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorWorkspacePrivateEndpointConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

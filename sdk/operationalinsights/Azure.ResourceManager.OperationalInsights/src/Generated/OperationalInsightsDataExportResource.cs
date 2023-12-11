@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
     /// A Class representing an OperationalInsightsDataExport along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OperationalInsightsDataExportResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetOperationalInsightsDataExportResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceResource" /> using the GetOperationalInsightsDataExport method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OperationalInsightsDataExportResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetOperationalInsightsDataExportResource method.
+    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceResource"/> using the GetOperationalInsightsDataExport method.
     /// </summary>
     public partial class OperationalInsightsDataExportResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OperationalInsightsDataExportResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="dataExportName"> The dataExportName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string dataExportName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataExports/{dataExportName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.OperationalInsights
         private readonly DataExportsRestOperations _operationalInsightsDataExportDataExportsRestClient;
         private readonly OperationalInsightsDataExportData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/dataExports";
+
         /// <summary> Initializes a new instance of the <see cref="OperationalInsightsDataExportResource"/> class for mocking. </summary>
         protected OperationalInsightsDataExportResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OperationalInsightsDataExportResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OperationalInsightsDataExportResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal OperationalInsightsDataExportResource(ArmClient client, OperationalInsightsDataExportData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.OperationalInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/dataExports";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

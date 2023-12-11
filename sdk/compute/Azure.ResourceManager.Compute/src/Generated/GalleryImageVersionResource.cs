@@ -20,13 +20,18 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a GalleryImageVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GalleryImageVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGalleryImageVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="GalleryImageResource" /> using the GetGalleryImageVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GalleryImageVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGalleryImageVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="GalleryImageResource"/> using the GetGalleryImageVersion method.
     /// </summary>
     public partial class GalleryImageVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GalleryImageVersionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="galleryName"> The galleryName. </param>
+        /// <param name="galleryImageName"> The galleryImageName. </param>
+        /// <param name="galleryImageVersionName"> The galleryImageVersionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}";
@@ -37,12 +42,15 @@ namespace Azure.ResourceManager.Compute
         private readonly GalleryImageVersionsRestOperations _galleryImageVersionRestClient;
         private readonly GalleryImageVersionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/galleries/images/versions";
+
         /// <summary> Initializes a new instance of the <see cref="GalleryImageVersionResource"/> class for mocking. </summary>
         protected GalleryImageVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GalleryImageVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GalleryImageVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GalleryImageVersionResource(ArmClient client, GalleryImageVersionData data) : this(client, data.Id)
@@ -63,9 +71,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/galleries/images/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

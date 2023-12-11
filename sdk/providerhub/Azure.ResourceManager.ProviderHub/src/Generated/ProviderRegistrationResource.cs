@@ -20,13 +20,15 @@ namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
     /// A Class representing a ProviderRegistration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProviderRegistrationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetProviderRegistrationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetProviderRegistration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProviderRegistrationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetProviderRegistrationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetProviderRegistration method.
     /// </summary>
     public partial class ProviderRegistrationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ProviderRegistrationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="providerNamespace"> The providerNamespace. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}";
@@ -39,12 +41,15 @@ namespace Azure.ResourceManager.ProviderHub
         private readonly ProviderHubRestOperations _defaultRestClient;
         private readonly ProviderRegistrationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ProviderHub/providerRegistrations";
+
         /// <summary> Initializes a new instance of the <see cref="ProviderRegistrationResource"/> class for mocking. </summary>
         protected ProviderRegistrationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ProviderRegistrationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProviderRegistrationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ProviderRegistrationResource(ArmClient client, ProviderRegistrationData data) : this(client, data.Id)
@@ -67,9 +72,6 @@ namespace Azure.ResourceManager.ProviderHub
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ProviderHub/providerRegistrations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -96,7 +98,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> An object representing collection of CustomRolloutResources and their operations over a CustomRolloutResource. </returns>
         public virtual CustomRolloutCollection GetCustomRollouts()
         {
-            return GetCachedClient(Client => new CustomRolloutCollection(Client, Id));
+            return GetCachedClient(client => new CustomRolloutCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +116,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// </summary>
         /// <param name="rolloutName"> The rollout name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CustomRolloutResource>> GetCustomRolloutAsync(string rolloutName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +139,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// </summary>
         /// <param name="rolloutName"> The rollout name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CustomRolloutResource> GetCustomRollout(string rolloutName, CancellationToken cancellationToken = default)
         {
@@ -149,7 +151,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> An object representing collection of DefaultRolloutResources and their operations over a DefaultRolloutResource. </returns>
         public virtual DefaultRolloutCollection GetDefaultRollouts()
         {
-            return GetCachedClient(Client => new DefaultRolloutCollection(Client, Id));
+            return GetCachedClient(client => new DefaultRolloutCollection(client, Id));
         }
 
         /// <summary>
@@ -167,8 +169,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// </summary>
         /// <param name="rolloutName"> The rollout name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DefaultRolloutResource>> GetDefaultRolloutAsync(string rolloutName, CancellationToken cancellationToken = default)
         {
@@ -190,8 +192,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// </summary>
         /// <param name="rolloutName"> The rollout name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rolloutName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DefaultRolloutResource> GetDefaultRollout(string rolloutName, CancellationToken cancellationToken = default)
         {
@@ -202,7 +204,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> An object representing collection of NotificationRegistrationResources and their operations over a NotificationRegistrationResource. </returns>
         public virtual NotificationRegistrationCollection GetNotificationRegistrations()
         {
-            return GetCachedClient(Client => new NotificationRegistrationCollection(Client, Id));
+            return GetCachedClient(client => new NotificationRegistrationCollection(client, Id));
         }
 
         /// <summary>
@@ -220,8 +222,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// </summary>
         /// <param name="notificationRegistrationName"> The notification registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="notificationRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationRegistrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="notificationRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NotificationRegistrationResource>> GetNotificationRegistrationAsync(string notificationRegistrationName, CancellationToken cancellationToken = default)
         {
@@ -243,8 +245,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// </summary>
         /// <param name="notificationRegistrationName"> The notification registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="notificationRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationRegistrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="notificationRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NotificationRegistrationResource> GetNotificationRegistration(string notificationRegistrationName, CancellationToken cancellationToken = default)
         {
@@ -255,7 +257,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> An object representing collection of ResourceTypeRegistrationResources and their operations over a ResourceTypeRegistrationResource. </returns>
         public virtual ResourceTypeRegistrationCollection GetResourceTypeRegistrations()
         {
-            return GetCachedClient(Client => new ResourceTypeRegistrationCollection(Client, Id));
+            return GetCachedClient(client => new ResourceTypeRegistrationCollection(client, Id));
         }
 
         /// <summary>
@@ -273,8 +275,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ResourceTypeRegistrationResource>> GetResourceTypeRegistrationAsync(string resourceType, CancellationToken cancellationToken = default)
         {
@@ -296,8 +298,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ResourceTypeRegistrationResource> GetResourceTypeRegistration(string resourceType, CancellationToken cancellationToken = default)
         {

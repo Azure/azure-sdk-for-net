@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The validation operation result for a linker. </summary>
     public partial class LinkerValidateOperationResult
     {
-        /// <summary> Initializes a new instance of LinkerValidateOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerValidateOperationResult"/>. </summary>
         internal LinkerValidateOperationResult()
         {
             ValidationDetail = new ChangeTrackingList<LinkerValidationResultItemInfo>();
         }
 
-        /// <summary> Initializes a new instance of LinkerValidateOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerValidateOperationResult"/>. </summary>
         /// <param name="resourceId"> Validated linker id. </param>
         /// <param name="status"> Validation operation status. </param>
         /// <param name="linkerName"> The linker name. </param>

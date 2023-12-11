@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteSlotHostNameBinding along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotHostNameBindingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotHostNameBindingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource" /> using the GetSiteSlotHostNameBinding method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteSlotHostNameBindingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteSlotHostNameBindingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource"/> using the GetSiteSlotHostNameBinding method.
     /// </summary>
     public partial class SiteSlotHostNameBindingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteSlotHostNameBindingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="slot"> The slot. </param>
+        /// <param name="hostName"> The hostName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string hostName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _siteSlotHostNameBindingWebAppsRestClient;
         private readonly HostNameBindingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/hostNameBindings";
+
         /// <summary> Initializes a new instance of the <see cref="SiteSlotHostNameBindingResource"/> class for mocking. </summary>
         protected SiteSlotHostNameBindingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteSlotHostNameBindingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotHostNameBindingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteSlotHostNameBindingResource(ArmClient client, HostNameBindingData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/hostNameBindings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

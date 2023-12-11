@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> The list of aliases. </summary>
     internal partial class SubscriptionAliasListResult
     {
-        /// <summary> Initializes a new instance of SubscriptionAliasListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionAliasListResult"/>. </summary>
         internal SubscriptionAliasListResult()
         {
             Value = new ChangeTrackingList<SubscriptionAliasData>();
         }
 
-        /// <summary> Initializes a new instance of SubscriptionAliasListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionAliasListResult"/>. </summary>
         /// <param name="value"> The list of alias. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal SubscriptionAliasListResult(IReadOnlyList<SubscriptionAliasData> value, string nextLink)

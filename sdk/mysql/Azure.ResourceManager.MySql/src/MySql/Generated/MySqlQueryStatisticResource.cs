@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.MySql
 {
     /// <summary>
     /// A Class representing a MySqlQueryStatistic along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MySqlQueryStatisticResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMySqlQueryStatisticResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MySqlServerResource" /> using the GetMySqlQueryStatistic method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlQueryStatisticResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMySqlQueryStatisticResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MySqlServerResource"/> using the GetMySqlQueryStatistic method.
     /// </summary>
     public partial class MySqlQueryStatisticResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MySqlQueryStatisticResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="queryStatisticId"> The queryStatisticId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string queryStatisticId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/topQueryStatistics/{queryStatisticId}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.MySql
         private readonly TopQueryStatisticsRestOperations _mySqlQueryStatisticTopQueryStatisticsRestClient;
         private readonly MySqlQueryStatisticData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers/topQueryStatistics";
+
         /// <summary> Initializes a new instance of the <see cref="MySqlQueryStatisticResource"/> class for mocking. </summary>
         protected MySqlQueryStatisticResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MySqlQueryStatisticResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlQueryStatisticResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MySqlQueryStatisticResource(ArmClient client, MySqlQueryStatisticData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.MySql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers/topQueryStatistics";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

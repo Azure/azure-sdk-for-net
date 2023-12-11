@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery point properties. </summary>
     public partial class SiteRecoveryPointProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPointProperties"/>. </summary>
         internal SiteRecoveryPointProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPointProperties"/>. </summary>
         /// <param name="recoveryPointOn"> The recovery point time. </param>
         /// <param name="recoveryPointType"> The recovery point type: ApplicationConsistent, CrashConsistent. </param>
         /// <param name="providerSpecificDetails">

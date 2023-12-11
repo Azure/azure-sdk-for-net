@@ -5,7 +5,6 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("RouterJobOffer")]
     public partial class RouterJobOffer
     {
     }

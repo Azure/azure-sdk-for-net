@@ -1,21 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{A11A9529-0A09-4ECB-9CE4-E7A6D6BA67DA}") = "Azure.ResourceManager.DataMigration", "src\Azure.ResourceManager.DataMigration.csproj", "{72E0B68A-F03E-4493-BE60-1DA3ADCE2CD1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.DataMigration", "src\Azure.ResourceManager.DataMigration.csproj", "{72E0B68A-F03E-4493-BE60-1DA3ADCE2CD1}"
 EndProject
-Project("{A11A9529-0A09-4ECB-9CE4-E7A6D6BA67DA}") = "Azure.ResourceManager.DataMigration.Tests", "tests\Azure.ResourceManager.DataMigration.Tests.csproj", "{5FE72E02-3B8F-47FF-A0A9-27F7239868D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.DataMigration.Tests", "tests\Azure.ResourceManager.DataMigration.Tests.csproj", "{5FE72E02-3B8F-47FF-A0A9-27F7239868D3}"
 EndProject
-Project("{A11A9529-0A09-4ECB-9CE4-E7A6D6BA67DA}") = "Azure.ResourceManager.DataMigration.Samples", "samples\Azure.ResourceManager.DataMigration.Samples.csproj", "{FF93ECC6-4D2C-4A94-85AB-A5F4251FB331}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.DataMigration.Samples", "samples\Azure.ResourceManager.DataMigration.Samples.csproj", "{FF93ECC6-4D2C-4A94-85AB-A5F4251FB331}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {FC6C8781-EBB4-4E67-85BC-34B574916093}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -49,5 +43,23 @@ Global
 		{5FE72E02-3B8F-47FF-A0A9-27F7239868D3}.Release|x64.Build.0 = Release|Any CPU
 		{5FE72E02-3B8F-47FF-A0A9-27F7239868D3}.Release|x86.ActiveCfg = Release|Any CPU
 		{5FE72E02-3B8F-47FF-A0A9-27F7239868D3}.Release|x86.Build.0 = Release|Any CPU
+		{FF93ECC6-4D2C-4A94-85AB-A5F4251FB331}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF93ECC6-4D2C-4A94-85AB-A5F4251FB331}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF93ECC6-4D2C-4A94-85AB-A5F4251FB331}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FF93ECC6-4D2C-4A94-85AB-A5F4251FB331}.Debug|x64.Build.0 = Debug|Any CPU
+		{FF93ECC6-4D2C-4A94-85AB-A5F4251FB331}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FF93ECC6-4D2C-4A94-85AB-A5F4251FB331}.Debug|x86.Build.0 = Debug|Any CPU
+		{FF93ECC6-4D2C-4A94-85AB-A5F4251FB331}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF93ECC6-4D2C-4A94-85AB-A5F4251FB331}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF93ECC6-4D2C-4A94-85AB-A5F4251FB331}.Release|x64.ActiveCfg = Release|Any CPU
+		{FF93ECC6-4D2C-4A94-85AB-A5F4251FB331}.Release|x64.Build.0 = Release|Any CPU
+		{FF93ECC6-4D2C-4A94-85AB-A5F4251FB331}.Release|x86.ActiveCfg = Release|Any CPU
+		{FF93ECC6-4D2C-4A94-85AB-A5F4251FB331}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FC6C8781-EBB4-4E67-85BC-34B574916093}
 	EndGlobalSection
 EndGlobal

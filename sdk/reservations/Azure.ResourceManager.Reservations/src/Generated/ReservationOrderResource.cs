@@ -21,13 +21,14 @@ namespace Azure.ResourceManager.Reservations
 {
     /// <summary>
     /// A Class representing a ReservationOrder along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ReservationOrderResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetReservationOrderResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetReservationOrder method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ReservationOrderResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetReservationOrderResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetReservationOrder method.
     /// </summary>
     public partial class ReservationOrderResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ReservationOrderResource"/> instance. </summary>
+        /// <param name="reservationOrderId"> The reservationOrderId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(Guid reservationOrderId)
         {
             var resourceId = $"/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}";
@@ -44,12 +45,15 @@ namespace Azure.ResourceManager.Reservations
         private readonly ReturnRestOperations _returnRestClient;
         private readonly ReservationOrderData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Capacity/reservationOrders";
+
         /// <summary> Initializes a new instance of the <see cref="ReservationOrderResource"/> class for mocking. </summary>
         protected ReservationOrderResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ReservationOrderResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ReservationOrderResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ReservationOrderResource(ArmClient client, ReservationOrderData data) : this(client, data.Id)
@@ -78,9 +82,6 @@ namespace Azure.ResourceManager.Reservations
 #endif
         }
 
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Capacity/reservationOrders";
-
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> An object representing collection of ReservationDetailResources and their operations over a ReservationDetailResource. </returns>
         public virtual ReservationDetailCollection GetReservationDetails()
         {
-            return GetCachedClient(Client => new ReservationDetailCollection(Client, Id));
+            return GetCachedClient(client => new ReservationDetailCollection(client, Id));
         }
 
         /// <summary>

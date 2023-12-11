@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The regional capabilities. </summary>
     public partial class ContainerCapabilities
     {
-        /// <summary> Initializes a new instance of ContainerCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerCapabilities"/>. </summary>
         internal ContainerCapabilities()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerCapabilities"/>. </summary>
         /// <param name="resourceType"> The resource type that this capability describes. </param>
         /// <param name="osType"> The OS type that this capability describes. </param>
         /// <param name="location"> The resource location. </param>

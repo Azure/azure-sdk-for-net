@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The linked integration runtime information. </summary>
     public partial class SynapseLinkedIntegrationRuntime
     {
-        /// <summary> Initializes a new instance of SynapseLinkedIntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseLinkedIntegrationRuntime"/>. </summary>
         internal SynapseLinkedIntegrationRuntime()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseLinkedIntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseLinkedIntegrationRuntime"/>. </summary>
         /// <param name="name"> The name of the linked integration runtime. </param>
         /// <param name="subscriptionId"> The subscription ID for which the linked integration runtime belong to. </param>
         /// <param name="dataFactoryName"> The name of the workspace for which the linked integration runtime belong to. </param>

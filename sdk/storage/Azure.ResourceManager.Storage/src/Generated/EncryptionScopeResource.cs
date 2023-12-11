@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Storage
 {
     /// <summary>
     /// A Class representing an EncryptionScope along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EncryptionScopeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEncryptionScopeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource" /> using the GetEncryptionScope method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EncryptionScopeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEncryptionScopeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource"/> using the GetEncryptionScope method.
     /// </summary>
     public partial class EncryptionScopeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EncryptionScopeResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="encryptionScopeName"> The encryptionScopeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string encryptionScopeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopes/{encryptionScopeName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Storage
         private readonly EncryptionScopesRestOperations _encryptionScopeRestClient;
         private readonly EncryptionScopeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/encryptionScopes";
+
         /// <summary> Initializes a new instance of the <see cref="EncryptionScopeResource"/> class for mocking. </summary>
         protected EncryptionScopeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EncryptionScopeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EncryptionScopeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EncryptionScopeResource(ArmClient client, EncryptionScopeData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Storage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/encryptionScopes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

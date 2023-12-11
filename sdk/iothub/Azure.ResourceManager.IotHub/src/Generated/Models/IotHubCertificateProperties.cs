@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The description of an X509 CA Certificate. </summary>
     public partial class IotHubCertificateProperties
     {
-        /// <summary> Initializes a new instance of IotHubCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificateProperties"/>. </summary>
         public IotHubCertificateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificateProperties"/>. </summary>
         /// <param name="subject"> The certificate's subject name. </param>
         /// <param name="expireOn"> The certificate's expiration date and time. </param>
         /// <param name="thumbprintString"> The certificate's thumbprint. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

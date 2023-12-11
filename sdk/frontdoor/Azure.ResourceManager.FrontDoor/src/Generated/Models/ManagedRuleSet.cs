@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines a managed rule set. </summary>
     public partial class ManagedRuleSet
     {
-        /// <summary> Initializes a new instance of ManagedRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSet"/>. </summary>
         /// <param name="ruleSetType"> Defines the rule set type to use. </param>
         /// <param name="ruleSetVersion"> Defines the version of the rule set to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetType"/> or <paramref name="ruleSetVersion"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             RuleGroupOverrides = new ChangeTrackingList<ManagedRuleGroupOverride>();
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSet"/>. </summary>
         /// <param name="ruleSetType"> Defines the rule set type to use. </param>
         /// <param name="ruleSetVersion"> Defines the version of the rule set to use. </param>
         /// <param name="ruleSetAction"> Defines the rule set action. </param>

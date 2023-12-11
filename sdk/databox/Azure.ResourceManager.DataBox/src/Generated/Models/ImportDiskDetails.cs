@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Import disk details. </summary>
     public partial class ImportDiskDetails
     {
-        /// <summary> Initializes a new instance of ImportDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportDiskDetails"/>. </summary>
         /// <param name="manifestFile"> The relative path of the manifest file on the disk. </param>
         /// <param name="manifestHash"> The Base16-encoded MD5 hash of the manifest file on the disk. </param>
         /// <param name="bitLockerKey"> BitLocker key used to encrypt the disk. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBox.Models
             BitLockerKey = bitLockerKey;
         }
 
-        /// <summary> Initializes a new instance of ImportDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportDiskDetails"/>. </summary>
         /// <param name="manifestFile"> The relative path of the manifest file on the disk. </param>
         /// <param name="manifestHash"> The Base16-encoded MD5 hash of the manifest file on the disk. </param>
         /// <param name="bitLockerKey"> BitLocker key used to encrypt the disk. </param>

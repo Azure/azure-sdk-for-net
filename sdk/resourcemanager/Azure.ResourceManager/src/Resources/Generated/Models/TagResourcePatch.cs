@@ -12,9 +12,18 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Wrapper resource for tags patch API request only. </summary>
     public partial class TagResourcePatch
     {
-        /// <summary> Initializes a new instance of TagResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagResourcePatch"/>. </summary>
         public TagResourcePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TagResourcePatch"/>. </summary>
+        /// <param name="patchMode"> The operation type for the patch API. </param>
+        /// <param name="properties"> The set of tags. </param>
+        internal TagResourcePatch(TagPatchMode? patchMode, Tag properties)
+        {
+            PatchMode = patchMode;
+            Properties = properties;
         }
 
         /// <summary> The operation type for the patch API. </summary>

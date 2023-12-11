@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.ArcScVmm
 {
     /// <summary>
     /// A Class representing a ScVmmVirtualNetwork along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScVmmVirtualNetworkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetScVmmVirtualNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetScVmmVirtualNetwork method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScVmmVirtualNetworkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScVmmVirtualNetworkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetScVmmVirtualNetwork method.
     /// </summary>
     public partial class ScVmmVirtualNetworkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ScVmmVirtualNetworkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualNetworkName"> The virtualNetworkName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualNetworkName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/virtualNetworks/{virtualNetworkName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.ArcScVmm
         private readonly VirtualNetworksRestOperations _scVmmVirtualNetworkVirtualNetworksRestClient;
         private readonly ScVmmVirtualNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ScVmm/virtualNetworks";
+
         /// <summary> Initializes a new instance of the <see cref="ScVmmVirtualNetworkResource"/> class for mocking. </summary>
         protected ScVmmVirtualNetworkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ScVmmVirtualNetworkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScVmmVirtualNetworkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScVmmVirtualNetworkResource(ArmClient client, ScVmmVirtualNetworkData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.ArcScVmm
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ScVmm/virtualNetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

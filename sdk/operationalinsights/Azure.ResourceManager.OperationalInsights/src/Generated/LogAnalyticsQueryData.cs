@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.OperationalInsights
     /// </summary>
     public partial class LogAnalyticsQueryData : ResourceData
     {
-        /// <summary> Initializes a new instance of LogAnalyticsQueryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsQueryData"/>. </summary>
         public LogAnalyticsQueryData()
         {
             Tags = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
-        /// <summary> Initializes a new instance of LogAnalyticsQueryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsQueryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

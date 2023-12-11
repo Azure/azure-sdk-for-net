@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Result of the request to list Flux Configurations.  It contains a list of FluxConfiguration objects and a URL link to get the next set of results. </summary>
     internal partial class FluxConfigurationsList
     {
-        /// <summary> Initializes a new instance of FluxConfigurationsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="FluxConfigurationsList"/>. </summary>
         internal FluxConfigurationsList()
         {
             Value = new ChangeTrackingList<KubernetesFluxConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of FluxConfigurationsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="FluxConfigurationsList"/>. </summary>
         /// <param name="value"> List of Flux Configurations within a Kubernetes cluster. </param>
         /// <param name="nextLink"> URL to get the next set of configuration objects, if any. </param>
         internal FluxConfigurationsList(IReadOnlyList<KubernetesFluxConfigurationData> value, string nextLink)

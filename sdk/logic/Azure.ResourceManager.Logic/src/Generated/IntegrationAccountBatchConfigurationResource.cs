@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Logic
 {
     /// <summary>
     /// A Class representing an IntegrationAccountBatchConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IntegrationAccountBatchConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIntegrationAccountBatchConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IntegrationAccountResource" /> using the GetIntegrationAccountBatchConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IntegrationAccountBatchConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIntegrationAccountBatchConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IntegrationAccountResource"/> using the GetIntegrationAccountBatchConfiguration method.
     /// </summary>
     public partial class IntegrationAccountBatchConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="IntegrationAccountBatchConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="integrationAccountName"> The integrationAccountName. </param>
+        /// <param name="batchConfigurationName"> The batchConfigurationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string integrationAccountName, string batchConfigurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/batchConfigurations/{batchConfigurationName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.Logic
         private readonly IntegrationAccountBatchConfigurationsRestOperations _integrationAccountBatchConfigurationRestClient;
         private readonly IntegrationAccountBatchConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Logic/integrationAccounts/batchConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="IntegrationAccountBatchConfigurationResource"/> class for mocking. </summary>
         protected IntegrationAccountBatchConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IntegrationAccountBatchConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IntegrationAccountBatchConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IntegrationAccountBatchConfigurationResource(ArmClient client, IntegrationAccountBatchConfigurationData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.Logic
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Logic/integrationAccounts/batchConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

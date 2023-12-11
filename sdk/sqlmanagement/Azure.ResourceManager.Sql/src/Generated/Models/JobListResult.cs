@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of jobs. </summary>
     internal partial class JobListResult
     {
-        /// <summary> Initializes a new instance of JobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobListResult"/>. </summary>
         internal JobListResult()
         {
             Value = new ChangeTrackingList<SqlServerJobData>();
         }
 
-        /// <summary> Initializes a new instance of JobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal JobListResult(IReadOnlyList<SqlServerJobData> value, string nextLink)

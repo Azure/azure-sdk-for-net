@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> Current version of each updatable component. </summary>
     public partial class HciPackageVersionInfo
     {
-        /// <summary> Initializes a new instance of HciPackageVersionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciPackageVersionInfo"/>. </summary>
         public HciPackageVersionInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of HciPackageVersionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciPackageVersionInfo"/>. </summary>
         /// <param name="packageType"> Package type. </param>
         /// <param name="version"> Package version. </param>
         /// <param name="lastUpdated"> Last time this component was updated. </param>

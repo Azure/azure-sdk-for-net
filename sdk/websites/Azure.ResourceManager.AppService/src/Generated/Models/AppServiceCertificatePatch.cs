@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Key Vault container ARM resource for a certificate that is purchased through Azure. </summary>
     public partial class AppServiceCertificatePatch : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceCertificatePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificatePatch"/>. </summary>
         public AppServiceCertificatePatch()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificatePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificatePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

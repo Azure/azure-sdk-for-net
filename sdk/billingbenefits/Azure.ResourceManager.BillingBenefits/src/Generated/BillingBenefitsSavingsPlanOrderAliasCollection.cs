@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.BillingBenefits
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BillingBenefitsSavingsPlanOrderAliasResource" /> and their operations.
-    /// Each <see cref="BillingBenefitsSavingsPlanOrderAliasResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="BillingBenefitsSavingsPlanOrderAliasCollection" /> instance call the GetBillingBenefitsSavingsPlanOrderAliases method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/> and their operations.
+    /// Each <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="BillingBenefitsSavingsPlanOrderAliasCollection"/> instance call the GetBillingBenefitsSavingsPlanOrderAliases method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class BillingBenefitsSavingsPlanOrderAliasCollection : ArmCollection
     {

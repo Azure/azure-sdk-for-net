@@ -13,7 +13,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Live Pipeline represents an unique instance of a pipeline topology which is used for real-time content ingestion and analysis. </summary>
     public partial class LivePipeline
     {
-        /// <summary> Initializes a new instance of LivePipeline. </summary>
+        /// <summary> Initializes a new instance of <see cref="LivePipeline"/>. </summary>
         /// <param name="name"> Live pipeline unique identifier. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public LivePipeline(string name)
@@ -23,7 +23,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of LivePipeline. </summary>
+        /// <summary> Initializes a new instance of <see cref="LivePipeline"/>. </summary>
         /// <param name="name"> Live pipeline unique identifier. </param>
         /// <param name="systemData"> Read-only system metadata associated with this object. </param>
         /// <param name="properties"> Live pipeline properties. </param>

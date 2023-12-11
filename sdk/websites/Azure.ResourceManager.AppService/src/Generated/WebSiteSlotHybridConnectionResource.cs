@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a WebSiteSlotHybridConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteSlotHybridConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebSiteSlotHybridConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource" /> using the GetWebSiteSlotHybridConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSiteSlotHybridConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWebSiteSlotHybridConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource"/> using the GetWebSiteSlotHybridConnection method.
     /// </summary>
     public partial class WebSiteSlotHybridConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSiteSlotHybridConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="slot"> The slot. </param>
+        /// <param name="entityName"> The entityName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string entityName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _webSiteSlotHybridConnectionWebAppsRestClient;
         private readonly RelayServiceConnectionEntityData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/hybridconnection";
+
         /// <summary> Initializes a new instance of the <see cref="WebSiteSlotHybridConnectionResource"/> class for mocking. </summary>
         protected WebSiteSlotHybridConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebSiteSlotHybridConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotHybridConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebSiteSlotHybridConnectionResource(ArmClient client, RelayServiceConnectionEntityData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/hybridconnection";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

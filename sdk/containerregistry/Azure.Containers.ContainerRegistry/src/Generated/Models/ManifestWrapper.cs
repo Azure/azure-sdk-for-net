@@ -13,7 +13,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Returns the requested manifest file. </summary>
     internal partial class ManifestWrapper : Manifest
     {
-        /// <summary> Initializes a new instance of ManifestWrapper. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManifestWrapper"/>. </summary>
         internal ManifestWrapper()
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
@@ -23,7 +23,7 @@ namespace Azure.Containers.ContainerRegistry
             Signatures = new ChangeTrackingList<ImageSignature>();
         }
 
-        /// <summary> Initializes a new instance of ManifestWrapper. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManifestWrapper"/>. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="mediaType"> Media type for this Manifest. </param>
         /// <param name="manifests"> (ManifestList, OCIIndex) List of V2 image layer information. </param>

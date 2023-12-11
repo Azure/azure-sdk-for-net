@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Specifies the custom service configuration. </summary>
     public partial class CustomService
     {
-        /// <summary> Initializes a new instance of CustomService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomService"/>. </summary>
         public CustomService()
         {
             EnvironmentVariables = new ChangeTrackingDictionary<string, EnvironmentVariable>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of CustomService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomService"/>. </summary>
         /// <param name="name"> Name of the Custom Service. </param>
         /// <param name="image"> Describes the Image Specifications. </param>
         /// <param name="environmentVariables"> Environment Variable for the container. </param>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

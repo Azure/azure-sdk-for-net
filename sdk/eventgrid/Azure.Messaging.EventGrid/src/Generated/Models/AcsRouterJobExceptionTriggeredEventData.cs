@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobExceptionTriggered event. </summary>
     public partial class AcsRouterJobExceptionTriggeredEventData : AcsRouterJobEventData
     {
-        /// <summary> Initializes a new instance of AcsRouterJobExceptionTriggeredEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterJobExceptionTriggeredEventData"/>. </summary>
         internal AcsRouterJobExceptionTriggeredEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsRouterJobExceptionTriggeredEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterJobExceptionTriggeredEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>

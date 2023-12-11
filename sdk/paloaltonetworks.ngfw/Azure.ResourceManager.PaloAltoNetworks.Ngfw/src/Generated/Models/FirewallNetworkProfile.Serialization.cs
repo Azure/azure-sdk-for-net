@@ -47,6 +47,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(TrustedRanges))
+            {
+                writer.WritePropertyName("trustedRanges"u8);
+                writer.WriteStartArray();
+                foreach (var item in TrustedRanges)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -62,6 +72,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             IList<IPAddressInfo> publicIPs = default;
             AllowEgressNatType enableEgressNat = default;
             Optional<IList<IPAddressInfo>> egressNatIP = default;
+            Optional<IList<string>> trustedRanges = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vnetConfiguration"u8))
@@ -116,8 +127,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     egressNatIP = array;
                     continue;
                 }
+                if (property.NameEquals("trustedRanges"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    trustedRanges = array;
+                    continue;
+                }
             }
-            return new FirewallNetworkProfile(vnetConfiguration.Value, vwanConfiguration.Value, networkType, publicIPs, enableEgressNat, Optional.ToList(egressNatIP));
+            return new FirewallNetworkProfile(vnetConfiguration.Value, vwanConfiguration.Value, networkType, publicIPs, enableEgressNat, Optional.ToList(egressNatIP), Optional.ToList(trustedRanges));
         }
     }
 }

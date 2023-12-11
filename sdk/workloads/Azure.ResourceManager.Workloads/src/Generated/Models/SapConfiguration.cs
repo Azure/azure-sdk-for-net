@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// </summary>
     public abstract partial class SapConfiguration
     {
-        /// <summary> Initializes a new instance of SapConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapConfiguration"/>. </summary>
         protected SapConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of SapConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapConfiguration"/>. </summary>
         /// <param name="configurationType"> The configuration Type. </param>
         internal SapConfiguration(SapConfigurationType configurationType)
         {

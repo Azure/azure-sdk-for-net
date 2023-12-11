@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Azure SKU definition. </summary>
     public partial class KustoSku
     {
-        /// <summary> Initializes a new instance of KustoSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoSku"/>. </summary>
         /// <param name="name"> SKU name. </param>
         /// <param name="tier"> SKU tier. </param>
         public KustoSku(KustoSkuName name, KustoSkuTier tier)
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Kusto.Models
             Tier = tier;
         }
 
-        /// <summary> Initializes a new instance of KustoSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoSku"/>. </summary>
         /// <param name="name"> SKU name. </param>
         /// <param name="capacity"> The number of instances of the cluster. </param>
         /// <param name="tier"> SKU tier. </param>

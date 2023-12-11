@@ -22,7 +22,7 @@ namespace Azure.Developer.DevCenter.Tests
             InstrumentClient(new DevBoxesClient(
                 TestEnvironment.Endpoint,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new DevCenterClientOptions())));
+                InstrumentClientOptions(new AzureDeveloperDevCenterClientOptions())));
 
         public DevBoxClientTests(bool isAsync) : base(isAsync)
         {
@@ -56,7 +56,9 @@ namespace Azure.Developer.DevCenter.Tests
                 WaitUntil.Completed,
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
-                DevBoxName);
+                DevBoxName,
+                TestEnvironment.hibernate,
+                TestEnvironment.context);
 
             BinaryData devBoxData = await devBoxStopOperation.WaitForCompletionAsync();
             JsonElement devBox = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
@@ -74,7 +76,8 @@ namespace Azure.Developer.DevCenter.Tests
                 WaitUntil.Completed,
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
-                DevBoxName);
+                DevBoxName,
+                TestEnvironment.context);
 
             devBoxData = await devBoxStartOperation.WaitForCompletionAsync();
             devBox = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
@@ -94,7 +97,8 @@ namespace Azure.Developer.DevCenter.Tests
             Response remoteConnectionResponse = await _devBoxesClient.GetRemoteConnectionAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
-                DevBoxName);
+                DevBoxName,
+                TestEnvironment.context);
 
             JsonElement remoteConnectionData = JsonDocument.Parse(remoteConnectionResponse.ContentStream).RootElement;
 
@@ -128,7 +132,8 @@ namespace Azure.Developer.DevCenter.Tests
             Response devBoxResponse = await _devBoxesClient.GetDevBoxAsync(
                TestEnvironment.ProjectName,
                TestEnvironment.MeUserId,
-               DevBoxName);
+               DevBoxName,
+               TestEnvironment.context);
 
             JsonElement devBoxResponseData = JsonDocument.Parse(devBoxResponse.ContentStream).RootElement;
 
@@ -146,7 +151,12 @@ namespace Azure.Developer.DevCenter.Tests
         {
             int numberOfReturnedDevBoxes = 0;
 
-            await foreach (BinaryData devBoxData in _devBoxesClient.GetDevBoxesAsync(TestEnvironment.ProjectName, TestEnvironment.MeUserId))
+            await foreach (BinaryData devBoxData in _devBoxesClient.GetDevBoxesAsync(
+                TestEnvironment.ProjectName,
+                TestEnvironment.MeUserId,
+                TestEnvironment.filter,
+                TestEnvironment.maxCount,
+                TestEnvironment.context))
             {
                 numberOfReturnedDevBoxes++;
                 JsonElement devBoxResponseData = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
@@ -168,7 +178,10 @@ namespace Azure.Developer.DevCenter.Tests
         {
             int numberOfReturnedDevBoxes = 0;
 
-            await foreach (BinaryData devBoxData in _devBoxesClient.GetAllDevBoxesAsync())
+            await foreach (BinaryData devBoxData in _devBoxesClient.GetAllDevBoxesAsync(
+                TestEnvironment.filter,
+                TestEnvironment.maxCount,
+                TestEnvironment.context))
             {
                 numberOfReturnedDevBoxes++;
                 JsonElement devBoxResponseData = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
@@ -190,7 +203,11 @@ namespace Azure.Developer.DevCenter.Tests
         {
             int numberOfReturnedDevBoxes = 0;
 
-            await foreach (BinaryData devBoxData in _devBoxesClient.GetAllDevBoxesByUserAsync(TestEnvironment.MeUserId))
+            await foreach (BinaryData devBoxData in _devBoxesClient.GetAllDevBoxesByUserAsync(
+                TestEnvironment.MeUserId,
+                TestEnvironment.filter,
+                TestEnvironment.maxCount,
+                TestEnvironment.context))
             {
                 numberOfReturnedDevBoxes++;
                 JsonElement devBoxResponseData = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
@@ -212,7 +229,8 @@ namespace Azure.Developer.DevCenter.Tests
         {
             Response getPoolResponse = await _devBoxesClient.GetPoolAsync(
                 TestEnvironment.ProjectName,
-                TestEnvironment.PoolName);
+                TestEnvironment.PoolName,
+                TestEnvironment.context);
 
             JsonElement getPoolData = JsonDocument.Parse(getPoolResponse.ContentStream).RootElement;
 
@@ -229,7 +247,11 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetPoolsSucceeds()
         {
             var numberOfReturnedPools = 0;
-            await foreach (BinaryData poolData in _devBoxesClient.GetPoolsAsync(TestEnvironment.ProjectName))
+            await foreach (BinaryData poolData in _devBoxesClient.GetPoolsAsync(
+                TestEnvironment.ProjectName,
+                TestEnvironment.filter,
+                TestEnvironment.maxCount,
+                TestEnvironment.context))
             {
                 numberOfReturnedPools++;
                 JsonElement getPoolsResponseData = JsonDocument.Parse(poolData.ToStream()).RootElement;
@@ -250,7 +272,12 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetSchedulesSucceeds()
         {
             var numberOfReturnedSchedules = 0;
-            await foreach (BinaryData scheduleData in _devBoxesClient.GetSchedulesAsync(TestEnvironment.ProjectName, TestEnvironment.PoolName))
+            await foreach (BinaryData scheduleData in _devBoxesClient.GetSchedulesAsync(
+                TestEnvironment.ProjectName,
+                TestEnvironment.PoolName,
+                TestEnvironment.filter,
+                TestEnvironment.maxCount,
+                TestEnvironment.context))
             {
                 numberOfReturnedSchedules++;
                 JsonElement getSchedulesResponseData = JsonDocument.Parse(scheduleData.ToStream()).RootElement;
@@ -273,7 +300,8 @@ namespace Azure.Developer.DevCenter.Tests
             Response getScheduleResponse = await _devBoxesClient.GetScheduleAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.PoolName,
-                "default");
+                "default",
+                TestEnvironment.context);
 
             JsonElement getScheduleData = JsonDocument.Parse(getScheduleResponse.ContentStream).RootElement;
 
@@ -290,7 +318,7 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetActionsSucceeds()
         {
             var numberOfReturnedActions = 0;
-            await foreach (BinaryData actionsData in _devBoxesClient.GetActionsAsync(TestEnvironment.ProjectName, TestEnvironment.MeUserId, DevBoxName))
+            await foreach (BinaryData actionsData in _devBoxesClient.GetDevBoxActionsAsync(TestEnvironment.ProjectName, TestEnvironment.MeUserId, DevBoxName, TestEnvironment.context))
             {
                 numberOfReturnedActions++;
                 JsonElement getActionsResponseData = JsonDocument.Parse(actionsData.ToStream()).RootElement;
@@ -310,11 +338,12 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task GetActionSucceeds()
         {
-            Response getActionResponse = await _devBoxesClient.GetActionAsync(
+            Response getActionResponse = await _devBoxesClient.GetDevBoxActionAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
                 DevBoxName,
-                "schedule-default");
+                "schedule-default",
+                TestEnvironment.context);
 
             JsonElement getActionData = JsonDocument.Parse(getActionResponse.ContentStream).RootElement;
 
@@ -351,7 +380,8 @@ namespace Azure.Developer.DevCenter.Tests
                 TestEnvironment.MeUserId,
                 DevBoxName,
                 "schedule-default",
-                delayUntil);
+                delayUntil,
+                TestEnvironment.context);
 
             JsonElement delayActionData = JsonDocument.Parse(delayActionResponse.ContentStream).RootElement;
             if (!delayActionData.TryGetProperty("next", out var nextActionTimeJson))
@@ -374,7 +404,7 @@ namespace Azure.Developer.DevCenter.Tests
             DateTimeOffset delayUntil = DateTimeOffset.Parse("2023-05-02T16:01:53.3821556Z");
             var numberOfReturnedActions = 0;
 
-            await foreach (BinaryData actionsData in _devBoxesClient.DelayAllActionsAsync(TestEnvironment.ProjectName, TestEnvironment.MeUserId, DevBoxName, delayUntil))
+            await foreach (BinaryData actionsData in _devBoxesClient.DelayAllActionsAsync(TestEnvironment.ProjectName, TestEnvironment.MeUserId, DevBoxName, delayUntil, TestEnvironment.context))
             {
                 numberOfReturnedActions++;
                 JsonElement getActionsResponseData = JsonDocument.Parse(actionsData.ToStream()).RootElement;

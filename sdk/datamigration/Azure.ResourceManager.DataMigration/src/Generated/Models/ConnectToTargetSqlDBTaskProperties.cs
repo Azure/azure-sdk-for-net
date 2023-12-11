@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that validates connection to SQL DB and target server requirements. </summary>
     public partial class ConnectToTargetSqlDBTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of ConnectToTargetSqlDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlDBTaskProperties"/>. </summary>
         public ConnectToTargetSqlDBTaskProperties()
         {
             Output = new ChangeTrackingList<ConnectToTargetSqlDBTaskOutput>();
             TaskType = TaskType.ConnectToTargetSqlDB;
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetSqlDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlDBTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>

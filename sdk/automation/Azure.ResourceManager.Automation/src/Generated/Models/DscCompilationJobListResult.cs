@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list job operation. </summary>
     internal partial class DscCompilationJobListResult
     {
-        /// <summary> Initializes a new instance of DscCompilationJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscCompilationJobListResult"/>. </summary>
         internal DscCompilationJobListResult()
         {
             Value = new ChangeTrackingList<DscCompilationJobData>();
         }
 
-        /// <summary> Initializes a new instance of DscCompilationJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscCompilationJobListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of Dsc Compilation jobs. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
         internal DscCompilationJobListResult(IReadOnlyList<DscCompilationJobData> value, string nextLink)

@@ -26,7 +26,7 @@ param (
     [string] $SubscriptionId,
 
     [Parameter()]
-    [ValidateRange(1, 7*24)]
+    [ValidateRange(1, 30*24)]
     [int] $DeleteAfterHours = 48
 )
 
@@ -136,6 +136,9 @@ try {
 
     Log "Updating DeleteAfter to '$deleteAfter'"
     Write-Warning "Any clean-up scripts running against subscription '$SubscriptionId' may delete resource group '$ResourceGroupName' after $DeleteAfterHours hours."
+    if (!$resourceGroup.Tags) {
+        $resourceGroup.Tags = @{}
+    }
     $resourceGroup.Tags['DeleteAfter'] = $deleteAfter
 
     Log "Updating resource group '$ResourceGroupName'"

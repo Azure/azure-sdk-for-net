@@ -13,9 +13,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters to create and update an Azure Cosmos DB SQL Role Assignment. </summary>
     public partial class CosmosDBSqlRoleAssignmentCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlRoleAssignmentCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlRoleAssignmentCreateOrUpdateContent"/>. </summary>
         public CosmosDBSqlRoleAssignmentCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlRoleAssignmentCreateOrUpdateContent"/>. </summary>
+        /// <param name="roleDefinitionId"> The unique identifier for the associated Role Definition. </param>
+        /// <param name="scope"> The data plane resource path for which access is being granted through this Role Assignment. </param>
+        /// <param name="principalId"> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </param>
+        internal CosmosDBSqlRoleAssignmentCreateOrUpdateContent(ResourceIdentifier roleDefinitionId, string scope, Guid? principalId)
+        {
+            RoleDefinitionId = roleDefinitionId;
+            Scope = scope;
+            PrincipalId = principalId;
         }
 
         /// <summary> The unique identifier for the associated Role Definition. </summary>

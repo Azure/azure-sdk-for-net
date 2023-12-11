@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The Db2 table dataset. </summary>
     public partial class Db2TableDataset : Dataset
     {
-        /// <summary> Initializes a new instance of Db2TableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="Db2TableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public Db2TableDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Db2Table";
         }
 
-        /// <summary> Initializes a new instance of Db2TableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="Db2TableDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

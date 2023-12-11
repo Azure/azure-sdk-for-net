@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The DefaultRolloutProperties. </summary>
     public partial class DefaultRolloutProperties
     {
-        /// <summary> Initializes a new instance of DefaultRolloutProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultRolloutProperties"/>. </summary>
         public DefaultRolloutProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DefaultRolloutProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultRolloutProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="specification"></param>
         /// <param name="status"></param>

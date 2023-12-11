@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> The properties of a private endpoint connection. </summary>
     public partial class DeviceProvisioningServicesPrivateEndpointConnectionProperties
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="connectionState"> The current state of a private endpoint connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
         public DeviceProvisioningServicesPrivateEndpointConnectionProperties(DeviceProvisioningServicesPrivateLinkServiceConnectionState connectionState)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             ConnectionState = connectionState;
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpoint"> The private endpoint property of a private endpoint connection. </param>
         /// <param name="connectionState"> The current state of a private endpoint connection. </param>
         internal DeviceProvisioningServicesPrivateEndpointConnectionProperties(SubResource privateEndpoint, DeviceProvisioningServicesPrivateLinkServiceConnectionState connectionState)

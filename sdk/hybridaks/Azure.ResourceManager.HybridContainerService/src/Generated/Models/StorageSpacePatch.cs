@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The storageSpaces resource patch definition. </summary>
     public partial class StorageSpacePatch
     {
-        /// <summary> Initializes a new instance of StorageSpacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpacePatch"/>. </summary>
         public StorageSpacePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageSpacePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal StorageSpacePatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

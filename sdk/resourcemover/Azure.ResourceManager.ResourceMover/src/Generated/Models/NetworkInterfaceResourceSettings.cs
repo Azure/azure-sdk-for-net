@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the network interface resource settings. </summary>
     public partial class NetworkInterfaceResourceSettings : MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of NetworkInterfaceResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceResourceSettings"/>. </summary>
         public NetworkInterfaceResourceSettings()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             ResourceType = "Microsoft.Network/networkInterfaces";
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaceResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <param name="targetResourceGroupName"> Gets or sets the target resource group name. </param>

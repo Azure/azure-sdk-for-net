@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
     /// A Class representing a MobileNetworkSite along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MobileNetworkSiteResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMobileNetworkSiteResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MobileNetworkResource" /> using the GetMobileNetworkSite method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MobileNetworkSiteResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMobileNetworkSiteResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MobileNetworkResource"/> using the GetMobileNetworkSite method.
     /// </summary>
     public partial class MobileNetworkSiteResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MobileNetworkSiteResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="mobileNetworkName"> The mobileNetworkName. </param>
+        /// <param name="siteName"> The siteName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string mobileNetworkName, string siteName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/sites/{siteName}";
@@ -37,12 +41,15 @@ namespace Azure.ResourceManager.MobileNetwork
         private readonly SitesRestOperations _mobileNetworkSiteSitesRestClient;
         private readonly MobileNetworkSiteData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/mobileNetworks/sites";
+
         /// <summary> Initializes a new instance of the <see cref="MobileNetworkSiteResource"/> class for mocking. </summary>
         protected MobileNetworkSiteResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MobileNetworkSiteResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MobileNetworkSiteResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MobileNetworkSiteResource(ArmClient client, MobileNetworkSiteData data) : this(client, data.Id)
@@ -63,9 +70,6 @@ namespace Azure.ResourceManager.MobileNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/mobileNetworks/sites";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

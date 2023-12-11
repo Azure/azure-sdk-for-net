@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Response of the GetDomainOwnershipIdentifier operation. </summary>
     public partial class ApiManagementServiceGetDomainOwnershipIdentifierResult
     {
-        /// <summary> Initializes a new instance of ApiManagementServiceGetDomainOwnershipIdentifierResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceGetDomainOwnershipIdentifierResult"/>. </summary>
         internal ApiManagementServiceGetDomainOwnershipIdentifierResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementServiceGetDomainOwnershipIdentifierResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceGetDomainOwnershipIdentifierResult"/>. </summary>
         /// <param name="domainOwnershipIdentifier"> The domain ownership identifier value. </param>
         internal ApiManagementServiceGetDomainOwnershipIdentifierResult(string domainOwnershipIdentifier)
         {

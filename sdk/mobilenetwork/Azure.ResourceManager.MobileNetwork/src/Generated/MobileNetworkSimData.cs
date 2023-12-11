@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class MobileNetworkSimData : ResourceData
     {
-        /// <summary> Initializes a new instance of MobileNetworkSimData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkSimData"/>. </summary>
         /// <param name="internationalMobileSubscriberIdentity"> The international mobile subscriber identity (IMSI) for the SIM. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="internationalMobileSubscriberIdentity"/> is null. </exception>
         public MobileNetworkSimData(string internationalMobileSubscriberIdentity)
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MobileNetwork
             StaticIPConfiguration = new ChangeTrackingList<SimStaticIPProperties>();
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkSimData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkSimData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

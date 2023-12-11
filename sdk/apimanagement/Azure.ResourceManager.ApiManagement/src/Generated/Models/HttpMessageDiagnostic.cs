@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Http message diagnostic settings. </summary>
     public partial class HttpMessageDiagnostic
     {
-        /// <summary> Initializes a new instance of HttpMessageDiagnostic. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpMessageDiagnostic"/>. </summary>
         public HttpMessageDiagnostic()
         {
             Headers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HttpMessageDiagnostic. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpMessageDiagnostic"/>. </summary>
         /// <param name="headers"> Array of HTTP Headers to log. </param>
         /// <param name="body"> Body logging settings. </param>
         /// <param name="dataMasking"> Data masking settings. </param>

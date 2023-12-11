@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> General Policy model custom properties. </summary>
     public partial class GeneralPolicyModelCustomProperties : PolicyModelCustomProperties
     {
-        /// <summary> Initializes a new instance of GeneralPolicyModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeneralPolicyModelCustomProperties"/>. </summary>
         public GeneralPolicyModelCustomProperties()
         {
             InstanceType = "PolicyModelCustomProperties";
         }
 
-        /// <summary> Initializes a new instance of GeneralPolicyModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeneralPolicyModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         internal GeneralPolicyModelCustomProperties(string instanceType) : base(instanceType)
         {

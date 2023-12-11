@@ -14,10 +14,10 @@ namespace Azure.Monitor.Query.Models
     /// <summary> An single request in a batch. </summary>
     internal partial class BatchQueryRequest
     {
-        /// <summary> Initializes a new instance of BatchQueryRequest. </summary>
-        /// <param name="id"> The error details. </param>
+        /// <summary> Initializes a new instance of <see cref="BatchQueryRequest"/>. </summary>
+        /// <param name="id"> Unique ID corresponding to each request in the batch. </param>
         /// <param name="body"> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </param>
-        /// <param name="workspace"> Workspace Id to be included in the query. </param>
+        /// <param name="workspace"> Primary Workspace ID of the query. This is the Workspace ID from the Properties blade in the Azure portal. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="body"/> or <paramref name="workspace"/> is null. </exception>
         public BatchQueryRequest(string id, QueryBody body, string workspace)
         {
@@ -33,17 +33,34 @@ namespace Azure.Monitor.Query.Models
             Workspace = workspace;
         }
 
-        /// <summary> The error details. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchQueryRequest"/>. </summary>
+        /// <param name="id"> Unique ID corresponding to each request in the batch. </param>
+        /// <param name="headers"> Headers of the request. Can use prefer header to set server timeout and to query statistics and visualization information. </param>
+        /// <param name="body"> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </param>
+        /// <param name="path"> The query path of a single request in a batch, defaults to /query. </param>
+        /// <param name="method"> The method of a single request in a batch, defaults to POST. </param>
+        /// <param name="workspace"> Primary Workspace ID of the query. This is the Workspace ID from the Properties blade in the Azure portal. </param>
+        internal BatchQueryRequest(string id, IDictionary<string, string> headers, QueryBody body, string path, string method, string workspace)
+        {
+            Id = id;
+            Headers = headers;
+            Body = body;
+            Path = path;
+            Method = method;
+            Workspace = workspace;
+        }
+
+        /// <summary> Unique ID corresponding to each request in the batch. </summary>
         public string Id { get; }
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        /// <summary> Headers of the request. Can use prefer header to set server timeout and to query statistics and visualization information. </summary>
         public IDictionary<string, string> Headers { get; }
         /// <summary> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </summary>
         public QueryBody Body { get; }
-        /// <summary> Gets the path. </summary>
+        /// <summary> The query path of a single request in a batch, defaults to /query. </summary>
         public string Path { get; }
-        /// <summary> Gets the method. </summary>
+        /// <summary> The method of a single request in a batch, defaults to POST. </summary>
         public string Method { get; }
-        /// <summary> Workspace Id to be included in the query. </summary>
+        /// <summary> Primary Workspace ID of the query. This is the Workspace ID from the Properties blade in the Azure portal. </summary>
         public string Workspace { get; }
     }
 }

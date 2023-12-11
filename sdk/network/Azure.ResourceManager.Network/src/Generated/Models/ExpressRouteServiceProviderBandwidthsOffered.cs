@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Contains bandwidths offered in ExpressRouteServiceProvider resources. </summary>
     public partial class ExpressRouteServiceProviderBandwidthsOffered
     {
-        /// <summary> Initializes a new instance of ExpressRouteServiceProviderBandwidthsOffered. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProviderBandwidthsOffered"/>. </summary>
         public ExpressRouteServiceProviderBandwidthsOffered()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteServiceProviderBandwidthsOffered. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProviderBandwidthsOffered"/>. </summary>
         /// <param name="offerName"> The OfferName. </param>
         /// <param name="valueInMbps"> The ValueInMbps. </param>
         internal ExpressRouteServiceProviderBandwidthsOffered(string offerName, int? valueInMbps)

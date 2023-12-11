@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Automation
 {
     /// <summary>
     /// A Class representing an AutomationSchedule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomationScheduleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutomationScheduleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource" /> using the GetAutomationSchedule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomationScheduleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutomationScheduleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource"/> using the GetAutomationSchedule method.
     /// </summary>
     public partial class AutomationScheduleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutomationScheduleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="automationAccountName"> The automationAccountName. </param>
+        /// <param name="scheduleName"> The scheduleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string automationAccountName, string scheduleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.Automation
         private readonly ScheduleRestOperations _automationScheduleScheduleRestClient;
         private readonly AutomationScheduleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/schedules";
+
         /// <summary> Initializes a new instance of the <see cref="AutomationScheduleResource"/> class for mocking. </summary>
         protected AutomationScheduleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutomationScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomationScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomationScheduleResource(ArmClient client, AutomationScheduleData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.Automation
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/schedules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

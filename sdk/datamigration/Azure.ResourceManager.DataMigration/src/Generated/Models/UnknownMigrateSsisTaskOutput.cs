@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The UnknownMigrateSsisTaskOutput. </summary>
     internal partial class UnknownMigrateSsisTaskOutput : MigrateSsisTaskOutput
     {
-        /// <summary> Initializes a new instance of UnknownMigrateSsisTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMigrateSsisTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         internal UnknownMigrateSsisTaskOutput(string id, string resultType) : base(id, resultType)

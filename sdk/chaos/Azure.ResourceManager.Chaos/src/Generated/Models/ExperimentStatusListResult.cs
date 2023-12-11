@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents a list of Experiment statuses and a link for pagination. </summary>
     internal partial class ExperimentStatusListResult
     {
-        /// <summary> Initializes a new instance of ExperimentStatusListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentStatusListResult"/>. </summary>
         internal ExperimentStatusListResult()
         {
             Value = new ChangeTrackingList<ExperimentStatusData>();
         }
 
-        /// <summary> Initializes a new instance of ExperimentStatusListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentStatusListResult"/>. </summary>
         /// <param name="value"> List of Experiment statuses. </param>
         /// <param name="nextLink"> URL to retrieve the next page of Experiment statuses. </param>
         internal ExperimentStatusListResult(IReadOnlyList<ExperimentStatusData> value, string nextLink)

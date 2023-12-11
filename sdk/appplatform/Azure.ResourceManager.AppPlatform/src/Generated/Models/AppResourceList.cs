@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Object that includes an array of App resources and a possible link for next set. </summary>
     internal partial class AppResourceList
     {
-        /// <summary> Initializes a new instance of AppResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppResourceList"/>. </summary>
         internal AppResourceList()
         {
             Value = new ChangeTrackingList<AppPlatformAppData>();
         }
 
-        /// <summary> Initializes a new instance of AppResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppResourceList"/>. </summary>
         /// <param name="value"> Collection of App resources. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).

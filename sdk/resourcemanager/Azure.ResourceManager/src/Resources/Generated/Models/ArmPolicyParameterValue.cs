@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The value of a parameter. </summary>
     public partial class ArmPolicyParameterValue
     {
-        /// <summary> Initializes a new instance of ArmPolicyParameterValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmPolicyParameterValue"/>. </summary>
         public ArmPolicyParameterValue()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmPolicyParameterValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmPolicyParameterValue"/>. </summary>
         /// <param name="value"> The value of the parameter. </param>
         internal ArmPolicyParameterValue(BinaryData value)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

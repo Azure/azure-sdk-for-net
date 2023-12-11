@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Query result. </summary>
     public partial class IdpsSignatureListResult
     {
-        /// <summary> Initializes a new instance of IdpsSignatureListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdpsSignatureListResult"/>. </summary>
         internal IdpsSignatureListResult()
         {
             Signatures = new ChangeTrackingList<IdpsSignatureResult>();
         }
 
-        /// <summary> Initializes a new instance of IdpsSignatureListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdpsSignatureListResult"/>. </summary>
         /// <param name="matchingRecordsCount"> Number of total records matching the query. </param>
         /// <param name="signatures"> Array containing the results of the query. </param>
         internal IdpsSignatureListResult(long? matchingRecordsCount, IReadOnlyList<IdpsSignatureResult> signatures)

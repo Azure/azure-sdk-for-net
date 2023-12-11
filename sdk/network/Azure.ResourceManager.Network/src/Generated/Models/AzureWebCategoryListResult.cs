@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListAzureWebCategories API service call. </summary>
     internal partial class AzureWebCategoryListResult
     {
-        /// <summary> Initializes a new instance of AzureWebCategoryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureWebCategoryListResult"/>. </summary>
         internal AzureWebCategoryListResult()
         {
             Value = new ChangeTrackingList<AzureWebCategoryData>();
         }
 
-        /// <summary> Initializes a new instance of AzureWebCategoryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureWebCategoryListResult"/>. </summary>
         /// <param name="value"> List of Azure Web Categories for a given Subscription. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         internal AzureWebCategoryListResult(IReadOnlyList<AzureWebCategoryData> value, string nextLink)

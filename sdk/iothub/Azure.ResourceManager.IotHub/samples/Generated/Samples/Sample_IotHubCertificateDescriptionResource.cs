@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.IotHub.Samples
             {
                 Properties = new IotHubCertificateProperties()
                 {
-                    Certificate = BinaryData.FromString("############################################"),
+                    Certificate = BinaryData.FromString("\"############################################\""),
                 },
             };
             ArmOperation<IotHubCertificateDescriptionResource> lro = await iotHubCertificateDescription.UpdateAsync(WaitUntil.Completed, data);
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.IotHub.Samples
             string ifMatch = "AAAAAAAADGk=";
             IotHubCertificateVerificationContent content = new IotHubCertificateVerificationContent()
             {
-                Certificate = BinaryData.FromString("#####################################"),
+                Certificate = BinaryData.FromString("\"#####################################\""),
             };
             IotHubCertificateDescriptionResource result = await iotHubCertificateDescription.VerifyAsync(ifMatch, content);
 

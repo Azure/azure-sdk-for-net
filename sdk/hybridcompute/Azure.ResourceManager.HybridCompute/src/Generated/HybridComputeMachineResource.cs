@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
     /// A Class representing a HybridComputeMachine along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HybridComputeMachineResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHybridComputeMachineResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetHybridComputeMachine method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HybridComputeMachineResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHybridComputeMachineResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHybridComputeMachine method.
     /// </summary>
     public partial class HybridComputeMachineResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HybridComputeMachineResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="machineName"> The machineName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string machineName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}";
@@ -44,12 +47,15 @@ namespace Azure.ResourceManager.HybridCompute
         private readonly PrivateLinkScopesRestOperations _hybridComputePrivateLinkScopePrivateLinkScopesRestClient;
         private readonly HybridComputeMachineData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridCompute/machines";
+
         /// <summary> Initializes a new instance of the <see cref="HybridComputeMachineResource"/> class for mocking. </summary>
         protected HybridComputeMachineResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HybridComputeMachineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HybridComputeMachineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HybridComputeMachineResource(ArmClient client, HybridComputeMachineData data) : this(client, data.Id)
@@ -78,9 +84,6 @@ namespace Azure.ResourceManager.HybridCompute
 #endif
         }
 
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridCompute/machines";
-
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
@@ -106,7 +109,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> An object representing collection of HybridComputeMachineExtensionResources and their operations over a HybridComputeMachineExtensionResource. </returns>
         public virtual HybridComputeMachineExtensionCollection GetHybridComputeMachineExtensions()
         {
-            return GetCachedClient(Client => new HybridComputeMachineExtensionCollection(Client, Id));
+            return GetCachedClient(client => new HybridComputeMachineExtensionCollection(client, Id));
         }
 
         /// <summary>
@@ -124,8 +127,8 @@ namespace Azure.ResourceManager.HybridCompute
         /// </summary>
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HybridComputeMachineExtensionResource>> GetHybridComputeMachineExtensionAsync(string extensionName, CancellationToken cancellationToken = default)
         {
@@ -147,8 +150,8 @@ namespace Azure.ResourceManager.HybridCompute
         /// </summary>
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HybridComputeMachineExtensionResource> GetHybridComputeMachineExtension(string extensionName, CancellationToken cancellationToken = default)
         {

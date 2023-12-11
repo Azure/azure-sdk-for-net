@@ -13,11 +13,24 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The filter expression to be used in the export. </summary>
     public partial class ForecastFilter
     {
-        /// <summary> Initializes a new instance of ForecastFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastFilter"/>. </summary>
         public ForecastFilter()
         {
             And = new ChangeTrackingList<ForecastFilter>();
             Or = new ChangeTrackingList<ForecastFilter>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ForecastFilter"/>. </summary>
+        /// <param name="and"> The logical "AND" expression. Must have at least 2 items. </param>
+        /// <param name="or"> The logical "OR" expression. Must have at least 2 items. </param>
+        /// <param name="dimensions"> Has comparison expression for a dimension. </param>
+        /// <param name="tags"> Has comparison expression for a tag. </param>
+        internal ForecastFilter(IList<ForecastFilter> and, IList<ForecastFilter> or, ForecastComparisonExpression dimensions, ForecastComparisonExpression tags)
+        {
+            And = and;
+            Or = or;
+            Dimensions = dimensions;
+            Tags = tags;
         }
 
         /// <summary> The logical "AND" expression. Must have at least 2 items. </summary>

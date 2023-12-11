@@ -21,9 +21,9 @@ using Azure.ResourceManager.NotificationHubs.Models;
 namespace Azure.ResourceManager.NotificationHubs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NotificationHubAuthorizationRuleResource" /> and their operations.
-    /// Each <see cref="NotificationHubAuthorizationRuleResource" /> in the collection will belong to the same instance of <see cref="NotificationHubResource" />.
-    /// To get a <see cref="NotificationHubAuthorizationRuleCollection" /> instance call the GetNotificationHubAuthorizationRules method from an instance of <see cref="NotificationHubResource" />.
+    /// A class representing a collection of <see cref="NotificationHubAuthorizationRuleResource"/> and their operations.
+    /// Each <see cref="NotificationHubAuthorizationRuleResource"/> in the collection will belong to the same instance of <see cref="NotificationHubResource"/>.
+    /// To get a <see cref="NotificationHubAuthorizationRuleCollection"/> instance call the GetNotificationHubAuthorizationRules method from an instance of <see cref="NotificationHubResource"/>.
     /// </summary>
     public partial class NotificationHubAuthorizationRuleCollection : ArmCollection, IEnumerable<NotificationHubAuthorizationRuleResource>, IAsyncEnumerable<NotificationHubAuthorizationRuleResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NotificationHubAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NotificationHubAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NotificationHubAuthorizationRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubAuthorizationRuleNotificationHubsRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NotificationHubAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NotificationHubAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NotificationHubAuthorizationRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubAuthorizationRuleNotificationHubsRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

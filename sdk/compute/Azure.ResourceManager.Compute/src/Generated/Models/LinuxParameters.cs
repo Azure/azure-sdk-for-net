@@ -13,12 +13,25 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Input for InstallPatches on a Linux VM, as directly received by the API. </summary>
     public partial class LinuxParameters
     {
-        /// <summary> Initializes a new instance of LinuxParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxParameters"/>. </summary>
         public LinuxParameters()
         {
             ClassificationsToInclude = new ChangeTrackingList<VmGuestPatchClassificationForLinux>();
             PackageNameMasksToInclude = new ChangeTrackingList<string>();
             PackageNameMasksToExclude = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LinuxParameters"/>. </summary>
+        /// <param name="classificationsToInclude"> The update classifications to select when installing patches for Linux. </param>
+        /// <param name="packageNameMasksToInclude"> packages to include in the patch operation. Format: packageName_packageVersion. </param>
+        /// <param name="packageNameMasksToExclude"> packages to exclude in the patch operation. Format: packageName_packageVersion. </param>
+        /// <param name="maintenanceRunId"> This is used as a maintenance run identifier for Auto VM Guest Patching in Linux. </param>
+        internal LinuxParameters(IList<VmGuestPatchClassificationForLinux> classificationsToInclude, IList<string> packageNameMasksToInclude, IList<string> packageNameMasksToExclude, string maintenanceRunId)
+        {
+            ClassificationsToInclude = classificationsToInclude;
+            PackageNameMasksToInclude = packageNameMasksToInclude;
+            PackageNameMasksToExclude = packageNameMasksToExclude;
+            MaintenanceRunId = maintenanceRunId;
         }
 
         /// <summary> The update classifications to select when installing patches for Linux. </summary>

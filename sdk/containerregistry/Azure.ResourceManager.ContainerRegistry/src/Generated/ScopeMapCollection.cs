@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ContainerRegistry
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ScopeMapResource" /> and their operations.
-    /// Each <see cref="ScopeMapResource" /> in the collection will belong to the same instance of <see cref="ContainerRegistryResource" />.
-    /// To get a <see cref="ScopeMapCollection" /> instance call the GetScopeMaps method from an instance of <see cref="ContainerRegistryResource" />.
+    /// A class representing a collection of <see cref="ScopeMapResource"/> and their operations.
+    /// Each <see cref="ScopeMapResource"/> in the collection will belong to the same instance of <see cref="ContainerRegistryResource"/>.
+    /// To get a <see cref="ScopeMapCollection"/> instance call the GetScopeMaps method from an instance of <see cref="ContainerRegistryResource"/>.
     /// </summary>
     public partial class ScopeMapCollection : ArmCollection, IEnumerable<ScopeMapResource>, IAsyncEnumerable<ScopeMapResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScopeMapResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ScopeMapResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScopeMapResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeMapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScopeMapResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScopeMapResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScopeMapResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeMapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServiceBusDisasterRecoveryResource" /> and their operations.
-    /// Each <see cref="ServiceBusDisasterRecoveryResource" /> in the collection will belong to the same instance of <see cref="ServiceBusNamespaceResource" />.
-    /// To get a <see cref="ServiceBusDisasterRecoveryCollection" /> instance call the GetServiceBusDisasterRecoveries method from an instance of <see cref="ServiceBusNamespaceResource" />.
+    /// A class representing a collection of <see cref="ServiceBusDisasterRecoveryResource"/> and their operations.
+    /// Each <see cref="ServiceBusDisasterRecoveryResource"/> in the collection will belong to the same instance of <see cref="ServiceBusNamespaceResource"/>.
+    /// To get a <see cref="ServiceBusDisasterRecoveryCollection"/> instance call the GetServiceBusDisasterRecoveries method from an instance of <see cref="ServiceBusNamespaceResource"/>.
     /// </summary>
     public partial class ServiceBusDisasterRecoveryCollection : ArmCollection, IEnumerable<ServiceBusDisasterRecoveryResource>, IAsyncEnumerable<ServiceBusDisasterRecoveryResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceBusDisasterRecoveryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceBusDisasterRecoveryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceBusDisasterRecoveryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceBusDisasterRecoveryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceBusDisasterRecoveryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceBusDisasterRecoveryResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

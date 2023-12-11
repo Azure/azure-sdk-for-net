@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The AccessKeyAuthTypeWorkspaceConnectionProperties. </summary>
     public partial class AccessKeyAuthTypeWorkspaceConnectionProperties : MachineLearningWorkspaceConnectionProperties
     {
-        /// <summary> Initializes a new instance of AccessKeyAuthTypeWorkspaceConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessKeyAuthTypeWorkspaceConnectionProperties"/>. </summary>
         public AccessKeyAuthTypeWorkspaceConnectionProperties()
         {
             AuthType = MachineLearningConnectionAuthType.AccessKey;
         }
 
-        /// <summary> Initializes a new instance of AccessKeyAuthTypeWorkspaceConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessKeyAuthTypeWorkspaceConnectionProperties"/>. </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
         /// <param name="expiryOn"></param>

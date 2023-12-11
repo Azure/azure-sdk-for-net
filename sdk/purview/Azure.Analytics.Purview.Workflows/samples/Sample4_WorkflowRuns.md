@@ -15,7 +15,7 @@ string username = Environment.GetEnvironmentVariable("Username");
 string password = Environment.GetEnvironmentVariable("Password");
 
 TokenCredential usernamePasswordCredential = new UsernamePasswordCredential(clientId,tenantId, username,password, null);
-var client = new PurviewWorkflowServiceClient(endpoint, usernamePasswordCredential);
+var client = new WorkflowsClient(endpoint, usernamePasswordCredential);
 ```
 
 ## Cancel a workflow run
@@ -26,5 +26,5 @@ Guid workflowRunId = new Guid("4f8d70c3-c09b-4e56-bfd1-8b86c79bd4d9");
 
 string request = "{\"comment\":\"Thanks!\"}";
 
-Response cancelResult = await client.CancelWorkflowRunAsync(workflowRunId, RequestContent.Create(request));
+Response cancelResult = await client.CancelAsync(workflowRunId, RequestContent.Create(request));
 ```

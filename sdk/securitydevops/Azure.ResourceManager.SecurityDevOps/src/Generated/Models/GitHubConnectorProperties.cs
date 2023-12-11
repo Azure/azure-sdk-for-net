@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> Properties of the ARM resource for /subscriptions/xxx/resourceGroups/xxx/providers/Microsoft.SecurityDevOps/gitHubConnectors. </summary>
     public partial class GitHubConnectorProperties
     {
-        /// <summary> Initializes a new instance of GitHubConnectorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubConnectorProperties"/>. </summary>
         public GitHubConnectorProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of GitHubConnectorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubConnectorProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="code"> Gets or sets one-time OAuth code to exchange for refresh and access tokens. </param>
         internal GitHubConnectorProperties(ProvisioningState? provisioningState, string code)

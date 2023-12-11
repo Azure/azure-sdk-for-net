@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> A message that describes why a resource is non-compliant with the policy. This is shown in 'deny' error messages and on resource's non-compliant compliance results. </summary>
     public partial class NonComplianceMessage
     {
-        /// <summary> Initializes a new instance of NonComplianceMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="NonComplianceMessage"/>. </summary>
         /// <param name="message"> A message that describes why a resource is non-compliant with the policy. This is shown in 'deny' error messages and on resource's non-compliant compliance results. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         public NonComplianceMessage(string message)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources.Models
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of NonComplianceMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="NonComplianceMessage"/>. </summary>
         /// <param name="message"> A message that describes why a resource is non-compliant with the policy. This is shown in 'deny' error messages and on resource's non-compliant compliance results. </param>
         /// <param name="policyDefinitionReferenceId"> The policy definition reference ID within a policy set definition the message is intended for. This is only applicable if the policy assignment assigns a policy set definition. If this is not provided the message applies to all policies assigned by this policy assignment. </param>
         internal NonComplianceMessage(string message, string policyDefinitionReferenceId)

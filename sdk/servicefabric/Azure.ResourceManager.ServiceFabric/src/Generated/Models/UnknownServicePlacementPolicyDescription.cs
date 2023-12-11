@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> The UnknownServicePlacementPolicyDescription. </summary>
     internal partial class UnknownServicePlacementPolicyDescription : ServicePlacementPolicyDescription
     {
-        /// <summary> Initializes a new instance of UnknownServicePlacementPolicyDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownServicePlacementPolicyDescription"/>. </summary>
         /// <param name="policyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
         internal UnknownServicePlacementPolicyDescription(ServicePlacementPolicyType policyType) : base(policyType)
         {

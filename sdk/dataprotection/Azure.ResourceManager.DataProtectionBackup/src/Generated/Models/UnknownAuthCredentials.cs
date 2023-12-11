@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> The UnknownAuthCredentials. </summary>
     internal partial class UnknownAuthCredentials : DataProtectionBackupAuthCredentials
     {
-        /// <summary> Initializes a new instance of UnknownAuthCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAuthCredentials"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         internal UnknownAuthCredentials(string objectType) : base(objectType)
         {

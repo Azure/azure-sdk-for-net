@@ -46,7 +46,7 @@ function RunOrExitOnFailure()
 function Login([string]$subscription, [string]$clusterGroup, [switch]$skipPushImages)
 {
     Write-Host "Logging in to subscription, cluster and container registry"
-    az account show *> $null
+    az account show -s "$subscription" *> $null
     if ($LASTEXITCODE) {
         RunOrExitOnFailure az login --allow-no-subscriptions
     }

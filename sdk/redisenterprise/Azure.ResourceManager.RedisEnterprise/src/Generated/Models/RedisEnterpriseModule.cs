@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Specifies configuration of a redis module. </summary>
     public partial class RedisEnterpriseModule
     {
-        /// <summary> Initializes a new instance of RedisEnterpriseModule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseModule"/>. </summary>
         /// <param name="name"> The name of the module, e.g. 'RedisBloom', 'RediSearch', 'RedisTimeSeries'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public RedisEnterpriseModule(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseModule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseModule"/>. </summary>
         /// <param name="name"> The name of the module, e.g. 'RedisBloom', 'RediSearch', 'RedisTimeSeries'. </param>
         /// <param name="args"> Configuration options for the module, e.g. 'ERROR_RATE 0.01 INITIAL_SIZE 400'. </param>
         /// <param name="version"> The version of the module, e.g. '1.0'. </param>

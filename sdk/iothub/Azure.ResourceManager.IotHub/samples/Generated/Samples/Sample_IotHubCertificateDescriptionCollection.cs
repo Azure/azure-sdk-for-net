@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.IotHub.Samples
             {
                 Properties = new IotHubCertificateProperties()
                 {
-                    Certificate = BinaryData.FromString("############################################"),
+                    Certificate = BinaryData.FromString("\"############################################\""),
                 },
             };
             ArmOperation<IotHubCertificateDescriptionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateName, data);

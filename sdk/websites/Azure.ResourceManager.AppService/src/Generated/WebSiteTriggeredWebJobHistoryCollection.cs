@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WebSiteTriggeredWebJobHistoryResource" /> and their operations.
-    /// Each <see cref="WebSiteTriggeredWebJobHistoryResource" /> in the collection will belong to the same instance of <see cref="WebSiteTriggeredwebJobResource" />.
-    /// To get a <see cref="WebSiteTriggeredWebJobHistoryCollection" /> instance call the GetWebSiteTriggeredWebJobHistories method from an instance of <see cref="WebSiteTriggeredwebJobResource" />.
+    /// A class representing a collection of <see cref="WebSiteTriggeredWebJobHistoryResource"/> and their operations.
+    /// Each <see cref="WebSiteTriggeredWebJobHistoryResource"/> in the collection will belong to the same instance of <see cref="WebSiteTriggeredwebJobResource"/>.
+    /// To get a <see cref="WebSiteTriggeredWebJobHistoryCollection"/> instance call the GetWebSiteTriggeredWebJobHistories method from an instance of <see cref="WebSiteTriggeredwebJobResource"/>.
     /// </summary>
     public partial class WebSiteTriggeredWebJobHistoryCollection : ArmCollection, IEnumerable<WebSiteTriggeredWebJobHistoryResource>, IAsyncEnumerable<WebSiteTriggeredWebJobHistoryResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebSiteTriggeredWebJobHistoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WebSiteTriggeredWebJobHistoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebSiteTriggeredWebJobHistoryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteTriggeredWebJobHistoryWebAppsRestClient.CreateListTriggeredWebJobHistoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebSiteTriggeredWebJobHistoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebSiteTriggeredWebJobHistoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebSiteTriggeredWebJobHistoryResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteTriggeredWebJobHistoryWebAppsRestClient.CreateListTriggeredWebJobHistoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

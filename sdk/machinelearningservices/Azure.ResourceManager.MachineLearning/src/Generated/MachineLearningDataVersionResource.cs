@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningDataVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningDataVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningDataVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningDataContainerResource" /> using the GetMachineLearningDataVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningDataVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningDataVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningDataContainerResource"/> using the GetMachineLearningDataVersion method.
     /// </summary>
     public partial class MachineLearningDataVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MachineLearningDataVersionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="version"> The version. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions/{version}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly DataVersionsRestOperations _machineLearningDataVersionDataVersionsRestClient;
         private readonly MachineLearningDataVersionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/data/versions";
+
         /// <summary> Initializes a new instance of the <see cref="MachineLearningDataVersionResource"/> class for mocking. </summary>
         protected MachineLearningDataVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MachineLearningDataVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningDataVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningDataVersionResource(ArmClient client, MachineLearningDataVersionData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.MachineLearning
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/data/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

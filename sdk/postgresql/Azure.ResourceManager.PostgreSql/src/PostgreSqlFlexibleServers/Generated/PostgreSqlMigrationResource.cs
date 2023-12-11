@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
     /// A Class representing a PostgreSqlMigration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PostgreSqlMigrationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPostgreSqlMigrationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource" /> using the GetPostgreSqlMigration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PostgreSqlMigrationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPostgreSqlMigrationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource"/> using the GetPostgreSqlMigration method.
     /// </summary>
     public partial class PostgreSqlMigrationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PostgreSqlMigrationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="targetDbServerName"> The targetDbServerName. </param>
+        /// <param name="migrationName"> The migrationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{targetDbServerName}/migrations/{migrationName}";
@@ -37,12 +41,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         private readonly MigrationsRestOperations _postgreSqlMigrationMigrationsRestClient;
         private readonly PostgreSqlMigrationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/migrations";
+
         /// <summary> Initializes a new instance of the <see cref="PostgreSqlMigrationResource"/> class for mocking. </summary>
         protected PostgreSqlMigrationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PostgreSqlMigrationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlMigrationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PostgreSqlMigrationResource(ArmClient client, PostgreSqlMigrationData data) : this(client, data.Id)
@@ -63,9 +70,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/migrations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

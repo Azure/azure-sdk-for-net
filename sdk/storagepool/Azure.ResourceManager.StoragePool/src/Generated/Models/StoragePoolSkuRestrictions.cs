@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Describes scaling information of a SKU. </summary>
     public partial class StoragePoolSkuRestrictions
     {
-        /// <summary> Initializes a new instance of StoragePoolSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePoolSkuRestrictions"/>. </summary>
         internal StoragePoolSkuRestrictions()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StoragePoolSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePoolSkuRestrictions"/>. </summary>
         /// <param name="restrictionsType"> The type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>

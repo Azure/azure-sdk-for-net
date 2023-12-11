@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ResourceMover
     }
     public partial class MoverResourceSetData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MoverResourceSetData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MoverResourceSetData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.ResourceMover.Models.MoverResourceSetProperties Properties { get { throw null; } set { } }
@@ -108,6 +108,34 @@ namespace Azure.ResourceManager.ResourceMover
         public static Azure.AsyncPageable<Azure.ResourceManager.ResourceMover.MoverResourceSetResource> GetMoverResourceSetsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.ResourceMover.Models.MoverOperationsDiscovery> GetOperationsDiscoveries(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.ResourceMover.Models.MoverOperationsDiscovery> GetOperationsDiscoveriesAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.ResourceMover.Mocking
+{
+    public partial class MockableResourceMoverArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableResourceMoverArmClient() { }
+        public virtual Azure.ResourceManager.ResourceMover.MoverResource GetMoverResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ResourceMover.MoverResourceSetResource GetMoverResourceSetResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableResourceMoverResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableResourceMoverResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.ResourceMover.MoverResourceSetResource> GetMoverResourceSet(string moverResourceSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceMover.MoverResourceSetResource>> GetMoverResourceSetAsync(string moverResourceSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ResourceMover.MoverResourceSetCollection GetMoverResourceSets() { throw null; }
+    }
+    public partial class MockableResourceMoverSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableResourceMoverSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ResourceMover.MoverResourceSetResource> GetMoverResourceSets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ResourceMover.MoverResourceSetResource> GetMoverResourceSetsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableResourceMoverTenantResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableResourceMoverTenantResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ResourceMover.Models.MoverOperationsDiscovery> GetOperationsDiscoveries(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ResourceMover.Models.MoverOperationsDiscovery> GetOperationsDiscoveriesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.ResourceMover.Models

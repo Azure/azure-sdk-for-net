@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Automation key which is used to register a DSC Node. </summary>
     public partial class AutomationKey
     {
-        /// <summary> Initializes a new instance of AutomationKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationKey"/>. </summary>
         internal AutomationKey()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationKey"/>. </summary>
         /// <param name="keyName"> Automation key name. </param>
         /// <param name="permissions"> Automation key permissions. </param>
         /// <param name="value"> Value of the Automation Key used for registration. </param>

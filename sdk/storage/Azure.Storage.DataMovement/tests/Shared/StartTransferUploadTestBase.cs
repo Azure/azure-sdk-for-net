@@ -36,6 +36,10 @@ namespace Azure.Storage.DataMovement.Tests
         ///
         /// The async is defaulted to true, since we do not have sync StartTransfer methods.
         /// </summary>
+        /// <param name="expectedOverwriteExceptionMessage">
+        /// To confirm the correct overwrite exception was thrown, we check against
+        /// this exception message to verify.
+        /// </param>
         /// <param name="generatedResourcenamePrefix"></param>
         /// <param name="mode"></param>
         public StartTransferUploadTestBase(
@@ -204,7 +208,7 @@ namespace Azure.Storage.DataMovement.Tests
             await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
-            await testEventsRaised.AssertSingleFailedCheck();
+            await testEventsRaised.AssertSingleFailedCheck(1);
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
@@ -593,7 +597,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
             Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
             Assert.IsTrue(await ExistsAsync(objectClient));
-            await testEventRaised.AssertSingleFailedCheck();
+            await testEventRaised.AssertSingleFailedCheck(1);
             Assert.NotNull(testEventRaised.FailedEvents.First().Exception, "Excepted failure: Overwrite failure was supposed to be raised during the test");
             Assert.IsTrue(testEventRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage));
             // Verify Upload - That we skipped over and didn't reupload something new.

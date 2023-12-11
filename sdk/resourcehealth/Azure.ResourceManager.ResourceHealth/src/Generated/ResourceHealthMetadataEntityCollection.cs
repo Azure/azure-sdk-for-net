@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ResourceHealthMetadataEntityResource" /> and their operations.
-    /// Each <see cref="ResourceHealthMetadataEntityResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="ResourceHealthMetadataEntityCollection" /> instance call the GetResourceHealthMetadataEntities method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="ResourceHealthMetadataEntityResource"/> and their operations.
+    /// Each <see cref="ResourceHealthMetadataEntityResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="ResourceHealthMetadataEntityCollection"/> instance call the GetResourceHealthMetadataEntities method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class ResourceHealthMetadataEntityCollection : ArmCollection, IEnumerable<ResourceHealthMetadataEntityResource>, IAsyncEnumerable<ResourceHealthMetadataEntityResource>
     {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceHealthMetadataEntityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceHealthMetadataEntityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceHealthMetadataEntityResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceHealthMetadataEntityMetadataRestClient.CreateListRequest();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceHealthMetadataEntityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceHealthMetadataEntityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceHealthMetadataEntityResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceHealthMetadataEntityMetadataRestClient.CreateListRequest();

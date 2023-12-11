@@ -4,6 +4,7 @@
     <AssemblyTitle>Azure.Analytics.Synapse.Monitoring</AssemblyTitle>
     <Version>1.0.0-beta.4</Version>
     <PackageTags>Microsoft Azure Synapse Monitoring;$(PackageCommonTags)</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
     <NoWarn>

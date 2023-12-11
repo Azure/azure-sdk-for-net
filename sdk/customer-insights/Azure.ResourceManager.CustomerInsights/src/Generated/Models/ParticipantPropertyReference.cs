@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The participant property reference. </summary>
     public partial class ParticipantPropertyReference
     {
-        /// <summary> Initializes a new instance of ParticipantPropertyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParticipantPropertyReference"/>. </summary>
         /// <param name="sourcePropertyName"> The source property that maps to the target property. </param>
         /// <param name="targetPropertyName"> The target property that maps to the source property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourcePropertyName"/> or <paramref name="targetPropertyName"/> is null. </exception>

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Class representing an Event Grid data connection. </summary>
     public partial class KustoEventGridDataConnection : KustoDataConnectionData
     {
-        /// <summary> Initializes a new instance of KustoEventGridDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoEventGridDataConnection"/>. </summary>
         public KustoEventGridDataConnection()
         {
             Kind = DataConnectionKind.EventGrid;
         }
 
-        /// <summary> Initializes a new instance of KustoEventGridDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoEventGridDataConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

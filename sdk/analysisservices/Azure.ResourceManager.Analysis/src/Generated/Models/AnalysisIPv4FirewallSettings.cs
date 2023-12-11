@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Analysis.Models
     /// <summary> An array of firewall rules. </summary>
     public partial class AnalysisIPv4FirewallSettings
     {
-        /// <summary> Initializes a new instance of AnalysisIPv4FirewallSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisIPv4FirewallSettings"/>. </summary>
         public AnalysisIPv4FirewallSettings()
         {
             FirewallRules = new ChangeTrackingList<AnalysisIPv4FirewallRule>();
         }
 
-        /// <summary> Initializes a new instance of AnalysisIPv4FirewallSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisIPv4FirewallSettings"/>. </summary>
         /// <param name="firewallRules"> An array of firewall rules. </param>
         /// <param name="isPowerBIServiceEnabled"> The indicator of enabling PBI service. </param>
         internal AnalysisIPv4FirewallSettings(IList<AnalysisIPv4FirewallRule> firewallRules, bool? isPowerBIServiceEnabled)

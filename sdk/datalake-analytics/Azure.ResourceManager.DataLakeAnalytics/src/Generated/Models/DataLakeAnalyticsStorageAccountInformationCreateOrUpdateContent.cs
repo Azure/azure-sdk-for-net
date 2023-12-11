@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent"/>. </summary>
         /// <param name="accessKey">
         /// The access key associated with this Azure Storage account that will be used to connect to it.
         /// Serialized Name: AddStorageAccountParameters.properties.accessKey
@@ -27,6 +27,21 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             Argument.AssertNotNull(accessKey, nameof(accessKey));
 
             AccessKey = accessKey;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent"/>. </summary>
+        /// <param name="accessKey">
+        /// The access key associated with this Azure Storage account that will be used to connect to it.
+        /// Serialized Name: AddStorageAccountParameters.properties.accessKey
+        /// </param>
+        /// <param name="suffix">
+        /// The optional suffix for the storage account.
+        /// Serialized Name: AddStorageAccountParameters.properties.suffix
+        /// </param>
+        internal DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent(string accessKey, string suffix)
+        {
+            AccessKey = accessKey;
+            Suffix = suffix;
         }
 
         /// <summary>

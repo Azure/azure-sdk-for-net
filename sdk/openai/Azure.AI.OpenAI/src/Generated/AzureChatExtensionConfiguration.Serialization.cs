@@ -17,12 +17,6 @@ namespace Azure.AI.OpenAI
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            writer.WritePropertyName("parameters"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Parameters);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Parameters.ToString()).RootElement);
-#endif
             writer.WriteEndObject();
         }
 

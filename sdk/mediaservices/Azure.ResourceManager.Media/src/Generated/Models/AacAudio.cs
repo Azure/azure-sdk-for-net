@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Describes Advanced Audio Codec (AAC) audio encoding settings. </summary>
     public partial class AacAudio : MediaAudioBase
     {
-        /// <summary> Initializes a new instance of AacAudio. </summary>
+        /// <summary> Initializes a new instance of <see cref="AacAudio"/>. </summary>
         public AacAudio()
         {
             OdataType = "#Microsoft.Media.AacAudio";
         }
 
-        /// <summary> Initializes a new instance of AacAudio. </summary>
+        /// <summary> Initializes a new instance of <see cref="AacAudio"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="label"> An optional label for the codec. The label can be used to control muxing behavior. </param>
         /// <param name="channels"> The number of channels in the audio. </param>

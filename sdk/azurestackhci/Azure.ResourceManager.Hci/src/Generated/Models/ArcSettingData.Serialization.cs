@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.Hci
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ConnectivityProperties);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ConnectivityProperties.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(ConnectivityProperties))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();

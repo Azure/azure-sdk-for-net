@@ -20,13 +20,15 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a SecuritySetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecuritySettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecuritySettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSecuritySetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecuritySettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecuritySettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSecuritySetting method.
     /// </summary>
     public partial class SecuritySettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecuritySettingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="settingName"> The settingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, SecuritySettingName settingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}";
@@ -37,12 +39,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly SettingsRestOperations _securitySettingSettingsRestClient;
         private readonly SecuritySettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/settings";
+
         /// <summary> Initializes a new instance of the <see cref="SecuritySettingResource"/> class for mocking. </summary>
         protected SecuritySettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecuritySettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecuritySettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecuritySettingResource(ArmClient client, SecuritySettingData data) : this(client, data.Id)
@@ -63,9 +68,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/settings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

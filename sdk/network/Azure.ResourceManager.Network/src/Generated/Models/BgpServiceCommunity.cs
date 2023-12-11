@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Service Community Properties. </summary>
     public partial class BgpServiceCommunity : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of BgpServiceCommunity. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpServiceCommunity"/>. </summary>
         public BgpServiceCommunity()
         {
             BgpCommunities = new ChangeTrackingList<BgpCommunity>();
         }
 
-        /// <summary> Initializes a new instance of BgpServiceCommunity. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpServiceCommunity"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

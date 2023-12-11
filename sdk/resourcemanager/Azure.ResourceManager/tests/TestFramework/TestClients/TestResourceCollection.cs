@@ -14,7 +14,7 @@ namespace Azure.Core.TestFramework.Tests
 {
     public class TestResourceCollection : ArmCollection, IEnumerable<TestResource>, IAsyncEnumerable<TestResource>
     {
-        private DiagnosticScopeFactory _diagnostic = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
+        private DiagnosticScopeFactory _diagnostic = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, true, true);
 
         public virtual Pageable<TestResource> GetAll(int pages = 1, CancellationToken cancellation = default)
         {

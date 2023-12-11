@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityCenterLocationResource" /> and their operations.
-    /// Each <see cref="SecurityCenterLocationResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="SecurityCenterLocationCollection" /> instance call the GetSecurityCenterLocations method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="SecurityCenterLocationResource"/> and their operations.
+    /// Each <see cref="SecurityCenterLocationResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SecurityCenterLocationCollection"/> instance call the GetSecurityCenterLocations method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class SecurityCenterLocationCollection : ArmCollection, IEnumerable<SecurityCenterLocationResource>, IAsyncEnumerable<SecurityCenterLocationResource>
     {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityCenterLocationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityCenterLocationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityCenterLocationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCenterLocationLocationsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityCenterLocationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityCenterLocationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityCenterLocationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCenterLocationLocationsRestClient.CreateListRequest(Id.SubscriptionId);

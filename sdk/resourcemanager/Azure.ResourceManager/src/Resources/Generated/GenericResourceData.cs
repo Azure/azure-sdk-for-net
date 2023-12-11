@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class GenericResourceData : TrackedResourceExtendedData
     {
-        /// <summary> Initializes a new instance of GenericResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public GenericResourceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of GenericResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

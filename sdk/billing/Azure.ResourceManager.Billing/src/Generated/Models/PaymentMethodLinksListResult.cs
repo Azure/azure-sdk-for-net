@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> The list of payment method links. </summary>
     internal partial class PaymentMethodLinksListResult
     {
-        /// <summary> Initializes a new instance of PaymentMethodLinksListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaymentMethodLinksListResult"/>. </summary>
         internal PaymentMethodLinksListResult()
         {
             Value = new ChangeTrackingList<BillingPaymentMethodLinkData>();
         }
 
-        /// <summary> Initializes a new instance of PaymentMethodLinksListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaymentMethodLinksListResult"/>. </summary>
         /// <param name="value"> The list of payment method links. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal PaymentMethodLinksListResult(IReadOnlyList<BillingPaymentMethodLinkData> value, string nextLink)

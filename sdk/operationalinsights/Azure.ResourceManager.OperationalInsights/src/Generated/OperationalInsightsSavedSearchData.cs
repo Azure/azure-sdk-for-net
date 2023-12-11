@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.OperationalInsights
     /// </summary>
     public partial class OperationalInsightsSavedSearchData : ResourceData
     {
-        /// <summary> Initializes a new instance of OperationalInsightsSavedSearchData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsSavedSearchData"/>. </summary>
         /// <param name="category"> The category of the saved search. This helps the user to find a saved search faster. </param>
         /// <param name="displayName"> Saved search display name. </param>
         /// <param name="query"> The query expression for the saved search. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OperationalInsights
             Tags = new ChangeTrackingList<OperationalInsightsTag>();
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsSavedSearchData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsSavedSearchData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     /// <summary> SSL configuration. If configured data-plane calls to user services will be exposed over SSL only. </summary>
     public partial class SslConfiguration
     {
-        /// <summary> Initializes a new instance of SslConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SslConfiguration"/>. </summary>
         public SslConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of SslConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SslConfiguration"/>. </summary>
         /// <param name="status"> SSL status. Allowed values are Enabled and Disabled. </param>
         /// <param name="cert"> The SSL cert data in PEM format. </param>
         /// <param name="key"> The SSL key data in PEM format. This is not returned in response of GET/PUT on the resource. To see this please call listKeys API. </param>

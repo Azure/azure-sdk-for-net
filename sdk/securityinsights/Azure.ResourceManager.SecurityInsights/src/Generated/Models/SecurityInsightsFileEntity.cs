@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a file entity. </summary>
     public partial class SecurityInsightsFileEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsFileEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsFileEntity"/>. </summary>
         public SecurityInsightsFileEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = SecurityInsightsEntityKind.File;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsFileEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsFileEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

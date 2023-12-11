@@ -20,13 +20,16 @@ namespace Azure.ResourceManager.ApiCenter
 {
     /// <summary>
     /// A Class representing an ApiCenterService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiCenterServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiCenterServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetApiCenterService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiCenterServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiCenterServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetApiCenterService method.
     /// </summary>
     public partial class ApiCenterServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiCenterServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}";
@@ -37,12 +40,15 @@ namespace Azure.ResourceManager.ApiCenter
         private readonly ServicesRestOperations _apiCenterServiceServicesRestClient;
         private readonly ApiCenterServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiCenter/services";
+
         /// <summary> Initializes a new instance of the <see cref="ApiCenterServiceResource"/> class for mocking. </summary>
         protected ApiCenterServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiCenterServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiCenterServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiCenterServiceResource(ArmClient client, ApiCenterServiceData data) : this(client, data.Id)
@@ -63,9 +69,6 @@ namespace Azure.ResourceManager.ApiCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiCenter/services";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

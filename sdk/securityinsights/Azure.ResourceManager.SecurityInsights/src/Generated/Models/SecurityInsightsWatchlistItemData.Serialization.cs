@@ -72,7 +72,10 @@ namespace Azure.ResourceManager.SecurityInsights
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ItemsKeyValue);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ItemsKeyValue.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(ItemsKeyValue))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(EntityMapping))
@@ -81,7 +84,10 @@ namespace Azure.ResourceManager.SecurityInsights
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(EntityMapping);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EntityMapping.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(EntityMapping))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();

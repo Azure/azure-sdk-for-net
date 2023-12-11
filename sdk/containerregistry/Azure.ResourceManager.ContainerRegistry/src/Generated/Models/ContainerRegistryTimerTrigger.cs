@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties of a timer trigger. </summary>
     public partial class ContainerRegistryTimerTrigger
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTimerTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTimerTrigger"/>. </summary>
         /// <param name="schedule"> The CRON expression for the task schedule. </param>
         /// <param name="name"> The name of the trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> or <paramref name="name"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTimerTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTimerTrigger"/>. </summary>
         /// <param name="schedule"> The CRON expression for the task schedule. </param>
         /// <param name="status"> The current status of trigger. </param>
         /// <param name="name"> The name of the trigger. </param>

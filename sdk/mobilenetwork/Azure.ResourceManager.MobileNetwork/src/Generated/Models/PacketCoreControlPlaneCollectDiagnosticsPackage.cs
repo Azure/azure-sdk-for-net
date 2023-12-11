@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Packet core control plane collect diagnostics package options. </summary>
     public partial class PacketCoreControlPlaneCollectDiagnosticsPackage
     {
-        /// <summary> Initializes a new instance of PacketCoreControlPlaneCollectDiagnosticsPackage. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneCollectDiagnosticsPackage"/>. </summary>
         /// <param name="storageAccountBlobUri"> The Storage Account Blob URL to upload the diagnostics package to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountBlobUri"/> is null. </exception>
         public PacketCoreControlPlaneCollectDiagnosticsPackage(Uri storageAccountBlobUri)

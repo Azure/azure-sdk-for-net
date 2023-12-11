@@ -90,7 +90,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SearchSpace);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(SearchSpace.ToString()).RootElement);
+            using (JsonDocument document = JsonDocument.Parse(SearchSpace))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
 #endif
             writer.WritePropertyName("trial"u8);
             writer.WriteObjectValue(Trial);

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult. </summary>
     internal partial class WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult"/>. </summary>
         internal WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningWorkspaceConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"></param>
         /// <param name="value"></param>
         internal WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningWorkspaceConnectionData> value)

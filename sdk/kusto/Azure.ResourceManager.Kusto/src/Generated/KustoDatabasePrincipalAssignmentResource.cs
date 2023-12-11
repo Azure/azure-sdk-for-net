@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
     /// A Class representing a KustoDatabasePrincipalAssignment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="KustoDatabasePrincipalAssignmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetKustoDatabasePrincipalAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="KustoDatabaseResource" /> using the GetKustoDatabasePrincipalAssignment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="KustoDatabasePrincipalAssignmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetKustoDatabasePrincipalAssignmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="KustoDatabaseResource"/> using the GetKustoDatabasePrincipalAssignment method.
     /// </summary>
     public partial class KustoDatabasePrincipalAssignmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="KustoDatabasePrincipalAssignmentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="principalAssignmentName"> The principalAssignmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string principalAssignmentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/principalAssignments/{principalAssignmentName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.Kusto
         private readonly DatabasePrincipalAssignmentsRestOperations _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient;
         private readonly KustoDatabasePrincipalAssignmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters/databases/principalAssignments";
+
         /// <summary> Initializes a new instance of the <see cref="KustoDatabasePrincipalAssignmentResource"/> class for mocking. </summary>
         protected KustoDatabasePrincipalAssignmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "KustoDatabasePrincipalAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="KustoDatabasePrincipalAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal KustoDatabasePrincipalAssignmentResource(ArmClient client, KustoDatabasePrincipalAssignmentData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.Kusto
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters/databases/principalAssignments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

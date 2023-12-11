@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> A site for the Webchat channel. </summary>
     public partial class WebChatSite : BotChannelSite
     {
-        /// <summary> Initializes a new instance of WebChatSite. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebChatSite"/>. </summary>
         /// <param name="siteName"> Site name. </param>
         /// <param name="isEnabled"> Whether this site is enabled for DirectLine channel. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.BotService.Models
             Argument.AssertNotNull(siteName, nameof(siteName));
         }
 
-        /// <summary> Initializes a new instance of WebChatSite. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebChatSite"/>. </summary>
         /// <param name="tenantId"> Tenant Id. </param>
         /// <param name="siteId"> Site Id. </param>
         /// <param name="siteName"> Site name. </param>

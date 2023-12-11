@@ -42,7 +42,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SourceDenormalizeInfo);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceDenormalizeInfo.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(SourceDenormalizeInfo))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();

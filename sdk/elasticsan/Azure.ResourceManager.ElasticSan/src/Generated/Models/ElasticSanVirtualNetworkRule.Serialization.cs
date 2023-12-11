@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
             ResourceIdentifier id = default;
             Optional<ElasticSanVirtualNetworkRuleAction> action = default;
-            Optional<ElasticSanVirtualNetworkRuleState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -50,17 +49,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     action = new ElasticSanVirtualNetworkRuleAction(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("state"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    state = property.Value.GetString().ToElasticSanVirtualNetworkRuleState();
-                    continue;
-                }
             }
-            return new ElasticSanVirtualNetworkRule(id, Optional.ToNullable(action), Optional.ToNullable(state));
+            return new ElasticSanVirtualNetworkRule(id, Optional.ToNullable(action));
         }
     }
 }

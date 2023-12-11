@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.Workloads
 {
     /// <summary>
     /// A Class representing a SapMonitor along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SapMonitorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSapMonitorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSapMonitor method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SapMonitorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSapMonitorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSapMonitor method.
     /// </summary>
     public partial class SapMonitorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SapMonitorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="monitorName"> The monitorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}";
@@ -39,12 +42,15 @@ namespace Azure.ResourceManager.Workloads
         private readonly MonitorsRestOperations _sapMonitormonitorsRestClient;
         private readonly SapMonitorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Workloads/monitors";
+
         /// <summary> Initializes a new instance of the <see cref="SapMonitorResource"/> class for mocking. </summary>
         protected SapMonitorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SapMonitorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SapMonitorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SapMonitorResource(ArmClient client, SapMonitorData data) : this(client, data.Id)
@@ -65,9 +71,6 @@ namespace Azure.ResourceManager.Workloads
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Workloads/monitors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -94,7 +97,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An object representing collection of SapProviderInstanceResources and their operations over a SapProviderInstanceResource. </returns>
         public virtual SapProviderInstanceCollection GetSapProviderInstances()
         {
-            return GetCachedClient(Client => new SapProviderInstanceCollection(Client, Id));
+            return GetCachedClient(client => new SapProviderInstanceCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +115,8 @@ namespace Azure.ResourceManager.Workloads
         /// </summary>
         /// <param name="providerInstanceName"> Name of the provider instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SapProviderInstanceResource>> GetSapProviderInstanceAsync(string providerInstanceName, CancellationToken cancellationToken = default)
         {
@@ -135,8 +138,8 @@ namespace Azure.ResourceManager.Workloads
         /// </summary>
         /// <param name="providerInstanceName"> Name of the provider instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SapProviderInstanceResource> GetSapProviderInstance(string providerInstanceName, CancellationToken cancellationToken = default)
         {
@@ -144,7 +147,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary> Gets an object representing a SapLandscapeMonitorResource along with the instance operations that can be performed on it in the SapMonitor. </summary>
-        /// <returns> Returns a <see cref="SapLandscapeMonitorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SapLandscapeMonitorResource"/> object. </returns>
         public virtual SapLandscapeMonitorResource GetSapLandscapeMonitor()
         {
             return new SapLandscapeMonitorResource(Client, Id.AppendChildResource("sapLandscapeMonitor", "default"));

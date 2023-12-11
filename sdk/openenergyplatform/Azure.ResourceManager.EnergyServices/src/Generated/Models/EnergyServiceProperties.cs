@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.EnergyServices.Models
     /// <summary> The EnergyServiceProperties. </summary>
     public partial class EnergyServiceProperties
     {
-        /// <summary> Initializes a new instance of EnergyServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnergyServiceProperties"/>. </summary>
         public EnergyServiceProperties()
         {
             DataPartitionNames = new ChangeTrackingList<DataPartitionName>();
         }
 
-        /// <summary> Initializes a new instance of EnergyServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnergyServiceProperties"/>. </summary>
         /// <param name="dnsName"></param>
         /// <param name="provisioningState"></param>
         /// <param name="authAppId"></param>

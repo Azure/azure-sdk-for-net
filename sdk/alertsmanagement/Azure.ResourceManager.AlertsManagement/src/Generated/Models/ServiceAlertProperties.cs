@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Alert property bag. </summary>
     public partial class ServiceAlertProperties
     {
-        /// <summary> Initializes a new instance of ServiceAlertProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertProperties"/>. </summary>
         public ServiceAlertProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertProperties"/>. </summary>
         /// <param name="essentials"> This object contains consistent fields across different monitor services. </param>
         /// <param name="context"> Information specific to the monitor service that gives more contextual details about the alert. </param>
         /// <param name="egressConfig"> Config which would be used for displaying the data in portal. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

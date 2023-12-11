@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Information about the HybridConnection destination for an event subscription. </summary>
     public partial class HybridConnectionEventSubscriptionDestination : EventSubscriptionDestination
     {
-        /// <summary> Initializes a new instance of HybridConnectionEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionEventSubscriptionDestination"/>. </summary>
         public HybridConnectionEventSubscriptionDestination()
         {
             DeliveryAttributeMappings = new ChangeTrackingList<DeliveryAttributeMapping>();
             EndpointType = EndpointType.HybridConnection;
         }
 
-        /// <summary> Initializes a new instance of HybridConnectionEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
         /// <param name="resourceId"> The Azure Resource ID of an hybrid connection that is the destination of an event subscription. </param>
         /// <param name="deliveryAttributeMappings">

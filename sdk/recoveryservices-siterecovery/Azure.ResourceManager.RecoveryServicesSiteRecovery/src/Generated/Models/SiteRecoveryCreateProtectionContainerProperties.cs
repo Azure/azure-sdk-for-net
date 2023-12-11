@@ -13,10 +13,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Create protection container input properties. </summary>
     internal partial class SiteRecoveryCreateProtectionContainerProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryCreateProtectionContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryCreateProtectionContainerProperties"/>. </summary>
         public SiteRecoveryCreateProtectionContainerProperties()
         {
             ProviderSpecificContent = new ChangeTrackingList<ReplicationProviderSpecificContainerCreationContent>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryCreateProtectionContainerProperties"/>. </summary>
+        /// <param name="providerSpecificContent">
+        /// Provider specific inputs for container creation.
+        /// Please note <see cref="ReplicationProviderSpecificContainerCreationContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2AContainerCreationContent"/>, <see cref="A2ACrossClusterMigrationContainerCreationContent"/> and <see cref="VMwareCbtContainerCreationContent"/>.
+        /// </param>
+        internal SiteRecoveryCreateProtectionContainerProperties(IList<ReplicationProviderSpecificContainerCreationContent> providerSpecificContent)
+        {
+            ProviderSpecificContent = providerSpecificContent;
         }
 
         /// <summary>

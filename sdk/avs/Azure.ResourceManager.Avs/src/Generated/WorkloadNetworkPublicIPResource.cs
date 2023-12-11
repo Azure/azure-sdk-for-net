@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing a WorkloadNetworkPublicIP along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkloadNetworkPublicIPResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWorkloadNetworkPublicIPResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetWorkloadNetworkPublicIP method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkloadNetworkPublicIPResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWorkloadNetworkPublicIPResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetWorkloadNetworkPublicIP method.
     /// </summary>
     public partial class WorkloadNetworkPublicIPResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WorkloadNetworkPublicIPResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="publicIPId"> The publicIPId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string publicIPId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/publicIPs/{publicIPId}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Avs
         private readonly WorkloadNetworksRestOperations _workloadNetworkPublicIPWorkloadNetworksRestClient;
         private readonly WorkloadNetworkPublicIPData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/workloadNetworks/publicIPs";
+
         /// <summary> Initializes a new instance of the <see cref="WorkloadNetworkPublicIPResource"/> class for mocking. </summary>
         protected WorkloadNetworkPublicIPResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WorkloadNetworkPublicIPResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkloadNetworkPublicIPResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WorkloadNetworkPublicIPResource(ArmClient client, WorkloadNetworkPublicIPData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/workloadNetworks/publicIPs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

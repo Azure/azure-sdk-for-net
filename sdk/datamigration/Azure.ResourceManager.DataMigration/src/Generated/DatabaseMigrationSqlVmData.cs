@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataMigration
     /// </summary>
     public partial class DatabaseMigrationSqlVmData : ResourceData
     {
-        /// <summary> Initializes a new instance of DatabaseMigrationSqlVmData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationSqlVmData"/>. </summary>
         public DatabaseMigrationSqlVmData()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseMigrationSqlVmData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationSqlVmData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

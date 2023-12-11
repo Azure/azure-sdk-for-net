@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Information about migration eligibility of a server object. </summary>
     public partial class MigrationEligibilityInfo
     {
-        /// <summary> Initializes a new instance of MigrationEligibilityInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationEligibilityInfo"/>. </summary>
         internal MigrationEligibilityInfo()
         {
             ValidationMessages = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MigrationEligibilityInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationEligibilityInfo"/>. </summary>
         /// <param name="isEligibleForMigration"> Whether object is eligible for migration or not. </param>
         /// <param name="validationMessages"> Information about eligibility failure for the server object. </param>
         internal MigrationEligibilityInfo(bool? isEligibleForMigration, IReadOnlyList<string> validationMessages)

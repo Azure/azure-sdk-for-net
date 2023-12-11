@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.KeyVault.CertificateExpired event. </summary>
     public partial class KeyVaultCertificateExpiredEventData
     {
-        /// <summary> Initializes a new instance of KeyVaultCertificateExpiredEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultCertificateExpiredEventData"/>. </summary>
         internal KeyVaultCertificateExpiredEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultCertificateExpiredEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultCertificateExpiredEventData"/>. </summary>
         /// <param name="id"> The id of the object that triggered this event. </param>
         /// <param name="vaultName"> Key vault name of the object that triggered this event. </param>
         /// <param name="objectType"> The type of the object that triggered this event. </param>

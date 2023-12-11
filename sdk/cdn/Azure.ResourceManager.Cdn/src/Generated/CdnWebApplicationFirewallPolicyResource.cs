@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
     /// A Class representing a CdnWebApplicationFirewallPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CdnWebApplicationFirewallPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCdnWebApplicationFirewallPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetCdnWebApplicationFirewallPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CdnWebApplicationFirewallPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCdnWebApplicationFirewallPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetCdnWebApplicationFirewallPolicy method.
     /// </summary>
     public partial class CdnWebApplicationFirewallPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CdnWebApplicationFirewallPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="policyName"> The policyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string policyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/cdnWebApplicationFirewallPolicies/{policyName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.Cdn
         private readonly PoliciesRestOperations _cdnWebApplicationFirewallPolicyPoliciesRestClient;
         private readonly CdnWebApplicationFirewallPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/cdnWebApplicationFirewallPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="CdnWebApplicationFirewallPolicyResource"/> class for mocking. </summary>
         protected CdnWebApplicationFirewallPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CdnWebApplicationFirewallPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CdnWebApplicationFirewallPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CdnWebApplicationFirewallPolicyResource(ArmClient client, CdnWebApplicationFirewallPolicyData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.Cdn
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cdn/cdnWebApplicationFirewallPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

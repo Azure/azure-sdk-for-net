@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -13,6 +14,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
 {
     internal class PathScanner
     {
+        public static Lazy<PathScanner> Singleton { get; } = new Lazy<PathScanner>(() => new PathScanner());
+
         public virtual async IAsyncEnumerable<ShareFileClient> ScanFilesAsync(
             ShareDirectoryClient directory,
             [EnumeratorCancellation] CancellationToken cancellationToken)

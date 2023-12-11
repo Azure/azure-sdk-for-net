@@ -126,6 +126,11 @@
     </AdditionalFiles>
   </ItemGroup>
 
+  <!-- disable enhanced analysis-->
+  <ItemGroup Condition="'$(DisableEnhancedAnalysis)' == 'true'">
+    <EditorConfigFiles Include="$(RepoEngPath)/globalconfigs/disable_enhanced_analysis.globalconfig" />
+  </ItemGroup>
+
   <!-- Enable SourceLink -->
   <ItemGroup Condition="'$(EnableSourceLink)' == 'true'">
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />

@@ -21,7 +21,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         private const string DefaultContentLanguage = "en-US";
         private const string DefaultContentDisposition = "inline";
         private const string DefaultCacheControl = "no-cache";
-        private const string DefaultCpkScope = "encryption-scope";
         private readonly Metadata DefaultMetadata = DataProvider.BuildMetadata();
         private readonly Tags DefaultTags = DataProvider.BuildTags();
 
@@ -39,8 +38,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 },
                 AccessTier.Hot,
                 DefaultMetadata,
-                DefaultTags,
-                DefaultCpkScope);
+                DefaultTags);
         }
 
         [Test]
@@ -48,7 +46,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             BlobDestinationCheckpointData data = CreateDefault();
 
-            Assert.AreEqual(DataMovementBlobConstants.DestinationJobPartHeader.SchemaVersion, data.Version);
+            Assert.AreEqual(DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion, data.Version);
             Assert.AreEqual(DefaultBlobType, data.BlobType);
             Assert.AreEqual(DefaultContentType, data.ContentHeaders.ContentType);
             Assert.AreEqual(DefaultContentEncoding, data.ContentHeaders.ContentEncoding);
@@ -58,7 +56,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(AccessTier.Hot, data.AccessTier);
             CollectionAssert.AreEquivalent(DefaultMetadata, data.Metadata);
             CollectionAssert.AreEquivalent(DefaultTags, data.Tags);
-            Assert.AreEqual(DefaultCpkScope, data.CpkScope);
         }
 
         [Test]
@@ -67,7 +64,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobDestinationCheckpointData data = CreateDefault();
 
             string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.1.bin");
-            using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationJobPartHeader.VariableLengthStartIndex))
+            using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
             using (FileStream fileStream = File.OpenRead(samplePath))
             {
                 data.Serialize(dataStream);
@@ -85,11 +82,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             BlobDestinationCheckpointData data = CreateDefault();
 
-            using (Stream stream = new MemoryStream(DataMovementBlobConstants.DestinationJobPartHeader.VariableLengthStartIndex))
+            using (Stream stream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
             {
                 data.Serialize(stream);
                 stream.Position = 0;
-                DeserializeAndVerify(stream, DataMovementBlobConstants.DestinationJobPartHeader.SchemaVersion);
+                DeserializeAndVerify(stream, DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion);
             }
         }
 
@@ -118,7 +115,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(AccessTier.Hot, deserialized.AccessTier);
             CollectionAssert.AreEquivalent(DefaultMetadata, deserialized.Metadata);
             CollectionAssert.AreEquivalent(DefaultTags, deserialized.Tags);
-            Assert.AreEqual(DefaultCpkScope, deserialized.CpkScope);
         }
     }
 }

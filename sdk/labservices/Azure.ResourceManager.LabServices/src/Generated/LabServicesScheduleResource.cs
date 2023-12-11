@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.LabServices
 {
     /// <summary>
     /// A Class representing a LabServicesSchedule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LabServicesScheduleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLabServicesScheduleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LabResource" /> using the GetLabServicesSchedule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LabServicesScheduleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLabServicesScheduleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LabResource"/> using the GetLabServicesSchedule method.
     /// </summary>
     public partial class LabServicesScheduleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LabServicesScheduleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="labName"> The labName. </param>
+        /// <param name="scheduleName"> The scheduleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string scheduleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/schedules/{scheduleName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.LabServices
         private readonly SchedulesRestOperations _labServicesScheduleSchedulesRestClient;
         private readonly LabServicesScheduleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.LabServices/labs/schedules";
+
         /// <summary> Initializes a new instance of the <see cref="LabServicesScheduleResource"/> class for mocking. </summary>
         protected LabServicesScheduleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LabServicesScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LabServicesScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LabServicesScheduleResource(ArmClient client, LabServicesScheduleData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.LabServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.LabServices/labs/schedules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

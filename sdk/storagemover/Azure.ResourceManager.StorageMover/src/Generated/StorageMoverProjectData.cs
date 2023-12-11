@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.StorageMover
     /// </summary>
     public partial class StorageMoverProjectData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageMoverProjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverProjectData"/>. </summary>
         public StorageMoverProjectData()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageMoverProjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverProjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

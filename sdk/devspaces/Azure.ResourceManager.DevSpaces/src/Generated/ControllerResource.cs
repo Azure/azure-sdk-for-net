@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.DevSpaces
 {
     /// <summary>
     /// A Class representing a Controller along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ControllerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetControllerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetController method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ControllerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetControllerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetController method.
     /// </summary>
     public partial class ControllerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ControllerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevSpaces/controllers/{name}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.DevSpaces
         private readonly ControllersRestOperations _controllerRestClient;
         private readonly ControllerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevSpaces/controllers";
+
         /// <summary> Initializes a new instance of the <see cref="ControllerResource"/> class for mocking. </summary>
         protected ControllerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ControllerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ControllerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ControllerResource(ArmClient client, ControllerData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.DevSpaces
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevSpaces/controllers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

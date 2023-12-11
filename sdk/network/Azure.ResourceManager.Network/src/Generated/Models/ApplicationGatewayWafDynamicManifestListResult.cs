@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ApplicationGatewayWafDynamicManifests API service call. </summary>
     internal partial class ApplicationGatewayWafDynamicManifestListResult
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayWafDynamicManifestListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayWafDynamicManifestListResult"/>. </summary>
         internal ApplicationGatewayWafDynamicManifestListResult()
         {
             Value = new ChangeTrackingList<ApplicationGatewayWafDynamicManifestData>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayWafDynamicManifestListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayWafDynamicManifestListResult"/>. </summary>
         /// <param name="value"> The list of application gateway waf manifest. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         internal ApplicationGatewayWafDynamicManifestListResult(IReadOnlyList<ApplicationGatewayWafDynamicManifestData> value, string nextLink)

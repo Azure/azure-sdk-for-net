@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Association entity details. </summary>
     public partial class AssociationContract : ResourceData
     {
-        /// <summary> Initializes a new instance of AssociationContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssociationContract"/>. </summary>
         public AssociationContract()
         {
         }
 
-        /// <summary> Initializes a new instance of AssociationContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssociationContract"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

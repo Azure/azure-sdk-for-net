@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
     /// A Class representing an OperationalInsightsSavedSearch along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OperationalInsightsSavedSearchResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetOperationalInsightsSavedSearchResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceResource" /> using the GetOperationalInsightsSavedSearch method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OperationalInsightsSavedSearchResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetOperationalInsightsSavedSearchResource method.
+    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceResource"/> using the GetOperationalInsightsSavedSearch method.
     /// </summary>
     public partial class OperationalInsightsSavedSearchResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OperationalInsightsSavedSearchResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="savedSearchId"> The savedSearchId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string savedSearchId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/savedSearches/{savedSearchId}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.OperationalInsights
         private readonly SavedSearchesRestOperations _operationalInsightsSavedSearchSavedSearchesRestClient;
         private readonly OperationalInsightsSavedSearchData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/savedSearches";
+
         /// <summary> Initializes a new instance of the <see cref="OperationalInsightsSavedSearchResource"/> class for mocking. </summary>
         protected OperationalInsightsSavedSearchResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OperationalInsightsSavedSearchResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OperationalInsightsSavedSearchResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal OperationalInsightsSavedSearchResource(ArmClient client, OperationalInsightsSavedSearchData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.OperationalInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/savedSearches";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

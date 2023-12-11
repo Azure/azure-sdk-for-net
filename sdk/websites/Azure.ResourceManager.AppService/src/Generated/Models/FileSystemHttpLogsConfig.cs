@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Http logs to file system configuration. </summary>
     public partial class FileSystemHttpLogsConfig
     {
-        /// <summary> Initializes a new instance of FileSystemHttpLogsConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSystemHttpLogsConfig"/>. </summary>
         public FileSystemHttpLogsConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of FileSystemHttpLogsConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSystemHttpLogsConfig"/>. </summary>
         /// <param name="retentionInMb">
         /// Maximum size in megabytes that http log files can use.
         /// When reached old log files will be removed to make space for new ones.

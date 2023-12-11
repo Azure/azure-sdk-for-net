@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Information for connecting to SQL database server. </summary>
     public partial class SqlConnectionInfo : ConnectionInfo
     {
-        /// <summary> Initializes a new instance of SqlConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlConnectionInfo"/>. </summary>
         /// <param name="dataSource"> Data source in the format Protocol:MachineName\SQLServerInstanceName,PortNumber. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
         public SqlConnectionInfo(string dataSource)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ConnectionInfoType = "SqlConnectionInfo";
         }
 
-        /// <summary> Initializes a new instance of SqlConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlConnectionInfo"/>. </summary>
         /// <param name="connectionInfoType"> Type of connection info. </param>
         /// <param name="userName"> User name. </param>
         /// <param name="password"> Password credential. </param>

@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -18,16 +19,22 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            string kind = "Unknown";
+            Optional<string> id = default;
+            ExceptionActionKind kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new ExceptionActionKind(property.Value.GetString());
                     continue;
                 }
             }
-            return new UnknownExceptionAction(kind);
+            return new UnknownExceptionAction(id.Value, kind);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

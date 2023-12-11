@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Properties of the application rule protocol. </summary>
     public partial class AzureFirewallApplicationRuleProtocol
     {
-        /// <summary> Initializes a new instance of AzureFirewallApplicationRuleProtocol. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallApplicationRuleProtocol"/>. </summary>
         public AzureFirewallApplicationRuleProtocol()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallApplicationRuleProtocol. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallApplicationRuleProtocol"/>. </summary>
         /// <param name="protocolType"> Protocol type. </param>
         /// <param name="port"> Port number for the protocol, cannot be greater than 64000. This field is optional. </param>
         internal AzureFirewallApplicationRuleProtocol(AzureFirewallApplicationRuleProtocolType? protocolType, int? port)

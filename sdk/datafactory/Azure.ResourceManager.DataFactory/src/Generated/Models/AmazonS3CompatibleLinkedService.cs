@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Linked service for Amazon S3 Compatible. </summary>
     public partial class AmazonS3CompatibleLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of AmazonS3CompatibleLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonS3CompatibleLinkedService"/>. </summary>
         public AmazonS3CompatibleLinkedService()
         {
             LinkedServiceType = "AmazonS3Compatible";
         }
 
-        /// <summary> Initializes a new instance of AmazonS3CompatibleLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonS3CompatibleLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

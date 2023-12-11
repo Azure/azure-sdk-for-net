@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the content source. </summary>
     public partial class AutomationContentSource
     {
-        /// <summary> Initializes a new instance of AutomationContentSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationContentSource"/>. </summary>
         public AutomationContentSource()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationContentSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationContentSource"/>. </summary>
         /// <param name="hash"> Gets or sets the hash. </param>
         /// <param name="sourceType"> Gets or sets the content source type. </param>
         /// <param name="value"> Gets or sets the value of the content. This is based on the content source type. </param>

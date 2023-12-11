@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> Image registry credential. </summary>
     public partial class ContainerGroupImageRegistryCredential
     {
-        /// <summary> Initializes a new instance of ContainerGroupImageRegistryCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupImageRegistryCredential"/>. </summary>
         /// <param name="server"> The Docker image registry server without a protocol such as "http" and "https". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> is null. </exception>
         public ContainerGroupImageRegistryCredential(string server)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Server = server;
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupImageRegistryCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupImageRegistryCredential"/>. </summary>
         /// <param name="server"> The Docker image registry server without a protocol such as "http" and "https". </param>
         /// <param name="username"> The username for the private registry. </param>
         /// <param name="password"> The password for the private registry. </param>

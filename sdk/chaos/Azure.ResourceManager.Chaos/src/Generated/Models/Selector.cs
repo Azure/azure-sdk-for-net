@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Chaos.Models
     /// </summary>
     public partial class Selector
     {
-        /// <summary> Initializes a new instance of Selector. </summary>
+        /// <summary> Initializes a new instance of <see cref="Selector"/>. </summary>
         /// <param name="id"> String of the selector ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Selector(string id)
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Chaos.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of Selector. </summary>
+        /// <summary> Initializes a new instance of <see cref="Selector"/>. </summary>
         /// <param name="selectorType"> Enum of the selector type. </param>
         /// <param name="id"> String of the selector ID. </param>
         /// <param name="filter">
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

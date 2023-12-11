@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Information about the deadletter destination with resource identity. </summary>
     public partial class DeadLetterWithResourceIdentity
     {
-        /// <summary> Initializes a new instance of DeadLetterWithResourceIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeadLetterWithResourceIdentity"/>. </summary>
         public DeadLetterWithResourceIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of DeadLetterWithResourceIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeadLetterWithResourceIdentity"/>. </summary>
         /// <param name="identity"> The identity to use when dead-lettering events. </param>
         /// <param name="deadLetterDestination">
         /// Information about the destination where events have to be delivered for the event subscription.

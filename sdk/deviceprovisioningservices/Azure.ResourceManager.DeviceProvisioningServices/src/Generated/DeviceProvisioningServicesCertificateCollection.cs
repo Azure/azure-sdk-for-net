@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DeviceProvisioningServicesCertificateResource" /> and their operations.
-    /// Each <see cref="DeviceProvisioningServicesCertificateResource" /> in the collection will belong to the same instance of <see cref="DeviceProvisioningServiceResource" />.
-    /// To get a <see cref="DeviceProvisioningServicesCertificateCollection" /> instance call the GetDeviceProvisioningServicesCertificates method from an instance of <see cref="DeviceProvisioningServiceResource" />.
+    /// A class representing a collection of <see cref="DeviceProvisioningServicesCertificateResource"/> and their operations.
+    /// Each <see cref="DeviceProvisioningServicesCertificateResource"/> in the collection will belong to the same instance of <see cref="DeviceProvisioningServiceResource"/>.
+    /// To get a <see cref="DeviceProvisioningServicesCertificateCollection"/> instance call the GetDeviceProvisioningServicesCertificates method from an instance of <see cref="DeviceProvisioningServiceResource"/>.
     /// </summary>
     public partial class DeviceProvisioningServicesCertificateCollection : ArmCollection, IEnumerable<DeviceProvisioningServicesCertificateResource>, IAsyncEnumerable<DeviceProvisioningServicesCertificateResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeviceProvisioningServicesCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DeviceProvisioningServicesCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceProvisioningServicesCertificateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesCertificateDpsCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceProvisioningServicesCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeviceProvisioningServicesCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceProvisioningServicesCertificateResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesCertificateDpsCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The NginxConfigurationPackage. </summary>
     internal partial class NginxConfigurationPackage
     {
-        /// <summary> Initializes a new instance of NginxConfigurationPackage. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxConfigurationPackage"/>. </summary>
         public NginxConfigurationPackage()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxConfigurationPackage. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxConfigurationPackage"/>. </summary>
         /// <param name="data"></param>
         internal NginxConfigurationPackage(string data)
         {

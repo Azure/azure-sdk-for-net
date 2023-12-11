@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The WafMetricsResponseSeriesItem. </summary>
     public partial class WafMetricsResponseSeriesItem
     {
-        /// <summary> Initializes a new instance of WafMetricsResponseSeriesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="WafMetricsResponseSeriesItem"/>. </summary>
         internal WafMetricsResponseSeriesItem()
         {
             Groups = new ChangeTrackingList<WafMetricsResponseSeriesPropertiesItemsItem>();
             Data = new ChangeTrackingList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>();
         }
 
-        /// <summary> Initializes a new instance of WafMetricsResponseSeriesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="WafMetricsResponseSeriesItem"/>. </summary>
         /// <param name="metric"></param>
         /// <param name="unit"></param>
         /// <param name="groups"></param>

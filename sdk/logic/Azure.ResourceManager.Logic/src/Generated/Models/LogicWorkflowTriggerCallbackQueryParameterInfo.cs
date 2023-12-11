@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> Gets the workflow trigger callback URL query parameters. </summary>
     public partial class LogicWorkflowTriggerCallbackQueryParameterInfo
     {
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerCallbackQueryParameterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerCallbackQueryParameterInfo"/>. </summary>
         internal LogicWorkflowTriggerCallbackQueryParameterInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerCallbackQueryParameterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerCallbackQueryParameterInfo"/>. </summary>
         /// <param name="apiVersion"> The api version. </param>
         /// <param name="sp"> The SAS permissions. </param>
         /// <param name="sv"> The SAS version. </param>

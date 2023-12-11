@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmProviderHubModelFactory
     {
-        /// <summary> Initializes a new instance of CustomRolloutData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderHub.CustomRolloutData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new CustomRolloutData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of ProviderRegistrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderHub.ProviderRegistrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ProviderRegistrationData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeRegistrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderHub.ResourceTypeRegistrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceTypeRegistrationData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of TypedErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TypedErrorInfo"/>. </summary>
         /// <param name="typedErrorInfoType"></param>
         /// <param name="info"> Any object. </param>
         /// <returns> A new <see cref="Models.TypedErrorInfo"/> instance for mocking. </returns>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new TypedErrorInfo(typedErrorInfoType, info);
         }
 
-        /// <summary> Initializes a new instance of DefaultRolloutData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderHub.DefaultRolloutData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new DefaultRolloutData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of ResourceProviderManifest. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceProviderManifest"/>. </summary>
         /// <param name="providerAuthenticationAllowedAudiences"></param>
         /// <param name="providerAuthorizations"></param>
         /// <param name="namespace"></param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceProviderManifest(providerAuthenticationAllowedAudiences != null ? new ResourceProviderAuthentication(providerAuthenticationAllowedAudiences?.ToList()) : null, providerAuthorizations?.ToList(), @namespace, providerVersion, providerType, requiredFeatures?.ToList(), requiredFeaturesPolicy.HasValue ? new FeaturesRule(requiredFeaturesPolicy.Value) : null, optInHeaders != null ? new RequestHeaderOptions(optInHeaders) : null, resourceTypes?.ToList(), management, capabilities?.ToList(), metadata, globalNotificationEndpoints?.ToList(), reRegisterSubscriptionMetadata);
         }
 
-        /// <summary> Initializes a new instance of ProviderResourceType. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProviderResourceType"/>. </summary>
         /// <param name="name"></param>
         /// <param name="routingType"></param>
         /// <param name="resourceValidation"></param>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ProviderResourceType(name, routingType, resourceValidation, allowedUnauthorizedActions?.ToList(), authorizationActionMappings?.ToList(), linkedAccessChecks?.ToList(), defaultApiVersion, loggingRules?.ToList(), throttlingRules?.ToList(), endpoints?.ToList(), marketplaceType, managementType != null ? new IdentityManagement(managementType) : null, metadata, requiredFeatures?.ToList(), requiredFeaturesPolicy.HasValue ? new FeaturesRule(requiredFeaturesPolicy.Value) : null, subscriptionStateRules?.ToList(), serviceTreeInfos?.ToList(), optInHeaders != null ? new RequestHeaderOptions(optInHeaders) : null, skuLink, disallowedActionVerbs?.ToList(), templateDeploymentPolicy, extendedLocations?.ToList(), linkedOperationRules?.ToList(), resourceDeletionPolicy);
         }
 
-        /// <summary> Initializes a new instance of ResourceProviderEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceProviderEndpoint"/>. </summary>
         /// <param name="isEnabled"></param>
         /// <param name="apiVersions"></param>
         /// <param name="endpointUri"></param>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceProviderEndpoint(isEnabled, apiVersions?.ToList(), endpointUri, locations?.ToList(), requiredFeatures?.ToList(), requiredFeaturesPolicy.HasValue ? new FeaturesRule(requiredFeaturesPolicy.Value) : null, timeout);
         }
 
-        /// <summary> Initializes a new instance of TemplateDeploymentPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TemplateDeploymentPolicy"/>. </summary>
         /// <param name="capabilities"></param>
         /// <param name="preflightOptions"></param>
         /// <returns> A new <see cref="Models.TemplateDeploymentPolicy"/> instance for mocking. </returns>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new TemplateDeploymentPolicy(capabilities, preflightOptions);
         }
 
-        /// <summary> Initializes a new instance of LinkedOperationRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LinkedOperationRule"/>. </summary>
         /// <param name="linkedOperation"></param>
         /// <param name="linkedAction"></param>
         /// <returns> A new <see cref="Models.LinkedOperationRule"/> instance for mocking. </returns>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new LinkedOperationRule(linkedOperation, linkedAction);
         }
 
-        /// <summary> Initializes a new instance of ReRegisterSubscriptionMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReRegisterSubscriptionMetadata"/>. </summary>
         /// <param name="isEnabled"></param>
         /// <param name="concurrencyLimit"></param>
         /// <returns> A new <see cref="Models.ReRegisterSubscriptionMetadata"/> instance for mocking. </returns>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ReRegisterSubscriptionMetadata(isEnabled, concurrencyLimit);
         }
 
-        /// <summary> Initializes a new instance of CheckinManifestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CheckinManifestInfo"/>. </summary>
         /// <param name="isCheckedIn"></param>
         /// <param name="statusMessage"></param>
         /// <param name="pullRequest"></param>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new CheckinManifestInfo(isCheckedIn, statusMessage, pullRequest, commitId);
         }
 
-        /// <summary> Initializes a new instance of NotificationRegistrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderHub.NotificationRegistrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new NotificationRegistrationData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeSkuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderHub.ResourceTypeSkuData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

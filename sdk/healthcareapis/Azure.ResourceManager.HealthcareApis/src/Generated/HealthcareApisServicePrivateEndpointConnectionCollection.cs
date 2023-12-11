@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HealthcareApisServicePrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="HealthcareApisServicePrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="HealthcareApisServiceResource" />.
-    /// To get a <see cref="HealthcareApisServicePrivateEndpointConnectionCollection" /> instance call the GetHealthcareApisServicePrivateEndpointConnections method from an instance of <see cref="HealthcareApisServiceResource" />.
+    /// A class representing a collection of <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="HealthcareApisServiceResource"/>.
+    /// To get a <see cref="HealthcareApisServicePrivateEndpointConnectionCollection"/> instance call the GetHealthcareApisServicePrivateEndpointConnections method from an instance of <see cref="HealthcareApisServiceResource"/>.
     /// </summary>
     public partial class HealthcareApisServicePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<HealthcareApisServicePrivateEndpointConnectionResource>, IAsyncEnumerable<HealthcareApisServicePrivateEndpointConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthcareApisServicePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthcareApisServicePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HealthcareApisServicePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthcareApisServicePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

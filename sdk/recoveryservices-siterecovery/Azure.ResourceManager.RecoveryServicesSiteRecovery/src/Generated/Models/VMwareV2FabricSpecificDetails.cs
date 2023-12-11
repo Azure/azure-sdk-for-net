@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareV2 fabric specific details. </summary>
     public partial class VMwareV2FabricSpecificDetails : FabricSpecificDetails
     {
-        /// <summary> Initializes a new instance of VMwareV2FabricSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareV2FabricSpecificDetails"/>. </summary>
         internal VMwareV2FabricSpecificDetails()
         {
             ProcessServers = new ChangeTrackingList<SiteRecoveryProcessServerDetails>();
             InstanceType = "VMwareV2";
         }
 
-        /// <summary> Initializes a new instance of VMwareV2FabricSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareV2FabricSpecificDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="vmwareSiteId"> The ARM Id of the VMware site. </param>
         /// <param name="physicalSiteId"> The ARM Id of the physical site. </param>

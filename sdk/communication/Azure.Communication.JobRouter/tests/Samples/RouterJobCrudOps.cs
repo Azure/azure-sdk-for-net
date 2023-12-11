@@ -48,12 +48,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<ClassificationPolicy> classificationPolicy = routerAdministrationClient.CreateClassificationPolicy(
                 new CreateClassificationPolicyOptions("classification-policy-id")
                 {
-                    QueueSelectors =
+                    QueueSelectorAttachments =
                     {
                         new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal,
-                            new LabelValue(jobQueue.Value.Id))),
+                            new RouterValue(jobQueue.Value.Id))),
                     },
-                    PrioritizationRule = new StaticRouterRule(new LabelValue(10))
+                    PrioritizationRule = new StaticRouterRule(new RouterValue(10))
                 });
 
             string jobWithCpId = "job-with-cp-id";
@@ -89,8 +89,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateRouterJob
 
-            Response<RouterJob> updatedJob = routerClient.UpdateJob(
-                options: new UpdateJobOptions(jobId: jobId)
+            Response<RouterJob> updatedJob = routerClient.UpdateJob(new RouterJob(jobId)
                 {
                     // one or more job properties can be updated
                     ChannelReference = "45678",
@@ -110,11 +109,11 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // in order for the jobs to be router to a worker, we would need to create a worker with the appropriate queue and channel association
             Response<RouterWorker> worker = routerClient.CreateWorker(
-                options: new CreateWorkerOptions(workerId: "router-worker-id", totalCapacity: 100)
+                options: new CreateWorkerOptions(workerId: "router-worker-id", capacity: 100)
                 {
                     AvailableForOffers = true, // if a worker is not registered, no offer will be issued
-                    ChannelConfigurations = { ["general"] = new ChannelConfiguration(100), },
-                    QueueAssignments = { [jobQueue.Value.Id] = new RouterQueueAssignment(), },
+                    Channels = { new RouterChannel("general", 100) },
+                    Queues = { jobQueue.Value.Id }
                 });
 
             // now that we have a registered worker, we can expect offer to be sent to the worker
@@ -174,12 +173,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterJobs
 
-            Pageable<RouterJobItem> routerJobs = routerClient.GetJobs();
-            foreach (Page<RouterJobItem> asPage in routerJobs.AsPages(pageSizeHint: 10))
+            Pageable<RouterJob> routerJobs = routerClient.GetJobs(null, null);
+            foreach (Page<RouterJob> asPage in routerJobs.AsPages(pageSizeHint: 10))
             {
-                foreach (RouterJobItem? _job in asPage.Values)
+                foreach (RouterJob? _job in asPage.Values)
                 {
-                    Console.WriteLine($"Listing router job with id: {_job.Job.Id}");
+                    Console.WriteLine($"Listing router job with id: {_job.Id}");
                 }
             }
 

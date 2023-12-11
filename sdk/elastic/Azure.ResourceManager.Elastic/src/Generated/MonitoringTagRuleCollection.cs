@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Elastic
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MonitoringTagRuleResource" /> and their operations.
-    /// Each <see cref="MonitoringTagRuleResource" /> in the collection will belong to the same instance of <see cref="ElasticMonitorResource" />.
-    /// To get a <see cref="MonitoringTagRuleCollection" /> instance call the GetMonitoringTagRules method from an instance of <see cref="ElasticMonitorResource" />.
+    /// A class representing a collection of <see cref="MonitoringTagRuleResource"/> and their operations.
+    /// Each <see cref="MonitoringTagRuleResource"/> in the collection will belong to the same instance of <see cref="ElasticMonitorResource"/>.
+    /// To get a <see cref="MonitoringTagRuleCollection"/> instance call the GetMonitoringTagRules method from an instance of <see cref="ElasticMonitorResource"/>.
     /// </summary>
     public partial class MonitoringTagRuleCollection : ArmCollection, IEnumerable<MonitoringTagRuleResource>, IAsyncEnumerable<MonitoringTagRuleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Elastic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitoringTagRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MonitoringTagRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitoringTagRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitoringTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Elastic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitoringTagRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MonitoringTagRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitoringTagRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitoringTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

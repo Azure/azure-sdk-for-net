@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Currency and amount that customer will be charged in customer's local currency. Tax is not included. </summary>
     public partial class CalculatePriceResultPropertiesBillingCurrencyTotal
     {
-        /// <summary> Initializes a new instance of CalculatePriceResultPropertiesBillingCurrencyTotal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CalculatePriceResultPropertiesBillingCurrencyTotal"/>. </summary>
         internal CalculatePriceResultPropertiesBillingCurrencyTotal()
         {
         }
 
-        /// <summary> Initializes a new instance of CalculatePriceResultPropertiesBillingCurrencyTotal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CalculatePriceResultPropertiesBillingCurrencyTotal"/>. </summary>
         /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
         /// <param name="amount"> Amount in pricing currency. Tax is not included. </param>
         internal CalculatePriceResultPropertiesBillingCurrencyTotal(string currencyCode, double? amount)

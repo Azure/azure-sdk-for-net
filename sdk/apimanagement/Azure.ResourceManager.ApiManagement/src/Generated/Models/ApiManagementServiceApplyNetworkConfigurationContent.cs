@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Parameter supplied to the Apply Network configuration operation. </summary>
     public partial class ApiManagementServiceApplyNetworkConfigurationContent
     {
-        /// <summary> Initializes a new instance of ApiManagementServiceApplyNetworkConfigurationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceApplyNetworkConfigurationContent"/>. </summary>
         public ApiManagementServiceApplyNetworkConfigurationContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceApplyNetworkConfigurationContent"/>. </summary>
+        /// <param name="location"> Location of the Api Management service to update for a multi-region service. For a service deployed in a single region, this parameter is not required. </param>
+        internal ApiManagementServiceApplyNetworkConfigurationContent(AzureLocation? location)
+        {
+            Location = location;
         }
 
         /// <summary> Location of the Api Management service to update for a multi-region service. For a service deployed in a single region, this parameter is not required. </summary>

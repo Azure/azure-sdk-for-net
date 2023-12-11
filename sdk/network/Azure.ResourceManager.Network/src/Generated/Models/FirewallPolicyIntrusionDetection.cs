@@ -10,22 +10,26 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Configuration for intrusion detection mode and rules. </summary>
     public partial class FirewallPolicyIntrusionDetection
     {
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetection. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetection"/>. </summary>
         public FirewallPolicyIntrusionDetection()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetection. </summary>
-        /// <param name="mode"> Intrusion detection general state. </param>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetection"/>. </summary>
+        /// <param name="mode"> Intrusion detection general state. When attached to a parent policy, the firewall's effective IDPS mode is the stricter mode of the two. </param>
+        /// <param name="profile"> IDPS profile name. When attached to a parent policy, the firewall's effective profile is the profile name of the parent policy. </param>
         /// <param name="configuration"> Intrusion detection configuration properties. </param>
-        internal FirewallPolicyIntrusionDetection(FirewallPolicyIntrusionDetectionStateType? mode, FirewallPolicyIntrusionDetectionConfiguration configuration)
+        internal FirewallPolicyIntrusionDetection(FirewallPolicyIntrusionDetectionStateType? mode, FirewallPolicyIntrusionDetectionProfileType? profile, FirewallPolicyIntrusionDetectionConfiguration configuration)
         {
             Mode = mode;
+            Profile = profile;
             Configuration = configuration;
         }
 
-        /// <summary> Intrusion detection general state. </summary>
+        /// <summary> Intrusion detection general state. When attached to a parent policy, the firewall's effective IDPS mode is the stricter mode of the two. </summary>
         public FirewallPolicyIntrusionDetectionStateType? Mode { get; set; }
+        /// <summary> IDPS profile name. When attached to a parent policy, the firewall's effective profile is the profile name of the parent policy. </summary>
+        public FirewallPolicyIntrusionDetectionProfileType? Profile { get; set; }
         /// <summary> Intrusion detection configuration properties. </summary>
         public FirewallPolicyIntrusionDetectionConfiguration Configuration { get; set; }
     }

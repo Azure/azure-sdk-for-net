@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> A list of service description objects with a next link. </summary>
     internal partial class ServicesDescriptionListResult
     {
-        /// <summary> Initializes a new instance of ServicesDescriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicesDescriptionListResult"/>. </summary>
         internal ServicesDescriptionListResult()
         {
             Value = new ChangeTrackingList<HealthcareApisServiceData>();
         }
 
-        /// <summary> Initializes a new instance of ServicesDescriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicesDescriptionListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of service description objects. </param>
         /// <param name="value"> A list of service description objects. </param>
         internal ServicesDescriptionListResult(string nextLink, IReadOnlyList<HealthcareApisServiceData> value)

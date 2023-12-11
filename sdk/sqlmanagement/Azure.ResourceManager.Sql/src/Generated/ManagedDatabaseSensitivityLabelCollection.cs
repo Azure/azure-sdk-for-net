@@ -18,9 +18,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedDatabaseSensitivityLabelResource" /> and their operations.
-    /// Each <see cref="ManagedDatabaseSensitivityLabelResource" /> in the collection will belong to the same instance of <see cref="ManagedDatabaseColumnResource" />.
-    /// To get a <see cref="ManagedDatabaseSensitivityLabelCollection" /> instance call the GetManagedDatabaseSensitivityLabels method from an instance of <see cref="ManagedDatabaseColumnResource" />.
+    /// A class representing a collection of <see cref="ManagedDatabaseSensitivityLabelResource"/> and their operations.
+    /// Each <see cref="ManagedDatabaseSensitivityLabelResource"/> in the collection will belong to the same instance of <see cref="ManagedDatabaseColumnResource"/>.
+    /// To get a <see cref="ManagedDatabaseSensitivityLabelCollection"/> instance call the GetManagedDatabaseSensitivityLabels method from an instance of <see cref="ManagedDatabaseColumnResource"/>.
     /// </summary>
     public partial class ManagedDatabaseSensitivityLabelCollection : ArmCollection
     {

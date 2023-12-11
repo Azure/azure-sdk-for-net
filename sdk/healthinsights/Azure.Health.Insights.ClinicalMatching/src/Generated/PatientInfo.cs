@@ -14,13 +14,13 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> Patient structured information, including demographics and known structured clinical information. </summary>
     public partial class PatientInfo
     {
-        /// <summary> Initializes a new instance of PatientInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PatientInfo"/>. </summary>
         public PatientInfo()
         {
             ClinicalInfo = new ChangeTrackingList<ClinicalCodedElement>();
         }
 
-        /// <summary> Initializes a new instance of PatientInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PatientInfo"/>. </summary>
         /// <param name="sex"> The patient's sex. </param>
         /// <param name="birthDate"> The patient's date of birth. </param>
         /// <param name="clinicalInfo"> Known clinical information for the patient, structured. </param>

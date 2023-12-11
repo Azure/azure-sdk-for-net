@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.NetApp
     /// <summary> A class to add extension methods to Azure.ResourceManager.NetApp. </summary>
     public static partial class NetAppExtensions
     {
-        #region NetAppAccountBackupResource
         /// <summary>
         /// Gets an object representing a <see cref="NetAppAccountBackupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetAppAccountBackupResource.CreateResourceIdentifier" /> to create a <see cref="NetAppAccountBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -29,16 +28,9 @@ namespace Azure.ResourceManager.NetApp
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppAccountBackupResource GetNetAppAccountBackupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetAppAccountBackupResource.ValidateResourceId(id);
-                return new NetAppAccountBackupResource(client, id);
-            }
-            );
+            return GetMockableNetAppArmClient(client).GetNetAppAccountBackupResource(id);
         }
-        #endregion
 
-        #region NetAppVolumeBackupResource
         /// <summary>
         /// Gets an object representing a <see cref="NetAppVolumeBackupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetAppVolumeBackupResource.CreateResourceIdentifier" /> to create a <see cref="NetAppVolumeBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -50,13 +42,7 @@ namespace Azure.ResourceManager.NetApp
 
         public static NetAppVolumeBackupResource GetNetAppVolumeBackupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetAppVolumeBackupResource.ValidateResourceId(id);
-                return new NetAppVolumeBackupResource(client, id);
-            }
-            );
+            return GetMockableNetAppArmClient(client).GetNetAppVolumeBackupResource(id);
         }
-        #endregion
     }
 }

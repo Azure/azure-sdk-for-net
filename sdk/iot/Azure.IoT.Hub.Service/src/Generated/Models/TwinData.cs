@@ -14,13 +14,13 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The state information for a device or module. This is implicitly created and deleted when the corresponding device/ module identity is created or deleted in the IoT Hub. </summary>
     public partial class TwinData
     {
-        /// <summary> Initializes a new instance of TwinData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TwinData"/>. </summary>
         public TwinData()
         {
             Tags = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of TwinData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TwinData"/>. </summary>
         /// <param name="deviceId"> The unique identifier of the device in the identity registry of the IoT Hub. It is a case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars, and the following special characters {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}. </param>
         /// <param name="moduleId"> The unique identifier of the module in the identity registry of the IoT Hub. It is a case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars, and the following special characters {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}. </param>
         /// <param name="tags"> The collection of key-value pairs read and written by the solution back end. They are not visible to device apps. They keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), '.', '$' and space. The values are JSON objects, up-to 4KB in length. </param>

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The KerberosKeytabSecrets. </summary>
     public partial class KerberosKeytabSecrets : MachineLearningDatastoreSecrets
     {
-        /// <summary> Initializes a new instance of KerberosKeytabSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="KerberosKeytabSecrets"/>. </summary>
         public KerberosKeytabSecrets()
         {
             SecretsType = SecretsType.KerberosKeytab;
         }
 
-        /// <summary> Initializes a new instance of KerberosKeytabSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="KerberosKeytabSecrets"/>. </summary>
         /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
         /// <param name="kerberosKeytab"> Kerberos keytab secret. </param>
         internal KerberosKeytabSecrets(SecretsType secretsType, string kerberosKeytab) : base(secretsType)

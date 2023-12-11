@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListLoadBalancers API service call. </summary>
     internal partial class LoadBalancerListResult
     {
-        /// <summary> Initializes a new instance of LoadBalancerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerListResult"/>. </summary>
         internal LoadBalancerListResult()
         {
             Value = new ChangeTrackingList<LoadBalancerData>();
         }
 
-        /// <summary> Initializes a new instance of LoadBalancerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerListResult"/>. </summary>
         /// <param name="value"> A list of load balancers in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal LoadBalancerListResult(IReadOnlyList<LoadBalancerData> value, string nextLink)

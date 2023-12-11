@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SignalR.Models
     /// </summary>
     public partial class SignalRUpstreamTemplate
     {
-        /// <summary> Initializes a new instance of SignalRUpstreamTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRUpstreamTemplate"/>. </summary>
         /// <param name="urlTemplate">
         /// Gets or sets the Upstream URL template. You can use 3 predefined parameters {hub}, {category} {event} inside the template, the value of the Upstream URL is dynamically calculated when the client request comes in.
         /// For example, if the urlTemplate is `http://example.com/{hub}/api/{event}`, with a client request from hub `chat` connects, it will first POST to this URL: `http://example.com/chat/api/connect`.
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SignalR.Models
             UrlTemplate = urlTemplate;
         }
 
-        /// <summary> Initializes a new instance of SignalRUpstreamTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRUpstreamTemplate"/>. </summary>
         /// <param name="hubPattern">
         /// Gets or sets the matching pattern for hub names. If not set, it matches any hub.
         /// There are 3 kind of patterns supported:

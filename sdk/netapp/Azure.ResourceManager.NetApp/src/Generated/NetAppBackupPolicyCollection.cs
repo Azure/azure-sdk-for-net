@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetAppBackupPolicyResource" /> and their operations.
-    /// Each <see cref="NetAppBackupPolicyResource" /> in the collection will belong to the same instance of <see cref="NetAppAccountResource" />.
-    /// To get a <see cref="NetAppBackupPolicyCollection" /> instance call the GetNetAppBackupPolicies method from an instance of <see cref="NetAppAccountResource" />.
+    /// A class representing a collection of <see cref="NetAppBackupPolicyResource"/> and their operations.
+    /// Each <see cref="NetAppBackupPolicyResource"/> in the collection will belong to the same instance of <see cref="NetAppAccountResource"/>.
+    /// To get a <see cref="NetAppBackupPolicyCollection"/> instance call the GetNetAppBackupPolicies method from an instance of <see cref="NetAppAccountResource"/>.
     /// </summary>
     public partial class NetAppBackupPolicyCollection : ArmCollection, IEnumerable<NetAppBackupPolicyResource>, IAsyncEnumerable<NetAppBackupPolicyResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetAppBackupPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetAppBackupPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetAppBackupPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppBackupPolicyBackupPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetAppBackupPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetAppBackupPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetAppBackupPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppBackupPolicyBackupPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

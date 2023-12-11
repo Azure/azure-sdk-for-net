@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> A domain name and connection details used to access a dependency. </summary>
     public partial class BatchAccountEndpointDependency
     {
-        /// <summary> Initializes a new instance of BatchAccountEndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountEndpointDependency"/>. </summary>
         internal BatchAccountEndpointDependency()
         {
             EndpointDetails = new ChangeTrackingList<BatchEndpointDetail>();
         }
 
-        /// <summary> Initializes a new instance of BatchAccountEndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountEndpointDependency"/>. </summary>
         /// <param name="domainName"> The domain name of the dependency. Domain names may be fully qualified or may contain a * wildcard. </param>
         /// <param name="description"> Human-readable supplemental information about the dependency and when it is applicable. </param>
         /// <param name="endpointDetails"> The list of connection details for this endpoint. </param>

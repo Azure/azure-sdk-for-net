@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.VoiceServices.Models
     /// <summary> The type used for update operations of the TestLine. </summary>
     public partial class VoiceServicesTestLinePatch
     {
-        /// <summary> Initializes a new instance of VoiceServicesTestLinePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesTestLinePatch"/>. </summary>
         public VoiceServicesTestLinePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesTestLinePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal VoiceServicesTestLinePatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

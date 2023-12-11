@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Advisor.Models
     /// <summary> The Advisor configuration data structure. </summary>
     public partial class ConfigData : ResourceData
     {
-        /// <summary> Initializes a new instance of ConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigData"/>. </summary>
         public ConfigData()
         {
             Digests = new ChangeTrackingList<DigestConfig>();
         }
 
-        /// <summary> Initializes a new instance of ConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

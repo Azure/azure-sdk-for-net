@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The security settings of a device. </summary>
     public partial class DataBoxEdgeSecuritySettings : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeSecuritySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSecuritySettings"/>. </summary>
         /// <param name="deviceAdminPassword"> Device administrator password as an encrypted string (encrypted using RSA PKCS #1) is used to sign into the  local web UI of the device. The Actual password should have at least 8 characters that are a combination of  uppercase, lowercase, numeric, and special characters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceAdminPassword"/> is null. </exception>
         public DataBoxEdgeSecuritySettings(AsymmetricEncryptedSecret deviceAdminPassword)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             DeviceAdminPassword = deviceAdminPassword;
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeSecuritySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSecuritySettings"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

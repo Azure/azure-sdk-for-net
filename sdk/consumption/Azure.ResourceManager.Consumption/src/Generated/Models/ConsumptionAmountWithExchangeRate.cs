@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> The amount with exchange rate. </summary>
     public partial class ConsumptionAmountWithExchangeRate : ConsumptionAmount
     {
-        /// <summary> Initializes a new instance of ConsumptionAmountWithExchangeRate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionAmountWithExchangeRate"/>. </summary>
         internal ConsumptionAmountWithExchangeRate()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionAmountWithExchangeRate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionAmountWithExchangeRate"/>. </summary>
         /// <param name="currency"> Amount currency. </param>
         /// <param name="value"> Amount. </param>
         /// <param name="exchangeRate"> The exchange rate. </param>

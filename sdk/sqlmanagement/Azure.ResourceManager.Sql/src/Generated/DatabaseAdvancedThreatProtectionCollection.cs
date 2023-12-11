@@ -21,9 +21,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DatabaseAdvancedThreatProtectionResource" /> and their operations.
-    /// Each <see cref="DatabaseAdvancedThreatProtectionResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseResource" />.
-    /// To get a <see cref="DatabaseAdvancedThreatProtectionCollection" /> instance call the GetDatabaseAdvancedThreatProtections method from an instance of <see cref="SqlDatabaseResource" />.
+    /// A class representing a collection of <see cref="DatabaseAdvancedThreatProtectionResource"/> and their operations.
+    /// Each <see cref="DatabaseAdvancedThreatProtectionResource"/> in the collection will belong to the same instance of <see cref="SqlDatabaseResource"/>.
+    /// To get a <see cref="DatabaseAdvancedThreatProtectionCollection"/> instance call the GetDatabaseAdvancedThreatProtections method from an instance of <see cref="SqlDatabaseResource"/>.
     /// </summary>
     public partial class DatabaseAdvancedThreatProtectionCollection : ArmCollection, IEnumerable<DatabaseAdvancedThreatProtectionResource>, IAsyncEnumerable<DatabaseAdvancedThreatProtectionResource>
     {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatabaseAdvancedThreatProtectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DatabaseAdvancedThreatProtectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatabaseAdvancedThreatProtectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseAdvancedThreatProtectionDatabaseAdvancedThreatProtectionSettingsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabaseAdvancedThreatProtectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DatabaseAdvancedThreatProtectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatabaseAdvancedThreatProtectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseAdvancedThreatProtectionDatabaseAdvancedThreatProtectionSettingsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

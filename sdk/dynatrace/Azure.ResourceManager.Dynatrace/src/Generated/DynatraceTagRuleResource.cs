@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Dynatrace
 {
     /// <summary>
     /// A Class representing a DynatraceTagRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DynatraceTagRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDynatraceTagRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DynatraceMonitorResource" /> using the GetDynatraceTagRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DynatraceTagRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDynatraceTagRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DynatraceMonitorResource"/> using the GetDynatraceTagRule method.
     /// </summary>
     public partial class DynatraceTagRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DynatraceTagRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="monitorName"> The monitorName. </param>
+        /// <param name="ruleSetName"> The ruleSetName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName, string ruleSetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/tagRules/{ruleSetName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.Dynatrace
         private readonly TagRulesRestOperations _dynatraceTagRuleTagRulesRestClient;
         private readonly DynatraceTagRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Dynatrace.Observability/monitors/tagRules";
+
         /// <summary> Initializes a new instance of the <see cref="DynatraceTagRuleResource"/> class for mocking. </summary>
         protected DynatraceTagRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DynatraceTagRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DynatraceTagRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DynatraceTagRuleResource(ArmClient client, DynatraceTagRuleData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.Dynatrace
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Dynatrace.Observability/monitors/tagRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

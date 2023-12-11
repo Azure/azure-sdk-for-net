@@ -20,13 +20,18 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a MongoDBCollectionThroughputSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MongoDBCollectionThroughputSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMongoDBCollectionThroughputSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MongoDBCollectionResource" /> using the GetMongoDBCollectionThroughputSetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MongoDBCollectionThroughputSettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMongoDBCollectionThroughputSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MongoDBCollectionResource"/> using the GetMongoDBCollectionThroughputSetting method.
     /// </summary>
     public partial class MongoDBCollectionThroughputSettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MongoDBCollectionThroughputSettingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="collectionName"> The collectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string collectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/collections/{collectionName}/throughputSettings/default";
@@ -37,12 +42,15 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly MongoDBResourcesRestOperations _mongoDBCollectionThroughputSettingMongoDBResourcesRestClient;
         private readonly ThroughputSettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/collections/throughputSettings";
+
         /// <summary> Initializes a new instance of the <see cref="MongoDBCollectionThroughputSettingResource"/> class for mocking. </summary>
         protected MongoDBCollectionThroughputSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MongoDBCollectionThroughputSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MongoDBCollectionThroughputSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MongoDBCollectionThroughputSettingResource(ArmClient client, ThroughputSettingData data) : this(client, data.Id)
@@ -63,9 +71,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/collections/throughputSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

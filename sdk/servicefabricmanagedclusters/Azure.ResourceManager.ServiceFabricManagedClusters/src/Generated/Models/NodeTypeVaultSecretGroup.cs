@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Specifies set of certificates that should be installed onto the virtual machines. </summary>
     public partial class NodeTypeVaultSecretGroup
     {
-        /// <summary> Initializes a new instance of NodeTypeVaultSecretGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeTypeVaultSecretGroup"/>. </summary>
         /// <param name="sourceVault"> The relative URL of the Key Vault containing all of the certificates in VaultCertificates. </param>
         /// <param name="vaultCertificates"> The list of key vault references in SourceVault which contain certificates. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceVault"/> or <paramref name="vaultCertificates"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             VaultCertificates = vaultCertificates.ToList();
         }
 
-        /// <summary> Initializes a new instance of NodeTypeVaultSecretGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeTypeVaultSecretGroup"/>. </summary>
         /// <param name="sourceVault"> The relative URL of the Key Vault containing all of the certificates in VaultCertificates. </param>
         /// <param name="vaultCertificates"> The list of key vault references in SourceVault which contain certificates. </param>
         internal NodeTypeVaultSecretGroup(WritableSubResource sourceVault, IList<NodeTypeVaultCertificate> vaultCertificates)

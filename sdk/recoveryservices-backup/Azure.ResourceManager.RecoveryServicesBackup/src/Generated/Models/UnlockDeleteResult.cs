@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Response of Unlock Delete API. </summary>
     public partial class UnlockDeleteResult
     {
-        /// <summary> Initializes a new instance of UnlockDeleteResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnlockDeleteResult"/>. </summary>
         internal UnlockDeleteResult()
         {
         }
 
-        /// <summary> Initializes a new instance of UnlockDeleteResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnlockDeleteResult"/>. </summary>
         /// <param name="unlockDeleteExpireOn"> This is the time when unlock delete privileges will get expired. </param>
         internal UnlockDeleteResult(DateTimeOffset? unlockDeleteExpireOn)
         {

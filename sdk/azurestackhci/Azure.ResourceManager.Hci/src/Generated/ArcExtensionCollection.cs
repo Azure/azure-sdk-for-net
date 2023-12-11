@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Hci
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ArcExtensionResource" /> and their operations.
-    /// Each <see cref="ArcExtensionResource" /> in the collection will belong to the same instance of <see cref="ArcSettingResource" />.
-    /// To get an <see cref="ArcExtensionCollection" /> instance call the GetArcExtensions method from an instance of <see cref="ArcSettingResource" />.
+    /// A class representing a collection of <see cref="ArcExtensionResource"/> and their operations.
+    /// Each <see cref="ArcExtensionResource"/> in the collection will belong to the same instance of <see cref="ArcSettingResource"/>.
+    /// To get an <see cref="ArcExtensionCollection"/> instance call the GetArcExtensions method from an instance of <see cref="ArcSettingResource"/>.
     /// </summary>
     public partial class ArcExtensionCollection : ArmCollection, IEnumerable<ArcExtensionResource>, IAsyncEnumerable<ArcExtensionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Hci
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ArcExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ArcExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ArcExtensionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _arcExtensionExtensionsRestClient.CreateListByArcSettingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Hci
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ArcExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ArcExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ArcExtensionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _arcExtensionExtensionsRestClient.CreateListByArcSettingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

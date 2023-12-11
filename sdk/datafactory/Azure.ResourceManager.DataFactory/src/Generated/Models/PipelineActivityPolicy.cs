@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Execution policy for an activity. </summary>
     public partial class PipelineActivityPolicy
     {
-        /// <summary> Initializes a new instance of PipelineActivityPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineActivityPolicy"/>. </summary>
         public PipelineActivityPolicy()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of PipelineActivityPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineActivityPolicy"/>. </summary>
         /// <param name="timeout"> Specifies the timeout for the activity to run. The default timeout is 7 days. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="retry"> Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="retryIntervalInSeconds"> Interval between each retry attempt (in seconds). The default is 30 sec. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

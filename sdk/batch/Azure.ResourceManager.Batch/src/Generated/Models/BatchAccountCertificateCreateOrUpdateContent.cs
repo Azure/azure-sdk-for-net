@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Contains information about a certificate. </summary>
     public partial class BatchAccountCertificateCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of BatchAccountCertificateCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountCertificateCreateOrUpdateContent"/>. </summary>
         public BatchAccountCertificateCreateOrUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchAccountCertificateCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountCertificateCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

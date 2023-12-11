@@ -2,12 +2,16 @@
 // Licensed under the MIT License.
 #if NET6_0_OR_GREATER
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Tests;
+using Google.Protobuf;
 using Grpc.Core;
+using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.ServiceBus.Grpc;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc;
 using Microsoft.Azure.WebJobs.ServiceBus;
@@ -16,7 +20,7 @@ using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
-    public class ServiceBusGrpcSessionEndToEndTests : WebJobsServiceBusTestBase
+    public class ServiceBusGrpcSessionEndToEndTests : ServiceBusGrpcEndToEndTestsBase
     {
         public ServiceBusGrpcSessionEndToEndTests() : base(isSession: true)
         {
@@ -128,7 +132,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             var receiver = await client.AcceptNextSessionAsync(FirstQueueScope.QueueName);
             var abandonedMessage = (await receiver.ReceiveMessagesAsync(1)).Single();
             Assert.AreEqual("foobar", abandonedMessage.Body.ToString());
-            Assert.AreEqual("value", abandonedMessage.ApplicationProperties["key"]);
+            Assert.AreEqual(ServiceBusBindToSessionMessageAndAbandon.TimeSpan, abandonedMessage.ApplicationProperties["timespan"]);
+            Assert.AreEqual(ServiceBusBindToSessionMessageAndAbandon.Uri, abandonedMessage.ApplicationProperties["uri"]);
+            Assert.That(abandonedMessage.ApplicationProperties["datetime"], Is.EqualTo(ServiceBusBindToSessionMessageAndAbandon.DateTimeNow).Within(TimeSpan.FromMilliseconds(1)));
+            Assert.That(abandonedMessage.ApplicationProperties["datetimeoffset"], Is.EqualTo(ServiceBusBindToSessionMessageAndAbandon.DateTimeOffsetNow).Within(TimeSpan.FromMilliseconds(1)));
+            Assert.AreEqual(ServiceBusBindToSessionMessageAndAbandon.Guid, abandonedMessage.ApplicationProperties["guid"]);
             Assert.IsEmpty(provider.ActionsCache);
         }
 
@@ -170,7 +178,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         Locktoken = message.LockToken,
                         DeadletterErrorDescription = "description",
                         DeadletterReason = "reason",
-                        PropertiesToModify = {{ "key", new SettlementProperties { IntValue = 42} }}
+                        PropertiesToModify = EncodeDictionary(new Dictionary<string, object> {{ "key", 42}})
                     },
                     new MockServerCallContext());
 
@@ -195,7 +203,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     new DeferRequest
                     {
                         Locktoken = message.LockToken,
-                        PropertiesToModify = {{ "key", new SettlementProperties { BoolValue = true} }}
+                        PropertiesToModify = EncodeDictionary(new Dictionary<string, object> {{ "key", true}})
                     },
                     new MockServerCallContext());
                 var deferredMessage = (await receiveActions.ReceiveDeferredMessagesAsync(
@@ -208,6 +216,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public class ServiceBusBindToSessionMessageAndAbandon
         {
+            internal static DateTime DateTimeNow { get; } = DateTime.UtcNow;
+            internal static DateTimeOffset DateTimeOffsetNow { get; } = DateTimeOffset.UtcNow;
+            internal static Guid Guid { get; } = Guid.NewGuid();
+            internal static Uri Uri { get; } = new Uri("http://nonExistingServiceBusWebsite.com");
+            internal static TimeSpan TimeSpan { get; } = TimeSpan.FromSeconds(60);
+
             internal static SettlementService SettlementService { get; set; }
             public static async Task BindToMessage(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
@@ -217,35 +231,18 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     new AbandonRequest
                     {
                         Locktoken = message.LockToken,
-                        PropertiesToModify = {{ "key", new SettlementProperties { StringValue = "value"} }}
+                        PropertiesToModify = EncodeDictionary(new Dictionary<string, object>
+                        {
+                            { "timespan", TimeSpan },
+                            { "uri", Uri },
+                            { "datetime", DateTimeNow },
+                            { "datetimeoffset", DateTimeOffsetNow },
+                            { "guid", Guid },
+                        })
                     },
                     new MockServerCallContext());
                 _waitHandle1.Set();
             }
-        }
-
-        internal class MockServerCallContext : ServerCallContext
-        {
-            protected override Task WriteResponseHeadersAsyncCore(Metadata responseHeaders)
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override ContextPropagationToken CreatePropagationTokenCore(ContextPropagationOptions options)
-            {
-                throw new NotImplementedException();
-            }
-
-            protected override string MethodCore { get; }
-            protected override string HostCore { get; }
-            protected override string PeerCore { get; }
-            protected override DateTime DeadlineCore { get; }
-            protected override Metadata RequestHeadersCore { get; }
-            protected override CancellationToken CancellationTokenCore { get; } = CancellationToken.None;
-            protected override Metadata ResponseTrailersCore { get; }
-            protected override Status StatusCore { get; set; }
-            protected override WriteOptions WriteOptionsCore { get; set; }
-            protected override AuthContext AuthContextCore { get; }
         }
     }
 }

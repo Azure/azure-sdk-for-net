@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an ExpressRouteCrossConnectionPeering along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExpressRouteCrossConnectionPeeringResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExpressRouteCrossConnectionPeeringResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ExpressRouteCrossConnectionResource" /> using the GetExpressRouteCrossConnectionPeering method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExpressRouteCrossConnectionPeeringResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExpressRouteCrossConnectionPeeringResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ExpressRouteCrossConnectionResource"/> using the GetExpressRouteCrossConnectionPeering method.
     /// </summary>
     public partial class ExpressRouteCrossConnectionPeeringResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ExpressRouteCrossConnectionPeeringResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="crossConnectionName"> The crossConnectionName. </param>
+        /// <param name="peeringName"> The peeringName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string crossConnectionName, string peeringName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/peerings/{peeringName}";
@@ -38,12 +42,15 @@ namespace Azure.ResourceManager.Network
         private readonly ExpressRouteCrossConnectionsRestOperations _expressRouteCrossConnectionRestClient;
         private readonly ExpressRouteCrossConnectionPeeringData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/expressRouteCrossConnections/peerings";
+
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteCrossConnectionPeeringResource"/> class for mocking. </summary>
         protected ExpressRouteCrossConnectionPeeringResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExpressRouteCrossConnectionPeeringResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRouteCrossConnectionPeeringResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExpressRouteCrossConnectionPeeringResource(ArmClient client, ExpressRouteCrossConnectionPeeringData data) : this(client, data.Id)
@@ -67,9 +74,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/expressRouteCrossConnections/peerings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

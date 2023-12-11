@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public partial class ImportSettings
     {
-        /// <summary> Initializes a new instance of ImportSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportSettings"/>. </summary>
         public ImportSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ImportSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportSettings"/>. </summary>
         /// <param name="importSettingsType"> The import setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ImportSettings(string importSettingsType, IDictionary<string, BinaryData> additionalProperties)
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SelfHelp;
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSelfHelpModelFactory
     {
-        /// <summary> Initializes a new instance of SelfHelpNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Returns true or false depending on the availability of the name. </param>
         /// <param name="reason"> Reason for why value is not available. This field is returned if nameAvailable is false. </param>
         /// <param name="message"> Gets an error message explaining the 'reason' value with more details. This field is returned iif nameAvailable is false. </param>
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SelfHelpNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelp.SelfHelpDiagnosticData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SelfHelpDiagnosticData(id, name, resourceType, systemData, globalParameters, insights?.ToList(), acceptedOn, provisioningState, diagnostics?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpDiagnosticInfo"/>. </summary>
         /// <param name="solutionId"> Solution Id. </param>
         /// <param name="status"> Denotes the status of the diagnostic resource. </param>
         /// <param name="insights"> The problems (if any) detected by this insight. </param>
@@ -60,18 +61,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SelfHelpDiagnosticInfo(solutionId, status, insights?.ToList(), error);
         }
 
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticInsight. </summary>
-        /// <param name="id"> Article id. </param>
-        /// <param name="title"> This insight's title. </param>
-        /// <param name="results"> Detailed result content. </param>
-        /// <param name="insightImportanceLevel"> Importance level of the insight. </param>
-        /// <returns> A new <see cref="Models.SelfHelpDiagnosticInsight"/> instance for mocking. </returns>
-        public static SelfHelpDiagnosticInsight SelfHelpDiagnosticInsight(string id = null, string title = null, string results = null, SelfHelpImportanceLevel? insightImportanceLevel = null)
-        {
-            return new SelfHelpDiagnosticInsight(id, title, results, insightImportanceLevel);
-        }
-
-        /// <summary> Initializes a new instance of SelfHelpError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpError"/>. </summary>
         /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
         /// <param name="errorType"> Service specific error type which serves as additional context for the error herein. </param>
         /// <param name="message"> Description of the error. </param>
@@ -84,21 +74,138 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SelfHelpError(code, errorType, message, details?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SelfHelpSolutionMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpSolutionMetadata"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="solutions"> List of metadata. </param>
+        /// <returns> A new <see cref="Models.SelfHelpSolutionMetadata"/> instance for mocking. </returns>
+        public static SelfHelpSolutionMetadata SelfHelpSolutionMetadata(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<SolutionMetadataProperties> solutions = null)
+        {
+            solutions ??= new List<SolutionMetadataProperties>();
+
+            return new SelfHelpSolutionMetadata(id, name, resourceType, systemData, solutions?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SolutionMetadataProperties"/>. </summary>
         /// <param name="solutionId"> Solution Id. </param>
         /// <param name="solutionType"> Solution Type. </param>
         /// <param name="description"> A detailed description of solution. </param>
-        /// <param name="requiredParameterSets"> Required parameters for invoking this particular solution. </param>
-        /// <returns> A new <see cref="Models.SelfHelpSolutionMetadata"/> instance for mocking. </returns>
-        public static SelfHelpSolutionMetadata SelfHelpSolutionMetadata(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, string solutionType = null, string description = null, IEnumerable<IList<string>> requiredParameterSets = null)
+        /// <param name="requiredInputs"> Required parameters for invoking this particular solution. </param>
+        /// <returns> A new <see cref="Models.SolutionMetadataProperties"/> instance for mocking. </returns>
+        public static SolutionMetadataProperties SolutionMetadataProperties(string solutionId = null, SolutionType? solutionType = null, string description = null, IEnumerable<string> requiredInputs = null)
         {
-            requiredParameterSets ??= new List<IList<string>>();
+            requiredInputs ??= new List<string>();
 
-            return new SelfHelpSolutionMetadata(id, name, resourceType, systemData, solutionId, solutionType, description, requiredParameterSets?.ToList());
+            return new SolutionMetadataProperties(solutionId, solutionType, description, requiredInputs?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SelfHelp.SolutionResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Solution result. </param>
+        /// <returns> A new <see cref="SelfHelp.SolutionResourceData"/> instance for mocking. </returns>
+        public static SolutionResourceData SolutionResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SolutionResourceProperties properties = null)
+        {
+            return new SolutionResourceData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SelfHelp.TroubleshooterResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="solutionId"> Solution Id to identify single troubleshooter. </param>
+        /// <param name="parameters"> Client input parameters to run Troubleshooter Resource. </param>
+        /// <param name="provisioningState"> Status of troubleshooter provisioning. </param>
+        /// <param name="steps"> List of step object. </param>
+        /// <returns> A new <see cref="SelfHelp.TroubleshooterResourceData"/> instance for mocking. </returns>
+        public static TroubleshooterResourceData TroubleshooterResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, IDictionary<string, string> parameters = null, TroubleshooterProvisioningState? provisioningState = null, IEnumerable<SelfHelpStep> steps = null)
+        {
+            parameters ??= new Dictionary<string, string>();
+            steps ??= new List<SelfHelpStep>();
+
+            return new TroubleshooterResourceData(id, name, resourceType, systemData, solutionId, parameters, provisioningState, steps?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpStep"/>. </summary>
+        /// <param name="id"> Unique step id. </param>
+        /// <param name="title"> Step title. </param>
+        /// <param name="description"> Step description. </param>
+        /// <param name="guidance"> Get or sets the Step guidance. </param>
+        /// <param name="executionStatus"> Status of Troubleshooter Step execution. </param>
+        /// <param name="executionStatusDescription"> This field has more detailed status description of the execution status. </param>
+        /// <param name="stepType"> Type of Troubleshooting step. </param>
+        /// <param name="isLastStep"> is this last step of the workflow. </param>
+        /// <param name="inputs"></param>
+        /// <param name="automatedCheckResults"> Only for AutomatedStep type. </param>
+        /// <param name="insights"></param>
+        /// <param name="error"> The error detail. </param>
+        /// <returns> A new <see cref="Models.SelfHelpStep"/> instance for mocking. </returns>
+        public static SelfHelpStep SelfHelpStep(string id = null, string title = null, string description = null, string guidance = null, ExecutionStatus? executionStatus = null, string executionStatusDescription = null, SelfHelpType? stepType = null, bool? isLastStep = null, IEnumerable<StepInput> inputs = null, AutomatedCheckResult automatedCheckResults = null, IEnumerable<SelfHelpDiagnosticInsight> insights = null, ResponseError error = null)
+        {
+            inputs ??= new List<StepInput>();
+            insights ??= new List<SelfHelpDiagnosticInsight>();
+
+            return new SelfHelpStep(id, title, description, guidance, executionStatus, executionStatusDescription, stepType, isLastStep, inputs?.ToList(), automatedCheckResults, insights?.ToList(), error);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.StepInput"/>. </summary>
+        /// <param name="questionId"> Use Index as QuestionId. </param>
+        /// <param name="questionType"> Text Input. Will be a single line input. </param>
+        /// <param name="questionContent"> User question content. </param>
+        /// <param name="questionContentType"> Default is Text. </param>
+        /// <param name="responseHint"> Place holder text for response hints. </param>
+        /// <param name="recommendedOption"> Result of Automate step. </param>
+        /// <param name="selectedOptionValue"> Text of response that was selected. </param>
+        /// <param name="responseValidationProperties"> Troubleshooter step input response validation properties. </param>
+        /// <param name="responseOptions"></param>
+        /// <returns> A new <see cref="Models.StepInput"/> instance for mocking. </returns>
+        public static StepInput StepInput(string questionId = null, string questionType = null, string questionContent = null, QuestionContentType? questionContentType = null, string responseHint = null, string recommendedOption = null, string selectedOptionValue = null, ResponseValidationProperties responseValidationProperties = null, IEnumerable<ResponseConfig> responseOptions = null)
+        {
+            responseOptions ??= new List<ResponseConfig>();
+
+            return new StepInput(questionId, questionType, questionContent, questionContentType, responseHint, recommendedOption, selectedOptionValue, responseValidationProperties, responseOptions?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResponseValidationProperties"/>. </summary>
+        /// <param name="regex"> Regex used for the input validation. </param>
+        /// <param name="isRequired"> Default True. </param>
+        /// <param name="validationErrorMessage"> Validation Error Message. </param>
+        /// <param name="maxLength"> Max text input (open Ended Text). </param>
+        /// <returns> A new <see cref="Models.ResponseValidationProperties"/> instance for mocking. </returns>
+        public static ResponseValidationProperties ResponseValidationProperties(string regex = null, bool? isRequired = null, string validationErrorMessage = null, long? maxLength = null)
+        {
+            return new ResponseValidationProperties(regex, isRequired, validationErrorMessage, maxLength);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResponseConfig"/>. </summary>
+        /// <param name="key"> Unique string. </param>
+        /// <param name="value"> Option description. </param>
+        /// <returns> A new <see cref="Models.ResponseConfig"/> instance for mocking. </returns>
+        public static ResponseConfig ResponseConfig(string key = null, string value = null)
+        {
+            return new ResponseConfig(key, value);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AutomatedCheckResult"/>. </summary>
+        /// <param name="result"> Insight Article Content. </param>
+        /// <param name="resultType"> Type of Result. </param>
+        /// <returns> A new <see cref="Models.AutomatedCheckResult"/> instance for mocking. </returns>
+        public static AutomatedCheckResult AutomatedCheckResult(string result = null, AutomatedCheckResultType? resultType = null)
+        {
+            return new AutomatedCheckResult(result, resultType);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RestartTroubleshooterResult"/>. </summary>
+        /// <param name="troubleshooterResourceName"> Updated TroubleshooterResource Name . </param>
+        /// <returns> A new <see cref="Models.RestartTroubleshooterResult"/> instance for mocking. </returns>
+        public static RestartTroubleshooterResult RestartTroubleshooterResult(string troubleshooterResourceName = null)
+        {
+            return new RestartTroubleshooterResult(troubleshooterResourceName);
         }
     }
 }

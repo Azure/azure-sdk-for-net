@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The operation for configuring intrusion detection. </summary>
     public partial class FirewallPolicyIntrusionDetectionConfiguration
     {
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetectionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetectionConfiguration"/>. </summary>
         public FirewallPolicyIntrusionDetectionConfiguration()
         {
             SignatureOverrides = new ChangeTrackingList<FirewallPolicyIntrusionDetectionSignatureSpecification>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
             PrivateRanges = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetectionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetectionConfiguration"/>. </summary>
         /// <param name="signatureOverrides"> List of specific signatures states. </param>
         /// <param name="bypassTrafficSettings"> List of rules for traffic to bypass. </param>
         /// <param name="privateRanges"> IDPS Private IP address ranges are used to identify traffic direction (i.e. inbound, outbound, etc.). By default, only ranges defined by IANA RFC 1918 are considered private IP addresses. To modify default ranges, specify your Private IP address ranges with this property. </param>

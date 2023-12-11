@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     /// <summary>
     /// A Class representing a ContainerRegistryAgentPool along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerRegistryAgentPoolResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerRegistryAgentPoolResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerRegistryResource" /> using the GetContainerRegistryAgentPool method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerRegistryAgentPoolResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerRegistryAgentPoolResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerRegistryResource"/> using the GetContainerRegistryAgentPool method.
     /// </summary>
     public partial class ContainerRegistryAgentPoolResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerRegistryAgentPoolResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="registryName"> The registryName. </param>
+        /// <param name="agentPoolName"> The agentPoolName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string agentPoolName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/agentPools/{agentPoolName}";
@@ -37,12 +41,15 @@ namespace Azure.ResourceManager.ContainerRegistry
         private readonly AgentPoolsRestOperations _containerRegistryAgentPoolAgentPoolsRestClient;
         private readonly ContainerRegistryAgentPoolData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/agentPools";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerRegistryAgentPoolResource"/> class for mocking. </summary>
         protected ContainerRegistryAgentPoolResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerRegistryAgentPoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerRegistryAgentPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerRegistryAgentPoolResource(ArmClient client, ContainerRegistryAgentPoolData data) : this(client, data.Id)
@@ -63,9 +70,6 @@ namespace Azure.ResourceManager.ContainerRegistry
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/agentPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

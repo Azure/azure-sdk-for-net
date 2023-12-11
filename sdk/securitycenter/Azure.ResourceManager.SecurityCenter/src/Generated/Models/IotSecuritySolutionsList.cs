@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of IoT Security solutions. </summary>
     internal partial class IotSecuritySolutionsList
     {
-        /// <summary> Initializes a new instance of IotSecuritySolutionsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionsList"/>. </summary>
         /// <param name="value"> List of IoT Security solutions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IotSecuritySolutionsList(IEnumerable<IotSecuritySolutionData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of IotSecuritySolutionsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionsList"/>. </summary>
         /// <param name="value"> List of IoT Security solutions. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal IotSecuritySolutionsList(IReadOnlyList<IotSecuritySolutionData> value, string nextLink)

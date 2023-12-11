@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Azure Key Vault key management service settings for the security profile. </summary>
     public partial class ManagedClusterSecurityProfileKeyVaultKms
     {
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileKeyVaultKms. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileKeyVaultKms"/>. </summary>
         public ManagedClusterSecurityProfileKeyVaultKms()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileKeyVaultKms. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileKeyVaultKms"/>. </summary>
         /// <param name="isEnabled"> Whether to enable Azure Key Vault key management service. The default is false. </param>
         /// <param name="keyId"> Identifier of Azure Key Vault key. See [key identifier format](https://docs.microsoft.com/en-us/azure/key-vault/general/about-keys-secrets-certificates#vault-name-and-object-name) for more details. When Azure Key Vault key management service is enabled, this field is required and must be a valid key identifier. When Azure Key Vault key management service is disabled, leave the field empty. </param>
         /// <param name="keyVaultNetworkAccess"> Network access of key vault. The possible values are `Public` and `Private`. `Public` means the key vault allows public access from all networks. `Private` means the key vault disables public access and enables private link. The default value is `Public`. </param>

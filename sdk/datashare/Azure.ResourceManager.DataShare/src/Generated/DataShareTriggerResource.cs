@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
     /// A Class representing a DataShareTrigger along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataShareTriggerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataShareTriggerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ShareSubscriptionResource" /> using the GetDataShareTrigger method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataShareTriggerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataShareTriggerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ShareSubscriptionResource"/> using the GetDataShareTrigger method.
     /// </summary>
     public partial class DataShareTriggerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataShareTriggerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="shareSubscriptionName"> The shareSubscriptionName. </param>
+        /// <param name="triggerName"> The triggerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string triggerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/triggers/{triggerName}";
@@ -36,12 +41,15 @@ namespace Azure.ResourceManager.DataShare
         private readonly TriggersRestOperations _dataShareTriggerTriggersRestClient;
         private readonly DataShareTriggerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shareSubscriptions/triggers";
+
         /// <summary> Initializes a new instance of the <see cref="DataShareTriggerResource"/> class for mocking. </summary>
         protected DataShareTriggerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataShareTriggerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataShareTriggerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataShareTriggerResource(ArmClient client, DataShareTriggerData data) : this(client, data.Id)
@@ -62,9 +70,6 @@ namespace Azure.ResourceManager.DataShare
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shareSubscriptions/triggers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

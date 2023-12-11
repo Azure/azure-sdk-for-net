@@ -21,10 +21,10 @@ namespace Azure.Communication.JobRouter
             }
             Optional<RouterRule> scoringRule = default;
             Optional<ScoringRuleOptions> scoringRuleOptions = default;
-            string kind = default;
             Optional<int> minConcurrentOffers = default;
             Optional<int> maxConcurrentOffers = default;
             Optional<bool> bypassSelectors = default;
+            DistributionModeKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scoringRule"u8))
@@ -42,12 +42,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    scoringRuleOptions = ScoringRuleOptions.DeserializeScoringRuleOptions(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
+                    scoringRuleOptions = JobRouter.ScoringRuleOptions.DeserializeScoringRuleOptions(property.Value);
                     continue;
                 }
                 if (property.NameEquals("minConcurrentOffers"u8))
@@ -77,8 +72,13 @@ namespace Azure.Communication.JobRouter
                     bypassSelectors = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new DistributionModeKind(property.Value.GetString());
+                    continue;
+                }
             }
-            return new BestWorkerMode(kind, minConcurrentOffers, maxConcurrentOffers, Optional.ToNullable(bypassSelectors), scoringRule.Value, scoringRuleOptions.Value);
+            return new BestWorkerMode(minConcurrentOffers, maxConcurrentOffers, Optional.ToNullable(bypassSelectors), kind, scoringRule.Value, scoringRuleOptions.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

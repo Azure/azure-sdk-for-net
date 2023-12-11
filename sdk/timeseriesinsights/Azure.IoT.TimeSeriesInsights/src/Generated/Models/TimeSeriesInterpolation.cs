@@ -10,12 +10,12 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> The interpolation operation to be performed on the raw data points. Currently, only sampling of interpolated time series is allowed. Allowed aggregate function - eg: left($value). Can be null if no interpolation needs to be applied. </summary>
     public partial class TimeSeriesInterpolation
     {
-        /// <summary> Initializes a new instance of TimeSeriesInterpolation. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesInterpolation"/>. </summary>
         public TimeSeriesInterpolation()
         {
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesInterpolation. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesInterpolation"/>. </summary>
         /// <param name="kind"> The type of interpolation technique : "Linear" or "Step". </param>
         /// <param name="boundary"> The time range to the left and right of the search span to be used for Interpolation. This is helpful in scenarios where the data points are missing close to the start or end of the input search span. Can be null. </param>
         internal TimeSeriesInterpolation(InterpolationKind? kind, InterpolationBoundary boundary)

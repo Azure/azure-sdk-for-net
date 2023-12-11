@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Marketplace
     /// </summary>
     public partial class MarketplaceAdminApprovalRequestData : ResourceData
     {
-        /// <summary> Initializes a new instance of MarketplaceAdminApprovalRequestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalRequestData"/>. </summary>
         public MarketplaceAdminApprovalRequestData()
         {
             ApprovedPlans = new ChangeTrackingList<string>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Marketplace
             CollectionIds = new ChangeTrackingList<Guid>();
         }
 
-        /// <summary> Initializes a new instance of MarketplaceAdminApprovalRequestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalRequestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

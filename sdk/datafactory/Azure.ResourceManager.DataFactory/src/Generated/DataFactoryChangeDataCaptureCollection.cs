@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataFactoryChangeDataCaptureResource" /> and their operations.
-    /// Each <see cref="DataFactoryChangeDataCaptureResource" /> in the collection will belong to the same instance of <see cref="DataFactoryResource" />.
-    /// To get a <see cref="DataFactoryChangeDataCaptureCollection" /> instance call the GetDataFactoryChangeDataCaptures method from an instance of <see cref="DataFactoryResource" />.
+    /// A class representing a collection of <see cref="DataFactoryChangeDataCaptureResource"/> and their operations.
+    /// Each <see cref="DataFactoryChangeDataCaptureResource"/> in the collection will belong to the same instance of <see cref="DataFactoryResource"/>.
+    /// To get a <see cref="DataFactoryChangeDataCaptureCollection"/> instance call the GetDataFactoryChangeDataCaptures method from an instance of <see cref="DataFactoryResource"/>.
     /// </summary>
     public partial class DataFactoryChangeDataCaptureCollection : ArmCollection, IEnumerable<DataFactoryChangeDataCaptureResource>, IAsyncEnumerable<DataFactoryChangeDataCaptureResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataFactoryChangeDataCaptureResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataFactoryChangeDataCaptureResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataFactoryChangeDataCaptureResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryChangeDataCaptureChangeDataCaptureRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataFactoryChangeDataCaptureResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataFactoryChangeDataCaptureResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataFactoryChangeDataCaptureResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryChangeDataCaptureChangeDataCaptureRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

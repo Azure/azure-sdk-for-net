@@ -77,7 +77,7 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 
 ```C# Snippet:Azure_DevCenter_GetProjects_Scenario
 string targetProjectName = null;
-await foreach (BinaryData data in devCenterClient.GetProjectsAsync())
+await foreach (BinaryData data in devCenterClient.GetProjectsAsync(null, null, null))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     targetProjectName = result.GetProperty("name").ToString();
@@ -90,7 +90,7 @@ Interaction with DevBox pools is facilitated through the `DevBoxesClient`. Pools
 
 ```C# Snippet:Azure_DevCenter_GetPools_Scenario
 string targetPoolName = null;
-await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName))
+await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     targetPoolName = result.GetProperty("name").ToString();
@@ -127,7 +127,8 @@ Once a DevBox is provisioned, you can connect to it using an RDP connection stri
 Response remoteConnectionResponse = await devBoxesClient.GetRemoteConnectionAsync(
     targetProjectName,
     "me",
-    "MyDevBox");
+    "MyDevBox",
+    null);
 JsonElement remoteConnectionData = JsonDocument.Parse(remoteConnectionResponse.ContentStream).RootElement;
 Console.WriteLine($"Connect using web URL {remoteConnectionData.GetProperty("webUrl")}.");
 ```
@@ -153,7 +154,7 @@ Console.WriteLine($"Completed dev box deletion.");
 ```C# Snippet:Azure_DevCenter_GetCatalogs_Scenario
 string catalogName = null;
 
-await foreach (BinaryData data in environmentsClient.GetCatalogsAsync(projectName))
+await foreach (BinaryData data in environmentsClient.GetCatalogsAsync(projectName, null, null))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     catalogName = result.GetProperty("name").ToString();
@@ -179,7 +180,7 @@ Issue a request to get all environment types in a project.
 
 ```C# Snippet:Azure_DevCenter_GetEnvironmentTypes_Scenario
 string environmentTypeName = null;
-await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(projectName))
+await foreach (BinaryData data in environmentsClient.GetEnvironmentTypesAsync(projectName, null, null))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     environmentTypeName = result.GetProperty("name").ToString();

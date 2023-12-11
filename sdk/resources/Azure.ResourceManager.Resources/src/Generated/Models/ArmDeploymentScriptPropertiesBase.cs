@@ -12,9 +12,26 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Common properties for the deployment script. </summary>
     internal partial class ArmDeploymentScriptPropertiesBase
     {
-        /// <summary> Initializes a new instance of ArmDeploymentScriptPropertiesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentScriptPropertiesBase"/>. </summary>
         internal ArmDeploymentScriptPropertiesBase()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentScriptPropertiesBase"/>. </summary>
+        /// <param name="containerSettings"> Container settings. </param>
+        /// <param name="storageAccountSettings"> Storage Account settings. </param>
+        /// <param name="cleanupPreference"> The clean up preference when the script execution gets in a terminal state. Default setting is 'Always'. </param>
+        /// <param name="provisioningState"> State of the script execution. This only appears in the response. </param>
+        /// <param name="status"> Contains the results of script execution. </param>
+        /// <param name="outputs"> List of script outputs. </param>
+        internal ArmDeploymentScriptPropertiesBase(ContainerConfiguration containerSettings, ScriptStorageConfiguration storageAccountSettings, ScriptCleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, BinaryData outputs)
+        {
+            ContainerSettings = containerSettings;
+            StorageAccountSettings = storageAccountSettings;
+            CleanupPreference = cleanupPreference;
+            ProvisioningState = provisioningState;
+            Status = status;
+            Outputs = outputs;
         }
 
         /// <summary> Container settings. </summary>
@@ -34,7 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

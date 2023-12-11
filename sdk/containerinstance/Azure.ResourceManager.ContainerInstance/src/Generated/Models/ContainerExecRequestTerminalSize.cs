@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The size of the terminal. </summary>
     public partial class ContainerExecRequestTerminalSize
     {
-        /// <summary> Initializes a new instance of ContainerExecRequestTerminalSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerExecRequestTerminalSize"/>. </summary>
         public ContainerExecRequestTerminalSize()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerExecRequestTerminalSize"/>. </summary>
+        /// <param name="rows"> The row size of the terminal. </param>
+        /// <param name="cols"> The column size of the terminal. </param>
+        internal ContainerExecRequestTerminalSize(int? rows, int? cols)
+        {
+            Rows = rows;
+            Cols = cols;
         }
 
         /// <summary> The row size of the terminal. </summary>

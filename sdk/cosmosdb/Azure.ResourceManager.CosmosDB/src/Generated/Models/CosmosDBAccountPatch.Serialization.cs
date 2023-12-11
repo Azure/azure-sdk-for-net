@@ -220,6 +220,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
             }
+            if (Optional.IsDefined(CustomerManagedKeyStatus))
+            {
+                writer.WritePropertyName("customerManagedKeyStatus"u8);
+                writer.WriteStringValue(CustomerManagedKeyStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(EnablePriorityBasedExecution))
+            {
+                writer.WritePropertyName("enablePriorityBasedExecution"u8);
+                writer.WriteBooleanValue(EnablePriorityBasedExecution.Value);
+            }
+            if (Optional.IsDefined(DefaultPriorityLevel))
+            {
+                writer.WritePropertyName("defaultPriorityLevel"u8);
+                writer.WriteStringValue(DefaultPriorityLevel.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> ARM resource. </summary>
     public partial class ResourceWithWritableName
     {
-        /// <summary> Initializes a new instance of ResourceWithWritableName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceWithWritableName"/>. </summary>
         public ResourceWithWritableName()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceWithWritableName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceWithWritableName"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

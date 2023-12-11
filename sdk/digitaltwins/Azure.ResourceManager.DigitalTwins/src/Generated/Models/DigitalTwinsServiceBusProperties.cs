@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> Properties related to ServiceBus. </summary>
     public partial class DigitalTwinsServiceBusProperties : DigitalTwinsEndpointResourceProperties
     {
-        /// <summary> Initializes a new instance of DigitalTwinsServiceBusProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsServiceBusProperties"/>. </summary>
         public DigitalTwinsServiceBusProperties()
         {
             EndpointType = EndpointType.ServiceBus;
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsServiceBusProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsServiceBusProperties"/>. </summary>
         /// <param name="endpointType"> The type of Digital Twins endpoint. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="createdOn"> Time when the Endpoint was added to DigitalTwinsInstance. </param>

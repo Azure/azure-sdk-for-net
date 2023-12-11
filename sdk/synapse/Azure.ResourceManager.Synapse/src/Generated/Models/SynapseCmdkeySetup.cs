@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The custom setup of running cmdkey commands. </summary>
     public partial class SynapseCmdkeySetup : SynapseCustomSetupBase
     {
-        /// <summary> Initializes a new instance of SynapseCmdkeySetup. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseCmdkeySetup"/>. </summary>
         /// <param name="targetName"> The server name of data source access. </param>
         /// <param name="userName"> The user name of data source access. </param>
         /// <param name="password">
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Synapse.Models
             CustomSetupBaseType = "CmdkeySetup";
         }
 
-        /// <summary> Initializes a new instance of SynapseCmdkeySetup. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseCmdkeySetup"/>. </summary>
         /// <param name="customSetupBaseType"> The type of custom setup. </param>
         /// <param name="targetName"> The server name of data source access. </param>
         /// <param name="userName"> The user name of data source access. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

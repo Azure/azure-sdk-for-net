@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of NetworkTaps. </summary>
     internal partial class NetworkTapsListResult
     {
-        /// <summary> Initializes a new instance of NetworkTapsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTapsListResult"/>. </summary>
         internal NetworkTapsListResult()
         {
             Value = new ChangeTrackingList<NetworkTapData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkTapsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTapsListResult"/>. </summary>
         /// <param name="value"> List of NetworkTap resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal NetworkTapsListResult(IReadOnlyList<NetworkTapData> value, string nextLink)

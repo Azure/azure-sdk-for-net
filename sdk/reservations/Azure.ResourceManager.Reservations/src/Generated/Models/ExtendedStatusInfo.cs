@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The ExtendedStatusInfo. </summary>
     public partial class ExtendedStatusInfo
     {
-        /// <summary> Initializes a new instance of ExtendedStatusInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedStatusInfo"/>. </summary>
         internal ExtendedStatusInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtendedStatusInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedStatusInfo"/>. </summary>
         /// <param name="statusCode"></param>
         /// <param name="message"> The message giving detailed information about the status code. </param>
         internal ExtendedStatusInfo(ReservationStatusCode? statusCode, string message)

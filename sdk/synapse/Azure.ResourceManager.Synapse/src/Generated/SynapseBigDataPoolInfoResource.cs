@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseBigDataPoolInfo along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseBigDataPoolInfoResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseBigDataPoolInfoResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource" /> using the GetSynapseBigDataPoolInfo method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseBigDataPoolInfoResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseBigDataPoolInfoResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource"/> using the GetSynapseBigDataPoolInfo method.
     /// </summary>
     public partial class SynapseBigDataPoolInfoResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseBigDataPoolInfoResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="bigDataPoolName"> The bigDataPoolName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string bigDataPoolName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}";
@@ -37,12 +41,15 @@ namespace Azure.ResourceManager.Synapse
         private readonly BigDataPoolsRestOperations _synapseBigDataPoolInfoBigDataPoolsRestClient;
         private readonly SynapseBigDataPoolInfoData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/bigDataPools";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseBigDataPoolInfoResource"/> class for mocking. </summary>
         protected SynapseBigDataPoolInfoResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseBigDataPoolInfoResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseBigDataPoolInfoResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseBigDataPoolInfoResource(ArmClient client, SynapseBigDataPoolInfoData data) : this(client, data.Id)
@@ -63,9 +70,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/bigDataPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

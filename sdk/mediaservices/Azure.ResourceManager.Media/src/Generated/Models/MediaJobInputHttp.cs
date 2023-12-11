@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Represents HTTPS job input. </summary>
     public partial class MediaJobInputHttp : MediaJobInputClip
     {
-        /// <summary> Initializes a new instance of MediaJobInputHttp. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputHttp"/>. </summary>
         public MediaJobInputHttp()
         {
             OdataType = "#Microsoft.Media.JobInputHttp";
         }
 
-        /// <summary> Initializes a new instance of MediaJobInputHttp. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputHttp"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="files"> List of files. Required for JobInputHttp. Maximum of 4000 characters each. Query strings will not be returned in service responses to prevent sensitive data exposure. </param>
         /// <param name="start">

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the target region information. </summary>
     public partial class TargetRegion
     {
-        /// <summary> Initializes a new instance of TargetRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetRegion"/>. </summary>
         /// <param name="name"> The name of the region. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public TargetRegion(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of TargetRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetRegion"/>. </summary>
         /// <param name="name"> The name of the region. </param>
         /// <param name="regionalReplicaCount"> The number of replicas of the Image Version to be created per region. This property is updatable. </param>
         /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. This property is not updatable. </param>

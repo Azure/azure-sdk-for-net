@@ -118,6 +118,7 @@
     "Vectorizable",
     "Vectorizer",
     "Vectorizers",
+    "vhdx",
     "vmss",
     "vnet",
     "westcentralus",
@@ -452,6 +453,13 @@
       ]
     },
     {
+      "filename": "**/sdk/documentintelligence/**/*.cs",
+      "words": [
+        "UPCA",
+        "UPCE"
+      ]
+    },
+    {
       "filename": "**/sdk/dynatrace/**/*.cs",
       "words": [
         "Dynatrace",
@@ -638,7 +646,9 @@
         "Ocsp",
         "Afri",
         "Apac",
-        "Latam"
+        "Latam",
+        "Fips",
+        "Diffie"
       ]
     },
     {
@@ -928,6 +938,12 @@
       "filename": "**/sdk/resourcehealth/**/*.cs",
       "words": [
         "occured"
+      ]
+    },
+    {
+      "filename": "**/sdk/schemaregistry/**/*.cs",
+      "words": [
+        "protobuf"
       ]
     },
     {
@@ -1227,6 +1243,21 @@
         "rpath",
         "runpath",
         "Cves"
+      ]
+    },
+    {
+      "filename": "**/sdk/monitor/**/*.cs",
+      "words": [
+        "resourceid"
+      ]
+    },
+    {
+      "filename": "**/sdk/hybridnetwork/**/*.cs",
+      "words": [
+        "Nfvi",
+        "nfvi",
+        "NFVIs",
+        "nfvis"
       ]
     }
   ],

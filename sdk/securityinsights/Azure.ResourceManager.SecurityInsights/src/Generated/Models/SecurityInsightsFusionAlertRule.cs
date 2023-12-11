@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents Fusion alert rule. </summary>
     public partial class SecurityInsightsFusionAlertRule : SecurityInsightsAlertRuleData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsFusionAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsFusionAlertRule"/>. </summary>
         public SecurityInsightsFusionAlertRule()
         {
             Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = AlertRuleKind.Fusion;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsFusionAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsFusionAlertRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

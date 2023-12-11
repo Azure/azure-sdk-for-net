@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     /// <summary>
     /// A Class representing a DataReplicationDra along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataReplicationDraResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataReplicationDraResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataReplicationFabricResource" /> using the GetDataReplicationDra method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataReplicationDraResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataReplicationDraResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataReplicationFabricResource"/> using the GetDataReplicationDra method.
     /// </summary>
     public partial class DataReplicationDraResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataReplicationDraResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="fabricName"> The fabricName. </param>
+        /// <param name="fabricAgentName"> The fabricAgentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string fabricName, string fabricAgentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationFabrics/{fabricName}/fabricAgents/{fabricAgentName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         private readonly DraRestOperations _dataReplicationDraDraRestClient;
         private readonly DataReplicationDraData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationFabrics/fabricAgents";
+
         /// <summary> Initializes a new instance of the <see cref="DataReplicationDraResource"/> class for mocking. </summary>
         protected DataReplicationDraResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataReplicationDraResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataReplicationDraResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataReplicationDraResource(ArmClient client, DataReplicationDraData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationFabrics/fabricAgents";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Class encapsulating target details, used where the destination is not a datasource. </summary>
     public partial class RestoreFilesTargetDetails
     {
-        /// <summary> Initializes a new instance of RestoreFilesTargetDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreFilesTargetDetails"/>. </summary>
         /// <param name="filePrefix">
         /// Restore operation may create multiple files inside location pointed by Url
         /// Below will be the common prefix for all of them
@@ -32,6 +32,29 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             FilePrefix = filePrefix;
             RestoreTargetLocationType = restoreTargetLocationType;
             Uri = uri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RestoreFilesTargetDetails"/>. </summary>
+        /// <param name="filePrefix">
+        /// Restore operation may create multiple files inside location pointed by Url
+        /// Below will be the common prefix for all of them
+        /// </param>
+        /// <param name="restoreTargetLocationType">
+        /// Denotes the target location where the data will be restored,
+        /// string value for the enum {Microsoft.Internal.AzureBackup.DataProtection.Common.Interface.RestoreTargetLocationType}
+        /// </param>
+        /// <param name="uri"> Url denoting the restore destination. It can point to container / file share etc. </param>
+        /// <param name="targetResourceArmId">
+        /// Full ARM Id denoting the restore destination. It is the ARM Id pointing to container / file share
+        /// This is optional if the target subscription can be identified with the URL field. If not
+        /// then this is needed if CrossSubscriptionRestore field of BackupVault is in any of the disabled states
+        /// </param>
+        internal RestoreFilesTargetDetails(string filePrefix, RestoreTargetLocationType restoreTargetLocationType, Uri uri, ResourceIdentifier targetResourceArmId)
+        {
+            FilePrefix = filePrefix;
+            RestoreTargetLocationType = restoreTargetLocationType;
+            Uri = uri;
+            TargetResourceArmId = targetResourceArmId;
         }
 
         /// <summary>

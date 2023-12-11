@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class HubData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of HubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubData"/>. </summary>
         /// <param name="location"> The location. </param>
         public HubData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of HubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

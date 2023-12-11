@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerAutomaticTuningData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlServerAutomaticTuningData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerAutomaticTuningData"/>. </summary>
         public SqlServerAutomaticTuningData()
         {
             Options = new ChangeTrackingDictionary<string, AutomaticTuningServerOptions>();
         }
 
-        /// <summary> Initializes a new instance of SqlServerAutomaticTuningData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerAutomaticTuningData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

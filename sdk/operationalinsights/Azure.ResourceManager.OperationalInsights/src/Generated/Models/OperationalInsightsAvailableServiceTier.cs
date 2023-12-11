@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> Service Tier details. </summary>
     public partial class OperationalInsightsAvailableServiceTier
     {
-        /// <summary> Initializes a new instance of OperationalInsightsAvailableServiceTier. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsAvailableServiceTier"/>. </summary>
         internal OperationalInsightsAvailableServiceTier()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsAvailableServiceTier. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsAvailableServiceTier"/>. </summary>
         /// <param name="serviceTier"> The name of the Service Tier. </param>
         /// <param name="isEnabled"> True if the Service Tier is enabled for the workspace. </param>
         /// <param name="minimumRetention"> The minimum retention for the Service Tier, in days. </param>

@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeDeviceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DataBoxEdgeDeviceData(AzureLocation location) : base(location)
         {
             ConfiguredRoleTypes = new ChangeTrackingList<DataBoxEdgeRoleType>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

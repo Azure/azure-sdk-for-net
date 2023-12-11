@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmLabServicesModelFactory
     {
-        /// <summary> Initializes a new instance of LabVirtualMachineImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServices.LabVirtualMachineImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.LabServices.Models
             return new LabVirtualMachineImageData(id, name, resourceType, systemData, enabledState, provisioningState, displayName, description, iconUri, author, osType, plan, termsStatus, offer, publisher, sku, version, sharedGalleryId, availableRegions?.ToList(), osState);
         }
 
-        /// <summary> Initializes a new instance of LabPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServices.LabPlanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.LabServices.Models
             return new LabPlanData(id, name, resourceType, systemData, tags, location, identity, defaultConnectionProfile, defaultAutoShutdownProfile, defaultNetworkSubnetId != null ? new LabPlanNetworkProfile(defaultNetworkSubnetId) : null, allowedRegions?.ToList(), sharedGalleryId, supportInfo, linkedLmsInstance, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of LabData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServices.LabData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.LabServices.Models
             return new LabData(id, name, resourceType, systemData, tags, location, autoShutdownProfile, connectionProfile, virtualMachineProfile, securityProfile, rosterProfile, labPlanId, title, description, provisioningState, networkProfile, state);
         }
 
-        /// <summary> Initializes a new instance of LabVirtualMachineProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LabVirtualMachineProfile"/>. </summary>
         /// <param name="createOption"> Indicates what lab virtual machines are created from. </param>
         /// <param name="imageReference"> The image configuration for lab virtual machines. </param>
         /// <param name="osType"> The OS type of the image. </param>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.LabServices.Models
             return new LabVirtualMachineProfile(createOption, imageReference, osType, sku, additionalCapabilitiesInstallGpuDrivers != null ? new LabVirtualMachineAdditionalCapability(additionalCapabilitiesInstallGpuDrivers) : null, usageQuota, useSharedPassword, adminUser, nonAdminUser);
         }
 
-        /// <summary> Initializes a new instance of LabVirtualMachineImageReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LabVirtualMachineImageReference"/>. </summary>
         /// <param name="id"> Image resource ID. </param>
         /// <param name="offer"> The image offer if applicable. </param>
         /// <param name="publisher"> The image publisher. </param>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.LabServices.Models
             return new LabVirtualMachineImageReference(id, offer, publisher, sku, version, exactVersion);
         }
 
-        /// <summary> Initializes a new instance of LabSecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LabSecurityProfile"/>. </summary>
         /// <param name="registrationCode"> The registration code for the lab. </param>
         /// <param name="openAccess"> Whether any user or only specified users can register to a lab. </param>
         /// <returns> A new <see cref="Models.LabSecurityProfile"/> instance for mocking. </returns>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.LabServices.Models
             return new LabSecurityProfile(registrationCode, openAccess);
         }
 
-        /// <summary> Initializes a new instance of LabServicesScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServices.LabServicesScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.LabServices.Models
             return new LabServicesScheduleData(id, name, resourceType, systemData, startOn, stopOn, recurrencePattern, timeZoneId, notes, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of AvailableLabServicesSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvailableLabServicesSku"/>. </summary>
         /// <param name="resourceType"> The lab services resource type. </param>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="tier"> The tier of the SKU. </param>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.LabServices.Models
             return new AvailableLabServicesSku(resourceType, name, tier, size, family, capacity, capabilities?.ToList(), locations?.ToList(), costs?.ToList(), restrictions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AvailableLabServicesSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvailableLabServicesSkuCapacity"/>. </summary>
         /// <param name="default"> The default capacity for this resource. </param>
         /// <param name="minimum"> The lowest permitted capacity for this resource. </param>
         /// <param name="maximum"> The highest permitted capacity for this resource. </param>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.LabServices.Models
             return new AvailableLabServicesSkuCapacity(@default, minimum, maximum, scaleType);
         }
 
-        /// <summary> Initializes a new instance of AvailableLabServicesSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvailableLabServicesSkuCapability"/>. </summary>
         /// <param name="name"> The name of the capability for a SKU. </param>
         /// <param name="value"> The value of the capability for a SKU. </param>
         /// <returns> A new <see cref="Models.AvailableLabServicesSkuCapability"/> instance for mocking. </returns>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.LabServices.Models
             return new AvailableLabServicesSkuCapability(name, value);
         }
 
-        /// <summary> Initializes a new instance of AvailableLabServicesSkuCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvailableLabServicesSkuCost"/>. </summary>
         /// <param name="meterId"> The meter id. </param>
         /// <param name="quantity"> The quantity of units charged. </param>
         /// <param name="extendedUnit"> The extended unit. </param>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.LabServices.Models
             return new AvailableLabServicesSkuCost(meterId, quantity, extendedUnit);
         }
 
-        /// <summary> Initializes a new instance of AvailableLabServicesSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvailableLabServicesSkuRestrictions"/>. </summary>
         /// <param name="labServicesSkuRestrictionType"> The type of restriction. </param>
         /// <param name="values"> The values of the restriction. </param>
         /// <param name="reasonCode"> The reason for the restriction. </param>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.LabServices.Models
             return new AvailableLabServicesSkuRestrictions(labServicesSkuRestrictionType, values?.ToList(), reasonCode);
         }
 
-        /// <summary> Initializes a new instance of LabServicesUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LabServicesUsage"/>. </summary>
         /// <param name="currentValue"> The current usage. </param>
         /// <param name="limit"> The limit integer. </param>
         /// <param name="unit"> The unit details. </param>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.LabServices.Models
             return new LabServicesUsage(currentValue, limit, unit, name, id);
         }
 
-        /// <summary> Initializes a new instance of LabServicesUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LabServicesUsageName"/>. </summary>
         /// <param name="localizedValue"> The localized name of the resource. </param>
         /// <param name="skuInstances"> The instances of the resource. </param>
         /// <param name="value"> The name of the resource. </param>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.LabServices.Models
             return new LabServicesUsageName(localizedValue, skuInstances?.ToList(), value);
         }
 
-        /// <summary> Initializes a new instance of LabUserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServices.LabUserData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.LabServices.Models
             return new LabUserData(id, name, resourceType, systemData, additionalUsageQuota, provisioningState, displayName, email, registrationState, invitationState, invitationSentOn, totalUsage);
         }
 
-        /// <summary> Initializes a new instance of LabVirtualMachineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServices.LabVirtualMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.LabServices.Models
             return new LabVirtualMachineData(id, name, resourceType, systemData, provisioningState, state, connectionProfile, claimedByUserId, vmType);
         }
 
-        /// <summary> Initializes a new instance of LabVirtualMachineConnectionProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LabVirtualMachineConnectionProfile"/>. </summary>
         /// <param name="privateIPAddress"> The private IP address of the virtual machine. </param>
         /// <param name="sshAuthority"> Port and host name separated by semicolon for connecting via SSH protocol to the virtual machine. </param>
         /// <param name="sshInBrowserUri"> URL for connecting via SSH protocol to the virtual machine in browser. </param>

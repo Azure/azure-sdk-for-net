@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> The amount. </summary>
     public partial class BillingAmount
     {
-        /// <summary> Initializes a new instance of BillingAmount. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingAmount"/>. </summary>
         internal BillingAmount()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingAmount. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingAmount"/>. </summary>
         /// <param name="currency"> The currency for the amount value. </param>
         /// <param name="value"> Amount value. </param>
         internal BillingAmount(string currency, float? value)

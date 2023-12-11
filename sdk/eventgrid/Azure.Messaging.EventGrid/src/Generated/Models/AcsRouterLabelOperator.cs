@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Router Job Worker Selector Label Operator. </summary>
     public readonly partial struct AcsRouterLabelOperator : IEquatable<AcsRouterLabelOperator>

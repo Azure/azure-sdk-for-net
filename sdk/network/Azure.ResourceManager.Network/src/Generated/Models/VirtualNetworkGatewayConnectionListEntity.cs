@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> A common class for general resource information. </summary>
     public partial class VirtualNetworkGatewayConnectionListEntity : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionListEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionListEntity"/>. </summary>
         /// <param name="virtualNetworkGateway1"> The reference to virtual network gateway resource. </param>
         /// <param name="connectionType"> Gateway connection type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGateway1"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
             TrafficSelectorPolicies = new ChangeTrackingList<TrafficSelectorPolicy>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionListEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionListEntity"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

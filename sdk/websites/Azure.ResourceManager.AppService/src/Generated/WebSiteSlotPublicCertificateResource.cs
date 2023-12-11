@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a WebSiteSlotPublicCertificate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteSlotPublicCertificateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebSiteSlotPublicCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource" /> using the GetWebSiteSlotPublicCertificate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSiteSlotPublicCertificateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWebSiteSlotPublicCertificateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource"/> using the GetWebSiteSlotPublicCertificate method.
     /// </summary>
     public partial class WebSiteSlotPublicCertificateResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSiteSlotPublicCertificateResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="slot"> The slot. </param>
+        /// <param name="publicCertificateName"> The publicCertificateName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string publicCertificateName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates/{publicCertificateName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _webSiteSlotPublicCertificateWebAppsRestClient;
         private readonly PublicCertificateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/publicCertificates";
+
         /// <summary> Initializes a new instance of the <see cref="WebSiteSlotPublicCertificateResource"/> class for mocking. </summary>
         protected WebSiteSlotPublicCertificateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebSiteSlotPublicCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteSlotPublicCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebSiteSlotPublicCertificateResource(ArmClient client, PublicCertificateData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/publicCertificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

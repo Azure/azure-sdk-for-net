@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Properties of a private link resource. </summary>
     public partial class SqlPrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of SqlPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlPrivateLinkResourceProperties"/>. </summary>
         internal SqlPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SqlPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource required zone names. </param>

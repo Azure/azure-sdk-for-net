@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes an available Compute SKU Location Information. </summary>
     public partial class ComputeResourceSkuLocationInfo
     {
-        /// <summary> Initializes a new instance of ComputeResourceSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuLocationInfo"/>. </summary>
         internal ComputeResourceSkuLocationInfo()
         {
             Zones = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             ExtendedLocations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ComputeResourceSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuLocationInfo"/>. </summary>
         /// <param name="location"> Location of the SKU. </param>
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Details of capabilities available to a SKU in specific zones. </param>

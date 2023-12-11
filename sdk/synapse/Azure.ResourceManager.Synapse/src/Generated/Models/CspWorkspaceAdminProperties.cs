@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Initial workspace AAD admin properties for a CSP subscription. </summary>
     internal partial class CspWorkspaceAdminProperties
     {
-        /// <summary> Initializes a new instance of CspWorkspaceAdminProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CspWorkspaceAdminProperties"/>. </summary>
         public CspWorkspaceAdminProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CspWorkspaceAdminProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CspWorkspaceAdminProperties"/>. </summary>
         /// <param name="initialWorkspaceAdminObjectId"> AAD object ID of initial workspace admin. </param>
         internal CspWorkspaceAdminProperties(Guid? initialWorkspaceAdminObjectId)
         {

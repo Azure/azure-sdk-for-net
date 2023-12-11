@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.SecurityInsights
     /// </summary>
     public partial class SecurityInsightsIncidentData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentData"/>. </summary>
         public SecurityInsightsIncidentData()
         {
             Labels = new ChangeTrackingList<SecurityInsightsIncidentLabel>();
             RelatedAnalyticRuleIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

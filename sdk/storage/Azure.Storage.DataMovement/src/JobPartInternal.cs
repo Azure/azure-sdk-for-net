@@ -75,20 +75,15 @@ namespace Azure.Storage.DataMovement
         private object _failureTypeLock = new object();
 
         /// <summary>
-        /// The maximum length of an transfer in bytes.
-        ///
-        /// On uploads, if the value is not set, it will be set at 4 MB if the total size is less than 100MB,
-        /// or will default to 8 MB if the total size is greater than or equal to 100MB.
+        /// The chunk size to use for the transfer.
         /// </summary>
-        internal long _maximumTransferChunkSize { get; set; }
+        internal long _transferChunkSize { get; set; }
 
         /// <summary>
         /// The size of the first range request in bytes. Single Transfer sizes smaller than this
-        /// limit will be uploaded or downloaded in a single request.
-        /// Transfers larger than this limit will continue being downloaded or uploaded
-        /// in chunks of size <see cref="_maximumTransferChunkSize"/>.
-        ///
-        /// On Uploads, if the value is not set, it will set at 256 MB.
+        /// limit will be Uploaded or Downloaded in a single request. Transfers larger than this
+        /// limit will continue being downloaded or uploaded in chunks of size
+        /// <see cref="_transferChunkSize"/>.
         /// </summary>
         internal long _initialTransferSize { get; set; }
 
@@ -133,6 +128,7 @@ namespace Azure.Storage.DataMovement
 
         private List<Task<bool>> _chunkTasks;
         private List<TaskCompletionSource<bool>> _chunkTaskSources;
+        protected bool _queueingTasks = false;
 
         /// <summary>
         /// Array pools for reading from streams to upload
@@ -147,7 +143,7 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
-            long? maximumTransferChunkSize,
+            long? transferChunkSize,
             long? initialTransferSize,
             DataTransferErrorMode errorHandling,
             StorageResourceCreationPreference createMode,
@@ -166,14 +162,13 @@ namespace Azure.Storage.DataMovement
         {
             Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
 
-            // if defualt is passed, the job part status will be queued
+            // if default is passed, the job part status will be queued
             JobPartStatus = jobPartStatus ?? new DataTransferStatus();
             PartNumber = partNumber;
             _dataTransfer = dataTransfer;
             _sourceResource = sourceResource;
             _destinationResource = destinationResource;
             _errorHandling = errorHandling;
-            _createMode = createMode;
             _failureType = JobPartFailureType.None;
             _checkpointer = checkpointer;
             _progressTracker = progressTracker;
@@ -186,20 +181,17 @@ namespace Azure.Storage.DataMovement
             SingleTransferCompletedEventHandler = singleTransferEventHandler;
             ClientDiagnostics = clientDiagnostics;
 
-            _initialTransferSize = _destinationResource.MaxChunkSize;
-            if (initialTransferSize.HasValue)
-            {
-                _initialTransferSize = Math.Min(initialTransferSize.Value, _destinationResource.MaxChunkSize);
-            }
-            // If the maximum chunk size is not set, we will determine the chunk size
-            // based on the file length later
-            _maximumTransferChunkSize = _destinationResource.MaxChunkSize;
-            if (maximumTransferChunkSize.HasValue)
-            {
-                _maximumTransferChunkSize = Math.Min(
-                    maximumTransferChunkSize.Value,
-                    _destinationResource.MaxChunkSize);
-            }
+            // Set transfer sizes to user specified values or default
+            // clamped to max supported chunk size for the destination.
+            _initialTransferSize = Math.Min(
+                initialTransferSize ?? DataMovementConstants.DefaultInitialTransferSize,
+                _destinationResource.MaxSupportedChunkSize);
+            _transferChunkSize = Math.Min(
+                transferChunkSize ?? DataMovementConstants.DefaultChunkSize,
+                _destinationResource.MaxSupportedChunkSize);
+            // Set the default create mode
+            _createMode = createMode == StorageResourceCreationPreference.Default ?
+                StorageResourceCreationPreference.FailIfExists : createMode;
 
             Length = length;
             _chunkTasks = new List<Task<bool>>();
@@ -303,7 +295,7 @@ namespace Azure.Storage.DataMovement
                 await PartTransferStatusEventHandler.RaiseAsync(
                     new TransferStatusEventArgs(
                         _dataTransfer.Id,
-                        JobPartStatus,
+                        JobPartStatus.DeepCopy(),
                         false,
                         _cancellationToken),
                     nameof(JobPartInternal),
@@ -369,7 +361,7 @@ namespace Azure.Storage.DataMovement
                 await PartTransferStatusEventHandler.RaiseAsync(
                     new TransferStatusEventArgs(
                         _dataTransfer.Id,
-                        JobPartStatus,
+                        JobPartStatus.DeepCopy(),
                         false,
                         _cancellationToken),
                     nameof(JobPartInternal),
@@ -386,13 +378,13 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public async virtual Task InvokeFailedArg(Exception ex)
         {
-            if (ex is not OperationCanceledException
-                && ex is not TaskCanceledException)
+            if (ex is not OperationCanceledException &&
+                ex is not TaskCanceledException &&
+                !ex.Message.Contains("The request was canceled."))
             {
                 SetFailureType(ex.Message);
                 if (TransferFailedEventHandler != null)
                 {
-                    // TODO: change to RaiseAsync
                     await TransferFailedEventHandler.RaiseAsync(
                         new TransferItemFailedEventArgs(
                             _dataTransfer.Id,
@@ -415,7 +407,7 @@ namespace Azure.Storage.DataMovement
                     await PartTransferStatusEventHandler.RaiseAsync(
                         new TransferStatusEventArgs(
                             _dataTransfer.Id,
-                            JobPartStatus,
+                            JobPartStatus.DeepCopy(),
                             false,
                             _cancellationToken),
                         nameof(JobPartInternal),
@@ -424,9 +416,30 @@ namespace Azure.Storage.DataMovement
                         .ConfigureAwait(false);
                 }
             }
-            // Trigger job cancellation if the failed handler is enabled
-            await TriggerCancellationAsync().ConfigureAwait(false);
-            await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
+
+            try
+            {
+                // Trigger job cancellation if the failed handler is enabled
+                await TriggerCancellationAsync().ConfigureAwait(false);
+                await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
+            }
+            catch (Exception cancellationException)
+            {
+                // If an exception is thrown while trying to clean up,
+                // raise the failed event and prevent the transfer from hanging
+                await TransferFailedEventHandler.RaiseAsync(
+                    new TransferItemFailedEventArgs(
+                        _dataTransfer.Id,
+                        _sourceResource,
+                        _destinationResource,
+                        cancellationException,
+                        false,
+                        _cancellationToken),
+                    nameof(JobPartInternal),
+                    nameof(TransferFailedEventHandler),
+                    ClientDiagnostics)
+                    .ConfigureAwait(false);
+            }
         }
 
         /// <summary>
@@ -451,20 +464,17 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Serializes the respective job part and adds it to the checkpointer.
         /// </summary>
-        /// <param name="chunksTotal">Number of chunks in the job part.</param>
-        /// <returns></returns>
-        public async virtual Task AddJobPartToCheckpointerAsync(int chunksTotal)
+        public async virtual Task AddJobPartToCheckpointerAsync()
         {
-            JobPartPlanHeader header = this.ToJobPartPlanHeader(jobStatus: JobPartStatus);
+            JobPartPlanHeader header = this.ToJobPartPlanHeader();
             using (Stream stream = new MemoryStream())
             {
                 header.Serialize(stream);
                 await _checkpointer.AddNewJobPartAsync(
-                        transferId: _dataTransfer.Id,
-                        partNumber: PartNumber,
-                        chunksTotal: chunksTotal,
-                        headerStream: stream,
-                        cancellationToken: _cancellationToken).ConfigureAwait(false);
+                    transferId: _dataTransfer.Id,
+                    partNumber: PartNumber,
+                    headerStream: stream,
+                    cancellationToken: _cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -474,24 +484,6 @@ namespace Azure.Storage.DataMovement
                 transferId: _dataTransfer.Id,
                 partNumber: PartNumber,
                 status: JobPartStatus).ConfigureAwait(false);
-        }
-
-        internal long CalculateBlockSize(long length)
-        {
-            // If the caller provided an explicit block size, we'll use it.
-            // Otherwise we'll adjust dynamically based on the size of the
-            // content.
-            if (_maximumTransferChunkSize > 0)
-            {
-                long assignedSize = Math.Min(
-                    _destinationResource.MaxChunkSize,
-                    _maximumTransferChunkSize);
-                return Math.Min(assignedSize, length);
-            }
-            long blockSize = length < Constants.LargeUploadThreshold ?
-                        Math.Min(Constants.DefaultBufferSize, _destinationResource.MaxChunkSize) :
-                        Math.Min(Constants.LargeBufferSize, _destinationResource.MaxChunkSize);
-            return Math.Min(blockSize, length);
         }
 
         internal static long ParseRangeTotalLength(string range)
@@ -567,15 +559,15 @@ namespace Azure.Storage.DataMovement
 
         internal async Task CheckAndUpdateCancellationStateAsync()
         {
-            if (_chunkTasks.All((Task task) => (task.IsCompleted)))
+            if (JobPartStatus.State == DataTransferState.Pausing ||
+                JobPartStatus.State == DataTransferState.Stopping)
             {
-                if (JobPartStatus.State == DataTransferState.Pausing)
+                if (!_queueingTasks && _chunkTasks.All((Task task) => (task.IsCompleted)))
                 {
-                    await OnTransferStateChangedAsync(DataTransferState.Paused).ConfigureAwait(false);
-                }
-                else if (JobPartStatus.State == DataTransferState.Stopping)
-                {
-                    await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
+                    DataTransferState newState = JobPartStatus.State == DataTransferState.Pausing ?
+                        DataTransferState.Paused :
+                        DataTransferState.Completed;
+                    await OnTransferStateChangedAsync(newState).ConfigureAwait(false);
                 }
             }
         }

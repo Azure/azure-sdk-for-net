@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Filter First Quality. </summary>
     internal partial class FirstQuality
     {
-        /// <summary> Initializes a new instance of FirstQuality. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirstQuality"/>. </summary>
         /// <param name="bitrate"> The first quality bitrate. </param>
         public FirstQuality(int bitrate)
         {

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Runtime properties of this Capability Type. </summary>
     internal partial class CapabilityTypePropertiesRuntimeProperties
     {
-        /// <summary> Initializes a new instance of CapabilityTypePropertiesRuntimeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilityTypePropertiesRuntimeProperties"/>. </summary>
         public CapabilityTypePropertiesRuntimeProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CapabilityTypePropertiesRuntimeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilityTypePropertiesRuntimeProperties"/>. </summary>
         /// <param name="kind"> String of the kind of the resource's action type (continuous or discrete). </param>
         internal CapabilityTypePropertiesRuntimeProperties(string kind)
         {

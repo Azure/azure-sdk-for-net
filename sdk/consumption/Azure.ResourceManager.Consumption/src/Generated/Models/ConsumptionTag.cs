@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> The tag resource. </summary>
     public partial class ConsumptionTag
     {
-        /// <summary> Initializes a new instance of ConsumptionTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionTag"/>. </summary>
         public ConsumptionTag()
         {
             Value = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionTag"/>. </summary>
         /// <param name="key"> Tag key. </param>
         /// <param name="value"> Tag values. </param>
         internal ConsumptionTag(string key, IList<string> value)

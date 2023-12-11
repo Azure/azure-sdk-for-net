@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Result of testing all routes. </summary>
     public partial class IotHubTestAllRoutesResult
     {
-        /// <summary> Initializes a new instance of IotHubTestAllRoutesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubTestAllRoutesResult"/>. </summary>
         internal IotHubTestAllRoutesResult()
         {
             Routes = new ChangeTrackingList<IotHubMatchedRoute>();
         }
 
-        /// <summary> Initializes a new instance of IotHubTestAllRoutesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubTestAllRoutesResult"/>. </summary>
         /// <param name="routes"> JSON-serialized array of matched routes. </param>
         internal IotHubTestAllRoutesResult(IReadOnlyList<IotHubMatchedRoute> routes)
         {

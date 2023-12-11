@@ -21,9 +21,9 @@ using Azure.ResourceManager.Automation.Models;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AutomationSourceControlResource" /> and their operations.
-    /// Each <see cref="AutomationSourceControlResource" /> in the collection will belong to the same instance of <see cref="AutomationAccountResource" />.
-    /// To get an <see cref="AutomationSourceControlCollection" /> instance call the GetAutomationSourceControls method from an instance of <see cref="AutomationAccountResource" />.
+    /// A class representing a collection of <see cref="AutomationSourceControlResource"/> and their operations.
+    /// Each <see cref="AutomationSourceControlResource"/> in the collection will belong to the same instance of <see cref="AutomationAccountResource"/>.
+    /// To get an <see cref="AutomationSourceControlCollection"/> instance call the GetAutomationSourceControls method from an instance of <see cref="AutomationAccountResource"/>.
     /// </summary>
     public partial class AutomationSourceControlCollection : ArmCollection, IEnumerable<AutomationSourceControlResource>, IAsyncEnumerable<AutomationSourceControlResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationSourceControlResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomationSourceControlResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationSourceControlResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationSourceControlSourceControlRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationSourceControlResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomationSourceControlResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationSourceControlResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationSourceControlSourceControlRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class SiteExtensionInfoData : ResourceData
     {
-        /// <summary> Initializes a new instance of SiteExtensionInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteExtensionInfoData"/>. </summary>
         public SiteExtensionInfoData()
         {
             Authors = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SiteExtensionInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteExtensionInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

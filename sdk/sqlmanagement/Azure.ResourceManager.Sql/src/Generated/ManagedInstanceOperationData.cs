@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedInstanceOperationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedInstanceOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceOperationData"/>. </summary>
         public ManagedInstanceOperationData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceOperationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

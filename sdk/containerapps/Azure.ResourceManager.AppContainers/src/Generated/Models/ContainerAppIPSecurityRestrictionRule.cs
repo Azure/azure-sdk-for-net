@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Rule to restrict incoming IP address. </summary>
     public partial class ContainerAppIPSecurityRestrictionRule
     {
-        /// <summary> Initializes a new instance of ContainerAppIPSecurityRestrictionRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppIPSecurityRestrictionRule"/>. </summary>
         /// <param name="name"> Name for the IP restriction rule. </param>
         /// <param name="ipAddressRange"> CIDR notation to match incoming IP address. </param>
         /// <param name="action"> Allow or Deny rules to determine for incoming IP. Note: Rules can only consist of ALL Allow or ALL Deny. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Action = action;
         }
 
-        /// <summary> Initializes a new instance of ContainerAppIPSecurityRestrictionRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppIPSecurityRestrictionRule"/>. </summary>
         /// <param name="name"> Name for the IP restriction rule. </param>
         /// <param name="description"> Describe the IP restriction rule that is being sent to the container-app. This is an optional field. </param>
         /// <param name="ipAddressRange"> CIDR notation to match incoming IP address. </param>

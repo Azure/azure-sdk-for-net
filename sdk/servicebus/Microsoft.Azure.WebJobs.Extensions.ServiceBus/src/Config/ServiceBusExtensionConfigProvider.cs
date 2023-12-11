@@ -48,7 +48,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
             IConverterManager converterManager,
             ServiceBusClientFactory clientFactory,
             ConcurrencyManager concurrencyManager,
-            IDrainModeManager drainModeManager)
+            IDrainModeManager drainModeManager,
+            CleanupService cleanupService)
         {
             _options = options.Value;
             _messagingProvider = messagingProvider;

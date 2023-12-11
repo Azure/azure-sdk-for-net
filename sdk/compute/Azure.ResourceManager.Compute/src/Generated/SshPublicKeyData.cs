@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class SshPublicKeyData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SshPublicKeyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SshPublicKeyData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SshPublicKeyData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of SshPublicKeyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SshPublicKeyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

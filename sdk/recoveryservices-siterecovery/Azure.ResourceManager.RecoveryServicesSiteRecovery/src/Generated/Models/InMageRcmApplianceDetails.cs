@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm appliance details. </summary>
     public partial class InMageRcmApplianceDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmApplianceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmApplianceDetails"/>. </summary>
         internal InMageRcmApplianceDetails()
         {
             SwitchProviderBlockingErrorDetails = new ChangeTrackingList<InMageRcmFabricSwitchProviderBlockingErrorDetails>();
         }
 
-        /// <summary> Initializes a new instance of InMageRcmApplianceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmApplianceDetails"/>. </summary>
         /// <param name="id"> The appliance Id. </param>
         /// <param name="name"> The appliance name. </param>
         /// <param name="fabricArmId"> The fabric ARM Id. </param>

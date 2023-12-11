@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Xml read settings. </summary>
     public partial class XmlReadSettings : FormatReadSettings
     {
-        /// <summary> Initializes a new instance of XmlReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="XmlReadSettings"/>. </summary>
         public XmlReadSettings()
         {
             FormatReadSettingsType = "XmlReadSettings";
         }
 
-        /// <summary> Initializes a new instance of XmlReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="XmlReadSettings"/>. </summary>
         /// <param name="formatReadSettingsType"> The read setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="compressionProperties">
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="detectDataType"> Indicates whether type detection is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="namespaces"> Indicates whether namespace is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="namespacePrefixes"> Namespace uri to prefix mappings to override the prefixes in column names when namespace is enabled, if no prefix is defined for a namespace uri, the prefix of xml element/attribute name in the xml data file will be used. Example: "{"http://www.example.com/xml":"prefix"}" Type: object (or Expression with resultType object). </param>
-        internal XmlReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties, CompressionReadSettings compressionProperties, DataFactoryElement<string> validationMode, DataFactoryElement<bool> detectDataType, DataFactoryElement<bool> namespaces, BinaryData namespacePrefixes) : base(formatReadSettingsType, additionalProperties)
+        internal XmlReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties, CompressionReadSettings compressionProperties, DataFactoryElement<string> validationMode, DataFactoryElement<bool> detectDataType, DataFactoryElement<bool> namespaces, DataFactoryElement<IDictionary<string, string>> namespacePrefixes) : base(formatReadSettingsType, additionalProperties)
         {
             CompressionProperties = compressionProperties;
             ValidationMode = validationMode;
@@ -54,36 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<bool> DetectDataType { get; set; }
         /// <summary> Indicates whether namespace is enabled when reading the xml files. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> Namespaces { get; set; }
-        /// <summary>
-        /// Namespace uri to prefix mappings to override the prefixes in column names when namespace is enabled, if no prefix is defined for a namespace uri, the prefix of xml element/attribute name in the xml data file will be used. Example: "{"http://www.example.com/xml":"prefix"}" Type: object (or Expression with resultType object).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData NamespacePrefixes { get; set; }
+        /// <summary> Namespace uri to prefix mappings to override the prefixes in column names when namespace is enabled, if no prefix is defined for a namespace uri, the prefix of xml element/attribute name in the xml data file will be used. Example: "{"http://www.example.com/xml":"prefix"}" Type: object (or Expression with resultType object). </summary>
+        public DataFactoryElement<IDictionary<string, string>> NamespacePrefixes { get; set; }
     }
 }

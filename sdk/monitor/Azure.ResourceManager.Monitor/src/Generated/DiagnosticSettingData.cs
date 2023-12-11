@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class DiagnosticSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of DiagnosticSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingData"/>. </summary>
         public DiagnosticSettingData()
         {
             Metrics = new ChangeTrackingList<MetricSettings>();
             Logs = new ChangeTrackingList<LogSettings>();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

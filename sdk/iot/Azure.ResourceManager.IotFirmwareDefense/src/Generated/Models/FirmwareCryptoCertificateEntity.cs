@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Information on an entity (distinguished name) in a cryptographic certificate. </summary>
     public partial class FirmwareCryptoCertificateEntity
     {
-        /// <summary> Initializes a new instance of FirmwareCryptoCertificateEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificateEntity"/>. </summary>
         internal FirmwareCryptoCertificateEntity()
         {
         }
 
-        /// <summary> Initializes a new instance of FirmwareCryptoCertificateEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificateEntity"/>. </summary>
         /// <param name="commonName"> Common name of the certificate entity. </param>
         /// <param name="organization"> Organization of the certificate entity. </param>
         /// <param name="organizationalUnit"> The organizational unit of the certificate entity. </param>

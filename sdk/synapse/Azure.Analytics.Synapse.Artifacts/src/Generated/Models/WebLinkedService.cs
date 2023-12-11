@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Web linked service. </summary>
     public partial class WebLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of WebLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebLinkedService"/>. </summary>
         /// <param name="typeProperties">
         /// Web linked service properties.
         /// Please note <see cref="WebLinkedServiceTypeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Web";
         }
 
-        /// <summary> Initializes a new instance of WebLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

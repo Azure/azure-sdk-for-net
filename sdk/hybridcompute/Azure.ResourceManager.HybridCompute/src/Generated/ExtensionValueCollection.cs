@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ExtensionValueResource" /> and their operations.
-    /// Each <see cref="ExtensionValueResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get an <see cref="ExtensionValueCollection" /> instance call the GetExtensionValues method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="ExtensionValueResource"/> and their operations.
+    /// Each <see cref="ExtensionValueResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get an <see cref="ExtensionValueCollection"/> instance call the GetExtensionValues method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class ExtensionValueCollection : ArmCollection, IEnumerable<ExtensionValueResource>, IAsyncEnumerable<ExtensionValueResource>
     {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExtensionValueResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExtensionValueResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExtensionValueResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _extensionValueExtensionMetadataRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location), _publisher, _extensionType);
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExtensionValueResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExtensionValueResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExtensionValueResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _extensionValueExtensionMetadataRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location), _publisher, _extensionType);

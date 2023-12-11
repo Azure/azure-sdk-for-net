@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary>
     /// A Class representing a DataProtectionBackupInstance along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataProtectionBackupInstanceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataProtectionBackupInstanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataProtectionBackupVaultResource" /> using the GetDataProtectionBackupInstance method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataProtectionBackupInstanceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataProtectionBackupInstanceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataProtectionBackupVaultResource"/> using the GetDataProtectionBackupInstance method.
     /// </summary>
     public partial class DataProtectionBackupInstanceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataProtectionBackupInstanceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="backupInstanceName"> The backupInstanceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string backupInstanceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}";
@@ -39,12 +43,15 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private readonly RestorableTimeRangesRestOperations _restorableTimeRangesRestClient;
         private readonly DataProtectionBackupInstanceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults/backupInstances";
+
         /// <summary> Initializes a new instance of the <see cref="DataProtectionBackupInstanceResource"/> class for mocking. </summary>
         protected DataProtectionBackupInstanceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataProtectionBackupInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataProtectionBackupInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataProtectionBackupInstanceResource(ArmClient client, DataProtectionBackupInstanceData data) : this(client, data.Id)
@@ -67,9 +74,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults/backupInstances";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -96,7 +100,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> An object representing collection of DataProtectionBackupRecoveryPointResources and their operations over a DataProtectionBackupRecoveryPointResource. </returns>
         public virtual DataProtectionBackupRecoveryPointCollection GetDataProtectionBackupRecoveryPoints()
         {
-            return GetCachedClient(Client => new DataProtectionBackupRecoveryPointCollection(Client, Id));
+            return GetCachedClient(client => new DataProtectionBackupRecoveryPointCollection(client, Id));
         }
 
         /// <summary>
@@ -112,10 +116,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="recoveryPointId"> The String to use. </param>
+        /// <param name="recoveryPointId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataProtectionBackupRecoveryPointResource>> GetDataProtectionBackupRecoveryPointAsync(string recoveryPointId, CancellationToken cancellationToken = default)
         {
@@ -135,10 +139,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="recoveryPointId"> The String to use. </param>
+        /// <param name="recoveryPointId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataProtectionBackupRecoveryPointResource> GetDataProtectionBackupRecoveryPoint(string recoveryPointId, CancellationToken cancellationToken = default)
         {

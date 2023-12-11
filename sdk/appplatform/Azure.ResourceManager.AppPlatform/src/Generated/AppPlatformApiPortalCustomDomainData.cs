@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppPlatform
     /// </summary>
     public partial class AppPlatformApiPortalCustomDomainData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppPlatformApiPortalCustomDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformApiPortalCustomDomainData"/>. </summary>
         public AppPlatformApiPortalCustomDomainData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformApiPortalCustomDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformApiPortalCustomDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

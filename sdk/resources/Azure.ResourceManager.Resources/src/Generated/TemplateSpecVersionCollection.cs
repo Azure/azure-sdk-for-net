@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TemplateSpecVersionResource" /> and their operations.
-    /// Each <see cref="TemplateSpecVersionResource" /> in the collection will belong to the same instance of <see cref="TemplateSpecResource" />.
-    /// To get a <see cref="TemplateSpecVersionCollection" /> instance call the GetTemplateSpecVersions method from an instance of <see cref="TemplateSpecResource" />.
+    /// A class representing a collection of <see cref="TemplateSpecVersionResource"/> and their operations.
+    /// Each <see cref="TemplateSpecVersionResource"/> in the collection will belong to the same instance of <see cref="TemplateSpecResource"/>.
+    /// To get a <see cref="TemplateSpecVersionCollection"/> instance call the GetTemplateSpecVersions method from an instance of <see cref="TemplateSpecResource"/>.
     /// </summary>
     public partial class TemplateSpecVersionCollection : ArmCollection, IEnumerable<TemplateSpecVersionResource>, IAsyncEnumerable<TemplateSpecVersionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TemplateSpecVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TemplateSpecVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TemplateSpecVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _templateSpecVersionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TemplateSpecVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TemplateSpecVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TemplateSpecVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _templateSpecVersionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlServerKey along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlServerKeyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlServerKeyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetSqlServerKey method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerKeyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlServerKeyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetSqlServerKey method.
     /// </summary>
     public partial class SqlServerKeyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlServerKeyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="keyName"> The keyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string keyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys/{keyName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Sql
         private readonly ServerKeysRestOperations _sqlServerKeyServerKeysRestClient;
         private readonly SqlServerKeyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/keys";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerKeyResource"/> class for mocking. </summary>
         protected SqlServerKeyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlServerKeyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlServerKeyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlServerKeyResource(ArmClient client, SqlServerKeyData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/keys";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

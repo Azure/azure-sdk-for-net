@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobReceived event. </summary>
     public partial class AcsRouterJobReceivedEventData : AcsRouterJobEventData
     {
-        /// <summary> Initializes a new instance of AcsRouterJobReceivedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterJobReceivedEventData"/>. </summary>
         /// <param name="unavailableForMatching"> Unavailable For Matching for Router Job Received. </param>
         internal AcsRouterJobReceivedEventData(bool unavailableForMatching)
         {
@@ -23,31 +22,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             UnavailableForMatching = unavailableForMatching;
         }
 
-        /// <summary> Initializes a new instance of AcsRouterJobReceivedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterJobReceivedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
         /// <param name="queueId"> Router Job events Queue Id. </param>
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
-        /// <param name="jobStatus"> Router Job Received Job Status. </param>
+        /// <param name="status"> Router Job Received Job Status. </param>
         /// <param name="classificationPolicyId"> Router Job Classification Policy Id. </param>
         /// <param name="priority"> Router Job Priority. </param>
         /// <param name="requestedWorkerSelectors"> Router Job Received Requested Worker Selectors. </param>
         /// <param name="scheduledOn"> Router Job Received Scheduled Time in UTC. </param>
         /// <param name="unavailableForMatching"> Unavailable For Matching for Router Job Received. </param>
-        internal AcsRouterJobReceivedEventData(string jobId, string channelReference, string channelId, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterJobStatus? jobStatus, string classificationPolicyId, int? priority, IReadOnlyList<AcsRouterWorkerSelector> requestedWorkerSelectors, DateTimeOffset? scheduledOn, bool unavailableForMatching) : base(jobId, channelReference, channelId, queueId, labels, tags)
+        internal AcsRouterJobReceivedEventData(string jobId, string channelReference, string channelId, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterJobStatus? status, string classificationPolicyId, int? priority, IReadOnlyList<AcsRouterWorkerSelector> requestedWorkerSelectors, DateTimeOffset? scheduledOn, bool unavailableForMatching) : base(jobId, channelReference, channelId, queueId, labels, tags)
         {
-            JobStatus = jobStatus;
+            Status = status;
             ClassificationPolicyId = classificationPolicyId;
             Priority = priority;
             RequestedWorkerSelectors = requestedWorkerSelectors;
             ScheduledOn = scheduledOn;
             UnavailableForMatching = unavailableForMatching;
         }
-
-        /// <summary> Router Job Received Job Status. </summary>
-        public AcsRouterJobStatus? JobStatus { get; }
         /// <summary> Router Job Classification Policy Id. </summary>
         public string ClassificationPolicyId { get; }
         /// <summary> Router Job Priority. </summary>

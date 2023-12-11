@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Nginx
     }
     public partial class NginxCertificateData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NginxCertificateData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NginxCertificateData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Nginx.Models.NginxCertificateProperties Properties { get { throw null; } set { } }
     }
     public partial class NginxCertificateResource : Azure.ResourceManager.ArmResource
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Nginx
     }
     public partial class NginxConfigurationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NginxConfigurationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NginxConfigurationData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Nginx.Models.NginxConfigurationProperties Properties { get { throw null; } set { } }
     }
     public partial class NginxConfigurationResource : Azure.ResourceManager.ArmResource
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Nginx
     }
     public partial class NginxDeploymentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NginxDeploymentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NginxDeploymentData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Nginx.Models.NginxDeploymentProperties Properties { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }
@@ -144,6 +144,29 @@ namespace Azure.ResourceManager.Nginx
         public static Azure.ResourceManager.Nginx.NginxDeploymentCollection GetNginxDeployments(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Nginx.NginxDeploymentResource> GetNginxDeployments(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Nginx.NginxDeploymentResource> GetNginxDeploymentsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.Nginx.Mocking
+{
+    public partial class MockableNginxArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableNginxArmClient() { }
+        public virtual Azure.ResourceManager.Nginx.NginxCertificateResource GetNginxCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Nginx.NginxConfigurationResource GetNginxConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Nginx.NginxDeploymentResource GetNginxDeploymentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableNginxResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableNginxResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Nginx.NginxDeploymentResource> GetNginxDeployment(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Nginx.NginxDeploymentResource>> GetNginxDeploymentAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Nginx.NginxDeploymentCollection GetNginxDeployments() { throw null; }
+    }
+    public partial class MockableNginxSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableNginxSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Nginx.NginxDeploymentResource> GetNginxDeployments(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Nginx.NginxDeploymentResource> GetNginxDeploymentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Nginx.Models

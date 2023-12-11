@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     /// <summary> Contains the REP (rendezvous endpoint) and “Listener” access token from notification service (NS). </summary>
     public partial class HybridConnectionConfig
     {
-        /// <summary> Initializes a new instance of HybridConnectionConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionConfig"/>. </summary>
         internal HybridConnectionConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of HybridConnectionConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionConfig"/>. </summary>
         /// <param name="expirationTime"> Timestamp when this token will be expired. </param>
         /// <param name="hybridConnectionName"> Name of the connection. </param>
         /// <param name="relay"> Name of the notification service. </param>

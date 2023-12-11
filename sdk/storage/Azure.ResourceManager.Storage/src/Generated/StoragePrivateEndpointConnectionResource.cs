@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Storage
 {
     /// <summary>
     /// A Class representing a StoragePrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StoragePrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStoragePrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource" /> using the GetStoragePrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StoragePrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStoragePrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource"/> using the GetStoragePrivateEndpointConnection method.
     /// </summary>
     public partial class StoragePrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StoragePrivateEndpointConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Storage
         private readonly PrivateEndpointConnectionsRestOperations _storagePrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly StoragePrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="StoragePrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected StoragePrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StoragePrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StoragePrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StoragePrivateEndpointConnectionResource(ArmClient client, StoragePrivateEndpointConnectionData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Storage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

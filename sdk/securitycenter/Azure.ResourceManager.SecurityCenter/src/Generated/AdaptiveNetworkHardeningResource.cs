@@ -21,13 +21,19 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing an AdaptiveNetworkHardening along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AdaptiveNetworkHardeningResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAdaptiveNetworkHardeningResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAdaptiveNetworkHardening method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AdaptiveNetworkHardeningResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAdaptiveNetworkHardeningResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAdaptiveNetworkHardening method.
     /// </summary>
     public partial class AdaptiveNetworkHardeningResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AdaptiveNetworkHardeningResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceNamespace"> The resourceNamespace. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="adaptiveNetworkHardeningResourceName"> The adaptiveNetworkHardeningResourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string adaptiveNetworkHardeningResourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/adaptiveNetworkHardenings/{adaptiveNetworkHardeningResourceName}";
@@ -38,12 +44,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly AdaptiveNetworkHardeningsRestOperations _adaptiveNetworkHardeningRestClient;
         private readonly AdaptiveNetworkHardeningData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/adaptiveNetworkHardenings";
+
         /// <summary> Initializes a new instance of the <see cref="AdaptiveNetworkHardeningResource"/> class for mocking. </summary>
         protected AdaptiveNetworkHardeningResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AdaptiveNetworkHardeningResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AdaptiveNetworkHardeningResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AdaptiveNetworkHardeningResource(ArmClient client, AdaptiveNetworkHardeningData data) : this(client, data.Id)
@@ -64,9 +73,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/adaptiveNetworkHardenings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -167,7 +173,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The AdaptiveNetworkHardeningEnforceContent to use. </param>
+        /// <param name="content"> The <see cref="AdaptiveNetworkHardeningEnforceContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> EnforceAsync(WaitUntil waitUntil, AdaptiveNetworkHardeningEnforceContent content, CancellationToken cancellationToken = default)
@@ -205,7 +211,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The AdaptiveNetworkHardeningEnforceContent to use. </param>
+        /// <param name="content"> The <see cref="AdaptiveNetworkHardeningEnforceContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation Enforce(WaitUntil waitUntil, AdaptiveNetworkHardeningEnforceContent content, CancellationToken cancellationToken = default)

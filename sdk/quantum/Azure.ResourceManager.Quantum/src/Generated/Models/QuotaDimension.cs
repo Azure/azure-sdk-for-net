@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Quantum.Models
     /// <summary> Information about a specific quota dimension. </summary>
     public partial class QuotaDimension
     {
-        /// <summary> Initializes a new instance of QuotaDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaDimension"/>. </summary>
         internal QuotaDimension()
         {
         }
 
-        /// <summary> Initializes a new instance of QuotaDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaDimension"/>. </summary>
         /// <param name="id"> Unique id of this dimension. </param>
         /// <param name="scope"> The scope of this quota dimension. </param>
         /// <param name="period"> The reset period of this quota dimension. </param>

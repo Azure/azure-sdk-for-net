@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
     /// A Class representing a Hub along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HubResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHubResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetHub method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HubResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHubResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHub method.
     /// </summary>
     public partial class HubResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HubResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="hubName"> The hubName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hubName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}";
@@ -43,12 +46,15 @@ namespace Azure.ResourceManager.CustomerInsights
         private readonly ImagesRestOperations _imagesRestClient;
         private readonly HubData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs";
+
         /// <summary> Initializes a new instance of the <see cref="HubResource"/> class for mocking. </summary>
         protected HubResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HubResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HubResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HubResource(ArmClient client, HubData data) : this(client, data.Id)
@@ -73,9 +79,6 @@ namespace Azure.ResourceManager.CustomerInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -102,7 +105,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An object representing collection of ProfileResourceFormatResources and their operations over a ProfileResourceFormatResource. </returns>
         public virtual ProfileResourceFormatCollection GetProfileResourceFormats()
         {
-            return GetCachedClient(Client => new ProfileResourceFormatCollection(Client, Id));
+            return GetCachedClient(client => new ProfileResourceFormatCollection(client, Id));
         }
 
         /// <summary>
@@ -121,8 +124,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="profileName"> The name of the profile. </param>
         /// <param name="localeCode"> Locale of profile to retrieve, default is en-us. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ProfileResourceFormatResource>> GetProfileResourceFormatAsync(string profileName, string localeCode = null, CancellationToken cancellationToken = default)
         {
@@ -145,8 +148,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="profileName"> The name of the profile. </param>
         /// <param name="localeCode"> Locale of profile to retrieve, default is en-us. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ProfileResourceFormatResource> GetProfileResourceFormat(string profileName, string localeCode = null, CancellationToken cancellationToken = default)
         {
@@ -157,7 +160,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An object representing collection of InteractionResourceFormatResources and their operations over a InteractionResourceFormatResource. </returns>
         public virtual InteractionResourceFormatCollection GetInteractionResourceFormats()
         {
-            return GetCachedClient(Client => new InteractionResourceFormatCollection(Client, Id));
+            return GetCachedClient(client => new InteractionResourceFormatCollection(client, Id));
         }
 
         /// <summary>
@@ -176,8 +179,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="interactionName"> The name of the interaction. </param>
         /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="interactionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="interactionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="interactionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<InteractionResourceFormatResource>> GetInteractionResourceFormatAsync(string interactionName, string localeCode = null, CancellationToken cancellationToken = default)
         {
@@ -200,8 +203,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="interactionName"> The name of the interaction. </param>
         /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="interactionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="interactionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="interactionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<InteractionResourceFormatResource> GetInteractionResourceFormat(string interactionName, string localeCode = null, CancellationToken cancellationToken = default)
         {
@@ -212,7 +215,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An object representing collection of RelationshipResourceFormatResources and their operations over a RelationshipResourceFormatResource. </returns>
         public virtual RelationshipResourceFormatCollection GetRelationshipResourceFormats()
         {
-            return GetCachedClient(Client => new RelationshipResourceFormatCollection(Client, Id));
+            return GetCachedClient(client => new RelationshipResourceFormatCollection(client, Id));
         }
 
         /// <summary>
@@ -230,8 +233,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="relationshipName"> The name of the relationship. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RelationshipResourceFormatResource>> GetRelationshipResourceFormatAsync(string relationshipName, CancellationToken cancellationToken = default)
         {
@@ -253,8 +256,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="relationshipName"> The name of the relationship. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RelationshipResourceFormatResource> GetRelationshipResourceFormat(string relationshipName, CancellationToken cancellationToken = default)
         {
@@ -265,7 +268,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An object representing collection of RelationshipLinkResourceFormatResources and their operations over a RelationshipLinkResourceFormatResource. </returns>
         public virtual RelationshipLinkResourceFormatCollection GetRelationshipLinkResourceFormats()
         {
-            return GetCachedClient(Client => new RelationshipLinkResourceFormatCollection(Client, Id));
+            return GetCachedClient(client => new RelationshipLinkResourceFormatCollection(client, Id));
         }
 
         /// <summary>
@@ -283,8 +286,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="relationshipLinkName"> The name of the relationship link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relationshipLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationshipLinkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relationshipLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RelationshipLinkResourceFormatResource>> GetRelationshipLinkResourceFormatAsync(string relationshipLinkName, CancellationToken cancellationToken = default)
         {
@@ -306,8 +309,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="relationshipLinkName"> The name of the relationship link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relationshipLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationshipLinkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relationshipLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RelationshipLinkResourceFormatResource> GetRelationshipLinkResourceFormat(string relationshipLinkName, CancellationToken cancellationToken = default)
         {
@@ -318,7 +321,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An object representing collection of AuthorizationPolicyResourceFormatResources and their operations over a AuthorizationPolicyResourceFormatResource. </returns>
         public virtual AuthorizationPolicyResourceFormatCollection GetAuthorizationPolicyResourceFormats()
         {
-            return GetCachedClient(Client => new AuthorizationPolicyResourceFormatCollection(Client, Id));
+            return GetCachedClient(client => new AuthorizationPolicyResourceFormatCollection(client, Id));
         }
 
         /// <summary>
@@ -336,8 +339,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="authorizationPolicyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AuthorizationPolicyResourceFormatResource>> GetAuthorizationPolicyResourceFormatAsync(string authorizationPolicyName, CancellationToken cancellationToken = default)
         {
@@ -359,8 +362,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="authorizationPolicyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AuthorizationPolicyResourceFormatResource> GetAuthorizationPolicyResourceFormat(string authorizationPolicyName, CancellationToken cancellationToken = default)
         {
@@ -371,7 +374,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An object representing collection of ConnectorResourceFormatResources and their operations over a ConnectorResourceFormatResource. </returns>
         public virtual ConnectorResourceFormatCollection GetConnectorResourceFormats()
         {
-            return GetCachedClient(Client => new ConnectorResourceFormatCollection(Client, Id));
+            return GetCachedClient(client => new ConnectorResourceFormatCollection(client, Id));
         }
 
         /// <summary>
@@ -389,8 +392,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="connectorName"> The name of the connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ConnectorResourceFormatResource>> GetConnectorResourceFormatAsync(string connectorName, CancellationToken cancellationToken = default)
         {
@@ -412,8 +415,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="connectorName"> The name of the connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ConnectorResourceFormatResource> GetConnectorResourceFormat(string connectorName, CancellationToken cancellationToken = default)
         {
@@ -424,7 +427,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An object representing collection of KpiResourceFormatResources and their operations over a KpiResourceFormatResource. </returns>
         public virtual KpiResourceFormatCollection GetKpiResourceFormats()
         {
-            return GetCachedClient(Client => new KpiResourceFormatCollection(Client, Id));
+            return GetCachedClient(client => new KpiResourceFormatCollection(client, Id));
         }
 
         /// <summary>
@@ -442,8 +445,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="kpiName"> The name of the KPI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="kpiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="kpiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kpiName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<KpiResourceFormatResource>> GetKpiResourceFormatAsync(string kpiName, CancellationToken cancellationToken = default)
         {
@@ -465,8 +468,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="kpiName"> The name of the KPI. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="kpiName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="kpiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kpiName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<KpiResourceFormatResource> GetKpiResourceFormat(string kpiName, CancellationToken cancellationToken = default)
         {
@@ -477,7 +480,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An object representing collection of WidgetTypeResourceFormatResources and their operations over a WidgetTypeResourceFormatResource. </returns>
         public virtual WidgetTypeResourceFormatCollection GetWidgetTypeResourceFormats()
         {
-            return GetCachedClient(Client => new WidgetTypeResourceFormatCollection(Client, Id));
+            return GetCachedClient(client => new WidgetTypeResourceFormatCollection(client, Id));
         }
 
         /// <summary>
@@ -495,8 +498,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="widgetTypeName"> The name of the widget type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="widgetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="widgetTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="widgetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WidgetTypeResourceFormatResource>> GetWidgetTypeResourceFormatAsync(string widgetTypeName, CancellationToken cancellationToken = default)
         {
@@ -518,8 +521,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="widgetTypeName"> The name of the widget type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="widgetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="widgetTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="widgetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WidgetTypeResourceFormatResource> GetWidgetTypeResourceFormat(string widgetTypeName, CancellationToken cancellationToken = default)
         {
@@ -530,7 +533,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An object representing collection of ViewResourceFormatResources and their operations over a ViewResourceFormatResource. </returns>
         public virtual ViewResourceFormatCollection GetViewResourceFormats()
         {
-            return GetCachedClient(Client => new ViewResourceFormatCollection(Client, Id));
+            return GetCachedClient(client => new ViewResourceFormatCollection(client, Id));
         }
 
         /// <summary>
@@ -549,8 +552,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="viewName"> The name of the view. </param>
         /// <param name="userId"> The user ID. Use * to retrieve hub level view. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ViewResourceFormatResource>> GetViewResourceFormatAsync(string viewName, string userId, CancellationToken cancellationToken = default)
         {
@@ -573,8 +576,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="viewName"> The name of the view. </param>
         /// <param name="userId"> The user ID. Use * to retrieve hub level view. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ViewResourceFormatResource> GetViewResourceFormat(string viewName, string userId, CancellationToken cancellationToken = default)
         {
@@ -585,7 +588,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An object representing collection of LinkResourceFormatResources and their operations over a LinkResourceFormatResource. </returns>
         public virtual LinkResourceFormatCollection GetLinkResourceFormats()
         {
-            return GetCachedClient(Client => new LinkResourceFormatCollection(Client, Id));
+            return GetCachedClient(client => new LinkResourceFormatCollection(client, Id));
         }
 
         /// <summary>
@@ -603,8 +606,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="linkName"> The name of the link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<LinkResourceFormatResource>> GetLinkResourceFormatAsync(string linkName, CancellationToken cancellationToken = default)
         {
@@ -626,8 +629,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="linkName"> The name of the link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<LinkResourceFormatResource> GetLinkResourceFormat(string linkName, CancellationToken cancellationToken = default)
         {
@@ -638,7 +641,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An object representing collection of RoleAssignmentResourceFormatResources and their operations over a RoleAssignmentResourceFormatResource. </returns>
         public virtual RoleAssignmentResourceFormatCollection GetRoleAssignmentResourceFormats()
         {
-            return GetCachedClient(Client => new RoleAssignmentResourceFormatCollection(Client, Id));
+            return GetCachedClient(client => new RoleAssignmentResourceFormatCollection(client, Id));
         }
 
         /// <summary>
@@ -656,8 +659,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="assignmentName"> The name of the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RoleAssignmentResourceFormatResource>> GetRoleAssignmentResourceFormatAsync(string assignmentName, CancellationToken cancellationToken = default)
         {
@@ -679,8 +682,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="assignmentName"> The name of the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RoleAssignmentResourceFormatResource> GetRoleAssignmentResourceFormat(string assignmentName, CancellationToken cancellationToken = default)
         {
@@ -691,7 +694,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An object representing collection of PredictionResourceFormatResources and their operations over a PredictionResourceFormatResource. </returns>
         public virtual PredictionResourceFormatCollection GetPredictionResourceFormats()
         {
-            return GetCachedClient(Client => new PredictionResourceFormatCollection(Client, Id));
+            return GetCachedClient(client => new PredictionResourceFormatCollection(client, Id));
         }
 
         /// <summary>
@@ -709,8 +712,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="predictionName"> The name of the Prediction. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="predictionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="predictionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="predictionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PredictionResourceFormatResource>> GetPredictionResourceFormatAsync(string predictionName, CancellationToken cancellationToken = default)
         {
@@ -732,8 +735,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="predictionName"> The name of the Prediction. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="predictionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="predictionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="predictionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PredictionResourceFormatResource> GetPredictionResourceFormat(string predictionName, CancellationToken cancellationToken = default)
         {
@@ -954,7 +957,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RoleResourceFormat" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RoleResourceFormat"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoleResourceFormat> GetRolesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _rolesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -976,7 +979,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RoleResourceFormat" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RoleResourceFormat"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoleResourceFormat> GetRoles(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _rolesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

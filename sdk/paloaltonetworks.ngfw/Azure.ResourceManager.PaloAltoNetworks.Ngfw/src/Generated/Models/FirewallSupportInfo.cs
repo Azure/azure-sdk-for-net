@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Support information for the resource. </summary>
     public partial class FirewallSupportInfo
     {
-        /// <summary> Initializes a new instance of FirewallSupportInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallSupportInfo"/>. </summary>
         internal FirewallSupportInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallSupportInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallSupportInfo"/>. </summary>
         /// <param name="productSku"> product SKU associated with given resource. </param>
         /// <param name="productSerial"> product Serial associated with given resource. </param>
         /// <param name="accountRegistered"> account registered in Customer Support Portal. </param>

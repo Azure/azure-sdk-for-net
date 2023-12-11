@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Package response returned after async package operation completes successfully. </summary>
     public partial class ModelPackageResult
     {
-        /// <summary> Initializes a new instance of ModelPackageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelPackageResult"/>. </summary>
         internal ModelPackageResult()
         {
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ModelPackageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelPackageResult"/>. </summary>
         /// <param name="baseEnvironmentSource">
         /// Base environment to start with.
         /// Please note <see cref="Models.BaseEnvironmentSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

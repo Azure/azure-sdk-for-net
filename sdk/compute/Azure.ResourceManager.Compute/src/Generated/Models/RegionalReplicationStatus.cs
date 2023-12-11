@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> This is the regional replication status. </summary>
     public partial class RegionalReplicationStatus
     {
-        /// <summary> Initializes a new instance of RegionalReplicationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegionalReplicationStatus"/>. </summary>
         internal RegionalReplicationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of RegionalReplicationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegionalReplicationStatus"/>. </summary>
         /// <param name="region"> The region to which the gallery image version is being replicated to. </param>
         /// <param name="state"> This is the regional replication state. </param>
         /// <param name="details"> The details of the replication status. </param>

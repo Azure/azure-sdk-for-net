@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Time in a week. </summary>
     public partial class ContainerServiceTimeInWeek
     {
-        /// <summary> Initializes a new instance of ContainerServiceTimeInWeek. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceTimeInWeek"/>. </summary>
         public ContainerServiceTimeInWeek()
         {
             HourSlots = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceTimeInWeek. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceTimeInWeek"/>. </summary>
         /// <param name="day"> The day of the week. </param>
         /// <param name="hourSlots"> Each integer hour represents a time range beginning at 0m after the hour ending at the next hour (non-inclusive). 0 corresponds to 00:00 UTC, 23 corresponds to 23:00 UTC. Specifying [0, 1] means the 00:00 - 02:00 UTC time range. </param>
         internal ContainerServiceTimeInWeek(ContainerServiceWeekDay? day, IList<int> hourSlots)

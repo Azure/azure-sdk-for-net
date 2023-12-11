@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CertificateOrderDetectorResource" /> and their operations.
-    /// Each <see cref="CertificateOrderDetectorResource" /> in the collection will belong to the same instance of <see cref="AppServiceCertificateOrderResource" />.
-    /// To get a <see cref="CertificateOrderDetectorCollection" /> instance call the GetCertificateOrderDetectors method from an instance of <see cref="AppServiceCertificateOrderResource" />.
+    /// A class representing a collection of <see cref="CertificateOrderDetectorResource"/> and their operations.
+    /// Each <see cref="CertificateOrderDetectorResource"/> in the collection will belong to the same instance of <see cref="AppServiceCertificateOrderResource"/>.
+    /// To get a <see cref="CertificateOrderDetectorCollection"/> instance call the GetCertificateOrderDetectors method from an instance of <see cref="AppServiceCertificateOrderResource"/>.
     /// </summary>
     public partial class CertificateOrderDetectorCollection : ArmCollection, IEnumerable<CertificateOrderDetectorResource>, IAsyncEnumerable<CertificateOrderDetectorResource>
     {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CertificateOrderDetectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CertificateOrderDetectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CertificateOrderDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.CreateListAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CertificateOrderDetectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CertificateOrderDetectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CertificateOrderDetectorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient.CreateListAppServiceCertificateOrderDetectorResponseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

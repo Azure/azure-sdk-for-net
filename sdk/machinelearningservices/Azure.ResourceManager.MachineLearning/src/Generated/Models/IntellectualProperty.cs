@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Intellectual Property details for a resource. </summary>
     public partial class IntellectualProperty
     {
-        /// <summary> Initializes a new instance of IntellectualProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntellectualProperty"/>. </summary>
         /// <param name="publisher"> [Required] Publisher of the Intellectual Property. Must be the same as Registry publisher name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisher"/> is null. </exception>
         public IntellectualProperty(string publisher)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Publisher = publisher;
         }
 
-        /// <summary> Initializes a new instance of IntellectualProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntellectualProperty"/>. </summary>
         /// <param name="protectionLevel"> Protection level of the Intellectual Property. </param>
         /// <param name="publisher"> [Required] Publisher of the Intellectual Property. Must be the same as Registry publisher name. </param>
         internal IntellectualProperty(IntellectualProtectionLevel? protectionLevel, string publisher)

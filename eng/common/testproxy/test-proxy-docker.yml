@@ -15,7 +15,7 @@ steps:
     condition: and(succeeded(), ${{ parameters.condition }}, ne('${{ parameters.targetVersion }}', ''))
     inputs:
       targetType: filePath
-      filePath: '${{ parameters.templateRoot }}/eng/common/testproxy/override-proxy-version.ps1'
+      filePath: '${{ parameters.templateRoot }}/eng/common/testproxy/scripts/override-proxy-version.ps1'
       arguments: '-TargetVersion "${{ parameters.targetVersion }}"'
       pwsh: true
 

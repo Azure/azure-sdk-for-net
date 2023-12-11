@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Lock owner properties. </summary>
     public partial class ManagementLockOwner
     {
-        /// <summary> Initializes a new instance of ManagementLockOwner. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementLockOwner"/>. </summary>
         public ManagementLockOwner()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagementLockOwner. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementLockOwner"/>. </summary>
         /// <param name="applicationId"> The application ID of the lock owner. </param>
         internal ManagementLockOwner(string applicationId)
         {

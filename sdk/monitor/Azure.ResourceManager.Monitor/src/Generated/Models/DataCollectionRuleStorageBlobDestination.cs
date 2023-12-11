@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The DataCollectionRuleStorageBlobDestination. </summary>
     public partial class DataCollectionRuleStorageBlobDestination
     {
-        /// <summary> Initializes a new instance of DataCollectionRuleStorageBlobDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleStorageBlobDestination"/>. </summary>
         public DataCollectionRuleStorageBlobDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleStorageBlobDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleStorageBlobDestination"/>. </summary>
         /// <param name="containerName"> The container name of the Storage Blob. </param>
         /// <param name="storageAccountResourceId"> The resource ID of the storage account. </param>
         /// <param name="name">

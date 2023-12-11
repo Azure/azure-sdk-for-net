@@ -86,18 +86,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("indexAnalyzer");
                 }
             }
-            if (Optional.IsDefined(NormalizerName))
-            {
-                if (NormalizerName != null)
-                {
-                    writer.WritePropertyName("normalizer"u8);
-                    writer.WriteStringValue(NormalizerName.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("normalizer");
-                }
-            }
             if (Optional.IsDefined(VectorSearchDimensions))
             {
                 if (VectorSearchDimensions != null)
@@ -110,12 +98,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("dimensions");
                 }
             }
-            if (Optional.IsDefined(VectorSearchProfile))
+            if (Optional.IsDefined(VectorSearchProfileName))
             {
-                if (VectorSearchProfile != null)
+                if (VectorSearchProfileName != null)
                 {
                     writer.WritePropertyName("vectorSearchProfile"u8);
-                    writer.WriteStringValue(VectorSearchProfile);
+                    writer.WriteStringValue(VectorSearchProfileName);
                 }
                 else
                 {
@@ -162,7 +150,6 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<LexicalAnalyzerName?> analyzer = default;
             Optional<LexicalAnalyzerName?> searchAnalyzer = default;
             Optional<LexicalAnalyzerName?> indexAnalyzer = default;
-            Optional<LexicalNormalizerName?> normalizer = default;
             Optional<int?> dimensions = default;
             Optional<string> vectorSearchProfile = default;
             Optional<IList<string>> synonymMaps = default;
@@ -263,16 +250,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     indexAnalyzer = new LexicalAnalyzerName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("normalizer"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        normalizer = null;
-                        continue;
-                    }
-                    normalizer = new LexicalNormalizerName(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("dimensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -322,7 +299,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchField(name, type, Optional.ToNullable(key), Optional.ToNullable(retrievable), Optional.ToNullable(searchable), Optional.ToNullable(filterable), Optional.ToNullable(sortable), Optional.ToNullable(facetable), Optional.ToNullable(analyzer), Optional.ToNullable(searchAnalyzer), Optional.ToNullable(indexAnalyzer), Optional.ToNullable(normalizer), Optional.ToNullable(dimensions), vectorSearchProfile.Value, Optional.ToList(synonymMaps), Optional.ToList(fields));
+            return new SearchField(name, type, Optional.ToNullable(key), Optional.ToNullable(retrievable), Optional.ToNullable(searchable), Optional.ToNullable(filterable), Optional.ToNullable(sortable), Optional.ToNullable(facetable), Optional.ToNullable(analyzer), Optional.ToNullable(searchAnalyzer), Optional.ToNullable(indexAnalyzer), Optional.ToNullable(dimensions), vectorSearchProfile.Value, Optional.ToList(synonymMaps), Optional.ToList(fields));
         }
     }
 }

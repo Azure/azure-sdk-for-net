@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The native cloud connection configuration. </summary>
     public partial class CspmMonitorGcpOfferingNativeCloudConnection
     {
-        /// <summary> Initializes a new instance of CspmMonitorGcpOfferingNativeCloudConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="CspmMonitorGcpOfferingNativeCloudConnection"/>. </summary>
         public CspmMonitorGcpOfferingNativeCloudConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of CspmMonitorGcpOfferingNativeCloudConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="CspmMonitorGcpOfferingNativeCloudConnection"/>. </summary>
         /// <param name="workloadIdentityProviderId"> The GCP workload identity provider id for the offering. </param>
         /// <param name="serviceAccountEmailAddress"> The service account email address in GCP for this offering. </param>
         internal CspmMonitorGcpOfferingNativeCloudConnection(string workloadIdentityProviderId, string serviceAccountEmailAddress)

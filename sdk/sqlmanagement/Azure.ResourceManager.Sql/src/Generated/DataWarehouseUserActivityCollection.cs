@@ -21,9 +21,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataWarehouseUserActivityResource" /> and their operations.
-    /// Each <see cref="DataWarehouseUserActivityResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseResource" />.
-    /// To get a <see cref="DataWarehouseUserActivityCollection" /> instance call the GetDataWarehouseUserActivities method from an instance of <see cref="SqlDatabaseResource" />.
+    /// A class representing a collection of <see cref="DataWarehouseUserActivityResource"/> and their operations.
+    /// Each <see cref="DataWarehouseUserActivityResource"/> in the collection will belong to the same instance of <see cref="SqlDatabaseResource"/>.
+    /// To get a <see cref="DataWarehouseUserActivityCollection"/> instance call the GetDataWarehouseUserActivities method from an instance of <see cref="SqlDatabaseResource"/>.
     /// </summary>
     public partial class DataWarehouseUserActivityCollection : ArmCollection, IEnumerable<DataWarehouseUserActivityResource>, IAsyncEnumerable<DataWarehouseUserActivityResource>
     {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataWarehouseUserActivityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataWarehouseUserActivityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataWarehouseUserActivityResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataWarehouseUserActivityRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataWarehouseUserActivityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataWarehouseUserActivityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataWarehouseUserActivityResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataWarehouseUserActivityRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

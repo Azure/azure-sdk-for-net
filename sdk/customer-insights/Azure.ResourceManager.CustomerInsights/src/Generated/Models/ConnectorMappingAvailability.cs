@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Connector mapping property availability. </summary>
     public partial class ConnectorMappingAvailability
     {
-        /// <summary> Initializes a new instance of ConnectorMappingAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingAvailability"/>. </summary>
         /// <param name="interval"> The interval of the given frequency to use. </param>
         public ConnectorMappingAvailability(int interval)
         {
             Interval = interval;
         }
 
-        /// <summary> Initializes a new instance of ConnectorMappingAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingAvailability"/>. </summary>
         /// <param name="frequency"> The frequency to update. </param>
         /// <param name="interval"> The interval of the given frequency to use. </param>
         internal ConnectorMappingAvailability(FrequencyType? frequency, int interval)

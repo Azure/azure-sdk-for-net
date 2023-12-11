@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> IpGroups associated with azure firewall. </summary>
     public partial class AzureFirewallIPGroups
     {
-        /// <summary> Initializes a new instance of AzureFirewallIPGroups. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallIPGroups"/>. </summary>
         internal AzureFirewallIPGroups()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallIPGroups. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallIPGroups"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="changeNumber"> The iteration number. </param>
         internal AzureFirewallIPGroups(ResourceIdentifier id, string changeNumber)

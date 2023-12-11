@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Get Operation response object. </summary>
     public partial class DocumentModelCopyToOperationDetails : OperationDetails
     {
-        /// <summary> Initializes a new instance of DocumentModelCopyToOperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentModelCopyToOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Kind = DocumentOperationKind.DocumentModelCopyTo;
         }
 
-        /// <summary> Initializes a new instance of DocumentModelCopyToOperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentModelCopyToOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>

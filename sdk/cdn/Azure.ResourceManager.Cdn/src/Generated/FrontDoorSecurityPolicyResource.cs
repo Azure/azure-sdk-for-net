@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
     /// A Class representing a FrontDoorSecurityPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FrontDoorSecurityPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFrontDoorSecurityPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProfileResource" /> using the GetFrontDoorSecurityPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FrontDoorSecurityPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFrontDoorSecurityPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProfileResource"/> using the GetFrontDoorSecurityPolicy method.
     /// </summary>
     public partial class FrontDoorSecurityPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FrontDoorSecurityPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="profileName"> The profileName. </param>
+        /// <param name="securityPolicyName"> The securityPolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string securityPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.Cdn
         private readonly FrontDoorSecurityPoliciesRestOperations _frontDoorSecurityPolicyRestClient;
         private readonly FrontDoorSecurityPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/securityPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="FrontDoorSecurityPolicyResource"/> class for mocking. </summary>
         protected FrontDoorSecurityPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FrontDoorSecurityPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorSecurityPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FrontDoorSecurityPolicyResource(ArmClient client, FrontDoorSecurityPolicyData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.Cdn
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/securityPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

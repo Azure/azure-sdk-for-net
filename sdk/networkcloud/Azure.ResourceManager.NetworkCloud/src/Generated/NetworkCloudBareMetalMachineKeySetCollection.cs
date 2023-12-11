@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkCloudBareMetalMachineKeySetResource" /> and their operations.
-    /// Each <see cref="NetworkCloudBareMetalMachineKeySetResource" /> in the collection will belong to the same instance of <see cref="NetworkCloudClusterResource" />.
-    /// To get a <see cref="NetworkCloudBareMetalMachineKeySetCollection" /> instance call the GetNetworkCloudBareMetalMachineKeySets method from an instance of <see cref="NetworkCloudClusterResource" />.
+    /// A class representing a collection of <see cref="NetworkCloudBareMetalMachineKeySetResource"/> and their operations.
+    /// Each <see cref="NetworkCloudBareMetalMachineKeySetResource"/> in the collection will belong to the same instance of <see cref="NetworkCloudClusterResource"/>.
+    /// To get a <see cref="NetworkCloudBareMetalMachineKeySetCollection"/> instance call the GetNetworkCloudBareMetalMachineKeySets method from an instance of <see cref="NetworkCloudClusterResource"/>.
     /// </summary>
     public partial class NetworkCloudBareMetalMachineKeySetCollection : ArmCollection, IEnumerable<NetworkCloudBareMetalMachineKeySetResource>, IAsyncEnumerable<NetworkCloudBareMetalMachineKeySetResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudBareMetalMachineKeySetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkCloudBareMetalMachineKeySetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudBareMetalMachineKeySetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudBareMetalMachineKeySetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudBareMetalMachineKeySetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudBareMetalMachineKeySetResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

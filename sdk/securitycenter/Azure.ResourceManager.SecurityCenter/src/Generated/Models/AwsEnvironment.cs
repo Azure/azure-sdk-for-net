@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The aws connector environment data. </summary>
     public partial class AwsEnvironment : SecurityConnectorEnvironment
     {
-        /// <summary> Initializes a new instance of AwsEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsEnvironment"/>. </summary>
         public AwsEnvironment()
         {
             EnvironmentType = EnvironmentType.AwsAccount;
         }
 
-        /// <summary> Initializes a new instance of AwsEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsEnvironment"/>. </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
         /// <param name="organizationalData">
         /// The AWS account's organizational data

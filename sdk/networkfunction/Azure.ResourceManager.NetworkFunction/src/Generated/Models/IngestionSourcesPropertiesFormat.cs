@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetworkFunction.Models
     /// <summary> Ingestion policy properties. </summary>
     public partial class IngestionSourcesPropertiesFormat
     {
-        /// <summary> Initializes a new instance of IngestionSourcesPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionSourcesPropertiesFormat"/>. </summary>
         public IngestionSourcesPropertiesFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of IngestionSourcesPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionSourcesPropertiesFormat"/>. </summary>
         /// <param name="sourceType"> Ingestion source type. </param>
         /// <param name="resourceId"> Resource ID. </param>
         internal IngestionSourcesPropertiesFormat(IngestionSourceType? sourceType, string resourceId)

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents the an action and its status. </summary>
     public partial class ActionStatus
     {
-        /// <summary> Initializes a new instance of ActionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionStatus"/>. </summary>
         internal ActionStatus()
         {
             Targets = new ChangeTrackingList<ExperimentExecutionActionTargetDetailsProperties>();
         }
 
-        /// <summary> Initializes a new instance of ActionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionStatus"/>. </summary>
         /// <param name="actionName"> The name of the action status. </param>
         /// <param name="actionId"> The id of the action status. </param>
         /// <param name="status"> The status of the action. </param>

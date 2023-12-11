@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Features enabled for a workspace. </summary>
     public partial class MachineLearningUserFeature
     {
-        /// <summary> Initializes a new instance of MachineLearningUserFeature. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUserFeature"/>. </summary>
         internal MachineLearningUserFeature()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningUserFeature. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUserFeature"/>. </summary>
         /// <param name="id"> Specifies the feature ID. </param>
         /// <param name="displayName"> Specifies the feature name. </param>
         /// <param name="description"> Describes the feature for user experience. </param>

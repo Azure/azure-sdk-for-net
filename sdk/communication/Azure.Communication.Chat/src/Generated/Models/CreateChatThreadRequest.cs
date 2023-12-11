@@ -14,7 +14,7 @@ namespace Azure.Communication.Chat
     /// <summary> Request payload for creating a chat thread. </summary>
     internal partial class CreateChatThreadRequest
     {
-        /// <summary> Initializes a new instance of CreateChatThreadRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateChatThreadRequest"/>. </summary>
         /// <param name="topic"> The chat thread topic. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topic"/> is null. </exception>
         public CreateChatThreadRequest(string topic)
@@ -23,6 +23,15 @@ namespace Azure.Communication.Chat
 
             Topic = topic;
             Participants = new ChangeTrackingList<ChatParticipantInternal>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CreateChatThreadRequest"/>. </summary>
+        /// <param name="topic"> The chat thread topic. </param>
+        /// <param name="participants"> Participants to be added to the chat thread. </param>
+        internal CreateChatThreadRequest(string topic, IList<ChatParticipantInternal> participants)
+        {
+            Topic = topic;
+            Participants = participants;
         }
 
         /// <summary> The chat thread topic. </summary>

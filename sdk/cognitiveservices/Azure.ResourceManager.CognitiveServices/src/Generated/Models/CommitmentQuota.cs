@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Cognitive Services account commitment quota. </summary>
     public partial class CommitmentQuota
     {
-        /// <summary> Initializes a new instance of CommitmentQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommitmentQuota"/>. </summary>
         internal CommitmentQuota()
         {
         }
 
-        /// <summary> Initializes a new instance of CommitmentQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommitmentQuota"/>. </summary>
         /// <param name="quantity"> Commitment quota quantity. </param>
         /// <param name="unit"> Commitment quota unit. </param>
         internal CommitmentQuota(long? quantity, string unit)

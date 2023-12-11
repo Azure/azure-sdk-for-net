@@ -4,13 +4,8 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: digitaltwins
-    # Enable canary and public cloud testing in separate subscriptions, so that the tests-weekly builds
-    # don't exceed the 10 azure digital twin instance hard limit
     CloudConfig:
       Public:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Location: westcentralus
-      Canary:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
-        Location: eastus2euap
-    Clouds: Public,Canary
+    Clouds: Public

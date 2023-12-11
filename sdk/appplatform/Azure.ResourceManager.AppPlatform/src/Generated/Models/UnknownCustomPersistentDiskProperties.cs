@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> The UnknownCustomPersistentDiskProperties. </summary>
     internal partial class UnknownCustomPersistentDiskProperties : AppCustomPersistentDiskProperties
     {
-        /// <summary> Initializes a new instance of UnknownCustomPersistentDiskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCustomPersistentDiskProperties"/>. </summary>
         /// <param name="underlyingResourceType"> The type of the underlying resource to mount as a persistent disk. </param>
         /// <param name="mountPath"> The mount path of the persistent disk. </param>
         /// <param name="isReadOnly"> Indicates whether the persistent disk is a readOnly one. </param>

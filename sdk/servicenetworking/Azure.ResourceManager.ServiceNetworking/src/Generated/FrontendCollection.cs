@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary>
-    /// A class representing a collection of <see cref="FrontendResource" /> and their operations.
-    /// Each <see cref="FrontendResource" /> in the collection will belong to the same instance of <see cref="TrafficControllerResource" />.
-    /// To get a <see cref="FrontendCollection" /> instance call the GetFrontends method from an instance of <see cref="TrafficControllerResource" />.
+    /// A class representing a collection of <see cref="FrontendResource"/> and their operations.
+    /// Each <see cref="FrontendResource"/> in the collection will belong to the same instance of <see cref="TrafficControllerResource"/>.
+    /// To get a <see cref="FrontendCollection"/> instance call the GetFrontends method from an instance of <see cref="TrafficControllerResource"/>.
     /// </summary>
     public partial class FrontendCollection : ArmCollection, IEnumerable<FrontendResource>, IAsyncEnumerable<FrontendResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FrontendResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FrontendResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontendResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontendFrontendsInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FrontendResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FrontendResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontendResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontendFrontendsInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

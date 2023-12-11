@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Protection container mapping properties. </summary>
     public partial class ProtectionContainerMappingProperties
     {
-        /// <summary> Initializes a new instance of ProtectionContainerMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionContainerMappingProperties"/>. </summary>
         internal ProtectionContainerMappingProperties()
         {
             HealthErrorDetails = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of ProtectionContainerMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionContainerMappingProperties"/>. </summary>
         /// <param name="targetProtectionContainerId"> Paired protection container ARM ID. </param>
         /// <param name="targetProtectionContainerFriendlyName"> Friendly name of paired container. </param>
         /// <param name="providerSpecificDetails">

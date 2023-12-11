@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> The common properties of a cluster. </summary>
     public partial class CommonClusterProperties
     {
-        /// <summary> Initializes a new instance of CommonClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommonClusterProperties"/>. </summary>
         public CommonClusterProperties()
         {
             Hosts = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CommonClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommonClusterProperties"/>. </summary>
         /// <param name="clusterSize"> The cluster size. </param>
         /// <param name="provisioningState"> The state of the cluster provisioning. </param>
         /// <param name="clusterId"> The identity. </param>

@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.MySql
 {
     /// <summary>
     /// A Class representing a MySqlFirewallRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MySqlFirewallRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMySqlFirewallRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MySqlServerResource" /> using the GetMySqlFirewallRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlFirewallRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMySqlFirewallRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MySqlServerResource"/> using the GetMySqlFirewallRule method.
     /// </summary>
     public partial class MySqlFirewallRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MySqlFirewallRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="firewallRuleName"> The firewallRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/firewallRules/{firewallRuleName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.MySql
         private readonly FirewallRulesRestOperations _mySqlFirewallRuleFirewallRulesRestClient;
         private readonly MySqlFirewallRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers/firewallRules";
+
         /// <summary> Initializes a new instance of the <see cref="MySqlFirewallRuleResource"/> class for mocking. </summary>
         protected MySqlFirewallRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MySqlFirewallRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlFirewallRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MySqlFirewallRuleResource(ArmClient client, MySqlFirewallRuleData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.MySql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers/firewallRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

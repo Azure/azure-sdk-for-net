@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Paginated list of applied reservations. </summary>
     public partial class AppliedReservationList
     {
-        /// <summary> Initializes a new instance of AppliedReservationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppliedReservationList"/>. </summary>
         internal AppliedReservationList()
         {
             Value = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppliedReservationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppliedReservationList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> Url to get the next page of reservations. </param>
         internal AppliedReservationList(IReadOnlyList<string> value, string nextLink)

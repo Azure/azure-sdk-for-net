@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Prometheus addon profile for the container service cluster. </summary>
     internal partial class ManagedClusterAzureMonitorProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterAzureMonitorProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAzureMonitorProfile"/>. </summary>
         public ManagedClusterAzureMonitorProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterAzureMonitorProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAzureMonitorProfile"/>. </summary>
         /// <param name="metrics"> Metrics profile for the prometheus service addon. </param>
         internal ManagedClusterAzureMonitorProfile(ManagedClusterMonitorProfileMetrics metrics)
         {

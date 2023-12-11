@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Description of a Virtual Network that is useable for private site access. </summary>
     public partial class PrivateAccessVirtualNetwork
     {
-        /// <summary> Initializes a new instance of PrivateAccessVirtualNetwork. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateAccessVirtualNetwork"/>. </summary>
         public PrivateAccessVirtualNetwork()
         {
             Subnets = new ChangeTrackingList<PrivateAccessSubnet>();
         }
 
-        /// <summary> Initializes a new instance of PrivateAccessVirtualNetwork. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateAccessVirtualNetwork"/>. </summary>
         /// <param name="name"> The name of the Virtual Network. </param>
         /// <param name="key"> The key (ID) of the Virtual Network. </param>
         /// <param name="resourceId"> The ARM uri of the Virtual Network. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> configuration for the servers offering subPlan. </summary>
     internal partial class DefenderForServersAwsOfferingSubPlan
     {
-        /// <summary> Initializes a new instance of DefenderForServersAwsOfferingSubPlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersAwsOfferingSubPlan"/>. </summary>
         public DefenderForServersAwsOfferingSubPlan()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForServersAwsOfferingSubPlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersAwsOfferingSubPlan"/>. </summary>
         /// <param name="availableSubPlanType"> The available sub plans. </param>
         internal DefenderForServersAwsOfferingSubPlan(AvailableSubPlanType? availableSubPlanType)
         {

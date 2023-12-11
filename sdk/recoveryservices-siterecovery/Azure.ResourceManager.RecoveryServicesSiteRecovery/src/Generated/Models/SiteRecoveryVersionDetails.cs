@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Version related details. </summary>
     public partial class SiteRecoveryVersionDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryVersionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVersionDetails"/>. </summary>
         internal SiteRecoveryVersionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryVersionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVersionDetails"/>. </summary>
         /// <param name="version"> The agent version. </param>
         /// <param name="expireOn"> Version expiry date. </param>
         /// <param name="status"> A value indicating whether security update required. </param>

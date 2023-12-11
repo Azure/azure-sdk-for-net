@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of ExpressRoute gateways. </summary>
     internal partial class ExpressRouteGatewayList
     {
-        /// <summary> Initializes a new instance of ExpressRouteGatewayList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayList"/>. </summary>
         internal ExpressRouteGatewayList()
         {
             Value = new ChangeTrackingList<ExpressRouteGatewayData>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteGatewayList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayList"/>. </summary>
         /// <param name="value"> List of ExpressRoute gateways. </param>
         internal ExpressRouteGatewayList(IReadOnlyList<ExpressRouteGatewayData> value)
         {

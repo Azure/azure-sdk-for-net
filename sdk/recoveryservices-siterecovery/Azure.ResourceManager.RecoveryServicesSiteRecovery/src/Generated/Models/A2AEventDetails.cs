@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Model class for event details of a A2A event. </summary>
     public partial class A2AEventDetails : SiteRecoveryEventProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of A2AEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AEventDetails"/>. </summary>
         internal A2AEventDetails()
         {
             InstanceType = "A2A";
         }
 
-        /// <summary> Initializes a new instance of A2AEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AEventDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="protectedItemName"> The protected item arm name. </param>
         /// <param name="fabricObjectId"> The azure vm arm id. </param>

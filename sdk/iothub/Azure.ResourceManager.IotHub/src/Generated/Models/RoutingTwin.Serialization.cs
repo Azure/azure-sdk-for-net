@@ -21,7 +21,10 @@ namespace Azure.ResourceManager.IotHub.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Tags);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Tags.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Tags))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(Properties))

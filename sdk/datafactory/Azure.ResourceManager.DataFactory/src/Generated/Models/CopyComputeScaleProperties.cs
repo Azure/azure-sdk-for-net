@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> CopyComputeScale properties for managed integration runtime. </summary>
     public partial class CopyComputeScaleProperties
     {
-        /// <summary> Initializes a new instance of CopyComputeScaleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyComputeScaleProperties"/>. </summary>
         public CopyComputeScaleProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of CopyComputeScaleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyComputeScaleProperties"/>. </summary>
         /// <param name="dataIntegrationUnit"> DIU number setting reserved for copy activity execution. Supported values are multiples of 4 in range 4-256. </param>
         /// <param name="timeToLive"> Time to live (in minutes) setting of integration runtime which will execute copy activity. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

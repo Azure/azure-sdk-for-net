@@ -5,12 +5,12 @@
 
 using System;
 
-namespace Azure.AI.OpenAI
-{
-    // Custom code note: we explicitly pre-set the visibility of the response format "enum-like" to internal as
-    // response format will be handled by separate method signatures for URL/b64/etc..
+namespace Azure.AI.OpenAI;
 
-    internal readonly partial struct ImageGenerationResponseFormat : IEquatable<ImageGenerationResponseFormat>
-    {
-    }
+// CUSTOM CODE NOTE:
+//   This manages the intended internal visibility of the response format, which is instead handled by separate
+//   methods in .NET.
+
+internal readonly partial struct ImageGenerationResponseFormat : IEquatable<ImageGenerationResponseFormat>
+{
 }

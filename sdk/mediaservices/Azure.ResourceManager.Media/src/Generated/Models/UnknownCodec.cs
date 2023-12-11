@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The UnknownCodec. </summary>
     internal partial class UnknownCodec : MediaCodecBase
     {
-        /// <summary> Initializes a new instance of UnknownCodec. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCodec"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="label"> An optional label for the codec. The label can be used to control muxing behavior. </param>
         internal UnknownCodec(string odataType, string label) : base(odataType, label)

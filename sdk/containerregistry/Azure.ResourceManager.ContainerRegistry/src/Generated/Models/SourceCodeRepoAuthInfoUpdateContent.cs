@@ -10,9 +10,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The authorization properties for accessing the source code repository. </summary>
     public partial class SourceCodeRepoAuthInfoUpdateContent
     {
-        /// <summary> Initializes a new instance of SourceCodeRepoAuthInfoUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceCodeRepoAuthInfoUpdateContent"/>. </summary>
         public SourceCodeRepoAuthInfoUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SourceCodeRepoAuthInfoUpdateContent"/>. </summary>
+        /// <param name="tokenType"> The type of Auth token. </param>
+        /// <param name="token"> The access token used to access the source control provider. </param>
+        /// <param name="refreshToken"> The refresh token used to refresh the access token. </param>
+        /// <param name="scope"> The scope of the access token. </param>
+        /// <param name="expiresIn"> Time in seconds that the token remains valid. </param>
+        internal SourceCodeRepoAuthInfoUpdateContent(SourceCodeRepoAuthTokenType? tokenType, string token, string refreshToken, string scope, int? expiresIn)
+        {
+            TokenType = tokenType;
+            Token = token;
+            RefreshToken = refreshToken;
+            Scope = scope;
+            ExpiresIn = expiresIn;
         }
 
         /// <summary> The type of Auth token. </summary>

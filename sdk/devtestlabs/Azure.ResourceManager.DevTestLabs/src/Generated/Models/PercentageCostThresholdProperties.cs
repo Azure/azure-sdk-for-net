@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of a percentage cost threshold. </summary>
     internal partial class PercentageCostThresholdProperties
     {
-        /// <summary> Initializes a new instance of PercentageCostThresholdProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PercentageCostThresholdProperties"/>. </summary>
         public PercentageCostThresholdProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of PercentageCostThresholdProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PercentageCostThresholdProperties"/>. </summary>
         /// <param name="thresholdValue"> The cost threshold value. </param>
         internal PercentageCostThresholdProperties(double? thresholdValue)
         {

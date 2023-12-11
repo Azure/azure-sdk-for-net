@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Resource group export result. </summary>
     public partial class ResourceGroupExportResult
     {
-        /// <summary> Initializes a new instance of ResourceGroupExportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupExportResult"/>. </summary>
         internal ResourceGroupExportResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceGroupExportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupExportResult"/>. </summary>
         /// <param name="template"> The template content. </param>
         /// <param name="error"> The template export error. </param>
         internal ResourceGroupExportResult(BinaryData template, ResponseError error)
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

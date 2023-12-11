@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Galleries operation response. </summary>
     internal partial class GalleryList
     {
-        /// <summary> Initializes a new instance of GalleryList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryList"/>. </summary>
         /// <param name="value"> A list of galleries. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GalleryList(IEnumerable<GalleryData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of GalleryList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryList"/>. </summary>
         /// <param name="value"> A list of galleries. </param>
         /// <param name="nextLink"> The uri to fetch the next page of galleries. Call ListNext() with this to fetch the next page of galleries. </param>
         internal GalleryList(IReadOnlyList<GalleryData> value, string nextLink)

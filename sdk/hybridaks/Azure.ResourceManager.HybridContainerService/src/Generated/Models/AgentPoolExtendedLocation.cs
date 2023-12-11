@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The AgentPoolExtendedLocation. </summary>
     public partial class AgentPoolExtendedLocation
     {
-        /// <summary> Initializes a new instance of AgentPoolExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolExtendedLocation"/>. </summary>
         public AgentPoolExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentPoolExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolExtendedLocation"/>. </summary>
         /// <param name="agentPoolExtendedLocationType"> The extended location type. </param>
         /// <param name="name"> The extended location name. </param>
         internal AgentPoolExtendedLocation(string agentPoolExtendedLocationType, string name)

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm NIC details. </summary>
     public partial class InMageRcmNicDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmNicDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmNicDetails"/>. </summary>
         internal InMageRcmNicDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InMageRcmNicDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmNicDetails"/>. </summary>
         /// <param name="nicId"> The NIC Id. </param>
         /// <param name="isPrimaryNic"> A value indicating whether this is the primary NIC. </param>
         /// <param name="isSelectedForFailover"> A value indicating whether this NIC is selected for failover. </param>

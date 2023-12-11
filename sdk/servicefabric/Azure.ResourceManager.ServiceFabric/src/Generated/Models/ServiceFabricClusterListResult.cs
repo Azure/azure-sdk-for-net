@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Cluster list results. </summary>
     internal partial class ServiceFabricClusterListResult
     {
-        /// <summary> Initializes a new instance of ServiceFabricClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricClusterListResult"/>. </summary>
         internal ServiceFabricClusterListResult()
         {
             Value = new ChangeTrackingList<ServiceFabricClusterData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricClusterListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal ServiceFabricClusterListResult(IReadOnlyList<ServiceFabricClusterData> value, string nextLink)

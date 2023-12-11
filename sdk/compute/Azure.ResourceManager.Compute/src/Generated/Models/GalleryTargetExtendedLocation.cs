@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The GalleryTargetExtendedLocation. </summary>
     public partial class GalleryTargetExtendedLocation
     {
-        /// <summary> Initializes a new instance of GalleryTargetExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryTargetExtendedLocation"/>. </summary>
         public GalleryTargetExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryTargetExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryTargetExtendedLocation"/>. </summary>
         /// <param name="name"> The name of the region. </param>
         /// <param name="extendedLocation"> The name of the extended location. </param>
         /// <param name="extendedLocationReplicaCount"> The number of replicas of the Image Version to be created per extended location. This property is updatable. </param>

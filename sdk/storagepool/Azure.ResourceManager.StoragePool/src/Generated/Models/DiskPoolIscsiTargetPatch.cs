@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Payload for iSCSI Target update requests. </summary>
     public partial class DiskPoolIscsiTargetPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of DiskPoolIscsiTargetPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPoolIscsiTargetPatch"/>. </summary>
         public DiskPoolIscsiTargetPatch()
         {
             ManagedByExtended = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             Luns = new ChangeTrackingList<ManagedDiskIscsiLun>();
         }
 
-        /// <summary> Initializes a new instance of DiskPoolIscsiTargetPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPoolIscsiTargetPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

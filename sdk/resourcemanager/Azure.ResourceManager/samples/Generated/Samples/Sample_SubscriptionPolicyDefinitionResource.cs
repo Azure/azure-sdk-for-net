@@ -159,9 +159,9 @@ Description = "Resource name suffix",
 ParameterType = ArmPolicyParameterType.Integer,
 AllowedValues =
 {
-BinaryData.FromString("0"),BinaryData.FromString("30"),BinaryData.FromString("90"),BinaryData.FromString("180"),BinaryData.FromString("365")
+BinaryData.FromString("\"0\""),BinaryData.FromString("\"30\""),BinaryData.FromString("\"90\""),BinaryData.FromString("\"180\""),BinaryData.FromString("\"365\"")
 },
-DefaultValue = BinaryData.FromString("365"),
+DefaultValue = BinaryData.FromString("\"365\""),
 Metadata = new ParameterDefinitionsValueMetadata()
 {
 DisplayName = "Required retention (days)",

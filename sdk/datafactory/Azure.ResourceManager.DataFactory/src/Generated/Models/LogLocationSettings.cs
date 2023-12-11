@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Log location settings. </summary>
     public partial class LogLocationSettings
     {
-        /// <summary> Initializes a new instance of LogLocationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogLocationSettings"/>. </summary>
         /// <param name="linkedServiceName"> Log storage linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public LogLocationSettings(DataFactoryLinkedServiceReference linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceName = linkedServiceName;
         }
 
-        /// <summary> Initializes a new instance of LogLocationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogLocationSettings"/>. </summary>
         /// <param name="linkedServiceName"> Log storage linked service reference. </param>
         /// <param name="path"> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </param>
         internal LogLocationSettings(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> path)

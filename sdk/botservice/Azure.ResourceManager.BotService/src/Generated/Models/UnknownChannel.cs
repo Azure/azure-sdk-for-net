@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The UnknownChannel. </summary>
     internal partial class UnknownChannel : BotChannelProperties
     {
-        /// <summary> Initializes a new instance of UnknownChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownChannel"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>

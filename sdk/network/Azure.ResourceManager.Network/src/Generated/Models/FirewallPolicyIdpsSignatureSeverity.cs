@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Describes the severity of signature: 1 - Low, 2 - Medium, 3 - High. </summary>
+    /// <summary> Describes the severity of signature: 1 - High, 2 - Medium, 3 - Low. </summary>
     public enum FirewallPolicyIdpsSignatureSeverity
     {
         /// <summary> 1. </summary>

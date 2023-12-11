@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The UnknownIlrRequest. </summary>
     internal partial class UnknownIlrRequest : IlrContent
     {
-        /// <summary> Initializes a new instance of UnknownIlrRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownIlrRequest"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         internal UnknownIlrRequest(string objectType) : base(objectType)
         {

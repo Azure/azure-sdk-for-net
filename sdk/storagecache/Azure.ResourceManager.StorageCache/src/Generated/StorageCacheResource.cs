@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.StorageCache
 {
     /// <summary>
     /// A Class representing a StorageCache along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageCacheResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStorageCacheResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetStorageCache method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageCacheResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStorageCacheResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetStorageCache method.
     /// </summary>
     public partial class StorageCacheResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StorageCacheResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="cacheName"> The cacheName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cacheName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.StorageCache
         private readonly CachesRestOperations _storageCacheCachesRestClient;
         private readonly StorageCacheData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StorageCache/caches";
+
         /// <summary> Initializes a new instance of the <see cref="StorageCacheResource"/> class for mocking. </summary>
         protected StorageCacheResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StorageCacheResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageCacheResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StorageCacheResource(ArmClient client, StorageCacheData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.StorageCache
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StorageCache/caches";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <returns> An object representing collection of StorageTargetResources and their operations over a StorageTargetResource. </returns>
         public virtual StorageTargetCollection GetStorageTargets()
         {
-            return GetCachedClient(Client => new StorageTargetCollection(Client, Id));
+            return GetCachedClient(client => new StorageTargetCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.StorageCache
         /// </summary>
         /// <param name="storageTargetName"> Name of Storage Target. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageTargetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StorageTargetResource>> GetStorageTargetAsync(string storageTargetName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.StorageCache
         /// </summary>
         /// <param name="storageTargetName"> Name of Storage Target. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageTargetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StorageTargetResource> GetStorageTarget(string storageTargetName, CancellationToken cancellationToken = default)
         {

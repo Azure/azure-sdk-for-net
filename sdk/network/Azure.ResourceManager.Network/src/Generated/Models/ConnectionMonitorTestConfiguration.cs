@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes a connection monitor test configuration. </summary>
     public partial class ConnectionMonitorTestConfiguration
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorTestConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTestConfiguration"/>. </summary>
         /// <param name="name"> The name of the connection monitor test configuration. </param>
         /// <param name="protocol"> The protocol to use in test evaluation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
             Protocol = protocol;
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorTestConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTestConfiguration"/>. </summary>
         /// <param name="name"> The name of the connection monitor test configuration. </param>
         /// <param name="testFrequencySec"> The frequency of test evaluation, in seconds. </param>
         /// <param name="protocol"> The protocol to use in test evaluation. </param>

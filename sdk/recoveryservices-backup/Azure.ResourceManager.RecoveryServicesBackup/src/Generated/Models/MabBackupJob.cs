@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> MAB workload-specific job. </summary>
     public partial class MabBackupJob : BackupGenericJob
     {
-        /// <summary> Initializes a new instance of MabBackupJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabBackupJob"/>. </summary>
         public MabBackupJob()
         {
             ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             JobType = "MabJob";
         }
 
-        /// <summary> Initializes a new instance of MabBackupJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabBackupJob"/>. </summary>
         /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
         /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
         /// <param name="operation"> The operation name. </param>

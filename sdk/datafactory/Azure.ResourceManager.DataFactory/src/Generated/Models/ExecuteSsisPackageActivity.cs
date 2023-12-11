@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Execute SSIS package activity. </summary>
     public partial class ExecuteSsisPackageActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of ExecuteSsisPackageActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteSsisPackageActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="packageLocation"> SSIS package location. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "ExecuteSSISPackage";
         }
 
-        /// <summary> Initializes a new instance of ExecuteSsisPackageActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteSsisPackageActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

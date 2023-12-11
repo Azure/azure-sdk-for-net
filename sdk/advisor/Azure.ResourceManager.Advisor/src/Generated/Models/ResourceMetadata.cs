@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Advisor.Models
     /// <summary> Recommendation resource metadata. </summary>
     public partial class ResourceMetadata
     {
-        /// <summary> Initializes a new instance of ResourceMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMetadata"/>. </summary>
         public ResourceMetadata()
         {
             Action = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ResourceMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMetadata"/>. </summary>
         /// <param name="resourceId"> Azure resource Id of the assessed resource. </param>
         /// <param name="source"> Source from which recommendation is generated. </param>
         /// <param name="action"> The action to view resource. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

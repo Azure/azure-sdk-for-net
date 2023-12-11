@@ -53,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         {
             builder.Services.TryAddSingleton<IConfigureOptions<AzureMonitorOptions>,
                         DefaultAzureMonitorOptions>();
-            return builder.UseAzureMonitor(o => o = new AzureMonitorOptions());
+            return builder.UseAzureMonitor(o => { });
         }
 
         /// <summary>

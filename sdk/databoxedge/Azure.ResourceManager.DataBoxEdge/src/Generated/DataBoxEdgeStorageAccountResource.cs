@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
     /// A Class representing a DataBoxEdgeStorageAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataBoxEdgeStorageAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataBoxEdgeStorageAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeDeviceResource" /> using the GetDataBoxEdgeStorageAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataBoxEdgeStorageAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataBoxEdgeStorageAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeDeviceResource"/> using the GetDataBoxEdgeStorageAccount method.
     /// </summary>
     public partial class DataBoxEdgeStorageAccountResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataBoxEdgeStorageAccountResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="deviceName"> The deviceName. </param>
+        /// <param name="storageAccountName"> The storageAccountName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.DataBoxEdge
         private readonly StorageAccountsRestOperations _dataBoxEdgeStorageAccountStorageAccountsRestClient;
         private readonly DataBoxEdgeStorageAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccounts";
+
         /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeStorageAccountResource"/> class for mocking. </summary>
         protected DataBoxEdgeStorageAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataBoxEdgeStorageAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeStorageAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataBoxEdgeStorageAccountResource(ArmClient client, DataBoxEdgeStorageAccountData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.DataBoxEdge
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An object representing collection of DataBoxEdgeStorageContainerResources and their operations over a DataBoxEdgeStorageContainerResource. </returns>
         public virtual DataBoxEdgeStorageContainerCollection GetDataBoxEdgeStorageContainers()
         {
-            return GetCachedClient(Client => new DataBoxEdgeStorageContainerCollection(Client, Id));
+            return GetCachedClient(client => new DataBoxEdgeStorageContainerCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +112,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="containerName"> The container Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataBoxEdgeStorageContainerResource>> GetDataBoxEdgeStorageContainerAsync(string containerName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +135,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="containerName"> The container Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataBoxEdgeStorageContainerResource> GetDataBoxEdgeStorageContainer(string containerName, CancellationToken cancellationToken = default)
         {
