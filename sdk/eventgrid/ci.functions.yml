@@ -11,6 +11,7 @@ trigger:
     include:
       - sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid
       - sdk/eventgrid/service.projects
+      - sdk/eventgrid/ci.functions.yml
 
 pr:
   branches:
@@ -23,6 +24,7 @@ pr:
     include:
       - sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid
       - sdk/eventgrid/service.projects
+      - sdk/eventgrid/ci.functions.yml
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
