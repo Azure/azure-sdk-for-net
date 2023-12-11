@@ -5,7 +5,6 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text;
-using System.Threading;
 
 namespace OpenAI;
 
@@ -25,7 +24,8 @@ public class OpenAIClient
         _endpoint = endpoint;
         _credential = credential;
 
-        _pipeline = ClientPipeline.Create(options, new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer"));
+        var authenticationPolicy = KeyCredentialAuthenticationPolicy.CreateHeaderPolicy(_credential, "Authorization", "Bearer");
+        _pipeline = ClientPipeline.Create(options, authenticationPolicy);
     }
 
     public virtual ClientResult<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions)
