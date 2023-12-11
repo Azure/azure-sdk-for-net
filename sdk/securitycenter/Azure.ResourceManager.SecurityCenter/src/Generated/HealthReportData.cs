@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class HealthReportData : ResourceData
     {
-        /// <summary> Initializes a new instance of HealthReportData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthReportData"/>. </summary>
         public HealthReportData()
         {
             AffectedDefendersPlans = new ChangeTrackingList<string>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Issues = new ChangeTrackingList<Issue>();
         }
 
-        /// <summary> Initializes a new instance of HealthReportData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthReportData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

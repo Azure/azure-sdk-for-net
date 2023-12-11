@@ -24,10 +24,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// The available derived classes include <see cref="GcpMemberOrganizationalInfo"/> and <see cref="GcpParentOrganizationalInfo"/>.
         /// </param>
         /// <param name="projectDetails"> The Gcp project's details. </param>
-        internal GcpProjectEnvironment(EnvironmentType environmentType, GcpOrganizationalInfo organizationalData, GcpProjectDetails projectDetails) : base(environmentType)
+        /// <param name="scanInterval"> Scan interval in hours (value should be between 1-hour to 24-hours). </param>
+        internal GcpProjectEnvironment(EnvironmentType environmentType, GcpOrganizationalInfo organizationalData, GcpProjectDetails projectDetails, long? scanInterval) : base(environmentType)
         {
             OrganizationalData = organizationalData;
             ProjectDetails = projectDetails;
+            ScanInterval = scanInterval;
             EnvironmentType = environmentType;
         }
 
@@ -39,5 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public GcpOrganizationalInfo OrganizationalData { get; set; }
         /// <summary> The Gcp project's details. </summary>
         public GcpProjectDetails ProjectDetails { get; set; }
+        /// <summary> Scan interval in hours (value should be between 1-hour to 24-hours). </summary>
+        public long? ScanInterval { get; set; }
     }
 }

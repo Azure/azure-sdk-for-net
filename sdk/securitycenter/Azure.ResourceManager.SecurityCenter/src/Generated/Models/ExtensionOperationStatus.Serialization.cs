@@ -18,17 +18,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<ExtensionOperationStatusCode> code = default;
+            Optional<string> code = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    code = new ExtensionOperationStatusCode(property.Value.GetString());
+                    code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"u8))
@@ -37,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new ExtensionOperationStatus(Optional.ToNullable(code), message.Value);
+            return new ExtensionOperationStatus(code.Value, message.Value);
         }
     }
 }

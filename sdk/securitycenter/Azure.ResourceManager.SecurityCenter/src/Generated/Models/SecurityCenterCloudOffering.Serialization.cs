@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "CspmMonitorAws": return CspmMonitorAwsOffering.DeserializeCspmMonitorAwsOffering(element);
                     case "CspmMonitorAzureDevOps": return CspmMonitorAzureDevOpsOffering.DeserializeCspmMonitorAzureDevOpsOffering(element);
                     case "CspmMonitorGcp": return CspmMonitorGcpOffering.DeserializeCspmMonitorGcpOffering(element);
+                    case "CspmMonitorGitLab": return CspmMonitorGitLabOffering.DeserializeCspmMonitorGitLabOffering(element);
                     case "CspmMonitorGithub": return CspmMonitorGithubOffering.DeserializeCspmMonitorGithubOffering(element);
                     case "DefenderCspmAws": return DefenderCspmAwsOffering.DeserializeDefenderCspmAwsOffering(element);
                     case "DefenderCspmGcp": return DefenderCspmGcpOffering.DeserializeDefenderCspmGcpOffering(element);
@@ -41,6 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "DefenderForDatabasesAws": return DefenderForDatabasesAwsOffering.DeserializeDefenderForDatabasesAwsOffering(element);
                     case "DefenderForDatabasesGcp": return DefenderForDatabasesGcpOffering.DeserializeDefenderForDatabasesGcpOffering(element);
                     case "DefenderForDevOpsAzureDevOps": return DefenderForDevOpsAzureDevOpsOffering.DeserializeDefenderForDevOpsAzureDevOpsOffering(element);
+                    case "DefenderForDevOpsGitLab": return DefenderForDevOpsGitLabOffering.DeserializeDefenderForDevOpsGitLabOffering(element);
                     case "DefenderForDevOpsGithub": return DefenderForDevOpsGithubOffering.DeserializeDefenderForDevOpsGithubOffering(element);
                     case "DefenderForServersAws": return DefenderForServersAwsOffering.DeserializeDefenderForServersAwsOffering(element);
                     case "DefenderForServersGcp": return DefenderForServersGcpOffering.DeserializeDefenderForServersGcpOffering(element);

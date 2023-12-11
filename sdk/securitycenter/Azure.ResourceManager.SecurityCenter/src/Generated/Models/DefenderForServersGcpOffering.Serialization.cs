@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("subPlan"u8);
                 writer.WriteObjectValue(SubPlan);
             }
+            if (Optional.IsDefined(VmScanners))
+            {
+                writer.WritePropertyName("vmScanners"u8);
+                writer.WriteObjectValue(VmScanners);
+            }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
             writer.WriteEndObject();
@@ -56,6 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning> vaAutoProvisioning = default;
             Optional<DefenderForServersGcpOfferingMdeAutoProvisioning> mdeAutoProvisioning = default;
             Optional<DefenderForServersGcpOfferingSubPlan> subPlan = default;
+            Optional<DefenderForServersGcpOfferingVmScanners> vmScanners = default;
             OfferingType offeringType = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
@@ -105,6 +111,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     subPlan = DefenderForServersGcpOfferingSubPlan.DeserializeDefenderForServersGcpOfferingSubPlan(property.Value);
                     continue;
                 }
+                if (property.NameEquals("vmScanners"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmScanners = DefenderForServersGcpOfferingVmScanners.DeserializeDefenderForServersGcpOfferingVmScanners(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("offeringType"u8))
                 {
                     offeringType = new OfferingType(property.Value.GetString());
@@ -116,7 +131,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new DefenderForServersGcpOffering(offeringType, description.Value, defenderForServers.Value, arcAutoProvisioning.Value, vaAutoProvisioning.Value, mdeAutoProvisioning.Value, subPlan.Value);
+            return new DefenderForServersGcpOffering(offeringType, description.Value, defenderForServers.Value, arcAutoProvisioning.Value, vaAutoProvisioning.Value, mdeAutoProvisioning.Value, subPlan.Value, vmScanners.Value);
         }
     }
 }

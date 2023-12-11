@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("rds"u8);
                 writer.WriteObjectValue(Rds);
             }
+            if (Optional.IsDefined(DatabasesDspm))
+            {
+                writer.WritePropertyName("databasesDspm"u8);
+                writer.WriteObjectValue(DatabasesDspm);
+            }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
             writer.WriteEndObject();
@@ -38,6 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             Optional<DefenderForDatabasesAwsOfferingArcAutoProvisioning> arcAutoProvisioning = default;
             Optional<DefenderForDatabasesAwsOfferingRds> rds = default;
+            Optional<DefenderFoDatabasesAwsOfferingDatabasesDspm> databasesDspm = default;
             OfferingType offeringType = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
@@ -60,6 +66,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     rds = DefenderForDatabasesAwsOfferingRds.DeserializeDefenderForDatabasesAwsOfferingRds(property.Value);
                     continue;
                 }
+                if (property.NameEquals("databasesDspm"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    databasesDspm = DefenderFoDatabasesAwsOfferingDatabasesDspm.DeserializeDefenderFoDatabasesAwsOfferingDatabasesDspm(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("offeringType"u8))
                 {
                     offeringType = new OfferingType(property.Value.GetString());
@@ -71,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new DefenderForDatabasesAwsOffering(offeringType, description.Value, arcAutoProvisioning.Value, rds.Value);
+            return new DefenderForDatabasesAwsOffering(offeringType, description.Value, arcAutoProvisioning.Value, rds.Value, databasesDspm.Value);
         }
     }
 }

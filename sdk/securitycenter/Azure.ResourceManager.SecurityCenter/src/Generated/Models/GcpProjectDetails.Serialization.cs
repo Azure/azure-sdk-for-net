@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> projectNumber = default;
             Optional<string> projectId = default;
             Optional<string> workloadIdentityPoolId = default;
+            Optional<string> projectName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("projectNumber"u8))
@@ -54,8 +55,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     workloadIdentityPoolId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("projectName"u8))
+                {
+                    projectName = property.Value.GetString();
+                    continue;
+                }
             }
-            return new GcpProjectDetails(projectNumber.Value, projectId.Value, workloadIdentityPoolId.Value);
+            return new GcpProjectDetails(projectNumber.Value, projectId.Value, workloadIdentityPoolId.Value, projectName.Value);
         }
     }
 }

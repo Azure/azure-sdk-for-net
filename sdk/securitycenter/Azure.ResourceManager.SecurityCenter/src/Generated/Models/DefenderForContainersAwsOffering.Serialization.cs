@@ -65,6 +65,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("scubaExternalId"u8);
                 writer.WriteStringValue(ScubaExternalId);
             }
+            if (Optional.IsDefined(MdcContainersImageAssessment))
+            {
+                writer.WritePropertyName("mdcContainersImageAssessment"u8);
+                writer.WriteObjectValue(MdcContainersImageAssessment);
+            }
+            if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
+            {
+                writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
+                writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S);
+            }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
             writer.WriteEndObject();
@@ -86,6 +96,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<bool> autoProvisioning = default;
             Optional<long> kubeAuditRetentionTime = default;
             Optional<string> scubaExternalId = default;
+            Optional<DefenderForContainersAwsOfferingMdcContainersImageAssessment> mdcContainersImageAssessment = default;
+            Optional<DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S> mdcContainersAgentlessDiscoveryK8s = default;
             OfferingType offeringType = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
@@ -176,6 +188,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     scubaExternalId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("mdcContainersImageAssessment"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mdcContainersImageAssessment = DefenderForContainersAwsOfferingMdcContainersImageAssessment.DeserializeDefenderForContainersAwsOfferingMdcContainersImageAssessment(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("mdcContainersAgentlessDiscoveryK8s"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mdcContainersAgentlessDiscoveryK8s = DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("offeringType"u8))
                 {
                     offeringType = new OfferingType(property.Value.GetString());
@@ -187,7 +217,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new DefenderForContainersAwsOffering(offeringType, description.Value, kubernetesService.Value, kubernetesScubaReader.Value, cloudWatchToKinesis.Value, kinesisToS3.Value, containerVulnerabilityAssessment.Value, containerVulnerabilityAssessmentTask.Value, Optional.ToNullable(enableContainerVulnerabilityAssessment), Optional.ToNullable(autoProvisioning), Optional.ToNullable(kubeAuditRetentionTime), scubaExternalId.Value);
+            return new DefenderForContainersAwsOffering(offeringType, description.Value, kubernetesService.Value, kubernetesScubaReader.Value, cloudWatchToKinesis.Value, kinesisToS3.Value, containerVulnerabilityAssessment.Value, containerVulnerabilityAssessmentTask.Value, Optional.ToNullable(enableContainerVulnerabilityAssessment), Optional.ToNullable(autoProvisioning), Optional.ToNullable(kubeAuditRetentionTime), scubaExternalId.Value, mdcContainersImageAssessment.Value, mdcContainersAgentlessDiscoveryK8s.Value);
         }
     }
 }

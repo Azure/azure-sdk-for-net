@@ -25,11 +25,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="excludedProjectNumbers"> If the multi cloud account is of membership type organization, list of accounts excluded from offering. </param>
         /// <param name="serviceAccountEmailAddress"> The service account email address which represents the organization level permissions container. </param>
         /// <param name="workloadIdentityProviderId"> The GCP workload identity provider id which represents the permissions required to auto provision security connectors. </param>
-        internal GcpParentOrganizationalInfo(OrganizationMembershipType organizationMembershipType, IList<string> excludedProjectNumbers, string serviceAccountEmailAddress, string workloadIdentityProviderId) : base(organizationMembershipType)
+        /// <param name="organizationName"> GCP organization name. </param>
+        internal GcpParentOrganizationalInfo(OrganizationMembershipType organizationMembershipType, IList<string> excludedProjectNumbers, string serviceAccountEmailAddress, string workloadIdentityProviderId, string organizationName) : base(organizationMembershipType)
         {
             ExcludedProjectNumbers = excludedProjectNumbers;
             ServiceAccountEmailAddress = serviceAccountEmailAddress;
             WorkloadIdentityProviderId = workloadIdentityProviderId;
+            OrganizationName = organizationName;
             OrganizationMembershipType = organizationMembershipType;
         }
 
@@ -39,5 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string ServiceAccountEmailAddress { get; set; }
         /// <summary> The GCP workload identity provider id which represents the permissions required to auto provision security connectors. </summary>
         public string WorkloadIdentityProviderId { get; set; }
+        /// <summary> GCP organization name. </summary>
+        public string OrganizationName { get; }
     }
 }

@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "AzureDevOpsScope": return AzureDevOpsScopeEnvironment.DeserializeAzureDevOpsScopeEnvironment(element);
                     case "GcpProject": return GcpProjectEnvironment.DeserializeGcpProjectEnvironment(element);
                     case "GithubScope": return GithubScopeEnvironment.DeserializeGithubScopeEnvironment(element);
+                    case "GitlabScope": return GitlabScopeEnvironment.DeserializeGitlabScopeEnvironment(element);
                 }
             }
             return UnknownEnvironmentData.DeserializeUnknownEnvironmentData(element);

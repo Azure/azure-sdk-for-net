@@ -24,21 +24,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="vulnerabilityAssessmentAutoProvisioning"> The Vulnerability Assessment autoprovisioning configuration. </param>
         /// <param name="mdeAutoProvisioning"> The Microsoft Defender for Endpoint autoprovisioning configuration. </param>
         /// <param name="subPlan"> configuration for the servers offering subPlan. </param>
-        internal DefenderForServersGcpOffering(OfferingType offeringType, string description, GcpDefenderForServersInfo defenderForServers, DefenderForServersGcpOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning vulnerabilityAssessmentAutoProvisioning, DefenderForServersGcpOfferingMdeAutoProvisioning mdeAutoProvisioning, DefenderForServersGcpOfferingSubPlan subPlan) : base(offeringType, description)
+        /// <param name="vmScanners"> The Microsoft Defender for Server VM scanning configuration. </param>
+        internal DefenderForServersGcpOffering(OfferingType offeringType, string description, GcpDefenderForServersInfo defenderForServers, DefenderForServersGcpOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning vulnerabilityAssessmentAutoProvisioning, DefenderForServersGcpOfferingMdeAutoProvisioning mdeAutoProvisioning, DefenderForServersGcpOfferingSubPlan subPlan, DefenderForServersGcpOfferingVmScanners vmScanners) : base(offeringType, description)
         {
             DefenderForServers = defenderForServers;
             ArcAutoProvisioning = arcAutoProvisioning;
             VulnerabilityAssessmentAutoProvisioning = vulnerabilityAssessmentAutoProvisioning;
             MdeAutoProvisioning = mdeAutoProvisioning;
             SubPlan = subPlan;
+            VmScanners = vmScanners;
             OfferingType = offeringType;
         }
 
         /// <summary> The Defender for servers connection configuration. </summary>
         public GcpDefenderForServersInfo DefenderForServers { get; set; }
         /// <summary> The ARC autoprovisioning configuration. </summary>
-        internal DefenderForServersGcpOfferingArcAutoProvisioning ArcAutoProvisioning { get; set; }
-
+        public DefenderForServersGcpOfferingArcAutoProvisioning ArcAutoProvisioning { get; set; }
         /// <summary> The Vulnerability Assessment autoprovisioning configuration. </summary>
         public DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning VulnerabilityAssessmentAutoProvisioning { get; set; }
         /// <summary> The Microsoft Defender for Endpoint autoprovisioning configuration. </summary>
@@ -56,5 +57,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 SubPlan.AvailableSubPlanType = value;
             }
         }
+
+        /// <summary> The Microsoft Defender for Server VM scanning configuration. </summary>
+        public DefenderForServersGcpOfferingVmScanners VmScanners { get; set; }
     }
 }

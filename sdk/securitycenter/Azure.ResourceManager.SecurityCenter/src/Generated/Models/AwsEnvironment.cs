@@ -5,14 +5,18 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The aws connector environment data. </summary>
+    /// <summary> The AWS connector environment data. </summary>
     public partial class AwsEnvironment : SecurityConnectorEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="AwsEnvironment"/>. </summary>
         public AwsEnvironment()
         {
+            Regions = new ChangeTrackingList<string>();
             EnvironmentType = EnvironmentType.AwsAccount;
         }
 
@@ -23,9 +27,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// Please note <see cref="AwsOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AwsOrganizationalDataMember"/> and <see cref="AwsOrganizationalDataMaster"/>.
         /// </param>
-        internal AwsEnvironment(EnvironmentType environmentType, AwsOrganizationalInfo organizationalData) : base(environmentType)
+        /// <param name="regions"> list of regions to scan. </param>
+        /// <param name="accountName"> The AWS account name. </param>
+        /// <param name="scanInterval"> Scan interval in hours (value should be between 1-hour to 24-hours). </param>
+        internal AwsEnvironment(EnvironmentType environmentType, AwsOrganizationalInfo organizationalData, IList<string> regions, string accountName, long? scanInterval) : base(environmentType)
         {
             OrganizationalData = organizationalData;
+            Regions = regions;
+            AccountName = accountName;
+            ScanInterval = scanInterval;
             EnvironmentType = environmentType;
         }
 
@@ -35,5 +45,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// The available derived classes include <see cref="AwsOrganizationalDataMember"/> and <see cref="AwsOrganizationalDataMaster"/>.
         /// </summary>
         public AwsOrganizationalInfo OrganizationalData { get; set; }
+        /// <summary> list of regions to scan. </summary>
+        public IList<string> Regions { get; }
+        /// <summary> The AWS account name. </summary>
+        public string AccountName { get; }
+        /// <summary> Scan interval in hours (value should be between 1-hour to 24-hours). </summary>
+        public long? ScanInterval { get; set; }
     }
 }

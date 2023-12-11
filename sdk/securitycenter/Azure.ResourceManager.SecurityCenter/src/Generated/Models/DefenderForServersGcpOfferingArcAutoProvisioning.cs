@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The ARC autoprovisioning configuration. </summary>
-    internal partial class DefenderForServersGcpOfferingArcAutoProvisioning
+    public partial class DefenderForServersGcpOfferingArcAutoProvisioning
     {
         /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOfferingArcAutoProvisioning"/>. </summary>
         public DefenderForServersGcpOfferingArcAutoProvisioning()
@@ -17,12 +17,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOfferingArcAutoProvisioning"/>. </summary>
         /// <param name="isEnabled"> Is arc auto provisioning enabled. </param>
-        internal DefenderForServersGcpOfferingArcAutoProvisioning(bool? isEnabled)
+        /// <param name="configuration"> Configuration for servers Arc auto provisioning. </param>
+        internal DefenderForServersGcpOfferingArcAutoProvisioning(bool? isEnabled, DefenderForServersGcpOfferingArcAutoProvisioningConfiguration configuration)
         {
             IsEnabled = isEnabled;
+            Configuration = configuration;
         }
 
         /// <summary> Is arc auto provisioning enabled. </summary>
         public bool? IsEnabled { get; set; }
+        /// <summary> Configuration for servers Arc auto provisioning. </summary>
+        public DefenderForServersGcpOfferingArcAutoProvisioningConfiguration Configuration { get; set; }
     }
 }

@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="description"> The offering description. </param>
         /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
         /// <param name="rds"> The RDS configuration. </param>
-        internal DefenderForDatabasesAwsOffering(OfferingType offeringType, string description, DefenderForDatabasesAwsOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForDatabasesAwsOfferingRds rds) : base(offeringType, description)
+        /// <param name="databasesDspm"> The databases data security posture management (DSPM) configuration. </param>
+        internal DefenderForDatabasesAwsOffering(OfferingType offeringType, string description, DefenderForDatabasesAwsOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForDatabasesAwsOfferingRds rds, DefenderFoDatabasesAwsOfferingDatabasesDspm databasesDspm) : base(offeringType, description)
         {
             ArcAutoProvisioning = arcAutoProvisioning;
             Rds = rds;
+            DatabasesDspm = databasesDspm;
             OfferingType = offeringType;
         }
 
@@ -32,5 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public DefenderForDatabasesAwsOfferingArcAutoProvisioning ArcAutoProvisioning { get; set; }
         /// <summary> The RDS configuration. </summary>
         public DefenderForDatabasesAwsOfferingRds Rds { get; set; }
+        /// <summary> The databases data security posture management (DSPM) configuration. </summary>
+        public DefenderFoDatabasesAwsOfferingDatabasesDspm DatabasesDspm { get; set; }
     }
 }

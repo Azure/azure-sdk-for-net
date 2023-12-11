@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<IList<string>> excludedProjectNumbers = default;
             Optional<string> serviceAccountEmailAddress = default;
             Optional<string> workloadIdentityProviderId = default;
+            Optional<string> organizationName = default;
             OrganizationMembershipType organizationMembershipType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -77,13 +78,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     workloadIdentityProviderId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("organizationName"u8))
+                {
+                    organizationName = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("organizationMembershipType"u8))
                 {
                     organizationMembershipType = new OrganizationMembershipType(property.Value.GetString());
                     continue;
                 }
             }
-            return new GcpParentOrganizationalInfo(organizationMembershipType, Optional.ToList(excludedProjectNumbers), serviceAccountEmailAddress.Value, workloadIdentityProviderId.Value);
+            return new GcpParentOrganizationalInfo(organizationMembershipType, Optional.ToList(excludedProjectNumbers), serviceAccountEmailAddress.Value, workloadIdentityProviderId.Value, organizationName.Value);
         }
     }
 }

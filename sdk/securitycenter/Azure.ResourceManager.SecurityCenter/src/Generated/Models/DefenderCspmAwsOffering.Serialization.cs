@@ -20,6 +20,31 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("vmScanners"u8);
                 writer.WriteObjectValue(VmScanners);
             }
+            if (Optional.IsDefined(DataSensitivityDiscovery))
+            {
+                writer.WritePropertyName("dataSensitivityDiscovery"u8);
+                writer.WriteObjectValue(DataSensitivityDiscovery);
+            }
+            if (Optional.IsDefined(DatabasesDspm))
+            {
+                writer.WritePropertyName("databasesDspm"u8);
+                writer.WriteObjectValue(DatabasesDspm);
+            }
+            if (Optional.IsDefined(Ciem))
+            {
+                writer.WritePropertyName("ciem"u8);
+                writer.WriteObjectValue(Ciem);
+            }
+            if (Optional.IsDefined(MdcContainersImageAssessment))
+            {
+                writer.WritePropertyName("mdcContainersImageAssessment"u8);
+                writer.WriteObjectValue(MdcContainersImageAssessment);
+            }
+            if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
+            {
+                writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
+                writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S);
+            }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
             writer.WriteEndObject();
@@ -32,6 +57,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             Optional<DefenderCspmAwsOfferingVmScanners> vmScanners = default;
+            Optional<DefenderCspmAwsOfferingDataSensitivityDiscovery> dataSensitivityDiscovery = default;
+            Optional<DefenderCspmAwsOfferingDatabasesDspm> databasesDspm = default;
+            Optional<DefenderCspmAwsOfferingCiem> ciem = default;
+            Optional<DefenderCspmAwsOfferingMdcContainersImageAssessment> mdcContainersImageAssessment = default;
+            Optional<DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S> mdcContainersAgentlessDiscoveryK8s = default;
             OfferingType offeringType = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
@@ -45,6 +75,51 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     vmScanners = DefenderCspmAwsOfferingVmScanners.DeserializeDefenderCspmAwsOfferingVmScanners(property.Value);
                     continue;
                 }
+                if (property.NameEquals("dataSensitivityDiscovery"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataSensitivityDiscovery = DefenderCspmAwsOfferingDataSensitivityDiscovery.DeserializeDefenderCspmAwsOfferingDataSensitivityDiscovery(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("databasesDspm"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    databasesDspm = DefenderCspmAwsOfferingDatabasesDspm.DeserializeDefenderCspmAwsOfferingDatabasesDspm(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("ciem"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ciem = DefenderCspmAwsOfferingCiem.DeserializeDefenderCspmAwsOfferingCiem(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("mdcContainersImageAssessment"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mdcContainersImageAssessment = DefenderCspmAwsOfferingMdcContainersImageAssessment.DeserializeDefenderCspmAwsOfferingMdcContainersImageAssessment(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("mdcContainersAgentlessDiscoveryK8s"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mdcContainersAgentlessDiscoveryK8s = DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("offeringType"u8))
                 {
                     offeringType = new OfferingType(property.Value.GetString());
@@ -56,7 +131,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new DefenderCspmAwsOffering(offeringType, description.Value, vmScanners.Value);
+            return new DefenderCspmAwsOffering(offeringType, description.Value, vmScanners.Value, dataSensitivityDiscovery.Value, databasesDspm.Value, ciem.Value, mdcContainersImageAssessment.Value, mdcContainersAgentlessDiscoveryK8s.Value);
         }
     }
 }

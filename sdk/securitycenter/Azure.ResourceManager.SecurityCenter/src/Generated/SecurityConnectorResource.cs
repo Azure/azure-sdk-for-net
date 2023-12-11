@@ -144,6 +144,13 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetSecurityConnectorApplications().Get(applicationId, cancellationToken);
         }
 
+        /// <summary> Gets an object representing a DevOpsConfigurationResource along with the instance operations that can be performed on it in the SecurityConnector. </summary>
+        /// <returns> Returns a <see cref="DevOpsConfigurationResource"/> object. </returns>
+        public virtual DevOpsConfigurationResource GetDevOpsConfiguration()
+        {
+            return new DevOpsConfigurationResource(Client, Id.AppendChildResource("devops", "default"));
+        }
+
         /// <summary>
         /// Retrieves details of a specific security connector
         /// <list type="bullet">

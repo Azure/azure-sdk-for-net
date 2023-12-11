@@ -18,15 +18,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="DefenderForServersAwsOfferingArcAutoProvisioning"/>. </summary>
         /// <param name="isEnabled"> Is arc auto provisioning enabled. </param>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
-        internal DefenderForServersAwsOfferingArcAutoProvisioning(bool? isEnabled, string cloudRoleArn)
+        /// <param name="configuration"> Configuration for servers Arc auto provisioning. </param>
+        internal DefenderForServersAwsOfferingArcAutoProvisioning(bool? isEnabled, string cloudRoleArn, DefenderForServersAwsOfferingArcAutoProvisioningConfiguration configuration)
         {
             IsEnabled = isEnabled;
             CloudRoleArn = cloudRoleArn;
+            Configuration = configuration;
         }
 
         /// <summary> Is arc auto provisioning enabled. </summary>
         public bool? IsEnabled { get; set; }
         /// <summary> The cloud role ARN in AWS for this feature. </summary>
         public string CloudRoleArn { get; set; }
+        /// <summary> Configuration for servers Arc auto provisioning. </summary>
+        public DefenderForServersAwsOfferingArcAutoProvisioningConfiguration Configuration { get; set; }
     }
 }

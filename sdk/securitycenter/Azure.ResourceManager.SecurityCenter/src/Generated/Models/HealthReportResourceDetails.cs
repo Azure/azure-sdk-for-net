@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The resource details of the health report. </summary>
     public partial class HealthReportResourceDetails
     {
-        /// <summary> Initializes a new instance of HealthReportResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthReportResourceDetails"/>. </summary>
         public HealthReportResourceDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthReportResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthReportResourceDetails"/>. </summary>
         /// <param name="source"> The status of the health report. </param>
         /// <param name="id"> The azure id of the resource. </param>
         /// <param name="connectorId"> The id of the connector. </param>

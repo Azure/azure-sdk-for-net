@@ -40,6 +40,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("policyAgentAutoProvisioningFlag"u8);
                 writer.WriteBooleanValue(IsPolicyAgentAutoProvisioningEnabled.Value);
             }
+            if (Optional.IsDefined(MdcContainersImageAssessment))
+            {
+                writer.WritePropertyName("mdcContainersImageAssessment"u8);
+                writer.WriteObjectValue(MdcContainersImageAssessment);
+            }
+            if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
+            {
+                writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
+                writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S);
+            }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
             writer.WriteEndObject();
@@ -56,6 +66,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<bool> auditLogsAutoProvisioningFlag = default;
             Optional<bool> defenderAgentAutoProvisioningFlag = default;
             Optional<bool> policyAgentAutoProvisioningFlag = default;
+            Optional<DefenderForContainersGcpOfferingMdcContainersImageAssessment> mdcContainersImageAssessment = default;
+            Optional<DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S> mdcContainersAgentlessDiscoveryK8s = default;
             OfferingType offeringType = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
@@ -105,6 +117,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     policyAgentAutoProvisioningFlag = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("mdcContainersImageAssessment"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mdcContainersImageAssessment = DefenderForContainersGcpOfferingMdcContainersImageAssessment.DeserializeDefenderForContainersGcpOfferingMdcContainersImageAssessment(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("mdcContainersAgentlessDiscoveryK8s"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mdcContainersAgentlessDiscoveryK8s = DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("offeringType"u8))
                 {
                     offeringType = new OfferingType(property.Value.GetString());
@@ -116,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new DefenderForContainersGcpOffering(offeringType, description.Value, nativeCloudConnection.Value, dataPipelineNativeCloudConnection.Value, Optional.ToNullable(auditLogsAutoProvisioningFlag), Optional.ToNullable(defenderAgentAutoProvisioningFlag), Optional.ToNullable(policyAgentAutoProvisioningFlag));
+            return new DefenderForContainersGcpOffering(offeringType, description.Value, nativeCloudConnection.Value, dataPipelineNativeCloudConnection.Value, Optional.ToNullable(auditLogsAutoProvisioningFlag), Optional.ToNullable(defenderAgentAutoProvisioningFlag), Optional.ToNullable(policyAgentAutoProvisioningFlag), mdcContainersImageAssessment.Value, mdcContainersAgentlessDiscoveryK8s.Value);
         }
     }
 }

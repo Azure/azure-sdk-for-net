@@ -19,23 +19,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSecurityCenterModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.MdeOnboarding"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityCenterLocationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="onboardingPackageWindows"> The onboarding package used to onboard Windows machines to MDE, coded in base64. This can also be used for onboarding using the dedicated VM Extension. </param>
-        /// <param name="onboardingPackageLinux"> The onboarding package used to onboard Linux machines to MDE, coded in base64. This can also be used for onboarding using the dedicated VM Extension. </param>
-        /// <returns> A new <see cref="Models.MdeOnboarding"/> instance for mocking. </returns>
-        public static MdeOnboarding MdeOnboarding(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, byte[] onboardingPackageWindows = null, byte[] onboardingPackageLinux = null)
+        /// <param name="properties"> An empty set of properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.SecurityCenterLocationData"/> instance for mocking. </returns>
+        public static SecurityCenterLocationData SecurityCenterLocationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData properties = null)
         {
-            return new MdeOnboarding(id, name, resourceType, systemData, onboardingPackageWindows, onboardingPackageLinux);
+            return new SecurityCenterLocationData(id, name, resourceType, systemData, properties);
         }
 
-<<<<<<< HEAD
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.CustomAssessmentAutomationData"/>. </summary>
-=======
-        /// <summary> Initializes a new instance of SecurityTaskData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityTaskData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -51,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityTaskData(id, name, resourceType, systemData, state, createdOn, securityTaskParameters, lastStateChangedOn, subState);
         }
 
-        /// <summary> Initializes a new instance of SecurityTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityTaskProperties"/>. </summary>
         /// <param name="name"> Name of the task type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.SecurityTaskProperties"/> instance for mocking. </returns>
@@ -62,7 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityTaskProperties(name, additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of AutoProvisioningSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.AutoProvisioningSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -74,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AutoProvisioningSettingData(id, name, resourceType, systemData, autoProvision);
         }
 
-        /// <summary> Initializes a new instance of SecurityComplianceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityComplianceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -90,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityComplianceData(id, name, resourceType, systemData, assessedOn, resourceCount, assessmentResult?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ComplianceSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ComplianceSegment"/>. </summary>
         /// <param name="segmentType"> The segment type, e.g. compliant, non-compliance, insufficient coverage, N/A, etc. </param>
         /// <param name="percentage"> The size (%) of the segment. </param>
         /// <returns> A new <see cref="Models.ComplianceSegment"/> instance for mocking. </returns>
@@ -99,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new ComplianceSegment(segmentType, percentage);
         }
 
-        /// <summary> Initializes a new instance of InformationProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InformationProtectionPolicy"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -117,7 +113,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new InformationProtectionPolicy(id, name, resourceType, systemData, lastModifiedUtc, version, labels, informationTypes);
         }
 
-        /// <summary> Initializes a new instance of SecurityWorkspaceSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityWorkspaceSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -130,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityWorkspaceSettingData(id, name, resourceType, systemData, workspaceId, scope);
         }
 
-        /// <summary> Initializes a new instance of SecurityAlertsSuppressionRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityAlertsSuppressionRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -150,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityAlertsSuppressionRuleData(id, name, resourceType, systemData, alertType, lastModifiedOn, expireOn, reason, state, comment, suppressionAlertsScopeAllOf != null ? new SuppressionAlertsScope(suppressionAlertsScopeAllOf?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of SecurityAutomationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityAutomationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -179,7 +175,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityAutomationData(id, name, resourceType, systemData, tags, location, description, isEnabled, scopes?.ToList(), sources?.ToList(), actions?.ToList(), kind, eTag);
         }
 
-        /// <summary> Initializes a new instance of SecurityAutomationValidationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityAutomationValidationStatus"/>. </summary>
         /// <param name="isValid"> Indicates whether the model is valid or not. </param>
         /// <param name="message"> The validation message. </param>
         /// <returns> A new <see cref="Models.SecurityAutomationValidationStatus"/> instance for mocking. </returns>
@@ -188,7 +184,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityAutomationValidationStatus(isValid, message);
         }
 
-        /// <summary> Initializes a new instance of RegulatoryComplianceStandardData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.RegulatoryComplianceStandardData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -204,7 +200,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new RegulatoryComplianceStandardData(id, name, resourceType, systemData, state, passedControls, failedControls, skippedControls, unsupportedControls);
         }
 
-        /// <summary> Initializes a new instance of RegulatoryComplianceControlData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.RegulatoryComplianceControlData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -220,7 +216,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new RegulatoryComplianceControlData(id, name, resourceType, systemData, description, state, passedAssessments, failedAssessments, skippedAssessments);
         }
 
-        /// <summary> Initializes a new instance of RegulatoryComplianceAssessmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.RegulatoryComplianceAssessmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -239,7 +235,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new RegulatoryComplianceAssessmentData(id, name, resourceType, systemData, description, assessmentType, assessmentDetailsLink, state, passedResources, failedResources, skippedResources, unsupportedResources);
         }
 
-        /// <summary> Initializes a new instance of SecuritySubAssessmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecuritySubAssessmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -268,7 +264,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecuritySubAssessmentData(id, name, resourceType, systemData, vulnerabilityId, displayName, status, remediation, impact, category, description, generatedOn, resourceDetails, additionalData);
         }
 
-        /// <summary> Initializes a new instance of SubAssessmentStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SubAssessmentStatus"/>. </summary>
         /// <param name="code"> Programmatic code for the status of the assessment. </param>
         /// <param name="cause"> Programmatic code for the cause of the assessment status. </param>
         /// <param name="description"> Human readable description of the assessment status. </param>
@@ -279,7 +275,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SubAssessmentStatus(code, cause, description, severity);
         }
 
-        /// <summary> Initializes a new instance of SecurityCloudConnectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityCloudConnectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -296,7 +292,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityCloudConnectorData(id, name, resourceType, systemData, hybridComputeSettings, authenticationDetails);
         }
 
-        /// <summary> Initializes a new instance of HybridComputeSettingsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeSettingsProperties"/>. </summary>
         /// <param name="hybridComputeProvisioningState"> State of the service principal and its secret. </param>
         /// <param name="autoProvision"> Whether or not to automatically install Azure Arc (hybrid compute) agents on machines. </param>
         /// <param name="resourceGroupName"> The name of the resource group where Arc (Hybrid Compute) connectors are connected. </param>
@@ -309,7 +305,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new HybridComputeSettingsProperties(hybridComputeProvisioningState, autoProvision, resourceGroupName, region, proxyServer, servicePrincipal);
         }
 
-        /// <summary> Initializes a new instance of AuthenticationDetailsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AuthenticationDetailsProperties"/>. </summary>
         /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
         /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
         /// <param name="authenticationType"> Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials. </param>
@@ -321,7 +317,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new UnknownAuthenticationDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), authenticationType);
         }
 
-        /// <summary> Initializes a new instance of SecurityContactData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityContactData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -336,7 +332,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityContactData(id, name, resourceType, systemData, emails, phone, alertNotifications, notificationsByRole);
         }
 
-        /// <summary> Initializes a new instance of SoftwareInventoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SoftwareInventoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -356,8 +352,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SoftwareInventoryData(id, name, resourceType, systemData, deviceId, osPlatform, vendor, softwareName, version, endOfSupportStatus, endOfSupportDate, numberOfKnownVulnerabilities, firstSeenOn);
         }
 
-        /// <summary> Initializes a new instance of CustomAssessmentAutomationData. </summary>
->>>>>>> b613ecbd00f (update Generated code /t:GenerateCode)
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.CustomAssessmentAutomationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -405,10 +400,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new CustomEntityStoreAssignmentData(id, name, resourceType, systemData, principal, entityStoreDatabaseLink);
         }
 
-<<<<<<< HEAD
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.ComplianceResultData"/>. </summary>
-=======
-        /// <summary> Initializes a new instance of MdeOnboarding. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MdeOnboarding"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -421,7 +413,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new MdeOnboarding(id, name, resourceType, systemData, onboardingPackageWindows, onboardingPackageLinux);
         }
 
-        /// <summary> Initializes a new instance of GovernanceAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.GovernanceAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -438,7 +430,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GovernanceAssignmentData(id, name, resourceType, systemData, owner, remediationDueOn, remediationEta, isGracePeriod, governanceEmailNotification, additionalData);
         }
 
-        /// <summary> Initializes a new instance of GovernanceRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.GovernanceRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -467,7 +459,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GovernanceRuleData(id, name, resourceType, systemData, tenantId, displayName, description, remediationTimeframe, isGracePeriod, rulePriority, isDisabled, ruleType, sourceResourceType, excludedScopes?.ToList(), conditionSets?.ToList(), includeMemberScopes, ownerSource, governanceEmailNotification, metadata);
         }
 
-        /// <summary> Initializes a new instance of GovernanceRuleMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GovernanceRuleMetadata"/>. </summary>
         /// <param name="createdBy"> Governance rule Created by object id (GUID). </param>
         /// <param name="createdOn"> Governance rule creation date. </param>
         /// <param name="updatedBy"> Governance rule last updated by object id (GUID). </param>
@@ -478,7 +470,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GovernanceRuleMetadata(createdBy, createdOn, updatedBy, updatedOn);
         }
 
-        /// <summary> Initializes a new instance of SecurityApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityApplicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -495,7 +487,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityApplicationData(id, name, resourceType, systemData, displayName, description, sourceResourceType, conditionSets?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DefenderForStorageSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.DefenderForStorageSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -514,7 +506,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DefenderForStorageSettingData(id, name, resourceType, systemData, isEnabledPropertiesIsEnabled, overrideSubscriptionLevelSettings, isEnabledPropertiesSensitiveDataDiscoveryIsEnabled, operationStatusPropertiesSensitiveDataDiscoveryOperationStatus, scanResultsEventGridTopicResourceId, operationStatusPropertiesMalwareScanningOperationStatus, isEnabledPropertiesMalwareScanningOnUploadIsEnabled, capGBPerMonth);
         }
 
-        /// <summary> Initializes a new instance of ExtensionOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExtensionOperationStatus"/>. </summary>
         /// <param name="code"> The operation status code. </param>
         /// <param name="message"> Additional information regarding the success/failure of the operation. </param>
         /// <returns> A new <see cref="Models.ExtensionOperationStatus"/> instance for mocking. </returns>
@@ -523,7 +515,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new ExtensionOperationStatus(code, message);
         }
 
-        /// <summary> Initializes a new instance of SecurityOperatorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityOperatorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -535,7 +527,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityOperatorData(id, name, resourceType, systemData, identity);
         }
 
-        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentBaselineRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -549,7 +541,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SqlVulnerabilityAssessmentBaselineRuleData(id, name, resourceType, systemData, ruleResults != null ? new RuleResultsProperties(ruleResults?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentScanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SqlVulnerabilityAssessmentScanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -561,7 +553,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SqlVulnerabilityAssessmentScanData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentScanResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentScanResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -573,7 +565,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SqlVulnerabilityAssessmentScanResult(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of GetSensitivitySettingsResponseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.GetSensitivitySettingsResponseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -585,7 +577,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GetSensitivitySettingsResponseData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of GetSensitivitySettingsResponseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GetSensitivitySettingsResponseProperties"/>. </summary>
         /// <param name="sensitiveInfoTypesIds"> List of selected sensitive info types' IDs. </param>
         /// <param name="sensitivityThresholdLabelOrder"> The order of the sensitivity threshold label. Any label at or above this order will be considered sensitive. If set to -1, sensitivity by labels is turned off. </param>
         /// <param name="sensitivityThresholdLabelId"> The id of the sensitivity threshold label. Any label at or above this rank will be considered sensitive. </param>
@@ -598,7 +590,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GetSensitivitySettingsResponseProperties(sensitiveInfoTypesIds?.ToList(), sensitivityThresholdLabelOrder, sensitivityThresholdLabelId, mipInformation);
         }
 
-        /// <summary> Initializes a new instance of GetSensitivitySettingsResponsePropertiesMipInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GetSensitivitySettingsResponsePropertiesMipInformation"/>. </summary>
         /// <param name="mipIntegrationStatus"> Microsoft information protection integration status. </param>
         /// <param name="labels"> List of Microsoft information protection sensitivity labels. </param>
         /// <param name="customInfoTypes"> List of custom user-defined information types. </param>
@@ -613,7 +605,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GetSensitivitySettingsResponsePropertiesMipInformation(mipIntegrationStatus, labels?.ToList(), customInfoTypes?.ToList(), builtInInfoTypes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of Label. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.Label"/>. </summary>
         /// <param name="name"> The display name of the label. </param>
         /// <param name="id"> The ID of the label. </param>
         /// <param name="order"> Labels are ordered by sensitivity level. The higher the order of the label, the more sensitive it is. </param>
@@ -623,7 +615,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new Label(name, id, order);
         }
 
-        /// <summary> Initializes a new instance of InfoType. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InfoType"/>. </summary>
         /// <param name="name"> Display name of the info type. </param>
         /// <param name="id"> Id of the info type. </param>
         /// <param name="description"> Description of the info type. </param>
@@ -633,7 +625,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new InfoType(name, id, description);
         }
 
-        /// <summary> Initializes a new instance of BuiltInInfoType. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BuiltInInfoType"/>. </summary>
         /// <param name="name"> Display name of the info type. </param>
         /// <param name="id"> Id of the info type. </param>
         /// <param name="builtInInfoTypeValue"> Category of the built-in info type. </param>
@@ -643,7 +635,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new BuiltInInfoType(name, id, builtInInfoTypeValue);
         }
 
-        /// <summary> Initializes a new instance of HealthReportData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.HealthReportData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -667,7 +659,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new HealthReportData(id, name, resourceType, systemData, resourceDetails, environmentDetails, healthDataClassification, status, affectedDefendersPlans?.ToList(), affectedDefendersSubPlans?.ToList(), reportAdditionalData, issues?.ToList());
         }
 
-        /// <summary> Initializes a new instance of HealthReportResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HealthReportResourceDetails"/>. </summary>
         /// <param name="source"> The status of the health report. </param>
         /// <param name="id"> The azure id of the resource. </param>
         /// <param name="connectorId"> The id of the connector. </param>
@@ -677,7 +669,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new HealthReportResourceDetails(source, id, connectorId);
         }
 
-        /// <summary> Initializes a new instance of HealthReportStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HealthReportStatus"/>. </summary>
         /// <param name="code"> The status of the health report. </param>
         /// <param name="reason"> The reason of the given status. </param>
         /// <param name="lastScannedOn"> The date of when the resource was scanned in the last time. </param>
@@ -689,7 +681,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new HealthReportStatus(code, reason, lastScannedOn, statusChangeOn, firstEvaluationOn);
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsOrgData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.AzureDevOpsOrgData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -701,7 +693,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AzureDevOpsOrgData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsOrgProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AzureDevOpsOrgProperties"/>. </summary>
         /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
         /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
         /// <param name="provisioningState">
@@ -730,7 +722,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AzureDevOpsOrgProperties(provisioningStatusMessage, provisioningStatusUpdateTimeUtc, provisioningState, onboardingState, actionableRemediation);
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsProjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.AzureDevOpsProjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -742,7 +734,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AzureDevOpsProjectData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsProjectProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AzureDevOpsProjectProperties"/>. </summary>
         /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
         /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
         /// <param name="provisioningState">
@@ -773,7 +765,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AzureDevOpsProjectProperties(provisioningStatusMessage, provisioningStatusUpdateTimeUtc, provisioningState, parentOrgName, projectId, onboardingState, actionableRemediation);
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsRepositoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.AzureDevOpsRepositoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -785,7 +777,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AzureDevOpsRepositoryData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsRepositoryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AzureDevOpsRepositoryProperties"/>. </summary>
         /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
         /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
         /// <param name="provisioningState">
@@ -819,7 +811,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AzureDevOpsRepositoryProperties(provisioningStatusMessage, provisioningStatusUpdateTimeUtc, provisioningState, parentOrgName, parentProjectName, repoId, repoUri, visibility, onboardingState, actionableRemediation);
         }
 
-        /// <summary> Initializes a new instance of DevOpsConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.DevOpsConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -831,7 +823,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DevOpsConfigurationData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of DevOpsConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevOpsConfigurationProperties"/>. </summary>
         /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
         /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
         /// <param name="provisioningState">
@@ -859,7 +851,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DevOpsConfigurationProperties(provisioningStatusMessage, provisioningStatusUpdateTimeUtc, provisioningState, authorizationCode != null ? new Authorization(authorizationCode) : null, autoDiscovery, topLevelInventoryList?.ToList());
         }
 
-        /// <summary> Initializes a new instance of GitHubOwnerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.GitHubOwnerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -871,7 +863,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GitHubOwnerData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of GitHubOwnerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GitHubOwnerProperties"/>. </summary>
         /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
         /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
         /// <param name="provisioningState">
@@ -901,7 +893,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GitHubOwnerProperties(provisioningStatusMessage, provisioningStatusUpdateTimeUtc, provisioningState, ownerUri, gitHubInternalId, onboardingState);
         }
 
-        /// <summary> Initializes a new instance of GitHubRepositoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.GitHubRepositoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -913,7 +905,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GitHubRepositoryData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of GitHubRepositoryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GitHubRepositoryProperties"/>. </summary>
         /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
         /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
         /// <param name="provisioningState">
@@ -958,7 +950,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GitHubRepositoryProperties(provisioningStatusMessage, provisioningStatusUpdateTimeUtc, provisioningState, repoId, repoName, repoFullName, onboardingState, repoUri, parentOwnerName);
         }
 
-        /// <summary> Initializes a new instance of GitLabGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.GitLabGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -970,7 +962,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GitLabGroupData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of GitLabGroupProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GitLabGroupProperties"/>. </summary>
         /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
         /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
         /// <param name="provisioningState">
@@ -1009,7 +1001,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GitLabGroupProperties(provisioningStatusMessage, provisioningStatusUpdateTimeUtc, provisioningState, fullyQualifiedName, fullyQualifiedFriendlyName, uri, onboardingState);
         }
 
-        /// <summary> Initializes a new instance of GitLabProjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.GitLabProjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1021,7 +1013,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GitLabProjectData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of GitLabProjectProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GitLabProjectProperties"/>. </summary>
         /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
         /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
         /// <param name="provisioningState">
@@ -1065,7 +1057,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GitLabProjectProperties(provisioningStatusMessage, provisioningStatusUpdateTimeUtc, provisioningState, fullyQualifiedName, fullyQualifiedFriendlyName, fullyQualifiedParentGroupName, uri, onboardingState);
         }
 
-        /// <summary> Initializes a new instance of SecurityConnectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityConnectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1096,7 +1088,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityConnectorData(id, name, resourceType, systemData, tags, location, hierarchyIdentifier, hierarchyIdentifierTrialEndOn, environmentName, offerings?.ToList(), environmentData, kind, eTag);
         }
 
-        /// <summary> Initializes a new instance of SecurityCenterCloudOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityCenterCloudOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
         /// <returns> A new <see cref="Models.SecurityCenterCloudOffering"/> instance for mocking. </returns>
@@ -1105,8 +1097,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new UnknownCloudOffering(offeringType, description);
         }
 
-        /// <summary> Initializes a new instance of ComplianceResultData. </summary>
->>>>>>> f49344353ba (Fix autorest mapping and add unit tests)
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.ComplianceResultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1116,55 +1107,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static ComplianceResultData ComplianceResultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityAssessmentResourceStatus? resourceStatus = null)
         {
             return new ComplianceResultData(id, name, resourceType, systemData, resourceStatus);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityCenterPricingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="pricingTier"> The pricing tier value. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard. The standard tier offers advanced security capabilities, while the free tier offers basic security features. </param>
-        /// <param name="subPlan"> The sub-plan selected for a Standard pricing configuration, when more than one sub-plan is available. Each sub-plan enables a set of security features. When not specified, full plan is applied. </param>
-        /// <param name="freeTrialRemainingTime"> The duration left for the subscriptions free trial period - in ISO 8601 format (e.g. P3Y6M4DT12H30M5S). </param>
-        /// <param name="enabledOn"> Optional. If `pricingTier` is `Standard` then this property holds the date of the last time the `pricingTier` was set to `Standard`, when available (e.g 2023-03-01T12:42:42.1921106Z). </param>
-        /// <param name="isDeprecated"> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </param>
-        /// <param name="replacedBy"> Optional. List of plans that replace this plan. This property exists only if this plan is deprecated. </param>
-        /// <param name="extensions"> Optional. List of extensions offered under a plan. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityCenterPricingData"/> instance for mocking. </returns>
-        public static SecurityCenterPricingData SecurityCenterPricingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityCenterPricingTier? pricingTier = null, string subPlan = null, TimeSpan? freeTrialRemainingTime = null, DateTimeOffset? enabledOn = null, bool? isDeprecated = null, IEnumerable<string> replacedBy = null, IEnumerable<PlanExtension> extensions = null)
-        {
-            replacedBy ??= new List<string>();
-            extensions ??= new List<PlanExtension>();
-
-            return new SecurityCenterPricingData(id, name, resourceType, systemData, pricingTier, subPlan, freeTrialRemainingTime, enabledOn, isDeprecated, replacedBy?.ToList(), extensions?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PlanExtension"/>. </summary>
-        /// <param name="name">
-        /// The extension name. Supported values are: &lt;br&gt;&lt;br&gt;**AgentlessDiscoveryForKubernetes** - API-based discovery of information about Kubernetes cluster architecture, workload objects, and setup. Required for Kubernetes inventory, identity and network exposure detection, attack path analysis and risk hunting as part of the cloud security explorer.
-        /// Available for CloudPosture plan.&lt;br&gt;&lt;br&gt;**OnUploadMalwareScanning** - Limits the GB to be scanned per month for each storage account within the subscription. Once this limit reached on a given storage account, Blobs won't be scanned during current calendar month.
-        /// Available for StorageAccounts plan.&lt;br&gt;&lt;br&gt;**SensitiveDataDiscovery** - Sensitive data discovery identifies Blob storage container with sensitive data such as credentials, credit cards, and more, to help prioritize and investigate security events.
-        /// Available for StorageAccounts and CloudPosture plans.&lt;br&gt;&lt;br&gt;**ContainerRegistriesVulnerabilityAssessments** - Provides vulnerability management for images stored in your container registries.
-        /// Available for CloudPosture and Containers plans.
-        /// </param>
-        /// <param name="isEnabled"> Indicates whether the extension is enabled. </param>
-        /// <param name="additionalExtensionProperties"> Property values associated with the extension. </param>
-        /// <param name="operationStatus"> Optional. A status describing the success/failure of the extension's enablement/disablement operation. </param>
-        /// <returns> A new <see cref="Models.PlanExtension"/> instance for mocking. </returns>
-        public static PlanExtension PlanExtension(string name = null, IsExtensionEnabled isEnabled = default, IDictionary<string, BinaryData> additionalExtensionProperties = null, ExtensionOperationStatus operationStatus = null)
-        {
-            additionalExtensionProperties ??= new Dictionary<string, BinaryData>();
-
-            return new PlanExtension(name, isEnabled, additionalExtensionProperties, operationStatus);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExtensionOperationStatus"/>. </summary>
-        /// <param name="code"> The operation status code. </param>
-        /// <param name="message"> Additional information regarding the success/failure of the operation. </param>
-        /// <returns> A new <see cref="Models.ExtensionOperationStatus"/> instance for mocking. </returns>
-        public static ExtensionOperationStatus ExtensionOperationStatus(ExtensionOperationStatusCode? code = null, string message = null)
-        {
-            return new ExtensionOperationStatus(code, message);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenter.AdvancedThreatProtectionSettingData"/>. </summary>
@@ -1284,48 +1226,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             denylistValues ??= new List<string>();
 
             return new DenylistCustomAlertRule(displayName, description, isEnabled, "DenylistCustomAlertRule", valueType, denylistValues?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.IotSecuritySolutionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="workspace"> Workspace resource ID. </param>
-        /// <param name="displayName"> Resource display name. </param>
-        /// <param name="status"> Status of the IoT Security solution. </param>
-        /// <param name="export"> List of additional options for exporting to workspace data. </param>
-        /// <param name="disabledDataSources"> Disabled data sources. Disabling these data sources compromises the system. </param>
-        /// <param name="iotHubs"> IoT Hub resource IDs. </param>
-        /// <param name="userDefinedResources"> Properties of the IoT Security solution's user defined resources. </param>
-        /// <param name="autoDiscoveredResources"> List of resources that were automatically discovered as relevant to the security solution. </param>
-        /// <param name="recommendationsConfiguration"> List of the configuration status for each recommendation type. </param>
-        /// <param name="unmaskedIPLoggingStatus"> Unmasked IP address logging status. </param>
-        /// <param name="additionalWorkspaces"> List of additional workspaces. </param>
-        /// <returns> A new <see cref="SecurityCenter.IotSecuritySolutionData"/> instance for mocking. </returns>
-        public static IotSecuritySolutionData IotSecuritySolutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string workspace = null, string displayName = null, SecuritySolutionStatus? status = null, IEnumerable<IotSecuritySolutionExportOption> export = null, IEnumerable<IotSecuritySolutionDataSource> disabledDataSources = null, IEnumerable<string> iotHubs = null, UserDefinedResourcesProperties userDefinedResources = null, IEnumerable<string> autoDiscoveredResources = null, IEnumerable<RecommendationConfigurationProperties> recommendationsConfiguration = null, UnmaskedIPLoggingStatus? unmaskedIPLoggingStatus = null, IEnumerable<AdditionalWorkspacesProperties> additionalWorkspaces = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            export ??= new List<IotSecuritySolutionExportOption>();
-            disabledDataSources ??= new List<IotSecuritySolutionDataSource>();
-            iotHubs ??= new List<string>();
-            autoDiscoveredResources ??= new List<string>();
-            recommendationsConfiguration ??= new List<RecommendationConfigurationProperties>();
-            additionalWorkspaces ??= new List<AdditionalWorkspacesProperties>();
-
-            return new IotSecuritySolutionData(id, name, resourceType, systemData, tags, location, workspace, displayName, status, export?.ToList(), disabledDataSources?.ToList(), iotHubs?.ToList(), userDefinedResources, autoDiscoveredResources?.ToList(), recommendationsConfiguration?.ToList(), unmaskedIPLoggingStatus, additionalWorkspaces?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RecommendationConfigurationProperties"/>. </summary>
-        /// <param name="recommendationType"> The type of IoT Security recommendation. </param>
-        /// <param name="name"></param>
-        /// <param name="status"> Recommendation status. When the recommendation status is disabled recommendations are not generated. </param>
-        /// <returns> A new <see cref="Models.RecommendationConfigurationProperties"/> instance for mocking. </returns>
-        public static RecommendationConfigurationProperties RecommendationConfigurationProperties(IotSecurityRecommendationType recommendationType = default, string name = null, RecommendationConfigStatus status = default)
-        {
-            return new RecommendationConfigurationProperties(recommendationType, name, status);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenter.IotSecuritySolutionAnalyticsModelData"/>. </summary>
@@ -1460,275 +1360,272 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new IotSecurityAggregatedRecommendationData(id, name, resourceType, systemData, recommendationName, recommendationDisplayName, description, recommendationTypeId, detectedBy, remediationSteps, reportedSeverity, healthyDevices, unhealthyDeviceCount, logAnalyticsQuery, tags);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityCenterLocationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> An empty set of properties. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityCenterLocationData"/> instance for mocking. </returns>
-        public static SecurityCenterLocationData SecurityCenterLocationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData properties = null)
-        {
-            return new SecurityCenterLocationData(id, name, resourceType, systemData, properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityTaskData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="state"> State of the task (Active, Resolved etc.). </param>
-        /// <param name="createdOn"> The time this task was discovered in UTC. </param>
-        /// <param name="securityTaskParameters"> Changing set of properties, depending on the task type that is derived from the name field. </param>
-        /// <param name="lastStateChangedOn"> The time this task's details were last changed in UTC. </param>
-        /// <param name="subState"> Additional data on the state of the task. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityTaskData"/> instance for mocking. </returns>
-        public static SecurityTaskData SecurityTaskData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string state = null, DateTimeOffset? createdOn = null, SecurityTaskProperties securityTaskParameters = null, DateTimeOffset? lastStateChangedOn = null, string subState = null)
-        {
-            return new SecurityTaskData(id, name, resourceType, systemData, state, createdOn, securityTaskParameters, lastStateChangedOn, subState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityTaskProperties"/>. </summary>
-        /// <param name="name"> Name of the task type. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.SecurityTaskProperties"/> instance for mocking. </returns>
-        public static SecurityTaskProperties SecurityTaskProperties(string name = null, IDictionary<string, BinaryData> additionalProperties = null)
-        {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
-
-            return new SecurityTaskProperties(name, additionalProperties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.AutoProvisioningSettingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="autoProvision"> Describes what kind of security agent provisioning action to take. </param>
-        /// <returns> A new <see cref="SecurityCenter.AutoProvisioningSettingData"/> instance for mocking. </returns>
-        public static AutoProvisioningSettingData AutoProvisioningSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AutoProvisionState? autoProvision = null)
-        {
-            return new AutoProvisioningSettingData(id, name, resourceType, systemData, autoProvision);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityComplianceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="assessedOn"> The timestamp when the Compliance calculation was conducted. </param>
-        /// <param name="resourceCount"> The resource count of the given subscription for which the Compliance calculation was conducted (needed for Management Group Compliance calculation). </param>
-        /// <param name="assessmentResult"> An array of segment, which is the actually the compliance assessment. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityComplianceData"/> instance for mocking. </returns>
-        public static SecurityComplianceData SecurityComplianceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? assessedOn = null, int? resourceCount = null, IEnumerable<ComplianceSegment> assessmentResult = null)
-        {
-            assessmentResult ??= new List<ComplianceSegment>();
-
-            return new SecurityComplianceData(id, name, resourceType, systemData, assessedOn, resourceCount, assessmentResult?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ComplianceSegment"/>. </summary>
-        /// <param name="segmentType"> The segment type, e.g. compliant, non-compliance, insufficient coverage, N/A, etc. </param>
-        /// <param name="percentage"> The size (%) of the segment. </param>
-        /// <returns> A new <see cref="Models.ComplianceSegment"/> instance for mocking. </returns>
-        public static ComplianceSegment ComplianceSegment(string segmentType = null, double? percentage = null)
-        {
-            return new ComplianceSegment(segmentType, percentage);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.InformationProtectionPolicy"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="lastModifiedUtc"> Describes the last UTC time the policy was modified. </param>
-        /// <param name="version"> Describes the version of the policy. </param>
-        /// <param name="labels"> Dictionary of sensitivity labels. </param>
-        /// <param name="informationTypes"> The sensitivity information types. </param>
-        /// <returns> A new <see cref="Models.InformationProtectionPolicy"/> instance for mocking. </returns>
-        public static InformationProtectionPolicy InformationProtectionPolicy(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? lastModifiedUtc = null, string version = null, IDictionary<string, SensitivityLabel> labels = null, IDictionary<string, SecurityInformationTypeInfo> informationTypes = null)
-        {
-            labels ??= new Dictionary<string, SensitivityLabel>();
-            informationTypes ??= new Dictionary<string, SecurityInformationTypeInfo>();
-
-            return new InformationProtectionPolicy(id, name, resourceType, systemData, lastModifiedUtc, version, labels, informationTypes);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityContactData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="emails"> List of email addresses which will get notifications from Microsoft Defender for Cloud by the configurations defined in this security contact. </param>
-        /// <param name="phone"> The security contact's phone number. </param>
-        /// <param name="alertNotifications"> Defines whether to send email notifications about new security alerts. </param>
-        /// <param name="notificationsByRole"> Defines whether to send email notifications from Microsoft Defender for Cloud to persons with specific RBAC roles on the subscription. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityContactData"/> instance for mocking. </returns>
-        public static SecurityContactData SecurityContactData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string emails = null, string phone = null, SecurityContactPropertiesAlertNotifications alertNotifications = null, SecurityContactPropertiesNotificationsByRole notificationsByRole = null)
-        {
-            return new SecurityContactData(id, name, resourceType, systemData, emails, phone, alertNotifications, notificationsByRole);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityWorkspaceSettingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="workspaceId"> The full Azure ID of the workspace to save the data in. </param>
-        /// <param name="scope"> All the VMs in this scope will send their security data to the mentioned workspace unless overridden by a setting with more specific scope. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityWorkspaceSettingData"/> instance for mocking. </returns>
-        public static SecurityWorkspaceSettingData SecurityWorkspaceSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier workspaceId = null, string scope = null)
-        {
-            return new SecurityWorkspaceSettingData(id, name, resourceType, systemData, workspaceId, scope);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.RegulatoryComplianceStandardData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="state"> Aggregative state based on the standard's supported controls states. </param>
-        /// <param name="passedControls"> The number of supported regulatory compliance controls of the given standard with a passed state. </param>
-        /// <param name="failedControls"> The number of supported regulatory compliance controls of the given standard with a failed state. </param>
-        /// <param name="skippedControls"> The number of supported regulatory compliance controls of the given standard with a skipped state. </param>
-        /// <param name="unsupportedControls"> The number of regulatory compliance controls of the given standard which are unsupported by automated assessments. </param>
-        /// <returns> A new <see cref="SecurityCenter.RegulatoryComplianceStandardData"/> instance for mocking. </returns>
-        public static RegulatoryComplianceStandardData RegulatoryComplianceStandardData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RegulatoryComplianceState? state = null, int? passedControls = null, int? failedControls = null, int? skippedControls = null, int? unsupportedControls = null)
-        {
-            return new RegulatoryComplianceStandardData(id, name, resourceType, systemData, state, passedControls, failedControls, skippedControls, unsupportedControls);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.RegulatoryComplianceControlData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> The description of the regulatory compliance control. </param>
-        /// <param name="state"> Aggregative state based on the control's supported assessments states. </param>
-        /// <param name="passedAssessments"> The number of supported regulatory compliance assessments of the given control with a passed state. </param>
-        /// <param name="failedAssessments"> The number of supported regulatory compliance assessments of the given control with a failed state. </param>
-        /// <param name="skippedAssessments"> The number of supported regulatory compliance assessments of the given control with a skipped state. </param>
-        /// <returns> A new <see cref="SecurityCenter.RegulatoryComplianceControlData"/> instance for mocking. </returns>
-        public static RegulatoryComplianceControlData RegulatoryComplianceControlData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, RegulatoryComplianceState? state = null, int? passedAssessments = null, int? failedAssessments = null, int? skippedAssessments = null)
-        {
-            return new RegulatoryComplianceControlData(id, name, resourceType, systemData, description, state, passedAssessments, failedAssessments, skippedAssessments);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.RegulatoryComplianceAssessmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> The description of the regulatory compliance assessment. </param>
-        /// <param name="assessmentType"> The expected type of assessment contained in the AssessmentDetailsLink. </param>
-        /// <param name="assessmentDetailsLink"> Link to more detailed assessment results data. The response type will be according to the assessmentType field. </param>
-        /// <param name="state"> Aggregative state based on the assessment's scanned resources states. </param>
-        /// <param name="passedResources"> The given assessment's related resources count with passed state. </param>
-        /// <param name="failedResources"> The given assessment's related resources count with failed state. </param>
-        /// <param name="skippedResources"> The given assessment's related resources count with skipped state. </param>
-        /// <param name="unsupportedResources"> The given assessment's related resources count with unsupported state. </param>
-        /// <returns> A new <see cref="SecurityCenter.RegulatoryComplianceAssessmentData"/> instance for mocking. </returns>
-        public static RegulatoryComplianceAssessmentData RegulatoryComplianceAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string assessmentType = null, string assessmentDetailsLink = null, RegulatoryComplianceState? state = null, int? passedResources = null, int? failedResources = null, int? skippedResources = null, int? unsupportedResources = null)
-        {
-            return new RegulatoryComplianceAssessmentData(id, name, resourceType, systemData, description, assessmentType, assessmentDetailsLink, state, passedResources, failedResources, skippedResources, unsupportedResources);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecuritySubAssessmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="vulnerabilityId"> Vulnerability ID. </param>
-        /// <param name="displayName"> User friendly display name of the sub-assessment. </param>
-        /// <param name="status"> Status of the sub-assessment. </param>
-        /// <param name="remediation"> Information on how to remediate this sub-assessment. </param>
-        /// <param name="impact"> Description of the impact of this sub-assessment. </param>
-        /// <param name="category"> Category of the sub-assessment. </param>
-        /// <param name="description"> Human readable description of the assessment status. </param>
-        /// <param name="generatedOn"> The date and time the sub-assessment was generated. </param>
-        /// <param name="resourceDetails">
-        /// Details of the resource that was assessed
-        /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
-        /// </param>
-        /// <param name="additionalData">
-        /// Details of the sub-assessment
-        /// Please note <see cref="SecuritySubAssessmentAdditionalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.ContainerRegistryVulnerabilityProperties"/>, <see cref="Models.ServerVulnerabilityProperties"/> and <see cref="Models.SqlServerVulnerabilityProperties"/>.
-        /// </param>
-        /// <returns> A new <see cref="SecurityCenter.SecuritySubAssessmentData"/> instance for mocking. </returns>
-        public static SecuritySubAssessmentData SecuritySubAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string vulnerabilityId = null, string displayName = null, SubAssessmentStatus status = null, string remediation = null, string impact = null, string category = null, string description = null, DateTimeOffset? generatedOn = null, SecurityCenterResourceDetails resourceDetails = null, SecuritySubAssessmentAdditionalInfo additionalData = null)
-        {
-            return new SecuritySubAssessmentData(id, name, resourceType, systemData, vulnerabilityId, displayName, status, remediation, impact, category, description, generatedOn, resourceDetails, additionalData);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SubAssessmentStatus"/>. </summary>
-        /// <param name="code"> Programmatic code for the status of the assessment. </param>
-        /// <param name="cause"> Programmatic code for the cause of the assessment status. </param>
-        /// <param name="description"> Human readable description of the assessment status. </param>
-        /// <param name="severity"> The sub-assessment severity level. </param>
-        /// <returns> A new <see cref="Models.SubAssessmentStatus"/> instance for mocking. </returns>
-        public static SubAssessmentStatus SubAssessmentStatus(SubAssessmentStatusCode? code = null, string cause = null, string description = null, SecurityAssessmentSeverity? severity = null)
-        {
-            return new SubAssessmentStatus(code, cause, description, severity);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityAutomationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.IotSecuritySolutionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="description"> The security automation description. </param>
-        /// <param name="isEnabled"> Indicates whether the security automation is enabled. </param>
-        /// <param name="scopes"> A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription itself or a resource group under that subscription. The automation will only apply on defined scopes. </param>
-        /// <param name="sources"> A collection of the source event types which evaluate the security automation set of rules. </param>
-        /// <param name="actions">
-        /// A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true.
-        /// Please note <see cref="SecurityAutomationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/> and <see cref="SecurityAutomationActionWorkspace"/>.
-        /// </param>
-        /// <param name="kind"> Kind of the resource. </param>
-        /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityAutomationData"/> instance for mocking. </returns>
-        public static SecurityAutomationData SecurityAutomationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string description = null, bool? isEnabled = null, IEnumerable<SecurityAutomationScope> scopes = null, IEnumerable<SecurityAutomationSource> sources = null, IEnumerable<SecurityAutomationAction> actions = null, string kind = null, ETag? eTag = null)
+        /// <param name="workspace"> Workspace resource ID. </param>
+        /// <param name="displayName"> Resource display name. </param>
+        /// <param name="status"> Status of the IoT Security solution. </param>
+        /// <param name="export"> List of additional options for exporting to workspace data. </param>
+        /// <param name="disabledDataSources"> Disabled data sources. Disabling these data sources compromises the system. </param>
+        /// <param name="iotHubs"> IoT Hub resource IDs. </param>
+        /// <param name="userDefinedResources"> Properties of the IoT Security solution's user defined resources. </param>
+        /// <param name="autoDiscoveredResources"> List of resources that were automatically discovered as relevant to the security solution. </param>
+        /// <param name="recommendationsConfiguration"> List of the configuration status for each recommendation type. </param>
+        /// <param name="unmaskedIPLoggingStatus"> Unmasked IP address logging status. </param>
+        /// <param name="additionalWorkspaces"> List of additional workspaces. </param>
+        /// <returns> A new <see cref="SecurityCenter.IotSecuritySolutionData"/> instance for mocking. </returns>
+        public static IotSecuritySolutionData IotSecuritySolutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string workspace = null, string displayName = null, SecuritySolutionStatus? status = null, IEnumerable<IotSecuritySolutionExportOption> export = null, IEnumerable<IotSecuritySolutionDataSource> disabledDataSources = null, IEnumerable<string> iotHubs = null, UserDefinedResourcesProperties userDefinedResources = null, IEnumerable<string> autoDiscoveredResources = null, IEnumerable<RecommendationConfigurationProperties> recommendationsConfiguration = null, UnmaskedIPLoggingStatus? unmaskedIPLoggingStatus = null, IEnumerable<AdditionalWorkspacesProperties> additionalWorkspaces = null)
         {
             tags ??= new Dictionary<string, string>();
-            scopes ??= new List<SecurityAutomationScope>();
-            sources ??= new List<SecurityAutomationSource>();
-            actions ??= new List<SecurityAutomationAction>();
+            export ??= new List<IotSecuritySolutionExportOption>();
+            disabledDataSources ??= new List<IotSecuritySolutionDataSource>();
+            iotHubs ??= new List<string>();
+            autoDiscoveredResources ??= new List<string>();
+            recommendationsConfiguration ??= new List<RecommendationConfigurationProperties>();
+            additionalWorkspaces ??= new List<AdditionalWorkspacesProperties>();
 
-            return new SecurityAutomationData(id, name, resourceType, systemData, tags, location, description, isEnabled, scopes?.ToList(), sources?.ToList(), actions?.ToList(), kind, eTag);
+            return new IotSecuritySolutionData(id, name, resourceType, systemData, tags, location, workspace, displayName, status, export?.ToList(), disabledDataSources?.ToList(), iotHubs?.ToList(), userDefinedResources, autoDiscoveredResources?.ToList(), recommendationsConfiguration?.ToList(), unmaskedIPLoggingStatus, additionalWorkspaces?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityAutomationValidationStatus"/>. </summary>
-        /// <param name="isValid"> Indicates whether the model is valid or not. </param>
-        /// <param name="message"> The validation message. </param>
-        /// <returns> A new <see cref="Models.SecurityAutomationValidationStatus"/> instance for mocking. </returns>
-        public static SecurityAutomationValidationStatus SecurityAutomationValidationStatus(bool? isValid = null, string message = null)
+        /// <summary> Initializes a new instance of <see cref="Models.RecommendationConfigurationProperties"/>. </summary>
+        /// <param name="recommendationType"> The type of IoT Security recommendation. </param>
+        /// <param name="name"></param>
+        /// <param name="status"> Recommendation status. When the recommendation status is disabled recommendations are not generated. </param>
+        /// <returns> A new <see cref="Models.RecommendationConfigurationProperties"/> instance for mocking. </returns>
+        public static RecommendationConfigurationProperties RecommendationConfigurationProperties(IotSecurityRecommendationType recommendationType = default, string name = null, RecommendationConfigStatus status = default)
         {
-            return new SecurityAutomationValidationStatus(isValid, message);
+            return new RecommendationConfigurationProperties(recommendationType, name, status);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityAlertsSuppressionRuleData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.AdaptiveNetworkHardeningData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="alertType"> Type of the alert to automatically suppress. For all alert types, use '*'. </param>
-        /// <param name="lastModifiedOn"> The last time this rule was modified. </param>
-        /// <param name="expireOn"> Expiration date of the rule, if value is not provided or provided as null this field will default to the maximum allowed expiration date. </param>
-        /// <param name="reason"> The reason for dismissing the alert. </param>
-        /// <param name="state"> Possible states of the rule. </param>
-        /// <param name="comment"> Any comment regarding the rule. </param>
-        /// <param name="suppressionAlertsScopeAllOf"> The suppression conditions. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityAlertsSuppressionRuleData"/> instance for mocking. </returns>
-        public static SecurityAlertsSuppressionRuleData SecurityAlertsSuppressionRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string alertType = null, DateTimeOffset? lastModifiedOn = null, DateTimeOffset? expireOn = null, string reason = null, SecurityAlertsSuppressionRuleState? state = null, string comment = null, IEnumerable<SuppressionAlertsScopeElement> suppressionAlertsScopeAllOf = null)
+        /// <param name="rules"> The security rules which are recommended to be effective on the VM. </param>
+        /// <param name="rulesCalculatedOn"> The UTC time on which the rules were calculated. </param>
+        /// <param name="effectiveNetworkSecurityGroups"> The Network Security Groups effective on the network interfaces of the protected resource. </param>
+        /// <returns> A new <see cref="SecurityCenter.AdaptiveNetworkHardeningData"/> instance for mocking. </returns>
+        public static AdaptiveNetworkHardeningData AdaptiveNetworkHardeningData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<RecommendedSecurityRule> rules = null, DateTimeOffset? rulesCalculatedOn = null, IEnumerable<EffectiveNetworkSecurityGroups> effectiveNetworkSecurityGroups = null)
         {
-            suppressionAlertsScopeAllOf ??= new List<SuppressionAlertsScopeElement>();
+            rules ??= new List<RecommendedSecurityRule>();
+            effectiveNetworkSecurityGroups ??= new List<EffectiveNetworkSecurityGroups>();
 
-            return new SecurityAlertsSuppressionRuleData(id, name, resourceType, systemData, alertType, lastModifiedOn, expireOn, reason, state, comment, suppressionAlertsScopeAllOf != null ? new SuppressionAlertsScope(suppressionAlertsScopeAllOf?.ToList()) : null);
+            return new AdaptiveNetworkHardeningData(id, name, resourceType, systemData, rules?.ToList(), rulesCalculatedOn, effectiveNetworkSecurityGroups?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityCenterAllowedConnection"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="calculatedOn"> The UTC time on which the allowed connections resource was calculated. </param>
+        /// <param name="connectableResources"> List of connectable resources. </param>
+        /// <param name="location"> Location where the resource is stored. </param>
+        /// <returns> A new <see cref="Models.SecurityCenterAllowedConnection"/> instance for mocking. </returns>
+        public static SecurityCenterAllowedConnection SecurityCenterAllowedConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? calculatedOn = null, IEnumerable<ConnectableResourceInfo> connectableResources = null, AzureLocation? location = null)
+        {
+            connectableResources ??= new List<ConnectableResourceInfo>();
+
+            return new SecurityCenterAllowedConnection(id, name, resourceType, systemData, calculatedOn, connectableResources?.ToList(), location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectableResourceInfo"/>. </summary>
+        /// <param name="id"> The Azure resource id. </param>
+        /// <param name="inboundConnectedResources"> The list of Azure resources that the resource has inbound allowed connection from. </param>
+        /// <param name="outboundConnectedResources"> The list of Azure resources that the resource has outbound allowed connection to. </param>
+        /// <returns> A new <see cref="Models.ConnectableResourceInfo"/> instance for mocking. </returns>
+        public static ConnectableResourceInfo ConnectableResourceInfo(ResourceIdentifier id = null, IEnumerable<ConnectedResourceInfo> inboundConnectedResources = null, IEnumerable<ConnectedResourceInfo> outboundConnectedResources = null)
+        {
+            inboundConnectedResources ??= new List<ConnectedResourceInfo>();
+            outboundConnectedResources ??= new List<ConnectedResourceInfo>();
+
+            return new ConnectableResourceInfo(id, inboundConnectedResources?.ToList(), outboundConnectedResources?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectedResourceInfo"/>. </summary>
+        /// <param name="connectedResourceId"> The Azure resource id of the connected resource. </param>
+        /// <param name="tcpPorts"> The allowed tcp ports. </param>
+        /// <param name="udpPorts"> The allowed udp ports. </param>
+        /// <returns> A new <see cref="Models.ConnectedResourceInfo"/> instance for mocking. </returns>
+        public static ConnectedResourceInfo ConnectedResourceInfo(ResourceIdentifier connectedResourceId = null, string tcpPorts = null, string udpPorts = null)
+        {
+            return new ConnectedResourceInfo(connectedResourceId, tcpPorts, udpPorts);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.AdaptiveApplicationControlGroupData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="enforcementMode"> The application control policy enforcement/protection mode of the machine group. </param>
+        /// <param name="protectionMode"> The protection mode of the collection/file types. Exe/Msi/Script are used for Windows, Executable is used for Linux. </param>
+        /// <param name="configurationStatus"> The configuration status of the machines group or machine or rule. </param>
+        /// <param name="recommendationStatus"> The initial recommendation status of the machine group or machine. </param>
+        /// <param name="issues"></param>
+        /// <param name="sourceSystem"> The source type of the machine group. </param>
+        /// <param name="vmRecommendations"></param>
+        /// <param name="pathRecommendations"></param>
+        /// <param name="location"> Location where the resource is stored. </param>
+        /// <returns> A new <see cref="SecurityCenter.AdaptiveApplicationControlGroupData"/> instance for mocking. </returns>
+        public static AdaptiveApplicationControlGroupData AdaptiveApplicationControlGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AdaptiveApplicationControlEnforcementMode? enforcementMode = null, SecurityCenterFileProtectionMode protectionMode = null, SecurityCenterConfigurationStatus? configurationStatus = null, RecommendationStatus? recommendationStatus = null, IEnumerable<AdaptiveApplicationControlIssueSummary> issues = null, AdaptiveApplicationControlGroupSourceSystem? sourceSystem = null, IEnumerable<VmRecommendation> vmRecommendations = null, IEnumerable<PathRecommendation> pathRecommendations = null, AzureLocation? location = null)
+        {
+            issues ??= new List<AdaptiveApplicationControlIssueSummary>();
+            vmRecommendations ??= new List<VmRecommendation>();
+            pathRecommendations ??= new List<PathRecommendation>();
+
+            return new AdaptiveApplicationControlGroupData(id, name, resourceType, systemData, enforcementMode, protectionMode, configurationStatus, recommendationStatus, issues?.ToList(), sourceSystem, vmRecommendations?.ToList(), pathRecommendations?.ToList(), location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AdaptiveApplicationControlIssueSummary"/>. </summary>
+        /// <param name="issue"> An alert that machines within a group can have. </param>
+        /// <param name="numberOfVms"> The number of machines in the group that have this alert. </param>
+        /// <returns> A new <see cref="Models.AdaptiveApplicationControlIssueSummary"/> instance for mocking. </returns>
+        public static AdaptiveApplicationControlIssueSummary AdaptiveApplicationControlIssueSummary(AdaptiveApplicationControlIssue? issue = null, float? numberOfVms = null)
+        {
+            return new AdaptiveApplicationControlIssueSummary(issue, numberOfVms);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DiscoveredSecuritySolution"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="securityFamily"> The security family of the discovered solution. </param>
+        /// <param name="offer"> The security solutions' image offer. </param>
+        /// <param name="publisher"> The security solutions' image publisher. </param>
+        /// <param name="sku"> The security solutions' image sku. </param>
+        /// <param name="location"> Location where the resource is stored. </param>
+        /// <returns> A new <see cref="Models.DiscoveredSecuritySolution"/> instance for mocking. </returns>
+        public static DiscoveredSecuritySolution DiscoveredSecuritySolution(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityFamily securityFamily = default, string offer = null, string publisher = null, string sku = null, AzureLocation? location = null)
+        {
+            return new DiscoveredSecuritySolution(id, name, resourceType, systemData, securityFamily, offer, publisher, sku, location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExternalSecuritySolution"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> The kind of the external solution. </param>
+        /// <param name="location"> Location where the resource is stored. </param>
+        /// <returns> A new <see cref="Models.ExternalSecuritySolution"/> instance for mocking. </returns>
+        public static ExternalSecuritySolution ExternalSecuritySolution(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", AzureLocation? location = null)
+        {
+            return new ExternalSecuritySolution(id, name, resourceType, systemData, kind, location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.JitNetworkAccessPolicyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="virtualMachines"> Configurations for Microsoft.Compute/virtualMachines resource type. </param>
+        /// <param name="requests"></param>
+        /// <param name="provisioningState"> Gets the provisioning state of the Just-in-Time policy. </param>
+        /// <param name="kind"> Kind of the resource. </param>
+        /// <param name="location"> Location where the resource is stored. </param>
+        /// <returns> A new <see cref="SecurityCenter.JitNetworkAccessPolicyData"/> instance for mocking. </returns>
+        public static JitNetworkAccessPolicyData JitNetworkAccessPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<JitNetworkAccessPolicyVirtualMachine> virtualMachines = null, IEnumerable<JitNetworkAccessRequestInfo> requests = null, string provisioningState = null, string kind = null, AzureLocation? location = null)
+        {
+            virtualMachines ??= new List<JitNetworkAccessPolicyVirtualMachine>();
+            requests ??= new List<JitNetworkAccessRequestInfo>();
+
+            return new JitNetworkAccessPolicyData(id, name, resourceType, systemData, virtualMachines?.ToList(), requests?.ToList(), provisioningState, kind, location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecureScoreData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="displayName"> The initiative’s name. </param>
+        /// <param name="weight"> The relative weight for each subscription. Used when calculating an aggregated secure score for multiple subscriptions. </param>
+        /// <param name="max"> Maximum score available. </param>
+        /// <param name="current"> Current score. </param>
+        /// <param name="percentage"> Ratio of the current score divided by the maximum. Rounded to 4 digits after the decimal point. </param>
+        /// <returns> A new <see cref="SecurityCenter.SecureScoreData"/> instance for mocking. </returns>
+        public static SecureScoreData SecureScoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, long? weight = null, int? max = null, double? current = null, double? percentage = null)
+        {
+            return new SecureScoreData(id, name, resourceType, systemData, displayName, weight, max, current, percentage);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecureScoreControlDetails"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="displayName"> User friendly display name of the control. </param>
+        /// <param name="healthyResourceCount"> Number of healthy resources in the control. </param>
+        /// <param name="unhealthyResourceCount"> Number of unhealthy resources in the control. </param>
+        /// <param name="notApplicableResourceCount"> Number of not applicable resources in the control. </param>
+        /// <param name="weight"> The relative weight for this specific control in each of your subscriptions. Used when calculating an aggregated score for this control across all of your subscriptions. </param>
+        /// <param name="definition"> Information about the security control. </param>
+        /// <param name="max"> Maximum score available. </param>
+        /// <param name="current"> Current score. </param>
+        /// <param name="percentage"> Ratio of the current score divided by the maximum. Rounded to 4 digits after the decimal point. </param>
+        /// <returns> A new <see cref="Models.SecureScoreControlDetails"/> instance for mocking. </returns>
+        public static SecureScoreControlDetails SecureScoreControlDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, int? healthyResourceCount = null, int? unhealthyResourceCount = null, int? notApplicableResourceCount = null, long? weight = null, SecureScoreControlDefinitionItem definition = null, int? max = null, double? current = null, double? percentage = null)
+        {
+            return new SecureScoreControlDetails(id, name, resourceType, systemData, displayName, healthyResourceCount, unhealthyResourceCount, notApplicableResourceCount, weight, definition, max, current, percentage);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecureScoreControlDefinitionItem"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="displayName"> User friendly display name of the control. </param>
+        /// <param name="description"> User friendly description of the control. </param>
+        /// <param name="maxScore"> Maximum control score (0..10). </param>
+        /// <param name="sourceType"> Source object from which the control was created. </param>
+        /// <param name="assessmentDefinitions"> Array of assessments metadata IDs that are included in this security control. </param>
+        /// <returns> A new <see cref="Models.SecureScoreControlDefinitionItem"/> instance for mocking. </returns>
+        public static SecureScoreControlDefinitionItem SecureScoreControlDefinitionItem(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string description = null, int? maxScore = null, SecurityControlType? sourceType = null, IEnumerable<SubResource> assessmentDefinitions = null)
+        {
+            assessmentDefinitions ??= new List<SubResource>();
+
+            return new SecureScoreControlDefinitionItem(id, name, resourceType, systemData, displayName, description, maxScore, sourceType != null ? new SecureScoreControlDefinitionSource(sourceType) : null, assessmentDefinitions?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecuritySolution"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="securityFamily"> The security family of the security solution. </param>
+        /// <param name="provisioningState"> The security family provisioning State. </param>
+        /// <param name="template"> The security solutions' template. </param>
+        /// <param name="protectionStatus"> The security solutions' status. </param>
+        /// <param name="location"> Location where the resource is stored. </param>
+        /// <returns> A new <see cref="Models.SecuritySolution"/> instance for mocking. </returns>
+        public static SecuritySolution SecuritySolution(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityFamily? securityFamily = null, SecurityFamilyProvisioningState? provisioningState = null, string template = null, string protectionStatus = null, AzureLocation? location = null)
+        {
+            return new SecuritySolution(id, name, resourceType, systemData, securityFamily, provisioningState, template, protectionStatus, location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecuritySolutionsReferenceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="securityFamily"> The security family of the security solution. </param>
+        /// <param name="alertVendorName"> The security solutions' vendor name. </param>
+        /// <param name="packageInfoUri"> The security solutions' package info url. </param>
+        /// <param name="productName"> The security solutions' product name. </param>
+        /// <param name="publisher"> The security solutions' publisher. </param>
+        /// <param name="publisherDisplayName"> The security solutions' publisher display name. </param>
+        /// <param name="template"> The security solutions' template. </param>
+        /// <param name="location"> Location where the resource is stored. </param>
+        /// <returns> A new <see cref="Models.SecuritySolutionsReferenceData"/> instance for mocking. </returns>
+        public static SecuritySolutionsReferenceData SecuritySolutionsReferenceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityFamily securityFamily = default, string alertVendorName = null, Uri packageInfoUri = null, string productName = null, string publisher = null, string publisherDisplayName = null, string template = null, AzureLocation? location = null)
+        {
+            return new SecuritySolutionsReferenceData(id, name, resourceType, systemData, securityFamily, alertVendorName, packageInfoUri, productName, publisher, publisherDisplayName, template, location);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenter.ServerVulnerabilityAssessmentData"/>. </summary>
@@ -1741,6 +1638,56 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static ServerVulnerabilityAssessmentData ServerVulnerabilityAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ServerVulnerabilityAssessmentPropertiesProvisioningState? provisioningState = null)
         {
             return new ServerVulnerabilityAssessmentData(id, name, resourceType, systemData, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityTopologyResource"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="calculatedOn"> The UTC time on which the topology was calculated. </param>
+        /// <param name="topologyResources"> Azure resources which are part of this topology resource. </param>
+        /// <param name="location"> Location where the resource is stored. </param>
+        /// <returns> A new <see cref="Models.SecurityTopologyResource"/> instance for mocking. </returns>
+        public static SecurityTopologyResource SecurityTopologyResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? calculatedOn = null, IEnumerable<TopologySingleResource> topologyResources = null, AzureLocation? location = null)
+        {
+            topologyResources ??= new List<TopologySingleResource>();
+
+            return new SecurityTopologyResource(id, name, resourceType, systemData, calculatedOn, topologyResources?.ToList(), location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TopologySingleResource"/>. </summary>
+        /// <param name="resourceId"> Azure resource id. </param>
+        /// <param name="severity"> The security severity of the resource. </param>
+        /// <param name="recommendationsExist"> Indicates if the resource has security recommendations. </param>
+        /// <param name="networkZones"> Indicates the resource connectivity level to the Internet (InternetFacing, Internal ,etc.). </param>
+        /// <param name="topologyScore"> Score of the resource based on its security severity. </param>
+        /// <param name="location"> The location of this resource. </param>
+        /// <param name="parents"> Azure resources connected to this resource which are in higher level in the topology view. </param>
+        /// <param name="children"> Azure resources connected to this resource which are in lower level in the topology view. </param>
+        /// <returns> A new <see cref="Models.TopologySingleResource"/> instance for mocking. </returns>
+        public static TopologySingleResource TopologySingleResource(ResourceIdentifier resourceId = null, string severity = null, bool? recommendationsExist = null, string networkZones = null, int? topologyScore = null, AzureLocation? location = null, IEnumerable<TopologySingleResourceParent> parents = null, IEnumerable<TopologySingleResourceChild> children = null)
+        {
+            parents ??= new List<TopologySingleResourceParent>();
+            children ??= new List<TopologySingleResourceChild>();
+
+            return new TopologySingleResource(resourceId, severity, recommendationsExist, networkZones, topologyScore, location, parents?.ToList(), children?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TopologySingleResourceParent"/>. </summary>
+        /// <param name="resourceId"> Azure resource id which serves as parent resource in topology view. </param>
+        /// <returns> A new <see cref="Models.TopologySingleResourceParent"/> instance for mocking. </returns>
+        public static TopologySingleResourceParent TopologySingleResourceParent(ResourceIdentifier resourceId = null)
+        {
+            return new TopologySingleResourceParent(resourceId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TopologySingleResourceChild"/>. </summary>
+        /// <param name="resourceId"> Azure resource id which serves as child resource in topology view. </param>
+        /// <returns> A new <see cref="Models.TopologySingleResourceChild"/> instance for mocking. </returns>
+        public static TopologySingleResourceChild TopologySingleResourceChild(ResourceIdentifier resourceId = null)
+        {
+            return new TopologySingleResourceChild(resourceId);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityAssessmentMetadataData"/>. </summary>
@@ -1857,324 +1804,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityAssessmentCreateOrUpdateContent(id, name, resourceType, systemData, resourceDetails, displayName, additionalData, linksAzurePortalUri != null ? new AssessmentLinks(linksAzurePortalUri) : null, metadata, partnersData, status);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.AdaptiveApplicationControlGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="enforcementMode"> The application control policy enforcement/protection mode of the machine group. </param>
-        /// <param name="protectionMode"> The protection mode of the collection/file types. Exe/Msi/Script are used for Windows, Executable is used for Linux. </param>
-        /// <param name="configurationStatus"> The configuration status of the machines group or machine or rule. </param>
-        /// <param name="recommendationStatus"> The initial recommendation status of the machine group or machine. </param>
-        /// <param name="issues"></param>
-        /// <param name="sourceSystem"> The source type of the machine group. </param>
-        /// <param name="vmRecommendations"></param>
-        /// <param name="pathRecommendations"></param>
-        /// <param name="location"> Location where the resource is stored. </param>
-        /// <returns> A new <see cref="SecurityCenter.AdaptiveApplicationControlGroupData"/> instance for mocking. </returns>
-        public static AdaptiveApplicationControlGroupData AdaptiveApplicationControlGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AdaptiveApplicationControlEnforcementMode? enforcementMode = null, SecurityCenterFileProtectionMode protectionMode = null, SecurityCenterConfigurationStatus? configurationStatus = null, RecommendationStatus? recommendationStatus = null, IEnumerable<AdaptiveApplicationControlIssueSummary> issues = null, AdaptiveApplicationControlGroupSourceSystem? sourceSystem = null, IEnumerable<VmRecommendation> vmRecommendations = null, IEnumerable<PathRecommendation> pathRecommendations = null, AzureLocation? location = null)
-        {
-            issues ??= new List<AdaptiveApplicationControlIssueSummary>();
-            vmRecommendations ??= new List<VmRecommendation>();
-            pathRecommendations ??= new List<PathRecommendation>();
-
-            return new AdaptiveApplicationControlGroupData(id, name, resourceType, systemData, enforcementMode, protectionMode, configurationStatus, recommendationStatus, issues?.ToList(), sourceSystem, vmRecommendations?.ToList(), pathRecommendations?.ToList(), location);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AdaptiveApplicationControlIssueSummary"/>. </summary>
-        /// <param name="issue"> An alert that machines within a group can have. </param>
-        /// <param name="numberOfVms"> The number of machines in the group that have this alert. </param>
-        /// <returns> A new <see cref="Models.AdaptiveApplicationControlIssueSummary"/> instance for mocking. </returns>
-        public static AdaptiveApplicationControlIssueSummary AdaptiveApplicationControlIssueSummary(AdaptiveApplicationControlIssue? issue = null, float? numberOfVms = null)
-        {
-            return new AdaptiveApplicationControlIssueSummary(issue, numberOfVms);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.AdaptiveNetworkHardeningData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="rules"> The security rules which are recommended to be effective on the VM. </param>
-        /// <param name="rulesCalculatedOn"> The UTC time on which the rules were calculated. </param>
-        /// <param name="effectiveNetworkSecurityGroups"> The Network Security Groups effective on the network interfaces of the protected resource. </param>
-        /// <returns> A new <see cref="SecurityCenter.AdaptiveNetworkHardeningData"/> instance for mocking. </returns>
-        public static AdaptiveNetworkHardeningData AdaptiveNetworkHardeningData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<RecommendedSecurityRule> rules = null, DateTimeOffset? rulesCalculatedOn = null, IEnumerable<EffectiveNetworkSecurityGroups> effectiveNetworkSecurityGroups = null)
-        {
-            rules ??= new List<RecommendedSecurityRule>();
-            effectiveNetworkSecurityGroups ??= new List<EffectiveNetworkSecurityGroups>();
-
-            return new AdaptiveNetworkHardeningData(id, name, resourceType, systemData, rules?.ToList(), rulesCalculatedOn, effectiveNetworkSecurityGroups?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityCenterAllowedConnection"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="calculatedOn"> The UTC time on which the allowed connections resource was calculated. </param>
-        /// <param name="connectableResources"> List of connectable resources. </param>
-        /// <param name="location"> Location where the resource is stored. </param>
-        /// <returns> A new <see cref="Models.SecurityCenterAllowedConnection"/> instance for mocking. </returns>
-        public static SecurityCenterAllowedConnection SecurityCenterAllowedConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? calculatedOn = null, IEnumerable<ConnectableResourceInfo> connectableResources = null, AzureLocation? location = null)
-        {
-            connectableResources ??= new List<ConnectableResourceInfo>();
-
-            return new SecurityCenterAllowedConnection(id, name, resourceType, systemData, calculatedOn, connectableResources?.ToList(), location);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConnectableResourceInfo"/>. </summary>
-        /// <param name="id"> The Azure resource id. </param>
-        /// <param name="inboundConnectedResources"> The list of Azure resources that the resource has inbound allowed connection from. </param>
-        /// <param name="outboundConnectedResources"> The list of Azure resources that the resource has outbound allowed connection to. </param>
-        /// <returns> A new <see cref="Models.ConnectableResourceInfo"/> instance for mocking. </returns>
-        public static ConnectableResourceInfo ConnectableResourceInfo(ResourceIdentifier id = null, IEnumerable<ConnectedResourceInfo> inboundConnectedResources = null, IEnumerable<ConnectedResourceInfo> outboundConnectedResources = null)
-        {
-            inboundConnectedResources ??= new List<ConnectedResourceInfo>();
-            outboundConnectedResources ??= new List<ConnectedResourceInfo>();
-
-            return new ConnectableResourceInfo(id, inboundConnectedResources?.ToList(), outboundConnectedResources?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConnectedResourceInfo"/>. </summary>
-        /// <param name="connectedResourceId"> The Azure resource id of the connected resource. </param>
-        /// <param name="tcpPorts"> The allowed tcp ports. </param>
-        /// <param name="udpPorts"> The allowed udp ports. </param>
-        /// <returns> A new <see cref="Models.ConnectedResourceInfo"/> instance for mocking. </returns>
-        public static ConnectedResourceInfo ConnectedResourceInfo(ResourceIdentifier connectedResourceId = null, string tcpPorts = null, string udpPorts = null)
-        {
-            return new ConnectedResourceInfo(connectedResourceId, tcpPorts, udpPorts);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityTopologyResource"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="calculatedOn"> The UTC time on which the topology was calculated. </param>
-        /// <param name="topologyResources"> Azure resources which are part of this topology resource. </param>
-        /// <param name="location"> Location where the resource is stored. </param>
-        /// <returns> A new <see cref="Models.SecurityTopologyResource"/> instance for mocking. </returns>
-        public static SecurityTopologyResource SecurityTopologyResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? calculatedOn = null, IEnumerable<TopologySingleResource> topologyResources = null, AzureLocation? location = null)
-        {
-            topologyResources ??= new List<TopologySingleResource>();
-
-            return new SecurityTopologyResource(id, name, resourceType, systemData, calculatedOn, topologyResources?.ToList(), location);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TopologySingleResource"/>. </summary>
-        /// <param name="resourceId"> Azure resource id. </param>
-        /// <param name="severity"> The security severity of the resource. </param>
-        /// <param name="recommendationsExist"> Indicates if the resource has security recommendations. </param>
-        /// <param name="networkZones"> Indicates the resource connectivity level to the Internet (InternetFacing, Internal ,etc.). </param>
-        /// <param name="topologyScore"> Score of the resource based on its security severity. </param>
-        /// <param name="location"> The location of this resource. </param>
-        /// <param name="parents"> Azure resources connected to this resource which are in higher level in the topology view. </param>
-        /// <param name="children"> Azure resources connected to this resource which are in lower level in the topology view. </param>
-        /// <returns> A new <see cref="Models.TopologySingleResource"/> instance for mocking. </returns>
-        public static TopologySingleResource TopologySingleResource(ResourceIdentifier resourceId = null, string severity = null, bool? recommendationsExist = null, string networkZones = null, int? topologyScore = null, AzureLocation? location = null, IEnumerable<TopologySingleResourceParent> parents = null, IEnumerable<TopologySingleResourceChild> children = null)
-        {
-            parents ??= new List<TopologySingleResourceParent>();
-            children ??= new List<TopologySingleResourceChild>();
-
-            return new TopologySingleResource(resourceId, severity, recommendationsExist, networkZones, topologyScore, location, parents?.ToList(), children?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TopologySingleResourceParent"/>. </summary>
-        /// <param name="resourceId"> Azure resource id which serves as parent resource in topology view. </param>
-        /// <returns> A new <see cref="Models.TopologySingleResourceParent"/> instance for mocking. </returns>
-        public static TopologySingleResourceParent TopologySingleResourceParent(ResourceIdentifier resourceId = null)
-        {
-            return new TopologySingleResourceParent(resourceId);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TopologySingleResourceChild"/>. </summary>
-        /// <param name="resourceId"> Azure resource id which serves as child resource in topology view. </param>
-        /// <returns> A new <see cref="Models.TopologySingleResourceChild"/> instance for mocking. </returns>
-        public static TopologySingleResourceChild TopologySingleResourceChild(ResourceIdentifier resourceId = null)
-        {
-            return new TopologySingleResourceChild(resourceId);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.JitNetworkAccessPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="virtualMachines"> Configurations for Microsoft.Compute/virtualMachines resource type. </param>
-        /// <param name="requests"></param>
-        /// <param name="provisioningState"> Gets the provisioning state of the Just-in-Time policy. </param>
-        /// <param name="kind"> Kind of the resource. </param>
-        /// <param name="location"> Location where the resource is stored. </param>
-        /// <returns> A new <see cref="SecurityCenter.JitNetworkAccessPolicyData"/> instance for mocking. </returns>
-        public static JitNetworkAccessPolicyData JitNetworkAccessPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<JitNetworkAccessPolicyVirtualMachine> virtualMachines = null, IEnumerable<JitNetworkAccessRequestInfo> requests = null, string provisioningState = null, string kind = null, AzureLocation? location = null)
-        {
-            virtualMachines ??= new List<JitNetworkAccessPolicyVirtualMachine>();
-            requests ??= new List<JitNetworkAccessRequestInfo>();
-
-            return new JitNetworkAccessPolicyData(id, name, resourceType, systemData, virtualMachines?.ToList(), requests?.ToList(), provisioningState, kind, location);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DiscoveredSecuritySolution"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="securityFamily"> The security family of the discovered solution. </param>
-        /// <param name="offer"> The security solutions' image offer. </param>
-        /// <param name="publisher"> The security solutions' image publisher. </param>
-        /// <param name="sku"> The security solutions' image sku. </param>
-        /// <param name="location"> Location where the resource is stored. </param>
-        /// <returns> A new <see cref="Models.DiscoveredSecuritySolution"/> instance for mocking. </returns>
-        public static DiscoveredSecuritySolution DiscoveredSecuritySolution(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityFamily securityFamily = default, string offer = null, string publisher = null, string sku = null, AzureLocation? location = null)
-        {
-            return new DiscoveredSecuritySolution(id, name, resourceType, systemData, securityFamily, offer, publisher, sku, location);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SecuritySolutionsReferenceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="securityFamily"> The security family of the security solution. </param>
-        /// <param name="alertVendorName"> The security solutions' vendor name. </param>
-        /// <param name="packageInfoUri"> The security solutions' package info url. </param>
-        /// <param name="productName"> The security solutions' product name. </param>
-        /// <param name="publisher"> The security solutions' publisher. </param>
-        /// <param name="publisherDisplayName"> The security solutions' publisher display name. </param>
-        /// <param name="template"> The security solutions' template. </param>
-        /// <param name="location"> Location where the resource is stored. </param>
-        /// <returns> A new <see cref="Models.SecuritySolutionsReferenceData"/> instance for mocking. </returns>
-        public static SecuritySolutionsReferenceData SecuritySolutionsReferenceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityFamily securityFamily = default, string alertVendorName = null, Uri packageInfoUri = null, string productName = null, string publisher = null, string publisherDisplayName = null, string template = null, AzureLocation? location = null)
-        {
-            return new SecuritySolutionsReferenceData(id, name, resourceType, systemData, securityFamily, alertVendorName, packageInfoUri, productName, publisher, publisherDisplayName, template, location);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExternalSecuritySolution"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the external solution. </param>
-        /// <param name="location"> Location where the resource is stored. </param>
-        /// <returns> A new <see cref="Models.ExternalSecuritySolution"/> instance for mocking. </returns>
-        public static ExternalSecuritySolution ExternalSecuritySolution(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", AzureLocation? location = null)
-        {
-            return new ExternalSecuritySolution(id, name, resourceType, systemData, kind, location);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecureScoreData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> The initiative’s name. </param>
-        /// <param name="weight"> The relative weight for each subscription. Used when calculating an aggregated secure score for multiple subscriptions. </param>
-        /// <param name="max"> Maximum score available. </param>
-        /// <param name="current"> Current score. </param>
-        /// <param name="percentage"> Ratio of the current score divided by the maximum. Rounded to 4 digits after the decimal point. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecureScoreData"/> instance for mocking. </returns>
-        public static SecureScoreData SecureScoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, long? weight = null, int? max = null, double? current = null, double? percentage = null)
-        {
-            return new SecureScoreData(id, name, resourceType, systemData, displayName, weight, max, current, percentage);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SecureScoreControlDetails"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> User friendly display name of the control. </param>
-        /// <param name="healthyResourceCount"> Number of healthy resources in the control. </param>
-        /// <param name="unhealthyResourceCount"> Number of unhealthy resources in the control. </param>
-        /// <param name="notApplicableResourceCount"> Number of not applicable resources in the control. </param>
-        /// <param name="weight"> The relative weight for this specific control in each of your subscriptions. Used when calculating an aggregated score for this control across all of your subscriptions. </param>
-        /// <param name="definition"> Information about the security control. </param>
-        /// <param name="max"> Maximum score available. </param>
-        /// <param name="current"> Current score. </param>
-        /// <param name="percentage"> Ratio of the current score divided by the maximum. Rounded to 4 digits after the decimal point. </param>
-        /// <returns> A new <see cref="Models.SecureScoreControlDetails"/> instance for mocking. </returns>
-        public static SecureScoreControlDetails SecureScoreControlDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, int? healthyResourceCount = null, int? unhealthyResourceCount = null, int? notApplicableResourceCount = null, long? weight = null, SecureScoreControlDefinitionItem definition = null, int? max = null, double? current = null, double? percentage = null)
-        {
-            return new SecureScoreControlDetails(id, name, resourceType, systemData, displayName, healthyResourceCount, unhealthyResourceCount, notApplicableResourceCount, weight, definition, max, current, percentage);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SecureScoreControlDefinitionItem"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> User friendly display name of the control. </param>
-        /// <param name="description"> User friendly description of the control. </param>
-        /// <param name="maxScore"> Maximum control score (0..10). </param>
-        /// <param name="sourceType"> Source object from which the control was created. </param>
-        /// <param name="assessmentDefinitions"> Array of assessments metadata IDs that are included in this security control. </param>
-        /// <returns> A new <see cref="Models.SecureScoreControlDefinitionItem"/> instance for mocking. </returns>
-        public static SecureScoreControlDefinitionItem SecureScoreControlDefinitionItem(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string description = null, int? maxScore = null, SecurityControlType? sourceType = null, IEnumerable<SubResource> assessmentDefinitions = null)
-        {
-            assessmentDefinitions ??= new List<SubResource>();
-
-            return new SecureScoreControlDefinitionItem(id, name, resourceType, systemData, displayName, description, maxScore, sourceType != null ? new SecureScoreControlDefinitionSource(sourceType) : null, assessmentDefinitions?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SecuritySolution"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="securityFamily"> The security family of the security solution. </param>
-        /// <param name="provisioningState"> The security family provisioning State. </param>
-        /// <param name="template"> The security solutions' template. </param>
-        /// <param name="protectionStatus"> The security solutions' status. </param>
-        /// <param name="location"> Location where the resource is stored. </param>
-        /// <returns> A new <see cref="Models.SecuritySolution"/> instance for mocking. </returns>
-        public static SecuritySolution SecuritySolution(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityFamily? securityFamily = null, SecurityFamilyProvisioningState? provisioningState = null, string template = null, string protectionStatus = null, AzureLocation? location = null)
-        {
-            return new SecuritySolution(id, name, resourceType, systemData, securityFamily, provisioningState, template, protectionStatus, location);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityCloudConnectorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="hybridComputeSettings"> Settings for hybrid compute management. These settings are relevant only for Arc autoProvision (Hybrid Compute). </param>
-        /// <param name="authenticationDetails">
-        /// Settings for authentication management, these settings are relevant only for the cloud connector.
-        /// Please note <see cref="Models.AuthenticationDetailsProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AwsAssumeRoleAuthenticationDetailsProperties"/>, <see cref="Models.AwsCredsAuthenticationDetailsProperties"/> and <see cref="Models.GcpCredentialsDetailsProperties"/>.
-        /// </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityCloudConnectorData"/> instance for mocking. </returns>
-        public static SecurityCloudConnectorData SecurityCloudConnectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HybridComputeSettingsProperties hybridComputeSettings = null, AuthenticationDetailsProperties authenticationDetails = null)
-        {
-            return new SecurityCloudConnectorData(id, name, resourceType, systemData, hybridComputeSettings, authenticationDetails);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeSettingsProperties"/>. </summary>
-        /// <param name="hybridComputeProvisioningState"> State of the service principal and its secret. </param>
-        /// <param name="autoProvision"> Whether or not to automatically install Azure Arc (hybrid compute) agents on machines. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where Arc (Hybrid Compute) connectors are connected. </param>
-        /// <param name="region"> The location where the metadata of machines will be stored. </param>
-        /// <param name="proxyServer"> For a non-Azure machine that is not connected directly to the internet, specify a proxy server that the non-Azure machine can use. </param>
-        /// <param name="servicePrincipal"> An object to access resources that are secured by an Azure AD tenant. </param>
-        /// <returns> A new <see cref="Models.HybridComputeSettingsProperties"/> instance for mocking. </returns>
-        public static HybridComputeSettingsProperties HybridComputeSettingsProperties(HybridComputeProvisioningState? hybridComputeProvisioningState = null, AutoProvisionState autoProvision = default, string resourceGroupName = null, string region = null, ProxyServerProperties proxyServer = null, ServicePrincipalProperties servicePrincipal = null)
-        {
-            return new HybridComputeSettingsProperties(hybridComputeProvisioningState, autoProvision, resourceGroupName, region, proxyServer, servicePrincipal);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AuthenticationDetailsProperties"/>. </summary>
-        /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
-        /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
-        /// <param name="authenticationType"> Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials. </param>
-        /// <returns> A new <see cref="Models.AuthenticationDetailsProperties"/> instance for mocking. </returns>
-        public static AuthenticationDetailsProperties AuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState = null, IEnumerable<SecurityCenterCloudPermission> grantedPermissions = null, string authenticationType = "Unknown")
-        {
-            grantedPermissions ??= new List<SecurityCenterCloudPermission>();
-
-            return new UnknownAuthenticationDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), authenticationType);
-        }
-
         /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityAlertData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2259,107 +1888,47 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecuritySettingData(id, name, resourceType, systemData, kind);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.IngestionSettingData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityCenterPricingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Ingestion setting data. </param>
-        /// <returns> A new <see cref="SecurityCenter.IngestionSettingData"/> instance for mocking. </returns>
-        public static IngestionSettingData IngestionSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData properties = null)
+        /// <param name="pricingTier"> The pricing tier value. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard. The standard tier offers advanced security capabilities, while the free tier offers basic security features. </param>
+        /// <param name="subPlan"> The sub-plan selected for a Standard pricing configuration, when more than one sub-plan is available. Each sub-plan enables a set of security features. When not specified, full plan is applied. </param>
+        /// <param name="freeTrialRemainingTime"> The duration left for the subscriptions free trial period - in ISO 8601 format (e.g. P3Y6M4DT12H30M5S). </param>
+        /// <param name="enabledOn"> Optional. If `pricingTier` is `Standard` then this property holds the date of the last time the `pricingTier` was set to `Standard`, when available (e.g 2023-03-01T12:42:42.1921106Z). </param>
+        /// <param name="isDeprecated"> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </param>
+        /// <param name="replacedBy"> Optional. List of plans that replace this plan. This property exists only if this plan is deprecated. </param>
+        /// <param name="extensions"> Optional. List of extensions offered under a plan. </param>
+        /// <returns> A new <see cref="SecurityCenter.SecurityCenterPricingData"/> instance for mocking. </returns>
+        public static SecurityCenterPricingData SecurityCenterPricingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityCenterPricingTier? pricingTier = null, string subPlan = null, TimeSpan? freeTrialRemainingTime = null, DateTimeOffset? enabledOn = null, bool? isDeprecated = null, IEnumerable<string> replacedBy = null, IEnumerable<PlanExtension> extensions = null)
         {
-            return new IngestionSettingData(id, name, resourceType, systemData, properties);
+            replacedBy ??= new List<string>();
+            extensions ??= new List<PlanExtension>();
+
+            return new SecurityCenterPricingData(id, name, resourceType, systemData, pricingTier, subPlan, freeTrialRemainingTime, enabledOn, isDeprecated, replacedBy?.ToList(), extensions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.IngestionSettingToken"/>. </summary>
-        /// <param name="token"> The token is used for correlating security data and logs with the resources in the subscription. </param>
-        /// <returns> A new <see cref="Models.IngestionSettingToken"/> instance for mocking. </returns>
-        public static IngestionSettingToken IngestionSettingToken(string token = null)
-        {
-            return new IngestionSettingToken(token);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.IngestionConnectionString"/>. </summary>
-        /// <param name="location"> The region where ingested logs and data resides. </param>
-        /// <param name="value"> Connection string value. </param>
-        /// <returns> A new <see cref="Models.IngestionConnectionString"/> instance for mocking. </returns>
-        public static IngestionConnectionString IngestionConnectionString(AzureLocation? location = null, string value = null)
-        {
-            return new IngestionConnectionString(location, value);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SoftwareInventoryData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="deviceId"> Unique identifier for the virtual machine in the service. </param>
-        /// <param name="osPlatform"> Platform of the operating system running on the device. </param>
-        /// <param name="vendor"> Name of the software vendor. </param>
-        /// <param name="softwareName"> Name of the software product. </param>
-        /// <param name="version"> Version number of the software product. </param>
-        /// <param name="endOfSupportStatus"> End of support status. </param>
-        /// <param name="endOfSupportDate"> The end of support date in case the product is upcoming end of support. </param>
-        /// <param name="numberOfKnownVulnerabilities"> Number of weaknesses. </param>
-        /// <param name="firstSeenOn"> First time that the software was seen in the device. </param>
-        /// <returns> A new <see cref="SecurityCenter.SoftwareInventoryData"/> instance for mocking. </returns>
-        public static SoftwareInventoryData SoftwareInventoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string deviceId = null, string osPlatform = null, string vendor = null, string softwareName = null, string version = null, EndOfSupportStatus? endOfSupportStatus = null, string endOfSupportDate = null, int? numberOfKnownVulnerabilities = null, DateTimeOffset? firstSeenOn = null)
-        {
-            return new SoftwareInventoryData(id, name, resourceType, systemData, deviceId, osPlatform, vendor, softwareName, version, endOfSupportStatus, endOfSupportDate, numberOfKnownVulnerabilities, firstSeenOn);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityConnectorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="hierarchyIdentifier"> The multi cloud resource identifier (account id in case of AWS connector, project number in case of GCP connector). </param>
-        /// <param name="hierarchyIdentifierTrialEndOn"> The date on which the trial period will end, if applicable. Trial period exists for 30 days after upgrading to payed offerings. </param>
-        /// <param name="environmentName"> The multi cloud resource's cloud name. </param>
-        /// <param name="offerings">
-        /// A collection of offerings for the security connector.
-        /// Please note <see cref="Models.SecurityCenterCloudOffering"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.CspmMonitorAwsOffering"/>, <see cref="Models.CspmMonitorAzureDevOpsOffering"/>, <see cref="Models.CspmMonitorGcpOffering"/>, <see cref="Models.CspmMonitorGithubOffering"/>, <see cref="Models.DefenderCspmAwsOffering"/>, <see cref="Models.DefenderCspmGcpOffering"/>, <see cref="Models.DefenderForContainersAwsOffering"/>, <see cref="Models.DefenderForContainersGcpOffering"/>, <see cref="Models.DefenderForDatabasesAwsOffering"/>, <see cref="Models.DefenderForDatabasesGcpOffering"/>, <see cref="Models.DefenderForDevOpsAzureDevOpsOffering"/>, <see cref="Models.DefenderForDevOpsGithubOffering"/>, <see cref="Models.DefenderForServersAwsOffering"/>, <see cref="Models.DefenderForServersGcpOffering"/> and <see cref="Models.InformationProtectionAwsOffering"/>.
+        /// <summary> Initializes a new instance of <see cref="Models.PlanExtension"/>. </summary>
+        /// <param name="name">
+        /// The extension name. Supported values are: &lt;br&gt;&lt;br&gt;**AgentlessDiscoveryForKubernetes** - API-based discovery of information about Kubernetes cluster architecture, workload objects, and setup. Required for Kubernetes inventory, identity and network exposure detection, attack path analysis and risk hunting as part of the cloud security explorer.
+        /// Available for CloudPosture plan.&lt;br&gt;&lt;br&gt;**OnUploadMalwareScanning** - Limits the GB to be scanned per month for each storage account within the subscription. Once this limit reached on a given storage account, Blobs won't be scanned during current calendar month.
+        /// Available for StorageAccounts plan.&lt;br&gt;&lt;br&gt;**SensitiveDataDiscovery** - Sensitive data discovery identifies Blob storage container with sensitive data such as credentials, credit cards, and more, to help prioritize and investigate security events.
+        /// Available for StorageAccounts and CloudPosture plans.&lt;br&gt;&lt;br&gt;**ContainerRegistriesVulnerabilityAssessments** - Provides vulnerability management for images stored in your container registries.
+        /// Available for CloudPosture and Containers plans.
         /// </param>
-<<<<<<< HEAD
-        /// <param name="environmentData">
-        /// The security connector environment data.
-        /// Please note <see cref="SecurityConnectorEnvironment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AwsEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GcpProjectEnvironment"/> and <see cref="GithubScopeEnvironment"/>.
-        /// </param>
-        /// <param name="kind"> Kind of the resource. </param>
-        /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityConnectorData"/> instance for mocking. </returns>
-        public static SecurityConnectorData SecurityConnectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string hierarchyIdentifier = null, DateTimeOffset? hierarchyIdentifierTrialEndOn = null, SecurityCenterCloudName? environmentName = null, IEnumerable<SecurityCenterCloudOffering> offerings = null, SecurityConnectorEnvironment environmentData = null, string kind = null, ETag? eTag = null)
-=======
         /// <param name="isEnabled"> Indicates whether the extension is enabled. </param>
         /// <param name="additionalExtensionProperties"> Property values associated with the extension. </param>
         /// <param name="operationStatus"> Optional. A status describing the success/failure of the extension's enablement/disablement operation. </param>
         /// <returns> A new <see cref="Models.PlanExtension"/> instance for mocking. </returns>
         public static PlanExtension PlanExtension(string name = null, IsExtensionEnabled isEnabled = default, IDictionary<string, BinaryData> additionalExtensionProperties = null, OperationStatusAutoGenerated operationStatus = null)
->>>>>>> b613ecbd00f (update Generated code /t:GenerateCode)
         {
-            tags ??= new Dictionary<string, string>();
-            offerings ??= new List<SecurityCenterCloudOffering>();
+            additionalExtensionProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SecurityConnectorData(id, name, resourceType, systemData, tags, location, hierarchyIdentifier, hierarchyIdentifierTrialEndOn, environmentName, offerings?.ToList(), environmentData, kind, eTag);
+            return new PlanExtension(name, isEnabled, additionalExtensionProperties, operationStatus);
         }
 
-<<<<<<< HEAD
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityCenterCloudOffering"/>. </summary>
-        /// <param name="offeringType"> The type of the security offering. </param>
-        /// <param name="description"> The offering description. </param>
-        /// <returns> A new <see cref="Models.SecurityCenterCloudOffering"/> instance for mocking. </returns>
-        public static SecurityCenterCloudOffering SecurityCenterCloudOffering(string offeringType = "Unknown", string description = null)
-        {
-            return new UnknownCloudOffering(offeringType, description);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.GovernanceRuleData"/>. </summary>
-=======
-        /// <summary> Initializes a new instance of OperationStatusAutoGenerated. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationStatusAutoGenerated"/>. </summary>
         /// <param name="code"> The operation status code. </param>
         /// <param name="message"> Additional information regarding the success/failure of the operation. </param>
         /// <returns> A new <see cref="Models.OperationStatusAutoGenerated"/> instance for mocking. </returns>
@@ -2368,117 +1937,396 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new OperationStatusAutoGenerated(code, message);
         }
 
-        /// <summary> Initializes a new instance of ServerVulnerabilityAssessmentsSettingData. </summary>
->>>>>>> b613ecbd00f (update Generated code /t:GenerateCode)
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.ServerVulnerabilityAssessmentsSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tenantId"> The tenantId (GUID). </param>
-        /// <param name="displayName"> Display name of the governance rule. </param>
-        /// <param name="description"> Description of the governance rule. </param>
-        /// <param name="remediationTimeframe"> Governance rule remediation timeframe - this is the time that will affect on the grace-period duration e.g. 7.00:00:00 - means 7 days. </param>
-        /// <param name="isGracePeriod"> Defines whether there is a grace period on the governance rule. </param>
-        /// <param name="rulePriority"> The governance rule priority, priority to the lower number. Rules with the same priority on the same scope will not be allowed. </param>
-        /// <param name="isDisabled"> Defines whether the rule is active/inactive. </param>
-        /// <param name="ruleType"> The rule type of the governance rule, defines the source of the rule e.g. Integrated. </param>
-        /// <param name="sourceResourceType"> The governance rule source, what the rule affects, e.g. Assessments. </param>
-        /// <param name="excludedScopes"> Excluded scopes, filter out the descendants of the scope (on management scopes). </param>
-        /// <param name="conditionSets"> The governance rule conditionSets - see examples. </param>
-        /// <param name="includeMemberScopes"> Defines whether the rule is management scope rule (master connector as a single scope or management scope). </param>
-        /// <param name="ownerSource"> The owner source for the governance rule - e.g. Manually by user@contoso.com - see example. </param>
-        /// <param name="governanceEmailNotification"> The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners. </param>
-        /// <param name="metadata"> The governance rule metadata. </param>
-        /// <returns> A new <see cref="SecurityCenter.GovernanceRuleData"/> instance for mocking. </returns>
-        public static GovernanceRuleData GovernanceRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? tenantId = null, string displayName = null, string description = null, string remediationTimeframe = null, bool? isGracePeriod = null, int? rulePriority = null, bool? isDisabled = null, GovernanceRuleType? ruleType = null, GovernanceRuleSourceResourceType? sourceResourceType = null, IEnumerable<string> excludedScopes = null, IEnumerable<BinaryData> conditionSets = null, bool? includeMemberScopes = null, GovernanceRuleOwnerSource ownerSource = null, GovernanceRuleEmailNotification governanceEmailNotification = null, GovernanceRuleMetadata metadata = null)
+        /// <param name="kind"> The kind of the server vulnerability assessments setting. </param>
+        /// <returns> A new <see cref="SecurityCenter.ServerVulnerabilityAssessmentsSettingData"/> instance for mocking. </returns>
+        public static ServerVulnerabilityAssessmentsSettingData ServerVulnerabilityAssessmentsSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
-            excludedScopes ??= new List<string>();
-            conditionSets ??= new List<BinaryData>();
-
-            return new GovernanceRuleData(id, name, resourceType, systemData, tenantId, displayName, description, remediationTimeframe, isGracePeriod, rulePriority, isDisabled, ruleType, sourceResourceType, excludedScopes?.ToList(), conditionSets?.ToList(), includeMemberScopes, ownerSource, governanceEmailNotification, metadata);
+            return new ServerVulnerabilityAssessmentsSettingData(id, name, resourceType, systemData, kind);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GovernanceRuleMetadata"/>. </summary>
-        /// <param name="createdBy"> Governance rule Created by object id (GUID). </param>
-        /// <param name="createdOn"> Governance rule creation date. </param>
-        /// <param name="updatedBy"> Governance rule last updated by object id (GUID). </param>
-        /// <param name="updatedOn"> Governance rule last update date. </param>
-        /// <returns> A new <see cref="Models.GovernanceRuleMetadata"/> instance for mocking. </returns>
-        public static GovernanceRuleMetadata GovernanceRuleMetadata(string createdBy = null, DateTimeOffset? createdOn = null, string updatedBy = null, DateTimeOffset? updatedOn = null)
-        {
-            return new GovernanceRuleMetadata(createdBy, createdOn, updatedBy, updatedOn);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.GovernanceAssignmentData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.ApiCollectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="owner"> The Owner for the governance assignment - e.g. user@contoso.com - see example. </param>
-        /// <param name="remediationDueOn"> The remediation due-date - after this date Secure Score will be affected (in case of  active grace-period). </param>
-        /// <param name="remediationEta"> The ETA (estimated time of arrival) for remediation (optional), see example. </param>
-        /// <param name="isGracePeriod"> Defines whether there is a grace period on the governance assignment. </param>
-        /// <param name="governanceEmailNotification"> The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners. </param>
-        /// <param name="additionalData"> The additional data for the governance assignment - e.g. links to ticket (optional), see example. </param>
-        /// <returns> A new <see cref="SecurityCenter.GovernanceAssignmentData"/> instance for mocking. </returns>
-        public static GovernanceAssignmentData GovernanceAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string owner = null, DateTimeOffset? remediationDueOn = null, RemediationEta remediationEta = null, bool? isGracePeriod = null, GovernanceEmailNotification governanceEmailNotification = null, GovernanceAssignmentAdditionalInfo additionalData = null)
+        /// <param name="provisioningState"> Gets the provisioning state of the API collection. </param>
+        /// <param name="displayName"> The display name of the API collection. </param>
+        /// <param name="discoveredVia"> The resource Id of the resource from where this API collection was discovered. </param>
+        /// <param name="baseUri"> The base URI for this API collection. All endpoints of this API collection extend this base URI. </param>
+        /// <param name="numberOfApiEndpoints"> The number of API endpoints discovered in this API collection. </param>
+        /// <param name="numberOfInactiveApiEndpoints"> The number of API endpoints in this API collection that have not received any API traffic in the last 30 days. </param>
+        /// <param name="numberOfUnauthenticatedApiEndpoints"> The number of API endpoints in this API collection that are unauthenticated. </param>
+        /// <param name="numberOfExternalApiEndpoints"> The number of API endpoints in this API collection for which API traffic from the internet was observed. </param>
+        /// <param name="numberOfApiEndpointsWithSensitiveDataExposed"> The number of API endpoints in this API collection which are exposing sensitive data in their requests and/or responses. </param>
+        /// <param name="sensitivityLabel"> The highest priority sensitivity label from Microsoft Purview in this API collection. </param>
+        /// <returns> A new <see cref="SecurityCenter.ApiCollectionData"/> instance for mocking. </returns>
+        public static ApiCollectionData ApiCollectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SecurityFamilyProvisioningState? provisioningState = null, string displayName = null, ResourceIdentifier discoveredVia = null, Uri baseUri = null, long? numberOfApiEndpoints = null, long? numberOfInactiveApiEndpoints = null, long? numberOfUnauthenticatedApiEndpoints = null, long? numberOfExternalApiEndpoints = null, long? numberOfApiEndpointsWithSensitiveDataExposed = null, string sensitivityLabel = null)
         {
-            return new GovernanceAssignmentData(id, name, resourceType, systemData, owner, remediationDueOn, remediationEta, isGracePeriod, governanceEmailNotification, additionalData);
+            return new ApiCollectionData(id, name, resourceType, systemData, provisioningState, displayName, discoveredVia, baseUri, numberOfApiEndpoints, numberOfInactiveApiEndpoints, numberOfUnauthenticatedApiEndpoints, numberOfExternalApiEndpoints, numberOfApiEndpointsWithSensitiveDataExposed, sensitivityLabel);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityApplicationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> display name of the application. </param>
-        /// <param name="description"> description of the application. </param>
-        /// <param name="sourceResourceType"> The application source, what it affects, e.g. Assessments. </param>
-        /// <param name="conditionSets"> The application conditionSets - see examples. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityApplicationData"/> instance for mocking. </returns>
-        public static SecurityApplicationData SecurityApplicationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string description = null, ApplicationSourceResourceType? sourceResourceType = null, IEnumerable<BinaryData> conditionSets = null)
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityAutomationActionEventHub"/>. </summary>
+        /// <param name="eventHubResourceId"> The target Event Hub Azure Resource ID. </param>
+        /// <param name="sasPolicyName"> The target Event Hub SAS policy name. </param>
+        /// <param name="connectionString"> The target Event Hub connection string (it will not be included in any response). </param>
+        /// <returns> A new <see cref="Models.SecurityAutomationActionEventHub"/> instance for mocking. </returns>
+        public static SecurityAutomationActionEventHub SecurityAutomationActionEventHub(ResourceIdentifier eventHubResourceId = null, string sasPolicyName = null, string connectionString = null)
         {
-            conditionSets ??= new List<BinaryData>();
-
-            return new SecurityApplicationData(id, name, resourceType, systemData, displayName, description, sourceResourceType, conditionSets?.ToList());
+            return new SecurityAutomationActionEventHub(ActionType.EventHub, eventHubResourceId, sasPolicyName, connectionString);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SqlVulnerabilityAssessmentScanData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> A vulnerability assessment scan record properties. </param>
-        /// <returns> A new <see cref="SecurityCenter.SqlVulnerabilityAssessmentScanData"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentScanData SqlVulnerabilityAssessmentScanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SqlVulnerabilityAssessmentScanProperties properties = null)
+        /// <summary> Initializes a new instance of <see cref="Models.SqlServerVulnerabilityProperties"/>. </summary>
+        /// <param name="sqlServerVulnerabilityType"> The resource type the sub assessment refers to in its resource details. </param>
+        /// <param name="query"> The T-SQL query that runs on your SQL database to perform the particular check. </param>
+        /// <returns> A new <see cref="Models.SqlServerVulnerabilityProperties"/> instance for mocking. </returns>
+        public static SqlServerVulnerabilityProperties SqlServerVulnerabilityProperties(string sqlServerVulnerabilityType = null, string query = null)
         {
-            return new SqlVulnerabilityAssessmentScanData(id, name, resourceType, systemData, properties);
+            return new SqlServerVulnerabilityProperties(AssessedResourceType.SqlServerVulnerability, sqlServerVulnerabilityType, query);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentScanResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> A vulnerability assessment scan result properties for a single rule. </param>
-        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentScanResult"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentScanResult SqlVulnerabilityAssessmentScanResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SqlVulnerabilityAssessmentScanResultProperties properties = null)
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryVulnerabilityProperties"/>. </summary>
+        /// <param name="containerRegistryVulnerabilityPropertiesType"> Vulnerability Type. e.g: Vulnerability, Potential Vulnerability, Information Gathered, Vulnerability. </param>
+        /// <param name="cvss"> Dictionary from cvss version to cvss details object. </param>
+        /// <param name="isPatchable"> Indicates whether a patch is available or not. </param>
+        /// <param name="cve"> List of CVEs. </param>
+        /// <param name="publishedOn"> Published time. </param>
+        /// <param name="vendorReferences"></param>
+        /// <param name="repositoryName"> Name of the repository which the vulnerable image belongs to. </param>
+        /// <param name="imageDigest"> Digest of the vulnerable image. </param>
+        /// <returns> A new <see cref="Models.ContainerRegistryVulnerabilityProperties"/> instance for mocking. </returns>
+        public static ContainerRegistryVulnerabilityProperties ContainerRegistryVulnerabilityProperties(string containerRegistryVulnerabilityPropertiesType = null, IReadOnlyDictionary<string, SecurityCvss> cvss = null, bool? isPatchable = null, IEnumerable<SecurityCve> cve = null, DateTimeOffset? publishedOn = null, IEnumerable<VendorReference> vendorReferences = null, string repositoryName = null, string imageDigest = null)
         {
-            return new SqlVulnerabilityAssessmentScanResult(id, name, resourceType, systemData, properties);
+            cvss ??= new Dictionary<string, SecurityCvss>();
+            cve ??= new List<SecurityCve>();
+            vendorReferences ??= new List<VendorReference>();
+
+            return new ContainerRegistryVulnerabilityProperties(AssessedResourceType.ContainerRegistryVulnerability, containerRegistryVulnerabilityPropertiesType, cvss, isPatchable, cve?.ToList(), publishedOn, vendorReferences?.ToList(), repositoryName, imageDigest);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="ruleResults"> Rule results properties. </param>
-        /// <returns> A new <see cref="SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleData"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentBaselineRuleData SqlVulnerabilityAssessmentBaselineRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<IList<string>> ruleResults = null)
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityCvss"/>. </summary>
+        /// <param name="base"> CVSS base. </param>
+        /// <returns> A new <see cref="Models.SecurityCvss"/> instance for mocking. </returns>
+        public static SecurityCvss SecurityCvss(float? @base = null)
         {
-            ruleResults ??= new List<IList<string>>();
+            return new SecurityCvss(@base);
+        }
 
-            return new SqlVulnerabilityAssessmentBaselineRuleData(id, name, resourceType, systemData, ruleResults != null ? new RuleResultsProperties(ruleResults?.ToList()) : null);
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityCve"/>. </summary>
+        /// <param name="title"> CVE title. </param>
+        /// <param name="link"> Link url. </param>
+        /// <returns> A new <see cref="Models.SecurityCve"/> instance for mocking. </returns>
+        public static SecurityCve SecurityCve(string title = null, string link = null)
+        {
+            return new SecurityCve(title, link);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.VendorReference"/>. </summary>
+        /// <param name="title"> Link title. </param>
+        /// <param name="link"> Link url. </param>
+        /// <returns> A new <see cref="Models.VendorReference"/> instance for mocking. </returns>
+        public static VendorReference VendorReference(string title = null, string link = null)
+        {
+            return new VendorReference(title, link);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServerVulnerabilityProperties"/>. </summary>
+        /// <param name="serverVulnerabilityType"> Vulnerability Type. e.g: Vulnerability, Potential Vulnerability, Information Gathered. </param>
+        /// <param name="cvss"> Dictionary from cvss version to cvss details object. </param>
+        /// <param name="isPatchable"> Indicates whether a patch is available or not. </param>
+        /// <param name="cve"> List of CVEs. </param>
+        /// <param name="threat"> Threat name. </param>
+        /// <param name="publishedOn"> Published time. </param>
+        /// <param name="vendorReferences"></param>
+        /// <returns> A new <see cref="Models.ServerVulnerabilityProperties"/> instance for mocking. </returns>
+        public static ServerVulnerabilityProperties ServerVulnerabilityProperties(string serverVulnerabilityType = null, IReadOnlyDictionary<string, SecurityCvss> cvss = null, bool? isPatchable = null, IEnumerable<SecurityCve> cve = null, string threat = null, DateTimeOffset? publishedOn = null, IEnumerable<VendorReference> vendorReferences = null)
+        {
+            cvss ??= new Dictionary<string, SecurityCvss>();
+            cve ??= new List<SecurityCve>();
+            vendorReferences ??= new List<VendorReference>();
+
+            return new ServerVulnerabilityProperties(new AssessedResourceType("ServerVulnerabilityAssessment"), serverVulnerabilityType, cvss, isPatchable, cve?.ToList(), threat, publishedOn, vendorReferences?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AwsCredsAuthenticationDetailsProperties"/>. </summary>
+        /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
+        /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
+        /// <param name="accountId"> The ID of the cloud account. </param>
+        /// <param name="awsAccessKeyId"> Public key element of the AWS credential object (write only). </param>
+        /// <param name="awsSecretAccessKey"> Secret key element of the AWS credential object (write only). </param>
+        /// <returns> A new <see cref="Models.AwsCredsAuthenticationDetailsProperties"/> instance for mocking. </returns>
+        public static AwsCredsAuthenticationDetailsProperties AwsCredsAuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState = null, IEnumerable<SecurityCenterCloudPermission> grantedPermissions = null, string accountId = null, string awsAccessKeyId = null, string awsSecretAccessKey = null)
+        {
+            grantedPermissions ??= new List<SecurityCenterCloudPermission>();
+
+            return new AwsCredsAuthenticationDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), AuthenticationType.AwsCreds, accountId, awsAccessKeyId, awsSecretAccessKey);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AwsAssumeRoleAuthenticationDetailsProperties"/>. </summary>
+        /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
+        /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
+        /// <param name="accountId"> The ID of the cloud account. </param>
+        /// <param name="awsAssumeRoleArn"> Assumed role ID is an identifier that you can use to create temporary security credentials. </param>
+        /// <param name="awsExternalId"> A unique identifier that is required when you assume a role in another account. </param>
+        /// <returns> A new <see cref="Models.AwsAssumeRoleAuthenticationDetailsProperties"/> instance for mocking. </returns>
+        public static AwsAssumeRoleAuthenticationDetailsProperties AwsAssumeRoleAuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState = null, IEnumerable<SecurityCenterCloudPermission> grantedPermissions = null, string accountId = null, string awsAssumeRoleArn = null, Guid awsExternalId = default)
+        {
+            grantedPermissions ??= new List<SecurityCenterCloudPermission>();
+
+            return new AwsAssumeRoleAuthenticationDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), AuthenticationType.AwsAssumeRole, accountId, awsAssumeRoleArn, awsExternalId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GcpCredentialsDetailsProperties"/>. </summary>
+        /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
+        /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
+        /// <param name="organizationId"> The organization ID of the GCP cloud account. </param>
+        /// <param name="gcpCredentialType"> Type field of the API key (write only). </param>
+        /// <param name="projectId"> Project ID field of the API key (write only). </param>
+        /// <param name="privateKeyId"> Private key ID field of the API key (write only). </param>
+        /// <param name="privateKey"> Private key field of the API key (write only). </param>
+        /// <param name="clientEmail"> Client email field of the API key (write only). </param>
+        /// <param name="clientId"> Client ID field of the API key (write only). </param>
+        /// <param name="authUri"> Auth URI field of the API key (write only). </param>
+        /// <param name="tokenUri"> Token URI field of the API key (write only). </param>
+        /// <param name="authProviderX509CertUri"> Auth provider x509 certificate URL field of the API key (write only). </param>
+        /// <param name="clientX509CertUri"> Client x509 certificate URL field of the API key (write only). </param>
+        /// <returns> A new <see cref="Models.GcpCredentialsDetailsProperties"/> instance for mocking. </returns>
+        public static GcpCredentialsDetailsProperties GcpCredentialsDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState = null, IEnumerable<SecurityCenterCloudPermission> grantedPermissions = null, string organizationId = null, string gcpCredentialType = null, string projectId = null, string privateKeyId = null, string privateKey = null, string clientEmail = null, string clientId = null, Uri authUri = null, Uri tokenUri = null, Uri authProviderX509CertUri = null, Uri clientX509CertUri = null)
+        {
+            grantedPermissions ??= new List<SecurityCenterCloudPermission>();
+
+            return new GcpCredentialsDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), AuthenticationType.GcpCredentials, organizationId, gcpCredentialType, projectId, privateKeyId, privateKey, clientEmail, clientId, authUri, tokenUri, authProviderX509CertUri, clientX509CertUri);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AwsEnvironment"/>. </summary>
+        /// <param name="organizationalData">
+        /// The AWS account's organizational data
+        /// Please note <see cref="AwsOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AwsOrganizationalDataMember"/> and <see cref="AwsOrganizationalDataMaster"/>.
+        /// </param>
+        /// <param name="regions"> list of regions to scan. </param>
+        /// <param name="accountName"> The AWS account name. </param>
+        /// <param name="scanInterval"> Scan interval in hours (value should be between 1-hour to 24-hours). </param>
+        /// <returns> A new <see cref="Models.AwsEnvironment"/> instance for mocking. </returns>
+        public static AwsEnvironment AwsEnvironment(AwsOrganizationalInfo organizationalData = null, IEnumerable<string> regions = null, string accountName = null, long? scanInterval = null)
+        {
+            regions ??= new List<string>();
+
+            return new AwsEnvironment(EnvironmentType.AwsAccount, organizationalData, regions?.ToList(), accountName, scanInterval);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GcpProjectDetails"/>. </summary>
+        /// <param name="projectNumber"> The unique GCP Project number. </param>
+        /// <param name="projectId"> The GCP Project id. </param>
+        /// <param name="workloadIdentityPoolId"> The GCP workload identity federation pool id. </param>
+        /// <param name="projectName"> GCP project name. </param>
+        /// <returns> A new <see cref="Models.GcpProjectDetails"/> instance for mocking. </returns>
+        public static GcpProjectDetails GcpProjectDetails(string projectNumber = null, string projectId = null, string workloadIdentityPoolId = null, string projectName = null)
+        {
+            return new GcpProjectDetails(projectNumber, projectId, workloadIdentityPoolId, projectName);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GcpParentOrganizationalInfo"/>. </summary>
+        /// <param name="excludedProjectNumbers"> If the multi cloud account is of membership type organization, list of accounts excluded from offering. </param>
+        /// <param name="serviceAccountEmailAddress"> The service account email address which represents the organization level permissions container. </param>
+        /// <param name="workloadIdentityProviderId"> The GCP workload identity provider id which represents the permissions required to auto provision security connectors. </param>
+        /// <param name="organizationName"> GCP organization name. </param>
+        /// <returns> A new <see cref="Models.GcpParentOrganizationalInfo"/> instance for mocking. </returns>
+        public static GcpParentOrganizationalInfo GcpParentOrganizationalInfo(IEnumerable<string> excludedProjectNumbers = null, string serviceAccountEmailAddress = null, string workloadIdentityProviderId = null, string organizationName = null)
+        {
+            excludedProjectNumbers ??= new List<string>();
+
+            return new GcpParentOrganizationalInfo(OrganizationMembershipType.Organization, excludedProjectNumbers?.ToList(), serviceAccountEmailAddress, workloadIdentityProviderId, organizationName);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CspmMonitorAwsOffering"/>. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <param name="cloudRoleArn"> The native cloud connection configuration. </param>
+        /// <returns> A new <see cref="Models.CspmMonitorAwsOffering"/> instance for mocking. </returns>
+        public static CspmMonitorAwsOffering CspmMonitorAwsOffering(string description = null, string cloudRoleArn = null)
+        {
+            return new CspmMonitorAwsOffering(OfferingType.CspmMonitorAws, description, cloudRoleArn != null ? new CspmMonitorAwsOfferingNativeCloudConnection(cloudRoleArn) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DefenderForContainersAwsOffering"/>. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <param name="kubernetesServiceCloudRoleArn"> The kubernetes service connection configuration. </param>
+        /// <param name="kubernetesScubaReaderCloudRoleArn"> The kubernetes to scuba connection configuration. </param>
+        /// <param name="cloudRoleArn"> The cloudwatch to kinesis connection configuration. </param>
+        /// <param name="kinesisToS3CloudRoleArn"> The kinesis to s3 connection configuration. </param>
+        /// <param name="containerVulnerabilityAssessmentCloudRoleArn"> The container vulnerability assessment configuration. </param>
+        /// <param name="containerVulnerabilityAssessmentTaskCloudRoleArn"> The container vulnerability assessment task configuration. </param>
+        /// <param name="isContainerVulnerabilityAssessmentEnabled"> Enable container vulnerability assessment feature. </param>
+        /// <param name="isAutoProvisioningEnabled"> Is audit logs pipeline auto provisioning enabled. </param>
+        /// <param name="kubeAuditRetentionTime"> The retention time in days of kube audit logs set on the CloudWatch log group. </param>
+        /// <param name="scubaExternalId"> The externalId used by the data reader to prevent the confused deputy attack. </param>
+        /// <param name="mdcContainersImageAssessment"> The Microsoft Defender container image assessment configuration. </param>
+        /// <param name="mdcContainersAgentlessDiscoveryK8S"> The Microsoft Defender container agentless discovery K8s configuration. </param>
+        /// <returns> A new <see cref="Models.DefenderForContainersAwsOffering"/> instance for mocking. </returns>
+        public static DefenderForContainersAwsOffering DefenderForContainersAwsOffering(string description = null, string kubernetesServiceCloudRoleArn = null, string kubernetesScubaReaderCloudRoleArn = null, string cloudRoleArn = null, string kinesisToS3CloudRoleArn = null, string containerVulnerabilityAssessmentCloudRoleArn = null, string containerVulnerabilityAssessmentTaskCloudRoleArn = null, bool? isContainerVulnerabilityAssessmentEnabled = null, bool? isAutoProvisioningEnabled = null, long? kubeAuditRetentionTime = null, string scubaExternalId = null, DefenderForContainersAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment = null, DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = null)
+        {
+            return new DefenderForContainersAwsOffering(OfferingType.DefenderForContainersAws, description, kubernetesServiceCloudRoleArn != null ? new DefenderForContainersAwsOfferingKubernetesService(kubernetesServiceCloudRoleArn) : null, kubernetesScubaReaderCloudRoleArn != null ? new DefenderForContainersAwsOfferingKubernetesScubaReader(kubernetesScubaReaderCloudRoleArn) : null, cloudRoleArn != null ? new DefenderForContainersAwsOfferingCloudWatchToKinesis(cloudRoleArn) : null, kinesisToS3CloudRoleArn != null ? new DefenderForContainersAwsOfferingKinesisToS3(kinesisToS3CloudRoleArn) : null, containerVulnerabilityAssessmentCloudRoleArn != null ? new DefenderForContainersAwsOfferingContainerVulnerabilityAssessment(containerVulnerabilityAssessmentCloudRoleArn) : null, containerVulnerabilityAssessmentTaskCloudRoleArn != null ? new DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask(containerVulnerabilityAssessmentTaskCloudRoleArn) : null, isContainerVulnerabilityAssessmentEnabled, isAutoProvisioningEnabled, kubeAuditRetentionTime, scubaExternalId, mdcContainersImageAssessment, mdcContainersAgentlessDiscoveryK8S);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DefenderForServersAwsOffering"/>. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <param name="defenderForServersCloudRoleArn"> The Defender for servers connection configuration. </param>
+        /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
+        /// <param name="vaAutoProvisioning"> The Vulnerability Assessment autoprovisioning configuration. </param>
+        /// <param name="mdeAutoProvisioning"> The Microsoft Defender for Endpoint autoprovisioning configuration. </param>
+        /// <param name="availableSubPlanType"> configuration for the servers offering subPlan. </param>
+        /// <param name="vmScanners"> The Microsoft Defender for Server VM scanning configuration. </param>
+        /// <returns> A new <see cref="Models.DefenderForServersAwsOffering"/> instance for mocking. </returns>
+        public static DefenderForServersAwsOffering DefenderForServersAwsOffering(string description = null, string defenderForServersCloudRoleArn = null, DefenderForServersAwsOfferingArcAutoProvisioning arcAutoProvisioning = null, DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning vaAutoProvisioning = null, DefenderForServersAwsOfferingMdeAutoProvisioning mdeAutoProvisioning = null, AvailableSubPlanType? availableSubPlanType = null, DefenderForServersAwsOfferingVmScanners vmScanners = null)
+        {
+            return new DefenderForServersAwsOffering(OfferingType.DefenderForServersAws, description, defenderForServersCloudRoleArn != null ? new AwsDefenderForServersInfo(defenderForServersCloudRoleArn) : null, arcAutoProvisioning, vaAutoProvisioning, mdeAutoProvisioning, availableSubPlanType != null ? new DefenderForServersAwsOfferingSubPlan(availableSubPlanType) : null, vmScanners);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DefenderForDatabasesAwsOffering"/>. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
+        /// <param name="rds"> The RDS configuration. </param>
+        /// <param name="databasesDspm"> The databases data security posture management (DSPM) configuration. </param>
+        /// <returns> A new <see cref="Models.DefenderForDatabasesAwsOffering"/> instance for mocking. </returns>
+        public static DefenderForDatabasesAwsOffering DefenderForDatabasesAwsOffering(string description = null, DefenderForDatabasesAwsOfferingArcAutoProvisioning arcAutoProvisioning = null, DefenderForDatabasesAwsOfferingRds rds = null, DefenderFoDatabasesAwsOfferingDatabasesDspm databasesDspm = null)
+        {
+            return new DefenderForDatabasesAwsOffering(OfferingType.DefenderForDatabasesAws, description, arcAutoProvisioning, rds, databasesDspm);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InformationProtectionAwsOffering"/>. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <param name="informationProtectionCloudRoleArn"> The native cloud connection configuration. </param>
+        /// <returns> A new <see cref="Models.InformationProtectionAwsOffering"/> instance for mocking. </returns>
+        public static InformationProtectionAwsOffering InformationProtectionAwsOffering(string description = null, string informationProtectionCloudRoleArn = null)
+        {
+            return new InformationProtectionAwsOffering(OfferingType.InformationProtectionAws, description, informationProtectionCloudRoleArn != null ? new AwsInformationProtection(informationProtectionCloudRoleArn) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CspmMonitorGcpOffering"/>. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <param name="nativeCloudConnection"> The native cloud connection configuration. </param>
+        /// <returns> A new <see cref="Models.CspmMonitorGcpOffering"/> instance for mocking. </returns>
+        public static CspmMonitorGcpOffering CspmMonitorGcpOffering(string description = null, CspmMonitorGcpOfferingNativeCloudConnection nativeCloudConnection = null)
+        {
+            return new CspmMonitorGcpOffering(OfferingType.CspmMonitorGcp, description, nativeCloudConnection);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DefenderForServersGcpOffering"/>. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <param name="defenderForServers"> The Defender for servers connection configuration. </param>
+        /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
+        /// <param name="vulnerabilityAssessmentAutoProvisioning"> The Vulnerability Assessment autoprovisioning configuration. </param>
+        /// <param name="mdeAutoProvisioning"> The Microsoft Defender for Endpoint autoprovisioning configuration. </param>
+        /// <param name="availableSubPlanType"> configuration for the servers offering subPlan. </param>
+        /// <param name="vmScanners"> The Microsoft Defender for Server VM scanning configuration. </param>
+        /// <returns> A new <see cref="Models.DefenderForServersGcpOffering"/> instance for mocking. </returns>
+        public static DefenderForServersGcpOffering DefenderForServersGcpOffering(string description = null, GcpDefenderForServersInfo defenderForServers = null, DefenderForServersGcpOfferingArcAutoProvisioning arcAutoProvisioning = null, DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning vulnerabilityAssessmentAutoProvisioning = null, DefenderForServersGcpOfferingMdeAutoProvisioning mdeAutoProvisioning = null, AvailableSubPlanType? availableSubPlanType = null, DefenderForServersGcpOfferingVmScanners vmScanners = null)
+        {
+            return new DefenderForServersGcpOffering(OfferingType.DefenderForServersGcp, description, defenderForServers, arcAutoProvisioning, vulnerabilityAssessmentAutoProvisioning, mdeAutoProvisioning, availableSubPlanType != null ? new DefenderForServersGcpOfferingSubPlan(availableSubPlanType) : null, vmScanners);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DefenderForDatabasesGcpOffering"/>. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
+        /// <param name="defenderForDatabasesArcAutoProvisioning"> The native cloud connection configuration. </param>
+        /// <returns> A new <see cref="Models.DefenderForDatabasesGcpOffering"/> instance for mocking. </returns>
+        public static DefenderForDatabasesGcpOffering DefenderForDatabasesGcpOffering(string description = null, DefenderForDatabasesGcpOfferingArcAutoProvisioning arcAutoProvisioning = null, GcpDefenderForDatabasesArcAutoProvisioning defenderForDatabasesArcAutoProvisioning = null)
+        {
+            return new DefenderForDatabasesGcpOffering(OfferingType.DefenderForDatabasesGcp, description, arcAutoProvisioning, defenderForDatabasesArcAutoProvisioning);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DefenderForContainersGcpOffering"/>. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <param name="nativeCloudConnection"> The native cloud connection configuration. </param>
+        /// <param name="dataPipelineNativeCloudConnection"> The native cloud connection configuration. </param>
+        /// <param name="isAuditLogsAutoProvisioningEnabled"> Is audit logs data collection enabled. </param>
+        /// <param name="isDefenderAgentAutoProvisioningEnabled"> Is Microsoft Defender for Cloud Kubernetes agent auto provisioning enabled. </param>
+        /// <param name="isPolicyAgentAutoProvisioningEnabled"> Is Policy Kubernetes agent auto provisioning enabled. </param>
+        /// <param name="mdcContainersImageAssessment"> The Microsoft Defender Container image assessment configuration. </param>
+        /// <param name="mdcContainersAgentlessDiscoveryK8S"> The Microsoft Defender Container agentless discovery configuration. </param>
+        /// <returns> A new <see cref="Models.DefenderForContainersGcpOffering"/> instance for mocking. </returns>
+        public static DefenderForContainersGcpOffering DefenderForContainersGcpOffering(string description = null, DefenderForContainersGcpOfferingNativeCloudConnection nativeCloudConnection = null, DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection dataPipelineNativeCloudConnection = null, bool? isAuditLogsAutoProvisioningEnabled = null, bool? isDefenderAgentAutoProvisioningEnabled = null, bool? isPolicyAgentAutoProvisioningEnabled = null, DefenderForContainersGcpOfferingMdcContainersImageAssessment mdcContainersImageAssessment = null, DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = null)
+        {
+            return new DefenderForContainersGcpOffering(OfferingType.DefenderForContainersGcp, description, nativeCloudConnection, dataPipelineNativeCloudConnection, isAuditLogsAutoProvisioningEnabled, isDefenderAgentAutoProvisioningEnabled, isPolicyAgentAutoProvisioningEnabled, mdcContainersImageAssessment, mdcContainersAgentlessDiscoveryK8S);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CspmMonitorGithubOffering"/>. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <returns> A new <see cref="Models.CspmMonitorGithubOffering"/> instance for mocking. </returns>
+        public static CspmMonitorGithubOffering CspmMonitorGithubOffering(string description = null)
+        {
+            return new CspmMonitorGithubOffering(OfferingType.CspmMonitorGithub, description);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CspmMonitorAzureDevOpsOffering"/>. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <returns> A new <see cref="Models.CspmMonitorAzureDevOpsOffering"/> instance for mocking. </returns>
+        public static CspmMonitorAzureDevOpsOffering CspmMonitorAzureDevOpsOffering(string description = null)
+        {
+            return new CspmMonitorAzureDevOpsOffering(OfferingType.CspmMonitorAzureDevOps, description);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DefenderCspmAwsOffering"/>. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <param name="vmScanners"> The Microsoft Defender for Server VM scanning configuration. </param>
+        /// <param name="dataSensitivityDiscovery"> The Microsoft Defender Data Sensitivity discovery configuration. </param>
+        /// <param name="databasesDspm"> The databases DSPM configuration. </param>
+        /// <param name="ciem"> Defenders CSPM Cloud infrastructure entitlement management (CIEM) offering configurations. </param>
+        /// <param name="mdcContainersImageAssessment"> The Microsoft Defender container image assessment configuration. </param>
+        /// <param name="mdcContainersAgentlessDiscoveryK8S"> The Microsoft Defender container agentless discovery K8s configuration. </param>
+        /// <returns> A new <see cref="Models.DefenderCspmAwsOffering"/> instance for mocking. </returns>
+        public static DefenderCspmAwsOffering DefenderCspmAwsOffering(string description = null, DefenderCspmAwsOfferingVmScanners vmScanners = null, DefenderCspmAwsOfferingDataSensitivityDiscovery dataSensitivityDiscovery = null, DefenderCspmAwsOfferingDatabasesDspm databasesDspm = null, DefenderCspmAwsOfferingCiem ciem = null, DefenderCspmAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment = null, DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = null)
+        {
+            return new DefenderCspmAwsOffering(OfferingType.DefenderCspmAws, description, vmScanners, dataSensitivityDiscovery, databasesDspm, ciem, mdcContainersImageAssessment, mdcContainersAgentlessDiscoveryK8S);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DefenderCspmGcpOffering"/>. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <param name="ciemDiscovery"> GCP Defenders CSPM Cloud infrastructure entitlement management (CIEM) discovery offering configurations. </param>
+        /// <param name="vmScanners"> The Microsoft Defender for Server VM scanning configuration. </param>
+        /// <param name="dataSensitivityDiscovery"> The Microsoft Defender Data Sensitivity discovery configuration. </param>
+        /// <param name="mdcContainersImageAssessment"> The Microsoft Defender Container image assessment configuration. </param>
+        /// <param name="mdcContainersAgentlessDiscoveryK8S"> The Microsoft Defender Container agentless discovery configuration. </param>
+        /// <returns> A new <see cref="Models.DefenderCspmGcpOffering"/> instance for mocking. </returns>
+        public static DefenderCspmGcpOffering DefenderCspmGcpOffering(string description = null, DefenderCspmGcpOfferingCiemDiscovery ciemDiscovery = null, DefenderCspmGcpOfferingVmScanners vmScanners = null, DefenderCspmGcpOfferingDataSensitivityDiscovery dataSensitivityDiscovery = null, DefenderCspmGcpOfferingMdcContainersImageAssessment mdcContainersImageAssessment = null, DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S = null)
+        {
+            return new DefenderCspmGcpOffering(OfferingType.DefenderCspmGcp, description, ciemDiscovery, vmScanners, dataSensitivityDiscovery, mdcContainersImageAssessment, mdcContainersAgentlessDiscoveryK8S);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DefenderForDevOpsGithubOffering"/>. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <returns> A new <see cref="Models.DefenderForDevOpsGithubOffering"/> instance for mocking. </returns>
+        public static DefenderForDevOpsGithubOffering DefenderForDevOpsGithubOffering(string description = null)
+        {
+            return new DefenderForDevOpsGithubOffering(OfferingType.DefenderForDevOpsGithub, description);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DefenderForDevOpsAzureDevOpsOffering"/>. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <returns> A new <see cref="Models.DefenderForDevOpsAzureDevOpsOffering"/> instance for mocking. </returns>
+        public static DefenderForDevOpsAzureDevOpsOffering DefenderForDevOpsAzureDevOpsOffering(string description = null)
+        {
+            return new DefenderForDevOpsAzureDevOpsOffering(OfferingType.DefenderForDevOpsAzureDevOps, description);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CspmMonitorGitLabOffering"/>. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <returns> A new <see cref="Models.CspmMonitorGitLabOffering"/> instance for mocking. </returns>
+        public static CspmMonitorGitLabOffering CspmMonitorGitLabOffering(string description = null)
+        {
+            return new CspmMonitorGitLabOffering(OfferingType.CspmMonitorGitLab, description);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DefenderForDevOpsGitLabOffering"/>. </summary>
+        /// <param name="description"> The offering description. </param>
+        /// <returns> A new <see cref="Models.DefenderForDevOpsGitLabOffering"/> instance for mocking. </returns>
+        public static DefenderForDevOpsGitLabOffering DefenderForDevOpsGitLabOffering(string description = null)
+        {
+            return new DefenderForDevOpsGitLabOffering(OfferingType.DefenderForDevOpsGitLab, description);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectionToIPNotAllowed"/>. </summary>
@@ -2745,88 +2593,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new UnauthorizedOperationsNotInAllowedRange(displayName, description, isEnabled, "UnauthorizedOperationsNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SqlServerVulnerabilityProperties"/>. </summary>
-        /// <param name="sqlServerVulnerabilityType"> The resource type the sub assessment refers to in its resource details. </param>
-        /// <param name="query"> The T-SQL query that runs on your SQL database to perform the particular check. </param>
-        /// <returns> A new <see cref="Models.SqlServerVulnerabilityProperties"/> instance for mocking. </returns>
-        public static SqlServerVulnerabilityProperties SqlServerVulnerabilityProperties(string sqlServerVulnerabilityType = null, string query = null)
-        {
-            return new SqlServerVulnerabilityProperties(AssessedResourceType.SqlServerVulnerability, sqlServerVulnerabilityType, query);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryVulnerabilityProperties"/>. </summary>
-        /// <param name="containerRegistryVulnerabilityPropertiesType"> Vulnerability Type. e.g: Vulnerability, Potential Vulnerability, Information Gathered, Vulnerability. </param>
-        /// <param name="cvss"> Dictionary from cvss version to cvss details object. </param>
-        /// <param name="isPatchable"> Indicates whether a patch is available or not. </param>
-        /// <param name="cve"> List of CVEs. </param>
-        /// <param name="publishedOn"> Published time. </param>
-        /// <param name="vendorReferences"></param>
-        /// <param name="repositoryName"> Name of the repository which the vulnerable image belongs to. </param>
-        /// <param name="imageDigest"> Digest of the vulnerable image. </param>
-        /// <returns> A new <see cref="Models.ContainerRegistryVulnerabilityProperties"/> instance for mocking. </returns>
-        public static ContainerRegistryVulnerabilityProperties ContainerRegistryVulnerabilityProperties(string containerRegistryVulnerabilityPropertiesType = null, IReadOnlyDictionary<string, SecurityCvss> cvss = null, bool? isPatchable = null, IEnumerable<SecurityCve> cve = null, DateTimeOffset? publishedOn = null, IEnumerable<VendorReference> vendorReferences = null, string repositoryName = null, string imageDigest = null)
-        {
-            cvss ??= new Dictionary<string, SecurityCvss>();
-            cve ??= new List<SecurityCve>();
-            vendorReferences ??= new List<VendorReference>();
-
-            return new ContainerRegistryVulnerabilityProperties(AssessedResourceType.ContainerRegistryVulnerability, containerRegistryVulnerabilityPropertiesType, cvss, isPatchable, cve?.ToList(), publishedOn, vendorReferences?.ToList(), repositoryName, imageDigest);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityCvss"/>. </summary>
-        /// <param name="base"> CVSS base. </param>
-        /// <returns> A new <see cref="Models.SecurityCvss"/> instance for mocking. </returns>
-        public static SecurityCvss SecurityCvss(float? @base = null)
-        {
-            return new SecurityCvss(@base);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityCve"/>. </summary>
-        /// <param name="title"> CVE title. </param>
-        /// <param name="link"> Link url. </param>
-        /// <returns> A new <see cref="Models.SecurityCve"/> instance for mocking. </returns>
-        public static SecurityCve SecurityCve(string title = null, string link = null)
-        {
-            return new SecurityCve(title, link);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.VendorReference"/>. </summary>
-        /// <param name="title"> Link title. </param>
-        /// <param name="link"> Link url. </param>
-        /// <returns> A new <see cref="Models.VendorReference"/> instance for mocking. </returns>
-        public static VendorReference VendorReference(string title = null, string link = null)
-        {
-            return new VendorReference(title, link);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServerVulnerabilityProperties"/>. </summary>
-        /// <param name="serverVulnerabilityType"> Vulnerability Type. e.g: Vulnerability, Potential Vulnerability, Information Gathered. </param>
-        /// <param name="cvss"> Dictionary from cvss version to cvss details object. </param>
-        /// <param name="isPatchable"> Indicates whether a patch is available or not. </param>
-        /// <param name="cve"> List of CVEs. </param>
-        /// <param name="threat"> Threat name. </param>
-        /// <param name="publishedOn"> Published time. </param>
-        /// <param name="vendorReferences"></param>
-        /// <returns> A new <see cref="Models.ServerVulnerabilityProperties"/> instance for mocking. </returns>
-        public static ServerVulnerabilityProperties ServerVulnerabilityProperties(string serverVulnerabilityType = null, IReadOnlyDictionary<string, SecurityCvss> cvss = null, bool? isPatchable = null, IEnumerable<SecurityCve> cve = null, string threat = null, DateTimeOffset? publishedOn = null, IEnumerable<VendorReference> vendorReferences = null)
-        {
-            cvss ??= new Dictionary<string, SecurityCvss>();
-            cve ??= new List<SecurityCve>();
-            vendorReferences ??= new List<VendorReference>();
-
-            return new ServerVulnerabilityProperties(new AssessedResourceType("ServerVulnerabilityAssessment"), serverVulnerabilityType, cvss, isPatchable, cve?.ToList(), threat, publishedOn, vendorReferences?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityAutomationActionEventHub"/>. </summary>
-        /// <param name="eventHubResourceId"> The target Event Hub Azure Resource ID. </param>
-        /// <param name="sasPolicyName"> The target Event Hub SAS policy name. </param>
-        /// <param name="connectionString"> The target Event Hub connection string (it will not be included in any response). </param>
-        /// <returns> A new <see cref="Models.SecurityAutomationActionEventHub"/> instance for mocking. </returns>
-        public static SecurityAutomationActionEventHub SecurityAutomationActionEventHub(ResourceIdentifier eventHubResourceId = null, string sasPolicyName = null, string connectionString = null)
-        {
-            return new SecurityAutomationActionEventHub(ActionType.EventHub, eventHubResourceId, sasPolicyName, connectionString);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.CefExternalSecuritySolution"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2864,56 +2630,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static AadExternalSecuritySolution AadExternalSecuritySolution(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, AadSolutionProperties properties = null)
         {
             return new AadExternalSecuritySolution(id, name, resourceType, systemData, ExternalSecuritySolutionKind.Aad, location, properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AwsCredsAuthenticationDetailsProperties"/>. </summary>
-        /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
-        /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
-        /// <param name="accountId"> The ID of the cloud account. </param>
-        /// <param name="awsAccessKeyId"> Public key element of the AWS credential object (write only). </param>
-        /// <param name="awsSecretAccessKey"> Secret key element of the AWS credential object (write only). </param>
-        /// <returns> A new <see cref="Models.AwsCredsAuthenticationDetailsProperties"/> instance for mocking. </returns>
-        public static AwsCredsAuthenticationDetailsProperties AwsCredsAuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState = null, IEnumerable<SecurityCenterCloudPermission> grantedPermissions = null, string accountId = null, string awsAccessKeyId = null, string awsSecretAccessKey = null)
-        {
-            grantedPermissions ??= new List<SecurityCenterCloudPermission>();
-
-            return new AwsCredsAuthenticationDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), AuthenticationType.AwsCreds, accountId, awsAccessKeyId, awsSecretAccessKey);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AwsAssumeRoleAuthenticationDetailsProperties"/>. </summary>
-        /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
-        /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
-        /// <param name="accountId"> The ID of the cloud account. </param>
-        /// <param name="awsAssumeRoleArn"> Assumed role ID is an identifier that you can use to create temporary security credentials. </param>
-        /// <param name="awsExternalId"> A unique identifier that is required when you assume a role in another account. </param>
-        /// <returns> A new <see cref="Models.AwsAssumeRoleAuthenticationDetailsProperties"/> instance for mocking. </returns>
-        public static AwsAssumeRoleAuthenticationDetailsProperties AwsAssumeRoleAuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState = null, IEnumerable<SecurityCenterCloudPermission> grantedPermissions = null, string accountId = null, string awsAssumeRoleArn = null, Guid awsExternalId = default)
-        {
-            grantedPermissions ??= new List<SecurityCenterCloudPermission>();
-
-            return new AwsAssumeRoleAuthenticationDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), AuthenticationType.AwsAssumeRole, accountId, awsAssumeRoleArn, awsExternalId);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GcpCredentialsDetailsProperties"/>. </summary>
-        /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
-        /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
-        /// <param name="organizationId"> The organization ID of the GCP cloud account. </param>
-        /// <param name="gcpCredentialType"> Type field of the API key (write only). </param>
-        /// <param name="projectId"> Project ID field of the API key (write only). </param>
-        /// <param name="privateKeyId"> Private key ID field of the API key (write only). </param>
-        /// <param name="privateKey"> Private key field of the API key (write only). </param>
-        /// <param name="clientEmail"> Client email field of the API key (write only). </param>
-        /// <param name="clientId"> Client ID field of the API key (write only). </param>
-        /// <param name="authUri"> Auth URI field of the API key (write only). </param>
-        /// <param name="tokenUri"> Token URI field of the API key (write only). </param>
-        /// <param name="authProviderX509CertUri"> Auth provider x509 certificate URL field of the API key (write only). </param>
-        /// <param name="clientX509CertUri"> Client x509 certificate URL field of the API key (write only). </param>
-        /// <returns> A new <see cref="Models.GcpCredentialsDetailsProperties"/> instance for mocking. </returns>
-        public static GcpCredentialsDetailsProperties GcpCredentialsDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState = null, IEnumerable<SecurityCenterCloudPermission> grantedPermissions = null, string organizationId = null, string gcpCredentialType = null, string projectId = null, string privateKeyId = null, string privateKey = null, string clientEmail = null, string clientId = null, Uri authUri = null, Uri tokenUri = null, Uri authProviderX509CertUri = null, Uri clientX509CertUri = null)
-        {
-            grantedPermissions ??= new List<SecurityCenterCloudPermission>();
-
-            return new GcpCredentialsDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), AuthenticationType.GcpCredentials, organizationId, gcpCredentialType, projectId, privateKeyId, privateKey, clientEmail, clientId, authUri, tokenUri, authProviderX509CertUri, clientX509CertUri);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureResourceIdentifier"/>. </summary>
@@ -2959,168 +2675,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityAlertSyncSettings(id, name, resourceType, systemData, SettingKind.AlertSyncSettings, isEnabled);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GcpProjectDetails"/>. </summary>
-        /// <param name="projectNumber"> The unique GCP Project number. </param>
-        /// <param name="projectId"> The GCP Project id. </param>
-        /// <param name="workloadIdentityPoolId"> The GCP workload identity federation pool id. </param>
-        /// <returns> A new <see cref="Models.GcpProjectDetails"/> instance for mocking. </returns>
-        public static GcpProjectDetails GcpProjectDetails(string projectNumber = null, string projectId = null, string workloadIdentityPoolId = null)
+        /// <summary> Initializes a new instance of <see cref="Models.AzureServersSetting"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="selectedProvider"> The selected vulnerability assessments provider on Azure servers in the defined scope. </param>
+        /// <returns> A new <see cref="Models.AzureServersSetting"/> instance for mocking. </returns>
+        public static AzureServersSetting AzureServersSetting(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ServerVulnerabilityAssessmentsAzureSettingSelectedProvider? selectedProvider = null)
         {
-            return new GcpProjectDetails(projectNumber, projectId, workloadIdentityPoolId);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CspmMonitorAwsOffering"/>. </summary>
-        /// <param name="description"> The offering description. </param>
-        /// <param name="cloudRoleArn"> The native cloud connection configuration. </param>
-        /// <returns> A new <see cref="Models.CspmMonitorAwsOffering"/> instance for mocking. </returns>
-        public static CspmMonitorAwsOffering CspmMonitorAwsOffering(string description = null, string cloudRoleArn = null)
-        {
-            return new CspmMonitorAwsOffering(OfferingType.CspmMonitorAws, description, cloudRoleArn != null ? new CspmMonitorAwsOfferingNativeCloudConnection(cloudRoleArn) : null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DefenderForContainersAwsOffering"/>. </summary>
-        /// <param name="description"> The offering description. </param>
-        /// <param name="kubernetesServiceCloudRoleArn"> The kubernetes service connection configuration. </param>
-        /// <param name="kubernetesScubaReaderCloudRoleArn"> The kubernetes to scuba connection configuration. </param>
-        /// <param name="cloudRoleArn"> The cloudwatch to kinesis connection configuration. </param>
-        /// <param name="kinesisToS3CloudRoleArn"> The kinesis to s3 connection configuration. </param>
-        /// <param name="containerVulnerabilityAssessmentCloudRoleArn"> The container vulnerability assessment configuration. </param>
-        /// <param name="containerVulnerabilityAssessmentTaskCloudRoleArn"> The container vulnerability assessment task configuration. </param>
-        /// <param name="isContainerVulnerabilityAssessmentEnabled"> Enable container vulnerability assessment feature. </param>
-        /// <param name="isAutoProvisioningEnabled"> Is audit logs pipeline auto provisioning enabled. </param>
-        /// <param name="kubeAuditRetentionTime"> The retention time in days of kube audit logs set on the CloudWatch log group. </param>
-        /// <param name="scubaExternalId"> The externalId used by the data reader to prevent the confused deputy attack. </param>
-        /// <returns> A new <see cref="Models.DefenderForContainersAwsOffering"/> instance for mocking. </returns>
-        public static DefenderForContainersAwsOffering DefenderForContainersAwsOffering(string description = null, string kubernetesServiceCloudRoleArn = null, string kubernetesScubaReaderCloudRoleArn = null, string cloudRoleArn = null, string kinesisToS3CloudRoleArn = null, string containerVulnerabilityAssessmentCloudRoleArn = null, string containerVulnerabilityAssessmentTaskCloudRoleArn = null, bool? isContainerVulnerabilityAssessmentEnabled = null, bool? isAutoProvisioningEnabled = null, long? kubeAuditRetentionTime = null, string scubaExternalId = null)
-        {
-            return new DefenderForContainersAwsOffering(OfferingType.DefenderForContainersAws, description, kubernetesServiceCloudRoleArn != null ? new DefenderForContainersAwsOfferingKubernetesService(kubernetesServiceCloudRoleArn) : null, kubernetesScubaReaderCloudRoleArn != null ? new DefenderForContainersAwsOfferingKubernetesScubaReader(kubernetesScubaReaderCloudRoleArn) : null, cloudRoleArn != null ? new DefenderForContainersAwsOfferingCloudWatchToKinesis(cloudRoleArn) : null, kinesisToS3CloudRoleArn != null ? new DefenderForContainersAwsOfferingKinesisToS3(kinesisToS3CloudRoleArn) : null, containerVulnerabilityAssessmentCloudRoleArn != null ? new DefenderForContainersAwsOfferingContainerVulnerabilityAssessment(containerVulnerabilityAssessmentCloudRoleArn) : null, containerVulnerabilityAssessmentTaskCloudRoleArn != null ? new DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask(containerVulnerabilityAssessmentTaskCloudRoleArn) : null, isContainerVulnerabilityAssessmentEnabled, isAutoProvisioningEnabled, kubeAuditRetentionTime, scubaExternalId);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DefenderForServersAwsOffering"/>. </summary>
-        /// <param name="description"> The offering description. </param>
-        /// <param name="defenderForServersCloudRoleArn"> The Defender for servers connection configuration. </param>
-        /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
-        /// <param name="vaAutoProvisioning"> The Vulnerability Assessment autoprovisioning configuration. </param>
-        /// <param name="mdeAutoProvisioning"> The Microsoft Defender for Endpoint autoprovisioning configuration. </param>
-        /// <param name="availableSubPlanType"> configuration for the servers offering subPlan. </param>
-        /// <param name="vmScanners"> The Microsoft Defender for Server VM scanning configuration. </param>
-        /// <returns> A new <see cref="Models.DefenderForServersAwsOffering"/> instance for mocking. </returns>
-        public static DefenderForServersAwsOffering DefenderForServersAwsOffering(string description = null, string defenderForServersCloudRoleArn = null, DefenderForServersAwsOfferingArcAutoProvisioning arcAutoProvisioning = null, DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning vaAutoProvisioning = null, DefenderForServersAwsOfferingMdeAutoProvisioning mdeAutoProvisioning = null, AvailableSubPlanType? availableSubPlanType = null, DefenderForServersAwsOfferingVmScanners vmScanners = null)
-        {
-            return new DefenderForServersAwsOffering(OfferingType.DefenderForServersAws, description, defenderForServersCloudRoleArn != null ? new AwsDefenderForServersInfo(defenderForServersCloudRoleArn) : null, arcAutoProvisioning, vaAutoProvisioning, mdeAutoProvisioning, availableSubPlanType != null ? new DefenderForServersAwsOfferingSubPlan(availableSubPlanType) : null, vmScanners);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DefenderForDatabasesAwsOffering"/>. </summary>
-        /// <param name="description"> The offering description. </param>
-        /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
-        /// <param name="rds"> The RDS configuration. </param>
-        /// <returns> A new <see cref="Models.DefenderForDatabasesAwsOffering"/> instance for mocking. </returns>
-        public static DefenderForDatabasesAwsOffering DefenderForDatabasesAwsOffering(string description = null, DefenderForDatabasesAwsOfferingArcAutoProvisioning arcAutoProvisioning = null, DefenderForDatabasesAwsOfferingRds rds = null)
-        {
-            return new DefenderForDatabasesAwsOffering(OfferingType.DefenderForDatabasesAws, description, arcAutoProvisioning, rds);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.InformationProtectionAwsOffering"/>. </summary>
-        /// <param name="description"> The offering description. </param>
-        /// <param name="informationProtectionCloudRoleArn"> The native cloud connection configuration. </param>
-        /// <returns> A new <see cref="Models.InformationProtectionAwsOffering"/> instance for mocking. </returns>
-        public static InformationProtectionAwsOffering InformationProtectionAwsOffering(string description = null, string informationProtectionCloudRoleArn = null)
-        {
-            return new InformationProtectionAwsOffering(OfferingType.InformationProtectionAws, description, informationProtectionCloudRoleArn != null ? new AwsInformationProtection(informationProtectionCloudRoleArn) : null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CspmMonitorGcpOffering"/>. </summary>
-        /// <param name="description"> The offering description. </param>
-        /// <param name="nativeCloudConnection"> The native cloud connection configuration. </param>
-        /// <returns> A new <see cref="Models.CspmMonitorGcpOffering"/> instance for mocking. </returns>
-        public static CspmMonitorGcpOffering CspmMonitorGcpOffering(string description = null, CspmMonitorGcpOfferingNativeCloudConnection nativeCloudConnection = null)
-        {
-            return new CspmMonitorGcpOffering(OfferingType.CspmMonitorGcp, description, nativeCloudConnection);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DefenderForServersGcpOffering"/>. </summary>
-        /// <param name="description"> The offering description. </param>
-        /// <param name="defenderForServers"> The Defender for servers connection configuration. </param>
-        /// <param name="isEnabled"> The ARC autoprovisioning configuration. </param>
-        /// <param name="vulnerabilityAssessmentAutoProvisioning"> The Vulnerability Assessment autoprovisioning configuration. </param>
-        /// <param name="mdeAutoProvisioning"> The Microsoft Defender for Endpoint autoprovisioning configuration. </param>
-        /// <param name="availableSubPlanType"> configuration for the servers offering subPlan. </param>
-        /// <returns> A new <see cref="Models.DefenderForServersGcpOffering"/> instance for mocking. </returns>
-        public static DefenderForServersGcpOffering DefenderForServersGcpOffering(string description = null, GcpDefenderForServersInfo defenderForServers = null, bool? isEnabled = null, DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning vulnerabilityAssessmentAutoProvisioning = null, DefenderForServersGcpOfferingMdeAutoProvisioning mdeAutoProvisioning = null, AvailableSubPlanType? availableSubPlanType = null)
-        {
-            return new DefenderForServersGcpOffering(OfferingType.DefenderForServersGcp, description, defenderForServers, isEnabled != null ? new DefenderForServersGcpOfferingArcAutoProvisioning(isEnabled) : null, vulnerabilityAssessmentAutoProvisioning, mdeAutoProvisioning, availableSubPlanType != null ? new DefenderForServersGcpOfferingSubPlan(availableSubPlanType) : null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DefenderForDatabasesGcpOffering"/>. </summary>
-        /// <param name="description"> The offering description. </param>
-        /// <param name="isEnabled"> The ARC autoprovisioning configuration. </param>
-        /// <param name="defenderForDatabasesArcAutoProvisioning"> The native cloud connection configuration. </param>
-        /// <returns> A new <see cref="Models.DefenderForDatabasesGcpOffering"/> instance for mocking. </returns>
-        public static DefenderForDatabasesGcpOffering DefenderForDatabasesGcpOffering(string description = null, bool? isEnabled = null, GcpDefenderForDatabasesArcAutoProvisioning defenderForDatabasesArcAutoProvisioning = null)
-        {
-            return new DefenderForDatabasesGcpOffering(OfferingType.DefenderForDatabasesGcp, description, isEnabled != null ? new DefenderForDatabasesGcpOfferingArcAutoProvisioning(isEnabled) : null, defenderForDatabasesArcAutoProvisioning);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DefenderForContainersGcpOffering"/>. </summary>
-        /// <param name="description"> The offering description. </param>
-        /// <param name="nativeCloudConnection"> The native cloud connection configuration. </param>
-        /// <param name="dataPipelineNativeCloudConnection"> The native cloud connection configuration. </param>
-        /// <param name="isAuditLogsAutoProvisioningEnabled"> Is audit logs data collection enabled. </param>
-        /// <param name="isDefenderAgentAutoProvisioningEnabled"> Is Microsoft Defender for Cloud Kubernetes agent auto provisioning enabled. </param>
-        /// <param name="isPolicyAgentAutoProvisioningEnabled"> Is Policy Kubernetes agent auto provisioning enabled. </param>
-        /// <returns> A new <see cref="Models.DefenderForContainersGcpOffering"/> instance for mocking. </returns>
-        public static DefenderForContainersGcpOffering DefenderForContainersGcpOffering(string description = null, DefenderForContainersGcpOfferingNativeCloudConnection nativeCloudConnection = null, DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection dataPipelineNativeCloudConnection = null, bool? isAuditLogsAutoProvisioningEnabled = null, bool? isDefenderAgentAutoProvisioningEnabled = null, bool? isPolicyAgentAutoProvisioningEnabled = null)
-        {
-            return new DefenderForContainersGcpOffering(OfferingType.DefenderForContainersGcp, description, nativeCloudConnection, dataPipelineNativeCloudConnection, isAuditLogsAutoProvisioningEnabled, isDefenderAgentAutoProvisioningEnabled, isPolicyAgentAutoProvisioningEnabled);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CspmMonitorGithubOffering"/>. </summary>
-        /// <param name="description"> The offering description. </param>
-        /// <returns> A new <see cref="Models.CspmMonitorGithubOffering"/> instance for mocking. </returns>
-        public static CspmMonitorGithubOffering CspmMonitorGithubOffering(string description = null)
-        {
-            return new CspmMonitorGithubOffering(OfferingType.CspmMonitorGithub, description);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CspmMonitorAzureDevOpsOffering"/>. </summary>
-        /// <param name="description"> The offering description. </param>
-        /// <returns> A new <see cref="Models.CspmMonitorAzureDevOpsOffering"/> instance for mocking. </returns>
-        public static CspmMonitorAzureDevOpsOffering CspmMonitorAzureDevOpsOffering(string description = null)
-        {
-            return new CspmMonitorAzureDevOpsOffering(OfferingType.CspmMonitorAzureDevOps, description);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DefenderCspmAwsOffering"/>. </summary>
-        /// <param name="description"> The offering description. </param>
-        /// <param name="vmScanners"> The Microsoft Defender for Server VM scanning configuration. </param>
-        /// <returns> A new <see cref="Models.DefenderCspmAwsOffering"/> instance for mocking. </returns>
-        public static DefenderCspmAwsOffering DefenderCspmAwsOffering(string description = null, DefenderCspmAwsOfferingVmScanners vmScanners = null)
-        {
-            return new DefenderCspmAwsOffering(OfferingType.DefenderCspmAws, description, vmScanners);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DefenderCspmGcpOffering"/>. </summary>
-        /// <param name="description"> The offering description. </param>
-        /// <returns> A new <see cref="Models.DefenderCspmGcpOffering"/> instance for mocking. </returns>
-        public static DefenderCspmGcpOffering DefenderCspmGcpOffering(string description = null)
-        {
-            return new DefenderCspmGcpOffering(OfferingType.DefenderCspmGcp, description);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DefenderForDevOpsGithubOffering"/>. </summary>
-        /// <param name="description"> The offering description. </param>
-        /// <returns> A new <see cref="Models.DefenderForDevOpsGithubOffering"/> instance for mocking. </returns>
-        public static DefenderForDevOpsGithubOffering DefenderForDevOpsGithubOffering(string description = null)
-        {
-            return new DefenderForDevOpsGithubOffering(OfferingType.DefenderForDevOpsGithub, description);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DefenderForDevOpsAzureDevOpsOffering"/>. </summary>
-        /// <param name="description"> The offering description. </param>
-        /// <returns> A new <see cref="Models.DefenderForDevOpsAzureDevOpsOffering"/> instance for mocking. </returns>
-        public static DefenderForDevOpsAzureDevOpsOffering DefenderForDevOpsAzureDevOpsOffering(string description = null)
-        {
-            return new DefenderForDevOpsAzureDevOpsOffering(OfferingType.DefenderForDevOpsAzureDevOps, description);
+            return new AzureServersSetting(id, name, resourceType, systemData, ServerVulnerabilityAssessmentsSettingKind.AzureServersSetting, selectedProvider);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureResourceDetails"/>. </summary>

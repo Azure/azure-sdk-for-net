@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("cloudRoleArn"u8);
                 writer.WriteStringValue(CloudRoleArn);
             }
+            if (Optional.IsDefined(Configuration))
+            {
+                writer.WritePropertyName("configuration"u8);
+                writer.WriteObjectValue(Configuration);
+            }
             writer.WriteEndObject();
         }
 
@@ -36,6 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             Optional<bool> enabled = default;
             Optional<string> cloudRoleArn = default;
+            Optional<DefenderFoDatabasesAwsOfferingArcAutoProvisioningConfiguration> configuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -52,8 +58,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     cloudRoleArn = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("configuration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    configuration = DefenderFoDatabasesAwsOfferingArcAutoProvisioningConfiguration.DeserializeDefenderFoDatabasesAwsOfferingArcAutoProvisioningConfiguration(property.Value);
+                    continue;
+                }
             }
-            return new DefenderForDatabasesAwsOfferingArcAutoProvisioning(Optional.ToNullable(enabled), cloudRoleArn.Value);
+            return new DefenderForDatabasesAwsOfferingArcAutoProvisioning(Optional.ToNullable(enabled), cloudRoleArn.Value, configuration.Value);
         }
     }
 }

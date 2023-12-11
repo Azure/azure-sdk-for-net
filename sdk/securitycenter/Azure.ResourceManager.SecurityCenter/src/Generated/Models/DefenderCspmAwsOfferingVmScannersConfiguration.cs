@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingVmScannersConfiguration"/>. </summary>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
-        /// <param name="scanningMode"> The scanning mode for the vm scan. </param>
+        /// <param name="scanningMode"> The scanning mode for the VM scan. </param>
         /// <param name="exclusionTags"> VM tags that indicates that VM should not be scanned. </param>
         internal DefenderCspmAwsOfferingVmScannersConfiguration(string cloudRoleArn, DefenderForServersScanningMode? scanningMode, IDictionary<string, string> exclusionTags)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> The cloud role ARN in AWS for this feature. </summary>
         public string CloudRoleArn { get; set; }
-        /// <summary> The scanning mode for the vm scan. </summary>
+        /// <summary> The scanning mode for the VM scan. </summary>
         public DefenderForServersScanningMode? ScanningMode { get; set; }
         /// <summary> VM tags that indicates that VM should not be scanned. </summary>
         public IDictionary<string, string> ExclusionTags { get; }

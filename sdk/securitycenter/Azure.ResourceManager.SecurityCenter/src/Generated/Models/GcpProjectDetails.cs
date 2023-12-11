@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="projectNumber"> The unique GCP Project number. </param>
         /// <param name="projectId"> The GCP Project id. </param>
         /// <param name="workloadIdentityPoolId"> The GCP workload identity federation pool id. </param>
-        internal GcpProjectDetails(string projectNumber, string projectId, string workloadIdentityPoolId)
+        /// <param name="projectName"> GCP project name. </param>
+        internal GcpProjectDetails(string projectNumber, string projectId, string workloadIdentityPoolId, string projectName)
         {
             ProjectNumber = projectNumber;
             ProjectId = projectId;
             WorkloadIdentityPoolId = workloadIdentityPoolId;
+            ProjectName = projectName;
         }
 
         /// <summary> The unique GCP Project number. </summary>
@@ -32,5 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string ProjectId { get; set; }
         /// <summary> The GCP workload identity federation pool id. </summary>
         public string WorkloadIdentityPoolId { get; }
+        /// <summary> GCP project name. </summary>
+        public string ProjectName { get; }
     }
 }

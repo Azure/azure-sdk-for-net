@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("projectDetails"u8);
                 writer.WriteObjectValue(ProjectDetails);
             }
+            if (Optional.IsDefined(ScanInterval))
+            {
+                writer.WritePropertyName("scanInterval"u8);
+                writer.WriteNumberValue(ScanInterval.Value);
+            }
             writer.WritePropertyName("environmentType"u8);
             writer.WriteStringValue(EnvironmentType.ToString());
             writer.WriteEndObject();
@@ -38,6 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             Optional<GcpOrganizationalInfo> organizationalData = default;
             Optional<GcpProjectDetails> projectDetails = default;
+            Optional<long> scanInterval = default;
             EnvironmentType environmentType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -59,13 +65,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     projectDetails = GcpProjectDetails.DeserializeGcpProjectDetails(property.Value);
                     continue;
                 }
+                if (property.NameEquals("scanInterval"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scanInterval = property.Value.GetInt64();
+                    continue;
+                }
                 if (property.NameEquals("environmentType"u8))
                 {
                     environmentType = new EnvironmentType(property.Value.GetString());
                     continue;
                 }
             }
-            return new GcpProjectEnvironment(environmentType, organizationalData.Value, projectDetails.Value);
+            return new GcpProjectEnvironment(environmentType, organizationalData.Value, projectDetails.Value, Optional.ToNullable(scanInterval));
         }
     }
 }

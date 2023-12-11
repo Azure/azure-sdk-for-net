@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The platform where the assessed resource resides. </summary>
-    internal readonly partial struct Source : IEquatable<Source>
+    public readonly partial struct Source : IEquatable<Source>
     {
         private readonly string _value;
 

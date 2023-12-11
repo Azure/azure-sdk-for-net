@@ -8,64 +8,53 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Hci.Models
+namespace Azure.ResourceManager.SecurityCenter.Models
 {
-<<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/Models/VirtualMachineInstancePropertiesStorageProfileOSDisk.Serialization.cs
-    public partial class VirtualMachineInstancePropertiesStorageProfileOSDisk : IUtf8JsonSerializable
-========
     public partial class HealthReportResourceDetails : IUtf8JsonSerializable
->>>>>>>> f49344353ba (Fix autorest mapping and add unit tests):sdk/securitycenter/Azure.ResourceManager.SecurityCenter/src/Generated/Models/HealthReportResourceDetails.Serialization.cs
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(OSType))
-            {
-                writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OSType.Value.ToSerialString());
+                writer.WritePropertyName("source"u8);
+                writer.WriteStringValue(Source.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
-<<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/Models/VirtualMachineInstancePropertiesStorageProfileOSDisk.Serialization.cs
-        internal static VirtualMachineInstancePropertiesStorageProfileOSDisk DeserializeVirtualMachineInstancePropertiesStorageProfileOSDisk(JsonElement element)
-========
         internal static HealthReportResourceDetails DeserializeHealthReportResourceDetails(JsonElement element)
->>>>>>>> f49344353ba (Fix autorest mapping and add unit tests):sdk/securitycenter/Azure.ResourceManager.SecurityCenter/src/Generated/Models/HealthReportResourceDetails.Serialization.cs
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            Optional<Source> source = default;
             Optional<string> id = default;
-            Optional<OperatingSystemType> osType = default;
+            Optional<string> connectorId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("osType"u8))
+                if (property.NameEquals("source"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osType = property.Value.GetString().ToOperatingSystemType();
+                    source = new Source(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("connectorId"u8))
+                {
+                    connectorId = property.Value.GetString();
                     continue;
                 }
             }
-<<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/Models/VirtualMachineInstancePropertiesStorageProfileOSDisk.Serialization.cs
-            return new VirtualMachineInstancePropertiesStorageProfileOSDisk(id.Value, Optional.ToNullable(osType));
-========
             return new HealthReportResourceDetails(Optional.ToNullable(source), id.Value, connectorId.Value);
->>>>>>>> f49344353ba (Fix autorest mapping and add unit tests):sdk/securitycenter/Azure.ResourceManager.SecurityCenter/src/Generated/Models/HealthReportResourceDetails.Serialization.cs
         }
     }
 }

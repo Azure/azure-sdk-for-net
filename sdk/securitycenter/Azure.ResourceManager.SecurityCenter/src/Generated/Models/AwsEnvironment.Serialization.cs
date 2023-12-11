@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,6 +21,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("organizationalData"u8);
                 writer.WriteObjectValue(OrganizationalData);
             }
+            if (Optional.IsCollectionDefined(Regions))
+            {
+                writer.WritePropertyName("regions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Regions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ScanInterval))
+            {
+                writer.WritePropertyName("scanInterval"u8);
+                writer.WriteNumberValue(ScanInterval.Value);
+            }
             writer.WritePropertyName("environmentType"u8);
             writer.WriteStringValue(EnvironmentType.ToString());
             writer.WriteEndObject();
@@ -32,6 +48,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             Optional<AwsOrganizationalInfo> organizationalData = default;
+            Optional<IList<string>> regions = default;
+            Optional<string> accountName = default;
+            Optional<long> scanInterval = default;
             EnvironmentType environmentType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -44,13 +63,41 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     organizationalData = AwsOrganizationalInfo.DeserializeAwsOrganizationalInfo(property.Value);
                     continue;
                 }
+                if (property.NameEquals("regions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    regions = array;
+                    continue;
+                }
+                if (property.NameEquals("accountName"u8))
+                {
+                    accountName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("scanInterval"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scanInterval = property.Value.GetInt64();
+                    continue;
+                }
                 if (property.NameEquals("environmentType"u8))
                 {
                     environmentType = new EnvironmentType(property.Value.GetString());
                     continue;
                 }
             }
-            return new AwsEnvironment(environmentType, organizationalData.Value);
+            return new AwsEnvironment(environmentType, organizationalData.Value, Optional.ToList(regions), accountName.Value, Optional.ToNullable(scanInterval));
         }
     }
 }

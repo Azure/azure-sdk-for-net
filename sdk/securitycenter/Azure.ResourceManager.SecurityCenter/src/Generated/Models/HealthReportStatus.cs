@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The status of the health report. </summary>
     public partial class HealthReportStatus
     {
-        /// <summary> Initializes a new instance of HealthReportStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthReportStatus"/>. </summary>
         public HealthReportStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthReportStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthReportStatus"/>. </summary>
         /// <param name="code"> The status of the health report. </param>
         /// <param name="reason"> The reason of the given status. </param>
         /// <param name="lastScannedOn"> The date of when the resource was scanned in the last time. </param>

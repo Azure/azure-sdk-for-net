@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> A status describing the success/failure of the extension's enablement/disablement operation. </summary>
+    /// <summary> A status describing the success/failure of the enablement/disablement operation. </summary>
     public partial class ExtensionOperationStatus
     {
         /// <summary> Initializes a new instance of <see cref="ExtensionOperationStatus"/>. </summary>
@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="ExtensionOperationStatus"/>. </summary>
         /// <param name="code"> The operation status code. </param>
         /// <param name="message"> Additional information regarding the success/failure of the operation. </param>
-        internal ExtensionOperationStatus(ExtensionOperationStatusCode? code, string message)
+        internal ExtensionOperationStatus(string code, string message)
         {
             Code = code;
             Message = message;
         }
 
         /// <summary> The operation status code. </summary>
-        public ExtensionOperationStatusCode? Code { get; }
+        public string Code { get; }
         /// <summary> Additional information regarding the success/failure of the operation. </summary>
         public string Message { get; }
     }
