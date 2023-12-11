@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         [Obsolete("This method no longer works in all API versions. Please use the different PrivateEndpointConnectionData instead.", false)]
         public static StorageSyncPrivateEndpointConnectionData StorageSyncPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, StorageSyncPrivateLinkServiceConnectionState connectionState = null, StorageSyncPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new StorageSyncPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
+            return new StorageSyncPrivateEndpointConnectionData(id, name, resourceType, systemData, null, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageSyncRegisteredServerCreateOrUpdateContent"/>. </summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         [Obsolete("This method no longer works in all API versions. Please use the different CreateOrUpdateContent instead.", false)]
         public static StorageSyncRegisteredServerCreateOrUpdateContent StorageSyncRegisteredServerCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData serverCertificate = null, string agentVersion = null, string serverOSVersion = null, string lastHeartbeat = null, string serverRole = null, Guid? clusterId = null, string clusterName = null, Guid? serverId = null, string friendlyName = null)
         {
-            return new StorageSyncRegisteredServerCreateOrUpdateContent(id, name, resourceType, systemData, serverCertificate, agentVersion, serverOSVersion, lastHeartbeat, serverRole, clusterId, clusterName, serverId, friendlyName);
+            return new StorageSyncRegisteredServerCreateOrUpdateContent(id, name, resourceType, systemData, serverCertificate, agentVersion, serverOSVersion, lastHeartbeat, serverRole, clusterId, clusterName, serverId, friendlyName, null, null);
         }
     }
 }
