@@ -4,7 +4,24 @@
 
 ### Features Added
 
+**Updates for using streaming tool calls:**
+
+- A new .NET-specific `StreamingToolCallUpdate` type has been added to better represent streaming tool call updates
+  when using chat tools.
+  - This new type includes an explicit `ToolCallIndex` property, reflecting `index` in the REST schema, to allow
+    resilient deserialization of parallel function tool calling.
+- A convenience constructor has been added for `ChatRequestAssistantMessage` that can automatically populate from a prior
+  `ChatResponseMessage` when using non-streaming chat completions.
+- A public constructor has been added for `ChatCompletionsFunctionToolCall` to allow more intuitive reconstruction of
+  `ChatCompletionsToolCall` instances for use in `ChatRequestAssistantMessage` instances made from streaming responses.
+
 ### Breaking Changes
+
+- The type of `ToolCallUpdate` on `StreamingChatCompletionsUpdate` has been changed from the non-streaming
+  `ChatCompletionsToolCall` to the new `StreamingToolCallUpdate` type. The conversion is straightforward:
+  - `ToolCallUpdate.Id` remains unchanged.
+  - Instead of casting `ToolCallUpdate` to `ChatCompletionsFunctionToolCall`, cast it to `StreamingToolCallUpdate`.
+  - Update cast instance use of `functionToolCallUpdate.Arguments` to accumulate `functionToolCallUpdate.ArgumentsUpdate`.
 
 ### Bugs Fixed
 

@@ -284,7 +284,8 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.EmbeddingsUsage EmbeddingsUsage(int promptTokens = 0, int totalTokens = 0) { throw null; }
         public static Azure.AI.OpenAI.ImageGenerationData ImageGenerationData(System.Uri url = null, string base64Data = null, string revisedPrompt = null) { throw null; }
         public static Azure.AI.OpenAI.StopFinishDetails StopFinishDetails(string stop = null) { throw null; }
-        public static Azure.AI.OpenAI.StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(string id, System.DateTimeOffset created, string systemFingerprint, int? choiceIndex = default(int?), Azure.AI.OpenAI.ChatRole? role = default(Azure.AI.OpenAI.ChatRole?), string authorName = null, string contentUpdate = null, Azure.AI.OpenAI.CompletionsFinishReason? finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason?), string functionName = null, string functionArgumentsUpdate = null, Azure.AI.OpenAI.ChatCompletionsToolCall toolCall = null, Azure.AI.OpenAI.AzureChatExtensionsMessageContext azureExtensionsContext = null) { throw null; }
+        public static Azure.AI.OpenAI.StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(string id, System.DateTimeOffset created, string systemFingerprint, int? choiceIndex = default(int?), Azure.AI.OpenAI.ChatRole? role = default(Azure.AI.OpenAI.ChatRole?), string authorName = null, string contentUpdate = null, Azure.AI.OpenAI.CompletionsFinishReason? finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason?), string functionName = null, string functionArgumentsUpdate = null, Azure.AI.OpenAI.StreamingToolCallUpdate toolCallUpdate = null, Azure.AI.OpenAI.AzureChatExtensionsMessageContext azureExtensionsContext = null) { throw null; }
+        public static Azure.AI.OpenAI.StreamingFunctionToolCallUpdate StreamingFunctionToolCallUpdate(string id, int toolCallIndex, string functionName, string functionArgumentsUpdate) { throw null; }
     }
     public partial class ChatChoice
     {
@@ -308,7 +309,7 @@ namespace Azure.AI.OpenAI
     }
     public partial class ChatCompletionsFunctionToolCall : Azure.AI.OpenAI.ChatCompletionsToolCall
     {
-        internal ChatCompletionsFunctionToolCall() : base (default(string)) { }
+        public ChatCompletionsFunctionToolCall(string id, string name, string arguments) : base (default(string)) { }
         public string Arguments { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
@@ -416,6 +417,7 @@ namespace Azure.AI.OpenAI
     }
     public partial class ChatRequestAssistantMessage : Azure.AI.OpenAI.ChatRequestMessage
     {
+        public ChatRequestAssistantMessage(Azure.AI.OpenAI.ChatResponseMessage responseMessage) { }
         public ChatRequestAssistantMessage(string content) { }
         public string Content { get { throw null; } }
         public Azure.AI.OpenAI.FunctionCall FunctionCall { get { throw null; } set { } }
@@ -934,7 +936,13 @@ namespace Azure.AI.OpenAI
         public string Id { get { throw null; } }
         public Azure.AI.OpenAI.ChatRole? Role { get { throw null; } }
         public string SystemFingerprint { get { throw null; } }
-        public Azure.AI.OpenAI.ChatCompletionsToolCall ToolCallUpdate { get { throw null; } }
+        public Azure.AI.OpenAI.StreamingToolCallUpdate ToolCallUpdate { get { throw null; } }
+    }
+    public partial class StreamingFunctionToolCallUpdate : Azure.AI.OpenAI.StreamingToolCallUpdate
+    {
+        internal StreamingFunctionToolCallUpdate() { }
+        public string ArgumentsUpdate { get { throw null; } }
+        public string Name { get { throw null; } }
     }
     public partial class StreamingResponse<T> : System.Collections.Generic.IAsyncEnumerable<T>, System.IDisposable
     {
@@ -945,6 +953,12 @@ namespace Azure.AI.OpenAI
         public System.Collections.Generic.IAsyncEnumerable<T> EnumerateValues() { throw null; }
         public Azure.Response GetRawResponse() { throw null; }
         System.Collections.Generic.IAsyncEnumerator<T> System.Collections.Generic.IAsyncEnumerable<T>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public abstract partial class StreamingToolCallUpdate
+    {
+        internal StreamingToolCallUpdate() { }
+        public string Id { get { throw null; } }
+        public int ToolCallIndex { get { throw null; } }
     }
 }
 namespace Microsoft.Extensions.Azure

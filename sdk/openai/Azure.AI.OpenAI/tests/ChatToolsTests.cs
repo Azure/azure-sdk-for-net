@@ -127,10 +127,7 @@ public class ChatToolsTests : OpenAITestBase
             followupOptions.Messages.Add(originalMessage);
         }
         // And the tool call message just received back from the assistant
-        followupOptions.Messages.Add(new ChatRequestAssistantMessage(choice.Message.Content)
-        {
-            ToolCalls = { functionToolCall },
-        });
+        followupOptions.Messages.Add(new ChatRequestAssistantMessage(choice.Message));
 
         // And also the tool message that resolves the tool call
         followupOptions.Messages.Add(new ChatRequestToolMessage(
@@ -186,27 +183,28 @@ public class ChatToolsTests : OpenAITestBase
             }
             if (chatUpdate.ToolCallUpdate is not null)
             {
-                Assert.That(chatUpdate.ToolCallUpdate, Is.InstanceOf<ChatCompletionsFunctionToolCall>());
+                Assert.That(chatUpdate.ToolCallUpdate, Is.InstanceOf<StreamingToolCallUpdate>());
             }
-            if (chatUpdate.ToolCallUpdate is ChatCompletionsFunctionToolCall functionToolCall)
+            if (chatUpdate.ToolCallUpdate is StreamingFunctionToolCallUpdate functionToolCallUpdate)
             {
-                if (!string.IsNullOrEmpty(functionToolCall.Id))
+                if (!string.IsNullOrEmpty(functionToolCallUpdate.Id))
                 {
                     Assert.That(toolCallIdsByChoiceIndex.ContainsKey(chatUpdate.ChoiceIndex.Value), Is.False);
-                    toolCallIdsByChoiceIndex[chatUpdate.ChoiceIndex.Value] = functionToolCall.Id;
+                    toolCallIdsByChoiceIndex[chatUpdate.ChoiceIndex.Value] = functionToolCallUpdate.Id;
                 }
-                if (functionToolCall.Name != null)
+                if (functionToolCallUpdate.Name != null)
                 {
                     Assert.That(toolCallFunctionNamesByChoiceIndex.ContainsKey(chatUpdate.ChoiceIndex.Value), Is.False);
-                    toolCallFunctionNamesByChoiceIndex[chatUpdate.ChoiceIndex.Value] = functionToolCall.Name;
+                    toolCallFunctionNamesByChoiceIndex[chatUpdate.ChoiceIndex.Value] = functionToolCallUpdate.Name;
                 }
-                if (functionToolCall.Arguments != null)
+                if (functionToolCallUpdate.ArgumentsUpdate != null)
                 {
                     if (!toolCallFunctionArgumentsByChoiceIndex.ContainsKey(chatUpdate.ChoiceIndex.Value))
                     {
                         toolCallFunctionArgumentsByChoiceIndex[chatUpdate.ChoiceIndex.Value] = new();
                     }
-                    toolCallFunctionArgumentsByChoiceIndex[chatUpdate.ChoiceIndex.Value].Append(functionToolCall.Arguments);
+                    toolCallFunctionArgumentsByChoiceIndex[chatUpdate.ChoiceIndex.Value]
+                        .Append(functionToolCallUpdate.ArgumentsUpdate);
                 }
             }
         }
