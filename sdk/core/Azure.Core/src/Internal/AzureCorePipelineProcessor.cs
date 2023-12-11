@@ -5,23 +5,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
     internal class AzureCorePipelineProcessor : IEnumerable<PipelinePolicy>
     {
-        private readonly ReadOnlyMemory<HttpPipelinePolicy> _policies;
-
         private readonly PolicyEnumerator _enumerator;
 
         public AzureCorePipelineProcessor(ReadOnlyMemory<HttpPipelinePolicy> policies)
         {
-            _policies = policies;
             _enumerator = new PolicyEnumerator(policies);
         }
 
-        public ReadOnlyMemory<HttpPipelinePolicy> Policies => _policies;
+        public ReadOnlyMemory<HttpPipelinePolicy> Policies
+            => _enumerator.Policies;
 
         public IEnumerator<PipelinePolicy> GetEnumerator()
             => _enumerator;
@@ -29,80 +26,79 @@ namespace Azure.Core.Pipeline
         IEnumerator IEnumerable.GetEnumerator()
             => _enumerator;
 
+        //private class PolicyEnumerator : IEnumerator<PipelinePolicy>
+        //{
+        //    private readonly ReadOnlyMemory<HttpPipelinePolicy> _policies;
+        //    private int _current;
+
+        //    public PolicyEnumerator(ReadOnlyMemory<HttpPipelinePolicy> policies)
+        //    {
+        //        _policies = policies;
+        //        _current = -1;
+        //    }
+
+        //    public ReadOnlyMemory<HttpPipelinePolicy> Policies
+        //        => _policies.Slice(_current);
+
+        //    public PolicyEnumerator GetEnumerator() => this;
+
+        //    public bool MoveNext()
+        //    {
+        //        _current++;
+        //        return _current < _policies.Length;
+        //    }
+
+        //    public PipelinePolicy Current => _policies.Span[_current];
+
+        //    object IEnumerator.Current => Current;
+
+        //    public void Reset()
+        //    {
+        //        _current = 0;
+        //    }
+
+        //    public void Dispose() { }
+        //}
+
         private class PolicyEnumerator : IEnumerator<PipelinePolicy>
         {
-            private readonly ReadOnlyMemory<HttpPipelinePolicy> _policies;
-            private int _current;
+            //private readonly ReadOnlyMemory<HttpPipelinePolicy> _original;
+            private ReadOnlyMemory<HttpPipelinePolicy> _policies;
+
+            private bool _first = true;
 
             public PolicyEnumerator(ReadOnlyMemory<HttpPipelinePolicy> policies)
             {
+                //_original = policies;
                 _policies = policies;
-                _current = -1;
             }
+
+            public ReadOnlyMemory<HttpPipelinePolicy> Policies => _policies;
+
             public PolicyEnumerator GetEnumerator() => this;
 
             public bool MoveNext()
             {
-                _current++;
-                return _current < _policies.Length;
+                if (_first)
+                {
+                    _first = false;
+                }
+                else
+                {
+                    _policies = _policies.Slice(1);
+                }
+
+                return _policies.Length > 0;
             }
 
-            public PipelinePolicy Current => _policies.Span[_current];
+            public PipelinePolicy Current => _policies.Span[0];
 
             object IEnumerator.Current => Current;
 
             public void Reset()
-            {
-                _current = 0;
-            }
+                => throw new NotSupportedException("Reset operation is not supported for PolicyEnumerator.");
 
             public void Dispose() { }
         }
-
-        //private class PipelinePolicyAdapter : PipelinePolicy
-        //{
-        //    private readonly IEnumerable<PipelinePolicy> _pipeline;
-        //    private readonly HttpPipelinePolicy _policy;
-
-        //    public PipelinePolicyAdapter(HttpPipelinePolicy policy, IEnumerable<PipelinePolicy> pipeline)
-        //    {
-        //        _policy = policy;
-        //        _pipeline = pipeline;
-        //    }
-
-        //    public override void Process(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
-        //    {
-        //        _policy.Process(message, new AzureCorePipelineEnumerable)
-        //    }
-
-        //    public override ValueTask ProcessAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-        //}
-
-        //public bool ProcessNext()
-        //{
-        //    if (_policies.Length == 0)
-        //    {
-        //        return false;
-        //    }
-
-        //    _policies.Span[0].Process(_message, _policies.Slice(1));
-
-        //    return _policies.Length > 0;
-        //}
-
-        //public async ValueTask<bool> ProcessNextAsync()
-        //{
-        //    if (_policies.Length == 0)
-        //    {
-        //        return false;
-        //    }
-
-        //    await _policies.Span[0].ProcessAsync(_message, _policies.Slice(1)).ConfigureAwait(false);
-
-        //    return _policies.Length > 0;
-        //}
     }
 }

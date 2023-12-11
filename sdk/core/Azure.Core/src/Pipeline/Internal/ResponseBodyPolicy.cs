@@ -34,6 +34,9 @@ namespace Azure.Core.Pipeline
         {
             AzureCorePipelineProcessor policies = new(pipeline);
 
+            // Match semantics of HttpPipelinePolicy.ProcessNext
+            policies.GetEnumerator().MoveNext();
+
             // Get the network timeout for this particular invocation of the pipeline.
             // We either use the default that the policy was constructed with at
             // pipeline-creation time, or we get an override value from the message that
