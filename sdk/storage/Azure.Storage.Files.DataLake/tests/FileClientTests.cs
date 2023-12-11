@@ -3390,7 +3390,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2024_05_04)]
         public async Task ReadAsyncWithUPN()
         {
-            await using DisposingFileSystem test = await GetNewFileSystem();
+            await using DisposingFileSystem test = await GetNewFileSystem(publicAccessType: PublicAccessType.None);
 
             // Arrange
             var data = GetRandomBuffer(Constants.KB);
@@ -3410,14 +3410,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<FileDownloadInfo> response = await fileClient.ReadAsync(options);
 
             // Assert
-            string group = response.Value.Properties.Group;
-            string owner = response.Value.Properties.Owner;
-
-            // Assert format is different since upn is false
-            Response<FileDownloadInfo> response1 = await fileClient.ReadAsync();
-
-            Assert.AreNotEqual(group, response1.Value.Properties.Group);
-            Assert.AreNotEqual(owner, response1.Value.Properties.Owner);
+            Assert.NotNull(response.Value.Properties.Owner);
+            Assert.NotNull(response.Value.Properties.Group);
         }
 
         [RecordedTest]

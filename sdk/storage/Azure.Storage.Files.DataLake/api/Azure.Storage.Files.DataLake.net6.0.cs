@@ -633,7 +633,6 @@ namespace Azure.Storage.Files.DataLake.Models
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
         public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
         public Azure.Storage.DownloadTransferValidationOptions TransferValidation { get { throw null; } set { } }
-        public bool? UserPrincipalName { get { throw null; } set { } }
     }
     public partial class DataLakeFileScheduleDeletionOptions
     {

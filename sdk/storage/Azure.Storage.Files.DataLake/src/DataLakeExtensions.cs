@@ -590,8 +590,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 TransferOptions = options.TransferOptions,
-                TransferValidation = options.TransferValidation,
-                UserPrincipalName = options.UserPrincipalName
+                TransferValidation = options.TransferValidation
             };
         }
 
