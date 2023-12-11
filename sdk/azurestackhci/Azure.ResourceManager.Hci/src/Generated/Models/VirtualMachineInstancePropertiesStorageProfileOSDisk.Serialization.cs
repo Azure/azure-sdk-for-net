@@ -10,11 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-<<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/Models/VirtualMachineInstancePropertiesStorageProfileOSDisk.Serialization.cs
     public partial class VirtualMachineInstancePropertiesStorageProfileOSDisk : IUtf8JsonSerializable
-========
-    public partial class HealthReportResourceDetails : IUtf8JsonSerializable
->>>>>>>> f49344353ba (Fix autorest mapping and add unit tests):sdk/securitycenter/Azure.ResourceManager.SecurityCenter/src/Generated/Models/HealthReportResourceDetails.Serialization.cs
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -32,11 +28,7 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteEndObject();
         }
 
-<<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/Models/VirtualMachineInstancePropertiesStorageProfileOSDisk.Serialization.cs
         internal static VirtualMachineInstancePropertiesStorageProfileOSDisk DeserializeVirtualMachineInstancePropertiesStorageProfileOSDisk(JsonElement element)
-========
-        internal static HealthReportResourceDetails DeserializeHealthReportResourceDetails(JsonElement element)
->>>>>>>> f49344353ba (Fix autorest mapping and add unit tests):sdk/securitycenter/Azure.ResourceManager.SecurityCenter/src/Generated/Models/HealthReportResourceDetails.Serialization.cs
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -61,11 +53,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-<<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/Models/VirtualMachineInstancePropertiesStorageProfileOSDisk.Serialization.cs
             return new VirtualMachineInstancePropertiesStorageProfileOSDisk(id.Value, Optional.ToNullable(osType));
-========
-            return new HealthReportResourceDetails(Optional.ToNullable(source), id.Value, connectorId.Value);
->>>>>>>> f49344353ba (Fix autorest mapping and add unit tests):sdk/securitycenter/Azure.ResourceManager.SecurityCenter/src/Generated/Models/HealthReportResourceDetails.Serialization.cs
         }
     }
 }
