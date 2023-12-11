@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Properties of the network rule. </summary>
     public partial class AzureFirewallNetworkRule
     {
-        /// <summary> Initializes a new instance of AzureFirewallNetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallNetworkRule"/>. </summary>
         public AzureFirewallNetworkRule()
         {
             Protocols = new ChangeTrackingList<AzureFirewallNetworkRuleProtocol>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
             DestinationIPGroups = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallNetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallNetworkRule"/>. </summary>
         /// <param name="name"> Name of the network rule. </param>
         /// <param name="description"> Description of the rule. </param>
         /// <param name="protocols"> Array of AzureFirewallNetworkRuleProtocols. </param>

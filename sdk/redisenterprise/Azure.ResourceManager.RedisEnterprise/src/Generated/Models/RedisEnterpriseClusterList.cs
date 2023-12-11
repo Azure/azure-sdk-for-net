@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> The response of a list-all operation. </summary>
     internal partial class RedisEnterpriseClusterList
     {
-        /// <summary> Initializes a new instance of RedisEnterpriseClusterList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseClusterList"/>. </summary>
         internal RedisEnterpriseClusterList()
         {
             Value = new ChangeTrackingList<RedisEnterpriseClusterData>();
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseClusterList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseClusterList"/>. </summary>
         /// <param name="value"> List of clusters. </param>
         /// <param name="nextLink"> The URI to fetch the next page of results. </param>
         internal RedisEnterpriseClusterList(IReadOnlyList<RedisEnterpriseClusterData> value, string nextLink)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Information used to connect to a CIFS file system. </summary>
     public partial class BatchCifsMountConfiguration
     {
-        /// <summary> Initializes a new instance of BatchCifsMountConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchCifsMountConfiguration"/>. </summary>
         /// <param name="username"> The user to use for authentication against the CIFS file system. </param>
         /// <param name="source"> The URI of the file system to mount. </param>
         /// <param name="relativeMountPath"> All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Batch.Models
             Password = password;
         }
 
-        /// <summary> Initializes a new instance of BatchCifsMountConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchCifsMountConfiguration"/>. </summary>
         /// <param name="username"> The user to use for authentication against the CIFS file system. </param>
         /// <param name="source"> The URI of the file system to mount. </param>
         /// <param name="relativeMountPath"> All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>

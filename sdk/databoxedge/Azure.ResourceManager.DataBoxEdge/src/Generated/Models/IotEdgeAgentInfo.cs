@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> IoT edge agent details is optional, this will be used for download system Agent module while bootstrapping IoT Role if specified. </summary>
     public partial class IotEdgeAgentInfo
     {
-        /// <summary> Initializes a new instance of IotEdgeAgentInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotEdgeAgentInfo"/>. </summary>
         /// <param name="imageName"> Name of the IoT edge agent image. </param>
         /// <param name="tag"> Image Tag. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> or <paramref name="tag"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Tag = tag;
         }
 
-        /// <summary> Initializes a new instance of IotEdgeAgentInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotEdgeAgentInfo"/>. </summary>
         /// <param name="imageName"> Name of the IoT edge agent image. </param>
         /// <param name="tag"> Image Tag. </param>
         /// <param name="imageRepository"> Image repository details. </param>

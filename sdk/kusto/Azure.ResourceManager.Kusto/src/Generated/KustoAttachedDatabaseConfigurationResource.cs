@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Kusto
         private readonly AttachedDatabaseConfigurationsRestOperations _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsRestClient;
         private readonly KustoAttachedDatabaseConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters/attachedDatabaseConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="KustoAttachedDatabaseConfigurationResource"/> class for mocking. </summary>
         protected KustoAttachedDatabaseConfigurationResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Kusto
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters/attachedDatabaseConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

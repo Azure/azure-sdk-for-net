@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> SKU parameters supplied to the create RedisEnterprise operation. </summary>
     public partial class RedisEnterpriseSku
     {
-        /// <summary> Initializes a new instance of RedisEnterpriseSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseSku"/>. </summary>
         /// <param name="name"> The type of RedisEnterprise cluster to deploy. Possible values: (Enterprise_E10, EnterpriseFlash_F300 etc.). </param>
         public RedisEnterpriseSku(RedisEnterpriseSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseSku"/>. </summary>
         /// <param name="name"> The type of RedisEnterprise cluster to deploy. Possible values: (Enterprise_E10, EnterpriseFlash_F300 etc.). </param>
         /// <param name="capacity"> The size of the RedisEnterprise cluster. Defaults to 2 or 3 depending on SKU. Valid values are (2, 4, 6, ...) for Enterprise SKUs and (3, 9, 15, ...) for Flash SKUs. </param>
         internal RedisEnterpriseSku(RedisEnterpriseSkuName name, int? capacity)

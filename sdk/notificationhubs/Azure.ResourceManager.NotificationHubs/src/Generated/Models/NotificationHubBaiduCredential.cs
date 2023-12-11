@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Description of a NotificationHub BaiduCredential. </summary>
     public partial class NotificationHubBaiduCredential
     {
-        /// <summary> Initializes a new instance of NotificationHubBaiduCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubBaiduCredential"/>. </summary>
         public NotificationHubBaiduCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationHubBaiduCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubBaiduCredential"/>. </summary>
         /// <param name="baiduApiKey"> Baidu Api Key. </param>
         /// <param name="baiduEndpoint"> Baidu Endpoint. </param>
         /// <param name="baiduSecretKey"> Baidu Secret Key. </param>

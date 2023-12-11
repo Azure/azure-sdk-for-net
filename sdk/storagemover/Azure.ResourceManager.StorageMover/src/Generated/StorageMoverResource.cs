@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.StorageMover
         private readonly StorageMoversRestOperations _storageMoverRestClient;
         private readonly StorageMoverData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StorageMover/storageMovers";
+
         /// <summary> Initializes a new instance of the <see cref="StorageMoverResource"/> class for mocking. </summary>
         protected StorageMoverResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.StorageMover
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StorageMover/storageMovers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The StorageMoverPatch to use. </param>
+        /// <param name="patch"> The <see cref="StorageMoverPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<StorageMoverResource>> UpdateAsync(StorageMoverPatch patch, CancellationToken cancellationToken = default)
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The StorageMoverPatch to use. </param>
+        /// <param name="patch"> The <see cref="StorageMoverPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<StorageMoverResource> Update(StorageMoverPatch patch, CancellationToken cancellationToken = default)

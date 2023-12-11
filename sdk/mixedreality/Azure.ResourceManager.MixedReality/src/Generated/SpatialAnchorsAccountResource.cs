@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.MixedReality
         private readonly SpatialAnchorsAccountsRestOperations _spatialAnchorsAccountRestClient;
         private readonly SpatialAnchorsAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MixedReality/spatialAnchorsAccounts";
+
         /// <summary> Initializes a new instance of the <see cref="SpatialAnchorsAccountResource"/> class for mocking. </summary>
         protected SpatialAnchorsAccountResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.MixedReality
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MixedReality/spatialAnchorsAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

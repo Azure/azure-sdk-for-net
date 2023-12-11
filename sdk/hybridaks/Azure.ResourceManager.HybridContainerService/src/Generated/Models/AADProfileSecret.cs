@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The server AAD application secret. </summary>
     public partial class AADProfileSecret
     {
-        /// <summary> Initializes a new instance of AADProfileSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="AADProfileSecret"/>. </summary>
         public AADProfileSecret()
         {
         }
 
-        /// <summary> Initializes a new instance of AADProfileSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="AADProfileSecret"/>. </summary>
         /// <param name="serverAppSecret"> The server AAD application secret. </param>
         internal AADProfileSecret(string serverAppSecret)
         {

@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The provider registration definition. </summary>
     public partial class ProviderRegistrationContent
     {
-        /// <summary> Initializes a new instance of ProviderRegistrationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderRegistrationContent"/>. </summary>
         public ProviderRegistrationContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProviderRegistrationContent"/>. </summary>
+        /// <param name="thirdPartyProviderConsent"> The provider consent. </param>
+        internal ProviderRegistrationContent(ProviderConsentDefinition thirdPartyProviderConsent)
+        {
+            ThirdPartyProviderConsent = thirdPartyProviderConsent;
         }
 
         /// <summary> The provider consent. </summary>

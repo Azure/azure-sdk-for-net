@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly ApiPolicyRestOperations _apiPolicyRestClient;
         private readonly PolicyContractData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/policies";
+
         /// <summary> Initializes a new instance of the <see cref="ApiPolicyResource"/> class for mocking. </summary>
         protected ApiPolicyResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/policies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

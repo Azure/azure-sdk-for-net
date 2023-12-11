@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The UnknownReplicationProtectionIntentProviderSpecificSettings. </summary>
     internal partial class UnknownReplicationProtectionIntentProviderSpecificSettings : ReplicationProtectionIntentProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of UnknownReplicationProtectionIntentProviderSpecificSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownReplicationProtectionIntentProviderSpecificSettings"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
         internal UnknownReplicationProtectionIntentProviderSpecificSettings(string instanceType) : base(instanceType)
         {

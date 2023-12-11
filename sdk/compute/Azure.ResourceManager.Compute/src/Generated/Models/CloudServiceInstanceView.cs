@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> InstanceView of CloudService as a whole. </summary>
     public partial class CloudServiceInstanceView
     {
-        /// <summary> Initializes a new instance of CloudServiceInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceInstanceView"/>. </summary>
         internal CloudServiceInstanceView()
         {
             PrivateIds = new ChangeTrackingList<string>();
             Statuses = new ChangeTrackingList<ResourceInstanceViewStatus>();
         }
 
-        /// <summary> Initializes a new instance of CloudServiceInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceInstanceView"/>. </summary>
         /// <param name="roleInstance"> Instance view statuses. </param>
         /// <param name="sdkVersion"> The version of the SDK that was used to generate the package for the cloud service. </param>
         /// <param name="privateIds"> Specifies a list of unique identifiers generated internally for the cloud service. &lt;br /&gt;&lt;br /&gt; NOTE: If you are using Azure Diagnostics extension, this property can be used as 'DeploymentId' for querying details. </param>

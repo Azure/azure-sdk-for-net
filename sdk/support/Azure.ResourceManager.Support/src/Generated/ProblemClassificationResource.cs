@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Support
         private readonly ProblemClassificationsRestOperations _problemClassificationRestClient;
         private readonly ProblemClassificationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Support/services/problemClassifications";
+
         /// <summary> Initializes a new instance of the <see cref="ProblemClassificationResource"/> class for mocking. </summary>
         protected ProblemClassificationResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Support
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Support/services/problemClassifications";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

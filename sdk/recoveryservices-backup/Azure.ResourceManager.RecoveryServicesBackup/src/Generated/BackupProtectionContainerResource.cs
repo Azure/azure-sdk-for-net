@@ -46,6 +46,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly BackupWorkloadItemsRestOperations _backupWorkloadItemsRestClient;
         private readonly BackupProtectionContainerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers";
+
         /// <summary> Initializes a new instance of the <see cref="BackupProtectionContainerResource"/> class for mocking. </summary>
         protected BackupProtectionContainerResource()
         {
@@ -74,9 +77,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -14,7 +14,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Get Operation response object. </summary>
     public partial class DocumentModelBuildOperationDetails : OperationDetails
     {
-        /// <summary> Initializes a new instance of DocumentModelBuildOperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentModelBuildOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.DocumentIntelligence
             Kind = OperationKind.DocumentModelBuild;
         }
 
-        /// <summary> Initializes a new instance of DocumentModelBuildOperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentModelBuildOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>

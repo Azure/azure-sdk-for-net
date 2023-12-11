@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.HDInsight
     /// </summary>
     public partial class HDInsightApplicationData : ResourceData
     {
-        /// <summary> Initializes a new instance of HDInsightApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightApplicationData"/>. </summary>
         public HDInsightApplicationData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightApplicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

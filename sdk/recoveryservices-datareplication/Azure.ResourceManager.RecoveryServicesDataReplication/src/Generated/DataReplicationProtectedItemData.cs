@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     /// </summary>
     public partial class DataReplicationProtectedItemData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataReplicationProtectedItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationProtectedItemData"/>. </summary>
         /// <param name="properties"> Protected item model properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DataReplicationProtectedItemData(DataReplicationProtectedItemProperties properties)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataReplicationProtectedItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationProtectedItemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

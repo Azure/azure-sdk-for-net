@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Storage
     /// </summary>
     public partial class TableData : ResourceData
     {
-        /// <summary> Initializes a new instance of TableData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableData"/>. </summary>
         public TableData()
         {
             SignedIdentifiers = new ChangeTrackingList<StorageTableSignedIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of TableData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

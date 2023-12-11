@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of Template Specs. </summary>
     internal partial class TemplateSpecsListResult
     {
-        /// <summary> Initializes a new instance of TemplateSpecsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateSpecsListResult"/>. </summary>
         internal TemplateSpecsListResult()
         {
             Value = new ChangeTrackingList<TemplateSpecData>();
         }
 
-        /// <summary> Initializes a new instance of TemplateSpecsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateSpecsListResult"/>. </summary>
         /// <param name="value"> An array of Template Specs. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal TemplateSpecsListResult(IReadOnlyList<TemplateSpecData> value, string nextLink)

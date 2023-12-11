@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure SQL workload-specific backup item. </summary>
     public partial class SqlProtectedItem : BackupGenericProtectedItem
     {
-        /// <summary> Initializes a new instance of SqlProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlProtectedItem"/>. </summary>
         public SqlProtectedItem()
         {
             ProtectedItemType = "Microsoft.Sql/servers/databases";
         }
 
-        /// <summary> Initializes a new instance of SqlProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlProtectedItem"/>. </summary>
         /// <param name="protectedItemType"> backup item type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>

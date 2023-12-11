@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Orbital
         private readonly AvailableGroundStationsRestOperations _availableGroundStationRestClient;
         private readonly AvailableGroundStationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Orbital/availableGroundStations";
+
         /// <summary> Initializes a new instance of the <see cref="AvailableGroundStationResource"/> class for mocking. </summary>
         protected AvailableGroundStationResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Orbital
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Orbital/availableGroundStations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

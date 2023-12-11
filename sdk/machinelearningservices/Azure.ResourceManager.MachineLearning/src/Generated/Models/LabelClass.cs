@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Label class definition. </summary>
     public partial class LabelClass
     {
-        /// <summary> Initializes a new instance of LabelClass. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabelClass"/>. </summary>
         public LabelClass()
         {
             Subclasses = new ChangeTrackingDictionary<string, LabelClass>();
         }
 
-        /// <summary> Initializes a new instance of LabelClass. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabelClass"/>. </summary>
         /// <param name="displayName"> Display name of the label class. </param>
         /// <param name="subclasses"> Dictionary of subclasses of the label class. </param>
         internal LabelClass(string displayName, IDictionary<string, LabelClass> subclasses)

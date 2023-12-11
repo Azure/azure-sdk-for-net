@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> List the alerts. </summary>
     internal partial class ServiceAlertListResult
     {
-        /// <summary> Initializes a new instance of ServiceAlertListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertListResult"/>. </summary>
         internal ServiceAlertListResult()
         {
             Value = new ChangeTrackingList<ServiceAlertData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertListResult"/>. </summary>
         /// <param name="nextLink"> URL to fetch the next set of alerts. </param>
         /// <param name="value"> List of alerts. </param>
         internal ServiceAlertListResult(string nextLink, IReadOnlyList<ServiceAlertData> value)

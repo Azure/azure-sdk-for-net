@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.HybridContainerService
     /// </summary>
     public partial class ProvisionedClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ProvisionedClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ProvisionedClusterData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

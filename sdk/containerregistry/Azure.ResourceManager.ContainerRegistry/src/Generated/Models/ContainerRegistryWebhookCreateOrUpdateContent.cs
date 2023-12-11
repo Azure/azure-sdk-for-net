@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters for creating a webhook. </summary>
     public partial class ContainerRegistryWebhookCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryWebhookCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The location of the webhook. This cannot be changed after the resource is created. </param>
         public ContainerRegistryWebhookCreateOrUpdateContent(AzureLocation location)
         {
@@ -22,6 +22,25 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Location = location;
             CustomHeaders = new ChangeTrackingDictionary<string, string>();
             Actions = new ChangeTrackingList<ContainerRegistryWebhookAction>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookCreateOrUpdateContent"/>. </summary>
+        /// <param name="tags"> The tags for the webhook. </param>
+        /// <param name="location"> The location of the webhook. This cannot be changed after the resource is created. </param>
+        /// <param name="serviceUri"> The service URI for the webhook to post notifications. </param>
+        /// <param name="customHeaders"> Custom headers that will be added to the webhook notifications. </param>
+        /// <param name="status"> The status of the webhook at the time the operation was called. </param>
+        /// <param name="scope"> The scope of repositories where the event can be triggered. For example, 'foo:*' means events for all tags under repository 'foo'. 'foo:bar' means events for 'foo:bar' only. 'foo' is equivalent to 'foo:latest'. Empty means all events. </param>
+        /// <param name="actions"> The list of actions that trigger the webhook to post notifications. </param>
+        internal ContainerRegistryWebhookCreateOrUpdateContent(IDictionary<string, string> tags, AzureLocation location, Uri serviceUri, IDictionary<string, string> customHeaders, ContainerRegistryWebhookStatus? status, string scope, IList<ContainerRegistryWebhookAction> actions)
+        {
+            Tags = tags;
+            Location = location;
+            ServiceUri = serviceUri;
+            CustomHeaders = customHeaders;
+            Status = status;
+            Scope = scope;
+            Actions = actions;
         }
 
         /// <summary> The tags for the webhook. </summary>

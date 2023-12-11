@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Parameters in Policy. </summary>
     public partial class BackupInstancePolicySettings
     {
-        /// <summary> Initializes a new instance of BackupInstancePolicySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupInstancePolicySettings"/>. </summary>
         public BackupInstancePolicySettings()
         {
             DataStoreParametersList = new ChangeTrackingList<DataStoreSettings>();
             BackupDataSourceParametersList = new ChangeTrackingList<BackupDataSourceSettings>();
         }
 
-        /// <summary> Initializes a new instance of BackupInstancePolicySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupInstancePolicySettings"/>. </summary>
         /// <param name="dataStoreParametersList">
         /// Gets or sets the DataStore Parameters
         /// Please note <see cref="DataStoreSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

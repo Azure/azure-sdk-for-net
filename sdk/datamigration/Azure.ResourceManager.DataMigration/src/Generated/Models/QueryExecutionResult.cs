@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes query analysis results for execution in source and target. </summary>
     public partial class QueryExecutionResult
     {
-        /// <summary> Initializes a new instance of QueryExecutionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryExecutionResult"/>. </summary>
         internal QueryExecutionResult()
         {
         }
 
-        /// <summary> Initializes a new instance of QueryExecutionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryExecutionResult"/>. </summary>
         /// <param name="queryText"> Query text retrieved from the source server. </param>
         /// <param name="statementsInBatch"> Total no. of statements in the batch. </param>
         /// <param name="sourceResult"> Query analysis result from the source. </param>

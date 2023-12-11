@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Cdn
         private readonly PoliciesRestOperations _cdnWebApplicationFirewallPolicyPoliciesRestClient;
         private readonly CdnWebApplicationFirewallPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/cdnWebApplicationFirewallPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="CdnWebApplicationFirewallPolicyResource"/> class for mocking. </summary>
         protected CdnWebApplicationFirewallPolicyResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Cdn
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cdn/cdnWebApplicationFirewallPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

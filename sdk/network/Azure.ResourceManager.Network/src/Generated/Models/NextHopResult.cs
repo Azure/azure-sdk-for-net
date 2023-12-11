@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The information about next hop from the specified VM. </summary>
     public partial class NextHopResult
     {
-        /// <summary> Initializes a new instance of NextHopResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NextHopResult"/>. </summary>
         internal NextHopResult()
         {
         }
 
-        /// <summary> Initializes a new instance of NextHopResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NextHopResult"/>. </summary>
         /// <param name="nextHopType"> Next hop type. </param>
         /// <param name="nextHopIPAddress"> Next hop IP Address. </param>
         /// <param name="routeTableId"> The resource identifier for the route table associated with the route being returned. If the route being returned does not correspond to any user created routes then this field will be the string 'System Route'. </param>

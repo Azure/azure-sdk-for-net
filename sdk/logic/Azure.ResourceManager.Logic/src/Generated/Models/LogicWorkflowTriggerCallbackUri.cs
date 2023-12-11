@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The workflow trigger callback URL. </summary>
     public partial class LogicWorkflowTriggerCallbackUri
     {
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerCallbackUri. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerCallbackUri"/>. </summary>
         internal LogicWorkflowTriggerCallbackUri()
         {
             RelativePathParameters = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerCallbackUri. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerCallbackUri"/>. </summary>
         /// <param name="value"> Gets the workflow trigger callback URL. </param>
         /// <param name="method"> Gets the workflow trigger callback URL HTTP method. </param>
         /// <param name="basePath"> Gets the workflow trigger callback URL base path. </param>

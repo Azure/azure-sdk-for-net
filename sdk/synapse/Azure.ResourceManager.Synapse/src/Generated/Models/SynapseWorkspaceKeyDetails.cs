@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Details of the customer managed key associated with the workspace. </summary>
     public partial class SynapseWorkspaceKeyDetails
     {
-        /// <summary> Initializes a new instance of SynapseWorkspaceKeyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceKeyDetails"/>. </summary>
         public SynapseWorkspaceKeyDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkspaceKeyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceKeyDetails"/>. </summary>
         /// <param name="name"> Workspace Key sub-resource name. </param>
         /// <param name="keyVaultUri"> Workspace Key sub-resource key vault url. </param>
         internal SynapseWorkspaceKeyDetails(string name, Uri keyVaultUri)

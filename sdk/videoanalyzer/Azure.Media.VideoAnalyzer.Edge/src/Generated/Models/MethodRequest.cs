@@ -10,11 +10,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary>
     /// Base class for direct method calls.
     /// Please note <see cref="MethodRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MethodRequestEmptyBodyBase"/>, <see cref="PipelineTopologySetRequestBody"/>, <see cref="RemoteDeviceAdapterSetRequestBody"/>, <see cref="LivePipelineActivateRequest"/>, <see cref="LivePipelineDeactivateRequest"/>, <see cref="LivePipelineDeleteRequest"/>, <see cref="LivePipelineGetRequest"/>, <see cref="LivePipelineListRequest"/>, <see cref="LivePipelineSetRequest"/>, <see cref="OnvifDeviceDiscoverRequest"/>, <see cref="OnvifDeviceGetRequest"/>, <see cref="PipelineTopologyDeleteRequest"/>, <see cref="PipelineTopologyGetRequest"/>, <see cref="PipelineTopologyListRequest"/>, <see cref="PipelineTopologySetRequest"/>, <see cref="RemoteDeviceAdapterDeleteRequest"/>, <see cref="RemoteDeviceAdapterGetRequest"/>, <see cref="RemoteDeviceAdapterListRequest"/>, <see cref="RemoteDeviceAdapterSetRequest"/> and <see cref="LivePipelineSetRequestBody"/>.
+    /// The available derived classes include <see cref="MethodRequestEmptyBodyBase"/>, <see cref="LivePipelineActivateRequest"/>, <see cref="LivePipelineDeactivateRequest"/>, <see cref="LivePipelineDeleteRequest"/>, <see cref="LivePipelineGetRequest"/>, <see cref="LivePipelineListRequest"/>, <see cref="LivePipelineSetRequest"/>, <see cref="OnvifDeviceDiscoverRequest"/>, <see cref="OnvifDeviceGetRequest"/>, <see cref="PipelineTopologyDeleteRequest"/>, <see cref="PipelineTopologyGetRequest"/>, <see cref="PipelineTopologyListRequest"/>, <see cref="PipelineTopologySetRequest"/>, <see cref="RemoteDeviceAdapterDeleteRequest"/>, <see cref="RemoteDeviceAdapterGetRequest"/>, <see cref="RemoteDeviceAdapterListRequest"/> and <see cref="RemoteDeviceAdapterSetRequest"/>.
     /// </summary>
     public abstract partial class MethodRequest
     {
-        /// <summary> Initializes a new instance of MethodRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="MethodRequest"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
         internal MethodRequest(string methodName, string apiVersion)

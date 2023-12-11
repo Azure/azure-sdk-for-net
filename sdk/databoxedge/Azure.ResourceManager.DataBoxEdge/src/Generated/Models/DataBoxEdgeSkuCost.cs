@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The metadata for retrieving price info. </summary>
     public partial class DataBoxEdgeSkuCost
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeSkuCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSkuCost"/>. </summary>
         internal DataBoxEdgeSkuCost()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeSkuCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSkuCost"/>. </summary>
         /// <param name="meterId"> Used for querying price from commerce. </param>
         /// <param name="quantity"> The cost quantity. </param>
         /// <param name="extendedUnit"> The extended unit. </param>

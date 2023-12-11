@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.HybridContainerService
         private readonly AgentPoolRestOperations _hybridContainerServiceAgentPoolagentPoolRestClient;
         private readonly HybridContainerServiceAgentPoolData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/provisionedClusters/agentPools";
+
         /// <summary> Initializes a new instance of the <see cref="HybridContainerServiceAgentPoolResource"/> class for mocking. </summary>
         protected HybridContainerServiceAgentPoolResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.HybridContainerService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/provisionedClusters/agentPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="data"> The HybridContainerServiceAgentPool to use. </param>
+        /// <param name="data"> The <see cref="HybridContainerServiceAgentPoolData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<HybridContainerServiceAgentPoolResource>> UpdateAsync(HybridContainerServiceAgentPoolData data, CancellationToken cancellationToken = default)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="data"> The HybridContainerServiceAgentPool to use. </param>
+        /// <param name="data"> The <see cref="HybridContainerServiceAgentPoolData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<HybridContainerServiceAgentPoolResource> Update(HybridContainerServiceAgentPoolData data, CancellationToken cancellationToken = default)

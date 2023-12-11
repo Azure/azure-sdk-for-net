@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Azure Operator Distributed Services network function template. </summary>
     public partial class AzureOperatorNexusNetworkFunctionTemplate : VirtualNetworkFunctionTemplate
     {
-        /// <summary> Initializes a new instance of AzureOperatorNexusNetworkFunctionTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusNetworkFunctionTemplate"/>. </summary>
         public AzureOperatorNexusNetworkFunctionTemplate()
         {
             NetworkFunctionApplications = new ChangeTrackingList<AzureOperatorNexusNetworkFunctionApplication>();
             NfviType = VirtualNetworkFunctionNfviType.AzureOperatorNexus;
         }
 
-        /// <summary> Initializes a new instance of AzureOperatorNexusNetworkFunctionTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusNetworkFunctionTemplate"/>. </summary>
         /// <param name="nfviType"> The network function type. </param>
         /// <param name="networkFunctionApplications">
         /// Network function applications.

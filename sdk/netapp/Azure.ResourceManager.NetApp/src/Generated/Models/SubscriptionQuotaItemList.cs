@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> List of Subscription Quota Items. </summary>
     internal partial class SubscriptionQuotaItemList
     {
-        /// <summary> Initializes a new instance of SubscriptionQuotaItemList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaItemList"/>. </summary>
         internal SubscriptionQuotaItemList()
         {
             Value = new ChangeTrackingList<NetAppSubscriptionQuotaItem>();
         }
 
-        /// <summary> Initializes a new instance of SubscriptionQuotaItemList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaItemList"/>. </summary>
         /// <param name="value"> A list of SubscriptionQuotaItems. </param>
         internal SubscriptionQuotaItemList(IReadOnlyList<NetAppSubscriptionQuotaItem> value)
         {

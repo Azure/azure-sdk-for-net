@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> Model factory for models. </summary>
     public static partial class HealthInsightsCancerProfilingModelFactory
     {
-        /// <summary> Initializes a new instance of OncoPhenotypeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancerProfiling.OncoPhenotypeResult"/>. </summary>
         /// <param name="jobId"> A processing job identifier. </param>
         /// <param name="createdDateTime"> The date and time when the processing job was created. </param>
         /// <param name="expirationDateTime"> The date and time when the processing job is set to expire. </param>
@@ -31,7 +31,7 @@ namespace Azure.Health.Insights.CancerProfiling
             return new OncoPhenotypeResult(jobId, createdDateTime, expirationDateTime, lastUpdateDateTime, status, errors?.ToList(), results);
         }
 
-        /// <summary> Initializes a new instance of OncoPhenotypeResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancerProfiling.OncoPhenotypeResults"/>. </summary>
         /// <param name="patients"> Results for the patients given in the request. </param>
         /// <param name="modelVersion"> The version of the model used for inference, expressed as the model date. </param>
         /// <returns> A new <see cref="CancerProfiling.OncoPhenotypeResults"/> instance for mocking. </returns>
@@ -42,7 +42,7 @@ namespace Azure.Health.Insights.CancerProfiling
             return new OncoPhenotypeResults(patients?.ToList(), modelVersion);
         }
 
-        /// <summary> Initializes a new instance of OncoPhenotypePatientResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancerProfiling.OncoPhenotypePatientResult"/>. </summary>
         /// <param name="id"> The identifier given for the patient in the request. </param>
         /// <param name="inferences"> The model's inferences for the given patient. </param>
         /// <returns> A new <see cref="CancerProfiling.OncoPhenotypePatientResult"/> instance for mocking. </returns>
@@ -53,7 +53,7 @@ namespace Azure.Health.Insights.CancerProfiling
             return new OncoPhenotypePatientResult(id, inferences?.ToList());
         }
 
-        /// <summary> Initializes a new instance of OncoPhenotypeInference. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancerProfiling.OncoPhenotypeInference"/>. </summary>
         /// <param name="type"> The type of the Onco Phenotype inference. </param>
         /// <param name="value"> The value of the inference, as relevant for the given inference type. </param>
         /// <param name="description"> The description corresponding to the inference value. </param>
@@ -68,7 +68,7 @@ namespace Azure.Health.Insights.CancerProfiling
             return new OncoPhenotypeInference(type, value, description, confidenceScore, evidence?.ToList(), caseId);
         }
 
-        /// <summary> Initializes a new instance of InferenceEvidence. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancerProfiling.InferenceEvidence"/>. </summary>
         /// <param name="patientDataEvidence"> A piece of evidence from a clinical note (text document). </param>
         /// <param name="patientInfoEvidence">
         /// A piece of clinical information, expressed as a code in a clinical coding
@@ -81,7 +81,7 @@ namespace Azure.Health.Insights.CancerProfiling
             return new InferenceEvidence(patientDataEvidence, patientInfoEvidence, importance);
         }
 
-        /// <summary> Initializes a new instance of ClinicalNoteEvidence. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancerProfiling.ClinicalNoteEvidence"/>. </summary>
         /// <param name="id"> The identifier of the document containing the evidence. </param>
         /// <param name="text"> The actual text span which is evidence for the inference. </param>
         /// <param name="offset"> The start index of the evidence text span in the document (0 based). </param>

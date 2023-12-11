@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Hyper-V Replica Blue specific protection profile details. </summary>
     public partial class HyperVReplicaPolicyDetails : PolicyProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of HyperVReplicaPolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaPolicyDetails"/>. </summary>
         internal HyperVReplicaPolicyDetails()
         {
             InstanceType = "HyperVReplica2012";
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaPolicyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaPolicyDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="recoveryPoints"> A value indicating the number of recovery points. </param>
         /// <param name="applicationConsistentSnapshotFrequencyInHours"> A value indicating the application consistent frequency. </param>

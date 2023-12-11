@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningDiagnoseResultValue. </summary>
     public partial class MachineLearningDiagnoseResultValue
     {
-        /// <summary> Initializes a new instance of MachineLearningDiagnoseResultValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDiagnoseResultValue"/>. </summary>
         internal MachineLearningDiagnoseResultValue()
         {
             UserDefinedRouteResults = new ChangeTrackingList<MachineLearningDiagnoseResult>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             OtherResults = new ChangeTrackingList<MachineLearningDiagnoseResult>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDiagnoseResultValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDiagnoseResultValue"/>. </summary>
         /// <param name="userDefinedRouteResults"></param>
         /// <param name="networkSecurityRuleResults"></param>
         /// <param name="resourceLockResults"></param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Collection of Communication resources. </summary>
     internal partial class CommunicationsListResult
     {
-        /// <summary> Initializes a new instance of CommunicationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationsListResult"/>. </summary>
         internal CommunicationsListResult()
         {
             Value = new ChangeTrackingList<SupportTicketCommunicationData>();
         }
 
-        /// <summary> Initializes a new instance of CommunicationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationsListResult"/>. </summary>
         /// <param name="value"> List of Communication resources. </param>
         /// <param name="nextLink"> The URI to fetch the next page of Communication resources. </param>
         internal CommunicationsListResult(IReadOnlyList<SupportTicketCommunicationData> value, string nextLink)

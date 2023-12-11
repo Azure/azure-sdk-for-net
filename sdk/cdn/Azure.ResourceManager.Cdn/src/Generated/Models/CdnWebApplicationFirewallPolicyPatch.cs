@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Properties required to update a CdnWebApplicationFirewallPolicy. </summary>
     public partial class CdnWebApplicationFirewallPolicyPatch
     {
-        /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnWebApplicationFirewallPolicyPatch"/>. </summary>
         public CdnWebApplicationFirewallPolicyPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CdnWebApplicationFirewallPolicyPatch"/>. </summary>
+        /// <param name="tags"> CdnWebApplicationFirewallPolicy tags. </param>
+        internal CdnWebApplicationFirewallPolicyPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> CdnWebApplicationFirewallPolicy tags. </summary>

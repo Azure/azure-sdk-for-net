@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The expression. </summary>
     public partial class LogicExpression
     {
-        /// <summary> Initializes a new instance of LogicExpression. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicExpression"/>. </summary>
         internal LogicExpression()
         {
             Subexpressions = new ChangeTrackingList<LogicExpression>();
         }
 
-        /// <summary> Initializes a new instance of LogicExpression. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicExpression"/>. </summary>
         /// <param name="text"> The text. </param>
         /// <param name="value"> Anything. </param>
         /// <param name="subexpressions"> The sub expressions. </param>

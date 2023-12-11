@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> A footnote object describing a table or figure. </summary>
     public partial class DocumentFootnote
     {
-        /// <summary> Initializes a new instance of DocumentFootnote. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentFootnote"/>. </summary>
         /// <param name="content"> Content of the footnote. </param>
         /// <param name="spans"> Location of the footnote in the reading order concatenated content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="spans"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.AI.DocumentIntelligence
             Elements = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DocumentFootnote. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentFootnote"/>. </summary>
         /// <param name="content"> Content of the footnote. </param>
         /// <param name="boundingRegions"> Bounding regions covering the footnote. </param>
         /// <param name="spans"> Location of the footnote in the reading order concatenated content. </param>

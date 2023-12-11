@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The properties of an Azure Cosmos DB merge operations. </summary>
     public partial class MergeParameters
     {
-        /// <summary> Initializes a new instance of MergeParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="MergeParameters"/>. </summary>
         public MergeParameters()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MergeParameters"/>. </summary>
+        /// <param name="isDryRun"> Specifies whether the operation is a real merge operation or a simulation. </param>
+        internal MergeParameters(bool? isDryRun)
+        {
+            IsDryRun = isDryRun;
         }
 
         /// <summary> Specifies whether the operation is a real merge operation or a simulation. </summary>

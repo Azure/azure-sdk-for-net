@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Compute
         private readonly CommunityGalleryImageVersionsRestOperations _communityGalleryImageVersionRestClient;
         private readonly CommunityGalleryImageVersionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/locations/communityGalleries/images/versions";
+
         /// <summary> Initializes a new instance of the <see cref="CommunityGalleryImageVersionResource"/> class for mocking. </summary>
         protected CommunityGalleryImageVersionResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/locations/communityGalleries/images/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

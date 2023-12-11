@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automanage.Models
     /// <summary> The response of the list configuration profile assignment operation. </summary>
     internal partial class ConfigurationProfileAssignmentList
     {
-        /// <summary> Initializes a new instance of ConfigurationProfileAssignmentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationProfileAssignmentList"/>. </summary>
         internal ConfigurationProfileAssignmentList()
         {
             Value = new ChangeTrackingList<AutomanageConfigurationProfileAssignmentData>();
         }
 
-        /// <summary> Initializes a new instance of ConfigurationProfileAssignmentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationProfileAssignmentList"/>. </summary>
         /// <param name="value"> Result of the list configuration profile assignment operation. </param>
         internal ConfigurationProfileAssignmentList(IReadOnlyList<AutomanageConfigurationProfileAssignmentData> value)
         {

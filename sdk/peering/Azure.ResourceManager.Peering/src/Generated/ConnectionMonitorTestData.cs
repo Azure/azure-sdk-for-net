@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Peering
     /// </summary>
     public partial class ConnectionMonitorTestData : ResourceData
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorTestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTestData"/>. </summary>
         public ConnectionMonitorTestData()
         {
             Path = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorTestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

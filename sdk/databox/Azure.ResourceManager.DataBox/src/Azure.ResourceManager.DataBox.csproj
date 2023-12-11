@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Version>1.1.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.0.2</ApiCompatVersion>
+    <ApiCompatVersion>1.0.3</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.DataBox</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.DataBox.</Description>
     <PackageTags>azure;management;arm;resource manager;databox</PackageTags>

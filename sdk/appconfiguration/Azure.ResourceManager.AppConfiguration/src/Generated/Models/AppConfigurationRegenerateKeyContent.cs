@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     /// <summary> The parameters used to regenerate an API key. </summary>
     public partial class AppConfigurationRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of AppConfigurationRegenerateKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationRegenerateKeyContent"/>. </summary>
         public AppConfigurationRegenerateKeyContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationRegenerateKeyContent"/>. </summary>
+        /// <param name="id"> The id of the key to regenerate. </param>
+        internal AppConfigurationRegenerateKeyContent(string id)
+        {
+            Id = id;
         }
 
         /// <summary> The id of the key to regenerate. </summary>

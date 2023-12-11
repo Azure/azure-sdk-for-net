@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Product Entity Base Parameters. </summary>
     public partial class ProductEntityBaseProperties
     {
-        /// <summary> Initializes a new instance of ProductEntityBaseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductEntityBaseProperties"/>. </summary>
         internal ProductEntityBaseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ProductEntityBaseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductEntityBaseProperties"/>. </summary>
         /// <param name="description"> Product description. May include HTML formatting tags. </param>
         /// <param name="terms"> Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process. </param>
         /// <param name="isSubscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The ProvisionedClustersResponseProperties. </summary>
     public partial class ProvisionedClustersResponseProperties : ProvisionedClustersPropertiesWithoutSecrets
     {
-        /// <summary> Initializes a new instance of ProvisionedClustersResponseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersResponseProperties"/>. </summary>
         public ProvisionedClustersResponseProperties()
         {
             AddonProfiles = new ChangeTrackingDictionary<string, AddonProfiles>();
             AgentPoolProfiles = new ChangeTrackingList<NamedAgentPoolProfile>();
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClustersResponseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersResponseProperties"/>. </summary>
         /// <param name="aadProfile"> AAD profile for the provisioned cluster. </param>
         /// <param name="windowsProfile"> WindowsProfile - Profile for Windows VMs in the Provisioned Cluster. </param>
         /// <param name="httpProxyConfig"> HttpProxyConfig - Configurations for provisioning the cluster with HTTP proxy servers. </param>

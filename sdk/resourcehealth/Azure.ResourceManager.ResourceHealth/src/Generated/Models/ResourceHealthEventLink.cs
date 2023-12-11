@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Useful links for service health event. </summary>
     public partial class ResourceHealthEventLink
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventLink"/>. </summary>
         internal ResourceHealthEventLink()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventLink"/>. </summary>
         /// <param name="linkType"> Type of link. </param>
         /// <param name="displayText"> Display text of link. </param>
         /// <param name="extensionName"> It provides the name of portal extension to produce link for given service health event. </param>

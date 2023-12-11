@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Service health status. </summary>
     public partial class DataMigrationServiceStatusResponse
     {
-        /// <summary> Initializes a new instance of DataMigrationServiceStatusResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigrationServiceStatusResponse"/>. </summary>
         internal DataMigrationServiceStatusResponse()
         {
             SupportedTaskTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataMigrationServiceStatusResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigrationServiceStatusResponse"/>. </summary>
         /// <param name="agentVersion"> The DMS instance agent version. </param>
         /// <param name="agentConfiguration"> Agent Configuration. </param>
         /// <param name="status"> The machine-readable status, such as 'Initializing', 'Offline', 'Online', 'Deploying', 'Deleting', 'Stopped', 'Stopping', 'Starting', 'FailedToStart', 'FailedToStop' or 'Failed'. </param>

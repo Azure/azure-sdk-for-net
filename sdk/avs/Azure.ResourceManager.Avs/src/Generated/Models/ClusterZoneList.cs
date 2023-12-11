@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> List of all zones and associated hosts for a cluster. </summary>
     internal partial class ClusterZoneList
     {
-        /// <summary> Initializes a new instance of ClusterZoneList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterZoneList"/>. </summary>
         internal ClusterZoneList()
         {
             Zones = new ChangeTrackingList<AvsClusterZone>();
         }
 
-        /// <summary> Initializes a new instance of ClusterZoneList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterZoneList"/>. </summary>
         /// <param name="zones"> Zone and associated hosts info. </param>
         internal ClusterZoneList(IReadOnlyList<AvsClusterZone> zones)
         {

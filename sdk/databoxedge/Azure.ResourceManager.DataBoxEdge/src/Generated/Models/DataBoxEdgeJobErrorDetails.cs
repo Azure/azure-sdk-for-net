@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The job error information containing the list of job errors. </summary>
     public partial class DataBoxEdgeJobErrorDetails
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeJobErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeJobErrorDetails"/>. </summary>
         internal DataBoxEdgeJobErrorDetails()
         {
             ErrorDetails = new ChangeTrackingList<DataBoxEdgeJobErrorItem>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeJobErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeJobErrorDetails"/>. </summary>
         /// <param name="errorDetails"> The error details. </param>
         /// <param name="code"> The code intended for programmatic access. </param>
         /// <param name="message"> The message that describes the error in detail. </param>

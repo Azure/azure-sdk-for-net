@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> A list of recommendation actions. </summary>
     internal partial class MySqlRecommendationActionListResult
     {
-        /// <summary> Initializes a new instance of MySqlRecommendationActionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlRecommendationActionListResult"/>. </summary>
         internal MySqlRecommendationActionListResult()
         {
             Value = new ChangeTrackingList<MySqlRecommendationActionData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlRecommendationActionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlRecommendationActionListResult"/>. </summary>
         /// <param name="value"> The list of recommendation action advisors. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal MySqlRecommendationActionListResult(IReadOnlyList<MySqlRecommendationActionData> value, string nextLink)

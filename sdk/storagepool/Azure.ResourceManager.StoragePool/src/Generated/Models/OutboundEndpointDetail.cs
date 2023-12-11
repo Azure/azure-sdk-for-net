@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Current TCP connectivity information from the App Service Environment to a single endpoint. </summary>
     public partial class OutboundEndpointDetail
     {
-        /// <summary> Initializes a new instance of OutboundEndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundEndpointDetail"/>. </summary>
         internal OutboundEndpointDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of OutboundEndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundEndpointDetail"/>. </summary>
         /// <param name="ipAddress"> An IP Address that Domain Name currently resolves to. </param>
         /// <param name="port"> The port an endpoint is connected to. </param>
         /// <param name="latencyInMs"> The time in milliseconds it takes for a TCP connection to be created from the App Service Environment to this IpAddress at this Port. </param>

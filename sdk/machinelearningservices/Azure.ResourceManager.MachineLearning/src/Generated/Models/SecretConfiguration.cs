@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Secret Configuration definition. </summary>
     public partial class SecretConfiguration
     {
-        /// <summary> Initializes a new instance of SecretConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretConfiguration"/>. </summary>
         public SecretConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of SecretConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretConfiguration"/>. </summary>
         /// <param name="uri">
         /// Secret Uri.
         /// Sample Uri : https://myvault.vault.azure.net/secrets/mysecretname/secretversion

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> ConsoleList represents a list of virtual machine consoles. </summary>
     internal partial class ConsoleList
     {
-        /// <summary> Initializes a new instance of ConsoleList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsoleList"/>. </summary>
         internal ConsoleList()
         {
             Value = new ChangeTrackingList<NetworkCloudVirtualMachineConsoleData>();
         }
 
-        /// <summary> Initializes a new instance of ConsoleList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsoleList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of virtual machine consoles. </param>
         internal ConsoleList(string nextLink, IReadOnlyList<NetworkCloudVirtualMachineConsoleData> value)

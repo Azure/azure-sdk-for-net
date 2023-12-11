@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListFirewallPolicyRuleCollectionGroups API service call. </summary>
     internal partial class FirewallPolicyRuleCollectionGroupListResult
     {
-        /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleCollectionGroupListResult"/>. </summary>
         internal FirewallPolicyRuleCollectionGroupListResult()
         {
             Value = new ChangeTrackingList<FirewallPolicyRuleCollectionGroupData>();
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleCollectionGroupListResult"/>. </summary>
         /// <param name="value"> List of FirewallPolicyRuleCollectionGroups in a FirewallPolicy. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         internal FirewallPolicyRuleCollectionGroupListResult(IReadOnlyList<FirewallPolicyRuleCollectionGroupData> value, string nextLink)

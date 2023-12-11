@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Information about the formal API definition for the app. </summary>
     internal partial class AppServiceApiDefinitionInfo
     {
-        /// <summary> Initializes a new instance of AppServiceApiDefinitionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceApiDefinitionInfo"/>. </summary>
         public AppServiceApiDefinitionInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceApiDefinitionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceApiDefinitionInfo"/>. </summary>
         /// <param name="uri"> The URL of the API definition. </param>
         internal AppServiceApiDefinitionInfo(Uri uri)
         {

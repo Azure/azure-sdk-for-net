@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> A notification hub that has been linked to the communication service. </summary>
     public partial class LinkedNotificationHub
     {
-        /// <summary> Initializes a new instance of LinkedNotificationHub. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedNotificationHub"/>. </summary>
         internal LinkedNotificationHub()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkedNotificationHub. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedNotificationHub"/>. </summary>
         /// <param name="resourceId"> The resource ID of the notification hub. </param>
         internal LinkedNotificationHub(ResourceIdentifier resourceId)
         {

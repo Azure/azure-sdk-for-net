@@ -13,10 +13,19 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Parameters for updating an Storage sync service. </summary>
     public partial class StorageSyncServicePatch
     {
-        /// <summary> Initializes a new instance of StorageSyncServicePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServicePatch"/>. </summary>
         public StorageSyncServicePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServicePatch"/>. </summary>
+        /// <param name="tags"> The user-specified tags associated with the storage sync service. </param>
+        /// <param name="incomingTrafficPolicy"> Incoming Traffic Policy. </param>
+        internal StorageSyncServicePatch(IDictionary<string, string> tags, IncomingTrafficPolicy? incomingTrafficPolicy)
+        {
+            Tags = tags;
+            IncomingTrafficPolicy = incomingTrafficPolicy;
         }
 
         /// <summary> The user-specified tags associated with the storage sync service. </summary>

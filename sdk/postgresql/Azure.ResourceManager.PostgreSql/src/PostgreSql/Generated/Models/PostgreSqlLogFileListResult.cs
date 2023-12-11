@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> A list of log files. </summary>
     internal partial class PostgreSqlLogFileListResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlLogFileListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlLogFileListResult"/>. </summary>
         internal PostgreSqlLogFileListResult()
         {
             Value = new ChangeTrackingList<PostgreSqlLogFile>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlLogFileListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlLogFileListResult"/>. </summary>
         /// <param name="value"> The list of log files. </param>
         internal PostgreSqlLogFileListResult(IReadOnlyList<PostgreSqlLogFile> value)
         {

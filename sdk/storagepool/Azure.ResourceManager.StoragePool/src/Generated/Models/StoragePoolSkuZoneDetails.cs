@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Describes The zonal capabilities of a SKU. </summary>
     public partial class StoragePoolSkuZoneDetails
     {
-        /// <summary> Initializes a new instance of StoragePoolSkuZoneDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePoolSkuZoneDetails"/>. </summary>
         internal StoragePoolSkuZoneDetails()
         {
             Name = new ChangeTrackingList<string>();
             Capabilities = new ChangeTrackingList<StoragePoolSkuCapability>();
         }
 
-        /// <summary> Initializes a new instance of StoragePoolSkuZoneDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePoolSkuZoneDetails"/>. </summary>
         /// <param name="name"> The set of zones that the SKU is available in with the specified capabilities. </param>
         /// <param name="capabilities"> A list of capabilities that are available for the SKU in the specified list of zones. </param>
         internal StoragePoolSkuZoneDetails(IReadOnlyList<string> name, IReadOnlyList<StoragePoolSkuCapability> capabilities)

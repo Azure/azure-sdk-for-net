@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Network
         private readonly VirtualApplianceSitesRestOperations _virtualApplianceSiteRestClient;
         private readonly VirtualApplianceSiteData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/networkVirtualAppliances/virtualApplianceSites";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualApplianceSiteResource"/> class for mocking. </summary>
         protected VirtualApplianceSiteResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/networkVirtualAppliances/virtualApplianceSites";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Analysis.Models
     /// <summary> The gateway details. </summary>
     public partial class AnalysisGatewayDetails
     {
-        /// <summary> Initializes a new instance of AnalysisGatewayDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisGatewayDetails"/>. </summary>
         public AnalysisGatewayDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of AnalysisGatewayDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisGatewayDetails"/>. </summary>
         /// <param name="gatewayResourceId"> Gateway resource to be associated with the server. </param>
         /// <param name="gatewayObjectId"> Gateway object id from in the DMTS cluster for the gateway resource. </param>
         /// <param name="dmtsClusterUri"> Uri of the DMTS cluster. </param>

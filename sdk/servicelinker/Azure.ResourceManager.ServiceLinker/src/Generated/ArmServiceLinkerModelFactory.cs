@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmServiceLinkerModelFactory
     {
-        /// <summary> Initializes a new instance of LinkerResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceLinker.LinkerResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             return new LinkerResourceData(id, name, resourceType, systemData, targetService, authInfo, clientType, provisioningState, solutionType != null ? new VnetSolution(solutionType) : null, secretStoreKeyVaultId != null ? new LinkerSecretStore(secretStoreKeyVaultId) : null, scope);
         }
 
-        /// <summary> Initializes a new instance of LinkerValidateOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LinkerValidateOperationResult"/>. </summary>
         /// <param name="resourceId"> Validated linker id. </param>
         /// <param name="status"> Validation operation status. </param>
         /// <param name="linkerName"> The linker name. </param>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             return new LinkerValidateOperationResult(resourceId, status, linkerName, isConnectionAvailable, reportStartOn, reportEndOn, sourceId, targetId, authType, validationDetail?.ToList());
         }
 
-        /// <summary> Initializes a new instance of LinkerValidationResultItemInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LinkerValidationResultItemInfo"/>. </summary>
         /// <param name="name"> The validation item name. </param>
         /// <param name="description"> The display name of validation item. </param>
         /// <param name="result"> The result of validation. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             return new LinkerValidationResultItemInfo(name, description, result, errorMessage, errorCode);
         }
 
-        /// <summary> Initializes a new instance of SourceConfigurationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SourceConfigurationResult"/>. </summary>
         /// <param name="configurations"> The configuration properties for source resource. </param>
         /// <returns> A new <see cref="Models.SourceConfigurationResult"/> instance for mocking. </returns>
         public static SourceConfigurationResult SourceConfigurationResult(IEnumerable<SourceConfiguration> configurations = null)
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             return new SourceConfigurationResult(configurations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SourceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SourceConfiguration"/>. </summary>
         /// <param name="name"> The name of setting. </param>
         /// <param name="value"> The value of setting. </param>
         /// <returns> A new <see cref="Models.SourceConfiguration"/> instance for mocking. </returns>

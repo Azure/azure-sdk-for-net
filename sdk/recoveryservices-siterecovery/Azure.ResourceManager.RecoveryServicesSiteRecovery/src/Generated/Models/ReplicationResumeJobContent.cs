@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Resume job params. </summary>
     public partial class ReplicationResumeJobContent
     {
-        /// <summary> Initializes a new instance of ReplicationResumeJobContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationResumeJobContent"/>. </summary>
         public ReplicationResumeJobContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationResumeJobContent"/>. </summary>
+        /// <param name="properties"> Resume job properties. </param>
+        internal ReplicationResumeJobContent(ReplicationResumeJobProperties properties)
+        {
+            Properties = properties;
         }
 
         /// <summary> Resume job properties. </summary>

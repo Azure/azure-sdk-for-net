@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class VmInsightsOnboardingStatusData : ResourceData
     {
-        /// <summary> Initializes a new instance of VmInsightsOnboardingStatusData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmInsightsOnboardingStatusData"/>. </summary>
         internal VmInsightsOnboardingStatusData()
         {
             Data = new ChangeTrackingList<DataContainer>();
         }
 
-        /// <summary> Initializes a new instance of VmInsightsOnboardingStatusData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmInsightsOnboardingStatusData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

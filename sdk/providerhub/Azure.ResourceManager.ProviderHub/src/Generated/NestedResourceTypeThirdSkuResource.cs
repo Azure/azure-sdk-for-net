@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.ProviderHub
         private readonly SkusRestOperations _nestedResourceTypeThirdSkuSkusRestClient;
         private readonly ResourceTypeSkuData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ProviderHub/providerRegistrations/resourcetypeRegistrations/resourcetypeRegistrations/resourcetypeRegistrations/resourcetypeRegistrations/skus";
+
         /// <summary> Initializes a new instance of the <see cref="NestedResourceTypeThirdSkuResource"/> class for mocking. </summary>
         protected NestedResourceTypeThirdSkuResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.ProviderHub
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ProviderHub/providerRegistrations/resourcetypeRegistrations/resourcetypeRegistrations/resourcetypeRegistrations/resourcetypeRegistrations/skus";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

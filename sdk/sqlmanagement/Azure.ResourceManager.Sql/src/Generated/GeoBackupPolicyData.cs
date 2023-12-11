@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class GeoBackupPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of GeoBackupPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoBackupPolicyData"/>. </summary>
         /// <param name="state"> The state of the geo backup policy. </param>
         public GeoBackupPolicyData(GeoBackupPolicyState state)
         {
             State = state;
         }
 
-        /// <summary> Initializes a new instance of GeoBackupPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoBackupPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

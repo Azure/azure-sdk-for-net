@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -66,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 }
 
                 // INITIALIZE INTERNALS
-                var manager = ManagerFactory.Instance.Get(exporterOptions);
+                var manager = new Manager(exporterOptions, new DefaultPlatform());
                 return new LiveMetricsExtractionProcessor(manager);
             });
         }

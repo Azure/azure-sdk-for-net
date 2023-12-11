@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> AML file system client information. </summary>
     public partial class AmlFileSystemClientInfo
     {
-        /// <summary> Initializes a new instance of AmlFileSystemClientInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemClientInfo"/>. </summary>
         internal AmlFileSystemClientInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AmlFileSystemClientInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemClientInfo"/>. </summary>
         /// <param name="mgsAddress"> The IPv4 address used by clients to mount the AML file system's Lustre Management Service (MGS). </param>
         /// <param name="mountCommand"> Recommended command to mount the AML file system. </param>
         /// <param name="lustreVersion"> The version of Lustre running in the AML file system. </param>

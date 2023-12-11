@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Object that describes a specific usage of the resources. </summary>
     public partial class SignalRUsage
     {
-        /// <summary> Initializes a new instance of SignalRUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRUsage"/>. </summary>
         internal SignalRUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalRUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRUsage"/>. </summary>
         /// <param name="id"> Fully qualified ARM resource id. </param>
         /// <param name="currentValue"> Current value for the usage quota. </param>
         /// <param name="limit"> The maximum permitted value for the usage quota. If there is no limit, this value will be -1. </param>

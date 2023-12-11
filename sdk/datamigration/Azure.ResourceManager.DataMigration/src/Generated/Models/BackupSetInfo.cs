@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Information of backup set. </summary>
     public partial class BackupSetInfo
     {
-        /// <summary> Initializes a new instance of BackupSetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupSetInfo"/>. </summary>
         internal BackupSetInfo()
         {
             ListOfBackupFiles = new ChangeTrackingList<BackupFileInfo>();
         }
 
-        /// <summary> Initializes a new instance of BackupSetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupSetInfo"/>. </summary>
         /// <param name="backupSetId"> Id for the set of backup files. </param>
         /// <param name="firstLsn"> First log sequence number of the backup file. </param>
         /// <param name="lastLsn"> Last log sequence number of the backup file. </param>

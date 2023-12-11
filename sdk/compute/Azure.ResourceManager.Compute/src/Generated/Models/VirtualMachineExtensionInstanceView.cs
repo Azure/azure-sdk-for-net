@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The instance view of a virtual machine extension. </summary>
     public partial class VirtualMachineExtensionInstanceView
     {
-        /// <summary> Initializes a new instance of VirtualMachineExtensionInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionInstanceView"/>. </summary>
         public VirtualMachineExtensionInstanceView()
         {
             Substatuses = new ChangeTrackingList<InstanceViewStatus>();
             Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineExtensionInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionInstanceView"/>. </summary>
         /// <param name="name"> The virtual machine extension name. </param>
         /// <param name="virtualMachineExtensionInstanceViewType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>

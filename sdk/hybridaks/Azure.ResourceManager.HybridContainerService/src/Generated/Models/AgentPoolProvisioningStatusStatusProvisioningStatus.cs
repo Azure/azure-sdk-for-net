@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Contains Provisioning errors. </summary>
     public partial class AgentPoolProvisioningStatusStatusProvisioningStatus
     {
-        /// <summary> Initializes a new instance of AgentPoolProvisioningStatusStatusProvisioningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolProvisioningStatusStatusProvisioningStatus"/>. </summary>
         public AgentPoolProvisioningStatusStatusProvisioningStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentPoolProvisioningStatusStatusProvisioningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolProvisioningStatusStatusProvisioningStatus"/>. </summary>
         /// <param name="error"></param>
         /// <param name="operationId"></param>
         /// <param name="phase"> Phase represents the current phase of cluster actuation. E.g. Pending, Running, Terminating, Failed etc. </param>

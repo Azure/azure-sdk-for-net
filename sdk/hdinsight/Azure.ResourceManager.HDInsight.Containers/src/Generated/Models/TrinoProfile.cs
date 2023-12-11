@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Trino Cluster profile. </summary>
     public partial class TrinoProfile
     {
-        /// <summary> Initializes a new instance of TrinoProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrinoProfile"/>. </summary>
         public TrinoProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of TrinoProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrinoProfile"/>. </summary>
         /// <param name="catalogOptions"> Trino cluster catalog options. </param>
         /// <param name="coordinator"> Trino Coordinator. </param>
         /// <param name="userPluginsSpec"> Trino user plugins spec. </param>

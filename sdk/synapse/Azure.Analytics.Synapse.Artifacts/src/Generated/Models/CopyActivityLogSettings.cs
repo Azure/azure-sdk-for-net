@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Settings for copy activity log. </summary>
     public partial class CopyActivityLogSettings
     {
-        /// <summary> Initializes a new instance of CopyActivityLogSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyActivityLogSettings"/>. </summary>
         public CopyActivityLogSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of CopyActivityLogSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyActivityLogSettings"/>. </summary>
         /// <param name="logLevel"> Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string). </param>
         /// <param name="enableReliableLogging"> Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean). </param>
         internal CopyActivityLogSettings(object logLevel, object enableReliableLogging)

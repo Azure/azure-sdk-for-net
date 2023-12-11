@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
     /// <summary> Just-in-time access policy setting. </summary>
     public partial class ManagedServicesJustInTimeAccessPolicy
     {
-        /// <summary> Initializes a new instance of ManagedServicesJustInTimeAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesJustInTimeAccessPolicy"/>. </summary>
         /// <param name="multiFactorAuthProvider"> The multi-factor authorization provider to be used for just-in-time access requests. </param>
         public ManagedServicesJustInTimeAccessPolicy(MultiFactorAuthProvider multiFactorAuthProvider)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             ManagedByTenantApprovers = new ChangeTrackingList<ManagedServicesEligibleApprover>();
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesJustInTimeAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesJustInTimeAccessPolicy"/>. </summary>
         /// <param name="multiFactorAuthProvider"> The multi-factor authorization provider to be used for just-in-time access requests. </param>
         /// <param name="maximumActivationDuration"> The maximum access duration in ISO 8601 format for just-in-time access requests. </param>
         /// <param name="managedByTenantApprovers"> The list of managedByTenant approvers for the eligible authorization. </param>

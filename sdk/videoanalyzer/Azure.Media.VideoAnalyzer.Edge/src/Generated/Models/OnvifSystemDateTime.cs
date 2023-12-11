@@ -10,12 +10,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The ONVIF device DNS properties. </summary>
     public partial class OnvifSystemDateTime
     {
-        /// <summary> Initializes a new instance of OnvifSystemDateTime. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnvifSystemDateTime"/>. </summary>
         public OnvifSystemDateTime()
         {
         }
 
-        /// <summary> Initializes a new instance of OnvifSystemDateTime. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnvifSystemDateTime"/>. </summary>
         /// <param name="type"> An enum value determining whether the date time was configured using NTP or manual. </param>
         /// <param name="time"> The device datetime returned when calling the request. </param>
         /// <param name="timeZone"> The timezone of the ONVIF device datetime. </param>

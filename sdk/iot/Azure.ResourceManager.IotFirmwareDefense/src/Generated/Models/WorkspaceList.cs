@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Return a list of firmware analysis workspaces. </summary>
     internal partial class WorkspaceList
     {
-        /// <summary> Initializes a new instance of WorkspaceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceList"/>. </summary>
         internal WorkspaceList()
         {
             Value = new ChangeTrackingList<FirmwareWorkspaceData>();
         }
 
-        /// <summary> Initializes a new instance of WorkspaceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceList"/>. </summary>
         /// <param name="value"> The list of firmware analysis workspaces. </param>
         /// <param name="nextLink"> The uri to fetch the next page of asset. </param>
         internal WorkspaceList(IReadOnlyList<FirmwareWorkspaceData> value, string nextLink)

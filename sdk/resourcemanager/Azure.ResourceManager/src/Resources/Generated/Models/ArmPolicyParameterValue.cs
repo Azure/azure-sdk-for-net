@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The value of a parameter. </summary>
     public partial class ArmPolicyParameterValue
     {
-        /// <summary> Initializes a new instance of ArmPolicyParameterValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmPolicyParameterValue"/>. </summary>
         public ArmPolicyParameterValue()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmPolicyParameterValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmPolicyParameterValue"/>. </summary>
         /// <param name="value"> The value of the parameter. </param>
         internal ArmPolicyParameterValue(BinaryData value)
         {

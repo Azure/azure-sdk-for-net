@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// </summary>
     public partial class ClusterHealthPolicy
     {
-        /// <summary> Initializes a new instance of ClusterHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterHealthPolicy"/>. </summary>
         public ClusterHealthPolicy()
         {
             ApplicationHealthPolicies = new ChangeTrackingDictionary<string, ApplicationHealthPolicy>();
         }
 
-        /// <summary> Initializes a new instance of ClusterHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterHealthPolicy"/>. </summary>
         /// <param name="maxPercentUnhealthyNodes">
         /// The maximum allowed percentage of unhealthy nodes before reporting an error. For example, to allow 10% of nodes to be unhealthy, this value would be 10.
         ///

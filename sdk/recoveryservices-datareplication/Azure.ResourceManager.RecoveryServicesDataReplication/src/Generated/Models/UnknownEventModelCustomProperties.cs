@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> The UnknownEventModelCustomProperties. </summary>
     internal partial class UnknownEventModelCustomProperties : EventModelCustomProperties
     {
-        /// <summary> Initializes a new instance of UnknownEventModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownEventModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         internal UnknownEventModelCustomProperties(string instanceType) : base(instanceType)
         {

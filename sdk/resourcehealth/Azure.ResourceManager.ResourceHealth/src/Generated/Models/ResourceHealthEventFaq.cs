@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Frequently asked question for the service health event. </summary>
     public partial class ResourceHealthEventFaq
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventFaq. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventFaq"/>. </summary>
         internal ResourceHealthEventFaq()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventFaq. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventFaq"/>. </summary>
         /// <param name="question"> FAQ question for the service health event. </param>
         /// <param name="answer"> FAQ answer for the service health event. </param>
         /// <param name="localeCode"> FAQ locale for the service health event. </param>

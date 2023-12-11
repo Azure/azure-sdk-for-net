@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Ingress profile for the container service cluster. </summary>
     internal partial class ManagedClusterIngressProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterIngressProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterIngressProfile"/>. </summary>
         public ManagedClusterIngressProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterIngressProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterIngressProfile"/>. </summary>
         /// <param name="webAppRouting"> Web App Routing settings for the ingress profile. </param>
         internal ManagedClusterIngressProfile(ManagedClusterIngressProfileWebAppRouting webAppRouting)
         {

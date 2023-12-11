@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Defines contents of a web application rule. </summary>
     public partial class WebApplicationFirewallCustomRule
     {
-        /// <summary> Initializes a new instance of WebApplicationFirewallCustomRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallCustomRule"/>. </summary>
         /// <param name="priority"> Priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </param>
         /// <param name="ruleType"> The rule type. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
             Action = action;
         }
 
-        /// <summary> Initializes a new instance of WebApplicationFirewallCustomRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallCustomRule"/>. </summary>
         /// <param name="name"> The name of the resource that is unique within a policy. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="priority"> Priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </param>

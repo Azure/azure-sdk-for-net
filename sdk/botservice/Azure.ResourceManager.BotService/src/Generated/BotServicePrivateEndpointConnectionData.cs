@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.BotService
     /// </summary>
     public partial class BotServicePrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of BotServicePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServicePrivateEndpointConnectionData"/>. </summary>
         public BotServicePrivateEndpointConnectionData()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BotServicePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServicePrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

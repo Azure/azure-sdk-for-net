@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan group details. </summary>
     public partial class SiteRecoveryPlanGroup
     {
-        /// <summary> Initializes a new instance of SiteRecoveryPlanGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPlanGroup"/>. </summary>
         /// <param name="groupType"> The group type. </param>
         public SiteRecoveryPlanGroup(RecoveryPlanGroupType groupType)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             EndGroupActions = new ChangeTrackingList<RecoveryPlanAction>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryPlanGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPlanGroup"/>. </summary>
         /// <param name="groupType"> The group type. </param>
         /// <param name="replicationProtectedItems"> The list of protected items. </param>
         /// <param name="startGroupActions"> The start group actions. </param>

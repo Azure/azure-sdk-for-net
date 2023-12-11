@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> A management group that is connected to a workspace. </summary>
     public partial class OperationalInsightsManagementGroup
     {
-        /// <summary> Initializes a new instance of OperationalInsightsManagementGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsManagementGroup"/>. </summary>
         internal OperationalInsightsManagementGroup()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsManagementGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsManagementGroup"/>. </summary>
         /// <param name="serverCount"> The number of servers connected to the management group. </param>
         /// <param name="isGateway"> Gets or sets a value indicating whether the management group is a gateway. </param>
         /// <param name="name"> The name of the management group. </param>

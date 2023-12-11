@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> API license information. </summary>
     public partial class ApiLicenseInformation
     {
-        /// <summary> Initializes a new instance of ApiLicenseInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiLicenseInformation"/>. </summary>
         public ApiLicenseInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiLicenseInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiLicenseInformation"/>. </summary>
         /// <param name="name"> The license name used for the API. </param>
         /// <param name="uri"> A URL to the license used for the API. MUST be in the format of a URL. </param>
         internal ApiLicenseInformation(string name, Uri uri)

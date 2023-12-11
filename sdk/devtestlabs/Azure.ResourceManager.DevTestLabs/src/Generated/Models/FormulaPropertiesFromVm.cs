@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Information about a VM from which a formula is to be created. </summary>
     internal partial class FormulaPropertiesFromVm
     {
-        /// <summary> Initializes a new instance of FormulaPropertiesFromVm. </summary>
+        /// <summary> Initializes a new instance of <see cref="FormulaPropertiesFromVm"/>. </summary>
         public FormulaPropertiesFromVm()
         {
         }
 
-        /// <summary> Initializes a new instance of FormulaPropertiesFromVm. </summary>
+        /// <summary> Initializes a new instance of <see cref="FormulaPropertiesFromVm"/>. </summary>
         /// <param name="labVmId"> The identifier of the VM from which a formula is to be created. </param>
         internal FormulaPropertiesFromVm(string labVmId)
         {

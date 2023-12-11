@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Support engineer information. </summary>
     internal partial class SupportEngineer
     {
-        /// <summary> Initializes a new instance of SupportEngineer. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportEngineer"/>. </summary>
         public SupportEngineer()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportEngineer. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportEngineer"/>. </summary>
         /// <param name="emailAddress"> Email address of the Azure Support engineer assigned to the support ticket. </param>
         internal SupportEngineer(string emailAddress)
         {

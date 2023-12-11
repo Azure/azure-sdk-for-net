@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> A list of network function definition versions. </summary>
     internal partial class NetworkFunctionDefinitionVersionListResult
     {
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionVersionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionVersionListResult"/>. </summary>
         internal NetworkFunctionDefinitionVersionListResult()
         {
             Value = new ChangeTrackingList<NetworkFunctionDefinitionVersionData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionVersionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionVersionListResult"/>. </summary>
         /// <param name="value"> A list of network function definition versions. </param>
         /// <param name="nextLink"> The URI to get the next set of results. </param>
         internal NetworkFunctionDefinitionVersionListResult(IReadOnlyList<NetworkFunctionDefinitionVersionData> value, string nextLink)

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> The role management policy enablement rule. </summary>
     public partial class RoleManagementPolicyEnablementRule : RoleManagementPolicyRule
     {
-        /// <summary> Initializes a new instance of RoleManagementPolicyEnablementRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyEnablementRule"/>. </summary>
         public RoleManagementPolicyEnablementRule()
         {
             EnablementRules = new ChangeTrackingList<RoleAssignmentEnablementRuleType>();
             RuleType = RoleManagementPolicyRuleType.RoleManagementPolicyEnablementRule;
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPolicyEnablementRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyEnablementRule"/>. </summary>
         /// <param name="id"> The id of the rule. </param>
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>

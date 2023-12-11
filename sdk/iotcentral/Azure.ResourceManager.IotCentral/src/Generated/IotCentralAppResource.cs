@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.IotCentral
         private readonly AppsRestOperations _iotCentralAppAppsRestClient;
         private readonly IotCentralAppData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.IoTCentral/iotApps";
+
         /// <summary> Initializes a new instance of the <see cref="IotCentralAppResource"/> class for mocking. </summary>
         protected IotCentralAppResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.IotCentral
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.IoTCentral/iotApps";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

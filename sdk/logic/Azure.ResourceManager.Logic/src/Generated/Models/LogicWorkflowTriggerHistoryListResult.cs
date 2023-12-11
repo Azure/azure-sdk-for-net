@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The list of workflow trigger histories. </summary>
     internal partial class LogicWorkflowTriggerHistoryListResult
     {
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerHistoryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerHistoryListResult"/>. </summary>
         internal LogicWorkflowTriggerHistoryListResult()
         {
             Value = new ChangeTrackingList<LogicWorkflowTriggerHistoryData>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerHistoryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerHistoryListResult"/>. </summary>
         /// <param name="value"> A list of workflow trigger histories. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal LogicWorkflowTriggerHistoryListResult(IReadOnlyList<LogicWorkflowTriggerHistoryData> value, string nextLink)

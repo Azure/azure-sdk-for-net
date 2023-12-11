@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The status of the wait duration. </summary>
     public partial class ContainerServiceFleetWaitStatus
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetWaitStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetWaitStatus"/>. </summary>
         internal ContainerServiceFleetWaitStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetWaitStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetWaitStatus"/>. </summary>
         /// <param name="status"> The status of the wait duration. </param>
         /// <param name="waitDurationInSeconds"> The wait duration configured in seconds. </param>
         internal ContainerServiceFleetWaitStatus(ContainerServiceFleetUpdateStatus status, int? waitDurationInSeconds)

@@ -13,13 +13,13 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Response of getting suggestions for search for time series instances. </summary>
     internal partial class InstancesSuggestResponse
     {
-        /// <summary> Initializes a new instance of InstancesSuggestResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancesSuggestResponse"/>. </summary>
         internal InstancesSuggestResponse()
         {
             Suggestions = new ChangeTrackingList<InstancesSearchStringSuggestion>();
         }
 
-        /// <summary> Initializes a new instance of InstancesSuggestResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancesSuggestResponse"/>. </summary>
         /// <param name="suggestions"> List of instance suggestions for searching time series models. </param>
         internal InstancesSuggestResponse(IReadOnlyList<InstancesSearchStringSuggestion> suggestions)
         {

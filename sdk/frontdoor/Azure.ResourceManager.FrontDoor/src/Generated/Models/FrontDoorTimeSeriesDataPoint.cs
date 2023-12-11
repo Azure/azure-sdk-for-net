@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines a timeseries datapoint used in a timeseries. </summary>
     public partial class FrontDoorTimeSeriesDataPoint
     {
-        /// <summary> Initializes a new instance of FrontDoorTimeSeriesDataPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesDataPoint"/>. </summary>
         public FrontDoorTimeSeriesDataPoint()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorTimeSeriesDataPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesDataPoint"/>. </summary>
         /// <param name="dateTimeUtc"> The DateTime of the Timeseries data point in UTC. </param>
         /// <param name="value"> The Value of the Timeseries data point. </param>
         internal FrontDoorTimeSeriesDataPoint(DateTimeOffset? dateTimeUtc, float? value)

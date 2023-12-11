@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Map of filter type and the details to filter. This field is required only if the TransferConfigurationType is given as TransferUsingFilter. </summary>
     internal partial class TransferConfigurationTransferFilterDetails
     {
-        /// <summary> Initializes a new instance of TransferConfigurationTransferFilterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransferConfigurationTransferFilterDetails"/>. </summary>
         public TransferConfigurationTransferFilterDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of TransferConfigurationTransferFilterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransferConfigurationTransferFilterDetails"/>. </summary>
         /// <param name="include"> Details of the filtering the transfer of data. </param>
         internal TransferConfigurationTransferFilterDetails(TransferFilterDetails include)
         {

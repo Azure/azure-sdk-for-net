@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Resource reference to the secret. ie. subs/rg/profile/secret. </summary>
     internal partial class FrontDoorCustomDomainHttpsContentSecret
     {
-        /// <summary> Initializes a new instance of FrontDoorCustomDomainHttpsContentSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainHttpsContentSecret"/>. </summary>
         public FrontDoorCustomDomainHttpsContentSecret()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorCustomDomainHttpsContentSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainHttpsContentSecret"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         internal FrontDoorCustomDomainHttpsContentSecret(ResourceIdentifier id)
         {

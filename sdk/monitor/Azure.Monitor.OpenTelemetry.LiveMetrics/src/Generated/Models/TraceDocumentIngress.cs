@@ -5,14 +5,26 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
     /// <summary> Trace type name. </summary>
     internal partial class TraceDocumentIngress : DocumentIngress
     {
-        /// <summary> Initializes a new instance of TraceDocumentIngress. </summary>
+        /// <summary> Initializes a new instance of <see cref="TraceDocumentIngress"/>. </summary>
         public TraceDocumentIngress()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TraceDocumentIngress"/>. </summary>
+        /// <param name="documentType"> Telemetry type. Types not defined in enum will get replaced with a 'Unknown' type. </param>
+        /// <param name="documentStreamIds"> An array of document streaming ids. Each id identifies a flow of documents customized by UX customers. </param>
+        /// <param name="properties"> Collection of custom properties. </param>
+        /// <param name="message"> Trace message. </param>
+        internal TraceDocumentIngress(DocumentIngressDocumentType? documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, string message) : base(documentType, documentStreamIds, properties)
+        {
+            Message = message;
         }
 
         /// <summary> Trace message. </summary>

@@ -10,7 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> Control document quotas for QuickPulse. </summary>
     internal partial class QuotaConfigurationInfo
     {
-        /// <summary> Initializes a new instance of QuotaConfigurationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaConfigurationInfo"/>. </summary>
         /// <param name="maxQuota"> Max quota. </param>
         /// <param name="quotaAccrualRatePerSec"> Quota accrual rate per second. </param>
         internal QuotaConfigurationInfo(float maxQuota, float quotaAccrualRatePerSec)
@@ -19,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             QuotaAccrualRatePerSec = quotaAccrualRatePerSec;
         }
 
-        /// <summary> Initializes a new instance of QuotaConfigurationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaConfigurationInfo"/>. </summary>
         /// <param name="initialQuota"> Initial quota. </param>
         /// <param name="maxQuota"> Max quota. </param>
         /// <param name="quotaAccrualRatePerSec"> Quota accrual rate per second. </param>

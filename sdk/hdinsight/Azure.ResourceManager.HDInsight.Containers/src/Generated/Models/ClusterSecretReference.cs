@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Secret reference and corresponding properties of a key vault secret. </summary>
     public partial class ClusterSecretReference
     {
-        /// <summary> Initializes a new instance of ClusterSecretReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterSecretReference"/>. </summary>
         /// <param name="referenceName"> Reference name of the secret to be used in service configs. </param>
         /// <param name="keyVaultObjectType"> Type of key vault object: secret, key or certificate. </param>
         /// <param name="keyVaultObjectName"> Object identifier name of the secret in key vault. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             KeyVaultObjectName = keyVaultObjectName;
         }
 
-        /// <summary> Initializes a new instance of ClusterSecretReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterSecretReference"/>. </summary>
         /// <param name="referenceName"> Reference name of the secret to be used in service configs. </param>
         /// <param name="keyVaultObjectType"> Type of key vault object: secret, key or certificate. </param>
         /// <param name="version"> Version of the secret in key vault. </param>

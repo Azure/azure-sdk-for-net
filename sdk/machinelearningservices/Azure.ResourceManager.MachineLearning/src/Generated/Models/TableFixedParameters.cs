@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Fixed training parameters that won't be swept over during AutoML Table training. </summary>
     public partial class TableFixedParameters
     {
-        /// <summary> Initializes a new instance of TableFixedParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableFixedParameters"/>. </summary>
         public TableFixedParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of TableFixedParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableFixedParameters"/>. </summary>
         /// <param name="booster"> Specify the boosting type, e.g gbdt for XGBoost. </param>
         /// <param name="boostingType"> Specify the boosting type, e.g gbdt for LightGBM. </param>
         /// <param name="growPolicy"> Specify the grow policy, which controls the way new nodes are added to the tree. </param>

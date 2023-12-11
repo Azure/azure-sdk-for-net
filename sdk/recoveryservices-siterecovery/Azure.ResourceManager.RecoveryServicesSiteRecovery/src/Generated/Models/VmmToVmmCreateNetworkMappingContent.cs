@@ -10,10 +10,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Create network mappings input properties/behavior specific to vmm to vmm Network mapping. </summary>
     public partial class VmmToVmmCreateNetworkMappingContent : FabricSpecificCreateNetworkMappingContent
     {
-        /// <summary> Initializes a new instance of VmmToVmmCreateNetworkMappingContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmmToVmmCreateNetworkMappingContent"/>. </summary>
         public VmmToVmmCreateNetworkMappingContent()
         {
             InstanceType = "VmmToVmm";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VmmToVmmCreateNetworkMappingContent"/>. </summary>
+        /// <param name="instanceType"> The instance type. </param>
+        internal VmmToVmmCreateNetworkMappingContent(string instanceType) : base(instanceType)
+        {
+            InstanceType = instanceType ?? "VmmToVmm";
         }
     }
 }

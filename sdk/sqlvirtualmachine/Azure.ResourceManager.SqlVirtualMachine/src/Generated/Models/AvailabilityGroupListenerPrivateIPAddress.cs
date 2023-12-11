@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> A private IP address bound to the availability group listener. </summary>
     public partial class AvailabilityGroupListenerPrivateIPAddress
     {
-        /// <summary> Initializes a new instance of AvailabilityGroupListenerPrivateIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilityGroupListenerPrivateIPAddress"/>. </summary>
         public AvailabilityGroupListenerPrivateIPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailabilityGroupListenerPrivateIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilityGroupListenerPrivateIPAddress"/>. </summary>
         /// <param name="ipAddress"> Private IP address bound to the availability group listener. </param>
         /// <param name="subnetResourceId"> Subnet used to include private IP. </param>
         internal AvailabilityGroupListenerPrivateIPAddress(IPAddress ipAddress, ResourceIdentifier subnetResourceId)

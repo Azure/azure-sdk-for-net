@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ProbeData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ProbeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProbeData"/>. </summary>
         public ProbeData()
         {
             LoadBalancingRules = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of ProbeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProbeData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

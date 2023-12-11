@@ -54,7 +54,6 @@ namespace Azure.Storage.DataMovement
         private readonly Channel<DownloadRangeEventArgs> _downloadRangeChannel;
         private CancellationToken _cancellationToken;
 
-        private readonly SemaphoreSlim _currentBytesSemaphore;
         private long _bytesTransferred;
         private readonly long _expectedLength;
 
@@ -145,7 +144,6 @@ namespace Azure.Storage.DataMovement
 
             // Set bytes transferred to the length of bytes we got back from the initial
             // download request
-            _currentBytesSemaphore = new SemaphoreSlim(1, 1);
             _bytesTransferred = currentTransferred;
             _currentRangeIndex = 0;
             _rangesCount = ranges.Count;
@@ -159,12 +157,6 @@ namespace Azure.Storage.DataMovement
         public void Dispose()
         {
             _downloadRangeChannel.Writer.TryComplete();
-
-            if (_currentBytesSemaphore != default)
-            {
-                _currentBytesSemaphore.Dispose();
-            }
-
             DisposeHandlers();
         }
 
@@ -179,7 +171,7 @@ namespace Azure.Storage.DataMovement
             {
                 if (args.Success)
                 {
-                    await _downloadRangeChannel.Writer.WriteAsync(args, _cancellationToken).ConfigureAwait(false);
+                    _downloadRangeChannel.Writer.TryWrite(args);
                 }
                 else
                 {
@@ -200,15 +192,6 @@ namespace Azure.Storage.DataMovement
                 while (await _downloadRangeChannel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
                 {
                     // Read one event argument at a time.
-                    try
-                    {
-                        await _currentBytesSemaphore.WaitAsync(_cancellationToken).ConfigureAwait(false);
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        // We should not continue if waiting on the semaphore has cancelled out.
-                        return;
-                    }
                     DownloadRangeEventArgs args = await _downloadRangeChannel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
                     long currentRangeOffset = _ranges[_currentRangeIndex].Offset;
                     if (currentRangeOffset < args.Offset)
@@ -259,17 +242,10 @@ namespace Azure.Storage.DataMovement
                         // to be copied to the file
                         throw Errors.InvalidDownloadOffset(args.Offset, args.BytesTransferred);
                     }
-                    _currentBytesSemaphore.Release();
                 }
             }
             catch (Exception ex)
             {
-                if (_currentBytesSemaphore.CurrentCount == 0)
-                {
-                    _currentBytesSemaphore.Release();
-                }
-                // Invoke the failed event argument here after we've released the semaphore
-                // or else we risk disposing the semaphore and releasing it after.
                 await InvokeFailedEvent(ex).ConfigureAwait(false);
             }
         }

@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Policy event record. </summary>
     public partial class PolicyEvent
     {
-        /// <summary> Initializes a new instance of PolicyEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyEvent"/>. </summary>
         internal PolicyEvent()
         {
             Components = new ChangeTrackingList<ComponentEventDetails>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of PolicyEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyEvent"/>. </summary>
         /// <param name="odataId"> OData entity ID; always set to null since policy event records do not have an entity ID. </param>
         /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
         /// <param name="timestamp"> Timestamp for the policy event record. </param>

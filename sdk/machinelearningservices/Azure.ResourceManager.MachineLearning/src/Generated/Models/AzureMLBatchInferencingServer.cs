@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Azure ML batch inferencing server configurations. </summary>
     public partial class AzureMLBatchInferencingServer : InferencingServer
     {
-        /// <summary> Initializes a new instance of AzureMLBatchInferencingServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLBatchInferencingServer"/>. </summary>
         public AzureMLBatchInferencingServer()
         {
             ServerType = InferencingServerType.AzureMLBatch;
         }
 
-        /// <summary> Initializes a new instance of AzureMLBatchInferencingServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLBatchInferencingServer"/>. </summary>
         /// <param name="serverType"> [Required] Inferencing server type for various targets. </param>
         /// <param name="codeConfiguration"> Code configuration for AML batch inferencing server. </param>
         internal AzureMLBatchInferencingServer(InferencingServerType serverType, MachineLearningCodeConfiguration codeConfiguration) : base(serverType)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The usage names that can be used; currently limited to StorageAccount. </summary>
     public partial class StorageUsageName
     {
-        /// <summary> Initializes a new instance of StorageUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageUsageName"/>. </summary>
         internal StorageUsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageUsageName"/>. </summary>
         /// <param name="value"> Gets a string describing the resource name. </param>
         /// <param name="localizedValue"> Gets a localized string describing the resource name. </param>
         internal StorageUsageName(string value, string localizedValue)

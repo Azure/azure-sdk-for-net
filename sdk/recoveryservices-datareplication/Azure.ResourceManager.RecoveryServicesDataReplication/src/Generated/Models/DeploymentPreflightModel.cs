@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Deployment preflight model. </summary>
     public partial class DeploymentPreflightModel
     {
-        /// <summary> Initializes a new instance of DeploymentPreflightModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentPreflightModel"/>. </summary>
         public DeploymentPreflightModel()
         {
             Resources = new ChangeTrackingList<DeploymentPreflightResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of DeploymentPreflightModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentPreflightModel"/>. </summary>
         /// <param name="resources"> Gets or sets the list of resources. </param>
         internal DeploymentPreflightModel(IList<DeploymentPreflightResourceInfo> resources)
         {

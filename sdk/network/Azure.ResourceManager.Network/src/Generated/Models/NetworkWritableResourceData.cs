@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Common resource representation. </summary>
     public partial class NetworkWritableResourceData
     {
-        /// <summary> Initializes a new instance of NetworkWritableResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkWritableResourceData"/>. </summary>
         public NetworkWritableResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkWritableResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkWritableResourceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

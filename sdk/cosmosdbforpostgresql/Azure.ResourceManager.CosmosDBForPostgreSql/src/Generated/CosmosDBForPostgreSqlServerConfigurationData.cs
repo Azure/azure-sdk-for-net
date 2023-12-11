@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     /// </summary>
     public partial class CosmosDBForPostgreSqlServerConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlServerConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlServerConfigurationData"/>. </summary>
         public CosmosDBForPostgreSqlServerConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlServerConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlServerConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

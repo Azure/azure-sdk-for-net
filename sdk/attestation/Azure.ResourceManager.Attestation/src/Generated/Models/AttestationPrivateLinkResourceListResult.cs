@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Attestation.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class AttestationPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of AttestationPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationPrivateLinkResourceListResult"/>. </summary>
         internal AttestationPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<AttestationPrivateLinkResource>();
         }
 
-        /// <summary> Initializes a new instance of AttestationPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         internal AttestationPrivateLinkResourceListResult(IReadOnlyList<AttestationPrivateLinkResource> value)
         {

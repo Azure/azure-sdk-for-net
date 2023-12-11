@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.EventGrid
         private readonly NamespacesRestOperations _eventGridNamespaceNamespacesRestClient;
         private readonly EventGridNamespaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/namespaces";
+
         /// <summary> Initializes a new instance of the <see cref="EventGridNamespaceResource"/> class for mocking. </summary>
         protected EventGridNamespaceResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/namespaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

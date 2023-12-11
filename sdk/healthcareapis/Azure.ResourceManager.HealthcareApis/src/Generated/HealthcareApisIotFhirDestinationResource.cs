@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.HealthcareApis
         private readonly IotConnectorFhirDestinationRestOperations _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient;
         private readonly HealthcareApisIotFhirDestinationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/workspaces/iotconnectors/fhirdestinations";
+
         /// <summary> Initializes a new instance of the <see cref="HealthcareApisIotFhirDestinationResource"/> class for mocking. </summary>
         protected HealthcareApisIotFhirDestinationResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.HealthcareApis
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/workspaces/iotconnectors/fhirdestinations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

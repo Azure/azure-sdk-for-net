@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly ComponentVersionsRestOperations _machineLearningComponentVersionComponentVersionsRestClient;
         private readonly MachineLearningComponentVersionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/components/versions";
+
         /// <summary> Initializes a new instance of the <see cref="MachineLearningComponentVersionResource"/> class for mocking. </summary>
         protected MachineLearningComponentVersionResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.MachineLearning
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/components/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

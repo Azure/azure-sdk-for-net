@@ -17,7 +17,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// </summary>
     public abstract partial class NamedPolygonBase
     {
-        /// <summary> Initializes a new instance of NamedPolygonBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamedPolygonBase"/>. </summary>
         /// <param name="name"> Polygon name. Must be unique within the node. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected NamedPolygonBase(string name)
@@ -27,7 +27,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of NamedPolygonBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamedPolygonBase"/>. </summary>
         /// <param name="type"> The Type discriminator for the derived types. </param>
         /// <param name="name"> Polygon name. Must be unique within the node. </param>
         internal NamedPolygonBase(string type, string name)

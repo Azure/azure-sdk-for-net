@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The BastionHostPropertiesFormatNetworkAcls. </summary>
     internal partial class BastionHostPropertiesFormatNetworkAcls
     {
-        /// <summary> Initializes a new instance of BastionHostPropertiesFormatNetworkAcls. </summary>
+        /// <summary> Initializes a new instance of <see cref="BastionHostPropertiesFormatNetworkAcls"/>. </summary>
         public BastionHostPropertiesFormatNetworkAcls()
         {
             IPRules = new ChangeTrackingList<BastionHostIPRule>();
         }
 
-        /// <summary> Initializes a new instance of BastionHostPropertiesFormatNetworkAcls. </summary>
+        /// <summary> Initializes a new instance of <see cref="BastionHostPropertiesFormatNetworkAcls"/>. </summary>
         /// <param name="ipRules"> Sets the IP ACL rules for Developer Bastion Host. </param>
         internal BastionHostPropertiesFormatNetworkAcls(IList<BastionHostIPRule> ipRules)
         {

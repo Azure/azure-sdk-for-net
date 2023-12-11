@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.HybridCompute
         private readonly ExtensionMetadataRestOperations _extensionValueExtensionMetadataRestClient;
         private readonly ExtensionValueData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridCompute/locations/publishers/extensionTypes/versions";
+
         /// <summary> Initializes a new instance of the <see cref="ExtensionValueResource"/> class for mocking. </summary>
         protected ExtensionValueResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.HybridCompute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridCompute/locations/publishers/extensionTypes/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

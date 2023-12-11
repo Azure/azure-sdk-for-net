@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Authorization
     /// </summary>
     public partial class RoleManagementPolicyAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of RoleManagementPolicyAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyAssignmentData"/>. </summary>
         public RoleManagementPolicyAssignmentData()
         {
             EffectiveRules = new ChangeTrackingList<RoleManagementPolicyRule>();
         }
 
-        /// <summary> Initializes a new instance of RoleManagementPolicyAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

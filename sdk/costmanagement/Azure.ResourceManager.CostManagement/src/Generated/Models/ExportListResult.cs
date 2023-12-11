@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Result of listing exports. It contains a list of available exports in the scope provided. </summary>
     internal partial class ExportListResult
     {
-        /// <summary> Initializes a new instance of ExportListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportListResult"/>. </summary>
         internal ExportListResult()
         {
             Value = new ChangeTrackingList<CostManagementExportData>();
         }
 
-        /// <summary> Initializes a new instance of ExportListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportListResult"/>. </summary>
         /// <param name="value"> The list of exports. </param>
         internal ExportListResult(IReadOnlyList<CostManagementExportData> value)
         {

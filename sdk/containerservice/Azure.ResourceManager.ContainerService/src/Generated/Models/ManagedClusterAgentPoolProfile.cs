@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Profile for the container service agent pool. </summary>
     public partial class ManagedClusterAgentPoolProfile : ManagedClusterAgentPoolProfileProperties
     {
-        /// <summary> Initializes a new instance of ManagedClusterAgentPoolProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAgentPoolProfile"/>. </summary>
         /// <param name="name"> Windows agent pool names must be 6 characters or less. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ManagedClusterAgentPoolProfile(string name)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterAgentPoolProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAgentPoolProfile"/>. </summary>
         /// <param name="count"> Number of agents (VMs) to host docker containers. Allowed values must be in the range of 0 to 1000 (inclusive) for user pools and in the range of 1 to 1000 (inclusive) for system pools. The default value is 1. </param>
         /// <param name="vmSize"> VM size availability varies by region. If a node contains insufficient compute resources (memory, cpu, etc) pods might fail to run correctly. For more details on restricted VM sizes, see: https://docs.microsoft.com/azure/aks/quotas-skus-regions. </param>
         /// <param name="osDiskSizeInGB"> OS Disk Size in GB to be used to specify the disk size for every machine in the master/agent pool. If you specify 0, it will apply the default osDisk size according to the vmSize specified. </param>

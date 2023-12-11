@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.SecurityInsights
         private readonly SecurityMLAnalyticsSettingsRestOperations _securityMLAnalyticsSettingRestClient;
         private readonly SecurityMLAnalyticsSettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/securityMLAnalyticsSettings";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityMLAnalyticsSettingResource"/> class for mocking. </summary>
         protected SecurityMLAnalyticsSettingResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.SecurityInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/securityMLAnalyticsSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

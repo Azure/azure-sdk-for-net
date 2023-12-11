@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Subscriptions list representation. </summary>
     internal partial class SubscriptionListResult
     {
-        /// <summary> Initializes a new instance of SubscriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionListResult"/>. </summary>
         internal SubscriptionListResult()
         {
             Value = new ChangeTrackingList<SubscriptionContractData>();
         }
 
-        /// <summary> Initializes a new instance of SubscriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

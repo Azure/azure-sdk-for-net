@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class SharedGalleryData : PirSharedGalleryResourceData
     {
-        /// <summary> Initializes a new instance of SharedGalleryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryData"/>. </summary>
         internal SharedGalleryData()
         {
         }
 
-        /// <summary> Initializes a new instance of SharedGalleryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="uniqueId"> The unique id of this shared gallery. </param>

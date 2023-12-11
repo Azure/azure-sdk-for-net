@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Automanage
     /// </summary>
     public partial class AutomanageBestPracticeData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomanageBestPracticeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomanageBestPracticeData"/>. </summary>
         internal AutomanageBestPracticeData()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomanageBestPracticeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomanageBestPracticeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

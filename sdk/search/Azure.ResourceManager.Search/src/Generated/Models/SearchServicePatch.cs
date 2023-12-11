@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> The parameters used to update an Azure Cognitive Search service. </summary>
     public partial class SearchServicePatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SearchServicePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServicePatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public SearchServicePatch(AzureLocation location) : base(location)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Search.Models
             SharedPrivateLinkResources = new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of SearchServicePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServicePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The X12 delimiter override settings. </summary>
     public partial class X12DelimiterOverrides
     {
-        /// <summary> Initializes a new instance of X12DelimiterOverrides. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12DelimiterOverrides"/>. </summary>
         /// <param name="dataElementSeparator"> The data element separator. </param>
         /// <param name="componentSeparator"> The component separator. </param>
         /// <param name="segmentTerminator"> The segment terminator. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
             ReplaceSeparatorsInPayload = replaceSeparatorsInPayload;
         }
 
-        /// <summary> Initializes a new instance of X12DelimiterOverrides. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12DelimiterOverrides"/>. </summary>
         /// <param name="protocolVersion"> The protocol version. </param>
         /// <param name="messageId"> The message id. </param>
         /// <param name="dataElementSeparator"> The data element separator. </param>

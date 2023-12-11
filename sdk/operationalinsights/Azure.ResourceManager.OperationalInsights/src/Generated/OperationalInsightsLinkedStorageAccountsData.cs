@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.OperationalInsights
     /// </summary>
     public partial class OperationalInsightsLinkedStorageAccountsData : ResourceData
     {
-        /// <summary> Initializes a new instance of OperationalInsightsLinkedStorageAccountsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsLinkedStorageAccountsData"/>. </summary>
         public OperationalInsightsLinkedStorageAccountsData()
         {
             StorageAccountIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsLinkedStorageAccountsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsLinkedStorageAccountsData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

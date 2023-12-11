@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     /// </summary>
     public partial class DataReplicationEmailConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataReplicationEmailConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationEmailConfigurationData"/>. </summary>
         /// <param name="properties"> Email configuration model properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DataReplicationEmailConfigurationData(DataReplicationEmailConfigurationProperties properties)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataReplicationEmailConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationEmailConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

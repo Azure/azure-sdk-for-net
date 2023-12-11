@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class RecoveryVirtualNetworkCustomDetails
     {
-        /// <summary> Initializes a new instance of RecoveryVirtualNetworkCustomDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryVirtualNetworkCustomDetails"/>. </summary>
         protected RecoveryVirtualNetworkCustomDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryVirtualNetworkCustomDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryVirtualNetworkCustomDetails"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
         internal RecoveryVirtualNetworkCustomDetails(string resourceType)
         {

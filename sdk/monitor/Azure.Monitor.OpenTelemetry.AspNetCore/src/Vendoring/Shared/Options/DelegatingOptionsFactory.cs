@@ -40,8 +40,8 @@ namespace Microsoft.Extensions.Options
         /// <summary>
         /// Initializes a new instance with the specified options configurations.
         /// </summary>
-        /// <param name="optionsFactoryFunc"></param>
-        /// <param name="configuration"></param>
+        /// <param name="optionsFactoryFunc">Factory delegate used to create <typeparamref name="TOptions"/> instances.</param>
+        /// <param name="configuration"><see cref="IConfiguration"/>.</param>
         /// <param name="setups">The configuration actions to run.</param>
         /// <param name="postConfigures">The initialization actions to run.</param>
         /// <param name="validations">The validations to run.</param>

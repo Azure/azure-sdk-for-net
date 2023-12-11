@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkTapData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkTapData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTapData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="networkPacketBrokerId"> ARM resource ID of the Network Packet Broker. </param>
         /// <param name="destinations"> List of destinations to send the filter traffic. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Destinations = destinations.ToList();
         }
 
-        /// <summary> Initializes a new instance of NetworkTapData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTapData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

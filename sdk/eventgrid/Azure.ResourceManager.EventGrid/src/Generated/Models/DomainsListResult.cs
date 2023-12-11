@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Result of the List Domains operation. </summary>
     internal partial class DomainsListResult
     {
-        /// <summary> Initializes a new instance of DomainsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainsListResult"/>. </summary>
         internal DomainsListResult()
         {
             Value = new ChangeTrackingList<EventGridDomainData>();
         }
 
-        /// <summary> Initializes a new instance of DomainsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainsListResult"/>. </summary>
         /// <param name="value"> A collection of Domains. </param>
         /// <param name="nextLink"> A link for the next page of domains. </param>
         internal DomainsListResult(IReadOnlyList<EventGridDomainData> value, string nextLink)

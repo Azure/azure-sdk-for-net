@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Identity attributes of a lab user. </summary>
     public partial class DevTestLabUserIdentity
     {
-        /// <summary> Initializes a new instance of DevTestLabUserIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabUserIdentity"/>. </summary>
         public DevTestLabUserIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabUserIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabUserIdentity"/>. </summary>
         /// <param name="principalName"> Set to the principal name / UPN of the client JWT making the request. </param>
         /// <param name="principalId"> Set to the principal Id of the client JWT making the request. Service principal will not have the principal Id. </param>
         /// <param name="tenantId"> Set to the tenant ID of the client JWT making the request. </param>

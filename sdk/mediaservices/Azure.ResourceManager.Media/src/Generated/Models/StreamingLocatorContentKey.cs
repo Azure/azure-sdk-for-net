@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Class for content key in Streaming Locator. </summary>
     public partial class StreamingLocatorContentKey
     {
-        /// <summary> Initializes a new instance of StreamingLocatorContentKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingLocatorContentKey"/>. </summary>
         /// <param name="id"> ID of Content Key. </param>
         public StreamingLocatorContentKey(Guid id)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             Tracks = new ChangeTrackingList<MediaTrackSelection>();
         }
 
-        /// <summary> Initializes a new instance of StreamingLocatorContentKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingLocatorContentKey"/>. </summary>
         /// <param name="id"> ID of Content Key. </param>
         /// <param name="keyType"> Encryption type of Content Key. </param>
         /// <param name="labelReferenceInStreamingPolicy"> Label of Content Key as specified in the Streaming Policy. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Cross-Origin-Resource-Sharing policy. </summary>
     public partial class ContainerAppCorsPolicy
     {
-        /// <summary> Initializes a new instance of ContainerAppCorsPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCorsPolicy"/>. </summary>
         /// <param name="allowedOrigins"> Specifies the content for the access-control-allow-origins header. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allowedOrigins"/> is null. </exception>
         public ContainerAppCorsPolicy(IEnumerable<string> allowedOrigins)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             ExposeHeaders = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCorsPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCorsPolicy"/>. </summary>
         /// <param name="allowedOrigins"> Specifies the content for the access-control-allow-origins header. </param>
         /// <param name="allowedMethods"> Specifies the content for the access-control-allow-methods header. </param>
         /// <param name="allowedHeaders"> Specifies the content for the access-control-allow-headers header. </param>

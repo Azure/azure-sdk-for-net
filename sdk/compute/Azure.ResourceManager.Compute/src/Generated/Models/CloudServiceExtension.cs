@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a cloud service Extension. </summary>
     public partial class CloudServiceExtension
     {
-        /// <summary> Initializes a new instance of CloudServiceExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceExtension"/>. </summary>
         public CloudServiceExtension()
         {
             RolesAppliedTo = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CloudServiceExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceExtension"/>. </summary>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="cloudServiceExtensionPropertiesType"> Specifies the type of the extension. </param>

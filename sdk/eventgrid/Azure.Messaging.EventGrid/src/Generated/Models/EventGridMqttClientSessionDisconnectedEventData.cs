@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Event data for Microsoft.EventGrid.MQTTClientSessionDisconnected event. </summary>
     public partial class EventGridMqttClientSessionDisconnectedEventData : EventGridMqttClientEventData
     {
-        /// <summary> Initializes a new instance of EventGridMqttClientSessionDisconnectedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridMqttClientSessionDisconnectedEventData"/>. </summary>
         internal EventGridMqttClientSessionDisconnectedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of EventGridMqttClientSessionDisconnectedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridMqttClientSessionDisconnectedEventData"/>. </summary>
         /// <param name="clientAuthenticationName"> Unique identifier for the MQTT client that the client presents to the service for authentication. This case-sensitive string can be up to 128 characters long, and supports UTF-8 characters. </param>
         /// <param name="clientName"> Name of the client resource in the Event Grid namespace. </param>
         /// <param name="namespaceName"> Name of the Event Grid namespace where the MQTT client was created or updated. </param>

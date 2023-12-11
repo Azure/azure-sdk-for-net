@@ -13,9 +13,19 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class SphereDevicePatch
     {
-        /// <summary> Initializes a new instance of SphereDevicePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereDevicePatch"/>. </summary>
         public SphereDevicePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SphereDevicePatch"/>. </summary>
+        /// <param name="deviceGroupId">
+        /// Device group id
+        /// Serialized Name: DeviceUpdate.properties.deviceGroupId
+        /// </param>
+        internal SphereDevicePatch(string deviceGroupId)
+        {
+            DeviceGroupId = deviceGroupId;
         }
 
         /// <summary>

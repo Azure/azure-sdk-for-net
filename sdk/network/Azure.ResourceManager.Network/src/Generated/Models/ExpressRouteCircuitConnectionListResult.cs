@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListConnections API service call retrieves all global reach connections that belongs to a Private Peering for an ExpressRouteCircuit. </summary>
     internal partial class ExpressRouteCircuitConnectionListResult
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitConnectionListResult"/>. </summary>
         internal ExpressRouteCircuitConnectionListResult()
         {
             Value = new ChangeTrackingList<ExpressRouteCircuitConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitConnectionListResult"/>. </summary>
         /// <param name="value"> The global reach connection associated with Private Peering in an ExpressRoute Circuit. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal ExpressRouteCircuitConnectionListResult(IReadOnlyList<ExpressRouteCircuitConnectionData> value, string nextLink)

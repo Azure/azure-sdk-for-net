@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The properties that define a direct peering facility. </summary>
     public partial class DirectPeeringFacility
     {
-        /// <summary> Initializes a new instance of DirectPeeringFacility. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectPeeringFacility"/>. </summary>
         public DirectPeeringFacility()
         {
         }
 
-        /// <summary> Initializes a new instance of DirectPeeringFacility. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectPeeringFacility"/>. </summary>
         /// <param name="address"> The address of the direct peering facility. </param>
         /// <param name="directPeeringType"> The type of the direct peering. </param>
         /// <param name="peeringDBFacilityId"> The PeeringDB.com ID of the facility. </param>

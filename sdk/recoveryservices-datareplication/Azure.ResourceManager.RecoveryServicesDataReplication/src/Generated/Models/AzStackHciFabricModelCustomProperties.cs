@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> AzStackHCI fabric model custom properties. </summary>
     public partial class AzStackHciFabricModelCustomProperties : FabricModelCustomProperties
     {
-        /// <summary> Initializes a new instance of AzStackHciFabricModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzStackHciFabricModelCustomProperties"/>. </summary>
         /// <param name="azStackHciSiteId"> Gets or sets the ARM Id of the AzStackHCI site. </param>
         /// <param name="cluster"> AzStackHCI cluster properties. </param>
         /// <param name="migrationSolutionId"> Gets or sets the Migration solution ARM Id. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             InstanceType = "AzStackHCI";
         }
 
-        /// <summary> Initializes a new instance of AzStackHciFabricModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzStackHciFabricModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="azStackHciSiteId"> Gets or sets the ARM Id of the AzStackHCI site. </param>
         /// <param name="applianceName"> Gets or sets the Appliance name. </param>

@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Logic
         private readonly IntegrationAccountCertificatesRestOperations _integrationAccountCertificateRestClient;
         private readonly IntegrationAccountCertificateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Logic/integrationAccounts/certificates";
+
         /// <summary> Initializes a new instance of the <see cref="IntegrationAccountCertificateResource"/> class for mocking. </summary>
         protected IntegrationAccountCertificateResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Logic
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Logic/integrationAccounts/certificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// </summary>
     public partial class ContainerRegistryTaskRunData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTaskRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskRunData"/>. </summary>
         public ContainerRegistryTaskRunData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTaskRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskRunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

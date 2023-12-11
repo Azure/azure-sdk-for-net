@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The Defender for DevOps for Github offering. </summary>
     public partial class DefenderForDevOpsGithubOffering : SecurityCenterCloudOffering
     {
-        /// <summary> Initializes a new instance of DefenderForDevOpsGithubOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForDevOpsGithubOffering"/>. </summary>
         public DefenderForDevOpsGithubOffering()
         {
             OfferingType = OfferingType.DefenderForDevOpsGithub;
         }
 
-        /// <summary> Initializes a new instance of DefenderForDevOpsGithubOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForDevOpsGithubOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
         internal DefenderForDevOpsGithubOffering(OfferingType offeringType, string description) : base(offeringType, description)

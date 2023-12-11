@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Network Status details. </summary>
     public partial class NetworkStatusContract
     {
-        /// <summary> Initializes a new instance of NetworkStatusContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkStatusContract"/>. </summary>
         /// <param name="dnsServers"> Gets the list of DNS servers IPV4 addresses. </param>
         /// <param name="connectivityStatus"> Gets the list of Connectivity Status to the Resources on which the service depends upon. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServers"/> or <paramref name="connectivityStatus"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ConnectivityStatus = connectivityStatus.ToList();
         }
 
-        /// <summary> Initializes a new instance of NetworkStatusContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkStatusContract"/>. </summary>
         /// <param name="dnsServers"> Gets the list of DNS servers IPV4 addresses. </param>
         /// <param name="connectivityStatus"> Gets the list of Connectivity Status to the Resources on which the service depends upon. </param>
         internal NetworkStatusContract(IReadOnlyList<string> dnsServers, IReadOnlyList<ConnectivityStatusContract> connectivityStatus)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> CIDR Ip address. </summary>
     public partial class CidrIPAddress
     {
-        /// <summary> Initializes a new instance of CidrIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="CidrIPAddress"/>. </summary>
         public CidrIPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of CidrIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="CidrIPAddress"/>. </summary>
         /// <param name="baseIPAddress"> Ip address itself. </param>
         /// <param name="prefixLength"> The length of the prefix of the ip address. </param>
         internal CidrIPAddress(string baseIPAddress, int? prefixLength)

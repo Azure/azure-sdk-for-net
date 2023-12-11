@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Storage
         private readonly FileSharesRestOperations _fileShareRestClient;
         private readonly FileShareData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/fileServices/shares";
+
         /// <summary> Initializes a new instance of the <see cref="FileShareResource"/> class for mocking. </summary>
         protected FileShareResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Storage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/fileServices/shares";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="deletedShare"> The DeletedShare to use. </param>
+        /// <param name="deletedShare"> The <see cref="DeletedShare"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedShare"/> is null. </exception>
         public virtual async Task<Response> RestoreAsync(DeletedShare deletedShare, CancellationToken cancellationToken = default)
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="deletedShare"> The DeletedShare to use. </param>
+        /// <param name="deletedShare"> The <see cref="DeletedShare"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedShare"/> is null. </exception>
         public virtual Response Restore(DeletedShare deletedShare, CancellationToken cancellationToken = default)

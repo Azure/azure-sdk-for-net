@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Live event preview settings. </summary>
     public partial class LiveEventPreview
     {
-        /// <summary> Initializes a new instance of LiveEventPreview. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveEventPreview"/>. </summary>
         public LiveEventPreview()
         {
             Endpoints = new ChangeTrackingList<LiveEventEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of LiveEventPreview. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveEventPreview"/>. </summary>
         /// <param name="endpoints"> The endpoints for preview. Do not share the preview URL with the live event audience. </param>
         /// <param name="accessControl"> The access control for live event preview. </param>
         /// <param name="previewLocator"> The identifier of the preview locator in Guid format. Specifying this at creation time allows the caller to know the preview locator url before the event is created. If omitted, the service will generate a random identifier. This value cannot be updated once the live event is created. </param>

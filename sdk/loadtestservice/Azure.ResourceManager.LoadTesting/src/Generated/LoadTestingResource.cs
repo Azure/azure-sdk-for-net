@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.LoadTesting
         private readonly LoadTestsRestOperations _loadTestingResourceLoadTestsRestClient;
         private readonly LoadTestingResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.LoadTestService/loadTests";
+
         /// <summary> Initializes a new instance of the <see cref="LoadTestingResource"/> class for mocking. </summary>
         protected LoadTestingResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.LoadTesting
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.LoadTestService/loadTests";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

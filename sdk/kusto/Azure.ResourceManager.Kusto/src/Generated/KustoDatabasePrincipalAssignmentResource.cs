@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Kusto
         private readonly DatabasePrincipalAssignmentsRestOperations _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient;
         private readonly KustoDatabasePrincipalAssignmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters/databases/principalAssignments";
+
         /// <summary> Initializes a new instance of the <see cref="KustoDatabasePrincipalAssignmentResource"/> class for mocking. </summary>
         protected KustoDatabasePrincipalAssignmentResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Kusto
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters/databases/principalAssignments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

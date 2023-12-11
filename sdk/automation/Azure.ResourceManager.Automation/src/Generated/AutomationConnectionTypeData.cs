@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class AutomationConnectionTypeData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomationConnectionTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionTypeData"/>. </summary>
         internal AutomationConnectionTypeData()
         {
             FieldDefinitions = new ChangeTrackingDictionary<string, AutomationConnectionFieldDefinition>();
         }
 
-        /// <summary> Initializes a new instance of AutomationConnectionTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionTypeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

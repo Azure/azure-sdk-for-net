@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Result of the List event subscriptions operation. </summary>
     internal partial class SubscriptionsListResult
     {
-        /// <summary> Initializes a new instance of SubscriptionsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionsListResult"/>. </summary>
         internal SubscriptionsListResult()
         {
             Value = new ChangeTrackingList<NamespaceTopicEventSubscriptionData>();
         }
 
-        /// <summary> Initializes a new instance of SubscriptionsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionsListResult"/>. </summary>
         /// <param name="value"> A collection of Subscriptions. </param>
         /// <param name="nextLink"> A link for the next page of event subscriptions. </param>
         internal SubscriptionsListResult(IReadOnlyList<NamespaceTopicEventSubscriptionData> value, string nextLink)

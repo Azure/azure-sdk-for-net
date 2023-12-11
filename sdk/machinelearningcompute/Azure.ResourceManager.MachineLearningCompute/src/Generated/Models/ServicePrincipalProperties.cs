@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     /// <summary> The Azure service principal used by Kubernetes for configuring load balancers. </summary>
     public partial class ServicePrincipalProperties
     {
-        /// <summary> Initializes a new instance of ServicePrincipalProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalProperties"/>. </summary>
         /// <param name="clientId"> The service principal client ID. </param>
         /// <param name="secret"> The service principal secret. This is not returned in response of GET/PUT on the resource. To see this please call listKeys. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> or <paramref name="secret"/> is null. </exception>

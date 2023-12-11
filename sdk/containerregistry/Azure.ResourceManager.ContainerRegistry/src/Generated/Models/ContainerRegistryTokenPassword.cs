@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The password that will be used for authenticating the token of a container registry. </summary>
     public partial class ContainerRegistryTokenPassword
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTokenPassword. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenPassword"/>. </summary>
         public ContainerRegistryTokenPassword()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTokenPassword. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenPassword"/>. </summary>
         /// <param name="createdOn"> The creation datetime of the password. </param>
         /// <param name="expireOn"> The expiry datetime of the password. </param>
         /// <param name="name"> The password name "password1" or "password2". </param>

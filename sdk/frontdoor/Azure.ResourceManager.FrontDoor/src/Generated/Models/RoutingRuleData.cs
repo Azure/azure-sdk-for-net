@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> A routing rule represents a specification for traffic to treat and where to send it, along with health probe information. </summary>
     public partial class RoutingRuleData : FrontDoorResourceData
     {
-        /// <summary> Initializes a new instance of RoutingRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingRuleData"/>. </summary>
         public RoutingRuleData()
         {
             FrontendEndpoints = new ChangeTrackingList<WritableSubResource>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             PatternsToMatch = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RoutingRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

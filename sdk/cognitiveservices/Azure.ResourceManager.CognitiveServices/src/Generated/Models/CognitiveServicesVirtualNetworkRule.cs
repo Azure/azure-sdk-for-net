@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> A rule governing the accessibility from a specific virtual network. </summary>
     public partial class CognitiveServicesVirtualNetworkRule
     {
-        /// <summary> Initializes a new instance of CognitiveServicesVirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesVirtualNetworkRule"/>. </summary>
         /// <param name="id"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public CognitiveServicesVirtualNetworkRule(ResourceIdentifier id)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesVirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesVirtualNetworkRule"/>. </summary>
         /// <param name="id"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
         /// <param name="state"> Gets the state of virtual network rule. </param>
         /// <param name="ignoreMissingVnetServiceEndpoint"> Ignore missing vnet service endpoint or not. </param>

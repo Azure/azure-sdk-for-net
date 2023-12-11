@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Eligible child resources list operation result. </summary>
     internal partial class EligibleChildResourcesListResult
     {
-        /// <summary> Initializes a new instance of EligibleChildResourcesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EligibleChildResourcesListResult"/>. </summary>
         internal EligibleChildResourcesListResult()
         {
             Value = new ChangeTrackingList<EligibleChildResource>();
         }
 
-        /// <summary> Initializes a new instance of EligibleChildResourcesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EligibleChildResourcesListResult"/>. </summary>
         /// <param name="value"> Eligible child resource list. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal EligibleChildResourcesListResult(IReadOnlyList<EligibleChildResource> value, string nextLink)

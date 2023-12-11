@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The UnknownFactoryRepoConfiguration. </summary>
     internal partial class UnknownFactoryRepoConfiguration : FactoryRepoConfiguration
     {
-        /// <summary> Initializes a new instance of UnknownFactoryRepoConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownFactoryRepoConfiguration"/>. </summary>
         /// <param name="factoryRepoConfigurationType"> Type of repo configuration. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="repositoryName"> Repository name. </param>

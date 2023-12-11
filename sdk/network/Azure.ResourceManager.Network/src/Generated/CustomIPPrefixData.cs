@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class CustomIPPrefixData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of CustomIPPrefixData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomIPPrefixData"/>. </summary>
         public CustomIPPrefixData()
         {
             Zones = new ChangeTrackingList<string>();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
             PublicIPPrefixes = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of CustomIPPrefixData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomIPPrefixData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class RestorePointData : ResourceData
     {
-        /// <summary> Initializes a new instance of RestorePointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointData"/>. </summary>
         public RestorePointData()
         {
             ExcludeDisks = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of RestorePointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

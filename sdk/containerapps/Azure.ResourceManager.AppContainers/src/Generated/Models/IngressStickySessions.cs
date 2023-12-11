@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Sticky Sessions for Single Revision Mode. </summary>
     internal partial class IngressStickySessions
     {
-        /// <summary> Initializes a new instance of IngressStickySessions. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngressStickySessions"/>. </summary>
         public IngressStickySessions()
         {
         }
 
-        /// <summary> Initializes a new instance of IngressStickySessions. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngressStickySessions"/>. </summary>
         /// <param name="affinity"> Sticky Session Affinity. </param>
         internal IngressStickySessions(Affinity? affinity)
         {

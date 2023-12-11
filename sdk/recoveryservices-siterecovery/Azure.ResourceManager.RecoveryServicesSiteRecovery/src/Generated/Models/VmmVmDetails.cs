@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMM fabric provider specific VM settings. </summary>
     public partial class VmmVmDetails : HyperVVmDetails
     {
-        /// <summary> Initializes a new instance of VmmVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmmVmDetails"/>. </summary>
         internal VmmVmDetails()
         {
             InstanceType = "VmmVirtualMachine";
         }
 
-        /// <summary> Initializes a new instance of VmmVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmmVmDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="sourceItemId"> The source id of the object. </param>
         /// <param name="generation"> The id of the object in fabric. </param>

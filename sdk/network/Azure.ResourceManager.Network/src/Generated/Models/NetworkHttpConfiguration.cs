@@ -13,11 +13,22 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> HTTP configuration of the connectivity check. </summary>
     public partial class NetworkHttpConfiguration
     {
-        /// <summary> Initializes a new instance of NetworkHttpConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkHttpConfiguration"/>. </summary>
         public NetworkHttpConfiguration()
         {
             Headers = new ChangeTrackingList<NetworkWatcherHttpHeader>();
             ValidStatusCodes = new ChangeTrackingList<int>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkHttpConfiguration"/>. </summary>
+        /// <param name="method"> HTTP method. </param>
+        /// <param name="headers"> List of HTTP headers. </param>
+        /// <param name="validStatusCodes"> Valid status codes. </param>
+        internal NetworkHttpConfiguration(NetworkWatcherHttpMethod? method, IList<NetworkWatcherHttpHeader> headers, IList<int> validStatusCodes)
+        {
+            Method = method;
+            Headers = headers;
+            ValidStatusCodes = validStatusCodes;
         }
 
         /// <summary> HTTP method. </summary>

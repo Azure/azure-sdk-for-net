@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class DataProtectionBackupRecoveryPointProperties
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupRecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRecoveryPointProperties"/>. </summary>
         protected DataProtectionBackupRecoveryPointProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupRecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRecoveryPointProperties"/>. </summary>
         /// <param name="objectType"></param>
         internal DataProtectionBackupRecoveryPointProperties(string objectType)
         {

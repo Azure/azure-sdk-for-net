@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The CosmosDBExcludedPath. </summary>
     public partial class CosmosDBExcludedPath
     {
-        /// <summary> Initializes a new instance of CosmosDBExcludedPath. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBExcludedPath"/>. </summary>
         public CosmosDBExcludedPath()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBExcludedPath. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBExcludedPath"/>. </summary>
         /// <param name="path"> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </param>
         internal CosmosDBExcludedPath(string path)
         {

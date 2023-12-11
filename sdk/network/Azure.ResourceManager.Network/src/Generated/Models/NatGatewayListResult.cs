@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListNatGateways API service call. </summary>
     internal partial class NatGatewayListResult
     {
-        /// <summary> Initializes a new instance of NatGatewayListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NatGatewayListResult"/>. </summary>
         internal NatGatewayListResult()
         {
             Value = new ChangeTrackingList<NatGatewayData>();
         }
 
-        /// <summary> Initializes a new instance of NatGatewayListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NatGatewayListResult"/>. </summary>
         /// <param name="value"> A list of Nat Gateways that exists in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal NatGatewayListResult(IReadOnlyList<NatGatewayData> value, string nextLink)

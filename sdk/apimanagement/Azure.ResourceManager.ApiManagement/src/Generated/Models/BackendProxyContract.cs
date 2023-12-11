@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Details of the Backend WebProxy Server to use in the Request to Backend. </summary>
     public partial class BackendProxyContract
     {
-        /// <summary> Initializes a new instance of BackendProxyContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendProxyContract"/>. </summary>
         /// <param name="uri"> WebProxy Server AbsoluteUri property which includes the entire URI stored in the Uri instance, including all fragments and query strings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public BackendProxyContract(Uri uri)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Uri = uri;
         }
 
-        /// <summary> Initializes a new instance of BackendProxyContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendProxyContract"/>. </summary>
         /// <param name="uri"> WebProxy Server AbsoluteUri property which includes the entire URI stored in the Uri instance, including all fragments and query strings. </param>
         /// <param name="username"> Username to connect to the WebProxy server. </param>
         /// <param name="password"> Password to connect to the WebProxy Server. </param>

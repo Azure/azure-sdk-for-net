@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Power query source. </summary>
     public partial class PowerQuerySource : DataFlowSource
     {
-        /// <summary> Initializes a new instance of PowerQuerySource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerQuerySource"/>. </summary>
         /// <param name="name"> Transformation name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PowerQuerySource(string name) : base(name)
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(name, nameof(name));
         }
 
-        /// <summary> Initializes a new instance of PowerQuerySource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerQuerySource"/>. </summary>
         /// <param name="name"> Transformation name. </param>
         /// <param name="description"> Transformation description. </param>
         /// <param name="dataset"> Dataset reference. </param>

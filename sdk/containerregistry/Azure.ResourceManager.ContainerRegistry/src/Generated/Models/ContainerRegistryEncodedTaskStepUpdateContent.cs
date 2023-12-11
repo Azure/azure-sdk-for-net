@@ -13,11 +13,26 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties for updating encoded task step. </summary>
     public partial class ContainerRegistryEncodedTaskStepUpdateContent : ContainerRegistryTaskStepUpdateContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryEncodedTaskStepUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncodedTaskStepUpdateContent"/>. </summary>
         public ContainerRegistryEncodedTaskStepUpdateContent()
         {
             Values = new ChangeTrackingList<ContainerRegistryTaskOverridableValue>();
             StepType = ContainerRegistryTaskStepType.EncodedTask;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncodedTaskStepUpdateContent"/>. </summary>
+        /// <param name="stepType"> The type of the step. </param>
+        /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
+        /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
+        /// <param name="encodedTaskContent"> Base64 encoded value of the template/definition file content. </param>
+        /// <param name="encodedValuesContent"> Base64 encoded value of the parameters/values file content. </param>
+        /// <param name="values"> The collection of overridable values that can be passed when running a task. </param>
+        internal ContainerRegistryEncodedTaskStepUpdateContent(ContainerRegistryTaskStepType stepType, string contextPath, string contextAccessToken, string encodedTaskContent, string encodedValuesContent, IList<ContainerRegistryTaskOverridableValue> values) : base(stepType, contextPath, contextAccessToken)
+        {
+            EncodedTaskContent = encodedTaskContent;
+            EncodedValuesContent = encodedValuesContent;
+            Values = values;
+            StepType = stepType;
         }
 
         /// <summary> Base64 encoded value of the template/definition file content. </summary>

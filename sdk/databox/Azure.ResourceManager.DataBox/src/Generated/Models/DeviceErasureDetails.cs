@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Device erasure details with erasure completion status and erasureordestructionlog sas key. </summary>
     public partial class DeviceErasureDetails
     {
-        /// <summary> Initializes a new instance of DeviceErasureDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceErasureDetails"/>. </summary>
         internal DeviceErasureDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceErasureDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceErasureDetails"/>. </summary>
         /// <param name="deviceErasureStatus"> Holds the device erasure completion status. </param>
         /// <param name="erasureOrDestructionCertificateSasKey"> Shared access key to download cleanup or destruction certificate for device. </param>
         internal DeviceErasureDetails(DataBoxStageStatus? deviceErasureStatus, string erasureOrDestructionCertificateSasKey)

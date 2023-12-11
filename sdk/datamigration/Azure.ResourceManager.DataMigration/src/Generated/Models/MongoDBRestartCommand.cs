@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the command that restarts a migration in whole or in part. </summary>
     public partial class MongoDBRestartCommand : CommandProperties
     {
-        /// <summary> Initializes a new instance of MongoDBRestartCommand. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBRestartCommand"/>. </summary>
         public MongoDBRestartCommand()
         {
             CommandType = CommandType.Restart;
         }
 
-        /// <summary> Initializes a new instance of MongoDBRestartCommand. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBRestartCommand"/>. </summary>
         /// <param name="commandType"> Command type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>

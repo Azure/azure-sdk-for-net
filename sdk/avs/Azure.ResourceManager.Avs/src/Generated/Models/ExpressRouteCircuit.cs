@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> An ExpressRoute Circuit. </summary>
     public partial class ExpressRouteCircuit
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuit. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuit"/>. </summary>
         public ExpressRouteCircuit()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuit. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuit"/>. </summary>
         /// <param name="primarySubnet"> CIDR of primary subnet. </param>
         /// <param name="secondarySubnet"> CIDR of secondary subnet. </param>
         /// <param name="expressRouteId"> Identifier of the ExpressRoute Circuit (Microsoft Colo only). </param>

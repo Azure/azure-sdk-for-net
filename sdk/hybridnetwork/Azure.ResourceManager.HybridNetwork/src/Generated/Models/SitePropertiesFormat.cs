@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Site properties. </summary>
     public partial class SitePropertiesFormat
     {
-        /// <summary> Initializes a new instance of SitePropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="SitePropertiesFormat"/>. </summary>
         public SitePropertiesFormat()
         {
             Nfvis = new ChangeTrackingList<NFVIs>();
             SiteNetworkServiceReferences = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of SitePropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="SitePropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the site resource. **TODO**: Confirm if this is needed. </param>
         /// <param name="nfvis">
         /// List of NFVIs

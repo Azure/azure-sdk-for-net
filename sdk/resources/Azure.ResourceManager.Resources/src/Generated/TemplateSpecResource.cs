@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Resources
         private readonly TemplateSpecsRestOperations _templateSpecRestClient;
         private readonly TemplateSpecData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/templateSpecs";
+
         /// <summary> Initializes a new instance of the <see cref="TemplateSpecResource"/> class for mocking. </summary>
         protected TemplateSpecResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/templateSpecs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

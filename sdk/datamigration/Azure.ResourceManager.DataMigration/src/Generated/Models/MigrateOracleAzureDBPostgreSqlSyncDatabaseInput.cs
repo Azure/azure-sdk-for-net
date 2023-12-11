@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Database specific information for Oracle to Azure Database for PostgreSQL migration task inputs. </summary>
     public partial class MigrateOracleAzureDBPostgreSqlSyncDatabaseInput
     {
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncDatabaseInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBPostgreSqlSyncDatabaseInput"/>. </summary>
         public MigrateOracleAzureDBPostgreSqlSyncDatabaseInput()
         {
             TableMap = new ChangeTrackingDictionary<string, string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             TargetSetting = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncDatabaseInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBPostgreSqlSyncDatabaseInput"/>. </summary>
         /// <param name="caseManipulation"> How to handle object name casing: either Preserve or ToLower. </param>
         /// <param name="name"> Name of the migration pipeline. </param>
         /// <param name="schemaName"> Name of the source schema. </param>

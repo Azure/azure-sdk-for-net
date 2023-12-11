@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The paginated list of peering registered ASNs. </summary>
     internal partial class PeeringRegisteredAsnListResult
     {
-        /// <summary> Initializes a new instance of PeeringRegisteredAsnListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringRegisteredAsnListResult"/>. </summary>
         internal PeeringRegisteredAsnListResult()
         {
             Value = new ChangeTrackingList<PeeringRegisteredAsnData>();
         }
 
-        /// <summary> Initializes a new instance of PeeringRegisteredAsnListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringRegisteredAsnListResult"/>. </summary>
         /// <param name="value"> The list of peering registered ASNs. </param>
         /// <param name="nextLink"> The link to fetch the next page of peering registered ASNs. </param>
         internal PeeringRegisteredAsnListResult(IReadOnlyList<PeeringRegisteredAsnData> value, string nextLink)

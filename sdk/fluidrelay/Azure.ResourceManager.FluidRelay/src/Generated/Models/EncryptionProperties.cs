@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.FluidRelay.Models
     /// <summary> All encryption configuration for a resource. </summary>
     internal partial class EncryptionProperties
     {
-        /// <summary> Initializes a new instance of EncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionProperties"/>. </summary>
         public EncryptionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionProperties"/>. </summary>
         /// <param name="customerManagedKeyEncryption"> All Customer-managed key encryption properties for the resource. </param>
         internal EncryptionProperties(CmkEncryptionProperties customerManagedKeyEncryption)
         {

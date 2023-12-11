@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
     /// <summary> Describes an identity resource. </summary>
     public partial class UserAssignedIdentityPatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of UserAssignedIdentityPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserAssignedIdentityPatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public UserAssignedIdentityPatch(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of UserAssignedIdentityPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserAssignedIdentityPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementPortalDelegationSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementPortalDelegationSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPortalDelegationSettingData"/>. </summary>
         public ApiManagementPortalDelegationSettingData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementPortalDelegationSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPortalDelegationSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

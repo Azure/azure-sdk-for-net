@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppManagedEnvironmentData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppManagedEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppManagedEnvironmentData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ContainerAppManagedEnvironmentData(AzureLocation location) : base(location)
         {
             WorkloadProfiles = new ChangeTrackingList<ContainerAppWorkloadProfile>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppManagedEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppManagedEnvironmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

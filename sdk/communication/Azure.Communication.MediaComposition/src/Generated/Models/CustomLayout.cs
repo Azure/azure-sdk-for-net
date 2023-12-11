@@ -15,7 +15,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Configure custom layout. </summary>
     public partial class CustomLayout : MediaCompositionLayout
     {
-        /// <summary> Initializes a new instance of CustomLayout. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomLayout"/>. </summary>
         /// <param name="inputGroups">
         /// Configure input groups of the layout
         /// Please note <see cref="InputGroup"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -31,7 +31,7 @@ namespace Azure.Communication.MediaComposition
             Kind = LayoutType.Custom;
         }
 
-        /// <summary> Initializes a new instance of CustomLayout. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomLayout"/>. </summary>
         /// <param name="kind"> Kind of layout. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>

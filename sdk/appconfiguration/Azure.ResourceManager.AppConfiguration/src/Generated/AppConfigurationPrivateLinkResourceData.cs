@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.AppConfiguration
     /// </summary>
     public partial class AppConfigurationPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppConfigurationPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateLinkResourceData"/>. </summary>
         internal AppConfigurationPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

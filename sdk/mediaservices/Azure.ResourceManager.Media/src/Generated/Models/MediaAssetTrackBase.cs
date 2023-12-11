@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Media.Models
     /// </summary>
     public abstract partial class MediaAssetTrackBase
     {
-        /// <summary> Initializes a new instance of MediaAssetTrackBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAssetTrackBase"/>. </summary>
         protected MediaAssetTrackBase()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaAssetTrackBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAssetTrackBase"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         internal MediaAssetTrackBase(string odataType)
         {

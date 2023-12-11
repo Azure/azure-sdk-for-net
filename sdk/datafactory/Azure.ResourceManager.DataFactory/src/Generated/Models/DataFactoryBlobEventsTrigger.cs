@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Trigger that runs every time a Blob event occurs. </summary>
     public partial class DataFactoryBlobEventsTrigger : MultiplePipelineTrigger
     {
-        /// <summary> Initializes a new instance of DataFactoryBlobEventsTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryBlobEventsTrigger"/>. </summary>
         /// <param name="events"> The type of events that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Storage Account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="events"/> or <paramref name="scope"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             TriggerType = "BlobEventsTrigger";
         }
 
-        /// <summary> Initializes a new instance of DataFactoryBlobEventsTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryBlobEventsTrigger"/>. </summary>
         /// <param name="triggerType"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>

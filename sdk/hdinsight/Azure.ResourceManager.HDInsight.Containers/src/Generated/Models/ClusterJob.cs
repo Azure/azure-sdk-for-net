@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Cluster job. </summary>
     public partial class ClusterJob : ResourceData
     {
-        /// <summary> Initializes a new instance of ClusterJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterJob"/>. </summary>
         /// <param name="properties">
         /// Properties of cluster job.
         /// Please note <see cref="ClusterJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of ClusterJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterJob"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

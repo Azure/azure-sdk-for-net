@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class IotSecuritySolutionAnalyticsModelData : ResourceData
     {
-        /// <summary> Initializes a new instance of IotSecuritySolutionAnalyticsModelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelData"/>. </summary>
         public IotSecuritySolutionAnalyticsModelData()
         {
             DevicesMetrics = new ChangeTrackingList<IotSecuritySolutionAnalyticsModelDevicesMetrics>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter
             MostPrevalentDeviceRecommendations = new ChangeTrackingList<IotSecurityDeviceRecommendation>();
         }
 
-        /// <summary> Initializes a new instance of IotSecuritySolutionAnalyticsModelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

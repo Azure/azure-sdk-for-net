@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The list linked service operation response. </summary>
     internal partial class LinkedServiceListResult
     {
-        /// <summary> Initializes a new instance of LinkedServiceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedServiceListResult"/>. </summary>
         internal LinkedServiceListResult()
         {
             Value = new ChangeTrackingList<OperationalInsightsLinkedServiceData>();
         }
 
-        /// <summary> Initializes a new instance of LinkedServiceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedServiceListResult"/>. </summary>
         /// <param name="value"> The list of linked service instances. </param>
         internal LinkedServiceListResult(IReadOnlyList<OperationalInsightsLinkedServiceData> value)
         {

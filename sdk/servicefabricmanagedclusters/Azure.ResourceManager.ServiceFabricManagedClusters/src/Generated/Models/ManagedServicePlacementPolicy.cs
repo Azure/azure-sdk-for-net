@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// </summary>
     public abstract partial class ManagedServicePlacementPolicy
     {
-        /// <summary> Initializes a new instance of ManagedServicePlacementPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicePlacementPolicy"/>. </summary>
         protected ManagedServicePlacementPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedServicePlacementPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicePlacementPolicy"/>. </summary>
         /// <param name="servicePlacementPolicyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
         internal ManagedServicePlacementPolicy(ServicePlacementPolicyType servicePlacementPolicyType)
         {

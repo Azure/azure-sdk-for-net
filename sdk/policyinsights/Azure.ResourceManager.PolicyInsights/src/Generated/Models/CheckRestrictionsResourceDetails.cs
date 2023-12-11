@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> The information about the resource that will be evaluated. </summary>
     public partial class CheckRestrictionsResourceDetails
     {
-        /// <summary> Initializes a new instance of CheckRestrictionsResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckRestrictionsResourceDetails"/>. </summary>
         /// <param name="resourceContent"> The resource content. This should include whatever properties are already known and can be a partial set of all resource properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceContent"/> is null. </exception>
         public CheckRestrictionsResourceDetails(BinaryData resourceContent)
@@ -21,6 +21,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Argument.AssertNotNull(resourceContent, nameof(resourceContent));
 
             ResourceContent = resourceContent;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CheckRestrictionsResourceDetails"/>. </summary>
+        /// <param name="resourceContent"> The resource content. This should include whatever properties are already known and can be a partial set of all resource properties. </param>
+        /// <param name="apiVersion"> The api-version of the resource content. </param>
+        /// <param name="scope"> The scope where the resource is being created. For example, if the resource is a child resource this would be the parent resource's resource ID. </param>
+        internal CheckRestrictionsResourceDetails(BinaryData resourceContent, string apiVersion, string scope)
+        {
+            ResourceContent = resourceContent;
+            ApiVersion = apiVersion;
+            Scope = scope;
         }
 
         /// <summary>

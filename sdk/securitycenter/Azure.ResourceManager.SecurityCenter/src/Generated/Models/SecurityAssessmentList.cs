@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Page of a security assessments list. </summary>
     internal partial class SecurityAssessmentList
     {
-        /// <summary> Initializes a new instance of SecurityAssessmentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentList"/>. </summary>
         internal SecurityAssessmentList()
         {
             Value = new ChangeTrackingList<SecurityAssessmentData>();
         }
 
-        /// <summary> Initializes a new instance of SecurityAssessmentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentList"/>. </summary>
         /// <param name="value"> Collection of security assessments in this page. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal SecurityAssessmentList(IReadOnlyList<SecurityAssessmentData> value, string nextLink)

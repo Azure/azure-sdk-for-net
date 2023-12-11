@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Represents a logFile. </summary>
     public partial class MySqlFlexibleServerLogFile : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerLogFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerLogFile"/>. </summary>
         public MySqlFlexibleServerLogFile()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerLogFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerLogFile"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,9 +13,24 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> Volume Group request. </summary>
     public partial class ElasticSanVolumeGroupPatch
     {
-        /// <summary> Initializes a new instance of ElasticSanVolumeGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeGroupPatch"/>. </summary>
         public ElasticSanVolumeGroupPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeGroupPatch"/>. </summary>
+        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="protocolType"> Type of storage target. </param>
+        /// <param name="encryption"> Type of encryption. </param>
+        /// <param name="encryptionProperties"> Encryption Properties describing Key Vault and Identity information. </param>
+        /// <param name="networkAcls"> A collection of rules governing the accessibility from specific network locations. </param>
+        internal ElasticSanVolumeGroupPatch(ManagedServiceIdentity identity, StorageTargetType? protocolType, ElasticSanEncryptionType? encryption, EncryptionProperties encryptionProperties, NetworkRuleSet networkAcls)
+        {
+            Identity = identity;
+            ProtocolType = protocolType;
+            Encryption = encryption;
+            EncryptionProperties = encryptionProperties;
+            NetworkAcls = networkAcls;
         }
 
         /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>

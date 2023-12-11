@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Configuration of a virtual network to which API Management service is deployed. </summary>
     public partial class VirtualNetworkConfiguration
     {
-        /// <summary> Initializes a new instance of VirtualNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkConfiguration"/>. </summary>
         public VirtualNetworkConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkConfiguration"/>. </summary>
         /// <param name="vnetId"> The virtual network ID. This is typically a GUID. Expect a null GUID by default. </param>
         /// <param name="subnetname"> The name of the subnet. </param>
         /// <param name="subnetResourceId"> The full resource ID of a subnet in a virtual network to deploy the API Management service in. </param>

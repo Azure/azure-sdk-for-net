@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The WorkspaceConnectionPersonalAccessToken. </summary>
     internal partial class WorkspaceConnectionPersonalAccessToken
     {
-        /// <summary> Initializes a new instance of WorkspaceConnectionPersonalAccessToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionPersonalAccessToken"/>. </summary>
         public WorkspaceConnectionPersonalAccessToken()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkspaceConnectionPersonalAccessToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionPersonalAccessToken"/>. </summary>
         /// <param name="pat"></param>
         internal WorkspaceConnectionPersonalAccessToken(string pat)
         {

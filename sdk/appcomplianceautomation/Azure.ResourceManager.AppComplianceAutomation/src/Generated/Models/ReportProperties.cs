@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> Report's properties. </summary>
     public partial class ReportProperties
     {
-        /// <summary> Initializes a new instance of ReportProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportProperties"/>. </summary>
         /// <param name="timeZone">
         /// Report collection trigger time's time zone, the available list can be obtained by executing "Get-TimeZone -ListAvailable" in PowerShell.
         /// An example of valid timezone id is "Pacific Standard Time".
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Resources = resources.ToList();
         }
 
-        /// <summary> Initializes a new instance of ReportProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportProperties"/>. </summary>
         /// <param name="id"> Report id in database. </param>
         /// <param name="status"> Report status. </param>
         /// <param name="tenantId"> Report's tenant id. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> String dictionary resource. </summary>
     public partial class AppServiceConfigurationDictionary : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceConfigurationDictionary. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceConfigurationDictionary"/>. </summary>
         public AppServiceConfigurationDictionary()
         {
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceConfigurationDictionary. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceConfigurationDictionary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

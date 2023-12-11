@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly SchedulesRestOperations _devTestLabScheduleSchedulesRestClient;
         private readonly DevTestLabScheduleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/schedules";
+
         /// <summary> Initializes a new instance of the <see cref="DevTestLabScheduleResource"/> class for mocking. </summary>
         protected DevTestLabScheduleResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DevTestLabs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/schedules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

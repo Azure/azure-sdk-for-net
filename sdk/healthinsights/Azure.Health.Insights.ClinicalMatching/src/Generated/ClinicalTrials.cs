@@ -17,14 +17,14 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// </summary>
     public partial class ClinicalTrials
     {
-        /// <summary> Initializes a new instance of ClinicalTrials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrials"/>. </summary>
         public ClinicalTrials()
         {
             CustomTrials = new ChangeTrackingList<ClinicalTrialDetails>();
             RegistryFilters = new ChangeTrackingList<ClinicalTrialRegistryFilter>();
         }
 
-        /// <summary> Initializes a new instance of ClinicalTrials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrials"/>. </summary>
         /// <param name="customTrials"> A list of clinical trials. </param>
         /// <param name="registryFilters">
         /// A list of filters, each one creating a selection of trials from a given

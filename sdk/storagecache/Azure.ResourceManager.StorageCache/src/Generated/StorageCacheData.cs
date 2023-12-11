@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.StorageCache
     /// </summary>
     public partial class StorageCacheData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of StorageCacheData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheData"/>. </summary>
         /// <param name="location"> The location. </param>
         public StorageCacheData(AzureLocation location) : base(location)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StorageCache
             SpaceAllocation = new ChangeTrackingList<StorageTargetSpaceAllocation>();
         }
 
-        /// <summary> Initializes a new instance of StorageCacheData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

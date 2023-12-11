@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged list of content types. </summary>
     internal partial class ContentTypeListResult
     {
-        /// <summary> Initializes a new instance of ContentTypeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentTypeListResult"/>. </summary>
         internal ContentTypeListResult()
         {
             Value = new ChangeTrackingList<ApiManagementContentType>();
         }
 
-        /// <summary> Initializes a new instance of ContentTypeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentTypeListResult"/>. </summary>
         /// <param name="value"> Collection of content types. </param>
         /// <param name="nextLink"> Next page link, if any. </param>
         internal ContentTypeListResult(IReadOnlyList<ApiManagementContentType> value, string nextLink)

@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Sql
         private readonly ReplicationLinksRestOperations _sqlServerDatabaseReplicationLinkReplicationLinksRestClient;
         private readonly SqlServerDatabaseReplicationLinkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/replicationLinks";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerDatabaseReplicationLinkResource"/> class for mocking. </summary>
         protected SqlServerDatabaseReplicationLinkResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/replicationLinks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

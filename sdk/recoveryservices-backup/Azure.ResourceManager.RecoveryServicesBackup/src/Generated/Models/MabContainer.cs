@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Container with items backed up using MAB backup engine. </summary>
     public partial class MabContainer : BackupGenericProtectionContainer
     {
-        /// <summary> Initializes a new instance of MabContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabContainer"/>. </summary>
         public MabContainer()
         {
             MabContainerHealthDetails = new ChangeTrackingList<MabContainerHealthDetails>();
             ContainerType = ProtectableContainerType.Windows;
         }
 
-        /// <summary> Initializes a new instance of MabContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>

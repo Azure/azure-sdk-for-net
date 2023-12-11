@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for list effective network security groups API service call. </summary>
     public partial class EffectiveNetworkSecurityGroupListResult
     {
-        /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveNetworkSecurityGroupListResult"/>. </summary>
         internal EffectiveNetworkSecurityGroupListResult()
         {
             Value = new ChangeTrackingList<EffectiveNetworkSecurityGroup>();
         }
 
-        /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveNetworkSecurityGroupListResult"/>. </summary>
         /// <param name="value"> A list of effective network security groups. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal EffectiveNetworkSecurityGroupListResult(IReadOnlyList<EffectiveNetworkSecurityGroup> value, string nextLink)

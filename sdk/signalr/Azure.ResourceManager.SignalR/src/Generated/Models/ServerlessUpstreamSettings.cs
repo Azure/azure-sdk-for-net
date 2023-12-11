@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> The settings for the Upstream when the service is in server-less mode. </summary>
     internal partial class ServerlessUpstreamSettings
     {
-        /// <summary> Initializes a new instance of ServerlessUpstreamSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerlessUpstreamSettings"/>. </summary>
         public ServerlessUpstreamSettings()
         {
             Templates = new ChangeTrackingList<SignalRUpstreamTemplate>();
         }
 
-        /// <summary> Initializes a new instance of ServerlessUpstreamSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerlessUpstreamSettings"/>. </summary>
         /// <param name="templates"> Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects. </param>
         internal ServerlessUpstreamSettings(IList<SignalRUpstreamTemplate> templates)
         {

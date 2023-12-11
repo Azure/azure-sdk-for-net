@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged OAuth2 Authorization Servers list representation. </summary>
     internal partial class AuthorizationServerListResult
     {
-        /// <summary> Initializes a new instance of AuthorizationServerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationServerListResult"/>. </summary>
         internal AuthorizationServerListResult()
         {
             Value = new ChangeTrackingList<ApiManagementAuthorizationServerData>();
         }
 
-        /// <summary> Initializes a new instance of AuthorizationServerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationServerListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Resources
         private readonly PolicyAssignmentsRestOperations _policyAssignmentRestClient;
         private readonly PolicyAssignmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Authorization/policyAssignments";
+
         /// <summary> Initializes a new instance of the <see cref="PolicyAssignmentResource"/> class for mocking. </summary>
         protected PolicyAssignmentResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Authorization/policyAssignments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

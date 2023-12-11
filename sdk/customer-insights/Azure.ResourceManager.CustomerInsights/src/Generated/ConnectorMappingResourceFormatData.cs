@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class ConnectorMappingResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of ConnectorMappingResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingResourceFormatData"/>. </summary>
         public ConnectorMappingResourceFormatData()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectorMappingResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for SocketAddress match conditions. </summary>
     public partial class SocketAddressMatchCondition
     {
-        /// <summary> Initializes a new instance of SocketAddressMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="SocketAddressMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="socketAddressOperator"> Describes operator to be matched. </param>
         public SocketAddressMatchCondition(SocketAddressMatchConditionType conditionType, SocketAddressOperator socketAddressOperator)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
-        /// <summary> Initializes a new instance of SocketAddressMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="SocketAddressMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="socketAddressOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>

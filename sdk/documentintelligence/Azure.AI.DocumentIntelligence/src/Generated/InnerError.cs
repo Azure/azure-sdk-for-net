@@ -10,12 +10,12 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> An object containing more specific information about the error. </summary>
     public partial class InnerError
     {
-        /// <summary> Initializes a new instance of InnerError. </summary>
+        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
         internal InnerError()
         {
         }
 
-        /// <summary> Initializes a new instance of InnerError. </summary>
+        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="innerErrorObject"> Inner error. </param>

@@ -45,6 +45,9 @@ namespace Azure.ResourceManager.Automation
         private readonly SourceControlSyncJobStreamsRestOperations _sourceControlSyncJobStreamsRestClient;
         private readonly AutomationSourceControlData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/sourceControls";
+
         /// <summary> Initializes a new instance of the <see cref="AutomationSourceControlResource"/> class for mocking. </summary>
         protected AutomationSourceControlResource()
         {
@@ -75,9 +78,6 @@ namespace Azure.ResourceManager.Automation
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/sourceControls";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

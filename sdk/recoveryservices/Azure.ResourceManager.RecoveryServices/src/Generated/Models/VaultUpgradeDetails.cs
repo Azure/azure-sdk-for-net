@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Details for upgrading vault. </summary>
     public partial class VaultUpgradeDetails
     {
-        /// <summary> Initializes a new instance of VaultUpgradeDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultUpgradeDetails"/>. </summary>
         public VaultUpgradeDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of VaultUpgradeDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultUpgradeDetails"/>. </summary>
         /// <param name="operationId"> ID of the vault upgrade operation. </param>
         /// <param name="startOn"> UTC time at which the upgrade operation has started. </param>
         /// <param name="lastUpdatedOn"> UTC time at which the upgrade operation status was last updated. </param>

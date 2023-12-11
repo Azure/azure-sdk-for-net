@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Virtual network subnet usage data. </summary>
     public partial class PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult"/>. </summary>
         internal PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult()
         {
             DelegatedSubnetsUsage = new ChangeTrackingList<PostgreSqlFlexibleServerDelegatedSubnetUsage>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult"/>. </summary>
         /// <param name="delegatedSubnetsUsage"></param>
         /// <param name="location"> location of the delegated subnet usage. </param>
         /// <param name="subscriptionId"> subscriptionId of the delegated subnet usage. </param>

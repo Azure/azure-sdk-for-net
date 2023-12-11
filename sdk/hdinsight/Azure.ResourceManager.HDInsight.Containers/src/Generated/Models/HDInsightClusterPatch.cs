@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The patch for a cluster. </summary>
     public partial class HDInsightClusterPatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of HDInsightClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterPatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public HDInsightClusterPatch(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

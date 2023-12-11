@@ -13,10 +13,21 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> The parameters used when calling trigger change detection action on cloud endpoint. </summary>
     public partial class TriggerChangeDetectionContent
     {
-        /// <summary> Initializes a new instance of TriggerChangeDetectionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerChangeDetectionContent"/>. </summary>
         public TriggerChangeDetectionContent()
         {
             Paths = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TriggerChangeDetectionContent"/>. </summary>
+        /// <param name="directoryPath"> Relative path to a directory Azure File share for which change detection is to be performed. </param>
+        /// <param name="changeDetectionMode"> Change Detection Mode. Applies to a directory specified in directoryPath parameter. </param>
+        /// <param name="paths"> Array of relative paths on the Azure File share to be included in the change detection. Can be files and directories. </param>
+        internal TriggerChangeDetectionContent(string directoryPath, ChangeDetectionMode? changeDetectionMode, IList<string> paths)
+        {
+            DirectoryPath = directoryPath;
+            ChangeDetectionMode = changeDetectionMode;
+            Paths = paths;
         }
 
         /// <summary> Relative path to a directory Azure File share for which change detection is to be performed. </summary>
