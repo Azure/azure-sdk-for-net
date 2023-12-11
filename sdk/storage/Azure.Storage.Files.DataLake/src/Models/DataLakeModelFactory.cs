@@ -41,7 +41,9 @@ namespace Azure.Storage.Files.DataLake.Models
             byte[] contentHash,
             DateTimeOffset createdOn,
             string encryptionContext,
-            IList<PathAccessControlItem> accessControlList
+            IList<PathAccessControlItem> accessControlList,
+            string group,
+            string owner
             )
             => new FileDownloadDetails()
             {
@@ -68,7 +70,9 @@ namespace Azure.Storage.Files.DataLake.Models
                 ContentHash = contentHash,
                 CreatedOn = createdOn,
                 EncryptionContext = encryptionContext,
-                AccessControlList = accessControlList
+                AccessControlList = accessControlList,
+                Group = group,
+                Owner = owner
             };
 
         /// <summary>

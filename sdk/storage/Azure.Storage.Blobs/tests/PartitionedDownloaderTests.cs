@@ -185,6 +185,7 @@ namespace Azure.Storage.Blobs.Test
                 It.IsAny<DownloadTransferValidationOptions>(),
                 It.IsAny<IProgress<long>>(),
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                false,
                 _async,
                 s_cancellationToken)).ThrowsAsync(e);
 
@@ -219,6 +220,7 @@ namespace Azure.Storage.Blobs.Test
                     options != null && options != s_validationOptions && !options.AutoValidateChecksum),
                 It.IsAny<IProgress<long>>(),
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
+                false,
                 _async,
                 s_cancellationToken)
             ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken>(
@@ -229,7 +231,7 @@ namespace Azure.Storage.Blobs.Test
 
         private async Task<Response> InvokeDownloadToAsync(PartitionedDownloader downloader, Stream stream)
         {
-            return await downloader.DownloadToInternal(stream, s_conditions, _async, s_cancellationToken);
+            return await downloader.DownloadToInternal(stream, s_conditions, false, _async, s_cancellationToken);
         }
 
         private class MockDataSource

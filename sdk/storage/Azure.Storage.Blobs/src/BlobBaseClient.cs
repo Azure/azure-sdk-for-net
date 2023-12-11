@@ -1007,8 +1007,8 @@ namespace Azure.Storage.Blobs.Specialized
                 rangeGetContentHash.ToValidationOptions(),
                 progressHandler: default,
                 $"{nameof(BlobBaseClient)}.{nameof(Download)}",
-                async,
                 false,
+                async,
                 cancellationToken).ConfigureAwait(false);
 
             // Return an exploding Response on 304
@@ -1318,8 +1318,8 @@ namespace Azure.Storage.Blobs.Specialized
                 rangeGetContentHash.ToValidationOptions(),
                 progressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
-                true, // async
                 false,
+                true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
         }
@@ -1372,8 +1372,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.TransferValidation,
                 options?.ProgressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
-                async: false,
                 options?.UserPrincipalName,
+                async: false,
                 cancellationToken).EnsureCompleted();
         }
 
@@ -1420,8 +1420,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.TransferValidation,
                 options?.ProgressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
-                async: true,
                 options?.UserPrincipalName,
+                async: true,
                 cancellationToken).ConfigureAwait(false);
         }
 
@@ -1445,8 +1445,8 @@ namespace Azure.Storage.Blobs.Specialized
             DownloadTransferValidationOptions transferValidationOverride,
             IProgress<long> progressHandler,
             string operationName,
-            bool async,
             bool? userPrincipalName,
+            bool async,
             CancellationToken cancellationToken)
         {
             HttpRange requestedRange = range;
@@ -1458,7 +1458,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
 
-            var response = await DownloadStreamingInternal(range, conditions, transferValidationOverride, progressHandler, operationName, async, userPrincipalName, cancellationToken).ConfigureAwait(false);
+            var response = await DownloadStreamingInternal(range, conditions, transferValidationOverride, progressHandler, operationName, userPrincipalName, async, cancellationToken).ConfigureAwait(false);
 
             // if using clientside encryption, wrap the auto-retry stream in a decryptor
             // we already return a nonseekable stream; returning a crypto stream is fine
@@ -1496,9 +1496,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="operationName">
         /// operation name of the calling API.
         /// </param>
-        /// <param name="async">
-        /// Whether to operate asynchronously.
-        /// </param>
         /// <param name="userPrincipalName">
         /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
         /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
@@ -1506,6 +1503,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// If "false", the values will be returned as Azure Active Directory Object IDs.The default
         /// value is false. Note that group and application Object IDs are not translated because they
         /// do not have unique friendly names.
+        /// </param>
+        /// <param name="async">
+        /// Whether to operate asynchronously.
         /// </param>
         /// <param name="cancellationToken">
         /// Cancellation token.
@@ -1517,8 +1517,8 @@ namespace Azure.Storage.Blobs.Specialized
             DownloadTransferValidationOptions transferValidationOverride,
             IProgress<long> progressHandler,
             string operationName,
-            bool async,
             bool? userPrincipalName,
+            bool async,
             CancellationToken cancellationToken)
         {
             DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Download;
@@ -1543,8 +1543,8 @@ namespace Azure.Storage.Blobs.Specialized
                         range,
                         conditions,
                         validationOptions,
-                        async: async,
                         userPrincipalName: userPrincipalName,
+                        async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -1568,8 +1568,8 @@ namespace Azure.Storage.Blobs.Specialized
                                     conditionsWithEtag,
                                     validationOptions,
                                     startOffset,
-                                    async,
                                     userPrincipalName,
+                                    async,
                                     cancellationToken)
                                 .EnsureCompleted()
                             .Value.Content,
@@ -1579,8 +1579,8 @@ namespace Azure.Storage.Blobs.Specialized
                                 conditionsWithEtag,
                                 validationOptions,
                                 startOffset,
-                                async,
                                 userPrincipalName,
+                                async,
                                 cancellationToken)
                                 .ConfigureAwait(false))
                             .Value.Content,
@@ -1656,9 +1656,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="startOffset">
         /// Starting offset to request - in the event of a retry.
         /// </param>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
         /// <param name="userPrincipalName">
         /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
         /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
@@ -1666,6 +1663,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// If "false", the values will be returned as Azure Active Directory Object IDs.The default
         /// value is false. Note that group and application Object IDs are not translated because they
         /// do not have unique friendly names.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1685,8 +1685,8 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions,
             DownloadTransferValidationOptions validationOptions,
             long startOffset = 0,
-            bool async = true,
             bool? userPrincipalName = default,
+            bool async = true,
             CancellationToken cancellationToken = default)
         {
             HttpRange? pageRange = null;
@@ -2276,8 +2276,8 @@ namespace Azure.Storage.Blobs.Specialized
                 transferValidationOverride: transferValidationOverride,
                 progressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadContent)}",
-                async: async,
                 false,
+                async: async,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
             // Return an exploding Response on 304
@@ -2517,8 +2517,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransferValidation,
-                async: false,
                 options?.UserPrincipalName,
+                async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
         }
@@ -2557,8 +2557,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransferValidation,
-                async: false,
                 options?.UserPrincipalName,
+                async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
         }
@@ -2596,8 +2596,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransferValidation,
-                async: true,
                 options?.UserPrincipalName,
+                async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         }
@@ -2636,8 +2636,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransferValidation,
-                async: true,
                 options?.UserPrincipalName,
+                async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
         }
@@ -2859,9 +2859,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="transferValidationOverride">
         /// Override for client options on transfer validation.
         /// </param>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
         /// <param name="userPrincipalName">
         /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
         /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
@@ -2869,6 +2866,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// If "false", the values will be returned as Azure Active Directory Object IDs.The default
         /// value is false. Note that group and application Object IDs are not translated because they
         /// do not have unique friendly names.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2887,8 +2887,8 @@ namespace Azure.Storage.Blobs.Specialized
             IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             DownloadTransferValidationOptions transferValidationOverride = default,
-            bool async = true,
             bool? userPrincipalName = default,
+            bool async = true,
             CancellationToken cancellationToken = default)
         {
             DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Download;
@@ -2899,7 +2899,7 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 ClientSideDecryptor.BeginContentEncryptionKeyCaching();
             }
-            return await downloader.DownloadToInternal(destination, conditions, async, userPrincipalName, cancellationToken).ConfigureAwait(false);
+            return await downloader.DownloadToInternal(destination, conditions, userPrincipalName, async, cancellationToken).ConfigureAwait(false);
         }
         #endregion Parallel Download
 
@@ -2930,8 +2930,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
                 transferValidationOverride: options?.TransferValidation,
-                async: false,
                 false,
+                async: false,
                 cancellationToken).EnsureCompleted();
 
         /// <summary>
@@ -2960,8 +2960,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
                 transferValidationOverride: options?.TransferValidation,
-                async: true,
                 false,
+                async: true,
                 cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -3002,8 +3002,8 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 allowModifications: false,
                 transferValidationOverride: default,
-                async: false,
                 false,
+                async: false,
                 cancellationToken).EnsureCompleted();
 
         /// <summary>
@@ -3081,8 +3081,8 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 allowModifications: false,
                 transferValidationOverride: default,
-                async: true,
                 false,
+                async: true,
                 cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -3145,9 +3145,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="transferValidationOverride">
         /// Optional override for settings in the client options.
         /// </param>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
         /// <param name="userPrincipalName">
         /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
         /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
@@ -3155,6 +3152,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// If "false", the values will be returned as Azure Active Directory Object IDs.The default
         /// value is false. Note that group and application Object IDs are not translated because they
         /// do not have unique friendly names.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -3173,8 +3173,8 @@ namespace Azure.Storage.Blobs.Specialized
             bool allowModifications,
             DownloadTransferValidationOptions transferValidationOverride,
 #pragma warning disable CA1801
-            bool async,
             bool? userPrincipalName,
+            bool async,
             CancellationToken cancellationToken)
 #pragma warning restore CA1801
         {
@@ -3238,8 +3238,8 @@ namespace Azure.Storage.Blobs.Specialized
                                 transferValidationOverride: downloadValidationOptions,
                                 progressHandler: default,
                                 operationName,
-                                async,
                                 userPrincipalName,
+                                async,
                                 cancellationToken).ConfigureAwait(false);
 
                             if (UsingClientSideEncryption)

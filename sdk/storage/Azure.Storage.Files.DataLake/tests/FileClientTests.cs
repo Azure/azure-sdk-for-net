@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -17,6 +19,7 @@ using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Tests.Shared;
+using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
 
@@ -3381,6 +3384,40 @@ namespace Azure.Storage.Files.DataLake.Tests
             var actual = new MemoryStream();
             await response.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2024_05_04)]
+        public async Task ReadAsyncWithUPN()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            DataLakeFileClient fileClient = await test.FileSystem.CreateFileAsync(GetNewFileName());
+            using (var stream = new MemoryStream(data))
+            {
+                await fileClient.AppendAsync(stream, 0);
+            }
+
+            await fileClient.FlushAsync(Constants.KB);
+
+            DataLakeFileReadOptions options = new DataLakeFileReadOptions
+            {
+                UserPrincipalName = true
+            };
+            // Act
+            Response<FileDownloadInfo> response = await fileClient.ReadAsync(options);
+
+            // Assert
+            string group = response.Value.Properties.Group;
+            string owner = response.Value.Properties.Owner;
+
+            // Assert format is different since upn is false
+            Response<FileDownloadInfo> response1 = await fileClient.ReadAsync();
+
+            Assert.AreNotEqual(group, response1.Value.Properties.Group);
+            Assert.AreNotEqual(owner, response1.Value.Properties.Owner);
         }
 
         [RecordedTest]

@@ -168,6 +168,16 @@ namespace Azure.Storage.Files.DataLake.Models
         public IList<PathAccessControlItem> AccessControlList { get; internal set; }
 
         /// <summary>
+        /// group
+        /// </summary>
+        public string Group { get; internal set; }
+
+        /// <summary>
+        /// owner
+        /// </summary>
+        public string Owner { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of FileDownloadDetails instances.
         /// You can use DataLakeModelFactory.FileDownloadDetails instead.
         /// </summary>
