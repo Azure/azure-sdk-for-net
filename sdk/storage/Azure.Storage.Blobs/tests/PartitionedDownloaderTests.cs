@@ -185,7 +185,7 @@ namespace Azure.Storage.Blobs.Test
                 It.IsAny<DownloadTransferValidationOptions>(),
                 It.IsAny<IProgress<long>>(),
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
-                false,
+                null,
                 _async,
                 s_cancellationToken)).ThrowsAsync(e);
 
@@ -220,7 +220,7 @@ namespace Azure.Storage.Blobs.Test
                     options != null && options != s_validationOptions && !options.AutoValidateChecksum),
                 It.IsAny<IProgress<long>>(),
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
-                false,
+                null,
                 _async,
                 s_cancellationToken)
             ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken>(

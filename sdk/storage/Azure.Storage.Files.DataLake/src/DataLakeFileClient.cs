@@ -2851,7 +2851,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Start();
 
-                Response<Blobs.Models.BlobDownloadStreamingResult> response = _blockBlobClient.DownloadStreaming(null, cancellationToken: CancellationToken.None);
+                Response<Blobs.Models.BlobDownloadStreamingResult> response = _blockBlobClient.DownloadStreaming();
 
                 return Response.FromValue(
                     response.ToFileDownloadInfo(),
@@ -2894,7 +2894,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<Blobs.Models.BlobDownloadStreamingResult> response
-                    = await _blockBlobClient.DownloadStreamingAsync(null, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+                    = await _blockBlobClient.DownloadStreamingAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
 
                 return Response.FromValue(
                     response.ToFileDownloadInfo(),
@@ -2941,7 +2941,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Start();
 
-                Response<Blobs.Models.BlobDownloadStreamingResult> response = _blockBlobClient.DownloadStreaming(null, cancellationToken: cancellationToken);
+                Response<Blobs.Models.BlobDownloadStreamingResult> response = _blockBlobClient.DownloadStreaming(cancellationToken: cancellationToken);
 
                 return Response.FromValue(
                     response.ToFileDownloadInfo(),
@@ -2989,7 +2989,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<Blobs.Models.BlobDownloadStreamingResult> response
-                    = await _blockBlobClient.DownloadStreamingAsync(null, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    = await _blockBlobClient.DownloadStreamingAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 return Response.FromValue(
                     response.ToFileDownloadInfo(),
