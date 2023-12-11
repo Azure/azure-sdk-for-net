@@ -124,7 +124,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GroupResult> GroupAsync(this IFaceOperations operations, IList<System.Guid> faceIds, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GroupResult> GroupAsync(this IFaceOperations operations, GroupRequest faceIds, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GroupWithHttpMessagesAsync(faceIds, null, cancellationToken).ConfigureAwait(false))
                 {
