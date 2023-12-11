@@ -15,19 +15,16 @@
 -->
 
 <Project>
+  <ItemGroup Condition="'$(SDKType)' == 'all'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)**\*.csproj" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(SDKType)' == 'client'">
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Messaging.*\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Data.Tables.*\**\*.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup Condition="'$(SDKType)' == 'functions'">
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.WebJobs.Extensions.EventHubs\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.WebJobs.Extensions.Tables\**\*.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(SDKType)' == 'mgmtclient'">
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.*\**\*.csproj" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(SDKType)' == 'data'">
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.EventHubs*\**\*.csproj" />
-  </ItemGroup>
 </Project>
