@@ -30,6 +30,15 @@
     <None Update="TestData\AvailabilitySetData\AvailabilitySetDataWithVMsWireFormat.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TestData\ModelWithPersistableOnly\ModelWithPersistableOnlyWireFormat.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\ModelXml.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\ModelXmlX.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\ModelX\ModelX.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
