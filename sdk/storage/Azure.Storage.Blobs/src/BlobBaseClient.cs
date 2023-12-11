@@ -6555,7 +6555,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        [CallerShouldAudit(reason: "https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual Uri GenerateSasUri(BlobSasPermissions permissions, DateTimeOffset expiresOn) =>
             GenerateSasUri(new BlobSasBuilder(permissions, expiresOn)
             {
@@ -6589,7 +6589,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Exception"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        [CallerShouldAudit(reason: "https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual Uri GenerateSasUri(BlobSasBuilder builder)
         {
             if (builder == null)
