@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Redis.Tests.ScenarioTests
             var accessPolicyAssignment = (await accessPolicyAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, accessPolicyAssignmentName, accessPolicyAssignmentData)).Value;
             Assert.AreEqual("accessPolicyAssignmentName1", accessPolicyAssignment.Data.Name);
             Assert.AreEqual("accessPolicy1", accessPolicyAssignment.Data.AccessPolicyName);
-            Assert.AreEqual("69d700c5-ca77-4335-947e-4f823dd00e1a", accessPolicyAssignment.Data.ObjectId);
+            Assert.AreEqual(new Guid("69d700c5-ca77-4335-947e-4f823dd00e1a"), accessPolicyAssignment.Data.ObjectId);
             Assert.AreEqual("kj-aad-testing", accessPolicyAssignment.Data.ObjectIdAlias);
 
             // List access policy assignments
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Redis.Tests.ScenarioTests
             accessPolicyAssignment = await accessPolicyAssignmentCollection.GetAsync(accessPolicyAssignmentName);
             Assert.AreEqual("accessPolicyAssignmentName1", accessPolicyAssignment.Data.Name);
             Assert.AreEqual("accessPolicy1", accessPolicyAssignment.Data.AccessPolicyName);
-            Assert.AreEqual("69d700c5-ca77-4335-947e-4f823dd00e1a", accessPolicyAssignment.Data.ObjectId);
+            Assert.AreEqual(new Guid("69d700c5-ca77-4335-947e-4f823dd00e1a"), accessPolicyAssignment.Data.ObjectId);
             Assert.AreEqual("aad testing app", accessPolicyAssignment.Data.ObjectIdAlias);
 
             // Delete access policy assignment
