@@ -16,25 +16,25 @@ public abstract class PipelinePolicy
     {
         IEnumerator<PipelinePolicy> enumerator = pipeline.GetEnumerator();
 
-        if (!enumerator.MoveNext())
+        if (enumerator.MoveNext())
         {
-            return false;
+            enumerator.Current.Process(message, pipeline);
+            return true;
         }
 
-        enumerator.Current.Process(message, pipeline);
-        return true;
+        return false;
     }
 
     public async Task<bool> ProcessNextAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
     {
         IEnumerator<PipelinePolicy> enumerator = pipeline.GetEnumerator();
 
-        if (!enumerator.MoveNext())
+        if (enumerator.MoveNext())
         {
-            return false;
+            await enumerator.Current.ProcessAsync(message, pipeline).ConfigureAwait(false);
+            return true;
         }
 
-        await enumerator.Current.ProcessAsync(message, pipeline).ConfigureAwait(false);
-        return true;
+        return false;
     }
 }

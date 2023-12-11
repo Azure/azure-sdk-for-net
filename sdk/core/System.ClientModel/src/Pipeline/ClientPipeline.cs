@@ -135,13 +135,21 @@ public partial class ClientPipeline
     public void Send(PipelineMessage message)
     {
         IEnumerable<PipelinePolicy> policies = GetProcessor(message);
-        policies.GetEnumerator().Current.Process(message, policies);
+        IEnumerator<PipelinePolicy> enumerator = policies.GetEnumerator();
+        if (enumerator.MoveNext())
+        {
+            enumerator.Current.Process(message, policies);
+        }
     }
 
     public async ValueTask SendAsync(PipelineMessage message)
     {
         IEnumerable<PipelinePolicy> policies = GetProcessor(message);
-        await policies.GetEnumerator().Current.ProcessNextAsync(message, policies).ConfigureAwait(false);
+        IEnumerator<PipelinePolicy> enumerator = policies.GetEnumerator();
+        if (enumerator.MoveNext())
+        {
+            await enumerator.Current.ProcessAsync(message, policies).ConfigureAwait(false);
+        }
     }
 
     private IEnumerable<PipelinePolicy> GetProcessor(PipelineMessage message)
@@ -160,7 +168,7 @@ public partial class ClientPipeline
         return new PipelineProcessor(_policies);
     }
 
-    private readonly struct PipelineProcessor : IEnumerable<PipelinePolicy>
+    private struct PipelineProcessor : IEnumerable<PipelinePolicy>
     {
         private readonly PolicyEnumerator _enumerator;
 
@@ -176,7 +184,7 @@ public partial class ClientPipeline
             => _enumerator;
     }
 
-    private struct PolicyEnumerator : IEnumerator<PipelinePolicy>
+    private class PolicyEnumerator : IEnumerator<PipelinePolicy>
     {
         private readonly ReadOnlyMemory<PipelinePolicy> _policies;
         private int _current;
@@ -184,16 +192,14 @@ public partial class ClientPipeline
         public PolicyEnumerator(ReadOnlyMemory<PipelinePolicy> policies)
         {
             _policies = policies;
-            _current = 0;
+            _current = -1;
         }
 
-        public readonly PolicyEnumerator GetEnumerator() => this;
+        public PolicyEnumerator GetEnumerator() => this;
 
         public bool MoveNext()
         {
             _current++;
-
-            // TODO: validate this contract
             return _current < _policies.Length;
         }
 
@@ -202,10 +208,10 @@ public partial class ClientPipeline
             _current = 0;
         }
 
-        public readonly void Dispose() { }
+        public void Dispose() { }
 
-        public readonly PipelinePolicy Current => _policies.Span[_current];
+        public PipelinePolicy Current => _policies.Span[_current];
 
-        readonly object IEnumerator.Current => Current;
+        object IEnumerator.Current => Current;
     }
 }
