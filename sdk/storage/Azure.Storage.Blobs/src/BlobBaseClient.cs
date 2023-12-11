@@ -1007,7 +1007,7 @@ namespace Azure.Storage.Blobs.Specialized
                 rangeGetContentHash.ToValidationOptions(),
                 progressHandler: default,
                 $"{nameof(BlobBaseClient)}.{nameof(Download)}",
-                false,
+                null,
                 async,
                 cancellationToken).ConfigureAwait(false);
 
@@ -1241,7 +1241,7 @@ namespace Azure.Storage.Blobs.Specialized
                 rangeGetContentHash.ToValidationOptions(),
                 progressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
-                false, // async
+                null, // async
                 false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1318,7 +1318,7 @@ namespace Azure.Storage.Blobs.Specialized
                 rangeGetContentHash.ToValidationOptions(),
                 progressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
-                false,
+                null,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
