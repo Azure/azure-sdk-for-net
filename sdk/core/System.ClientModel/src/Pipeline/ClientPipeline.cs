@@ -203,15 +203,15 @@ public partial class ClientPipeline
             return _current < _policies.Length;
         }
 
+        public PipelinePolicy Current => _policies.Span[_current];
+
+        object IEnumerator.Current => Current;
+
         public void Reset()
         {
             _current = 0;
         }
 
         public void Dispose() { }
-
-        public PipelinePolicy Current => _policies.Span[_current];
-
-        object IEnumerator.Current => Current;
     }
 }

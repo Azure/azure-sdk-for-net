@@ -56,9 +56,19 @@ namespace Azure.Core.Pipeline
         /// <param name="pipeline"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override ValueTask ProcessAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+        public override async ValueTask ProcessAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
         {
-            throw new NotImplementedException();
+            if (message is not HttpMessage httpMessage)
+            {
+                throw new InvalidOperationException($"Invalid type for message: '{message?.GetType()}'");
+            }
+
+            if (pipeline is not AzureCorePipelineProcessor processor)
+            {
+                throw new InvalidOperationException($"Invalid type for pipeline: '{pipeline?.GetType()}'");
+            }
+
+            await ProcessAsync(httpMessage, processor.Policies).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -69,7 +79,17 @@ namespace Azure.Core.Pipeline
         /// <exception cref="NotImplementedException"></exception>
         public override void Process(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
         {
-            throw new NotImplementedException();
+            if (message is not HttpMessage httpMessage)
+            {
+                throw new InvalidOperationException($"Invalid type for message: '{message?.GetType()}'");
+            }
+
+            if (pipeline is not AzureCorePipelineProcessor processor)
+            {
+                throw new InvalidOperationException($"Invalid type for pipeline: '{pipeline?.GetType()}'");
+            }
+
+            Process(httpMessage, processor.Policies);
         }
     }
 }

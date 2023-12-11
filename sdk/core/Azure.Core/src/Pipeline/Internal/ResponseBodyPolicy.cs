@@ -30,39 +30,9 @@ namespace Azure.Core.Pipeline
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
             => ProcessSyncOrAsync(message, pipeline, async: false).EnsureCompleted();
 
-        private IEnumerable<PipelinePolicy> GetEnumerable(ReadOnlyMemory<HttpPipelinePolicy> policies)
-        {
-            for (int i = 0; i < policies.Length; i++)
-            {
-                yield return new PipelinePolicyAdapter(policies.Span[i]);
-            }
-        }
-
-        private class PipelinePolicyAdapter : PipelinePolicy
-        {
-            private readonly HttpPipelinePolicy _policy;
-
-            public PipelinePolicyAdapter(HttpPipelinePolicy policy)
-            {
-                _policy = policy;
-            }
-
-            public override void Process(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
-            {
-                throw new NotImplementedException();
-                //_policy.Process()
-            }
-
-            public override ValueTask ProcessAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         private async ValueTask ProcessSyncOrAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            //AzureCorePipelineEnumerator executor = new(message, pipeline);
-            IEnumerable<PipelinePolicy> policies = GetEnumerable(pipeline);
+            AzureCorePipelineProcessor policies = new(pipeline);
 
             // Get the network timeout for this particular invocation of the pipeline.
             // We either use the default that the policy was constructed with at
