@@ -294,7 +294,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="name"> Name of schema. </param>
         /// <param name="schemaContent"> String representation (UTF-8) of the registered schema. </param>
-        /// <param name="contentType"> The content type for given schema. Allowed values: "application/json; serialization=Avro" | "application/json; serialization=json" | "text/plain; charset=utf-8" | "text/vnd.ms.protobuf". </param>
+        /// <param name="contentType"> The content type for given schema. Allowed values: "application/octet-stream" | "application/json; serialization=Avro" | "application/json; serialization=json". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="name"/> or <paramref name="schemaContent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -306,7 +306,7 @@ namespace Azure.Data.SchemaRegistry
             Argument.AssertNotNull(schemaContent, nameof(schemaContent));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = RequestContentHelper.FromObject(schemaContent);
+            using RequestContent content = schemaContent;
             Response response = await GetSchemaIdByContentAsync(groupName, name, content, contentType, context).ConfigureAwait(false);
             return response;
         }
@@ -315,7 +315,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="name"> Name of schema. </param>
         /// <param name="schemaContent"> String representation (UTF-8) of the registered schema. </param>
-        /// <param name="contentType"> The content type for given schema. Allowed values: "application/json; serialization=Avro" | "application/json; serialization=json" | "text/plain; charset=utf-8" | "text/vnd.ms.protobuf". </param>
+        /// <param name="contentType"> The content type for given schema. Allowed values: "application/octet-stream" | "application/json; serialization=Avro" | "application/json; serialization=json". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="name"/> or <paramref name="schemaContent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -327,7 +327,7 @@ namespace Azure.Data.SchemaRegistry
             Argument.AssertNotNull(schemaContent, nameof(schemaContent));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = RequestContentHelper.FromObject(schemaContent);
+            using RequestContent content = schemaContent;
             Response response = GetSchemaIdByContent(groupName, name, content, contentType, context);
             return response;
         }
@@ -350,7 +350,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="name"> Name of schema. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The content type for given schema. Allowed values: "application/json; serialization=Avro" | "application/json; serialization=json" | "text/plain; charset=utf-8" | "text/vnd.ms.protobuf". </param>
+        /// <param name="contentType"> The content type for given schema. Allowed values: "application/octet-stream" | "application/json; serialization=Avro" | "application/json; serialization=json". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -394,7 +394,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="name"> Name of schema. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The content type for given schema. Allowed values: "application/json; serialization=Avro" | "application/json; serialization=json" | "text/plain; charset=utf-8" | "text/vnd.ms.protobuf". </param>
+        /// <param name="contentType"> The content type for given schema. Allowed values: "application/octet-stream" | "application/json; serialization=Avro" | "application/json; serialization=json". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -424,7 +424,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="name"> Name of schema. </param>
         /// <param name="content"> String representation (UTF-8) of the schema. </param>
-        /// <param name="contentType"> The content type for given schema. Allowed values: "application/json; serialization=Avro" | "application/json; serialization=json" | "text/plain; charset=utf-8" | "text/vnd.ms.protobuf". </param>
+        /// <param name="contentType"> The content type for given schema. Allowed values: "application/octet-stream" | "application/json; serialization=Avro" | "application/json; serialization=json". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -436,7 +436,7 @@ namespace Azure.Data.SchemaRegistry
             Argument.AssertNotNull(content, nameof(content));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content0 = RequestContentHelper.FromObject(content);
+            using RequestContent content0 = content;
             Response response = await RegisterSchemaAsync(groupName, name, content0, contentType, context).ConfigureAwait(false);
             return response;
         }
@@ -445,7 +445,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="name"> Name of schema. </param>
         /// <param name="content"> String representation (UTF-8) of the schema. </param>
-        /// <param name="contentType"> The content type for given schema. Allowed values: "application/json; serialization=Avro" | "application/json; serialization=json" | "text/plain; charset=utf-8" | "text/vnd.ms.protobuf". </param>
+        /// <param name="contentType"> The content type for given schema. Allowed values: "application/octet-stream" | "application/json; serialization=Avro" | "application/json; serialization=json". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -457,7 +457,7 @@ namespace Azure.Data.SchemaRegistry
             Argument.AssertNotNull(content, nameof(content));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content0 = RequestContentHelper.FromObject(content);
+            using RequestContent content0 = content;
             Response response = RegisterSchema(groupName, name, content0, contentType, context);
             return response;
         }
@@ -480,7 +480,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="name"> Name of schema. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The content type for given schema. Allowed values: "application/json; serialization=Avro" | "application/json; serialization=json" | "text/plain; charset=utf-8" | "text/vnd.ms.protobuf". </param>
+        /// <param name="contentType"> The content type for given schema. Allowed values: "application/octet-stream" | "application/json; serialization=Avro" | "application/json; serialization=json". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -524,7 +524,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="name"> Name of schema. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The content type for given schema. Allowed values: "application/json; serialization=Avro" | "application/json; serialization=json" | "text/plain; charset=utf-8" | "text/vnd.ms.protobuf". </param>
+        /// <param name="contentType"> The content type for given schema. Allowed values: "application/octet-stream" | "application/json; serialization=Avro" | "application/json; serialization=json". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>

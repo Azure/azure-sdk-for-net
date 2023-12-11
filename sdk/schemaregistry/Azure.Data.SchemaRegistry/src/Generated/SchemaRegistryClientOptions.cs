@@ -16,7 +16,7 @@ namespace Azure.Data.SchemaRegistry
         private const ServiceVersion LatestVersion = ServiceVersion.V2023_07_01;
 
         /// <summary> The version of the service to use. </summary>
-        internal enum ServiceVersion
+        public enum ServiceVersion
         {
             /// <summary> Service version "2021-10". </summary>
             V2021_10 = 1,
