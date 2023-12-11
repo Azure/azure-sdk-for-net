@@ -18,7 +18,7 @@ public abstract class PipelinePolicy
 
         //PipelinePolicy policy = enumerator.Current;
         //bool more = enumerator.MoveNext();
-        //policy.ProcessAsync(message, pipeline);
+        //policy.Process(message, pipeline);
 
         //return more;
 
