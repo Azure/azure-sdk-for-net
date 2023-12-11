@@ -34,6 +34,7 @@ public class KeyCredentialAuthenticationPolicy : PipelinePolicy
 
     public static KeyCredentialAuthenticationPolicy CreateQueryPolicy(KeyCredential credential, string queryName)
     {
+        // TODO: Add tests for this implementation if the API is approved.
         ClientUtilities.AssertNotNull(credential, nameof(credential));
         ClientUtilities.AssertNotNullOrEmpty(queryName, nameof(queryName));
 
