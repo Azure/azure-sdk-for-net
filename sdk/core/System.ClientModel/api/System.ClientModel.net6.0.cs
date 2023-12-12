@@ -114,8 +114,8 @@ namespace System.ClientModel.Primitives
         internal KeyCredentialAuthenticationPolicy() { }
         public static System.ClientModel.Primitives.KeyCredentialAuthenticationPolicy CreateHeaderPolicy(System.ClientModel.KeyCredential credential, string headerName, string? keyPrefix = null) { throw null; }
         public static System.ClientModel.Primitives.KeyCredentialAuthenticationPolicy CreateQueryPolicy(System.ClientModel.KeyCredential credential, string queryName) { throw null; }
-        public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineProcessor pipeline) { }
-        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineProcessor pipeline) { throw null; }
+        public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PipelinePolicy> pipeline) { }
+        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PipelinePolicy> pipeline) { throw null; }
     }
     public abstract partial class MessageHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable
     {
@@ -174,20 +174,16 @@ namespace System.ClientModel.Primitives
     public abstract partial class PipelinePolicy
     {
         protected PipelinePolicy() { }
-        public abstract void Process(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineProcessor pipeline);
-        public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineProcessor pipeline);
+        public abstract void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PipelinePolicy> pipeline);
+        public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PipelinePolicy> pipeline);
+        protected virtual bool ProcessNext(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PipelinePolicy> pipeline) { throw null; }
+        protected virtual System.Threading.Tasks.Task<bool> ProcessNextAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PipelinePolicy> pipeline) { throw null; }
     }
     public enum PipelinePosition
     {
         PerCall = 0,
         PerTry = 1,
         BeforeTransport = 2,
-    }
-    public abstract partial class PipelineProcessor
-    {
-        protected PipelineProcessor() { }
-        public abstract bool ProcessNext();
-        public abstract System.Threading.Tasks.ValueTask<bool> ProcessNextAsync();
     }
     public abstract partial class PipelineRequest : System.IDisposable
     {
@@ -223,17 +219,17 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.PipelineMessage CreateMessage() { throw null; }
         protected abstract System.ClientModel.Primitives.PipelineMessage CreateMessageCore();
         public void Process(System.ClientModel.Primitives.PipelineMessage message) { }
-        public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineProcessor pipeline) { }
+        public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PipelinePolicy> pipeline) { }
         public System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
-        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineProcessor pipeline) { throw null; }
+        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PipelinePolicy> pipeline) { throw null; }
         protected abstract void ProcessCore(System.ClientModel.Primitives.PipelineMessage message);
         protected abstract System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.PipelineMessage message);
     }
     public partial class ResponseBufferingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
         public ResponseBufferingPolicy(System.TimeSpan networkTimeout) { }
-        public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineProcessor pipeline) { }
-        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineProcessor pipeline) { throw null; }
+        public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PipelinePolicy> pipeline) { }
+        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PipelinePolicy> pipeline) { throw null; }
         public static void SetBufferResponse(System.ClientModel.Primitives.PipelineMessage message, bool bufferResponse) { }
         public static void SetNetworkTimeout(System.ClientModel.Primitives.PipelineMessage message, System.TimeSpan networkTimeout) { }
         public static bool TryGetBufferResponse(System.ClientModel.Primitives.PipelineMessage message, out bool bufferResponse) { throw null; }
