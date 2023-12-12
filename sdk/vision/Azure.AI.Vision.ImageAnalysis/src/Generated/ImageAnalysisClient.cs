@@ -523,7 +523,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/unifiedvision", false);
+            uri.AppendRaw("/computervision", false);
             uri.AppendPath("/imageanalysis:analyze", false);
             if (visualFeatures != null && Optional.IsCollectionDefined(visualFeatures))
             {
@@ -560,7 +560,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRaw("/unifiedvision", false);
+            uri.AppendRaw("/computervision", false);
             uri.AppendPath("/imageanalysis:analyze", false);
             if (visualFeatures != null && Optional.IsCollectionDefined(visualFeatures))
             {
