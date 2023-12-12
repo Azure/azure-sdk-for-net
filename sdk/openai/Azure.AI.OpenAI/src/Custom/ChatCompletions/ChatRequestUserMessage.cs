@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
 
@@ -30,7 +31,7 @@ public partial class ChatRequestUserMessage : ChatRequestMessage
     /// or a collection of content items instead represented by <see cref="MultimodalContentItems"/>.
     /// </remarks>
     [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(SerializeContent))]
-    public override string Content { get; protected set; }
+    public string Content { get; protected set; }
 
     /// <summary>
     /// Gets the multimodal content item content associated with this message. Null if the message was instantiated
@@ -84,6 +85,7 @@ public partial class ChatRequestUserMessage : ChatRequestMessage
         MultimodalContentItems = content.ToList();
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal void SerializeContent(Utf8JsonWriter writer)
     {
         if (MultimodalContentItems != null)
