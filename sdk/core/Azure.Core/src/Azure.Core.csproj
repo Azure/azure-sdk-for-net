@@ -71,6 +71,7 @@
     <Compile Include="Shared\CancellationHelper.cs" />
     <Compile Include="Shared\OperationPoller.cs" />
     <Compile Include="Shared\TypeReferenceTypeAttribute.cs" />
+    <Compile Include="..\..\System.ClientModel\src\Internal\BitVector640.cs" />
   </ItemGroup>
 
   <ItemGroup>
