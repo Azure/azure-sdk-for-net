@@ -103,9 +103,7 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 
         HttpResponseMessage responseMessage;
         Stream? contentStream = null;
-
-        // TODO: enable with retries
-        //message.ClearResponse();
+        message.Response = null;
 
         try
         {

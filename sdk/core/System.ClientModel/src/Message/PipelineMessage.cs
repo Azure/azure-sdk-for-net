@@ -51,6 +51,12 @@ public class PipelineMessage : IDisposable
 
     #endregion
 
+    #region Meta-data for pipeline processing
+
+    internal int RetryCount { get; set; }
+
+    #endregion
+
     #region Per-request pipeline
 
     internal bool CustomRequestPipeline =>
@@ -63,6 +69,14 @@ public class PipelineMessage : IDisposable
     internal PipelinePolicy[]? BeforeTransportPolicies { get; set; }
 
     #endregion
+
+    internal void AssertResponse()
+    {
+        if (Response is null)
+        {
+            throw new InvalidOperationException("Response is not set on message.");
+        }
+    }
 
     #region IDisposable
 
