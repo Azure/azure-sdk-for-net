@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
+using static Azure.RequestContext;
 
 namespace Azure.Core
 {
@@ -23,7 +23,7 @@ namespace Azure.Core
         private ResponseClassificationHandler[]? _handlers;
         private ResponseClassifier _endOfChain;
 
-        public ChainingClassifier((int Status, bool IsError)[]? statusCodes,
+        public ChainingClassifier(StatusCodeClassification[]? statusCodes,
             ResponseClassificationHandler[]? handlers,
             ResponseClassifier endOfChain)
         {
@@ -67,16 +67,16 @@ namespace Azure.Core
 
         private class StatusCodeHandler : ResponseClassificationHandler
         {
-            private (int Status, bool IsError)[] _statusCodes;
+            private StatusCodeClassification[] _statusCodes;
 
-            public StatusCodeHandler((int Status, bool IsError)[] statusCodes)
+            public StatusCodeHandler(StatusCodeClassification[] statusCodes)
             {
                 _statusCodes = statusCodes;
             }
 
             public override bool TryClassify(HttpMessage message, out bool isError)
             {
-                foreach (var classification in _statusCodes)
+                foreach (StatusCodeClassification classification in _statusCodes)
                 {
                     if (classification.Status == message.Response.Status)
                     {

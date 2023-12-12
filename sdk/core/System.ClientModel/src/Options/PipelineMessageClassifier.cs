@@ -7,6 +7,9 @@ public class PipelineMessageClassifier
 {
     internal static PipelineMessageClassifier Default { get; } = new PipelineMessageClassifier();
 
+    public static PipelineMessageClassifier Create(ReadOnlySpan<ushort> successStatusCodes)
+        => new ResponseStatusClassifier(successStatusCodes);
+
     protected internal PipelineMessageClassifier() { }
 
     /// <summary>

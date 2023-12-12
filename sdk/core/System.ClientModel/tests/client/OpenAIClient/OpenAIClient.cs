@@ -87,5 +87,5 @@ public class OpenAIClient
     }
 
     private static PipelineMessageClassifier _messageClassifier200;
-    private static PipelineMessageClassifier MessageClassifier200 => _messageClassifier200 ??= new ResponseStatusClassifier(stackalloc ushort[] { 200 });
+    private static PipelineMessageClassifier MessageClassifier200 => _messageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 }

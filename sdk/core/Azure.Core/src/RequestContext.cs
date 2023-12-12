@@ -18,8 +18,8 @@ namespace Azure
     {
         private bool _frozen;
 
-        private (int Status, bool IsError)[]? _statusCodes;
-        internal (int Status, bool IsError)[]? StatusCodes => _statusCodes;
+        private StatusCodeClassification[]? _statusCodes;
+        internal StatusCodeClassification[]? StatusCodes => _statusCodes;
 
         private ResponseClassificationHandler[]? _handlers;
         internal ResponseClassificationHandler[]? Handlers => _handlers;
@@ -39,7 +39,7 @@ namespace Azure
             }
         }
 
-        private ErrorOptions FromErrorBehavior(ErrorBehavior errorOptions)
+        private static ErrorOptions FromErrorBehavior(ErrorBehavior errorOptions)
         {
             return errorOptions switch
             {
@@ -49,7 +49,7 @@ namespace Azure
             };
         }
 
-        private ErrorBehavior ToErrorBehavior(ErrorOptions errorOptions)
+        private static ErrorBehavior ToErrorBehavior(ErrorOptions errorOptions)
         {
             return errorOptions switch
             {
@@ -110,9 +110,11 @@ namespace Azure
             }
 
             int length = _statusCodes == null ? 0 : _statusCodes.Length;
+
             Array.Resize(ref _statusCodes, length + 1);
             Array.Copy(_statusCodes, 0, _statusCodes, 1, length);
-            _statusCodes[0] = (statusCode, isError);
+
+            _statusCodes[0] = new(statusCode, isError);
         }
 
         /// <summary>
@@ -136,8 +138,10 @@ namespace Azure
             }
 
             int length = _handlers == null ? 0 : _handlers.Length;
+
             Array.Resize(ref _handlers, length + 1);
             Array.Copy(_handlers, 0, _handlers, 1, length);
+
             _handlers[0] = classifier;
         }
 
@@ -160,7 +164,7 @@ namespace Azure
 
                 if (_statusCodes != null)
                 {
-                    foreach (var classification in _statusCodes)
+                    foreach (StatusCodeClassification classification in _statusCodes)
                     {
                         clone.AddClassifier(classification.Status, classification.IsError);
                     }
@@ -170,6 +174,21 @@ namespace Azure
             }
 
             return new ChainingClassifier(_statusCodes, _handlers, classifier);
+        }
+
+        internal readonly struct StatusCodeClassification
+        {
+            private readonly int _status;
+            private readonly bool _isError;
+
+            public StatusCodeClassification(int status, bool isError)
+            {
+                _status = status;
+                _isError = isError;
+            }
+
+            public int Status => _status;
+            public bool IsError => _isError;
         }
     }
 }
