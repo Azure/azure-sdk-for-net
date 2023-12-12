@@ -67,7 +67,6 @@ namespace System.ClientModel
         public System.ClientModel.Primitives.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
         public void AddHeader(string name, string value) { }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
-        protected internal void Apply(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineMessageClassifier? messageClassifier = null) { }
     }
 }
 namespace System.ClientModel.Primitives
