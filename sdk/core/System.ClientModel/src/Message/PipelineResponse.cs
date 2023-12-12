@@ -63,15 +63,13 @@ public abstract class PipelineResponse : IDisposable
     /// an error code.
     /// </summary>
     // IsError must be virtual in order to maintain Azure.Core back-compatibility.
-    public virtual bool IsError { get; }
+    public virtual bool IsError => _isError;
 
     // We have to have a separate method for setting IsError so that the IsError
     // setter doesn't become virtual when we make the getter virtual.
-    internal void SetIsError(bool isError)
-        => SetIsErrorCore(isError);
+    internal void SetIsError(bool isError) => SetIsErrorCore(isError);
 
-    protected virtual void SetIsErrorCore(bool isError)
-        => _isError = isError;
+    protected virtual void SetIsErrorCore(bool isError) => _isError = isError;
 
     #endregion
 
