@@ -4863,7 +4863,8 @@ namespace Azure.Storage.Blobs.Specialized
             GetPropertiesInternal(
                 options?.Conditions,
                 async: false,
-                new RequestContext() { CancellationToken = cancellationToken })
+                new RequestContext() { CancellationToken = cancellationToken },
+                options: options)
                 .EnsureCompleted();
 
         /// <summary>
@@ -4937,7 +4938,8 @@ namespace Azure.Storage.Blobs.Specialized
             await GetPropertiesInternal(
                 options?.Conditions,
                 async: true,
-                new RequestContext() { CancellationToken = cancellationToken })
+                new RequestContext() { CancellationToken = cancellationToken },
+                options: options)
                 .ConfigureAwait(false);
 
         /// <summary>

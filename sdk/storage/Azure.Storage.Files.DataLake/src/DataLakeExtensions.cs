@@ -223,6 +223,22 @@ namespace Azure.Storage.Files.DataLake
             };
         }
 
+        internal static BlobGetPropertiesOptions ToBlobGetPropertiesOptions(this DataLakePathGetPropertiesOptions dataLakePathGetPropertiesOptions)
+        {
+            if (dataLakePathGetPropertiesOptions == null)
+            {
+                return null;
+            }
+
+            BlobRequestConditions conditions = dataLakePathGetPropertiesOptions?.Conditions.ToBlobRequestConditions();
+
+            return new BlobGetPropertiesOptions()
+            {
+                Conditions = conditions,
+                UserPrincipalName = dataLakePathGetPropertiesOptions.UserPrincipalName
+            };
+        }
+
         internal static PathItem ToPathItem(this Dictionary<string, string> dictionary)
         {
             dictionary.TryGetValue("name", out string name);

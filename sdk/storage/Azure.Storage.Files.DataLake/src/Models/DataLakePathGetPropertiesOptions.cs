@@ -9,6 +9,12 @@ namespace Azure.Storage.Files.DataLake.Models
     public class DataLakePathGetPropertiesOptions
     {
         /// <summary>
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// getting properties for this path.
+        /// </summary>
+        public DataLakeRequestConditions Conditions { get; set; }
+
+        /// <summary>
         /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
         /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
         /// headers will be transformed from Azure Active Directory Object IDs to User Principal Names.

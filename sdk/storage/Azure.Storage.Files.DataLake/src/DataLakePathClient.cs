@@ -3460,7 +3460,7 @@ namespace Azure.Storage.Files.DataLake
 
         #region Get Properties
         /// <summary>
-        /// The <see cref="GetProperties(DataLakePathGetPropertiesOptions, DataLakeRequestConditions, CancellationToken)"/> operation returns all
+        /// The <see cref="GetProperties(DataLakePathGetPropertiesOptions, CancellationToken)"/> operation returns all
         /// user-defined metadata, standard HTTP properties, and system
         /// properties for the path. It does not return the content of the
         /// path.
@@ -3472,10 +3472,6 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="options">
         /// Optional <see cref="DataLakePathGetPropertiesOptions"/> to add
         /// options on getting the path's properties.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on getting the path's properties.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -3491,7 +3487,6 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual Response<PathProperties> GetProperties(
             DataLakePathGetPropertiesOptions options = default,
-            DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(GetProperties)}");
@@ -3501,7 +3496,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<Blobs.Models.BlobProperties> response = _blockBlobClient.GetProperties(
-                    conditions.ToBlobRequestConditions(),
+                    options?.ToBlobGetPropertiesOptions(),
                     cancellationToken);
 
                 return Response.FromValue(
@@ -3578,7 +3573,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="GetPropertiesAsync(DataLakePathGetPropertiesOptions, DataLakeRequestConditions, CancellationToken)"/> operation returns all
+        /// The <see cref="GetPropertiesAsync(DataLakePathGetPropertiesOptions, CancellationToken)"/> operation returns all
         /// user-defined metadata, standard HTTP properties, and system
         /// properties for the path. It does not return the content of the
         /// path.
@@ -3590,10 +3585,6 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="options">
         /// Optional <see cref="DataLakePathGetPropertiesOptions"/> to add
         /// options on getting the path's properties.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on getting the path's properties.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -3609,7 +3600,6 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual async Task<Response<PathProperties>> GetPropertiesAsync(
             DataLakePathGetPropertiesOptions options = default,
-            DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(GetProperties)}");
@@ -3619,7 +3609,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<Blobs.Models.BlobProperties> response = await _blockBlobClient.GetPropertiesAsync(
-                    conditions.ToBlobRequestConditions(),
+                    options?.ToBlobGetPropertiesOptions(),
                     cancellationToken)
                     .ConfigureAwait(false);
 

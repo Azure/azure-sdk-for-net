@@ -1665,7 +1665,7 @@ namespace Azure.Storage.Files.DataLake
 
         #region Get Properties
         /// <summary>
-        /// The <see cref="GetProperties(DataLakePathGetPropertiesOptions, DataLakeRequestConditions, CancellationToken)"/> operation returns all
+        /// The <see cref="GetProperties(DataLakePathGetPropertiesOptions, CancellationToken)"/> operation returns all
         /// user-defined metadata, standard HTTP properties, and system
         /// properties for the path. It does not return the content of the
         /// path.
@@ -1677,10 +1677,6 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="options">
         /// Optional <see cref="DataLakePathGetPropertiesOptions"/> to add
         /// options on getting the path's properties.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on getting the path's properties.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1698,7 +1694,6 @@ namespace Azure.Storage.Files.DataLake
         public virtual Response<PathProperties> GetProperties(
             DataLakePathGetPropertiesOptions options = default,
 #pragma warning restore CS0114 // Member hides inherited member; missing override keyword
-            DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(GetProperties)}");
@@ -1708,7 +1703,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 return base.GetProperties(
-                    conditions,
+                    options?.Conditions,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -1779,7 +1774,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="GetPropertiesAsync(DataLakePathGetPropertiesOptions, DataLakeRequestConditions, CancellationToken)"/> operation returns all
+        /// The <see cref="GetPropertiesAsync(DataLakePathGetPropertiesOptions, CancellationToken)"/> operation returns all
         /// user-defined metadata, standard HTTP properties, and system
         /// properties for the path. It does not return the content of the
         /// path.
@@ -1790,10 +1785,6 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="options">
         /// Optional <see cref="DataLakePathGetPropertiesOptions"/> to add
         /// options on getting the path's properties.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on getting the path's properties.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1809,7 +1800,6 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public override async Task<Response<PathProperties>> GetPropertiesAsync(
             DataLakePathGetPropertiesOptions options = default,
-            DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(GetProperties)}");
@@ -1819,7 +1809,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 return await base.GetPropertiesAsync(
-                    conditions,
+                    options?.Conditions,
                     cancellationToken)
                     .ConfigureAwait(false);
             }

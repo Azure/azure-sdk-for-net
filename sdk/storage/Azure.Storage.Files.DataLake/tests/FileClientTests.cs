@@ -2238,8 +2238,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
+                DataLakePathGetPropertiesOptions options = new DataLakePathGetPropertiesOptions()
+                {
+                    Conditions = conditions
+                };
+
                 // Act
-                Response<PathProperties> response = await file.GetPropertiesAsync(conditions: conditions);
+                Response<PathProperties> response = await file.GetPropertiesAsync(options: options);
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -2259,12 +2264,17 @@ namespace Azure.Storage.Files.DataLake.Tests
                 parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
                 DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
 
+                DataLakePathGetPropertiesOptions options = new DataLakePathGetPropertiesOptions()
+                {
+                    Conditions = conditions
+                };
+
                 // Act
                 await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
                         var _ = (await file.GetPropertiesAsync(
-                            conditions: conditions)).Value;
+                            options: options)).Value;
                     });
             }
         }
