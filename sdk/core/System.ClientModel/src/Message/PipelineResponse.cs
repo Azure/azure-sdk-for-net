@@ -7,6 +7,8 @@ namespace System.ClientModel.Primitives;
 
 public abstract class PipelineResponse : IDisposable
 {
+    private bool _isError = false;
+
     // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
     private static readonly BinaryData s_emptyBinaryData = new(Array.Empty<byte>());
 
@@ -60,7 +62,11 @@ public abstract class PipelineResponse : IDisposable
     /// Indicates whether the status code of the returned response is considered
     /// an error code.
     /// </summary>
-    public bool IsError { get; protected internal set; }
+    public virtual bool IsError
+    {
+        get => _isError;
+        protected internal set => _isError = value;
+    }
 
     #endregion
 

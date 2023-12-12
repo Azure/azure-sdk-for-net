@@ -163,6 +163,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Blobs.Files.Shares.Tests", "Azure.Storage.DataMovement.Files.Shares\BlobToFileSharesTests\Azure.Storage.DataMovement.Blobs.Files.Shares.Tests.csproj", "{B08F17FE-7AFA-4777-B179-0FE15883EA50}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.ClientModel", "..\core\System.ClientModel\src\System.ClientModel.csproj", "{A5B4D7E1-E930-4E3D-88A6-68EC0F671EF3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -357,6 +359,10 @@ Global
 		{B08F17FE-7AFA-4777-B179-0FE15883EA50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B08F17FE-7AFA-4777-B179-0FE15883EA50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B08F17FE-7AFA-4777-B179-0FE15883EA50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5B4D7E1-E930-4E3D-88A6-68EC0F671EF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5B4D7E1-E930-4E3D-88A6-68EC0F671EF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5B4D7E1-E930-4E3D-88A6-68EC0F671EF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5B4D7E1-E930-4E3D-88A6-68EC0F671EF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

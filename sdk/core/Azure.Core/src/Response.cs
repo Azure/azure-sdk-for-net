@@ -40,15 +40,6 @@ namespace Azure
         /// <summary>
         /// TBD.
         /// </summary>
-        public new virtual bool IsError
-        {
-            get => base.IsError;
-            internal set => base.IsError = value;
-        }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
