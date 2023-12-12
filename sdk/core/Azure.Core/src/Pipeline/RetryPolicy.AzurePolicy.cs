@@ -92,19 +92,14 @@ public partial class RetryPolicy
         {
             private readonly DelayStrategy _strategy;
             private readonly RetryPolicy _retryPolicy;
-            //private readonly AzureCoreRetryPolicy _adapterPolicy;
 
-            public AzureCoreRetryDelay(DelayStrategy strategy, RetryPolicy policy /*, AzureCoreRetryPolicy clientPolicy*/)
+            public AzureCoreRetryDelay(DelayStrategy strategy, RetryPolicy policy)
             {
                 _strategy = strategy;
                 _retryPolicy = policy;
-                //_adapterPolicy = clientPolicy;
             }
 
-            //protected override void OnDelayComplete(PipelineMessage message)
-            //    => _adapterPolicy.OnDelayComplete(message);
-
-            protected override TimeSpan GetDelay(PipelineMessage message, int delayCount)
+            protected override TimeSpan GetDelayCore(PipelineMessage message, int delayCount)
             {
                 HttpMessage httpMessage = AssertHttpMessage(message);
 
@@ -114,10 +109,10 @@ public partial class RetryPolicy
                 return _strategy.GetNextDelay(response, delayCount);
             }
 
-            protected override void Wait(TimeSpan duration, CancellationToken cancellationToken)
+            protected override void WaitCore(TimeSpan duration, CancellationToken cancellationToken)
                 => _retryPolicy.Wait(duration, cancellationToken);
 
-            protected override async Task WaitAsync(TimeSpan duration, CancellationToken cancellationToken)
+            protected override async Task WaitCoreAsync(TimeSpan duration, CancellationToken cancellationToken)
                 => await _retryPolicy.WaitAsync(duration, cancellationToken).ConfigureAwait(false);
         }
     }

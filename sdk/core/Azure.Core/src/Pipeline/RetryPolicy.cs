@@ -15,7 +15,6 @@ namespace Azure.Core.Pipeline
     {
         private readonly int _maxRetries;
         private readonly DelayStrategy _delayStrategy;
-
         private readonly AzureCoreRetryPolicy _policy;
 
         /// <summary>

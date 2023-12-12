@@ -120,10 +120,12 @@ namespace System.ClientModel.Primitives
     public partial class MessageDelay
     {
         public MessageDelay() { }
-        protected virtual System.TimeSpan GetDelay(System.ClientModel.Primitives.PipelineMessage message, int delayCount) { throw null; }
+        public void Delay(System.ClientModel.Primitives.PipelineMessage message, System.Threading.CancellationToken cancellationToken) { }
+        public System.Threading.Tasks.Task DelayAsync(System.ClientModel.Primitives.PipelineMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected virtual System.TimeSpan GetDelayCore(System.ClientModel.Primitives.PipelineMessage message, int delayCount) { throw null; }
         protected virtual void OnDelayComplete(System.ClientModel.Primitives.PipelineMessage message) { }
-        protected virtual void Wait(System.TimeSpan duration, System.Threading.CancellationToken cancellationToken) { }
-        protected virtual System.Threading.Tasks.Task WaitAsync(System.TimeSpan duration, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected virtual void WaitCore(System.TimeSpan duration, System.Threading.CancellationToken cancellationToken) { }
+        protected virtual System.Threading.Tasks.Task WaitCoreAsync(System.TimeSpan duration, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public abstract partial class MessageHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable
     {

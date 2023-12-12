@@ -26,7 +26,6 @@ public class RequestRetryPolicy : PipelinePolicy
     }
 
     public override void Process(PipelineMessage message, PipelineProcessor pipeline)
-
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
         => ProcessSyncOrAsync(message, pipeline, async: false).AsTask().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
