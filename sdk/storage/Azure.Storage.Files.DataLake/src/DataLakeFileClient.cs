@@ -3363,6 +3363,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
+
         /// <summary>
         /// The <see cref="ReadToAsync(Stream, DataLakeFileReadToOptions, CancellationToken)"/>
         /// operation downloads an entire file using parallel requests,
