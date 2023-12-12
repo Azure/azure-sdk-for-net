@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using static Azure.RequestContext;
 
 namespace Azure.Core
 {
@@ -12,6 +13,7 @@ namespace Azure.Core
     /// </summary>
     public class StatusCodeClassifier : ResponseClassifier
     {
+        private readonly ReadOnlySpan<ushort> _origCodes;
         private readonly PipelineMessageClassifier _statusCodeClassifier;
 
         internal ResponseClassificationHandler[]? Handlers { get; set; }
@@ -49,8 +51,16 @@ namespace Azure.Core
             return base.IsErrorResponse(message);
         }
 
-        internal virtual StatusCodeClassifier Clone()
+        internal virtual StatusCodeClassifier Clone(StatusCodeClassification[]? _statusCodes, ResponseClassificationHandler[]? _handlers)
         {
+            if (_statusCodes != null)
+            {
+                foreach (StatusCodeClassification classification in _statusCodes)
+                {
+                    clone.AddClassifier(classification.Status, classification.IsError);
+                }
+            }
+
             // TODO: Update this logic
             return new StatusCodeClassifier(_statusCodeClassifier, Handlers);
         }

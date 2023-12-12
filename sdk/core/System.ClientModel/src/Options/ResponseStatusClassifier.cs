@@ -17,6 +17,8 @@ namespace System.ClientModel.Primitives
         /// not to be errors.</param>
         public ResponseStatusClassifier(ReadOnlySpan<ushort> successStatusCodes)
         {
+            _successCodes = new();
+
             foreach (int statusCode in successStatusCodes)
             {
                 AddClassifier(statusCode, isError: false);
