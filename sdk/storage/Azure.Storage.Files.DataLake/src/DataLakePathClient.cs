@@ -3546,9 +3546,11 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        #pragma warning disable AZC0002
         public virtual Response<PathProperties> GetProperties(
-            DataLakeRequestConditions conditions = default,
-            CancellationToken cancellationToken = default)
+            #pragma warning restore AZC0002
+            DataLakeRequestConditions conditions,
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(GetProperties)}");
 
@@ -3663,9 +3665,11 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        #pragma warning disable AZC0002
         public virtual async Task<Response<PathProperties>> GetPropertiesAsync(
-            DataLakeRequestConditions conditions = default,
-            CancellationToken cancellationToken = default)
+            #pragma warning restore AZC0002
+            DataLakeRequestConditions conditions,
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(GetProperties)}");
 

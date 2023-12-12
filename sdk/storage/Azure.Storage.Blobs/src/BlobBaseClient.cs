@@ -4897,7 +4897,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobProperties> GetProperties(
-            BlobGetPropertiesOptions options = default,
+            BlobGetPropertiesOptions options,
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             // TODO: this remains hidden until we have more options that are non-HNS
@@ -4974,7 +4974,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobProperties>> GetPropertiesAsync(
-            BlobGetPropertiesOptions options = default,
+            BlobGetPropertiesOptions options,
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             // TODO: this remains hidden until we have more options that are non-HNS

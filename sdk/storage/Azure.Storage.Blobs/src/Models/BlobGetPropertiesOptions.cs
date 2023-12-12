@@ -7,6 +7,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Optional parameters for getting properties for a blob.
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class BlobGetPropertiesOptions
     {
         /// <summary>
