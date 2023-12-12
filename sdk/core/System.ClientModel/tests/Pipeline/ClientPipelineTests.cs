@@ -252,6 +252,8 @@ public class ClientPipelineTests
 
             return prop is List<string> list ? list : new List<string>();
         }
+
+        public override string ToString() => $"ObservablePolicy:{Id}";
     }
     #endregion
 }

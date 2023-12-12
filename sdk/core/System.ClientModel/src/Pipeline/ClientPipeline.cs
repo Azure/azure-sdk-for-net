@@ -180,45 +180,34 @@ public partial class ClientPipeline
         private readonly PolicyEnumerator _enumerator;
 
         public PipelineProcessor(ReadOnlyMemory<PipelinePolicy> policies)
-        {
-            _enumerator = new(policies);
-        }
+            => _enumerator = new(policies);
 
         public readonly IEnumerator<PipelinePolicy> GetEnumerator()
             => _enumerator;
 
         readonly IEnumerator IEnumerable.GetEnumerator()
             => _enumerator;
-    }
 
-    private class PolicyEnumerator : IEnumerator<PipelinePolicy>
-    {
-        private readonly ReadOnlyMemory<PipelinePolicy> _policies;
-        private int _current;
-
-        public PolicyEnumerator(ReadOnlyMemory<PipelinePolicy> policies)
+        private class PolicyEnumerator : IEnumerator<PipelinePolicy>
         {
-            _policies = policies;
-            _current = -1;
+            private readonly ReadOnlyMemory<PipelinePolicy> _policies;
+            private int _current;
+
+            public PolicyEnumerator(ReadOnlyMemory<PipelinePolicy> policies)
+            {
+                _policies = policies;
+                _current = -1;
+            }
+
+            public bool MoveNext() => _current++ < _policies.Length;
+
+            public PipelinePolicy Current => _policies.Span[_current];
+
+            object IEnumerator.Current => Current;
+
+            public void Reset() => _current = -1;
+
+            public void Dispose() { }
         }
-
-        public PolicyEnumerator GetEnumerator() => this;
-
-        public bool MoveNext()
-        {
-            _current++;
-            return _current < _policies.Length;
-        }
-
-        public PipelinePolicy Current => _policies.Span[_current];
-
-        object IEnumerator.Current => Current;
-
-        public void Reset()
-        {
-            _current = 0;
-        }
-
-        public void Dispose() { }
     }
 }
