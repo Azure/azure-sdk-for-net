@@ -7,9 +7,14 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Optional parameters for getting properties for a blob.
     /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
     public class BlobGetPropertiesOptions
     {
+        /// <summary>
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// getting properties for this blob.
+        /// </summary>
+        public BlobRequestConditions Conditions { get; set; }
+
         /// <summary>
         /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
         /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response

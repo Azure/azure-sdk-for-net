@@ -3187,7 +3187,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// transferred to the destination.  The copied snapshots are complete
         /// copies of the original snapshot and can be read or copied from as
         /// usual.  You can check the <see cref="BlobProperties.CopyStatus"/>
-        /// returned from the <see cref="BlobBaseClient.GetProperties(BlobRequestConditions, CancellationToken)"/> to
+        /// returned from the <see cref="BlobBaseClient.GetProperties(BlobGetPropertiesOptions, CancellationToken)"/> to
         /// determine if the copy has completed.
         ///
         /// For more information, see
@@ -3227,23 +3227,23 @@ namespace Azure.Storage.Blobs.Specialized
         /// permanently associated with the source and may only be used for
         /// incremental copies.
         ///
-        /// The <see cref="BlobBaseClient.GetProperties(BlobRequestConditions, CancellationToken)"/>,
+        /// The <see cref="BlobBaseClient.GetProperties(BlobGetPropertiesOptions, CancellationToken)"/>,
         /// <see cref="BlobContainerClient.GetBlobs"/>, and
         /// <see cref="BlobContainerClient.GetBlobsByHierarchy"/>
         /// operations indicate whether the blob is an incremental copy blob
         /// created in this way.  Incremental copy blobs may not be downloaded
         /// directly.  The only supported operations are
-        /// <see cref="BlobBaseClient.GetProperties(BlobRequestConditions, CancellationToken)"/>,
+        /// <see cref="BlobBaseClient.GetProperties(BlobGetPropertiesOptions, CancellationToken)"/>,
         /// <see cref="StartCopyIncremental(Uri, string, PageBlobRequestConditions, CancellationToken)"/>,
         /// and <see cref="BlobBaseClient.Delete"/>.  The copied snapshots may
         /// be read and deleted as usual.
         ///
         /// An incremental copy is performed asynchronously on the service and
         /// must be polled for completion.  You can poll
-        /// <see cref="BlobBaseClient.GetProperties(BlobRequestConditions, CancellationToken)"/> and check
+        /// <see cref="BlobBaseClient.GetProperties(BlobGetPropertiesOptions, CancellationToken)"/> and check
         /// <see cref="BlobProperties.CopyStatus"/> to determine when the copy
         /// has completed.  When the copy completes, the destination blob will
-        /// contain a new snapshot.  The <see cref="BlobBaseClient.GetProperties(BlobRequestConditions, CancellationToken)"/>
+        /// contain a new snapshot.  The <see cref="BlobBaseClient.GetProperties(BlobGetPropertiesOptions, CancellationToken)"/>
         /// operation returns the snapshot time of the newly created snapshot.
         ///
         /// The first time an incremental copy is performed on a destination
@@ -3296,7 +3296,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// transferred to the destination. The copied snapshots are complete
         /// copies of the original snapshot and can be read or copied from as
         /// usual.  You can check the <see cref="BlobProperties.CopyStatus"/>
-        /// returned from the <see cref="BlobBaseClient.GetPropertiesAsync(BlobRequestConditions, CancellationToken)"/>
+        /// returned from the <see cref="BlobBaseClient.GetPropertiesAsync(BlobGetPropertiesOptions, CancellationToken)"/>
         /// to determine if thecopy has completed.
         ///
         /// For more information, see
@@ -3336,23 +3336,23 @@ namespace Azure.Storage.Blobs.Specialized
         /// permanently associated with the source and may only be used for
         /// incremental copies.
         ///
-        /// The <see cref="BlobBaseClient.GetPropertiesAsync(BlobRequestConditions, CancellationToken)"/>,
+        /// The <see cref="BlobBaseClient.GetPropertiesAsync(BlobGetPropertiesOptions, CancellationToken)"/>,
         /// <see cref="BlobContainerClient.GetBlobsAsync"/>, and
         /// <see cref="BlobContainerClient.GetBlobsByHierarchyAsync"/>
         /// operations indicate whether the blob is an incremental copy blob
         /// created in this way.  Incremental copy blobs may not be downloaded
         /// directly.  The only supported operations are
-        /// <see cref="BlobBaseClient.GetPropertiesAsync(BlobRequestConditions, CancellationToken)"/>,
+        /// <see cref="BlobBaseClient.GetPropertiesAsync(BlobGetPropertiesOptions, CancellationToken)"/>,
         /// <see cref="StartCopyIncrementalAsync(Uri, string, PageBlobRequestConditions, CancellationToken)"/>,
         /// and  <see cref="BlobBaseClient.DeleteAsync"/>.  The copied
         /// snapshots may be read and deleted as usual.
         ///
         /// An incremental copy is performed asynchronously on the service and
         /// must be polled for completion.  You can poll
-        /// <see cref="BlobBaseClient.GetPropertiesAsync(BlobRequestConditions, CancellationToken)"/> and check
+        /// <see cref="BlobBaseClient.GetPropertiesAsync(BlobGetPropertiesOptions, CancellationToken)"/> and check
         /// <see cref="BlobProperties.CopyStatus"/> to determine when the copy
         /// has completed.  When the copy completes, the destination blob will
-        /// contain a new snapshot.  The <see cref="BlobBaseClient.GetPropertiesAsync(BlobRequestConditions, CancellationToken)"/>
+        /// contain a new snapshot.  The <see cref="BlobBaseClient.GetPropertiesAsync(BlobGetPropertiesOptions, CancellationToken)"/>
         /// operation returns the snapshot time of the newly created snapshot.
         ///
         /// The first time an incremental copy is performed on a destination
@@ -3406,7 +3406,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The copied snapshots are complete copies of the original snapshot
         /// and can be read or copied from as usual.  You can check the
         /// <see cref="BlobProperties.CopyStatus"/> returned from the
-        /// <see cref="BlobBaseClient.GetPropertiesAsync(BlobRequestConditions, CancellationToken)"/> to determine if the
+        /// <see cref="BlobBaseClient.GetPropertiesAsync(BlobGetPropertiesOptions, CancellationToken)"/> to determine if the
         /// copy has completed.
         ///
         /// For more information, see
@@ -3449,23 +3449,23 @@ namespace Azure.Storage.Blobs.Specialized
         /// permanently associated with the source and may only be used for
         /// incremental copies.
         ///
-        /// The <see cref="BlobBaseClient.GetPropertiesAsync(BlobRequestConditions, CancellationToken)"/>,
+        /// The <see cref="BlobBaseClient.GetPropertiesAsync(BlobGetPropertiesOptions, CancellationToken)"/>,
         /// <see cref="BlobContainerClient.GetBlobsAsync"/>, and
         /// <see cref="BlobContainerClient.GetBlobsByHierarchyAsync"/>
         /// operations indicate whether the blob is an incremental copy blob
         /// created in this way.  Incremental copy blobs may not be downloaded
         /// directly.  The only supported operations are
-        /// <see cref="BlobBaseClient.GetPropertiesAsync(BlobRequestConditions, CancellationToken)"/>,
+        /// <see cref="BlobBaseClient.GetPropertiesAsync(BlobGetPropertiesOptions, CancellationToken)"/>,
         /// <see cref="StartCopyIncremental(Uri, string, PageBlobRequestConditions, CancellationToken)"/>,
         /// and  <see cref="BlobBaseClient.DeleteAsync"/>.  The copied
         /// snapshots may be read and deleted as usual.
         ///
         /// An incremental copy is performed asynchronously on the service and
         /// must be polled for completion.  You can poll
-        /// <see cref="BlobBaseClient.GetPropertiesAsync(BlobRequestConditions, CancellationToken)"/> and check
+        /// <see cref="BlobBaseClient.GetPropertiesAsync(BlobGetPropertiesOptions, CancellationToken)"/> and check
         /// <see cref="BlobProperties.CopyStatus"/> to determine when the copy
         /// has completed.  When the copy completes, the destination blob will
-        /// contain a new snapshot.  The <see cref="BlobBaseClient.GetPropertiesAsync(BlobRequestConditions, CancellationToken)"/>
+        /// contain a new snapshot.  The <see cref="BlobBaseClient.GetPropertiesAsync(BlobGetPropertiesOptions, CancellationToken)"/>
         /// operation returns the snapshot time of the newly created snapshot.
         ///
         /// The first time an incremental copy is performed on a destination

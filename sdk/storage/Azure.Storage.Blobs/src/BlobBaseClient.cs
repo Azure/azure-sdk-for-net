@@ -4831,6 +4831,42 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region GetProperties
         /// <summary>
+        /// The <see cref="GetProperties(BlobGetPropertiesOptions, CancellationToken)"/> operation returns all
+        /// user-defined metadata, standard HTTP properties, and system
+        /// properties for the blob. It does not return the content of the
+        /// blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties">
+        /// Get Blob Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional <see cref="BlobGetPropertiesOptions"/> to add
+        /// options on getting the blob's properties.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobProperties}"/> describing the
+        /// blob's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobProperties> GetProperties(
+            BlobGetPropertiesOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            // TODO: this remains hidden until we have more options that are non-HNS
+            GetPropertiesInternal(
+                options?.Conditions,
+                async: false,
+                new RequestContext() { CancellationToken = cancellationToken })
+                .EnsureCompleted();
+
+        /// <summary>
         /// The <see cref="GetProperties(BlobRequestConditions, CancellationToken)"/> operation returns all
         /// user-defined metadata, standard HTTP properties, and system
         /// properties for the blob. It does not return the content of the
@@ -4856,9 +4892,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        #pragma warning disable AZC0002
         public virtual Response<BlobProperties> GetProperties(
-            BlobRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
+            #pragma warning restore AZC0002
+            BlobRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             GetPropertiesInternal(
                 conditions,
                 async: false,
@@ -4866,7 +4905,7 @@ namespace Azure.Storage.Blobs.Specialized
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="GetProperties(BlobGetPropertiesOptions, BlobRequestConditions, CancellationToken)"/> operation returns all
+        /// The <see cref="GetPropertiesAsync(BlobGetPropertiesOptions, CancellationToken)"/> operation returns all
         /// user-defined metadata, standard HTTP properties, and system
         /// properties for the blob. It does not return the content of the
         /// blob.
@@ -4878,10 +4917,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="options">
         /// Optional <see cref="BlobGetPropertiesOptions"/> to add
         /// options on getting the blob's properties.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on getting the blob's properties.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -4895,17 +4930,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<BlobProperties> GetProperties(
-            BlobGetPropertiesOptions options,
-            BlobRequestConditions conditions = default,
+        public virtual async Task<Response<BlobProperties>> GetPropertiesAsync(
+            BlobGetPropertiesOptions options = default,
             CancellationToken cancellationToken = default) =>
             // TODO: this remains hidden until we have more options that are non-HNS
-            GetPropertiesInternal(
-                conditions,
-                async: false,
+            await GetPropertiesInternal(
+                options?.Conditions,
+                async: true,
                 new RequestContext() { CancellationToken = cancellationToken })
-                .EnsureCompleted();
+                .ConfigureAwait(false);
 
         /// <summary>
         /// The <see cref="GetPropertiesAsync(BlobRequestConditions, CancellationToken)"/> operation returns all
@@ -4933,51 +4966,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobProperties>> GetPropertiesAsync(
-            BlobRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
-            await GetPropertiesInternal(
-                conditions,
-                async: true,
-                new RequestContext() { CancellationToken = cancellationToken })
-                .ConfigureAwait(false);
-
-        /// <summary>
-        /// The <see cref="GetPropertiesAsync(BlobGetPropertiesOptions, BlobRequestConditions, CancellationToken)"/> operation returns all
-        /// user-defined metadata, standard HTTP properties, and system
-        /// properties for the blob. It does not return the content of the
-        /// blob.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties">
-        /// Get Blob Properties</see>.
-        /// </summary>
-        /// <param name="options">
-        /// Optional <see cref="BlobGetPropertiesOptions"/> to add
-        /// options on getting the blob's properties.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on getting the blob's properties.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{BlobProperties}"/> describing the
-        /// blob's properties.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        #pragma warning disable AZC0002
         public virtual async Task<Response<BlobProperties>> GetPropertiesAsync(
-            BlobGetPropertiesOptions options,
-            BlobRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
-            // TODO: this remains hidden until we have more options that are non-HNS
+            #pragma warning restore AZC0002
+            BlobRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             await GetPropertiesInternal(
                 conditions,
                 async: true,
