@@ -3460,7 +3460,67 @@ namespace Azure.Storage.Files.DataLake
 
         #region Get Properties
         /// <summary>
-        /// The <see cref="GetProperties"/> operation returns all
+        /// The <see cref="GetProperties(DataLakePathGetPropertiesOptions, DataLakeRequestConditions, CancellationToken)"/> operation returns all
+        /// user-defined metadata, standard HTTP properties, and system
+        /// properties for the path. It does not return the content of the
+        /// path.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties">
+        /// Get Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional <see cref="DataLakePathGetPropertiesOptions"/> to add
+        /// options on getting the path's properties.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on getting the path's properties.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathProperties}"/> describing the
+        /// path's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<PathProperties> GetProperties(
+            DataLakePathGetPropertiesOptions options = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(GetProperties)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobProperties> response = _blockBlobClient.GetProperties(
+                    conditions.ToBlobRequestConditions(),
+                    cancellationToken);
+
+                return Response.FromValue(
+                    response.ToPathProperties(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetProperties(DataLakeRequestConditions, CancellationToken)"/> operation returns all
         /// user-defined metadata, standard HTTP properties, and system
         /// properties for the path. It does not return the content of the
         /// path.
@@ -3485,6 +3545,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<PathProperties> GetProperties(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -3515,7 +3576,68 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="GetPropertiesAsync"/> operation returns all
+        /// The <see cref="GetPropertiesAsync(DataLakePathGetPropertiesOptions, DataLakeRequestConditions, CancellationToken)"/> operation returns all
+        /// user-defined metadata, standard HTTP properties, and system
+        /// properties for the path. It does not return the content of the
+        /// path.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties">
+        /// Get Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional <see cref="DataLakePathGetPropertiesOptions"/> to add
+        /// options on getting the path's properties.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on getting the path's properties.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathProperties}"/> describing the
+        /// paths's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<PathProperties>> GetPropertiesAsync(
+            DataLakePathGetPropertiesOptions options = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(GetProperties)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobProperties> response = await _blockBlobClient.GetPropertiesAsync(
+                    conditions.ToBlobRequestConditions(),
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.ToPathProperties(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetPropertiesAsync(DataLakeRequestConditions, CancellationToken)"/> operation returns all
         /// user-defined metadata, standard HTTP properties, and system
         /// properties for the path. It does not return the content of the
         /// path.
@@ -3540,6 +3662,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<PathProperties>> GetPropertiesAsync(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)

@@ -3265,7 +3265,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="StartCopyFromUri(Uri, BlobCopyFromUriOptions, CancellationToken)"/>
         /// operation begins an asynchronous copy of the data from the <paramref name="source"/> to this blob.
         /// You can check the <see cref="BlobProperties.CopyStatus"/>
-        /// returned from the <see cref="GetProperties"/> to determine if the
+        /// returned from the <see cref="GetProperties(BlobRequestConditions, CancellationToken)"/> to determine if the
         /// copy has completed.
         ///
         /// For more information, see
@@ -3332,7 +3332,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="StartCopyFromUri(Uri, Metadata, AccessTier?, BlobRequestConditions, BlobRequestConditions, RehydratePriority?, CancellationToken)"/>
         /// operation begins an asynchronous copy of the data from the <paramref name="source"/> to this blob.
         /// You can check the <see cref="BlobProperties.CopyStatus"/>
-        /// returned from the <see cref="GetProperties"/> to determine if the
+        /// returned from the <see cref="GetProperties(BlobRequestConditions, CancellationToken)"/> to determine if the
         /// copy has completed.
         ///
         /// For more information, see
@@ -3420,7 +3420,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="StartCopyFromUri(Uri, Metadata, AccessTier?, BlobRequestConditions, BlobRequestConditions, RehydratePriority?, CancellationToken)"/>
         /// operation begins an asynchronous copy of the data from the <paramref name="source"/>
         /// to this blob.  You can check the <see cref="BlobProperties.CopyStatus"/>
-        /// returned from the <see cref="GetPropertiesAsync"/> to determine if
+        /// returned from the <see cref="GetPropertiesAsync(BlobRequestConditions, CancellationToken)"/> to determine if
         /// the copy has completed.
         ///
         /// For more information, see
@@ -3487,7 +3487,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="StartCopyFromUri(Uri, Metadata, AccessTier?, BlobRequestConditions, BlobRequestConditions, RehydratePriority?, CancellationToken)"/>
         /// operation begins an asynchronous copy of the data from the <paramref name="source"/>
         /// to this blob.You can check the <see cref="BlobProperties.CopyStatus"/>
-        /// returned from the <see cref="GetPropertiesAsync"/> to determine if
+        /// returned from the <see cref="GetPropertiesAsync(BlobRequestConditions, CancellationToken)"/> to determine if
         /// the copy has completed.
         ///
         /// For more information, see
@@ -3575,7 +3575,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The <see cref="StartCopyFromUriInternal"/> operation begins an
         /// asynchronous copy of the data from the <paramref name="source"/>
         /// to this blob.  You can check <see cref="BlobProperties.CopyStatus"/>
-        /// returned from the<see cref="GetPropertiesAsync"/> to determine if
+        /// returned from the<see cref="GetPropertiesAsync(BlobRequestConditions, CancellationToken)"/> to determine if
         /// the copy has completed.
         ///
         /// For more information, see
@@ -4831,7 +4831,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region GetProperties
         /// <summary>
-        /// The <see cref="GetProperties"/> operation returns all
+        /// The <see cref="GetProperties(BlobRequestConditions, CancellationToken)"/> operation returns all
         /// user-defined metadata, standard HTTP properties, and system
         /// properties for the blob. It does not return the content of the
         /// blob.
@@ -4866,7 +4866,49 @@ namespace Azure.Storage.Blobs.Specialized
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="GetPropertiesAsync"/> operation returns all
+        /// The <see cref="GetProperties(BlobGetPropertiesOptions, BlobRequestConditions, CancellationToken)"/> operation returns all
+        /// user-defined metadata, standard HTTP properties, and system
+        /// properties for the blob. It does not return the content of the
+        /// blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties">
+        /// Get Blob Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional <see cref="BlobGetPropertiesOptions"/> to add
+        /// options on getting the blob's properties.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
+        /// conditions on getting the blob's properties.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobProperties}"/> describing the
+        /// blob's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<BlobProperties> GetProperties(
+            BlobGetPropertiesOptions options = default,
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            // TODO: this remains hidden until we have more options that are non-HNS
+            GetPropertiesInternal(
+                conditions,
+                async: false,
+                new RequestContext() { CancellationToken = cancellationToken })
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="GetPropertiesAsync(BlobRequestConditions, CancellationToken)"/> operation returns all
         /// user-defined metadata, standard HTTP properties, and system
         /// properties for the blob. It does not return the content of the
         /// blob.
@@ -4901,6 +4943,48 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
+        /// The <see cref="GetPropertiesAsync(BlobGetPropertiesOptions, BlobRequestConditions, CancellationToken)"/> operation returns all
+        /// user-defined metadata, standard HTTP properties, and system
+        /// properties for the blob. It does not return the content of the
+        /// blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties">
+        /// Get Blob Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional <see cref="BlobGetPropertiesOptions"/> to add
+        /// options on getting the blob's properties.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
+        /// conditions on getting the blob's properties.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobProperties}"/> describing the
+        /// blob's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<BlobProperties>> GetPropertiesAsync(
+            BlobGetPropertiesOptions options = default,
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            // TODO: this remains hidden until we have more options that are non-HNS
+            await GetPropertiesInternal(
+                conditions,
+                async: true,
+                new RequestContext() { CancellationToken = cancellationToken })
+                .ConfigureAwait(false);
+
+        /// <summary>
         /// The <see cref="GetPropertiesInternal"/> operation returns all
         /// user-defined metadata, standard HTTP properties, and system
         /// properties for the blob. It does not return the content of the
@@ -4923,6 +5007,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="operationName">
         /// The name of the calling operation.
         /// </param>
+        /// <param name="options">
+        /// Optional <see cref="BlobGetPropertiesOptions"/> to add
+        /// options on getting the blob's properties.
+        /// </param>
         /// <returns>
         /// A <see cref="Response{BlobProperties}"/> describing the
         /// blob's properties.
@@ -4935,7 +5023,8 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions,
             bool async,
             RequestContext context,
-            string operationName = default)
+            string operationName = default,
+            BlobGetPropertiesOptions options = default)
         {
             context ??= new RequestContext();
             operationName ??= $"{nameof(BlobBaseClient)}.{nameof(GetProperties)}";
@@ -4970,6 +5059,7 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm.ToEncryptionAlgorithmString(),
                             requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
+                            userPrincipalName: options?.UserPrincipalName,
                             context: context)
                             .ConfigureAwait(false);
                     }
@@ -4982,6 +5072,7 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm.ToEncryptionAlgorithmString(),
                             requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
+                            userPrincipalName: options?.UserPrincipalName,
                             context: context);
                     }
 

@@ -195,7 +195,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(string snapshot, string versionId, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
+        internal HttpMessage CreateGetPropertiesRequest(string snapshot, string versionId, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, bool? userPrincipalName, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -231,6 +231,10 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToSerialString());
             }
+            if (userPrincipalName != null)
+            {
+                request.Headers.Add("x-ms-upn", userPrincipalName.Value);
+            }
             if (ifModifiedSince != null)
             {
                 request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
@@ -264,15 +268,16 @@ namespace Azure.Storage.Blobs
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="userPrincipalName"> Optional. Valid only when Hierarchical Namespace is enabled for the account. If "true", the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response headers will be transformed from Azure Active Directory Object IDs to User Principal Names.  If "false", the values will be returned as Azure Active Directory Object IDs. The default value is false. Note that group and application Object IDs are not translated because they do not have unique friendly names. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<BlobGetPropertiesHeaders>> GetPropertiesAsync(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobGetPropertiesHeaders>> GetPropertiesAsync(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, bool? userPrincipalName = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(snapshot, versionId, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
+            using var message = CreateGetPropertiesRequest(snapshot, versionId, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, userPrincipalName, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -292,15 +297,16 @@ namespace Azure.Storage.Blobs
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="userPrincipalName"> Optional. Valid only when Hierarchical Namespace is enabled for the account. If "true", the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response headers will be transformed from Azure Active Directory Object IDs to User Principal Names.  If "false", the values will be returned as Azure Active Directory Object IDs. The default value is false. Note that group and application Object IDs are not translated because they do not have unique friendly names. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
         /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<BlobGetPropertiesHeaders> GetProperties(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobGetPropertiesHeaders> GetProperties(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, bool? userPrincipalName = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(snapshot, versionId, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
+            using var message = CreateGetPropertiesRequest(snapshot, versionId, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, userPrincipalName, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobGetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -312,7 +318,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(string snapshot, string versionId, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string ifTags, RequestConditions requestConditions, RequestContext context)
+        internal HttpMessage CreateGetPropertiesRequest(string snapshot, string versionId, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, bool? userPrincipalName, string ifTags, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -350,6 +356,10 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-encryption-algorithm", encryptionAlgorithm);
             }
+            if (userPrincipalName != null)
+            {
+                request.Headers.Add("x-ms-upn", userPrincipalName.Value);
+            }
             if (ifTags != null)
             {
                 request.Headers.Add("x-ms-if-tags", ifTags);
@@ -378,18 +388,19 @@ namespace Azure.Storage.Blobs
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided. Allowed values: "None" | "AES256". </param>
+        /// <param name="userPrincipalName"> Optional. Valid only when Hierarchical Namespace is enabled for the account. If "true", the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response headers will be transformed from Azure Active Directory Object IDs to User Principal Names.  If "false", the values will be returned as Azure Active Directory Object IDs. The default value is false. Note that group and application Object IDs are not translated because they do not have unique friendly names. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPropertiesAsync(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionAlgorithm = null, string ifTags = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual async Task<Response> GetPropertiesAsync(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionAlgorithm = null, bool? userPrincipalName = null, string ifTags = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("Blob.GetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPropertiesRequest(snapshot, versionId, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, ifTags, requestConditions, context);
+                using HttpMessage message = CreateGetPropertiesRequest(snapshot, versionId, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, userPrincipalName, ifTags, requestConditions, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -416,18 +427,19 @@ namespace Azure.Storage.Blobs
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided. Allowed values: "None" | "AES256". </param>
+        /// <param name="userPrincipalName"> Optional. Valid only when Hierarchical Namespace is enabled for the account. If "true", the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response headers will be transformed from Azure Active Directory Object IDs to User Principal Names.  If "false", the values will be returned as Azure Active Directory Object IDs. The default value is false. Note that group and application Object IDs are not translated because they do not have unique friendly names. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetProperties(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionAlgorithm = null, string ifTags = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual Response GetProperties(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionAlgorithm = null, bool? userPrincipalName = null, string ifTags = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("Blob.GetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPropertiesRequest(snapshot, versionId, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, ifTags, requestConditions, context);
+                using HttpMessage message = CreateGetPropertiesRequest(snapshot, versionId, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, userPrincipalName, ifTags, requestConditions, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
