@@ -59,6 +59,12 @@ namespace Azure.ResourceManager.EventGrid.Tests
             return lro.Value;
         }
 
+        protected async Task<ResourceGroupResource> GetResourceGroupAsync(Azure.ResourceManager.Resources.SubscriptionResource subscription, string rgName)
+        {
+            var lro = await subscription.GetResourceGroups().GetAsync(rgName);
+            return lro.Value;
+        }
+
         protected async Task<PartnerRegistrationResource> CreatePartnerRegistration(ResourceGroupResource resourceGroup, string registrationName)
         {
             var data = new PartnerRegistrationData(new AzureLocation("Global"));
