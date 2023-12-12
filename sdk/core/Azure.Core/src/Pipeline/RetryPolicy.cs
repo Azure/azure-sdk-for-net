@@ -75,12 +75,6 @@ namespace Azure.Core.Pipeline
         /// <returns>Whether or not to retry.</returns>
         protected virtual bool ShouldRetry(HttpMessage message, Exception? exception)
         {
-            // If there was no exception and we got a success response, don't retry.
-            if (exception is null && message.Response is not null && !message.Response.IsError)
-            {
-                return false;
-            }
-
             if (message.RetryNumber >= _maxRetries)
             {
                 // We've exceeded the maximum number of retries, so don't retry.

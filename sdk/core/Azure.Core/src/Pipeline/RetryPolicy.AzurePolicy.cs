@@ -56,10 +56,10 @@ public partial class RetryPolicy
             _elapsedTime = (_afterProcess - _beforeProcess) / (double)Stopwatch.Frequency;
         }
 
-        protected override bool ShouldRetry(PipelineMessage message, Exception? exception)
+        protected override bool ShouldRetryCore(PipelineMessage message, Exception? exception)
             => _pipelinePolicy.ShouldRetry(AssertHttpMessage(message), exception);
 
-        protected override async ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
+        protected override async ValueTask<bool> ShouldRetryCoreAsync(PipelineMessage message, Exception? exception)
             => await _pipelinePolicy.ShouldRetryAsync(AssertHttpMessage(message), exception).ConfigureAwait(false);
 
         public void OnDelayComplete(PipelineMessage message)

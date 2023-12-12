@@ -132,7 +132,7 @@ public class RequestRetryPolicy : PipelinePolicy
 
     protected virtual ValueTask OnRequestSentAsync(PipelineMessage message) => default;
 
-    protected virtual bool ShouldRetry(PipelineMessage message, Exception? exception)
+    internal bool ShouldRetry(PipelineMessage message, Exception? exception)
     {
         // If there was no exception and we got a success response, don't retry.
         if (exception is null && message.Response is not null && !message.Response.IsError)
@@ -140,6 +140,22 @@ public class RequestRetryPolicy : PipelinePolicy
             return false;
         }
 
+        return ShouldRetryCore(message, exception);
+    }
+
+    internal async ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
+    {
+        // If there was no exception and we got a success response, don't retry.
+        if (exception is null && message.Response is not null && !message.Response.IsError)
+        {
+            return false;
+        }
+
+        return await ShouldRetryCoreAsync(message, exception).ConfigureAwait(false);
+    }
+
+    protected virtual bool ShouldRetryCore(PipelineMessage message, Exception? exception)
+    {
         if (message.RetryCount >= _maxRetries)
         {
             // We've exceeded the maximum number of retries, so don't retry.
@@ -151,8 +167,8 @@ public class RequestRetryPolicy : PipelinePolicy
             IsRetriable(message, exception);
     }
 
-    protected virtual ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
-        => new(ShouldRetry(message, exception));
+    protected virtual ValueTask<bool> ShouldRetryCoreAsync(PipelineMessage message, Exception? exception)
+        => new(ShouldRetryCore(message, exception));
 
     #region Retry Classifier
 
