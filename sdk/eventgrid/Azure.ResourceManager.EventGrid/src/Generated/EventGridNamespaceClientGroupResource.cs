@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.EventGrid
         private readonly ClientGroupsRestOperations _eventGridNamespaceClientGroupClientGroupsRestClient;
         private readonly EventGridNamespaceClientGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/namespaces/clientGroups";
+
         /// <summary> Initializes a new instance of the <see cref="EventGridNamespaceClientGroupResource"/> class for mocking. </summary>
         protected EventGridNamespaceClientGroupResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/namespaces/clientGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

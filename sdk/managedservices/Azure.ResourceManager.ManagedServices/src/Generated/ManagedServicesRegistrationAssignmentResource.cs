@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.ManagedServices
         private readonly RegistrationAssignmentsRestOperations _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient;
         private readonly ManagedServicesRegistrationAssignmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedServices/registrationAssignments";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedServicesRegistrationAssignmentResource"/> class for mocking. </summary>
         protected ManagedServicesRegistrationAssignmentResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.ManagedServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedServices/registrationAssignments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

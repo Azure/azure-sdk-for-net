@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ProviderHub
         private readonly DefaultRolloutsRestOperations _defaultRolloutRestClient;
         private readonly DefaultRolloutData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ProviderHub/providerRegistrations/defaultRollouts";
+
         /// <summary> Initializes a new instance of the <see cref="DefaultRolloutResource"/> class for mocking. </summary>
         protected DefaultRolloutResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.ProviderHub
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ProviderHub/providerRegistrations/defaultRollouts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

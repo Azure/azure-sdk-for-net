@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Network
         private readonly SubscriptionNetworkManagerConnectionsRestOperations _subscriptionNetworkManagerConnectionRestClient;
         private readonly NetworkManagerConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/networkManagerConnections";
+
         /// <summary> Initializes a new instance of the <see cref="SubscriptionNetworkManagerConnectionResource"/> class for mocking. </summary>
         protected SubscriptionNetworkManagerConnectionResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/networkManagerConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

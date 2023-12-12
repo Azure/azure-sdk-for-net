@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Subscription
         private readonly SubscriptionPolicyRestOperations _tenantPolicySubscriptionPolicyRestClient;
         private readonly TenantPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Subscription/policies";
+
         /// <summary> Initializes a new instance of the <see cref="TenantPolicyResource"/> class for mocking. </summary>
         protected TenantPolicyResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Subscription
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Subscription/policies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

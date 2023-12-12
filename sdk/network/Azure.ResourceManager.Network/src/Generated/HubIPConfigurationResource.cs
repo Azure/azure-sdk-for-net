@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Network
         private readonly VirtualHubIpConfigurationRestOperations _hubIPConfigurationVirtualHubIPConfigurationRestClient;
         private readonly HubIPConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs/ipConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="HubIPConfigurationResource"/> class for mocking. </summary>
         protected HubIPConfigurationResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs/ipConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

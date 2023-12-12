@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.HybridNetwork
         private readonly ComponentsRestOperations _componentRestClient;
         private readonly ComponentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/networkFunctions/components";
+
         /// <summary> Initializes a new instance of the <see cref="ComponentResource"/> class for mocking. </summary>
         protected ComponentResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.HybridNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/networkFunctions/components";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

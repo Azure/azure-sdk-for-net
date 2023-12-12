@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Peering
         private readonly ConnectionMonitorTestsRestOperations _connectionMonitorTestRestClient;
         private readonly ConnectionMonitorTestData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Peering/peeringServices/connectionMonitorTests";
+
         /// <summary> Initializes a new instance of the <see cref="ConnectionMonitorTestResource"/> class for mocking. </summary>
         protected ConnectionMonitorTestResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Peering
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Peering/peeringServices/connectionMonitorTests";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

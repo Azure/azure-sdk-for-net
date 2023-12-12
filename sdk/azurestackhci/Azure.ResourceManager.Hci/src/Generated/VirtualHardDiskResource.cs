@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Hci
         private readonly VirtualHardDisksRestOperations _virtualHardDiskRestClient;
         private readonly VirtualHardDiskData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/virtualHardDisks";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualHardDiskResource"/> class for mocking. </summary>
         protected VirtualHardDiskResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Hci
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/virtualHardDisks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

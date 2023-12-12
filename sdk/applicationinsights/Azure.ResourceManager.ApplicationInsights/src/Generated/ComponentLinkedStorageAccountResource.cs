@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ApplicationInsights
         private readonly ComponentLinkedStorageAccountsRestOperations _componentLinkedStorageAccountRestClient;
         private readonly ComponentLinkedStorageAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "microsoft.insights/components/linkedStorageAccounts";
+
         /// <summary> Initializes a new instance of the <see cref="ComponentLinkedStorageAccountResource"/> class for mocking. </summary>
         protected ComponentLinkedStorageAccountResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ApplicationInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "microsoft.insights/components/linkedStorageAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

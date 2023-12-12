@@ -972,6 +972,35 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         }
 
         [Test]
+        public void TranscriptionUpdatedEventParsed_Test()
+        {
+            TranscriptionUpdated @event = CallAutomationModelFactory.TranscriptionUpdated(
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId",
+                operationContext: "operationContext",
+                resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"),
+                transcriptionUpdate: new TranscriptionUpdate(TranscriptionStatus.TranscriptionUpdated, TranscriptionStatusDetails.StreamConnectionReestablished));
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.TranscriptionUpdated");
+            if (parsedEvent is TranscriptionUpdated transcriptionUpdated)
+            {
+                Assert.AreEqual("callConnectionId", transcriptionUpdated.CallConnectionId);
+                Assert.AreEqual("correlationId", transcriptionUpdated.CorrelationId);
+                Assert.AreEqual("serverCallId", transcriptionUpdated.ServerCallId);
+                Assert.AreEqual("operationContext", transcriptionUpdated.OperationContext);
+                Assert.AreEqual(200, transcriptionUpdated.ResultInformation?.Code);
+                Assert.AreEqual(TranscriptionStatus.TranscriptionUpdated, transcriptionUpdated.TranscriptionUpdate.TranscriptionStatus);
+                Assert.AreEqual(TranscriptionStatusDetails.StreamConnectionReestablished, transcriptionUpdated.TranscriptionUpdate.TranscriptionStatusDetails);
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
         public void TranscriptionStoppedEventParsed_Test()
         {
             TranscriptionStopped @event = CallAutomationModelFactory.TranscriptionStopped(

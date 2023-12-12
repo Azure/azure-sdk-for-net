@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly SubscriptionRestOperations _apiManagementSubscriptionSubscriptionRestClient;
         private readonly SubscriptionContractData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/subscriptions";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementSubscriptionResource"/> class for mocking. </summary>
         protected ApiManagementSubscriptionResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/subscriptions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

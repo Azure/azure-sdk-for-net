@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.NetworkCloud
         private readonly RacksRestOperations _networkCloudRackRacksRestClient;
         private readonly NetworkCloudRackData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/racks";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkCloudRackResource"/> class for mocking. </summary>
         protected NetworkCloudRackResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.NetworkCloud
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/racks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

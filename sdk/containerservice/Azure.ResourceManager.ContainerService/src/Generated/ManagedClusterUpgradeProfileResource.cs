@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ContainerService
         private readonly ManagedClustersRestOperations _managedClusterUpgradeProfileManagedClustersRestClient;
         private readonly ManagedClusterUpgradeProfileData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedClusters/upgradeProfiles";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedClusterUpgradeProfileResource"/> class for mocking. </summary>
         protected ManagedClusterUpgradeProfileResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.ContainerService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedClusters/upgradeProfiles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

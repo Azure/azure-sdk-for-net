@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ConnectedEnvironmentsRestOperations _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient;
         private readonly ContainerAppConnectedEnvironmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/connectedEnvironments";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppConnectedEnvironmentResource"/> class for mocking. </summary>
         protected ContainerAppConnectedEnvironmentResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/connectedEnvironments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

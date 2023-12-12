@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.AppService
         private readonly AppServicePlansRestOperations _hybridConnectionLimitAppServicePlansRestClient;
         private readonly HybridConnectionLimitData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/serverfarms/hybridConnectionPlanLimits";
+
         /// <summary> Initializes a new instance of the <see cref="HybridConnectionLimitResource"/> class for mocking. </summary>
         protected HybridConnectionLimitResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/serverfarms/hybridConnectionPlanLimits";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

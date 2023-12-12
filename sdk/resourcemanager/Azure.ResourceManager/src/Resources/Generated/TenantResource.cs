@@ -33,6 +33,9 @@ namespace Azure.ResourceManager.Resources
         private readonly ProvidersRestOperations _providersRestClient;
         private readonly TenantData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/tenants";
+
         /// <summary> Initializes a new instance of the <see cref="TenantResource"/> class for mocking. </summary>
         protected TenantResource()
         {
@@ -55,9 +58,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/tenants";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

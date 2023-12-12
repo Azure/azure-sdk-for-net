@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Avs
         private readonly ScriptCmdletsRestOperations _scriptCmdletRestClient;
         private readonly ScriptCmdletData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/scriptPackages/scriptCmdlets";
+
         /// <summary> Initializes a new instance of the <see cref="ScriptCmdletResource"/> class for mocking. </summary>
         protected ScriptCmdletResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/scriptPackages/scriptCmdlets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.CustomerInsights
         private readonly WidgetTypesRestOperations _widgetTypeResourceFormatWidgetTypesRestClient;
         private readonly WidgetTypeResourceFormatData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/widgetTypes";
+
         /// <summary> Initializes a new instance of the <see cref="WidgetTypeResourceFormatResource"/> class for mocking. </summary>
         protected WidgetTypeResourceFormatResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.CustomerInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/widgetTypes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

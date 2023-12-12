@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         private readonly FabricRestOperations _dataReplicationFabricFabricRestClient;
         private readonly DataReplicationFabricData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationFabrics";
+
         /// <summary> Initializes a new instance of the <see cref="DataReplicationFabricResource"/> class for mocking. </summary>
         protected DataReplicationFabricResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationFabrics";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

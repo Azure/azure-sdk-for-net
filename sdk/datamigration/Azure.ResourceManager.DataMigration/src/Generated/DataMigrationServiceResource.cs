@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.DataMigration
         private readonly ServicesRestOperations _dataMigrationServiceServicesRestClient;
         private readonly DataMigrationServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly Core.ResourceType ResourceType = "Microsoft.DataMigration/services";
+
         /// <summary> Initializes a new instance of the <see cref="DataMigrationServiceResource"/> class for mocking. </summary>
         protected DataMigrationServiceResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.DataMigration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.DataMigration/services";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

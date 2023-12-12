@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.LabServices
         private readonly VirtualMachinesRestOperations _labVirtualMachineVirtualMachinesRestClient;
         private readonly LabVirtualMachineData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.LabServices/labs/virtualMachines";
+
         /// <summary> Initializes a new instance of the <see cref="LabVirtualMachineResource"/> class for mocking. </summary>
         protected LabVirtualMachineResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.LabServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.LabServices/labs/virtualMachines";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

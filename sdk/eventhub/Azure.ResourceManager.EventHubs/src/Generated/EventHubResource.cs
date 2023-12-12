@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.EventHubs
         private readonly EventHubsRestOperations _eventHubRestClient;
         private readonly EventHubData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/eventhubs";
+
         /// <summary> Initializes a new instance of the <see cref="EventHubResource"/> class for mocking. </summary>
         protected EventHubResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.EventHubs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/eventhubs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

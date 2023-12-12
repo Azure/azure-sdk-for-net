@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private readonly FqdnListGlobalRulestackRestOperations _globalRulestackFqdnFqdnListGlobalRulestackRestClient;
         private readonly GlobalRulestackFqdnData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/globalRulestacks/fqdnlists";
+
         /// <summary> Initializes a new instance of the <see cref="GlobalRulestackFqdnResource"/> class for mocking. </summary>
         protected GlobalRulestackFqdnResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/globalRulestacks/fqdnlists";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

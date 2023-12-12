@@ -46,6 +46,9 @@ namespace Azure.ResourceManager.SecurityDevOps
         private readonly GitHubConnectorStatsRestOperations _gitHubConnectorStatsRestClient;
         private readonly GitHubConnectorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SecurityDevOps/gitHubConnectors";
+
         /// <summary> Initializes a new instance of the <see cref="GitHubConnectorResource"/> class for mocking. </summary>
         protected GitHubConnectorResource()
         {
@@ -77,9 +80,6 @@ namespace Azure.ResourceManager.SecurityDevOps
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SecurityDevOps/gitHubConnectors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

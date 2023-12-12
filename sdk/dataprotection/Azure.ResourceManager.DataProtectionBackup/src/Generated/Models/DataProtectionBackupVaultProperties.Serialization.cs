@@ -38,6 +38,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("featureSettings"u8);
                 writer.WriteObjectValue(FeatureSettings);
             }
+            if (Optional.IsCollectionDefined(ReplicatedRegions))
+            {
+                writer.WritePropertyName("replicatedRegions"u8);
+                writer.WriteStartArray();
+                foreach (var item in ReplicatedRegions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -56,6 +66,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<bool> isVaultProtectedByResourceGuard = default;
             Optional<BackupVaultFeatureSettings> featureSettings = default;
             Optional<BackupVaultSecureScoreLevel> secureScore = default;
+            Optional<IList<AzureLocation>> replicatedRegions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("monitoringSettings"u8))
@@ -140,8 +151,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     secureScore = new BackupVaultSecureScoreLevel(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("replicatedRegions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AzureLocation> array = new List<AzureLocation>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new AzureLocation(item.GetString()));
+                    }
+                    replicatedRegions = array;
+                    continue;
+                }
             }
-            return new DataProtectionBackupVaultProperties(monitoringSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(resourceMoveState), resourceMoveDetails.Value, securitySettings.Value, storageSettings, Optional.ToNullable(isVaultProtectedByResourceGuard), featureSettings.Value, Optional.ToNullable(secureScore));
+            return new DataProtectionBackupVaultProperties(monitoringSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(resourceMoveState), resourceMoveDetails.Value, securitySettings.Value, storageSettings, Optional.ToNullable(isVaultProtectedByResourceGuard), featureSettings.Value, Optional.ToNullable(secureScore), Optional.ToList(replicatedRegions));
         }
     }
 }

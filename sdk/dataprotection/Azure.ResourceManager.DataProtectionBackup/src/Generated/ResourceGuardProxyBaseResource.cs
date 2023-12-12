@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private readonly DppResourceGuardProxyRestOperations _resourceGuardProxyBaseResourceDppResourceGuardProxyRestClient;
         private readonly ResourceGuardProxyBaseResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults/backupResourceGuardProxies";
+
         /// <summary> Initializes a new instance of the <see cref="ResourceGuardProxyBaseResource"/> class for mocking. </summary>
         protected ResourceGuardProxyBaseResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults/backupResourceGuardProxies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

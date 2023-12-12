@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly DelegationSettingsRestOperations _apiManagementPortalDelegationSettingDelegationSettingsRestClient;
         private readonly ApiManagementPortalDelegationSettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/portalsettings";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementPortalDelegationSettingResource"/> class for mocking. </summary>
         protected ApiManagementPortalDelegationSettingResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/portalsettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

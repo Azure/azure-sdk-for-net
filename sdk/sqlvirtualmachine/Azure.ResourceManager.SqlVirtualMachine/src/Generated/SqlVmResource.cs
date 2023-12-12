@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         private readonly SqlVirtualMachinesRestOperations _sqlVmSqlVirtualMachinesRestClient;
         private readonly SqlVmData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SqlVirtualMachine/sqlVirtualMachines";
+
         /// <summary> Initializes a new instance of the <see cref="SqlVmResource"/> class for mocking. </summary>
         protected SqlVmResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SqlVirtualMachine/sqlVirtualMachines";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -50,6 +50,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         private readonly SupportPackagesRestOperations _supportPackagesRestClient;
         private readonly DataBoxEdgeDeviceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices";
+
         /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeDeviceResource"/> class for mocking. </summary>
         protected DataBoxEdgeDeviceResource()
         {
@@ -84,9 +87,6 @@ namespace Azure.ResourceManager.DataBoxEdge
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

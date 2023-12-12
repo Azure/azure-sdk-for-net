@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private readonly DeletedBackupInstancesRestOperations _deletedDataProtectionBackupInstanceDeletedBackupInstancesRestClient;
         private readonly DeletedDataProtectionBackupInstanceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults/deletedBackupInstances";
+
         /// <summary> Initializes a new instance of the <see cref="DeletedDataProtectionBackupInstanceResource"/> class for mocking. </summary>
         protected DeletedDataProtectionBackupInstanceResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults/deletedBackupInstances";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

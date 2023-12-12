@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Hci
         private readonly GalleryImagesRestOperations _galleryImageRestClient;
         private readonly GalleryImageData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/galleryImages";
+
         /// <summary> Initializes a new instance of the <see cref="GalleryImageResource"/> class for mocking. </summary>
         protected GalleryImageResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Hci
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/galleryImages";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

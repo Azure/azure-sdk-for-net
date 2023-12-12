@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private readonly RecoveryPointsRestOperations _dataProtectionBackupRecoveryPointRecoveryPointsRestClient;
         private readonly DataProtectionBackupRecoveryPointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults/backupInstances/recoveryPoints";
+
         /// <summary> Initializes a new instance of the <see cref="DataProtectionBackupRecoveryPointResource"/> class for mocking. </summary>
         protected DataProtectionBackupRecoveryPointResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults/backupInstances/recoveryPoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

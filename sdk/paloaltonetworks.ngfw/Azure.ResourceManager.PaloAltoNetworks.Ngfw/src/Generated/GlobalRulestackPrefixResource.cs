@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private readonly PrefixListGlobalRulestackRestOperations _globalRulestackPrefixPrefixListGlobalRulestackRestClient;
         private readonly GlobalRulestackPrefixData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/globalRulestacks/prefixlists";
+
         /// <summary> Initializes a new instance of the <see cref="GlobalRulestackPrefixResource"/> class for mocking. </summary>
         protected GlobalRulestackPrefixResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/globalRulestacks/prefixlists";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

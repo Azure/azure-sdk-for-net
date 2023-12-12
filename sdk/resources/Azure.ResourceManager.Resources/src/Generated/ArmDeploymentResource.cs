@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.Resources
         private readonly DeploymentRestOperations _deploymentOperationsRestClient;
         private readonly ArmDeploymentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/deployments";
+
         /// <summary> Initializes a new instance of the <see cref="ArmDeploymentResource"/> class for mocking. </summary>
         protected ArmDeploymentResource()
         {
@@ -71,9 +74,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/deployments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.StorageSync
         private readonly SyncGroupsRestOperations _storageSyncGroupSyncGroupsRestClient;
         private readonly StorageSyncGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StorageSync/storageSyncServices/syncGroups";
+
         /// <summary> Initializes a new instance of the <see cref="StorageSyncGroupResource"/> class for mocking. </summary>
         protected StorageSyncGroupResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.StorageSync
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StorageSync/storageSyncServices/syncGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

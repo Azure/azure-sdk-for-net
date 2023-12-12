@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.HybridNetwork
         private readonly NetworkFunctionDefinitionGroupsRestOperations _networkFunctionDefinitionGroupRestClient;
         private readonly NetworkFunctionDefinitionGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers/networkFunctionDefinitionGroups";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkFunctionDefinitionGroupResource"/> class for mocking. </summary>
         protected NetworkFunctionDefinitionGroupResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.HybridNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers/networkFunctionDefinitionGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

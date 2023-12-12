@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.HybridContainerService
         private readonly VirtualNetworksRestOperations _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient;
         private readonly HybridContainerServiceVirtualNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/virtualNetworks";
+
         /// <summary> Initializes a new instance of the <see cref="HybridContainerServiceVirtualNetworkResource"/> class for mocking. </summary>
         protected HybridContainerServiceVirtualNetworkResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.HybridContainerService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/virtualNetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
