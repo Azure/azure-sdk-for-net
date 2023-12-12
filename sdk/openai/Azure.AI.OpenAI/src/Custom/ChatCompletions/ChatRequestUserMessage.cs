@@ -27,7 +27,7 @@ public partial class ChatRequestUserMessage : ChatRequestMessage
     /// </summary>
     /// <remarks>
     /// <see cref="ChatRequestUserMessage"/> may use either plain text content, which is represented by this property,
-    /// or a collection of content items instead represented by <see cref="MultimodalContent"/>.
+    /// or a collection of content items instead represented by <see cref="MultimodalContentItems"/>.
     /// </remarks>
     [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(SerializeContent))]
     public override string Content { get; protected set; }
@@ -40,7 +40,7 @@ public partial class ChatRequestUserMessage : ChatRequestMessage
     /// <see cref="ChatRequestUserMessage"/> may use either plain text content, which is represented by
     /// <see cref="Content"/>, or a collection of content items instead represented by this property.
     /// </remarks>
-    public IList<ChatMessageContentItem> MultimodalContent { get; }
+    public IList<ChatMessageContentItem> MultimodalContentItems { get; }
 
     /// <summary>
     /// Creates a new instance of ChatRequestUserMessage using plain text content.
@@ -67,7 +67,7 @@ public partial class ChatRequestUserMessage : ChatRequestMessage
         : base(ChatRole.User)
     {
         Argument.AssertNotNullOrEmpty(content, nameof(content));
-        MultimodalContent = content.ToList();
+        MultimodalContentItems = content.ToList();
     }
 
     /// <summary>
@@ -81,15 +81,15 @@ public partial class ChatRequestUserMessage : ChatRequestMessage
         : base(ChatRole.User)
     {
         Argument.AssertNotNullOrEmpty(content, nameof(content));
-        MultimodalContent = content.ToList();
+        MultimodalContentItems = content.ToList();
     }
 
     internal void SerializeContent(Utf8JsonWriter writer)
     {
-        if (MultimodalContent != null)
+        if (MultimodalContentItems != null)
         {
             writer.WriteStartArray();
-            foreach (ChatMessageContentItem item in MultimodalContent)
+            foreach (ChatMessageContentItem item in MultimodalContentItems)
             {
                 writer.WriteObjectValue(item);
             }

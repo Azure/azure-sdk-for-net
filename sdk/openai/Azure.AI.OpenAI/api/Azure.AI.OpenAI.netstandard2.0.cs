@@ -448,7 +448,7 @@ namespace Azure.AI.OpenAI
         public ChatRequestUserMessage(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatMessageContentItem> content) { }
         public ChatRequestUserMessage(string content) { }
         public override string Content { get { throw null; } protected set { } }
-        public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatMessageContentItem> MultimodalContent { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatMessageContentItem> MultimodalContentItems { get { throw null; } }
         public string Name { get { throw null; } set { } }
     }
     public partial class ChatResponseMessage

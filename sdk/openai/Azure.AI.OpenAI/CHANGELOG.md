@@ -4,6 +4,10 @@
 
 ### Features Added
 
+- The abstract `ChatRequestMessage` now includes a gettable `Content` string to facilitate easier use of plain text content across messages.
+  `ChatRequestUserMessage` retains the option to specify a collection of `ChatMessageContentItem` instances instead of plain text for its
+  content, but this collection is now represented as a list named `MultimodalContentItems` present only on the specific derived type.
+
 ### Breaking Changes
 
 ### Bugs Fixed
