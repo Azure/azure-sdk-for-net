@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> Savings plan patch request. </summary>
     public partial class BillingBenefitsSavingsPlanPatch
     {
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanPatch"/>. </summary>
         public BillingBenefitsSavingsPlanPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanPatch"/>. </summary>
+        /// <param name="properties"> Savings plan patch request. </param>
+        internal BillingBenefitsSavingsPlanPatch(BillingBenefitsSavingsPlanPatchProperties properties)
+        {
+            Properties = properties;
         }
 
         /// <summary> Savings plan patch request. </summary>

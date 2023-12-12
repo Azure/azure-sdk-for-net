@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The edition capability. </summary>
     public partial class EditionCapability
     {
-        /// <summary> Initializes a new instance of EditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="EditionCapability"/>. </summary>
         internal EditionCapability()
         {
             SupportedServiceLevelObjectives = new ChangeTrackingList<ServiceObjectiveCapability>();
             SupportedStorageCapabilities = new ChangeTrackingList<StorageCapability>();
         }
 
-        /// <summary> Initializes a new instance of EditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="EditionCapability"/>. </summary>
         /// <param name="name"> The database edition name. </param>
         /// <param name="supportedServiceLevelObjectives"> The list of supported service objectives for the edition. </param>
         /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the edition. </param>

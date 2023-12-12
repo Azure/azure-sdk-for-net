@@ -10,9 +10,20 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The update gateway settings request parameters. </summary>
     public partial class HDInsightClusterUpdateGatewaySettingsContent
     {
-        /// <summary> Initializes a new instance of HDInsightClusterUpdateGatewaySettingsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterUpdateGatewaySettingsContent"/>. </summary>
         public HDInsightClusterUpdateGatewaySettingsContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterUpdateGatewaySettingsContent"/>. </summary>
+        /// <param name="isCredentialEnabled"> Indicates whether or not the gateway settings based authorization is enabled. </param>
+        /// <param name="userName"> The gateway settings user name. </param>
+        /// <param name="password"> The gateway settings user password. </param>
+        internal HDInsightClusterUpdateGatewaySettingsContent(bool? isCredentialEnabled, string userName, string password)
+        {
+            IsCredentialEnabled = isCredentialEnabled;
+            UserName = userName;
+            Password = password;
         }
 
         /// <summary> Indicates whether or not the gateway settings based authorization is enabled. </summary>

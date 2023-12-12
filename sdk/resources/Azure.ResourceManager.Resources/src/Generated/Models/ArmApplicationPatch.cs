@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Information about managed application. </summary>
     public partial class ArmApplicationPatch : ArmApplicationResourceData
     {
-        /// <summary> Initializes a new instance of ArmApplicationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationPatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public ArmApplicationPatch(AzureLocation location) : base(location)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources.Models
             Artifacts = new ChangeTrackingList<ArmApplicationArtifact>();
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

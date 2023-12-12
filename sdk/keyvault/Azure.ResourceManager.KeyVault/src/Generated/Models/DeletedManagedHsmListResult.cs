@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> List of deleted managed HSM Pools. </summary>
     internal partial class DeletedManagedHsmListResult
     {
-        /// <summary> Initializes a new instance of DeletedManagedHsmListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedManagedHsmListResult"/>. </summary>
         internal DeletedManagedHsmListResult()
         {
             Value = new ChangeTrackingList<DeletedManagedHsmData>();
         }
 
-        /// <summary> Initializes a new instance of DeletedManagedHsmListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedManagedHsmListResult"/>. </summary>
         /// <param name="value"> The list of deleted managed HSM Pools. </param>
         /// <param name="nextLink"> The URL to get the next set of deleted managed HSM Pools. </param>
         internal DeletedManagedHsmListResult(IReadOnlyList<DeletedManagedHsmData> value, string nextLink)

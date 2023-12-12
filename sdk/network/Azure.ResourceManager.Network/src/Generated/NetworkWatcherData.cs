@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkWatcherData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkWatcherData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkWatcherData"/>. </summary>
         public NetworkWatcherData()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkWatcherData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkWatcherData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

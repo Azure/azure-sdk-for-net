@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Qumulo
     /// </summary>
     public partial class QumuloFileSystemResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of QumuloFileSystemResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="QumuloFileSystemResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="marketplaceDetails"> Marketplace details. </param>
         /// <param name="storageSku"> Storage Sku. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Qumulo
             InitialCapacity = initialCapacity;
         }
 
-        /// <summary> Initializes a new instance of QumuloFileSystemResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="QumuloFileSystemResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

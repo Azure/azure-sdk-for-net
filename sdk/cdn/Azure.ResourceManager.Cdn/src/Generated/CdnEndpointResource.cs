@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Cdn
         private readonly CdnEndpointsRestOperations _cdnEndpointRestClient;
         private readonly CdnEndpointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/endpoints";
+
         /// <summary> Initializes a new instance of the <see cref="CdnEndpointResource"/> class for mocking. </summary>
         protected CdnEndpointResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.Cdn
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/endpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

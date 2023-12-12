@@ -45,50 +45,46 @@ internal static class PipelineProtocolExtensions
         throw new ClientRequestException(message.Response);
     }
 
-    public static async ValueTask<NullableOutputMessage<bool>> ProcessHeadAsBoolMessageAsync(this ClientPipeline pipeline, PipelineMessage message, RequestOptions requestContext)
+    public static async ValueTask<OptionalClientResult<bool>> ProcessHeadAsBoolMessageAsync(this ClientPipeline pipeline, PipelineMessage message, RequestOptions requestContext)
     {
         PipelineResponse response = await pipeline.ProcessMessageAsync(message, requestContext).ConfigureAwait(false);
         switch (response.Status)
         {
             case >= 200 and < 300:
-                return OutputMessage.FromNullableValue(true, response);
+                return ClientResult.FromOptionalValue(true, response);
             case >= 400 and < 500:
-                return OutputMessage.FromNullableValue(false, response);
+                return ClientResult.FromOptionalValue(false, response);
             default:
                 return new ErrorOutputMessage<bool>(response, new ClientRequestException(response));
         }
     }
 
-    public static NullableOutputMessage<bool> ProcessHeadAsBoolMessage(this ClientPipeline pipeline, PipelineMessage message, RequestOptions requestContext)
+    public static OptionalClientResult<bool> ProcessHeadAsBoolMessage(this ClientPipeline pipeline, PipelineMessage message, RequestOptions requestContext)
     {
         PipelineResponse response = pipeline.ProcessMessage(message, requestContext);
         switch (response.Status)
         {
             case >= 200 and < 300:
-                return OutputMessage.FromNullableValue(true, response);
+                return ClientResult.FromOptionalValue(true, response);
             case >= 400 and < 500:
-                return OutputMessage.FromNullableValue(false, response);
+                return ClientResult.FromOptionalValue(false, response);
             default:
                 return new ErrorOutputMessage<bool>(response, new ClientRequestException(response));
         }
     }
 
-    private class ErrorOutputMessage<T> : NullableOutputMessage<T>
+    private class ErrorOutputMessage<T> : OptionalClientResult<T>
     {
-        private readonly PipelineResponse _response;
         private readonly ClientRequestException _exception;
 
         public ErrorOutputMessage(PipelineResponse response, ClientRequestException exception)
             : base(default, response)
         {
-            _response = response;
             _exception = exception;
         }
 
         public override T? Value { get => throw _exception; }
 
         public override bool HasValue => false;
-
-        public override PipelineResponse GetRawResponse() => _response;
     }
 }

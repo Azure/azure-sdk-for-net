@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Container for SQL workloads under Azure Virtual Machines. </summary>
     public partial class VmAppContainerProtectionContainer : WorkloadContainer
     {
-        /// <summary> Initializes a new instance of VmAppContainerProtectionContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmAppContainerProtectionContainer"/>. </summary>
         public VmAppContainerProtectionContainer()
         {
             ContainerType = ProtectableContainerType.VmAppContainer;
         }
 
-        /// <summary> Initializes a new instance of VmAppContainerProtectionContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmAppContainerProtectionContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>

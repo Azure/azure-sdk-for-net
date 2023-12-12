@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A disk input details. </summary>
     public partial class A2AVmDiskDetails
     {
-        /// <summary> Initializes a new instance of A2AVmDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AVmDiskDetails"/>. </summary>
         /// <param name="diskUri"> The disk Uri. </param>
         /// <param name="recoveryAzureStorageAccountId"> The recovery VHD storage account Id. </param>
         /// <param name="primaryStagingAzureStorageAccountId"> The primary staging storage account Id. </param>

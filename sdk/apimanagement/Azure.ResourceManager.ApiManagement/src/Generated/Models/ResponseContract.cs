@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Operation response details. </summary>
     public partial class ResponseContract
     {
-        /// <summary> Initializes a new instance of ResponseContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponseContract"/>. </summary>
         /// <param name="statusCode"> Operation response HTTP status code. </param>
         public ResponseContract(int statusCode)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Headers = new ChangeTrackingList<ParameterContract>();
         }
 
-        /// <summary> Initializes a new instance of ResponseContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponseContract"/>. </summary>
         /// <param name="statusCode"> Operation response HTTP status code. </param>
         /// <param name="description"> Operation response description. </param>
         /// <param name="representations"> Collection of operation response representations. </param>

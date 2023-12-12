@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of sensitivity labels. </summary>
     internal partial class SensitivityLabelListResult
     {
-        /// <summary> Initializes a new instance of SensitivityLabelListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SensitivityLabelListResult"/>. </summary>
         internal SensitivityLabelListResult()
         {
             Value = new ChangeTrackingList<SensitivityLabelData>();
         }
 
-        /// <summary> Initializes a new instance of SensitivityLabelListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SensitivityLabelListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SensitivityLabelListResult(IReadOnlyList<SensitivityLabelData> value, string nextLink)

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> The GrafanaAvailablePluginListResponse. </summary>
     internal partial class GrafanaAvailablePluginListResponse
     {
-        /// <summary> Initializes a new instance of GrafanaAvailablePluginListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaAvailablePluginListResponse"/>. </summary>
         internal GrafanaAvailablePluginListResponse()
         {
             Value = new ChangeTrackingList<GrafanaAvailablePlugin>();
         }
 
-        /// <summary> Initializes a new instance of GrafanaAvailablePluginListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaAvailablePluginListResponse"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal GrafanaAvailablePluginListResponse(IReadOnlyList<GrafanaAvailablePlugin> value, string nextLink)

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network Manager Commit. </summary>
     public partial class NetworkManagerCommit
     {
-        /// <summary> Initializes a new instance of NetworkManagerCommit. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerCommit"/>. </summary>
         /// <param name="targetLocations"> List of target locations. </param>
         /// <param name="commitType"> Commit Type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLocations"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             CommitType = commitType;
         }
 
-        /// <summary> Initializes a new instance of NetworkManagerCommit. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerCommit"/>. </summary>
         /// <param name="commitId"> Commit Id. </param>
         /// <param name="targetLocations"> List of target locations. </param>
         /// <param name="configurationIds"> List of configuration ids. </param>

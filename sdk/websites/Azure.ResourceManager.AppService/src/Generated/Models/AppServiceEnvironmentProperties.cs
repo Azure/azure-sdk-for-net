@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Description of an App Service Environment. </summary>
     public partial class AppServiceEnvironmentProperties
     {
-        /// <summary> Initializes a new instance of AppServiceEnvironmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentProperties"/>. </summary>
         /// <param name="virtualNetwork"> Description of the Virtual Network. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
         public AppServiceEnvironmentProperties(AppServiceVirtualNetworkProfile virtualNetwork)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             UserWhitelistedIPRanges = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceEnvironmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the App Service Environment. </param>
         /// <param name="status"> Current status of the App Service Environment. </param>
         /// <param name="virtualNetwork"> Description of the Virtual Network. </param>

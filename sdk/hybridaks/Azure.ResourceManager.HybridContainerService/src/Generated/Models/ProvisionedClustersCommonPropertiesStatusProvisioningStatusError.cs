@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The ProvisionedClustersCommonPropertiesStatusProvisioningStatusError. </summary>
     public partial class ProvisionedClustersCommonPropertiesStatusProvisioningStatusError
     {
-        /// <summary> Initializes a new instance of ProvisionedClustersCommonPropertiesStatusProvisioningStatusError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersCommonPropertiesStatusProvisioningStatusError"/>. </summary>
         internal ProvisionedClustersCommonPropertiesStatusProvisioningStatusError()
         {
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClustersCommonPropertiesStatusProvisioningStatusError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersCommonPropertiesStatusProvisioningStatusError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
         internal ProvisionedClustersCommonPropertiesStatusProvisioningStatusError(string code, string message)

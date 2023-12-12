@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Cross-Origin Resource Sharing property. </summary>
     public partial class AppPlatformGatewayCorsProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformGatewayCorsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayCorsProperties"/>. </summary>
         public AppPlatformGatewayCorsProperties()
         {
             AllowedOrigins = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             ExposedHeaders = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayCorsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayCorsProperties"/>. </summary>
         /// <param name="allowedOrigins"> Allowed origins to make cross-site requests. The special value `*` allows all domains. </param>
         /// <param name="allowedMethods"> Allowed HTTP methods on cross-site requests. The special value `*` allows all methods. If not set, `GET` and `HEAD` are allowed by default. </param>
         /// <param name="allowedHeaders"> Allowed headers in cross-site requests. The special value `*` allows actual requests to send any header. </param>

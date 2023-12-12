@@ -54,6 +54,9 @@ namespace Azure.ResourceManager.MySql
         private readonly MySqlServersRestOperations _mySqlServersRestClient;
         private readonly MySqlServerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers";
+
         /// <summary> Initializes a new instance of the <see cref="MySqlServerResource"/> class for mocking. </summary>
         protected MySqlServerResource()
         {
@@ -92,9 +95,6 @@ namespace Azure.ResourceManager.MySql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

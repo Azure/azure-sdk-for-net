@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Logic
         private readonly IntegrationAccountSessionsRestOperations _integrationAccountSessionRestClient;
         private readonly IntegrationAccountSessionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Logic/integrationAccounts/sessions";
+
         /// <summary> Initializes a new instance of the <see cref="IntegrationAccountSessionResource"/> class for mocking. </summary>
         protected IntegrationAccountSessionResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Logic
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Logic/integrationAccounts/sessions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

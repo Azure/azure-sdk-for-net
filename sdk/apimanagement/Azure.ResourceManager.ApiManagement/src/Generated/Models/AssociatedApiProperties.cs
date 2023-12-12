@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> API contract properties for the Tag Resources. </summary>
     public partial class AssociatedApiProperties : ApiEntityBaseContract
     {
-        /// <summary> Initializes a new instance of AssociatedApiProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssociatedApiProperties"/>. </summary>
         internal AssociatedApiProperties()
         {
             Protocols = new ChangeTrackingList<ApiOperationInvokableProtocol>();
         }
 
-        /// <summary> Initializes a new instance of AssociatedApiProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssociatedApiProperties"/>. </summary>
         /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
         /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
         /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>

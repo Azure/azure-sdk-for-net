@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Featurization Configuration. </summary>
     public partial class TableVerticalFeaturizationSettings : MachineLearningFeaturizationSettings
     {
-        /// <summary> Initializes a new instance of TableVerticalFeaturizationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableVerticalFeaturizationSettings"/>. </summary>
         public TableVerticalFeaturizationSettings()
         {
             BlockedTransformers = new ChangeTrackingList<BlockedTransformer>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TransformerParams = new ChangeTrackingDictionary<string, IList<ColumnTransformer>>();
         }
 
-        /// <summary> Initializes a new instance of TableVerticalFeaturizationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableVerticalFeaturizationSettings"/>. </summary>
         /// <param name="datasetLanguage"> Dataset language, useful for the text data. </param>
         /// <param name="blockedTransformers"> These transformers shall not be used in featurization. </param>
         /// <param name="columnNameAndTypes"> Dictionary of column name and its type (int, float, string, datetime etc). </param>

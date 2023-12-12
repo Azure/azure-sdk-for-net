@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The private link service connection state. </summary>
     public partial class HDInsightPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of HDInsightPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The concrete private link service connection. </param>
         public HDInsightPrivateLinkServiceConnectionState(HDInsightPrivateLinkServiceConnectionStatus status)
         {
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of HDInsightPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The concrete private link service connection. </param>
         /// <param name="description"> The optional description of the status. </param>
         /// <param name="actionsRequired"> Whether there is further actions. </param>

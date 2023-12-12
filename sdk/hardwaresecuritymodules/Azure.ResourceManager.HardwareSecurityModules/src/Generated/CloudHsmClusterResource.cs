@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         private readonly CloudHsmClusterPrivateLinkResourcesRestOperations _cloudHsmClusterPrivateLinkResourcesRestClient;
         private readonly CloudHsmClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HardwareSecurityModules/cloudHsmClusters";
+
         /// <summary> Initializes a new instance of the <see cref="CloudHsmClusterResource"/> class for mocking. </summary>
         protected CloudHsmClusterResource()
         {
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HardwareSecurityModules/cloudHsmClusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

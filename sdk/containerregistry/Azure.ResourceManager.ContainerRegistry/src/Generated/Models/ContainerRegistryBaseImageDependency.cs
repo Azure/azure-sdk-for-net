@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> Properties that describe a base image dependency. </summary>
     public partial class ContainerRegistryBaseImageDependency
     {
-        /// <summary> Initializes a new instance of ContainerRegistryBaseImageDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryBaseImageDependency"/>. </summary>
         internal ContainerRegistryBaseImageDependency()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryBaseImageDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryBaseImageDependency"/>. </summary>
         /// <param name="dependencyType"> The type of the base image dependency. </param>
         /// <param name="registry"> The registry login server. </param>
         /// <param name="repository"> The repository name. </param>

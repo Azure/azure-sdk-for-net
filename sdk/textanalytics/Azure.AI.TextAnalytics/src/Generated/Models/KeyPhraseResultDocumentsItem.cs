@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The KeyPhraseResultDocumentsItem. </summary>
     internal partial class KeyPhraseResultDocumentsItem : KeyPhrasesDocumentResult
     {
-        /// <summary> Initializes a new instance of KeyPhraseResultDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseResultDocumentsItem"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="keyPhrases"> A list of representative words or phrases. The number of key phrases returned is proportional to the number of words in the input document. </param>
@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics.Models
             Argument.AssertNotNull(keyPhrases, nameof(keyPhrases));
         }
 
-        /// <summary> Initializes a new instance of KeyPhraseResultDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseResultDocumentsItem"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>

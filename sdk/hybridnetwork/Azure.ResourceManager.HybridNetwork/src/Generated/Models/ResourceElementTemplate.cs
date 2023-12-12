@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// </summary>
     public abstract partial class ResourceElementTemplate
     {
-        /// <summary> Initializes a new instance of ResourceElementTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceElementTemplate"/>. </summary>
         protected ResourceElementTemplate()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceElementTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceElementTemplate"/>. </summary>
         /// <param name="name"> Name of the resource element template. </param>
         /// <param name="resourceElementType"> The resource element template type. </param>
         /// <param name="dependsOnProfile"> The depends on profile. </param>

@@ -14,10 +14,23 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     /// <summary> FarmBeats update request. </summary>
     public partial class FarmBeatPatch
     {
-        /// <summary> Initializes a new instance of FarmBeatPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="FarmBeatPatch"/>. </summary>
         public FarmBeatPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FarmBeatPatch"/>. </summary>
+        /// <param name="location"> Geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="properties"> FarmBeats ARM Resource properties. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal FarmBeatPatch(AzureLocation? location, ManagedServiceIdentity identity, FarmBeatsUpdateProperties properties, IDictionary<string, string> tags)
+        {
+            Location = location;
+            Identity = identity;
+            Properties = properties;
+            Tags = tags;
         }
 
         /// <summary> Geo-location where the resource lives. </summary>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Swagger XML. </summary>
     public partial class SwaggerXml
     {
-        /// <summary> Initializes a new instance of SwaggerXml. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerXml"/>. </summary>
         public SwaggerXml()
         {
             Extensions = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SwaggerXml. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerXml"/>. </summary>
         /// <param name="name"> The xml element or attribute name. </param>
         /// <param name="namespace"> The xml namespace. </param>
         /// <param name="prefix"> The name prefix. </param>

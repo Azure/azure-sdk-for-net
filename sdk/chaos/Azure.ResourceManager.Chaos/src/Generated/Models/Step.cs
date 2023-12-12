@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents a step in the Experiment resource. </summary>
     public partial class Step
     {
-        /// <summary> Initializes a new instance of Step. </summary>
+        /// <summary> Initializes a new instance of <see cref="Step"/>. </summary>
         /// <param name="name"> String of the step name. </param>
         /// <param name="branches"> List of branches. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="branches"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Chaos.Models
             Branches = branches.ToList();
         }
 
-        /// <summary> Initializes a new instance of Step. </summary>
+        /// <summary> Initializes a new instance of <see cref="Step"/>. </summary>
         /// <param name="name"> String of the step name. </param>
         /// <param name="branches"> List of branches. </param>
         internal Step(string name, IList<Branch> branches)

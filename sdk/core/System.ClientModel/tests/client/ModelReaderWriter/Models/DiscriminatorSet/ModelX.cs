@@ -33,17 +33,17 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         public int? NullProperty = null;
         public IDictionary<string, string> KeyValuePairs { get; }
 
-        public static implicit operator InputContent(ModelX modelX)
+        public static implicit operator BinaryContent(ModelX modelX)
         {
             if (modelX == null)
             {
                 return null;
             }
 
-            return InputContent.Create(modelX, ModelReaderWriterHelper.WireOptions);
+            return BinaryContent.Create(modelX, ModelReaderWriterHelper.WireOptions);
         }
 
-        public static explicit operator ModelX(OutputMessage result)
+        public static explicit operator ModelX(ClientResult result)
         {
             if (result is null) throw new ArgumentNullException(nameof(result));
 

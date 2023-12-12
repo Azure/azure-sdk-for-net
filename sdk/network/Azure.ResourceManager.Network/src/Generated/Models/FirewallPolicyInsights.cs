@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Firewall Policy Insights. </summary>
     public partial class FirewallPolicyInsights
     {
-        /// <summary> Initializes a new instance of FirewallPolicyInsights. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyInsights"/>. </summary>
         public FirewallPolicyInsights()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyInsights. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyInsights"/>. </summary>
         /// <param name="isEnabled"> A flag to indicate if the insights are enabled on the policy. </param>
         /// <param name="retentionDays"> Number of days the insights should be enabled on the policy. </param>
         /// <param name="logAnalyticsResources"> Workspaces needed to configure the Firewall Policy Insights. </param>

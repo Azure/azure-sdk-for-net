@@ -14,29 +14,23 @@ namespace Azure.Core
     /// </summary>
     public sealed class HttpMessage : PipelineMessage
     {
-        private ArrayBackedPropertyBag<ulong, object> _propertyBag;
-        private Response? _response;
-
         /// <summary>
         /// Creates a new instance of <see cref="HttpMessage"/>.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="responseClassifier">The response classifier.</param>
         public HttpMessage(Request request, ResponseClassifier responseClassifier)
-            : base(ToPipelineRequest(request))
+            : base(request)
         {
             Argument.AssertNotNull(request, nameof(request));
 
-            _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
-
-            Request = request;
             ResponseClassifier = responseClassifier;
         }
 
         /// <summary>
         /// Gets the <see cref="Request"/> associated with this message.
         /// </summary>
-        public new Request Request { get; }
+        public new Request Request { get => (Request)base.Request; }
 
         /// <summary>
         /// Gets the <see cref="Response"/> associated with this message. Throws an exception if it wasn't set yet.
@@ -46,32 +40,28 @@ namespace Azure.Core
         {
             get
             {
-                if (_response == null)
+                if (base.Response is null)
                 {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
                     throw new InvalidOperationException("Response was not set, make sure SendAsync was called");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
-
-                return _response;
+                return (Response)base.Response;
             }
 
-            set
-            {
-                _response = value;
-                base.Response = ToPipelineResponse(value)!;
-            }
+            set => base.Response = value;
         }
 
         /// <summary>
         /// Gets the value indicating if the response is set on this message.
         /// </summary>
-        public bool HasResponse => _response != null || TryGetResponse(out _);
+        public bool HasResponse => base.Response is not null;
 
         internal void ClearResponse() => Response = null!;
 
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
-        // TODO: revisit this per not shadowing anymore
         public ResponseClassifier ResponseClassifier
         {
             get
@@ -137,11 +127,12 @@ namespace Azure.Core
                 ResponseClassifier = context.Apply(classifier);
             }
 
-            context.Apply(this);
+            Apply(context);
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
 
+        #region Message Properties
         /// <summary>
         /// Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
         /// </summary>
@@ -151,7 +142,7 @@ namespace Azure.Core
         public bool TryGetProperty(string name, out object? value)
         {
             value = null;
-            if (_propertyBag.IsEmpty || !_propertyBag.TryGetValue((ulong)typeof(MessagePropertyKey).TypeHandle.Value, out var rawValue))
+            if (!TryGetProperty(typeof(MessagePropertyKey), out var rawValue))
             {
                 return false;
             }
@@ -167,10 +158,10 @@ namespace Azure.Core
         public void SetProperty(string name, object value)
         {
             Dictionary<string, object> properties;
-            if (!_propertyBag.TryGetValue((ulong)typeof(MessagePropertyKey).TypeHandle.Value, out var rawValue))
+            if (!TryGetProperty(typeof(MessagePropertyKey), out var rawValue))
             {
                 properties = new Dictionary<string, object>();
-                _propertyBag.Set((ulong)typeof(MessagePropertyKey).TypeHandle.Value, properties);
+                SetProperty(typeof(MessagePropertyKey), properties);
             }
             else
             {
@@ -180,22 +171,33 @@ namespace Azure.Core
         }
 
         /// <summary>
+        /// Exists as a private key entry into the property bag for stashing string keyed entries in the Type keyed dictionary.
+        /// </summary>
+        private class MessagePropertyKey { }
+        #endregion
+
+        /// <summary>
         /// Returns the response content stream and releases it ownership to the caller.
         ///
         /// After calling this method, any attempt to use the
-        /// <see cref="Response.ContentStream"/> or <see cref="Response.Content"/>
+        /// <see cref="PipelineResponse.ContentStream"/> or <see cref="PipelineResponse.Content"/>
         /// properties on <see cref="Response"/> will result in an exception being thrown.
         /// </summary>
         /// <returns>The content stream, or <code>null</code> if <see cref="Response"/>
         /// did not have content set.</returns>
         public Stream? ExtractResponseContent()
         {
-            switch (_response?.ContentStream)
+            if (!HasResponse)
+            {
+                return null;
+            }
+
+            switch (Response.ContentStream)
             {
                 case ResponseShouldNotBeUsedStream responseContent:
                     return responseContent.Original;
                 case Stream stream:
-                    _response.ContentStream = new ResponseShouldNotBeUsedStream(_response.ContentStream);
+                    Response.ContentStream = new ResponseShouldNotBeUsedStream(Response.ContentStream);
                     return stream;
                 default:
                     return null;
@@ -251,58 +253,6 @@ namespace Azure.Core
                 get => throw CreateException();
                 set => throw CreateException();
             }
-        }
-
-        /// <summary>
-        /// Exists as a private key entry into the <see cref="_propertyBag"/> dictionary for stashing string keyed entries in the Type keyed dictionary.
-        /// </summary>
-        private class MessagePropertyKey { }
-
-        private static PipelineRequest ToPipelineRequest(Request request)
-        {
-            Argument.AssertNotNull(request, nameof(request));
-
-            if (HttpClientTransport.TryGetPipelineRequest(request, out PipelineRequest? pipelineRequest))
-            {
-                return pipelineRequest!;
-            }
-
-            // TODO: This may be able to go away when HttpWebTransportRequest inherits from SSMR type.
-            return new PipelineRequestAdapter(request);
-        }
-
-        private static PipelineResponse? ToPipelineResponse(Response response)
-        {
-            if (response is null)
-            {
-                return null;
-            }
-
-            if (HttpClientTransport.TryGetPipelineResponse(response, out PipelineResponse? pipelineResponse))
-            {
-                return pipelineResponse!;
-            }
-
-            // TODO: This may be able to go away when HttpWebTransportResponse inherits from SSMR type.
-            return new PipelineResponseAdapter(response);
-        }
-
-        /// <summary>
-        /// Disposes the request and response.
-        /// </summary>
-        public override void Dispose()
-        {
-            Request.Dispose();
-            _propertyBag.Dispose();
-
-            var response = _response;
-            if (response != null)
-            {
-                _response = null;
-                response.Dispose();
-            }
-
-            base.Dispose();
         }
     }
 }

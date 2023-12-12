@@ -13,10 +13,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Strictly used in update requests. </summary>
     public partial class MachineLearningBatchDeploymentPatch
     {
-        /// <summary> Initializes a new instance of MachineLearningBatchDeploymentPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningBatchDeploymentPatch"/>. </summary>
         public MachineLearningBatchDeploymentPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningBatchDeploymentPatch"/>. </summary>
+        /// <param name="properties"> Additional attributes of the entity. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal MachineLearningBatchDeploymentPatch(PartialBatchDeployment properties, IDictionary<string, string> tags)
+        {
+            Properties = properties;
+            Tags = tags;
         }
 
         /// <summary> Additional attributes of the entity. </summary>

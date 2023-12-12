@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> The Account access keys. </summary>
     public partial class PurviewAccountAccessKey
     {
-        /// <summary> Initializes a new instance of PurviewAccountAccessKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountAccessKey"/>. </summary>
         internal PurviewAccountAccessKey()
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewAccountAccessKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountAccessKey"/>. </summary>
         /// <param name="atlasKafkaPrimaryEndpoint"> Gets or sets the primary connection string. </param>
         /// <param name="atlasKafkaSecondaryEndpoint"> Gets or sets the secondary connection string. </param>
         internal PurviewAccountAccessKey(string atlasKafkaPrimaryEndpoint, string atlasKafkaSecondaryEndpoint)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> The available data types for TI (Threat Intelligence) data connector. </summary>
     internal partial class TIDataConnectorDataTypes
     {
-        /// <summary> Initializes a new instance of TIDataConnectorDataTypes. </summary>
+        /// <summary> Initializes a new instance of <see cref="TIDataConnectorDataTypes"/>. </summary>
         public TIDataConnectorDataTypes()
         {
         }
 
-        /// <summary> Initializes a new instance of TIDataConnectorDataTypes. </summary>
+        /// <summary> Initializes a new instance of <see cref="TIDataConnectorDataTypes"/>. </summary>
         /// <param name="indicators"> Data type for indicators connection. </param>
         internal TIDataConnectorDataTypes(TIDataConnectorDataTypesIndicators indicators)
         {

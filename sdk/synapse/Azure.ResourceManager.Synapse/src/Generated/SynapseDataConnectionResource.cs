@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly KustoPoolDataConnectionsRestOperations _synapseDataConnectionKustoPoolDataConnectionsRestClient;
         private readonly SynapseDataConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseDataConnectionResource"/> class for mocking. </summary>
         protected SynapseDataConnectionResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

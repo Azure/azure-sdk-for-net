@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Information used to connect to an Azure Fileshare. </summary>
     public partial class BatchFileShareConfiguration
     {
-        /// <summary> Initializes a new instance of BatchFileShareConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchFileShareConfiguration"/>. </summary>
         /// <param name="accountName"> The Azure Storage account name. </param>
         /// <param name="fileUri"> This is of the form 'https://{account}.file.core.windows.net/'. </param>
         /// <param name="accountKey"> The Azure Storage account key. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Batch.Models
             RelativeMountPath = relativeMountPath;
         }
 
-        /// <summary> Initializes a new instance of BatchFileShareConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchFileShareConfiguration"/>. </summary>
         /// <param name="accountName"> The Azure Storage account name. </param>
         /// <param name="fileUri"> This is of the form 'https://{account}.file.core.windows.net/'. </param>
         /// <param name="accountKey"> The Azure Storage account key. </param>

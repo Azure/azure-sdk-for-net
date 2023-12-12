@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Maps.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMapsModelFactory
     {
-        /// <summary> Initializes a new instance of MapsAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Maps.MapsAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Maps.Models
             return new MapsAccountData(id, name, resourceType, systemData, tags, location, sku, kind, identity, properties);
         }
 
-        /// <summary> Initializes a new instance of MapsSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MapsSku"/>. </summary>
         /// <param name="name"> The name of the SKU, in standard format (such as S0). </param>
         /// <param name="tier"> Gets the sku tier. This is based on the SKU name. </param>
         /// <returns> A new <see cref="Models.MapsSku"/> instance for mocking. </returns>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Maps.Models
             return new MapsSku(name, tier);
         }
 
-        /// <summary> Initializes a new instance of MapsAccountProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MapsAccountProperties"/>. </summary>
         /// <param name="uniqueId"> A unique identifier for the maps account. </param>
         /// <param name="disableLocalAuth"> Allows toggle functionality on Azure Policy to disable Azure Maps local authentication support. This will disable Shared Keys authentication from any usage. </param>
         /// <param name="provisioningState"> The provisioning state of the Map account resource. </param>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Maps.Models
             return new MapsAccountProperties(uniqueId, disableLocalAuth, provisioningState, linkedResources?.ToList(), corsRulesValue != null ? new CorsRules(corsRulesValue?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of MapsAccountSasToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MapsAccountSasToken"/>. </summary>
         /// <param name="accountSasToken"> The shared access signature access token. </param>
         /// <returns> A new <see cref="Models.MapsAccountSasToken"/> instance for mocking. </returns>
         public static MapsAccountSasToken MapsAccountSasToken(string accountSasToken = null)
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Maps.Models
             return new MapsAccountSasToken(accountSasToken);
         }
 
-        /// <summary> Initializes a new instance of MapsAccountKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MapsAccountKeys"/>. </summary>
         /// <param name="primaryKeyLastUpdatedOn"> The last updated date and time of the primary key. </param>
         /// <param name="primaryKey"> The primary key for accessing the Maps REST APIs. </param>
         /// <param name="secondaryKey"> The secondary key for accessing the Maps REST APIs. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Maps.Models
             return new MapsAccountKeys(primaryKeyLastUpdatedOn, primaryKey, secondaryKey, secondaryKeyLastUpdatedOn);
         }
 
-        /// <summary> Initializes a new instance of MapsCreatorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Maps.MapsCreatorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Maps.Models
             return new MapsCreatorData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of MapsCreatorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MapsCreatorProperties"/>. </summary>
         /// <param name="provisioningState"> The state of the resource provisioning, terminal states: Succeeded, Failed, Canceled. </param>
         /// <param name="storageUnits"> The storage units to be allocated. Integer values from 1 to 100, inclusive. </param>
         /// <returns> A new <see cref="Models.MapsCreatorProperties"/> instance for mocking. </returns>

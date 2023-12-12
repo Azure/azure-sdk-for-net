@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Result of the request to list NetworkGroup. It contains a list of groups and a URL link to get the next set of results. </summary>
     internal partial class NetworkGroupListResult
     {
-        /// <summary> Initializes a new instance of NetworkGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkGroupListResult"/>. </summary>
         internal NetworkGroupListResult()
         {
             Value = new ChangeTrackingList<NetworkGroupData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkGroupListResult"/>. </summary>
         /// <param name="value"> Gets a page of NetworkGroup. </param>
         /// <param name="nextLink"> Gets the URL to get the next set of results. </param>
         internal NetworkGroupListResult(IReadOnlyList<NetworkGroupData> value, string nextLink)

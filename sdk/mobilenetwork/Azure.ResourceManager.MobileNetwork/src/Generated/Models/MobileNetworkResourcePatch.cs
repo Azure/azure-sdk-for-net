@@ -13,10 +13,19 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Identity and Tags object for patch operations. </summary>
     public partial class MobileNetworkResourcePatch
     {
-        /// <summary> Initializes a new instance of MobileNetworkResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkResourcePatch"/>. </summary>
         public MobileNetworkResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkResourcePatch"/>. </summary>
+        /// <param name="userAssignedIdentity"> The managed service identity associated with this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal MobileNetworkResourcePatch(MobileNetworkManagedServiceIdentity userAssignedIdentity, IDictionary<string, string> tags)
+        {
+            UserAssignedIdentity = userAssignedIdentity;
+            Tags = tags;
         }
 
         /// <summary> The managed service identity associated with this resource. </summary>

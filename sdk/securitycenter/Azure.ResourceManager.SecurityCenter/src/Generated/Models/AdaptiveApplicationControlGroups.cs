@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Represents a list of VM/server groups and set of rules that are Recommended by Microsoft Defender for Cloud to be allowed. </summary>
     internal partial class AdaptiveApplicationControlGroups
     {
-        /// <summary> Initializes a new instance of AdaptiveApplicationControlGroups. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdaptiveApplicationControlGroups"/>. </summary>
         internal AdaptiveApplicationControlGroups()
         {
             Value = new ChangeTrackingList<AdaptiveApplicationControlGroupData>();
         }
 
-        /// <summary> Initializes a new instance of AdaptiveApplicationControlGroups. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdaptiveApplicationControlGroups"/>. </summary>
         /// <param name="value"></param>
         internal AdaptiveApplicationControlGroups(IReadOnlyList<AdaptiveApplicationControlGroupData> value)
         {

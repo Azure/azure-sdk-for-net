@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace System.ClientModel;
@@ -15,22 +16,26 @@ public class RequestOptions
 {
     private PipelinePolicy[]? _perCallPolicies;
     private PipelinePolicy[]? _perTryPolicies;
+    private PipelinePolicy[]? _beforeTransportPolicies;
+
+    private readonly MessageHeaders _requestHeaders;
 
     public RequestOptions()
     {
         CancellationToken = CancellationToken.None;
         ErrorBehavior = ErrorBehavior.Default;
-        RequestHeaders = new PipelineRequestHeaders();
+        _requestHeaders = new PipelineRequestHeaders();
     }
 
-    public virtual CancellationToken CancellationToken { get; set; }
+    public CancellationToken CancellationToken { get; set; }
 
-    public virtual ErrorBehavior ErrorBehavior { get; set; }
+    public ErrorBehavior ErrorBehavior { get; set; }
 
-    public virtual MessageHeaders RequestHeaders { get; }
+    public void AddHeader(string name, string value)
+        => _requestHeaders.Add(name, value);
 
     // Set options on the message before sending it through the pipeline.
-    protected internal void Apply(PipelineMessage message, MessageClassifier? messageClassifier = default)
+    internal void Apply(PipelineMessage message, PipelineMessageClassifier? messageClassifier = default)
     {
         // TODO: Even though we're overriding the message.CancellationToken, this
         // works today because message.CancellationToken is overridden in Azure.Core
@@ -48,11 +53,18 @@ public class RequestOptions
             messageClassifier ??
 
             // The internal global default classifier.
-            MessageClassifier.Default;
+            PipelineMessageClassifier.Default;
 
         // Copy custom pipeline policies.
         message.PerCallPolicies = _perCallPolicies;
         message.PerTryPolicies = _perTryPolicies;
+        message.BeforeTransportPolicies = _beforeTransportPolicies;
+
+        // TODO: revisit for perf
+        foreach (var header in _requestHeaders)
+        {
+            message.Request.Headers.Add(header.Key, string.Join(",", header.Value));
+        }
     }
 
     public void AddPolicy(PipelinePolicy policy, PipelinePosition position)
@@ -62,10 +74,13 @@ public class RequestOptions
         switch (position)
         {
             case PipelinePosition.PerCall:
-                _perCallPolicies = ServiceClientOptions.AddPolicy(policy, _perCallPolicies);
+                _perCallPolicies = PipelineOptions.AddPolicy(policy, _perCallPolicies);
                 break;
             case PipelinePosition.PerTry:
-                _perTryPolicies = ServiceClientOptions.AddPolicy(policy, _perTryPolicies);
+                _perTryPolicies = PipelineOptions.AddPolicy(policy, _perTryPolicies);
+                break;
+            case PipelinePosition.BeforeTransport:
+                _beforeTransportPolicies = PipelineOptions.AddPolicy(policy, _beforeTransportPolicies);
                 break;
             default:
                 throw new ArgumentException($"Unexpected value for position: '{position}'.");

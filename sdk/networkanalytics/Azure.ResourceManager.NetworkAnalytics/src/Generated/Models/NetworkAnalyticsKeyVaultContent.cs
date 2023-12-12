@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> Details for KeyVault. </summary>
     public partial class NetworkAnalyticsKeyVaultContent
     {
-        /// <summary> Initializes a new instance of NetworkAnalyticsKeyVaultContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkAnalyticsKeyVaultContent"/>. </summary>
         /// <param name="keyVaultUri"> key vault url. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultUri"/> is null. </exception>
         public NetworkAnalyticsKeyVaultContent(Uri keyVaultUri)

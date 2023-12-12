@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Azure Operator Distributed Services network function Template application definition. </summary>
     public partial class AzureOperatorNexusNetworkFunctionArmTemplateApplication : AzureOperatorNexusNetworkFunctionApplication
     {
-        /// <summary> Initializes a new instance of AzureOperatorNexusNetworkFunctionArmTemplateApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusNetworkFunctionArmTemplateApplication"/>. </summary>
         public AzureOperatorNexusNetworkFunctionArmTemplateApplication()
         {
             ArtifactType = AzureOperatorNexusArtifactType.ArmTemplate;
         }
 
-        /// <summary> Initializes a new instance of AzureOperatorNexusNetworkFunctionArmTemplateApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusNetworkFunctionArmTemplateApplication"/>. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
         /// <param name="artifactType"> The artifact type. </param>

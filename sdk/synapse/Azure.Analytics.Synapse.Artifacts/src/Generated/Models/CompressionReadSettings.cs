@@ -17,13 +17,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// </summary>
     public partial class CompressionReadSettings
     {
-        /// <summary> Initializes a new instance of CompressionReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompressionReadSettings"/>. </summary>
         public CompressionReadSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of CompressionReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompressionReadSettings"/>. </summary>
         /// <param name="type"> The Compression setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal CompressionReadSettings(string type, IDictionary<string, object> additionalProperties)

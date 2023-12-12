@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The CloudServicePatch. </summary>
     public partial class CloudServicePatch
     {
-        /// <summary> Initializes a new instance of CloudServicePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServicePatch"/>. </summary>
         public CloudServicePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CloudServicePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal CloudServicePatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

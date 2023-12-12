@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> An ADLS Gen2 folder data set mapping. </summary>
     public partial class AdlsGen2FolderDataSetMapping : ShareDataSetMappingData
     {
-        /// <summary> Initializes a new instance of AdlsGen2FolderDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdlsGen2FolderDataSetMapping"/>. </summary>
         /// <param name="dataSetId"> The id of the source data set. </param>
         /// <param name="fileSystem"> File system to which the folder belongs. </param>
         /// <param name="folderPath"> Folder path within the file system. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Kind = DataSetMappingKind.AdlsGen2Folder;
         }
 
-        /// <summary> Initializes a new instance of AdlsGen2FolderDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdlsGen2FolderDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

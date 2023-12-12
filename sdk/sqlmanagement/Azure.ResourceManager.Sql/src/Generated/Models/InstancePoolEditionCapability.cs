@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The instance pool capability. </summary>
     public partial class InstancePoolEditionCapability
     {
-        /// <summary> Initializes a new instance of InstancePoolEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancePoolEditionCapability"/>. </summary>
         internal InstancePoolEditionCapability()
         {
             SupportedFamilies = new ChangeTrackingList<InstancePoolFamilyCapability>();
         }
 
-        /// <summary> Initializes a new instance of InstancePoolEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancePoolEditionCapability"/>. </summary>
         /// <param name="name"> The instance pool version name. </param>
         /// <param name="supportedFamilies"> The supported families. </param>
         /// <param name="status"> The status of the capability. </param>

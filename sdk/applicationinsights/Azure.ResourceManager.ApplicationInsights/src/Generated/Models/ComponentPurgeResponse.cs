@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Response containing operationId for a specific purge action. </summary>
     public partial class ComponentPurgeResponse
     {
-        /// <summary> Initializes a new instance of ComponentPurgeResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentPurgeResponse"/>. </summary>
         /// <param name="operationId"> Id to use when querying for status for a particular purge operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         internal ComponentPurgeResponse(string operationId)

@@ -18,18 +18,28 @@ namespace Azure.Core.Pipeline
             _message = message;
         }
 
-        public override int Length => _policies.Length;
-
         public override bool ProcessNext()
         {
+            if (_policies.Length == 0)
+            {
+                return false;
+            }
+
             _policies.Span[0].Process(_message, _policies.Slice(1));
-            return true;
+
+            return _policies.Length > 0;
         }
 
         public override async ValueTask<bool> ProcessNextAsync()
         {
+            if (_policies.Length == 0)
+            {
+                return false;
+            }
+
             await _policies.Span[0].ProcessAsync(_message, _policies.Slice(1)).ConfigureAwait(false);
-            return true;
+
+            return _policies.Length > 0;
         }
     }
 }

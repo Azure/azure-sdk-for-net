@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for list effective route API service call. </summary>
     public partial class EffectiveRouteListResult
     {
-        /// <summary> Initializes a new instance of EffectiveRouteListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveRouteListResult"/>. </summary>
         internal EffectiveRouteListResult()
         {
             Value = new ChangeTrackingList<EffectiveRoute>();
         }
 
-        /// <summary> Initializes a new instance of EffectiveRouteListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveRouteListResult"/>. </summary>
         /// <param name="value"> A list of effective routes. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal EffectiveRouteListResult(IReadOnlyList<EffectiveRoute> value, string nextLink)

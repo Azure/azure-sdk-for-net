@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure storage workload specific job task details. </summary>
     public partial class StorageBackupJobTaskDetails
     {
-        /// <summary> Initializes a new instance of StorageBackupJobTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageBackupJobTaskDetails"/>. </summary>
         public StorageBackupJobTaskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageBackupJobTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageBackupJobTaskDetails"/>. </summary>
         /// <param name="taskId"> The task display name. </param>
         /// <param name="status"> The status. </param>
         internal StorageBackupJobTaskDetails(string taskId, string status)

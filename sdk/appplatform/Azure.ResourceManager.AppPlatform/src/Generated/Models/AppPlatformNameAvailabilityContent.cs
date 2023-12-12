@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Name availability parameters payload. </summary>
     public partial class AppPlatformNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of AppPlatformNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformNameAvailabilityContent"/>. </summary>
         /// <param name="resourceType"> Type of the resource to check name availability. </param>
         /// <param name="name"> Name to be checked. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     /// </summary>
     public partial class CosmosDBForPostgreSqlFirewallRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlFirewallRuleData"/>. </summary>
         /// <param name="startIPAddress"> The start IP address of the cluster firewall rule. Must be IPv4 format. </param>
         /// <param name="endIPAddress"> The end IP address of the cluster firewall rule. Must be IPv4 format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             EndIPAddress = endIPAddress;
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlFirewallRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

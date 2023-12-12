@@ -18,9 +18,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class PreValidateEnableBackupContent
     {
-        /// <summary> Initializes a new instance of PreValidateEnableBackupContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreValidateEnableBackupContent"/>. </summary>
         public PreValidateEnableBackupContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PreValidateEnableBackupContent"/>. </summary>
+        /// <param name="resourceType"> ProtectedItem Type- VM, SqlDataBase, AzureFileShare etc. </param>
+        /// <param name="resourceId"> ARM Virtual Machine Id. </param>
+        /// <param name="vaultId"> ARM id of the Recovery Services Vault. </param>
+        /// <param name="properties"> Configuration of VM if any needs to be validated like OS type etc. </param>
+        internal PreValidateEnableBackupContent(BackupDataSourceType? resourceType, ResourceIdentifier resourceId, ResourceIdentifier vaultId, string properties)
+        {
+            ResourceType = resourceType;
+            ResourceId = resourceId;
+            VaultId = vaultId;
+            Properties = properties;
         }
 
         /// <summary> ProtectedItem Type- VM, SqlDataBase, AzureFileShare etc. </summary>

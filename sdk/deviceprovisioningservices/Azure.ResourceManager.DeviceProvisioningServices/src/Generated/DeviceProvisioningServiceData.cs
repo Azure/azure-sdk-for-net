@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     /// </summary>
     public partial class DeviceProvisioningServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Service specific properties for a provisioning service. </param>
         /// <param name="sku"> Sku info for a provisioning Service. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

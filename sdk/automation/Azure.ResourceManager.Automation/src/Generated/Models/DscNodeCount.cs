@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Number of nodes based on the Filter. </summary>
     public partial class DscNodeCount
     {
-        /// <summary> Initializes a new instance of DscNodeCount. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeCount"/>. </summary>
         internal DscNodeCount()
         {
         }
 
-        /// <summary> Initializes a new instance of DscNodeCount. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeCount"/>. </summary>
         /// <param name="name"> Gets the name of a count type. </param>
         /// <param name="properties"></param>
         internal DscNodeCount(string name, DscNodeCountProperties properties)

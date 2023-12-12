@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.ElasticSan
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
         private readonly ElasticSanData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ElasticSan/elasticSans";
+
         /// <summary> Initializes a new instance of the <see cref="ElasticSanResource"/> class for mocking. </summary>
         protected ElasticSanResource()
         {
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.ElasticSan
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ElasticSan/elasticSans";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

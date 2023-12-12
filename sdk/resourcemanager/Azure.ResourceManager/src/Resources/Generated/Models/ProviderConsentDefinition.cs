@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The provider consent. </summary>
     internal partial class ProviderConsentDefinition
     {
-        /// <summary> Initializes a new instance of ProviderConsentDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderConsentDefinition"/>. </summary>
         public ProviderConsentDefinition()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProviderConsentDefinition"/>. </summary>
+        /// <param name="consentToAuthorization"> A value indicating whether authorization is consented or not. </param>
+        internal ProviderConsentDefinition(bool? consentToAuthorization)
+        {
+            ConsentToAuthorization = consentToAuthorization;
         }
 
         /// <summary> A value indicating whether authorization is consented or not. </summary>

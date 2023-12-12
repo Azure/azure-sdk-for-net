@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// </summary>
     public abstract partial class DraModelCustomProperties
     {
-        /// <summary> Initializes a new instance of DraModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DraModelCustomProperties"/>. </summary>
         protected DraModelCustomProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DraModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DraModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         internal DraModelCustomProperties(string instanceType)
         {

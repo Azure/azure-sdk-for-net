@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.MixedReality.Models
     /// <summary> Check Name Availability Response. </summary>
     public partial class MixedRealityNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of MixedRealityNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MixedRealityNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> if name Available. </param>
         internal MixedRealityNameAvailabilityResult(bool isNameAvailable)
         {
             IsNameAvailable = isNameAvailable;
         }
 
-        /// <summary> Initializes a new instance of MixedRealityNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MixedRealityNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> if name Available. </param>
         /// <param name="reason"> Resource Name To Verify. </param>
         /// <param name="message"> detail message. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> The metadata of the cloud environment (Azure/GCP/AWS/OCI...). </summary>
     internal partial class CloudMetadata
     {
-        /// <summary> Initializes a new instance of CloudMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudMetadata"/>. </summary>
         public CloudMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudMetadata"/>. </summary>
         /// <param name="provider"> Specifies the cloud provider (Azure/AWS/GCP...). </param>
         internal CloudMetadata(string provider)
         {

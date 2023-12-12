@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMarketplaceOrderingModelFactory
     {
-        /// <summary> Initializes a new instance of MarketplaceAgreementTermData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceOrdering.MarketplaceAgreementTermData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

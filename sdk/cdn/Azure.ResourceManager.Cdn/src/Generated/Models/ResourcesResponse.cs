@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Resources Response. </summary>
     public partial class ResourcesResponse
     {
-        /// <summary> Initializes a new instance of ResourcesResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcesResponse"/>. </summary>
         internal ResourcesResponse()
         {
             Endpoints = new ChangeTrackingList<ResourcesResponseEndpointsItem>();
             CustomDomains = new ChangeTrackingList<ResourcesResponseCustomDomainsItem>();
         }
 
-        /// <summary> Initializes a new instance of ResourcesResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcesResponse"/>. </summary>
         /// <param name="endpoints"></param>
         /// <param name="customDomains"></param>
         internal ResourcesResponse(IReadOnlyList<ResourcesResponseEndpointsItem> endpoints, IReadOnlyList<ResourcesResponseCustomDomainsItem> customDomains)

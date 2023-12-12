@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DataShare
     /// </summary>
     public partial class ProviderShareSubscriptionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProviderShareSubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderShareSubscriptionData"/>. </summary>
         public ProviderShareSubscriptionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ProviderShareSubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderShareSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Error details for when validation fails. </summary>
     public partial class ValidateResponseError
     {
-        /// <summary> Initializes a new instance of ValidateResponseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateResponseError"/>. </summary>
         internal ValidateResponseError()
         {
         }
 
-        /// <summary> Initializes a new instance of ValidateResponseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateResponseError"/>. </summary>
         /// <param name="code"> Validation error code. </param>
         /// <param name="message"> Validation error message. </param>
         internal ValidateResponseError(string code, string message)

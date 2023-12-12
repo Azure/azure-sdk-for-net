@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Azure Backup Rehydrate Request. </summary>
     public partial class BackupRehydrationContent
     {
-        /// <summary> Initializes a new instance of BackupRehydrationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupRehydrationContent"/>. </summary>
         /// <param name="recoveryPointId"> Id of the recovery point to be recovered. </param>
         /// <param name="rehydrationRetentionDuration"> Retention duration in ISO 8601 format i.e P10D . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
@@ -22,6 +22,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Argument.AssertNotNull(recoveryPointId, nameof(recoveryPointId));
 
             RecoveryPointId = recoveryPointId;
+            RehydrationRetentionDuration = rehydrationRetentionDuration;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupRehydrationContent"/>. </summary>
+        /// <param name="recoveryPointId"> Id of the recovery point to be recovered. </param>
+        /// <param name="rehydrationPriority"> Priority to be used for rehydration. Values High or Standard. </param>
+        /// <param name="rehydrationRetentionDuration"> Retention duration in ISO 8601 format i.e P10D . </param>
+        internal BackupRehydrationContent(string recoveryPointId, BackupRehydrationPriority? rehydrationPriority, TimeSpan rehydrationRetentionDuration)
+        {
+            RecoveryPointId = recoveryPointId;
+            RehydrationPriority = rehydrationPriority;
             RehydrationRetentionDuration = rehydrationRetentionDuration;
         }
 

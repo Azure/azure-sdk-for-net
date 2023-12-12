@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Update administrative state on list of resources. </summary>
     public partial class UpdateAdministrativeStateOnResources
     {
-        /// <summary> Initializes a new instance of UpdateAdministrativeStateOnResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateAdministrativeStateOnResources"/>. </summary>
         public UpdateAdministrativeStateOnResources()
         {
             ResourceIds = new ChangeTrackingList<ResourceIdentifier>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateAdministrativeStateOnResources"/>. </summary>
+        /// <param name="resourceIds"> Network Fabrics or Network Rack resource Id. </param>
+        internal UpdateAdministrativeStateOnResources(IList<ResourceIdentifier> resourceIds)
+        {
+            ResourceIds = resourceIds;
         }
 
         /// <summary> Network Fabrics or Network Rack resource Id. </summary>

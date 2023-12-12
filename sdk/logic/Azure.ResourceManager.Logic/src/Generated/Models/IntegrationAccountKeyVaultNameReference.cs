@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The key vault reference. </summary>
     public partial class IntegrationAccountKeyVaultNameReference : LogicResourceReference
     {
-        /// <summary> Initializes a new instance of IntegrationAccountKeyVaultNameReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountKeyVaultNameReference"/>. </summary>
         public IntegrationAccountKeyVaultNameReference()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountKeyVaultNameReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountKeyVaultNameReference"/>. </summary>
         /// <param name="id"> The resource id. </param>
         /// <param name="name"> Gets the resource name. </param>
         /// <param name="resourceType"> Gets the resource type. </param>

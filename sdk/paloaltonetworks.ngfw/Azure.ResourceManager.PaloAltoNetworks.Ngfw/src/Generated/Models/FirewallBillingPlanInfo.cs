@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Billing plan information. </summary>
     public partial class FirewallBillingPlanInfo
     {
-        /// <summary> Initializes a new instance of FirewallBillingPlanInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallBillingPlanInfo"/>. </summary>
         /// <param name="billingCycle"> different billing cycles like MONTHLY/WEEKLY. </param>
         /// <param name="planId"> plan id as published by Liftr.PAN. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="planId"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             PlanId = planId;
         }
 
-        /// <summary> Initializes a new instance of FirewallBillingPlanInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallBillingPlanInfo"/>. </summary>
         /// <param name="usageType"> different usage type like PAYG/COMMITTED. </param>
         /// <param name="billingCycle"> different billing cycles like MONTHLY/WEEKLY. </param>
         /// <param name="planId"> plan id as published by Liftr.PAN. </param>

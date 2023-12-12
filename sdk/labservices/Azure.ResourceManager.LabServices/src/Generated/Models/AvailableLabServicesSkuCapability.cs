@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> The array of capabilities of a lab services SKU. </summary>
     public partial class AvailableLabServicesSkuCapability
     {
-        /// <summary> Initializes a new instance of AvailableLabServicesSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableLabServicesSkuCapability"/>. </summary>
         internal AvailableLabServicesSkuCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailableLabServicesSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableLabServicesSkuCapability"/>. </summary>
         /// <param name="name"> The name of the capability for a SKU. </param>
         /// <param name="value"> The value of the capability for a SKU. </param>
         internal AvailableLabServicesSkuCapability(string name, string value)

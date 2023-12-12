@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Hive Server linked service. </summary>
     public partial class HiveLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of HiveLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HiveLinkedService"/>. </summary>
         /// <param name="host"> IP address or host name of the Hive server, separated by ';' for multiple hosts (only when serviceDiscoveryMode is enable). </param>
         /// <param name="authenticationType"> The authentication method used to access the Hive server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Hive";
         }
 
-        /// <summary> Initializes a new instance of HiveLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HiveLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

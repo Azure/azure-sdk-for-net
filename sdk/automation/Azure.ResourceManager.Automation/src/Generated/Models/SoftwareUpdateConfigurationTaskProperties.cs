@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Task properties of the software update configuration. </summary>
     public partial class SoftwareUpdateConfigurationTaskProperties
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationTaskProperties"/>. </summary>
         public SoftwareUpdateConfigurationTaskProperties()
         {
             Parameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationTaskProperties"/>. </summary>
         /// <param name="parameters"> Gets or sets the parameters of the task. </param>
         /// <param name="source"> Gets or sets the name of the runbook. </param>
         internal SoftwareUpdateConfigurationTaskProperties(IDictionary<string, string> parameters, string source)

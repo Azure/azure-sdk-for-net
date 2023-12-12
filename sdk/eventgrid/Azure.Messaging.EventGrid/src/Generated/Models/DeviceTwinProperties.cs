@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> A portion of the properties that can be written only by the application back-end, and read by the device. </summary>
     public partial class DeviceTwinProperties
     {
-        /// <summary> Initializes a new instance of DeviceTwinProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceTwinProperties"/>. </summary>
         internal DeviceTwinProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceTwinProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceTwinProperties"/>. </summary>
         /// <param name="metadata"> Metadata information for the properties JSON document. </param>
         /// <param name="version"> Version of device twin properties. </param>
         internal DeviceTwinProperties(DeviceTwinMetadata metadata, float? version)

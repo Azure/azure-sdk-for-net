@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Definition of canonical profile. </summary>
     public partial class CanonicalProfileDefinition
     {
-        /// <summary> Initializes a new instance of CanonicalProfileDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="CanonicalProfileDefinition"/>. </summary>
         internal CanonicalProfileDefinition()
         {
             Properties = new ChangeTrackingList<CanonicalProfileDefinitionPropertiesItem>();
         }
 
-        /// <summary> Initializes a new instance of CanonicalProfileDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="CanonicalProfileDefinition"/>. </summary>
         /// <param name="canonicalProfileId"> Canonical profile ID. </param>
         /// <param name="properties"> Properties of the canonical profile. </param>
         internal CanonicalProfileDefinition(int? canonicalProfileId, IReadOnlyList<CanonicalProfileDefinitionPropertiesItem> properties)

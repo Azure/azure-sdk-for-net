@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The data disks groups for the role. </summary>
     public partial class HDInsightClusterDataDiskGroup
     {
-        /// <summary> Initializes a new instance of HDInsightClusterDataDiskGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterDataDiskGroup"/>. </summary>
         public HDInsightClusterDataDiskGroup()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterDataDiskGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterDataDiskGroup"/>. </summary>
         /// <param name="disksPerNode"> The number of disks per node. </param>
         /// <param name="storageAccountType"> ReadOnly. The storage account type. Do not set this value. </param>
         /// <param name="diskSizeInGB"> ReadOnly. The DiskSize in GB. Do not set this value. </param>

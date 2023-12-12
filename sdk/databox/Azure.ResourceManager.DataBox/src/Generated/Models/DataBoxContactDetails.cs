@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Contact Details. </summary>
     public partial class DataBoxContactDetails
     {
-        /// <summary> Initializes a new instance of DataBoxContactDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxContactDetails"/>. </summary>
         /// <param name="contactName"> Contact name of the person. </param>
         /// <param name="phone"> Phone number of the contact person. </param>
         /// <param name="emailList"> List of Email-ids to be notified about job progress. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBox.Models
             NotificationPreference = new ChangeTrackingList<NotificationPreference>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxContactDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxContactDetails"/>. </summary>
         /// <param name="contactName"> Contact name of the person. </param>
         /// <param name="phone"> Phone number of the contact person. </param>
         /// <param name="phoneExtension"> Phone extension number of the contact person. </param>

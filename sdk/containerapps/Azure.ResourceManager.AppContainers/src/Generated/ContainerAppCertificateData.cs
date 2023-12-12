@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppCertificateData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCertificateData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ContainerAppCertificateData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list dsc nodes operation. </summary>
     internal partial class DscNodeListResult
     {
-        /// <summary> Initializes a new instance of DscNodeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeListResult"/>. </summary>
         internal DscNodeListResult()
         {
             Value = new ChangeTrackingList<DscNodeData>();
         }
 
-        /// <summary> Initializes a new instance of DscNodeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of dsc nodes. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
         /// <param name="totalCount"> Gets the total number of nodes matching filter criteria. </param>

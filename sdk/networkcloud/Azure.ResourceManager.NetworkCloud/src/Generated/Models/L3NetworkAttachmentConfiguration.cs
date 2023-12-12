@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> L3NetworkAttachmentConfiguration represents the configuration of the attachment of a Layer 3 network. </summary>
     public partial class L3NetworkAttachmentConfiguration
     {
-        /// <summary> Initializes a new instance of L3NetworkAttachmentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="L3NetworkAttachmentConfiguration"/>. </summary>
         /// <param name="networkId"> The resource ID of the network that is being configured for attachment. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkId"/> is null. </exception>
         public L3NetworkAttachmentConfiguration(ResourceIdentifier networkId)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             NetworkId = networkId;
         }
 
-        /// <summary> Initializes a new instance of L3NetworkAttachmentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="L3NetworkAttachmentConfiguration"/>. </summary>
         /// <param name="ipamEnabled"> The indication of whether this network will or will not perform IP address management and allocate IP addresses when attached. </param>
         /// <param name="networkId"> The resource ID of the network that is being configured for attachment. </param>
         /// <param name="pluginType"> The indicator of how this network will be utilized by the Kubernetes cluster. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The ARC autoprovisioning configuration. </summary>
     internal partial class DefenderForServersGcpOfferingArcAutoProvisioning
     {
-        /// <summary> Initializes a new instance of DefenderForServersGcpOfferingArcAutoProvisioning. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOfferingArcAutoProvisioning"/>. </summary>
         public DefenderForServersGcpOfferingArcAutoProvisioning()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForServersGcpOfferingArcAutoProvisioning. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOfferingArcAutoProvisioning"/>. </summary>
         /// <param name="isEnabled"> Is arc auto provisioning enabled. </param>
         internal DefenderForServersGcpOfferingArcAutoProvisioning(bool? isEnabled)
         {

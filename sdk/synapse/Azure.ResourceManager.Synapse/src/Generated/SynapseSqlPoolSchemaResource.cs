@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly SqlPoolSchemasRestOperations _synapseSqlPoolSchemaSqlPoolSchemasRestClient;
         private readonly SynapseSqlPoolSchemaData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/schemas";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseSqlPoolSchemaResource"/> class for mocking. </summary>
         protected SynapseSqlPoolSchemaResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/schemas";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

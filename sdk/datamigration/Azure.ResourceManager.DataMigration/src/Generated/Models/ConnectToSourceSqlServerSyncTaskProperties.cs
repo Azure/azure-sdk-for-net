@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that validates connection to SQL Server and source server requirements for online migration. </summary>
     public partial class ConnectToSourceSqlServerSyncTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerSyncTaskProperties"/>. </summary>
         public ConnectToSourceSqlServerSyncTaskProperties()
         {
             Output = new ChangeTrackingList<ConnectToSourceSqlServerTaskOutput>();
             TaskType = TaskType.ConnectToSourceSqlServerSync;
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerSyncTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>

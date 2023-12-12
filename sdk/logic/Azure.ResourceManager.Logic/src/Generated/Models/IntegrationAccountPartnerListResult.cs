@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The list of integration account partners. </summary>
     internal partial class IntegrationAccountPartnerListResult
     {
-        /// <summary> Initializes a new instance of IntegrationAccountPartnerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountPartnerListResult"/>. </summary>
         internal IntegrationAccountPartnerListResult()
         {
             Value = new ChangeTrackingList<IntegrationAccountPartnerData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountPartnerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountPartnerListResult"/>. </summary>
         /// <param name="value"> The list of integration account partners. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal IntegrationAccountPartnerListResult(IReadOnlyList<IntegrationAccountPartnerData> value, string nextLink)

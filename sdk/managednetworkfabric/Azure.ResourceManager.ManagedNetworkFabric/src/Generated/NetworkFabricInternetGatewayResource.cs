@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private readonly InternetGatewaysRestOperations _networkFabricInternetGatewayInternetGatewaysRestClient;
         private readonly NetworkFabricInternetGatewayData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/internetGateways";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkFabricInternetGatewayResource"/> class for mocking. </summary>
         protected NetworkFabricInternetGatewayResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/internetGateways";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

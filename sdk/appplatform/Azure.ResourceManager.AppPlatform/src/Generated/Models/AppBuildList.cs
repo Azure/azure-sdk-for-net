@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Object that includes an array of Build resources and a possible link for next set. </summary>
     internal partial class AppBuildList
     {
-        /// <summary> Initializes a new instance of AppBuildList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppBuildList"/>. </summary>
         internal AppBuildList()
         {
             Value = new ChangeTrackingList<AppPlatformBuildData>();
         }
 
-        /// <summary> Initializes a new instance of AppBuildList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppBuildList"/>. </summary>
         /// <param name="value"> Collection of Build resources. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).

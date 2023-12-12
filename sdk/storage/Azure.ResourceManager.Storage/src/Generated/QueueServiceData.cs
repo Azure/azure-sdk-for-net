@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Storage
     /// </summary>
     public partial class QueueServiceData : ResourceData
     {
-        /// <summary> Initializes a new instance of QueueServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueueServiceData"/>. </summary>
         public QueueServiceData()
         {
         }
 
-        /// <summary> Initializes a new instance of QueueServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueueServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

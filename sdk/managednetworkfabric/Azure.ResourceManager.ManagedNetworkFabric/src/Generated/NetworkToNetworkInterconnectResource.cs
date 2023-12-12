@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private readonly NetworkToNetworkInterconnectsRestOperations _networkToNetworkInterconnectRestClient;
         private readonly NetworkToNetworkInterconnectData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/networkFabrics/networkToNetworkInterconnects";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkToNetworkInterconnectResource"/> class for mocking. </summary>
         protected NetworkToNetworkInterconnectResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/networkFabrics/networkToNetworkInterconnects";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

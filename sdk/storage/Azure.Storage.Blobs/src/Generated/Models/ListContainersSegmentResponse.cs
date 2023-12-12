@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> An enumeration of containers. </summary>
     internal partial class ListContainersSegmentResponse
     {
-        /// <summary> Initializes a new instance of ListContainersSegmentResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListContainersSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="containerItems"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/> or <paramref name="containerItems"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.Storage.Blobs.Models
             ContainerItems = containerItems.ToList();
         }
 
-        /// <summary> Initializes a new instance of ListContainersSegmentResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListContainersSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="prefix"></param>
         /// <param name="marker"></param>

@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedInstanceEncryptionProtectorsRestOperations _managedInstanceEncryptionProtectorRestClient;
         private readonly ManagedInstanceEncryptionProtectorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/encryptionProtector";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceEncryptionProtectorResource"/> class for mocking. </summary>
         protected ManagedInstanceEncryptionProtectorResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/encryptionProtector";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

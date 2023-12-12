@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Vault Job specific error information. </summary>
     public partial class VaultBackupJobErrorInfo
     {
-        /// <summary> Initializes a new instance of VaultBackupJobErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultBackupJobErrorInfo"/>. </summary>
         public VaultBackupJobErrorInfo()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VaultBackupJobErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultBackupJobErrorInfo"/>. </summary>
         /// <param name="errorCode"> Error code. </param>
         /// <param name="errorString"> Localized error string. </param>
         /// <param name="recommendations"> List of localized recommendations for above error code. </param>

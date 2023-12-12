@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The query compilation object which defines the input, output, and transformation for the query compilation. </summary>
     public partial class StreamAnalyticsCompileQuery
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsCompileQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsCompileQuery"/>. </summary>
         /// <param name="query"> The query to compile. </param>
         /// <param name="jobType"> Describes the type of the job. Valid values are `Cloud` and 'Edge'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
@@ -26,6 +26,21 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Inputs = new ChangeTrackingList<StreamAnalyticsQueryInput>();
             Functions = new ChangeTrackingList<StreamAnalyticsQueryFunction>();
             JobType = jobType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsCompileQuery"/>. </summary>
+        /// <param name="query"> The query to compile. </param>
+        /// <param name="inputs"> The inputs for the query compilation. </param>
+        /// <param name="functions"> The functions for the query compilation. </param>
+        /// <param name="jobType"> Describes the type of the job. Valid values are `Cloud` and 'Edge'. </param>
+        /// <param name="compatibilityLevel"> The query to compile. </param>
+        internal StreamAnalyticsCompileQuery(string query, IList<StreamAnalyticsQueryInput> inputs, IList<StreamAnalyticsQueryFunction> functions, StreamingJobType jobType, StreamingJobCompatibilityLevel? compatibilityLevel)
+        {
+            Query = query;
+            Inputs = inputs;
+            Functions = functions;
+            JobType = jobType;
+            CompatibilityLevel = compatibilityLevel;
         }
 
         /// <summary> The query to compile. </summary>

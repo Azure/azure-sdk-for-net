@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Compilation error when evaluating route. </summary>
     public partial class RouteCompilationError
     {
-        /// <summary> Initializes a new instance of RouteCompilationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteCompilationError"/>. </summary>
         internal RouteCompilationError()
         {
         }
 
-        /// <summary> Initializes a new instance of RouteCompilationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteCompilationError"/>. </summary>
         /// <param name="message"> Route error message. </param>
         /// <param name="severity"> Severity of the route error. </param>
         /// <param name="location"> Location where the route error happened. </param>

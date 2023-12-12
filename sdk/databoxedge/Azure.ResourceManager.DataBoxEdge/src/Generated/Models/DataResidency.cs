@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Wraps data-residency related information for edge-resource and this should be used with ARM layer. </summary>
     internal partial class DataResidency
     {
-        /// <summary> Initializes a new instance of DataResidency. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataResidency"/>. </summary>
         public DataResidency()
         {
         }
 
-        /// <summary> Initializes a new instance of DataResidency. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataResidency"/>. </summary>
         /// <param name="residencyType"> DataResidencyType enum. </param>
         internal DataResidency(DataBoxEdgeDataResidencyType? residencyType)
         {

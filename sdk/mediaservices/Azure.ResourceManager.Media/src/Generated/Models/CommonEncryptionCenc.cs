@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Class for envelope encryption scheme. </summary>
     public partial class CommonEncryptionCenc
     {
-        /// <summary> Initializes a new instance of CommonEncryptionCenc. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommonEncryptionCenc"/>. </summary>
         public CommonEncryptionCenc()
         {
             ClearTracks = new ChangeTrackingList<MediaTrackSelection>();
         }
 
-        /// <summary> Initializes a new instance of CommonEncryptionCenc. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommonEncryptionCenc"/>. </summary>
         /// <param name="enabledProtocols"> Representing supported protocols. </param>
         /// <param name="clearTracks"> Representing which tracks should not be encrypted. </param>
         /// <param name="contentKeys"> Representing default content key for each encryption scheme and separate content keys for specific tracks. </param>

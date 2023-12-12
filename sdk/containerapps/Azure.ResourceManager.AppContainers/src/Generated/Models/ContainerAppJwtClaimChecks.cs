@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The configuration settings of the checks that should be made while validating the JWT Claims. </summary>
     public partial class ContainerAppJwtClaimChecks
     {
-        /// <summary> Initializes a new instance of ContainerAppJwtClaimChecks. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJwtClaimChecks"/>. </summary>
         public ContainerAppJwtClaimChecks()
         {
             AllowedGroups = new ChangeTrackingList<string>();
             AllowedClientApplications = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppJwtClaimChecks. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJwtClaimChecks"/>. </summary>
         /// <param name="allowedGroups"> The list of the allowed groups. </param>
         /// <param name="allowedClientApplications"> The list of the allowed client applications. </param>
         internal ContainerAppJwtClaimChecks(IList<string> allowedGroups, IList<string> allowedClientApplications)

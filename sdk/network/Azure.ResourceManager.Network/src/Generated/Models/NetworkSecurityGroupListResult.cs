@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListNetworkSecurityGroups API service call. </summary>
     internal partial class NetworkSecurityGroupListResult
     {
-        /// <summary> Initializes a new instance of NetworkSecurityGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityGroupListResult"/>. </summary>
         internal NetworkSecurityGroupListResult()
         {
             Value = new ChangeTrackingList<NetworkSecurityGroupData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkSecurityGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityGroupListResult"/>. </summary>
         /// <param name="value"> A list of NetworkSecurityGroup resources. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal NetworkSecurityGroupListResult(IReadOnlyList<NetworkSecurityGroupData> value, string nextLink)

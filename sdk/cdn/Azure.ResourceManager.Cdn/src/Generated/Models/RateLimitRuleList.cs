@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines contents of rate limit rules. </summary>
     internal partial class RateLimitRuleList
     {
-        /// <summary> Initializes a new instance of RateLimitRuleList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RateLimitRuleList"/>. </summary>
         public RateLimitRuleList()
         {
             Rules = new ChangeTrackingList<RateLimitRule>();
         }
 
-        /// <summary> Initializes a new instance of RateLimitRuleList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RateLimitRuleList"/>. </summary>
         /// <param name="rules"> List of rules. </param>
         internal RateLimitRuleList(IList<RateLimitRule> rules)
         {

@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Models
     /// <summary> Response containing search results from an index. </summary>
     internal partial class SearchDocumentsResult
     {
-        /// <summary> Initializes a new instance of SearchDocumentsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchDocumentsResult"/>. </summary>
         /// <param name="results"> The sequence of results returned by the query. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
         internal SearchDocumentsResult(IEnumerable<SearchResult> results)
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Models
             Results = results.ToList();
         }
 
-        /// <summary> Initializes a new instance of SearchDocumentsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchDocumentsResult"/>. </summary>
         /// <param name="count"> The total count of results found by the search operation, or null if the count was not requested. If present, the count may be greater than the number of results in this response. This can happen if you use the $top or $skip parameters, or if the query can't return all the requested documents in a single response. </param>
         /// <param name="coverage"> A value indicating the percentage of the index that was included in the query, or null if minimumCoverage was not specified in the request. </param>
         /// <param name="facets"> The facet query results for the search operation, organized as a collection of buckets for each faceted field; null if the query did not include any facet expressions. </param>

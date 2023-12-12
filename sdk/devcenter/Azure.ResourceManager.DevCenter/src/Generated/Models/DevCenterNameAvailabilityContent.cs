@@ -12,9 +12,18 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> The check availability request body. </summary>
     public partial class DevCenterNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of DevCenterNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterNameAvailabilityContent"/>. </summary>
         public DevCenterNameAvailabilityContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        internal DevCenterNameAvailabilityContent(string name, ResourceType? resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> The name of the resource for which availability needs to be checked. </summary>

@@ -17,6 +17,7 @@ public partial class ClientPipeline
 
         private readonly int _perCallIndex;
         private readonly int _perTryIndex;
+        private readonly int _beforeTransportIndex;
         private readonly int _length;
 
         // Original client-scope pipeline.
@@ -28,32 +29,42 @@ public partial class ClientPipeline
         // Custom per-try policies used for the scope of the method invocation.
         private readonly ReadOnlyMemory<PipelinePolicy> _customPerTryPolicies;
 
+        // Custom per-try policies used for the scope of the method invocation.
+        private readonly ReadOnlyMemory<PipelinePolicy> _customBeforeTransportPolicies;
+
         private int _current;
 
         public RequestOptionsProcessor(PipelineMessage message,
             ReadOnlyMemory<PipelinePolicy> fixedPolicies,
             ReadOnlyMemory<PipelinePolicy> perCallPolicies,
             ReadOnlyMemory<PipelinePolicy> perTryPolicies,
+            ReadOnlyMemory<PipelinePolicy> beforeTransportPolicies,
             int perCallIndex,
-            int perTryIndex)
+            int perTryIndex,
+            int beforeTransportIndex)
         {
             if (perCallIndex > fixedPolicies.Length) throw new ArgumentOutOfRangeException(nameof(perCallIndex), "perCallIndex cannot be greater than pipeline length.");
             if (perTryIndex > fixedPolicies.Length) throw new ArgumentOutOfRangeException(nameof(perTryIndex), "perTryIndex cannot be greater than pipeline length.");
+            if (beforeTransportIndex > fixedPolicies.Length) throw new ArgumentOutOfRangeException(nameof(beforeTransportIndex), "beforeTransportIndex cannot be greater than pipeline length.");
             if (perCallIndex > perTryIndex) throw new ArgumentOutOfRangeException(nameof(perCallIndex), "perCallIndex cannot be greater than perTryIndex.");
+            if (perTryIndex > beforeTransportIndex) throw new ArgumentOutOfRangeException(nameof(perTryIndex), "perTryIndex cannot be greater than beforeTransportIndex.");
 
             _message = message;
 
             _fixedPolicies = fixedPolicies;
             _customPerCallPolicies = perCallPolicies;
             _customPerTryPolicies = perTryPolicies;
+            _customBeforeTransportPolicies = beforeTransportPolicies;
 
             _perCallIndex = perCallIndex;
             _perTryIndex = perTryIndex;
+            _beforeTransportIndex = beforeTransportIndex;
 
-            _length = _fixedPolicies.Length + _customPerCallPolicies.Length + _customPerTryPolicies.Length;
+            _length = _fixedPolicies.Length +
+                _customPerCallPolicies.Length +
+                _customPerTryPolicies.Length +
+                _customBeforeTransportPolicies.Length;
         }
-
-        public override int Length => _length - _current;
 
         public override bool ProcessNext()
         {
@@ -78,11 +89,11 @@ public partial class ClientPipeline
         }
 
         /// <summary>
-        /// This custom pipeline is divided into five segments by the per-call
-        /// and per-try indexes:
+        /// This custom pipeline is divided into seven segments by the per-call,
+        /// per-try, and before-transport indexes:
         ///
-        /// [FixedPerCall] [CustomPerCall][FixedPerTry] [CustomPerTry][FixedPerTransport]
-        ///               ^_perCallIndex               ^_perTryIndex
+        /// [FixedPerCall] [CustomPerCall][FixedPerTry] [CustomPerTry][FixedPerTransport] [CustomBeforeTransport][Transport]
+        ///               ^_perCallIndex               ^_perTryIndex                     ^_beforeTransport
         ///
         /// This method returns the next policy in the customized pipeline
         /// sequence and maintains state by incrementing the _current counter
@@ -111,6 +122,16 @@ public partial class ClientPipeline
             }
 
             if (TryGetFixedPerTransportPolicy(out policy))
+            {
+                return true;
+            }
+
+            if (TryGetCustomBeforeTransportPolicy(out policy))
+            {
+                return true;
+            }
+
+            if (TryGetFixedTransportPolicy(out policy))
             {
                 return true;
             }
@@ -157,7 +178,9 @@ public partial class ClientPipeline
 
         private bool TryGetCustomPerTryPolicy(out PipelinePolicy policy)
         {
-            if (_current < _perTryIndex + _customPerCallPolicies.Length + _customPerTryPolicies.Length)
+            if (_current < _perTryIndex +
+                           _customPerCallPolicies.Length +
+                           _customPerTryPolicies.Length)
             {
                 policy = _customPerTryPolicies.Span[_current++ - (_perTryIndex + _customPerCallPolicies.Length)];
                 return true;
@@ -169,9 +192,36 @@ public partial class ClientPipeline
 
         private bool TryGetFixedPerTransportPolicy(out PipelinePolicy policy)
         {
-            if (_current < _length)
+            if (_current < _perTryIndex + _customPerCallPolicies.Length + _customPerTryPolicies.Length)
             {
                 policy = _fixedPolicies.Span[_current++ - (_customPerCallPolicies.Length + _customPerTryPolicies.Length)];
+                return true;
+            }
+
+            policy = default!;
+            return false;
+        }
+
+        private bool TryGetCustomBeforeTransportPolicy(out PipelinePolicy policy)
+        {
+            if (_current < _perTryIndex +
+                           _customPerCallPolicies.Length +
+                           _customPerTryPolicies.Length +
+                           _customBeforeTransportPolicies.Length)
+            {
+                policy = _customPerTryPolicies.Span[_current++ - (_beforeTransportIndex + _customPerCallPolicies.Length + _customPerTryPolicies.Length)];
+                return true;
+            }
+
+            policy = default!;
+            return false;
+        }
+
+        private bool TryGetFixedTransportPolicy(out PipelinePolicy policy)
+        {
+            if (_current < _length)
+            {
+                policy = _fixedPolicies.Span[_current++ - (_customPerCallPolicies.Length + _customPerTryPolicies.Length + _customBeforeTransportPolicies.Length)];
                 return true;
             }
 

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         private readonly MonitoringConfigRestOperations _monitoringMetricConfigurationMonitoringConfigRestClient;
         private readonly MonitoringMetricConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles/monitoringConfig";
+
         /// <summary> Initializes a new instance of the <see cref="MonitoringMetricConfigurationResource"/> class for mocking. </summary>
         protected MonitoringMetricConfigurationResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DataBoxEdge
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles/monitoringConfig";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

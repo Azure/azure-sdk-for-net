@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
     public partial class SystemData
     {
-        /// <summary> Initializes a new instance of SystemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemData"/>. </summary>
         public SystemData()
         {
         }
 
-        /// <summary> Initializes a new instance of SystemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemData"/>. </summary>
         /// <param name="createdBy"> An identifier for the identity that created the resource. </param>
         /// <param name="createdByType"> The type of identity that created the resource. </param>
         /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>

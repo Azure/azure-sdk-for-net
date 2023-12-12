@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Switch cases with have a value and corresponding activities. </summary>
     public partial class SwitchCaseActivity
     {
-        /// <summary> Initializes a new instance of SwitchCaseActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwitchCaseActivity"/>. </summary>
         public SwitchCaseActivity()
         {
             Activities = new ChangeTrackingList<PipelineActivity>();
         }
 
-        /// <summary> Initializes a new instance of SwitchCaseActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwitchCaseActivity"/>. </summary>
         /// <param name="value"> Expected value that satisfies the expression result of the 'on' property. </param>
         /// <param name="activities">
         /// List of activities to execute for satisfied case condition.

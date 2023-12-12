@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Configuration for defining the transfer of data. </summary>
     public partial class TransferConfiguration
     {
-        /// <summary> Initializes a new instance of TransferConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransferConfiguration"/>. </summary>
         /// <param name="transferConfigurationType"> Type of the configuration for transfer. </param>
         public TransferConfiguration(TransferConfigurationType transferConfigurationType)
         {
             TransferConfigurationType = transferConfigurationType;
         }
 
-        /// <summary> Initializes a new instance of TransferConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransferConfiguration"/>. </summary>
         /// <param name="transferConfigurationType"> Type of the configuration for transfer. </param>
         /// <param name="transferFilterDetails"> Map of filter type and the details to filter. This field is required only if the TransferConfigurationType is given as TransferUsingFilter. </param>
         /// <param name="transferAllDetails"> Map of filter type and the details to transfer all data. This field is required only if the TransferConfigurationType is given as TransferAll. </param>

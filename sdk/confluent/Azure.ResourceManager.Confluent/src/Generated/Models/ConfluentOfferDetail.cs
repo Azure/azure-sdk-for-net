@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Confluent.Models
     /// <summary> Confluent Offer detail. </summary>
     public partial class ConfluentOfferDetail
     {
-        /// <summary> Initializes a new instance of ConfluentOfferDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentOfferDetail"/>. </summary>
         /// <param name="publisherId"> Publisher Id. </param>
         /// <param name="id"> Offer Id. </param>
         /// <param name="planId"> Offer Plan Id. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Confluent.Models
             TermUnit = termUnit;
         }
 
-        /// <summary> Initializes a new instance of ConfluentOfferDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentOfferDetail"/>. </summary>
         /// <param name="publisherId"> Publisher Id. </param>
         /// <param name="id"> Offer Id. </param>
         /// <param name="planId"> Offer Plan Id. </param>

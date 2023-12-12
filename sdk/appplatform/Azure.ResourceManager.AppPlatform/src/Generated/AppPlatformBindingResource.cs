@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly BindingsRestOperations _appPlatformBindingBindingsRestClient;
         private readonly AppPlatformBindingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/apps/bindings";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformBindingResource"/> class for mocking. </summary>
         protected AppPlatformBindingResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/apps/bindings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

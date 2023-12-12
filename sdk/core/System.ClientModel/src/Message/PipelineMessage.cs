@@ -9,54 +9,39 @@ namespace System.ClientModel.Primitives;
 public class PipelineMessage : IDisposable
 {
     private PipelineResponse? _response;
+    private ArrayBackedPropertyBag<ulong, object> _propertyBag;
     private bool _disposed;
 
     protected internal PipelineMessage(PipelineRequest request)
     {
+        ClientUtilities.AssertNotNull(request, nameof(request));
+
         Request = request;
         _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
     }
 
-    public virtual PipelineRequest Request { get; }
+    public PipelineRequest Request { get; }
 
-    public virtual PipelineResponse Response
+    public PipelineResponse? Response
     {
-        get
-        {
-            if (_response is null)
-            {
-                throw new InvalidOperationException("Response has not been set on Message.");
-            }
-
-            return _response;
-        }
+        get => _response;
 
         // This is set internally by the transport.
         protected internal set => _response = value;
     }
 
-    public bool TryGetResponse(out PipelineResponse response)
-    {
-        response = _response!;
-        return _response is not null;
-    }
-
-    internal int RetryCount { get; set; }
-
     #region Pipeline invocation options
 
-    public virtual CancellationToken CancellationToken { get; set; }
+    public CancellationToken CancellationToken { get; set; }
 
-    public MessageClassifier? MessageClassifier { get; protected internal set; }
+    public PipelineMessageClassifier? MessageClassifier { get; protected internal set; }
 
-    public void Apply(RequestOptions options, MessageClassifier? messageClassifier = default)
+    public void Apply(RequestOptions options, PipelineMessageClassifier? messageClassifier = default)
     {
         // This design moves the client-author API (options.Apply) off the
         // client-user type RequestOptions.
         options.Apply(this, messageClassifier);
     }
-
-    private ArrayBackedPropertyBag<ulong, object> _propertyBag;
 
     public bool TryGetProperty(Type type, out object? value) =>
         _propertyBag.TryGetValue((ulong)type.TypeHandle.Value, out value);
@@ -74,6 +59,8 @@ public class PipelineMessage : IDisposable
     internal PipelinePolicy[]? PerCallPolicies { get; set; }
 
     internal PipelinePolicy[]? PerTryPolicies { get; set; }
+
+    internal PipelinePolicy[]? BeforeTransportPolicies { get; set; }
 
     #endregion
 
@@ -103,7 +90,7 @@ public class PipelineMessage : IDisposable
         }
     }
 
-    public virtual void Dispose()
+    public void Dispose()
     {
         Dispose(true);
         GC.SuppressFinalize(this);

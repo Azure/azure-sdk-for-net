@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> The AutomationRulePropertyArrayChangedValuesCondition. </summary>
     public partial class AutomationRulePropertyArrayChangedValuesCondition
     {
-        /// <summary> Initializes a new instance of AutomationRulePropertyArrayChangedValuesCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRulePropertyArrayChangedValuesCondition"/>. </summary>
         public AutomationRulePropertyArrayChangedValuesCondition()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationRulePropertyArrayChangedValuesCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRulePropertyArrayChangedValuesCondition"/>. </summary>
         /// <param name="arrayType"></param>
         /// <param name="changeType"></param>
         internal AutomationRulePropertyArrayChangedValuesCondition(AutomationRulePropertyArrayChangedConditionSupportedArrayType? arrayType, AutomationRulePropertyArrayChangedConditionSupportedChangeType? changeType)

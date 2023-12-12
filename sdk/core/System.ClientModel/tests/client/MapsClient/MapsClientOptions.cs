@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
+using System.ClientModel.Primitives;
 
 namespace Maps;
 
-public class MapsClientOptions : ServiceClientOptions
+public class MapsClientOptions : PipelineOptions
 {
     private const ServiceVersion LatestVersion = ServiceVersion.V1;
 

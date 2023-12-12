@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class HciSkuData : ResourceData
     {
-        /// <summary> Initializes a new instance of HciSkuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciSkuData"/>. </summary>
         public HciSkuData()
         {
             SkuMappings = new ChangeTrackingList<HciSkuMappings>();
         }
 
-        /// <summary> Initializes a new instance of HciSkuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciSkuData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

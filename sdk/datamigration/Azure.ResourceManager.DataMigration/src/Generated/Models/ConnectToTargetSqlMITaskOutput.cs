@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for the task that validates connection to Azure SQL Database Managed Instance. </summary>
     public partial class ConnectToTargetSqlMITaskOutput
     {
-        /// <summary> Initializes a new instance of ConnectToTargetSqlMITaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlMITaskOutput"/>. </summary>
         internal ConnectToTargetSqlMITaskOutput()
         {
             Logins = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetSqlMITaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlMITaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="targetServerVersion"> Target server version. </param>
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>

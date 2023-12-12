@@ -14,9 +14,16 @@ namespace Azure.ResourceManager.DataBox.Models
     /// </summary>
     public abstract partial class DataBoxValidationInputContent
     {
-        /// <summary> Initializes a new instance of DataBoxValidationInputContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidationInputContent"/>. </summary>
         protected DataBoxValidationInputContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidationInputContent"/>. </summary>
+        /// <param name="validationType"> Identifies the type of validation request. </param>
+        internal DataBoxValidationInputContent(DataBoxValidationInputDiscriminator validationType)
+        {
+            ValidationType = validationType;
         }
 
         /// <summary> Identifies the type of validation request. </summary>

@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly ServiceFabricsRestOperations _devTestLabServiceFabricServiceFabricsRestClient;
         private readonly DevTestLabServiceFabricData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/users/servicefabrics";
+
         /// <summary> Initializes a new instance of the <see cref="DevTestLabServiceFabricResource"/> class for mocking. </summary>
         protected DevTestLabServiceFabricResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.DevTestLabs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/users/servicefabrics";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

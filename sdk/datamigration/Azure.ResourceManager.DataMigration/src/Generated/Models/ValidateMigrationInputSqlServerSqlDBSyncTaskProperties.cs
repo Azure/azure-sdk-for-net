@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for task that validates migration input for SQL to Azure SQL DB sync migrations. </summary>
     public partial class ValidateMigrationInputSqlServerSqlDBSyncTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlDBSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateMigrationInputSqlServerSqlDBSyncTaskProperties"/>. </summary>
         public ValidateMigrationInputSqlServerSqlDBSyncTaskProperties()
         {
             Output = new ChangeTrackingList<ValidateSyncMigrationInputSqlServerTaskOutput>();
             TaskType = TaskType.ValidateMigrationInputSqlServerSqlDBSync;
         }
 
-        /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlDBSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateMigrationInputSqlServerSqlDBSyncTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>

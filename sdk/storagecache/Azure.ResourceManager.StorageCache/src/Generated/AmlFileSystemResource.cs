@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.StorageCache
         private readonly AmlFilesystemsRestOperations _amlFileSystemamlFilesystemsRestClient;
         private readonly AmlFileSystemData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StorageCache/amlFilesystems";
+
         /// <summary> Initializes a new instance of the <see cref="AmlFileSystemResource"/> class for mocking. </summary>
         protected AmlFileSystemResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.StorageCache
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StorageCache/amlFilesystems";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

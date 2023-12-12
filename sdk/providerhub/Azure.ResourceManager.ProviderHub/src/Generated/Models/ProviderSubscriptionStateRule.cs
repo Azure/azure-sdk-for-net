@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ProviderSubscriptionStateRule. </summary>
     public partial class ProviderSubscriptionStateRule
     {
-        /// <summary> Initializes a new instance of ProviderSubscriptionStateRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderSubscriptionStateRule"/>. </summary>
         public ProviderSubscriptionStateRule()
         {
             AllowedActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ProviderSubscriptionStateRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderSubscriptionStateRule"/>. </summary>
         /// <param name="state"></param>
         /// <param name="allowedActions"></param>
         internal ProviderSubscriptionStateRule(ProviderSubscriptionState? state, IList<string> allowedActions)

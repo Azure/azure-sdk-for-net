@@ -14,13 +14,13 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Additional information provided through arbitrary metadata. </summary>
     public partial class OciAnnotations
     {
-        /// <summary> Initializes a new instance of OciAnnotations. </summary>
+        /// <summary> Initializes a new instance of <see cref="OciAnnotations"/>. </summary>
         public OciAnnotations()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of OciAnnotations. </summary>
+        /// <summary> Initializes a new instance of <see cref="OciAnnotations"/>. </summary>
         /// <param name="createdOn"> Date and time on which the image was built (string, date-time as defined by https://tools.ietf.org/html/rfc3339#section-5.6). </param>
         /// <param name="authors"> Contact details of the people or organization responsible for the image. </param>
         /// <param name="url"> URL to find more information on the image. </param>

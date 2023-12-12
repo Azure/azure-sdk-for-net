@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The UnknownFirewallPolicyRule. </summary>
     internal partial class UnknownFirewallPolicyRule : FirewallPolicyRule
     {
-        /// <summary> Initializes a new instance of UnknownFirewallPolicyRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownFirewallPolicyRule"/>. </summary>
         /// <param name="name"> Name of the rule. </param>
         /// <param name="description"> Description of the rule. </param>
         /// <param name="ruleType"> Rule Type. </param>

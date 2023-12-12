@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The properties that are associated with an Azure Storage account with MSI. </summary>
     public partial class StreamingJobStorageAccount : StreamAnalyticsStorageAccount
     {
-        /// <summary> Initializes a new instance of StreamingJobStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobStorageAccount"/>. </summary>
         public StreamingJobStorageAccount()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingJobStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobStorageAccount"/>. </summary>
         /// <param name="accountName"> The name of the Azure Storage account. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="accountKey"> The account key for the Azure Storage account. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>

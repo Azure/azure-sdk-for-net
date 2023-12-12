@@ -10,9 +10,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> User Response for Troubleshooter continue request. </summary>
     public partial class TroubleshooterResult
     {
-        /// <summary> Initializes a new instance of TroubleshooterResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TroubleshooterResult"/>. </summary>
         public TroubleshooterResult()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TroubleshooterResult"/>. </summary>
+        /// <param name="questionId"> id of the question. </param>
+        /// <param name="questionType"> Text Input. Will be a single line input. </param>
+        /// <param name="response"> Response key for SingleInput. For Multi-line test/open ended question it is free form text. </param>
+        internal TroubleshooterResult(string questionId, QuestionType? questionType, string response)
+        {
+            QuestionId = questionId;
+            QuestionType = questionType;
+            Response = response;
         }
 
         /// <summary> id of the question. </summary>

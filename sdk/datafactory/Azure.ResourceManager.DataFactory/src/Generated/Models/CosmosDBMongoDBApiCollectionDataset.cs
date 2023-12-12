@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The CosmosDB (MongoDB API) database dataset. </summary>
     public partial class CosmosDBMongoDBApiCollectionDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of CosmosDBMongoDBApiCollectionDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMongoDBApiCollectionDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="collection"> The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collection"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "CosmosDbMongoDbApiCollection";
         }
 
-        /// <summary> Initializes a new instance of CosmosDBMongoDBApiCollectionDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMongoDBApiCollectionDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

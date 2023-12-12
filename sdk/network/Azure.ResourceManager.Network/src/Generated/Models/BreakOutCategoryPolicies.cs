@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network Virtual Appliance Sku Properties. </summary>
     public partial class BreakOutCategoryPolicies
     {
-        /// <summary> Initializes a new instance of BreakOutCategoryPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="BreakOutCategoryPolicies"/>. </summary>
         public BreakOutCategoryPolicies()
         {
         }
 
-        /// <summary> Initializes a new instance of BreakOutCategoryPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="BreakOutCategoryPolicies"/>. </summary>
         /// <param name="allow"> Flag to control breakout of o365 allow category. </param>
         /// <param name="optimize"> Flag to control breakout of o365 optimize category. </param>
         /// <param name="default"> Flag to control breakout of o365 default category. </param>

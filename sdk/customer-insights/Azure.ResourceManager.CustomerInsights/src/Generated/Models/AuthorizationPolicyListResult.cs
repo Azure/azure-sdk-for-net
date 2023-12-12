@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The response of list authorization policy operation. </summary>
     internal partial class AuthorizationPolicyListResult
     {
-        /// <summary> Initializes a new instance of AuthorizationPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationPolicyListResult"/>. </summary>
         internal AuthorizationPolicyListResult()
         {
             Value = new ChangeTrackingList<AuthorizationPolicyResourceFormatData>();
         }
 
-        /// <summary> Initializes a new instance of AuthorizationPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationPolicyListResult"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal AuthorizationPolicyListResult(IReadOnlyList<AuthorizationPolicyResourceFormatData> value, string nextLink)

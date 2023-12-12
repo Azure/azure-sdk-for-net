@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Project Database Details. </summary>
     public partial class DatabaseInfo
     {
-        /// <summary> Initializes a new instance of DatabaseInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseInfo"/>. </summary>
         /// <param name="sourceDatabaseName"> Name of the database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceDatabaseName"/> is null. </exception>
         public DatabaseInfo(string sourceDatabaseName)

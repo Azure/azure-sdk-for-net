@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Hive Server linked service. </summary>
     public partial class HiveLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of HiveLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HiveLinkedService"/>. </summary>
         /// <param name="host"> IP address or host name of the Hive server, separated by ';' for multiple hosts (only when serviceDiscoveryMode is enable). </param>
         /// <param name="authenticationType"> The authentication method used to access the Hive server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "Hive";
         }
 
-        /// <summary> Initializes a new instance of HiveLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HiveLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

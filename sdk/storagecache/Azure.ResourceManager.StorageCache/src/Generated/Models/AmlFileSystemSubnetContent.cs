@@ -12,9 +12,22 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Information required to validate the subnet that will be used in AML file system create. </summary>
     public partial class AmlFileSystemSubnetContent
     {
-        /// <summary> Initializes a new instance of AmlFileSystemSubnetContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemSubnetContent"/>. </summary>
         public AmlFileSystemSubnetContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemSubnetContent"/>. </summary>
+        /// <param name="filesystemSubnet"> Subnet used for managing the AML file system and for client-facing operations. This subnet should have at least a /24 subnet mask within the VNET's address space. </param>
+        /// <param name="storageCapacityTiB"> The size of the AML file system, in TiB. </param>
+        /// <param name="sku"> SKU for the resource. </param>
+        /// <param name="location"> Region that the AML file system will be created in. </param>
+        internal AmlFileSystemSubnetContent(string filesystemSubnet, float? storageCapacityTiB, StorageCacheSkuName sku, AzureLocation? location)
+        {
+            FilesystemSubnet = filesystemSubnet;
+            StorageCapacityTiB = storageCapacityTiB;
+            Sku = sku;
+            Location = location;
         }
 
         /// <summary> Subnet used for managing the AML file system and for client-facing operations. This subnet should have at least a /24 subnet mask within the VNET's address space. </summary>

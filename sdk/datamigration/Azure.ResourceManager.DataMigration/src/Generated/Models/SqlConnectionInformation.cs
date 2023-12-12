@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Source SQL Connection. </summary>
     public partial class SqlConnectionInformation
     {
-        /// <summary> Initializes a new instance of SqlConnectionInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlConnectionInformation"/>. </summary>
         public SqlConnectionInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlConnectionInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlConnectionInformation"/>. </summary>
         /// <param name="dataSource"> Data source. </param>
         /// <param name="authentication"> Authentication type. </param>
         /// <param name="userName"> User name to connect to source SQL. </param>

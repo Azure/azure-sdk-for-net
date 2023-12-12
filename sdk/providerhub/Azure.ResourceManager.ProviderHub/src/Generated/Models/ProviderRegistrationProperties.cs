@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ProviderRegistrationProperties. </summary>
     public partial class ProviderRegistrationProperties : ResourceProviderManifestProperties
     {
-        /// <summary> Initializes a new instance of ProviderRegistrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderRegistrationProperties"/>. </summary>
         public ProviderRegistrationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ProviderRegistrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderRegistrationProperties"/>. </summary>
         /// <param name="providerAuthentication"></param>
         /// <param name="providerAuthorizations"></param>
         /// <param name="namespace"></param>

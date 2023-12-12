@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class AzureWebCategoryData : ResourceData
     {
-        /// <summary> Initializes a new instance of AzureWebCategoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureWebCategoryData"/>. </summary>
         internal AzureWebCategoryData()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureWebCategoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureWebCategoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

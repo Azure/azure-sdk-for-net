@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ManagementPartner.Models
     /// <summary> this is the management partner operation. </summary>
     public partial class OperationDisplay
     {
-        /// <summary> Initializes a new instance of OperationDisplay. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationDisplay"/>. </summary>
         internal OperationDisplay()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationDisplay. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationDisplay"/>. </summary>
         /// <param name="provider"> the is management partner provider. </param>
         /// <param name="resource"> the is management partner resource. </param>
         /// <param name="operation"> the is management partner operation. </param>

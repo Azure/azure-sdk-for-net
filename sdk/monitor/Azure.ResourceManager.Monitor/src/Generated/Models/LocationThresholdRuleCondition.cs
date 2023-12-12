@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A rule condition based on a certain number of locations failing. </summary>
     public partial class LocationThresholdRuleCondition : AlertRuleCondition
     {
-        /// <summary> Initializes a new instance of LocationThresholdRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocationThresholdRuleCondition"/>. </summary>
         /// <param name="failedLocationCount"> the number of locations that must fail to activate the alert. </param>
         public LocationThresholdRuleCondition(int failedLocationCount)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
             OdataType = "Microsoft.Azure.Management.Insights.Models.LocationThresholdRuleCondition";
         }
 
-        /// <summary> Initializes a new instance of LocationThresholdRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocationThresholdRuleCondition"/>. </summary>
         /// <param name="odataType"> specifies the type of condition. This can be one of three types: ManagementEventRuleCondition (occurrences of management events), LocationThresholdRuleCondition (based on the number of failures of a web test), and ThresholdRuleCondition (based on the threshold of a metric). </param>
         /// <param name="dataSource">
         /// the resource from which the rule collects its data. For this type dataSource will always be of type RuleMetricDataSource.

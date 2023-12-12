@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> The MarketplaceRuleListResult. </summary>
     internal partial class MarketplaceRuleListResult
     {
-        /// <summary> Initializes a new instance of MarketplaceRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceRuleListResult"/>. </summary>
         internal MarketplaceRuleListResult()
         {
             Value = new ChangeTrackingList<MarketplaceRule>();
         }
 
-        /// <summary> Initializes a new instance of MarketplaceRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceRuleListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of rules list results if there are any. </param>
         internal MarketplaceRuleListResult(IReadOnlyList<MarketplaceRule> value, string nextLink)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> Dto for tenant domain registration. </summary>
     public partial class DataShareEmailRegistration
     {
-        /// <summary> Initializes a new instance of DataShareEmailRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareEmailRegistration"/>. </summary>
         public DataShareEmailRegistration()
         {
         }
 
-        /// <summary> Initializes a new instance of DataShareEmailRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareEmailRegistration"/>. </summary>
         /// <param name="activationCode"> Activation code for the registration. </param>
         /// <param name="activationExpireOn"> Date of the activation expiration. </param>
         /// <param name="email"> The email to register. </param>

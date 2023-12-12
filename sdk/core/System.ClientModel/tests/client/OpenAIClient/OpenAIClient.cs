@@ -5,7 +5,6 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text;
-using System.Threading;
 
 namespace OpenAI;
 
@@ -25,27 +24,26 @@ public class OpenAIClient
         _endpoint = endpoint;
         _credential = credential;
 
-        _pipeline = ClientPipeline.Create(options, new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer"));
+        var authenticationPolicy = KeyCredentialAuthenticationPolicy.CreateHeaderPolicy(_credential, "Authorization", "Bearer");
+        _pipeline = ClientPipeline.Create(options, authenticationPolicy);
     }
 
-    public virtual OutputMessage<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
+    public virtual ClientResult<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions)
     {
         if (deploymentId is null) throw new ArgumentNullException(nameof(deploymentId));
         if (deploymentId.Length == 0) throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentId));
         if (completionsOptions is null) throw new ArgumentNullException(nameof(completionsOptions));
 
-        RequestOptions options = FromCancellationToken(cancellationToken);
-        InputContent content = InputContent.Create(completionsOptions);
-
-        OutputMessage result = GetCompletions(deploymentId, content, options);
+        BinaryContent content = BinaryContent.Create(completionsOptions);
+        ClientResult result = GetCompletions(deploymentId, content);
 
         PipelineResponse response = result.GetRawResponse();
         Completions completions = Completions.FromResponse(response);
 
-        return OutputMessage.FromValue(completions, response);
+        return ClientResult.FromValue(completions, response);
     }
 
-    public virtual OutputMessage GetCompletions(string deploymentId, InputContent content, RequestOptions options = null)
+    public virtual ClientResult GetCompletions(string deploymentId, BinaryContent content, RequestOptions options = null)
     {
         if (deploymentId is null) throw new ArgumentNullException(nameof(deploymentId));
         if (deploymentId.Length == 0) throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentId));
@@ -62,10 +60,10 @@ public class OpenAIClient
             throw new ClientRequestException(response);
         }
 
-        return OutputMessage.FromResponse(response);
+        return ClientResult.FromResponse(response);
     }
 
-    internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, InputContent content, RequestOptions options)
+    internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, BinaryContent content, RequestOptions options)
     {
         PipelineMessage message = _pipeline.CreateMessage();
         message.Apply(options, MessageClassifier200);
@@ -88,17 +86,6 @@ public class OpenAIClient
         return message;
     }
 
-    private static RequestOptions DefaultRequestContext = new RequestOptions();
-    internal static RequestOptions FromCancellationToken(CancellationToken cancellationToken = default)
-    {
-        if (!cancellationToken.CanBeCanceled)
-        {
-            return DefaultRequestContext;
-        }
-
-        return new RequestOptions() { CancellationToken = cancellationToken };
-    }
-
-    private static MessageClassifier _messageClassifier200;
-    private static MessageClassifier MessageClassifier200 => _messageClassifier200 ??= new ResponseStatusClassifier(stackalloc ushort[] { 200 });
+    private static PipelineMessageClassifier _messageClassifier200;
+    private static PipelineMessageClassifier MessageClassifier200 => _messageClassifier200 ??= new ResponseStatusClassifier(stackalloc ushort[] { 200 });
 }

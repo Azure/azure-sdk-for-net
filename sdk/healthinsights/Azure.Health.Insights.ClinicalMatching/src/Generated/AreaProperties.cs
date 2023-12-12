@@ -10,7 +10,7 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> `GeoJSON` object properties. </summary>
     public partial class AreaProperties
     {
-        /// <summary> Initializes a new instance of AreaProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AreaProperties"/>. </summary>
         /// <param name="subType"> `GeoJSON` object sub-type. </param>
         /// <param name="radius"> The radius of the area's circle, in meters. </param>
         public AreaProperties(GeoJsonPropertiesSubType subType, double radius)

@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The SKU (tier) of a workspace. </summary>
     public partial class OperationalInsightsWorkspaceSku
     {
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspaceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceSku"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         public OperationalInsightsWorkspaceSku(OperationalInsightsWorkspaceSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspaceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceSku"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="capacityReservationLevel"> The capacity reservation level in GB for this workspace, when CapacityReservation sku is selected. </param>
         /// <param name="lastSkuUpdatedOn"> The last time when the sku was updated. </param>

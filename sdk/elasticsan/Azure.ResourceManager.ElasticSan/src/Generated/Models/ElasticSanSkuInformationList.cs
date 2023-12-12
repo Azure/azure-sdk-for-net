@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> List of SKU Information objects. </summary>
     internal partial class ElasticSanSkuInformationList
     {
-        /// <summary> Initializes a new instance of ElasticSanSkuInformationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanSkuInformationList"/>. </summary>
         internal ElasticSanSkuInformationList()
         {
             Value = new ChangeTrackingList<ElasticSanSkuInformation>();
         }
 
-        /// <summary> Initializes a new instance of ElasticSanSkuInformationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanSkuInformationList"/>. </summary>
         /// <param name="value"> List of ResourceType Sku. </param>
         /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
         internal ElasticSanSkuInformationList(IReadOnlyList<ElasticSanSkuInformation> value, string nextLink)

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Grafana
     /// </summary>
     public partial class GrafanaPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of GrafanaPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaPrivateEndpointConnectionData"/>. </summary>
         public GrafanaPrivateEndpointConnectionData()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of GrafanaPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

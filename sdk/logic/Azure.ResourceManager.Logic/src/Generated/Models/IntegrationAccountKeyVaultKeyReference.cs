@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The reference to the key vault key. </summary>
     public partial class IntegrationAccountKeyVaultKeyReference
     {
-        /// <summary> Initializes a new instance of IntegrationAccountKeyVaultKeyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountKeyVaultKeyReference"/>. </summary>
         /// <param name="keyName"> The private key name in key vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public IntegrationAccountKeyVaultKeyReference(string keyName)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Logic.Models
             KeyName = keyName;
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountKeyVaultKeyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountKeyVaultKeyReference"/>. </summary>
         /// <param name="keyName"> The private key name in key vault. </param>
         /// <param name="keyVersion"> The private key version in key vault. </param>
         /// <param name="resourceId"> The resource id. </param>

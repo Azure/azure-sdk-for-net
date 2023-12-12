@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The Microsoft Defender for Server VM scanning configuration. </summary>
     public partial class DefenderForServersAwsOfferingVmScanners
     {
-        /// <summary> Initializes a new instance of DefenderForServersAwsOfferingVmScanners. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersAwsOfferingVmScanners"/>. </summary>
         public DefenderForServersAwsOfferingVmScanners()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForServersAwsOfferingVmScanners. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersAwsOfferingVmScanners"/>. </summary>
         /// <param name="isEnabled"> Is Microsoft Defender for Server VM scanning enabled. </param>
         /// <param name="configuration"> configuration for Microsoft Defender for Server VM scanning. </param>
         internal DefenderForServersAwsOfferingVmScanners(bool? isEnabled, DefenderForServersAwsOfferingVmScannersConfiguration configuration)

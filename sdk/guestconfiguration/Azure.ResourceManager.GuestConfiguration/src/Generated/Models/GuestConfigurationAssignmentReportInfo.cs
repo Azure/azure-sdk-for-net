@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> The GuestConfigurationAssignmentReportInfo. </summary>
     public partial class GuestConfigurationAssignmentReportInfo
     {
-        /// <summary> Initializes a new instance of GuestConfigurationAssignmentReportInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReportInfo"/>. </summary>
         public GuestConfigurationAssignmentReportInfo()
         {
             Resources = new ChangeTrackingList<AssignmentReportResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of GuestConfigurationAssignmentReportInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReportInfo"/>. </summary>
         /// <param name="id"> ARM resource id of the report for the guest configuration assignment. </param>
         /// <param name="reportId"> GUID that identifies the guest configuration assignment report under a subscription, resource group. </param>
         /// <param name="assignment"> Configuration details of the guest configuration assignment. </param>

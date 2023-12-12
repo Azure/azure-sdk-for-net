@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataLakeStore
     /// </summary>
     public partial class DataLakeStoreFirewallRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataLakeStoreFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreFirewallRuleData"/>. </summary>
         internal DataLakeStoreFirewallRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreFirewallRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

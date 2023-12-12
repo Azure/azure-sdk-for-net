@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> The parameters required to accept subscription ownership. </summary>
     public partial class AcceptOwnershipContent
     {
-        /// <summary> Initializes a new instance of AcceptOwnershipContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcceptOwnershipContent"/>. </summary>
         public AcceptOwnershipContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AcceptOwnershipContent"/>. </summary>
+        /// <param name="properties"> Accept subscription ownership request properties. </param>
+        internal AcceptOwnershipContent(AcceptOwnershipRequestProperties properties)
+        {
+            Properties = properties;
         }
 
         /// <summary> Accept subscription ownership request properties. </summary>

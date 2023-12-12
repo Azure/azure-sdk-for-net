@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private readonly IpPrefixesRestOperations _networkFabricIPPrefixIPPrefixesRestClient;
         private readonly NetworkFabricIPPrefixData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/ipPrefixes";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkFabricIPPrefixResource"/> class for mocking. </summary>
         protected NetworkFabricIPPrefixResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/ipPrefixes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

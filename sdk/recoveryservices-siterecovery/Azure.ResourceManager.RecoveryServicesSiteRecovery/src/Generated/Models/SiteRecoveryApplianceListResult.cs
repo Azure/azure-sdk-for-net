@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Collection of appliance details. </summary>
     internal partial class SiteRecoveryApplianceListResult
     {
-        /// <summary> Initializes a new instance of SiteRecoveryApplianceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryApplianceListResult"/>. </summary>
         internal SiteRecoveryApplianceListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryReplicationAppliance>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryApplianceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryApplianceListResult"/>. </summary>
         /// <param name="value"> The appliance details. </param>
         /// <param name="nextLink"> The value of next link. </param>
         internal SiteRecoveryApplianceListResult(IReadOnlyList<SiteRecoveryReplicationAppliance> value, string nextLink)

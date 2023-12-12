@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Advisor.Models
     /// <summary> The list of Advisor recommendations. </summary>
     internal partial class ResourceRecommendationBaseListResult
     {
-        /// <summary> Initializes a new instance of ResourceRecommendationBaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceRecommendationBaseListResult"/>. </summary>
         internal ResourceRecommendationBaseListResult()
         {
             Value = new ChangeTrackingList<ResourceRecommendationBaseData>();
         }
 
-        /// <summary> Initializes a new instance of ResourceRecommendationBaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceRecommendationBaseListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of recommendations. </param>
         /// <param name="value"> The list of recommendations. </param>
         internal ResourceRecommendationBaseListResult(string nextLink, IReadOnlyList<ResourceRecommendationBaseData> value)

@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.Network
         private readonly NetworkManagementRestOperations _expressRouteProviderPortRestClient;
         private readonly BastionHostData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/bastionHosts";
+
         /// <summary> Initializes a new instance of the <see cref="BastionHostResource"/> class for mocking. </summary>
         protected BastionHostResource()
         {
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/bastionHosts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

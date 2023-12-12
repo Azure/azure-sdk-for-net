@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class AppServiceDetectorData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceDetectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceDetectorData"/>. </summary>
         public AppServiceDetectorData()
         {
             Dataset = new ChangeTrackingList<DiagnosticDataset>();
             DataProvidersMetadata = new ChangeTrackingList<DataProviderMetadata>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceDetectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceDetectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

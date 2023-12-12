@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> Storage Profile properties of a server. </summary>
     public partial class PostgreSqlStorageProfile
     {
-        /// <summary> Initializes a new instance of PostgreSqlStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlStorageProfile"/>. </summary>
         public PostgreSqlStorageProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlStorageProfile"/>. </summary>
         /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
         /// <param name="geoRedundantBackup"> Enable Geo-redundant or not for server backup. </param>
         /// <param name="storageInMB"> Max storage allowed for a server. </param>

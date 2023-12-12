@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Defines the observed Arc Agent status that is resourceSynced back to the ARM resource. </summary>
     public partial class ArcAgentStatus
     {
-        /// <summary> Initializes a new instance of ArcAgentStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcAgentStatus"/>. </summary>
         internal ArcAgentStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ArcAgentStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcAgentStatus"/>. </summary>
         /// <param name="deploymentState"> Observed deployment state of the Arc Agents on the target cluster. Possible values include: 'pending', 'provisioning', 'provisioned', 'deleting', 'failed', 'upgrading'. </param>
         /// <param name="errorMessage"> Error messages while onboarding/upgrading/uninstalling the Arc agents. </param>
         /// <param name="onboardingPublicKey"> Onboarding public key for provisioning the Managed identity for the HybridAKS cluster. Will be used to create the hybridIdentityMetadata proxy resource and will not be persisted. </param>

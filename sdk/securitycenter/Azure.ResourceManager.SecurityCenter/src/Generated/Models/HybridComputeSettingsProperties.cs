@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Settings for hybrid compute management. </summary>
     public partial class HybridComputeSettingsProperties
     {
-        /// <summary> Initializes a new instance of HybridComputeSettingsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeSettingsProperties"/>. </summary>
         /// <param name="autoProvision"> Whether or not to automatically install Azure Arc (hybrid compute) agents on machines. </param>
         public HybridComputeSettingsProperties(AutoProvisionState autoProvision)
         {
             AutoProvision = autoProvision;
         }
 
-        /// <summary> Initializes a new instance of HybridComputeSettingsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeSettingsProperties"/>. </summary>
         /// <param name="hybridComputeProvisioningState"> State of the service principal and its secret. </param>
         /// <param name="autoProvision"> Whether or not to automatically install Azure Arc (hybrid compute) agents on machines. </param>
         /// <param name="resourceGroupName"> The name of the resource group where Arc (Hybrid Compute) connectors are connected. </param>

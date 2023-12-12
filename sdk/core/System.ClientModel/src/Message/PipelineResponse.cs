@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Internal;
 using System.IO;
-using System.Net.Http;
 
 namespace System.ClientModel.Primitives;
 
@@ -12,28 +10,23 @@ public abstract class PipelineResponse : IDisposable
     // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
     private static readonly BinaryData s_emptyBinaryData = new(Array.Empty<byte>());
 
-    public static PipelineResponse Create(HttpResponseMessage response)
-        => new HttpPipelineResponse(response);
-
-    //public static bool TryGetHttpResponse(PipelineResponse response,
-    //    out HttpResponseMessage httpResponse)
-    //{
-    //    if (response is HttpPipelineResponse httpPipelineResponse)
-    //    {
-    //        httpResponse = httpPipelineResponse.HttpResponse;
-    //        return true;
-    //    }
-
-    //    httpResponse = default!;
-    //    return false;
-    //}
-
+    /// <summary>
+    /// Gets the HTTP status code.
+    /// </summary>
     public abstract int Status { get; }
 
+    /// <summary>
+    /// Gets the HTTP reason phrase.
+    /// </summary>
     public abstract string ReasonPhrase { get; }
 
-    public abstract MessageHeaders Headers { get; }
+    public MessageHeaders Headers => GetHeadersCore();
 
+    protected abstract MessageHeaders GetHeadersCore();
+
+    /// <summary>
+    /// Gets the contents of HTTP response. Returns <c>null</c> for responses without content.
+    /// </summary>
     public abstract Stream? ContentStream { get; set; }
 
     #region Meta-data properties set by the pipeline.
@@ -67,7 +60,7 @@ public abstract class PipelineResponse : IDisposable
     /// Indicates whether the status code of the returned response is considered
     /// an error code.
     /// </summary>
-    public bool IsError { get; internal set; }
+    public bool IsError { get; protected internal set; }
 
     #endregion
 

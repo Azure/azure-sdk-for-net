@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Recovery point model collection. </summary>
     internal partial class DataReplicationRecoveryPointListResult
     {
-        /// <summary> Initializes a new instance of DataReplicationRecoveryPointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationRecoveryPointListResult"/>. </summary>
         internal DataReplicationRecoveryPointListResult()
         {
             Value = new ChangeTrackingList<DataReplicationRecoveryPointData>();
         }
 
-        /// <summary> Initializes a new instance of DataReplicationRecoveryPointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationRecoveryPointListResult"/>. </summary>
         /// <param name="value"> Gets or sets the list of recovery points. </param>
         /// <param name="nextLink"> Gets or sets the value of next link. </param>
         internal DataReplicationRecoveryPointListResult(IReadOnlyList<DataReplicationRecoveryPointData> value, string nextLink)

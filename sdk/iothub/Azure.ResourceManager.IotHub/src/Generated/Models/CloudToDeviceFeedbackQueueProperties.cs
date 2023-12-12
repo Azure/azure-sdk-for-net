@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties of the feedback queue for cloud-to-device messages. </summary>
     public partial class CloudToDeviceFeedbackQueueProperties
     {
-        /// <summary> Initializes a new instance of CloudToDeviceFeedbackQueueProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudToDeviceFeedbackQueueProperties"/>. </summary>
         public CloudToDeviceFeedbackQueueProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudToDeviceFeedbackQueueProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudToDeviceFeedbackQueueProperties"/>. </summary>
         /// <param name="lockDurationAsIso8601"> The lock duration for the feedback queue. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#cloud-to-device-messages. </param>
         /// <param name="ttlAsIso8601"> The period of time for which a message is available to consume before it is expired by the IoT hub. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#cloud-to-device-messages. </param>
         /// <param name="maxDeliveryCount"> The number of times the IoT hub attempts to deliver a message on the feedback queue. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging#cloud-to-device-messages. </param>

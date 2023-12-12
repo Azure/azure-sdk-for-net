@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Capture Virtual Machine parameters. </summary>
     public partial class RunCommandInput
     {
-        /// <summary> Initializes a new instance of RunCommandInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunCommandInput"/>. </summary>
         /// <param name="commandId"> The run command id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="commandId"/> is null. </exception>
         public RunCommandInput(string commandId)
@@ -24,6 +24,17 @@ namespace Azure.ResourceManager.Compute.Models
             CommandId = commandId;
             Script = new ChangeTrackingList<string>();
             Parameters = new ChangeTrackingList<RunCommandInputParameter>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RunCommandInput"/>. </summary>
+        /// <param name="commandId"> The run command id. </param>
+        /// <param name="script"> Optional. The script to be executed.  When this value is given, the given script will override the default script of the command. </param>
+        /// <param name="parameters"> The run command parameters. </param>
+        internal RunCommandInput(string commandId, IList<string> script, IList<RunCommandInputParameter> parameters)
+        {
+            CommandId = commandId;
+            Script = script;
+            Parameters = parameters;
         }
 
         /// <summary> The run command id. </summary>

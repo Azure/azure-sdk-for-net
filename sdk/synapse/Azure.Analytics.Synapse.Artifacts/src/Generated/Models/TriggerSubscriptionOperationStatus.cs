@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Defines the response of a trigger subscription operation. </summary>
     public partial class TriggerSubscriptionOperationStatus
     {
-        /// <summary> Initializes a new instance of TriggerSubscriptionOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerSubscriptionOperationStatus"/>. </summary>
         internal TriggerSubscriptionOperationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of TriggerSubscriptionOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerSubscriptionOperationStatus"/>. </summary>
         /// <param name="triggerName"> Trigger name. </param>
         /// <param name="status"> Event Subscription Status. </param>
         internal TriggerSubscriptionOperationStatus(string triggerName, EventSubscriptionStatus? status)

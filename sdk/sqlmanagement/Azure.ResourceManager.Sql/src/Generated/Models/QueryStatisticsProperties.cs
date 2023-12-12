@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Properties of a query execution statistics. </summary>
     public partial class QueryStatisticsProperties
     {
-        /// <summary> Initializes a new instance of QueryStatisticsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryStatisticsProperties"/>. </summary>
         internal QueryStatisticsProperties()
         {
             Intervals = new ChangeTrackingList<QueryMetricInterval>();
         }
 
-        /// <summary> Initializes a new instance of QueryStatisticsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryStatisticsProperties"/>. </summary>
         /// <param name="databaseName"> Database name of the database in which this query was executed. </param>
         /// <param name="queryId"> Unique query id (unique within one database). </param>
         /// <param name="startTime"> The start time for the metric (ISO-8601 format). </param>

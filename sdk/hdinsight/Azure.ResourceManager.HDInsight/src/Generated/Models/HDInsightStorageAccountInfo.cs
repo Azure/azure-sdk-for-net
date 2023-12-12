@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The storage Account. </summary>
     public partial class HDInsightStorageAccountInfo
     {
-        /// <summary> Initializes a new instance of HDInsightStorageAccountInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightStorageAccountInfo"/>. </summary>
         public HDInsightStorageAccountInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightStorageAccountInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightStorageAccountInfo"/>. </summary>
         /// <param name="name"> The name of the storage account. </param>
         /// <param name="isDefault"> Whether or not the storage account is the default storage account. </param>
         /// <param name="container"> The container in the storage account, only to be specified for WASB storage accounts. </param>

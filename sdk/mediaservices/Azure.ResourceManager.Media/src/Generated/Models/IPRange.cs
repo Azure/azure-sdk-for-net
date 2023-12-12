@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The IP address range in the CIDR scheme. </summary>
     public partial class IPRange
     {
-        /// <summary> Initializes a new instance of IPRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPRange"/>. </summary>
         public IPRange()
         {
         }
 
-        /// <summary> Initializes a new instance of IPRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPRange"/>. </summary>
         /// <param name="name"> The friendly name for the IP address range. </param>
         /// <param name="address"> The IP address. </param>
         /// <param name="subnetPrefixLength"> The subnet mask prefix length (see CIDR notation). </param>

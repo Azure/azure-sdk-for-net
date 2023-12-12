@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> Details of single instance of redis. </summary>
     public partial class RedisInstanceDetails
     {
-        /// <summary> Initializes a new instance of RedisInstanceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisInstanceDetails"/>. </summary>
         internal RedisInstanceDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of RedisInstanceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisInstanceDetails"/>. </summary>
         /// <param name="sslPort"> Redis instance SSL port. </param>
         /// <param name="nonSslPort"> If enableNonSslPort is true, provides Redis instance Non-SSL port. </param>
         /// <param name="zone"> If the Cache uses availability zones, specifies availability zone where this instance is located. </param>

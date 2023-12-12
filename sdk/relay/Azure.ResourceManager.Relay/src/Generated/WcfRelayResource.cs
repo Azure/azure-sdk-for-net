@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Relay
         private readonly WCFRelaysRestOperations _wcfRelayWCFRelaysRestClient;
         private readonly WcfRelayData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/wcfRelays";
+
         /// <summary> Initializes a new instance of the <see cref="WcfRelayResource"/> class for mocking. </summary>
         protected WcfRelayResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Relay
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/wcfRelays";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

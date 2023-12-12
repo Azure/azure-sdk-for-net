@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> A list of DigitalTwins description objects with a next link. </summary>
     internal partial class DigitalTwinsDescriptionListResult
     {
-        /// <summary> Initializes a new instance of DigitalTwinsDescriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsDescriptionListResult"/>. </summary>
         internal DigitalTwinsDescriptionListResult()
         {
             Value = new ChangeTrackingList<DigitalTwinsDescriptionData>();
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsDescriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsDescriptionListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of DigitalTwins description objects. </param>
         /// <param name="value"> A list of DigitalTwins description objects. </param>
         internal DigitalTwinsDescriptionListResult(string nextLink, IReadOnlyList<DigitalTwinsDescriptionData> value)

@@ -4,25 +4,26 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
     public partial class HttpClientTransport
     {
-        private class AzureCoreHttpPipelineTransport : PipelineTransport
+        private class AzureCoreHttpPipelineTransport : HttpClientPipelineTransport
         {
-            private readonly PipelineTransport _httpPipelineTransport;
-
-            public AzureCoreHttpPipelineTransport(HttpClient client)
+            public AzureCoreHttpPipelineTransport(HttpClient client) : base(client)
             {
-                _httpPipelineTransport = Create(client,
-                    OnSendingRequest,
-                    OnReceivedResponse);
+            }
+
+            protected override PipelineMessage CreateMessageCore()
+            {
+                PipelineMessage message = base.CreateMessageCore();
+                HttpClientTransportRequest request = new(message.Request);
+                return new HttpMessage(request, ResponseClassifier.Shared);
             }
 
             /// <inheritdoc />
-            private void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest)
+            protected override void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest)
             {
                 if (message is not HttpMessage httpMessage)
                 {
@@ -35,29 +36,21 @@ namespace Azure.Core.Pipeline
             }
 
             /// <inheritdoc />
-            private void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
+            protected override void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
             {
                 if (message is not HttpMessage httpMessage)
                 {
                     throw new InvalidOperationException($"Unsupported message type: '{message?.GetType()}'.");
                 }
 
-                httpMessage.Response = new HttpClientTransportResponse(
-                    httpMessage.Request.ClientRequestId,
-                    message.Response);
+                if (message.Response is not PipelineResponse pipelineResponse)
+                {
+                    throw new InvalidOperationException($"Unsupported response type: '{message?.GetType()}'.");
+                }
+
+                string clientRequestId = httpMessage.Request.ClientRequestId;
+                httpMessage.Response = new HttpClientTransportResponse(clientRequestId, pipelineResponse);
             }
-
-            public override void Process(PipelineMessage message)
-                => _httpPipelineTransport.Process(message);
-
-            public override async ValueTask ProcessAsync(PipelineMessage message)
-                => await _httpPipelineTransport.ProcessAsync(message).ConfigureAwait(false);
-
-            public override PipelineMessage CreateMessage()
-                => _httpPipelineTransport.CreateMessage();
-
-            public override void Dispose()
-                => _httpPipelineTransport.Dispose();
         }
     }
 }

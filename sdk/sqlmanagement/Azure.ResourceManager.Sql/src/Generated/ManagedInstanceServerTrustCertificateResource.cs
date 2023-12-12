@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Sql
         private readonly ServerTrustCertificatesRestOperations _managedInstanceServerTrustCertificateServerTrustCertificatesRestClient;
         private readonly ServerTrustCertificateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/serverTrustCertificates";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceServerTrustCertificateResource"/> class for mocking. </summary>
         protected ManagedInstanceServerTrustCertificateResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/serverTrustCertificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

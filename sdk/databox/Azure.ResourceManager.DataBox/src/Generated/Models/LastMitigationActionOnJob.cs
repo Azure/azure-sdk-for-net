@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Last Mitigation Action Performed On Job. </summary>
     public partial class LastMitigationActionOnJob
     {
-        /// <summary> Initializes a new instance of LastMitigationActionOnJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="LastMitigationActionOnJob"/>. </summary>
         internal LastMitigationActionOnJob()
         {
         }
 
-        /// <summary> Initializes a new instance of LastMitigationActionOnJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="LastMitigationActionOnJob"/>. </summary>
         /// <param name="actionPerformedOn"> Action performed date time. </param>
         /// <param name="isPerformedByCustomer">
         /// Action performed by customer,

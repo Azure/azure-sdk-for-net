@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters that describes a set of credentials that will be used when a run is invoked. </summary>
     public partial class ContainerRegistryCredentials
     {
-        /// <summary> Initializes a new instance of ContainerRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryCredentials"/>. </summary>
         public ContainerRegistryCredentials()
         {
             CustomRegistries = new ChangeTrackingDictionary<string, CustomRegistryCredentials>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryCredentials"/>. </summary>
         /// <param name="sourceRegistry"> Describes the credential parameters for accessing the source registry. </param>
         /// <param name="customRegistries">
         /// Describes the credential parameters for accessing other custom registries. The key

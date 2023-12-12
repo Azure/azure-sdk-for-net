@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> Parent resource information. </summary>
     internal partial class ManagedByInfo
     {
-        /// <summary> Initializes a new instance of ManagedByInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedByInfo"/>. </summary>
         public ManagedByInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedByInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedByInfo"/>. </summary>
         /// <param name="resourceId"> Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use. </param>
         internal ManagedByInfo(ResourceIdentifier resourceId)
         {

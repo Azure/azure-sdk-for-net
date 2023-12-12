@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Expanded info of resource scope, role definition and policy. </summary>
     public partial class PolicyAssignmentProperties : ResourceData
     {
-        /// <summary> Initializes a new instance of PolicyAssignmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentProperties"/>. </summary>
         internal PolicyAssignmentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyAssignmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentProperties"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

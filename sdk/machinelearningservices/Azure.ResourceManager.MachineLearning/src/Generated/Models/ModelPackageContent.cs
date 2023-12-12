@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Model package operation request properties. </summary>
     public partial class ModelPackageContent
     {
-        /// <summary> Initializes a new instance of ModelPackageContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelPackageContent"/>. </summary>
         /// <param name="inferencingServer">
         /// [Required] Inferencing server configurations.
         /// Please note <see cref="Models.InferencingServer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -31,6 +31,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
             InferencingServer = inferencingServer;
             Inputs = new ChangeTrackingList<ModelPackageInput>();
             Tags = new ChangeTrackingDictionary<string, string>();
+            TargetEnvironmentId = targetEnvironmentId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ModelPackageContent"/>. </summary>
+        /// <param name="baseEnvironmentSource">
+        /// Base environment to start with.
+        /// Please note <see cref="Models.BaseEnvironmentSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BaseEnvironmentType"/>.
+        /// </param>
+        /// <param name="environmentVariables"> Collection of environment variables. </param>
+        /// <param name="inferencingServer">
+        /// [Required] Inferencing server configurations.
+        /// Please note <see cref="Models.InferencingServer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureMLBatchInferencingServer"/>, <see cref="AzureMLOnlineInferencingServer"/>, <see cref="CustomInferencingServer"/> and <see cref="TritonInferencingServer"/>.
+        /// </param>
+        /// <param name="inputs"> Collection of inputs. </param>
+        /// <param name="modelConfiguration"> Model configuration including the mount mode. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="targetEnvironmentId"> [Required] Arm ID of the target environment to be created by package operation. </param>
+        internal ModelPackageContent(BaseEnvironmentSource baseEnvironmentSource, IDictionary<string, string> environmentVariables, InferencingServer inferencingServer, IList<ModelPackageInput> inputs, ModelConfiguration modelConfiguration, IDictionary<string, string> tags, string targetEnvironmentId)
+        {
+            BaseEnvironmentSource = baseEnvironmentSource;
+            EnvironmentVariables = environmentVariables;
+            InferencingServer = inferencingServer;
+            Inputs = inputs;
+            ModelConfiguration = modelConfiguration;
+            Tags = tags;
             TargetEnvironmentId = targetEnvironmentId;
         }
 

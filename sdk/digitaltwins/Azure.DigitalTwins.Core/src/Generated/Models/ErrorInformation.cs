@@ -13,13 +13,13 @@ namespace Azure.DigitalTwins.Core
     /// <summary> Error definition. </summary>
     internal partial class ErrorInformation
     {
-        /// <summary> Initializes a new instance of ErrorInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorInformation"/>. </summary>
         public ErrorInformation()
         {
             Details = new ChangeTrackingList<ErrorInformation>();
         }
 
-        /// <summary> Initializes a new instance of ErrorInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorInformation"/>. </summary>
         /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="details"> Internal error details. </param>

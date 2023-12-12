@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
     public partial class NetAppVolumePatchDataProtection
     {
-        /// <summary> Initializes a new instance of NetAppVolumePatchDataProtection. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumePatchDataProtection"/>. </summary>
         public NetAppVolumePatchDataProtection()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumePatchDataProtection"/>. </summary>
+        /// <param name="snapshot"> Snapshot properties. </param>
+        internal NetAppVolumePatchDataProtection(VolumeSnapshotProperties snapshot)
+        {
+            Snapshot = snapshot;
         }
 
         /// <summary> Snapshot properties. </summary>

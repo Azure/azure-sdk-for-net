@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Ssis folder. </summary>
     public partial class SsisFolder : SsisObjectMetadata
     {
-        /// <summary> Initializes a new instance of SsisFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisFolder"/>. </summary>
         internal SsisFolder()
         {
             MetadataType = SsisObjectMetadataType.Folder;
         }
 
-        /// <summary> Initializes a new instance of SsisFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisFolder"/>. </summary>
         /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>

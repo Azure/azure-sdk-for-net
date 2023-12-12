@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Result of the List Permission Binding operation. </summary>
     internal partial class PermissionBindingsListResult
     {
-        /// <summary> Initializes a new instance of PermissionBindingsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PermissionBindingsListResult"/>. </summary>
         internal PermissionBindingsListResult()
         {
             Value = new ChangeTrackingList<EventGridNamespacePermissionBindingData>();
         }
 
-        /// <summary> Initializes a new instance of PermissionBindingsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PermissionBindingsListResult"/>. </summary>
         /// <param name="value"> A collection of Permission Binding. </param>
         /// <param name="nextLink"> A link for the next page of Permission Binding. </param>
         internal PermissionBindingsListResult(IReadOnlyList<EventGridNamespacePermissionBindingData> value, string nextLink)

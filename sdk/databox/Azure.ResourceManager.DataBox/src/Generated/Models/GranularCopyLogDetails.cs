@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// </summary>
     public abstract partial class GranularCopyLogDetails
     {
-        /// <summary> Initializes a new instance of GranularCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="GranularCopyLogDetails"/>. </summary>
         protected GranularCopyLogDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of GranularCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="GranularCopyLogDetails"/>. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
         internal GranularCopyLogDetails(DataBoxOrderType copyLogDetailsType)
         {

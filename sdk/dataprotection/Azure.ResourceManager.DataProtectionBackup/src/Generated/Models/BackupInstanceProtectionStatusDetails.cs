@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Protection status details. </summary>
     public partial class BackupInstanceProtectionStatusDetails
     {
-        /// <summary> Initializes a new instance of BackupInstanceProtectionStatusDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupInstanceProtectionStatusDetails"/>. </summary>
         internal BackupInstanceProtectionStatusDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupInstanceProtectionStatusDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupInstanceProtectionStatusDetails"/>. </summary>
         /// <param name="errorDetails"> Specifies the protection status error of the resource. </param>
         /// <param name="status"> Specifies the protection status of the resource. </param>
         internal BackupInstanceProtectionStatusDetails(ResponseError errorDetails, BackupInstanceProtectionStatus? status)

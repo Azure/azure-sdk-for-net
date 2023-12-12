@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Maintenance
     /// </summary>
     public partial class MaintenanceApplyUpdateData : ResourceData
     {
-        /// <summary> Initializes a new instance of MaintenanceApplyUpdateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceApplyUpdateData"/>. </summary>
         public MaintenanceApplyUpdateData()
         {
         }
 
-        /// <summary> Initializes a new instance of MaintenanceApplyUpdateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceApplyUpdateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

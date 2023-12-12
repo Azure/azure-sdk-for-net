@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Maintenance window time range. </summary>
     public partial class SynapseMaintenanceWindowTimeRange
     {
-        /// <summary> Initializes a new instance of SynapseMaintenanceWindowTimeRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseMaintenanceWindowTimeRange"/>. </summary>
         public SynapseMaintenanceWindowTimeRange()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseMaintenanceWindowTimeRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseMaintenanceWindowTimeRange"/>. </summary>
         /// <param name="dayOfWeek"> Day of maintenance window. </param>
         /// <param name="startOn"> Start time minutes offset from 12am. </param>
         /// <param name="duration"> Duration of maintenance window in minutes. </param>

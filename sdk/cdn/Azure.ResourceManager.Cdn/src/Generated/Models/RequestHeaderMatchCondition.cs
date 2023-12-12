@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for RequestHeader match conditions. </summary>
     public partial class RequestHeaderMatchCondition
     {
-        /// <summary> Initializes a new instance of RequestHeaderMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestHeaderMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="requestHeaderOperator"> Describes operator to be matched. </param>
         public RequestHeaderMatchCondition(RequestHeaderMatchConditionType conditionType, RequestHeaderOperator requestHeaderOperator)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
-        /// <summary> Initializes a new instance of RequestHeaderMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestHeaderMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="selector"> Name of Header to be matched. </param>
         /// <param name="requestHeaderOperator"> Describes operator to be matched. </param>

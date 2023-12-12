@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Panorama connectivity information. </summary>
     public partial class FirewallPanoramaStatus
     {
-        /// <summary> Initializes a new instance of FirewallPanoramaStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPanoramaStatus"/>. </summary>
         internal FirewallPanoramaStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallPanoramaStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPanoramaStatus"/>. </summary>
         /// <param name="panoramaServerStatus"> Primary Panorama connection status. </param>
         /// <param name="panoramaServer2Status"> Secondary Panorama connection status. </param>
         internal FirewallPanoramaStatus(FirewallPanoramaServerStatus? panoramaServerStatus, FirewallPanoramaServerStatus? panoramaServer2Status)

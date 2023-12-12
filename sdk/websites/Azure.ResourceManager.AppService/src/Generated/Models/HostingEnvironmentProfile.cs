@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Specification for an App Service Environment to use for this resource. </summary>
     public partial class HostingEnvironmentProfile
     {
-        /// <summary> Initializes a new instance of HostingEnvironmentProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostingEnvironmentProfile"/>. </summary>
         public HostingEnvironmentProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of HostingEnvironmentProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostingEnvironmentProfile"/>. </summary>
         /// <param name="id"> Resource ID of the App Service Environment. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="resourceType"> Resource type of the App Service Environment. </param>

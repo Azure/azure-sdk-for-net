@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The FileSystemSource. </summary>
     public partial class FileSystemSource : DataImportSource
     {
-        /// <summary> Initializes a new instance of FileSystemSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSystemSource"/>. </summary>
         public FileSystemSource()
         {
             SourceType = DataImportSourceType.FileSystem;
         }
 
-        /// <summary> Initializes a new instance of FileSystemSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSystemSource"/>. </summary>
         /// <param name="connection"> Workspace connection for data import source storage. </param>
         /// <param name="sourceType"> [Required] Specifies the type of data. </param>
         /// <param name="path"> Path on data import FileSystem source. </param>

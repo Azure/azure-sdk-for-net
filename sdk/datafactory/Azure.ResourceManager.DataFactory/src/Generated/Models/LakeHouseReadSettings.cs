@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Microsoft Fabric LakeHouse Files read settings. </summary>
     public partial class LakeHouseReadSettings : StoreReadSettings
     {
-        /// <summary> Initializes a new instance of LakeHouseReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LakeHouseReadSettings"/>. </summary>
         public LakeHouseReadSettings()
         {
             StoreReadSettingsType = "LakeHouseReadSettings";
         }
 
-        /// <summary> Initializes a new instance of LakeHouseReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LakeHouseReadSettings"/>. </summary>
         /// <param name="storeReadSettingsType"> The read setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>

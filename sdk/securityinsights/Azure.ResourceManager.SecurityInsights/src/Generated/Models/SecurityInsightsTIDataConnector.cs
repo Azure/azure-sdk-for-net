@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents threat intelligence data connector. </summary>
     public partial class SecurityInsightsTIDataConnector : SecurityInsightsDataConnectorData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsTIDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsTIDataConnector"/>. </summary>
         public SecurityInsightsTIDataConnector()
         {
             Kind = DataConnectorKind.ThreatIntelligence;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsTIDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsTIDataConnector"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

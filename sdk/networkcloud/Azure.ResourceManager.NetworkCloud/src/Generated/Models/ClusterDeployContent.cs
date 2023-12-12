@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> ClusterDeployParameters represents the body of the request to deploy cluster. </summary>
     public partial class ClusterDeployContent
     {
-        /// <summary> Initializes a new instance of ClusterDeployContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterDeployContent"/>. </summary>
         public ClusterDeployContent()
         {
             SkipValidationsForMachines = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterDeployContent"/>. </summary>
+        /// <param name="skipValidationsForMachines"> The names of bare metal machines in the cluster that should be skipped during environment validation. </param>
+        internal ClusterDeployContent(IList<string> skipValidationsForMachines)
+        {
+            SkipValidationsForMachines = skipValidationsForMachines;
         }
 
         /// <summary> The names of bare metal machines in the cluster that should be skipped during environment validation. </summary>

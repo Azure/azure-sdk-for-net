@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Result of Query Performance Insight data reset. </summary>
     public partial class MySqlQueryPerformanceInsightResetDataResult
     {
-        /// <summary> Initializes a new instance of MySqlQueryPerformanceInsightResetDataResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlQueryPerformanceInsightResetDataResult"/>. </summary>
         internal MySqlQueryPerformanceInsightResetDataResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlQueryPerformanceInsightResetDataResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlQueryPerformanceInsightResetDataResult"/>. </summary>
         /// <param name="status"> Indicates result of the operation. </param>
         /// <param name="message"> operation message. </param>
         internal MySqlQueryPerformanceInsightResetDataResult(MySqlQueryPerformanceInsightResetDataResultState? status, string message)

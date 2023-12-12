@@ -14,10 +14,19 @@ namespace Azure.ResourceManager.Kubernetes.Models
     /// <summary> Object containing updates for patch operations. </summary>
     public partial class ConnectedClusterPatch
     {
-        /// <summary> Initializes a new instance of ConnectedClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterPatch"/>. </summary>
         public ConnectedClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> Describes the connected cluster resource properties that can be updated during PATCH operation. </param>
+        internal ConnectedClusterPatch(IDictionary<string, string> tags, BinaryData properties)
+        {
+            Tags = tags;
+            Properties = properties;
         }
 
         /// <summary> Resource tags. </summary>

@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The CustomEntityRecognitionLROResult. </summary>
     internal partial class CustomEntityRecognitionLROResult : AnalyzeTextLROResult
     {
-        /// <summary> Initializes a new instance of CustomEntityRecognitionLROResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntityRecognitionLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         /// <param name="results"></param>
@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics.Models
             Kind = AnalyzeTextLROResultsKind.CustomEntityRecognitionLROResults;
         }
 
-        /// <summary> Initializes a new instance of CustomEntityRecognitionLROResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntityRecognitionLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         /// <param name="kind"> Enumeration of supported Text Analysis long-running operation task results. </param>

@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
-using System.IO;
 using System.ClientModel.Primitives;
+using System.IO;
 
 namespace Azure.Core
 {
@@ -12,7 +11,7 @@ namespace Azure.Core
     /// A type that analyzes HTTP responses and exceptions and determines if they should be retried,
     /// and/or analyzes responses and determines if they should be treated as error responses.
     /// </summary>
-    public class ResponseClassifier : MessageClassifier
+    public class ResponseClassifier : PipelineMessageClassifier
     {
         internal static ResponseClassifier Shared { get; } = new();
 
@@ -57,15 +56,7 @@ namespace Azure.Core
         /// <summary>
         /// Specifies if the response contained in the <paramref name="message"/> is not successful.
         /// </summary>
-        public virtual bool IsErrorResponse(HttpMessage message) => base.IsError(message);
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool IsError(PipelineMessage message)
-            => base.IsError(message);
+        public virtual bool IsErrorResponse(HttpMessage message)
+            => base.IsErrorResponse(message);
     }
 }

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> Group connectivity details. </summary>
     public partial class GroupConnectivityInformation
     {
-        /// <summary> Initializes a new instance of GroupConnectivityInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="GroupConnectivityInformation"/>. </summary>
         public GroupConnectivityInformation()
         {
             CustomerVisibleFqdns = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of GroupConnectivityInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="GroupConnectivityInformation"/>. </summary>
         /// <param name="groupId"> Group ID. </param>
         /// <param name="memberName"> Member name. </param>
         /// <param name="customerVisibleFqdns"> List of customer visible FQDNs. </param>

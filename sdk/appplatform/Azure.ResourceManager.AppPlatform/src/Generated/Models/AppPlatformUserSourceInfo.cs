@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// </summary>
     public abstract partial class AppPlatformUserSourceInfo
     {
-        /// <summary> Initializes a new instance of AppPlatformUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformUserSourceInfo"/>. </summary>
         protected AppPlatformUserSourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformUserSourceInfo"/>. </summary>
         /// <param name="userSourceInfoType"> Type of the source uploaded. </param>
         /// <param name="version"> Version of the source. </param>
         internal AppPlatformUserSourceInfo(string userSourceInfoType, string version)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> Request property. </summary>
     public partial class QuotaSubRequestDetail
     {
-        /// <summary> Initializes a new instance of QuotaSubRequestDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaSubRequestDetail"/>. </summary>
         internal QuotaSubRequestDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of QuotaSubRequestDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaSubRequestDetail"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceTypeName"> Resource type for which the quota properties were requested. </param>
         /// <param name="unit"> Quota limit units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>

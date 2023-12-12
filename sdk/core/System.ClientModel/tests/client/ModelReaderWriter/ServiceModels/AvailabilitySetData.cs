@@ -20,17 +20,17 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
     {
         internal AvailabilitySetData() { }
 
-        public static implicit operator InputContent(AvailabilitySetData availabilitySetData)
+        public static implicit operator BinaryContent(AvailabilitySetData availabilitySetData)
         {
             if (availabilitySetData is null)
             {
                 return null;
             }
 
-            return InputContent.Create(availabilitySetData, ModelReaderWriterHelper.WireOptions);
+            return BinaryContent.Create(availabilitySetData, ModelReaderWriterHelper.WireOptions);
         }
 
-        public static explicit operator AvailabilitySetData(OutputMessage result)
+        public static explicit operator AvailabilitySetData(ClientResult result)
         {
             if (result is null) throw new ArgumentNullException(nameof(result));
 

@@ -14,67 +14,55 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public partial class HttpClientTransport : HttpPipelineTransport
     {
-        // TODO: is this static method still needed?
-        internal static bool TryGetPipelineResponse(Response response, out PipelineResponse? pipelineResponse)
-        {
-            if (response is HttpClientTransportResponse responseAdapter)
-            {
-                pipelineResponse = responseAdapter.PipelineResponse;
-                return true;
-            }
-
-            pipelineResponse = null;
-            return false;
-        }
-
-        // Adapts a ClientModel PipelineResponse to an Azure.Core Response.
         private sealed class HttpClientTransportResponse : Response
         {
-            private readonly PipelineResponse _httpPipelineResponse;
+            private string _clientRequestId;
+            private readonly PipelineResponse _pipelineResponse;
 
-            public HttpClientTransportResponse(string requestId, PipelineResponse response)
+            public HttpClientTransportResponse(string clientRequestId, PipelineResponse pipelineResponse)
             {
-                Argument.AssertNotNull(requestId, nameof(requestId));
-
-                ClientRequestId = requestId;
-                _httpPipelineResponse = response;
+                _clientRequestId = clientRequestId;
+                _pipelineResponse = pipelineResponse;
             }
 
-            internal PipelineResponse PipelineResponse => _httpPipelineResponse;
+            public override int Status => _pipelineResponse.Status;
 
-            public override int Status => _httpPipelineResponse.Status;
+            public override string ReasonPhrase => _pipelineResponse.ReasonPhrase;
 
-            public override string ReasonPhrase => _httpPipelineResponse.ReasonPhrase;
-
-            public override string ClientRequestId { get; set; }
+            public override string ClientRequestId
+            {
+                get => _clientRequestId;
+                set => _clientRequestId = value;
+            }
 
             public override Stream? ContentStream
             {
-                get => _httpPipelineResponse.ContentStream;
-                set => _httpPipelineResponse.ContentStream = value;
+                get => _pipelineResponse.ContentStream;
+                set => _pipelineResponse.ContentStream = value;
             }
 
             protected internal override bool ContainsHeader(string name)
-                => _httpPipelineResponse.Headers.TryGetValue(name, out _);
+                => _pipelineResponse.Headers.TryGetValue(name, out _);
 
             protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
             {
-                _httpPipelineResponse.Headers.TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers);
-
-                foreach (KeyValuePair<string, string> header in headers)
+                foreach (KeyValuePair<string, string> header in _pipelineResponse.Headers)
                 {
                     yield return new HttpHeader(header.Key, header.Value);
                 }
             }
 
             protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
-                => _httpPipelineResponse.Headers.TryGetValue(name, out value);
+                => _pipelineResponse.Headers.TryGetValue(name, out value);
 
             protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
-                => _httpPipelineResponse.Headers.TryGetValues(name, out values);
+                => _pipelineResponse.Headers.TryGetValues(name, out values);
 
             public override void Dispose()
-                => _httpPipelineResponse.Dispose();
+            {
+                PipelineResponse response = _pipelineResponse;
+                response?.Dispose();
+            }
         }
     }
 }

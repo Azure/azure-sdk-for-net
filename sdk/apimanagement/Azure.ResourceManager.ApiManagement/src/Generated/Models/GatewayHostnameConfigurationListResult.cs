@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Gateway hostname configuration list representation. </summary>
     internal partial class GatewayHostnameConfigurationListResult
     {
-        /// <summary> Initializes a new instance of GatewayHostnameConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayHostnameConfigurationListResult"/>. </summary>
         internal GatewayHostnameConfigurationListResult()
         {
             Value = new ChangeTrackingList<ApiManagementGatewayHostnameConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of GatewayHostnameConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayHostnameConfigurationListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="nextLink"> Next page link if any. </param>
         internal GatewayHostnameConfigurationListResult(IReadOnlyList<ApiManagementGatewayHostnameConfigurationData> value, string nextLink)

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> An Azure Cosmos DB MongoDB database event. </summary>
     public partial class RestorableMongoDBDatabase : ResourceData
     {
-        /// <summary> Initializes a new instance of RestorableMongoDBDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableMongoDBDatabase"/>. </summary>
         internal RestorableMongoDBDatabase()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableMongoDBDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableMongoDBDatabase"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly CustomImagesRestOperations _devTestLabCustomImageCustomImagesRestClient;
         private readonly DevTestLabCustomImageData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/customimages";
+
         /// <summary> Initializes a new instance of the <see cref="DevTestLabCustomImageResource"/> class for mocking. </summary>
         protected DevTestLabCustomImageResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DevTestLabs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/customimages";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

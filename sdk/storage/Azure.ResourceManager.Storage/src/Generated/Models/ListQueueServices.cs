@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The ListQueueServices. </summary>
     internal partial class ListQueueServices
     {
-        /// <summary> Initializes a new instance of ListQueueServices. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListQueueServices"/>. </summary>
         internal ListQueueServices()
         {
             Value = new ChangeTrackingList<QueueServiceData>();
         }
 
-        /// <summary> Initializes a new instance of ListQueueServices. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListQueueServices"/>. </summary>
         /// <param name="value"> List of queue services returned. </param>
         internal ListQueueServices(IReadOnlyList<QueueServiceData> value)
         {

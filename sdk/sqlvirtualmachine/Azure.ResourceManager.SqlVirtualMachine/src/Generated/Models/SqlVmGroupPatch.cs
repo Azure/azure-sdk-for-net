@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> An update to a SQL virtual machine group. </summary>
     public partial class SqlVmGroupPatch
     {
-        /// <summary> Initializes a new instance of SqlVmGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmGroupPatch"/>. </summary>
         public SqlVmGroupPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlVmGroupPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal SqlVmGroupPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

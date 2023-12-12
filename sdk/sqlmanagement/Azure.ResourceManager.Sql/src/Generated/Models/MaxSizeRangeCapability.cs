@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The maximum size range capability. </summary>
     public partial class MaxSizeRangeCapability
     {
-        /// <summary> Initializes a new instance of MaxSizeRangeCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaxSizeRangeCapability"/>. </summary>
         internal MaxSizeRangeCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of MaxSizeRangeCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaxSizeRangeCapability"/>. </summary>
         /// <param name="minValue"> Minimum value. </param>
         /// <param name="maxValue"> Maximum value. </param>
         /// <param name="scaleSize"> Scale/step size for discrete values between the minimum value and the maximum value. </param>

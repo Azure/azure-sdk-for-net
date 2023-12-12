@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDefenderEasmModelFactory
     {
-        /// <summary> Initializes a new instance of EasmWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderEasm.EasmWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             return new EasmWorkspaceData(id, name, resourceType, systemData, tags, location, provisioningState, dataPlaneEndpoint);
         }
 
-        /// <summary> Initializes a new instance of EasmLabelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderEasm.EasmLabelData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             return new EasmLabelData(id, name, resourceType, systemData, provisioningState, displayName, color);
         }
 
-        /// <summary> Initializes a new instance of EasmLabelPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EasmLabelPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             return new EasmLabelPatch(id, name, resourceType, systemData, provisioningState, displayName, color);
         }
 
-        /// <summary> Initializes a new instance of EasmTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EasmTask"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

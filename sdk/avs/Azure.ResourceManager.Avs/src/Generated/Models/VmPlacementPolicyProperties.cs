@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> VM-VM placement policy properties. </summary>
     public partial class VmPlacementPolicyProperties : PlacementPolicyProperties
     {
-        /// <summary> Initializes a new instance of VmPlacementPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmPlacementPolicyProperties"/>. </summary>
         /// <param name="vmMembers"> Virtual machine members list. </param>
         /// <param name="affinityType"> placement policy affinity type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmMembers"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Avs.Models
             PolicyType = PlacementPolicyType.VmVm;
         }
 
-        /// <summary> Initializes a new instance of VmPlacementPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmPlacementPolicyProperties"/>. </summary>
         /// <param name="policyType"> placement policy type. </param>
         /// <param name="state"> Whether the placement policy is enabled or disabled. </param>
         /// <param name="displayName"> Display name of the placement policy. </param>

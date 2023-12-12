@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> The UnknownTimeSeriesDatabaseConnectionProperties. </summary>
     internal partial class UnknownTimeSeriesDatabaseConnectionProperties : TimeSeriesDatabaseConnectionProperties
     {
-        /// <summary> Initializes a new instance of UnknownTimeSeriesDatabaseConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownTimeSeriesDatabaseConnectionProperties"/>. </summary>
         /// <param name="connectionType"> The type of time series connection resource. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="identity"> Managed identity properties for the time series database connection resource. </param>

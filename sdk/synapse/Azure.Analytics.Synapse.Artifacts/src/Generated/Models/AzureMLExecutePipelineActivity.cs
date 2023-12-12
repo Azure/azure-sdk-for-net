@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure ML Execute Pipeline activity. </summary>
     public partial class AzureMLExecutePipelineActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of AzureMLExecutePipelineActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLExecutePipelineActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="mlPipelineId"> ID of the published Azure ML pipeline. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="mlPipelineId"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureMLExecutePipeline";
         }
 
-        /// <summary> Initializes a new instance of AzureMLExecutePipelineActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLExecutePipelineActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

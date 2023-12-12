@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Contains a list of PrivateLinkResource and a possible link to query more results. </summary>
     internal partial class SignalRPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of SignalRPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRPrivateLinkResourceListResult"/>. </summary>
         internal SignalRPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<SignalRPrivateLinkResource>();
         }
 
-        /// <summary> Initializes a new instance of SignalRPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> List of PrivateLinkResource. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).

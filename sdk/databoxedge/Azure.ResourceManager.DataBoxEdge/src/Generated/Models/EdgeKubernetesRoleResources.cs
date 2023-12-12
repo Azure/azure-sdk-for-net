@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Kubernetes role resources. </summary>
     public partial class EdgeKubernetesRoleResources
     {
-        /// <summary> Initializes a new instance of EdgeKubernetesRoleResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleResources"/>. </summary>
         /// <param name="compute"> Kubernetes role compute resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="compute"/> is null. </exception>
         public EdgeKubernetesRoleResources(EdgeKubernetesRoleCompute compute)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Compute = compute;
         }
 
-        /// <summary> Initializes a new instance of EdgeKubernetesRoleResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleResources"/>. </summary>
         /// <param name="storage"> Kubernetes role storage resource. </param>
         /// <param name="compute"> Kubernetes role compute resource. </param>
         /// <param name="network"> Kubernetes role network resource. </param>

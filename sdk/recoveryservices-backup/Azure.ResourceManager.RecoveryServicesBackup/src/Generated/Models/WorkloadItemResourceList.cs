@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> List of WorkloadItem resources. </summary>
     internal partial class WorkloadItemResourceList
     {
-        /// <summary> Initializes a new instance of WorkloadItemResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadItemResourceList"/>. </summary>
         internal WorkloadItemResourceList()
         {
             Value = new ChangeTrackingList<WorkloadItemResource>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadItemResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadItemResourceList"/>. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
         internal WorkloadItemResourceList(IReadOnlyList<WorkloadItemResource> value, string nextLink)

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.EnergyServices
         private readonly EnergyServicesRestOperations _energyServiceRestClient;
         private readonly EnergyServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OpenEnergyPlatform/energyServices";
+
         /// <summary> Initializes a new instance of the <see cref="EnergyServiceResource"/> class for mocking. </summary>
         protected EnergyServiceResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.EnergyServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OpenEnergyPlatform/energyServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

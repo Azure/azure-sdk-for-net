@@ -13,11 +13,22 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network Manager Deployment Status Parameter. </summary>
     public partial class NetworkManagerDeploymentStatusContent
     {
-        /// <summary> Initializes a new instance of NetworkManagerDeploymentStatusContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerDeploymentStatusContent"/>. </summary>
         public NetworkManagerDeploymentStatusContent()
         {
             Regions = new ChangeTrackingList<string>();
             DeploymentTypes = new ChangeTrackingList<NetworkConfigurationDeploymentType>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerDeploymentStatusContent"/>. </summary>
+        /// <param name="regions"> List of locations. </param>
+        /// <param name="deploymentTypes"> List of deployment types. </param>
+        /// <param name="skipToken"> Continuation token for pagination, capturing the next page size and offset, as well as the context of the query. </param>
+        internal NetworkManagerDeploymentStatusContent(IList<string> regions, IList<NetworkConfigurationDeploymentType> deploymentTypes, string skipToken)
+        {
+            Regions = regions;
+            DeploymentTypes = deploymentTypes;
+            SkipToken = skipToken;
         }
 
         /// <summary> List of locations. </summary>

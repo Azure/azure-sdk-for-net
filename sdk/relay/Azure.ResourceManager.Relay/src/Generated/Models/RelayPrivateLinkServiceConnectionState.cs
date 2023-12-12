@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Relay.Models
     /// <summary> ConnectionState information. </summary>
     public partial class RelayPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of RelayPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayPrivateLinkServiceConnectionState"/>. </summary>
         public RelayPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of RelayPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> Status of the connection. </param>
         /// <param name="description"> Description of the connection state. </param>
         internal RelayPrivateLinkServiceConnectionState(RelayPrivateLinkConnectionStatus? status, string description)

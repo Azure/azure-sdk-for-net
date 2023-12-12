@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.Resources
         private readonly DeploymentScriptsRestOperations _scriptLogDeploymentScriptsRestClient;
         private readonly ArmDeploymentScriptData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/deploymentScripts";
+
         /// <summary> Initializes a new instance of the <see cref="ArmDeploymentScriptResource"/> class for mocking. </summary>
         protected ArmDeploymentScriptResource()
         {
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/deploymentScripts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

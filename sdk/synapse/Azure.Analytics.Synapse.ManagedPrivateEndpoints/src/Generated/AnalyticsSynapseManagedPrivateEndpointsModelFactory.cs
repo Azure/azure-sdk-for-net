@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
     /// <summary> Model factory for models. </summary>
     public static partial class AnalyticsSynapseManagedPrivateEndpointsModelFactory
     {
-        /// <summary> Initializes a new instance of ManagedPrivateEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedPrivateEndpoint"/>. </summary>
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             return new ManagedPrivateEndpoint(id, name, type, properties);
         }
 
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedPrivateEndpointProperties"/>. </summary>
         /// <param name="name"> The name of managed private endpoint. </param>
         /// <param name="privateLinkResourceId"> The ARM resource ID of the resource to which the managed private endpoint is created. </param>
         /// <param name="groupId"> The groupId to which the managed private endpoint is created. </param>
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             return new ManagedPrivateEndpointProperties(name, privateLinkResourceId, groupId, provisioningState, connectionState, isReserved, fqdns?.ToList(), isCompliant);
         }
 
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedPrivateEndpointConnectionState"/>. </summary>
         /// <param name="status"> The approval status. </param>
         /// <param name="description"> The managed private endpoint description. </param>
         /// <param name="actionsRequired"> The actions required on the managed private endpoint. </param>

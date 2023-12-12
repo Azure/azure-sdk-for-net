@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The X12 one-way agreement. </summary>
     public partial class X12OneWayAgreement
     {
-        /// <summary> Initializes a new instance of X12OneWayAgreement. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12OneWayAgreement"/>. </summary>
         /// <param name="senderBusinessIdentity"> The sender business identity. </param>
         /// <param name="receiverBusinessIdentity"> The receiver business identity. </param>
         /// <param name="protocolSettings"> The X12 protocol settings. </param>

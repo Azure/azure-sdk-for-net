@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ManagedServices.Models
     /// <summary> The registration definition associated with the registration assignment. </summary>
     public partial class ManagedServicesRegistrationAssignmentRegistrationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentRegistrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationAssignmentRegistrationData"/>. </summary>
         internal ManagedServicesRegistrationAssignmentRegistrationData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentRegistrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationAssignmentRegistrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

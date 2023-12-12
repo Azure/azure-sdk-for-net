@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Helm artifact profile. </summary>
     public partial class HelmArtifactProfile
     {
-        /// <summary> Initializes a new instance of HelmArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HelmArtifactProfile"/>. </summary>
         public HelmArtifactProfile()
         {
             RegistryValuesPaths = new ChangeTrackingList<string>();
             ImagePullSecretsValuesPaths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HelmArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HelmArtifactProfile"/>. </summary>
         /// <param name="helmPackageName"> Helm package name. </param>
         /// <param name="helmPackageVersionRange"> Helm package version range. </param>
         /// <param name="registryValuesPaths"> The registry values path list. </param>

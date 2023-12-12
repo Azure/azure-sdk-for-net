@@ -13,14 +13,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Data flow debug settings. </summary>
     public partial class DataFlowDebugPackageDebugSettings
     {
-        /// <summary> Initializes a new instance of DataFlowDebugPackageDebugSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugPackageDebugSettings"/>. </summary>
         public DataFlowDebugPackageDebugSettings()
         {
             SourceSettings = new ChangeTrackingList<DataFlowSourceSetting>();
             Parameters = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of DataFlowDebugPackageDebugSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugPackageDebugSettings"/>. </summary>
         /// <param name="sourceSettings"> Source setting for data flow debug. </param>
         /// <param name="parameters"> Data flow parameters. </param>
         /// <param name="datasetParameters"> Parameters for dataset. </param>

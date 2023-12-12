@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Contains a list of match conditions, and an action on how to modify the request/response. If multiple rules match, the actions from one rule that conflict with a previous rule overwrite for a singular action, or append in the case of headers manipulation. </summary>
     public partial class RulesEngineRule
     {
-        /// <summary> Initializes a new instance of RulesEngineRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulesEngineRule"/>. </summary>
         /// <param name="name"> A name to refer to this specific rule. </param>
         /// <param name="priority"> A priority assigned to this rule. </param>
         /// <param name="action"> Actions to perform on the request and response if all of the match conditions are met. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             MatchConditions = new ChangeTrackingList<RulesEngineMatchCondition>();
         }
 
-        /// <summary> Initializes a new instance of RulesEngineRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulesEngineRule"/>. </summary>
         /// <param name="name"> A name to refer to this specific rule. </param>
         /// <param name="priority"> A priority assigned to this rule. </param>
         /// <param name="action"> Actions to perform on the request and response if all of the match conditions are met. </param>

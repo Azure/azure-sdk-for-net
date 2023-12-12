@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> The response to an enumeration operation on DNS resolvers. </summary>
     internal partial class DnsResolverListResult
     {
-        /// <summary> Initializes a new instance of DnsResolverListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResolverListResult"/>. </summary>
         internal DnsResolverListResult()
         {
             Value = new ChangeTrackingList<DnsResolverData>();
         }
 
-        /// <summary> Initializes a new instance of DnsResolverListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResolverListResult"/>. </summary>
         /// <param name="value"> Enumeration of the DNS resolvers. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
         internal DnsResolverListResult(IReadOnlyList<DnsResolverData> value, string nextLink)

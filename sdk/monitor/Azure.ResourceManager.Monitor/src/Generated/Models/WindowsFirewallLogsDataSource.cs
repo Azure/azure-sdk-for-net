@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Enables Firewall logs to be collected by this data collection rule. </summary>
     public partial class WindowsFirewallLogsDataSource
     {
-        /// <summary> Initializes a new instance of WindowsFirewallLogsDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsFirewallLogsDataSource"/>. </summary>
         /// <param name="streams"> Firewall logs streams. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="streams"/> is null. </exception>
         public WindowsFirewallLogsDataSource(IEnumerable<string> streams)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Streams = streams.ToList();
         }
 
-        /// <summary> Initializes a new instance of WindowsFirewallLogsDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsFirewallLogsDataSource"/>. </summary>
         /// <param name="streams"> Firewall logs streams. </param>
         /// <param name="name">
         /// A friendly name for the data source.

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Set of actions in the Rewrite Rule in Application Gateway. </summary>
     public partial class ApplicationGatewayRewriteRuleActionSet
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleActionSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRewriteRuleActionSet"/>. </summary>
         public ApplicationGatewayRewriteRuleActionSet()
         {
             RequestHeaderConfigurations = new ChangeTrackingList<ApplicationGatewayHeaderConfiguration>();
             ResponseHeaderConfigurations = new ChangeTrackingList<ApplicationGatewayHeaderConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleActionSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRewriteRuleActionSet"/>. </summary>
         /// <param name="requestHeaderConfigurations"> Request Header Actions in the Action Set. </param>
         /// <param name="responseHeaderConfigurations"> Response Header Actions in the Action Set. </param>
         /// <param name="urlConfiguration"> Url Configuration Action in the Action Set. </param>

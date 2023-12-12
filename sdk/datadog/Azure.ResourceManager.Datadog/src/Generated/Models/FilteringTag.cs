@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> The definition of a filtering tag. Filtering tags are used for capturing resources and include/exclude them from being monitored. </summary>
     public partial class FilteringTag
     {
-        /// <summary> Initializes a new instance of FilteringTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilteringTag"/>. </summary>
         public FilteringTag()
         {
         }
 
-        /// <summary> Initializes a new instance of FilteringTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilteringTag"/>. </summary>
         /// <param name="name"> The name (also known as the key) of the tag. </param>
         /// <param name="value"> The value of the tag. </param>
         /// <param name="action"> Valid actions for a filtering tag. Exclusion takes priority over inclusion. </param>

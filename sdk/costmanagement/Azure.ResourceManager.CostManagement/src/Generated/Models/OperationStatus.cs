@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The status of the long running operation. </summary>
     public partial class OperationStatus
     {
-        /// <summary> Initializes a new instance of OperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
         internal OperationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
         /// <param name="status"> The status of the long running operation. </param>
         /// <param name="reportUri"> The CSV file from the reportUrl blob link consists of reservation usage data with the following schema at daily granularity. </param>
         /// <param name="validUntil"> The time at which report URL becomes invalid. </param>

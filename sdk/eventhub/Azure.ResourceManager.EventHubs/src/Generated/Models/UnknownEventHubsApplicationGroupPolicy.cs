@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> The UnknownEventHubsApplicationGroupPolicy. </summary>
     internal partial class UnknownEventHubsApplicationGroupPolicy : EventHubsApplicationGroupPolicy
     {
-        /// <summary> Initializes a new instance of UnknownEventHubsApplicationGroupPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownEventHubsApplicationGroupPolicy"/>. </summary>
         /// <param name="name"> The Name of this policy. </param>
         /// <param name="applicationGroupPolicyType"> Application Group Policy types. </param>
         internal UnknownEventHubsApplicationGroupPolicy(string name, ApplicationGroupPolicyType applicationGroupPolicyType) : base(name, applicationGroupPolicyType)

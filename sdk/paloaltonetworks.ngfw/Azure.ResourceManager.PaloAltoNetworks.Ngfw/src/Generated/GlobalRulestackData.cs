@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// </summary>
     public partial class GlobalRulestackData : ResourceData
     {
-        /// <summary> Initializes a new instance of GlobalRulestackData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackData"/>. </summary>
         /// <param name="location"> Global Location. </param>
         public GlobalRulestackData(AzureLocation location)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             AssociatedSubscriptions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of GlobalRulestackData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

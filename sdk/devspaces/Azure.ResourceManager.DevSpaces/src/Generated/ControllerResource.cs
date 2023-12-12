@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DevSpaces
         private readonly ControllersRestOperations _controllerRestClient;
         private readonly ControllerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevSpaces/controllers";
+
         /// <summary> Initializes a new instance of the <see cref="ControllerResource"/> class for mocking. </summary>
         protected ControllerResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DevSpaces
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevSpaces/controllers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

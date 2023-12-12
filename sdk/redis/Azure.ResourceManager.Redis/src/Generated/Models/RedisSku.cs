@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> SKU parameters supplied to the create Redis operation. </summary>
     public partial class RedisSku
     {
-        /// <summary> Initializes a new instance of RedisSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisSku"/>. </summary>
         /// <param name="name"> The type of Redis cache to deploy. Valid values: (Basic, Standard, Premium). </param>
         /// <param name="family"> The SKU family to use. Valid values: (C, P). (C = Basic/Standard, P = Premium). </param>
         /// <param name="capacity"> The size of the Redis cache to deploy. Valid values: for C (Basic/Standard) family (0, 1, 2, 3, 4, 5, 6), for P (Premium) family (1, 2, 3, 4). </param>

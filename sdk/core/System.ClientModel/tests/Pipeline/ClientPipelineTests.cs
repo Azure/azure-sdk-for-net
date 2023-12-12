@@ -14,7 +14,7 @@ public class ClientPipelineTests
     [Test]
     public void RequestOptionsCanCustomizePipeline()
     {
-        ServiceClientOptions clientOptions = new SimpleClientOptions();
+        PipelineOptions clientOptions = new SimpleClientOptions();
         clientOptions.RetryPolicy = new ObservablePolicy("RetryPolicy");
         clientOptions.Transport = new ObservableTransport("Transport");
 
@@ -42,7 +42,7 @@ public class ClientPipelineTests
     }
 
     #region Helpers
-    private class SimpleClientOptions : ServiceClientOptions { }
+    private class SimpleClientOptions : PipelineOptions { }
 
     private class ObservableTransport : PipelineTransport
     {
@@ -53,12 +53,12 @@ public class ClientPipelineTests
             Id = id;
         }
 
-        public override PipelineMessage CreateMessage()
+        protected override PipelineMessage CreateMessageCore()
         {
             return new TransportMessage();
         }
 
-        public override void Process(PipelineMessage message)
+        protected override void ProcessCore(PipelineMessage message)
         {
             Stamp(message, "Transport");
 
@@ -68,7 +68,7 @@ public class ClientPipelineTests
             }
         }
 
-        public override ValueTask ProcessAsync(PipelineMessage message)
+        protected override ValueTask ProcessCoreAsync(PipelineMessage message)
         {
             Stamp(message, "Transport");
 
@@ -119,13 +119,42 @@ public class ClientPipelineTests
         {
             public TransportRequest() { }
 
-            public override string Method { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public override Uri Uri { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public override InputContent? Content { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-            public override MessageHeaders Headers => throw new NotImplementedException();
-
             public override void Dispose()
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override BinaryContent? GetContentCore()
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override MessageHeaders GetHeadersCore()
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override string GetMethodCore()
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override Uri GetUriCore()
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override void SetContentCore(BinaryContent? content)
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override void SetMethodCore(string method)
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override void SetUriCore(Uri uri)
             {
                 throw new NotImplementedException();
             }
@@ -133,16 +162,19 @@ public class ClientPipelineTests
 
         private class TransportResponse : PipelineResponse
         {
-            public override int Status => throw new NotImplementedException();
+            public override int Status => 0;
 
             public override string ReasonPhrase => throw new NotImplementedException();
-
-            public override MessageHeaders Headers => throw new NotImplementedException();
 
             public override Stream? ContentStream
             {
                 get => null;
                 set => throw new NotImplementedException();
+            }
+
+            protected override MessageHeaders GetHeadersCore()
+            {
+                throw new NotImplementedException();
             }
 
             public override void Dispose()

@@ -114,16 +114,16 @@ namespace Azure
         public Azure.ETag? IfMatch { get { throw null; } set { } }
         public Azure.ETag? IfNoneMatch { get { throw null; } set { } }
     }
-    public abstract partial class NullableResponse<T>
+    public abstract partial class NullableResponse<T> : System.ClientModel.OptionalClientResult<T>
     {
-        protected NullableResponse() { }
-        public abstract bool HasValue { get; }
-        public abstract T? Value { get; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected NullableResponse() : base (default(T), default(System.ClientModel.Primitives.PipelineResponse)) { }
+        protected NullableResponse(T? value, Azure.Response response) : base (default(T), default(System.ClientModel.Primitives.PipelineResponse)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public abstract Azure.Response GetRawResponse();
+        public virtual new Azure.Response GetRawResponse() { throw null; }
         public override string ToString() { throw null; }
     }
     public abstract partial class Operation
@@ -219,36 +219,34 @@ namespace Azure
     }
     public partial class RequestFailedException : System.ClientModel.ClientRequestException, System.Runtime.Serialization.ISerializable
     {
-        public RequestFailedException(Azure.Response response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
-        public RequestFailedException(Azure.Response response, System.Exception? innerException) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
-        public RequestFailedException(Azure.Response response, System.Exception? innerException, Azure.Core.RequestFailedDetailsParser? detailsParser) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        public RequestFailedException(Azure.Response response) : base (default(System.ClientModel.Primitives.PipelineResponse), default(string), default(System.Exception)) { }
+        public RequestFailedException(Azure.Response response, System.Exception? innerException) : base (default(System.ClientModel.Primitives.PipelineResponse), default(string), default(System.Exception)) { }
+        public RequestFailedException(Azure.Response response, System.Exception? innerException, Azure.Core.RequestFailedDetailsParser? detailsParser) : base (default(System.ClientModel.Primitives.PipelineResponse), default(string), default(System.Exception)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public RequestFailedException(int status, string message) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        public RequestFailedException(int status, string message) : base (default(System.ClientModel.Primitives.PipelineResponse), default(string), default(System.Exception)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public RequestFailedException(int status, string message, System.Exception? innerException) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        public RequestFailedException(int status, string message, System.Exception? innerException) : base (default(System.ClientModel.Primitives.PipelineResponse), default(string), default(System.Exception)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public RequestFailedException(int status, string message, string? errorCode, System.Exception? innerException) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
-        protected RequestFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
-        public RequestFailedException(string message) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
-        public RequestFailedException(string message, System.Exception? innerException) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        public RequestFailedException(int status, string message, string? errorCode, System.Exception? innerException) : base (default(System.ClientModel.Primitives.PipelineResponse), default(string), default(System.Exception)) { }
+        protected RequestFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base (default(System.ClientModel.Primitives.PipelineResponse), default(string), default(System.Exception)) { }
+        public RequestFailedException(string message) : base (default(System.ClientModel.Primitives.PipelineResponse), default(string), default(System.Exception)) { }
+        public RequestFailedException(string message, System.Exception? innerException) : base (default(System.ClientModel.Primitives.PipelineResponse), default(string), default(System.Exception)) { }
         public string? ErrorCode { get { throw null; } }
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public new Azure.Response? GetRawResponse() { throw null; }
     }
-    public abstract partial class Response : System.IDisposable
+    public abstract partial class Response : System.ClientModel.Primitives.PipelineResponse
     {
         protected Response() { }
         public abstract string ClientRequestId { get; set; }
-        public virtual System.BinaryData Content { get { throw null; } }
-        public abstract System.IO.Stream? ContentStream { get; set; }
-        public virtual Azure.Core.ResponseHeaders Headers { get { throw null; } }
-        public virtual bool IsError { get { throw null; } }
-        public abstract string ReasonPhrase { get; }
-        public abstract int Status { get; }
+        public virtual new System.BinaryData Content { get { throw null; } }
+        public virtual new Azure.Core.ResponseHeaders Headers { get { throw null; } }
+        public virtual new bool IsError { get { throw null; } }
         protected internal abstract bool ContainsHeader(string name);
-        public abstract void Dispose();
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         public static Azure.Response<T> FromValue<T>(T value, Azure.Response response) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected override System.ClientModel.Primitives.MessageHeaders GetHeadersCore() { throw null; }
         public override string ToString() { throw null; }
         protected internal abstract bool TryGetHeader(string name, out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
@@ -262,7 +260,9 @@ namespace Azure
     }
     public abstract partial class Response<T> : Azure.NullableResponse<T>
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected Response() { }
+        protected Response(T value, Azure.Response response) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool HasValue { get { throw null; } }
         public override T Value { get { throw null; } }
@@ -489,7 +489,6 @@ namespace Azure.Core
         public new Azure.Core.Request Request { get { throw null; } }
         public new Azure.Response Response { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
-        public override void Dispose() { }
         public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(string name, object value) { }
         public bool TryGetProperty(string name, out object? value) { throw null; }
@@ -513,24 +512,30 @@ namespace Azure.Core
         public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public abstract partial class Request : System.IDisposable
+    public abstract partial class Request : System.ClientModel.Primitives.PipelineRequest
     {
         protected Request() { }
         public virtual string ClientRequestId { get { throw null; } set { } }
-        public virtual Azure.Core.RequestContent? Content { get { throw null; } set { } }
-        public Azure.Core.RequestHeaders Headers { get { throw null; } }
-        public virtual Azure.Core.RequestMethod Method { get { throw null; } set { } }
-        public virtual Azure.Core.RequestUriBuilder Uri { get { throw null; } set { } }
+        public virtual new Azure.Core.RequestContent? Content { get { throw null; } set { } }
+        public new Azure.Core.RequestHeaders Headers { get { throw null; } }
+        public virtual new Azure.Core.RequestMethod Method { get { throw null; } set { } }
+        public virtual new Azure.Core.RequestUriBuilder Uri { get { throw null; } set { } }
         protected internal abstract void AddHeader(string name, string value);
         protected internal abstract bool ContainsHeader(string name);
-        public abstract void Dispose();
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
+        protected override System.ClientModel.BinaryContent? GetContentCore() { throw null; }
+        protected override System.ClientModel.Primitives.MessageHeaders GetHeadersCore() { throw null; }
+        protected override string GetMethodCore() { throw null; }
+        protected override System.Uri GetUriCore() { throw null; }
         protected internal abstract bool RemoveHeader(string name);
+        protected override void SetContentCore(System.ClientModel.BinaryContent? content) { }
         protected internal virtual void SetHeader(string name, string value) { }
+        protected override void SetMethodCore(string method) { }
+        protected override void SetUriCore(System.Uri uri) { }
         protected internal abstract bool TryGetHeader(string name, out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
-    public abstract partial class RequestContent : System.ClientModel.InputContent
+    public abstract partial class RequestContent : System.ClientModel.BinaryContent
     {
         protected RequestContent() { }
         public static Azure.Core.RequestContent Create(Azure.Core.Serialization.DynamicData content) { throw null; }
@@ -671,11 +676,9 @@ namespace Azure.Core
         protected ResponseClassificationHandler() { }
         public abstract bool TryClassify(Azure.Core.HttpMessage message, out bool isError);
     }
-    public partial class ResponseClassifier : System.ClientModel.Primitives.MessageClassifier
+    public partial class ResponseClassifier : System.ClientModel.Primitives.PipelineMessageClassifier
     {
         public ResponseClassifier() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool IsError(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
         public virtual bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
         public virtual bool IsRetriable(Azure.Core.HttpMessage message, System.Exception exception) { throw null; }
         public virtual bool IsRetriableException(System.Exception exception) { throw null; }

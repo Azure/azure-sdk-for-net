@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Profile for how to handle shutting down virtual machines. </summary>
     public partial class LabAutoShutdownProfile
     {
-        /// <summary> Initializes a new instance of LabAutoShutdownProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabAutoShutdownProfile"/>. </summary>
         public LabAutoShutdownProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of LabAutoShutdownProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabAutoShutdownProfile"/>. </summary>
         /// <param name="shutdownOnDisconnect"> Whether shutdown on disconnect is enabled. </param>
         /// <param name="shutdownWhenNotConnected"> Whether a VM will get shutdown when it hasn't been connected to after a period of time. </param>
         /// <param name="shutdownOnIdle"> Whether a VM will get shutdown when it has idled for a period of time. </param>

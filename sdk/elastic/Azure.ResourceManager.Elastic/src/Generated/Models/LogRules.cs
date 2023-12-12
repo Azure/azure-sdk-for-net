@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
     public partial class LogRules
     {
-        /// <summary> Initializes a new instance of LogRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogRules"/>. </summary>
         public LogRules()
         {
             FilteringTags = new ChangeTrackingList<FilteringTag>();
         }
 
-        /// <summary> Initializes a new instance of LogRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogRules"/>. </summary>
         /// <param name="sendAadLogs"> Flag specifying if AAD logs should be sent for the Monitor resource. </param>
         /// <param name="sendSubscriptionLogs"> Flag specifying if subscription logs should be sent for the Monitor resource. </param>
         /// <param name="sendActivityLogs"> Flag specifying if activity logs from Azure resources should be sent for the Monitor resource. </param>

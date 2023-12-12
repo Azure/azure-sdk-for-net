@@ -14,10 +14,23 @@ namespace Azure.ResourceManager.LoadTesting.Models
     /// <summary> LoadTest resource patch request body. </summary>
     public partial class LoadTestingResourcePatch
     {
-        /// <summary> Initializes a new instance of LoadTestingResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingResourcePatch"/>. </summary>
         public LoadTestingResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LoadTestingResourcePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The type of identity used for the resource. </param>
+        /// <param name="description"> Description of the resource. </param>
+        /// <param name="encryption"> CMK Encryption property. </param>
+        internal LoadTestingResourcePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, string description, LoadTestingCmkEncryptionProperties encryption)
+        {
+            Tags = tags;
+            Identity = identity;
+            Description = description;
+            Encryption = encryption;
         }
 
         /// <summary> Resource tags. </summary>

@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel;
+using System.ClientModel.Primitives;
 
 namespace OpenAI;
 
-public class OpenAIClientOptions : ServiceClientOptions
+public class OpenAIClientOptions : PipelineOptions
 {
 }

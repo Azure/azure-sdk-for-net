@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly CustomEntityStoreAssignmentsRestOperations _customEntityStoreAssignmentRestClient;
         private readonly CustomEntityStoreAssignmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/customEntityStoreAssignments";
+
         /// <summary> Initializes a new instance of the <see cref="CustomEntityStoreAssignmentResource"/> class for mocking. </summary>
         protected CustomEntityStoreAssignmentResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/customEntityStoreAssignments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

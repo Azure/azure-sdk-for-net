@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Kubernetes
     /// </summary>
     public partial class ConnectedClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ConnectedClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The identity of the connected cluster. Current supported identity types: None, SystemAssigned. </param>
         /// <param name="agentPublicKeyCertificate"> Base64 encoded public certificate used by the agent to do the initial handshake to the backend services in Azure. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Kubernetes
             AgentPublicKeyCertificate = agentPublicKeyCertificate;
         }
 
-        /// <summary> Initializes a new instance of ConnectedClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

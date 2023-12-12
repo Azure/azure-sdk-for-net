@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Connector properties of a CDC table in terms of name / value pairs. </summary>
     public partial class MapperDslConnectorProperties
     {
-        /// <summary> Initializes a new instance of MapperDslConnectorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperDslConnectorProperties"/>. </summary>
         public MapperDslConnectorProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MapperDslConnectorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperDslConnectorProperties"/>. </summary>
         /// <param name="name"> Name of the property. </param>
         /// <param name="value"> Value of the property. </param>
         internal MapperDslConnectorProperties(string name, BinaryData value)

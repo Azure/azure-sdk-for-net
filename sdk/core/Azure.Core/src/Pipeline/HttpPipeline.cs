@@ -84,20 +84,22 @@ namespace Azure.Core.Pipeline
         /// Creates a new <see cref="Request"/> instance.
         /// </summary>
         /// <returns>The request.</returns>
-        public Request CreateRequest() => _transport.CreateRequest();
+        public Request CreateRequest()
+            => _transport.CreateRequest();
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
         /// </summary>
         /// <returns>The message.</returns>
-        public HttpMessage CreateMessage()  => new(CreateRequest(), ResponseClassifier);
+        public HttpMessage CreateMessage()
+            => new(CreateRequest(), ResponseClassifier);
 
         /// <summary>
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        // Note: we don't have to remove nullability from RequestContext, for better or worse.
-        public HttpMessage CreateMessage(RequestContext? context) => CreateMessage(context, default);
+        public HttpMessage CreateMessage(RequestContext? context)
+            => CreateMessage(context, default);
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
@@ -108,14 +110,6 @@ namespace Azure.Core.Pipeline
         public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier = default)
         {
             HttpMessage message = new HttpMessage(CreateRequest(), classifier ?? ResponseClassifier);
-
-            // Note: this was an attempted bug fix, but isn't strictly required.
-            // This whole file could be reverted at this point with no ClientModel dependency.
-
-            // TODO: Note: Azure.Core-based libraries are going to need to somehow create the
-            // message by passing in the request context to create message so that
-            // message.ApplyContext() will be applied.  This is a bit of a tangle, but
-            // I think we can solve it with a little rework.
 
             if (context != null)
             {
@@ -150,7 +144,6 @@ namespace Azure.Core.Pipeline
             return SendAsync(message);
         }
 
-        // Note: this goes back to being private, which is nice.
         private async ValueTask SendAsync(HttpMessage message)
         {
             int length = _pipeline.Length + message.Policies!.Count;
@@ -187,7 +180,6 @@ namespace Azure.Core.Pipeline
             Send(message);
         }
 
-        // Note: this goes back to being private, which is nice.
         private void Send(HttpMessage message)
         {
             int length = _pipeline.Length + message.Policies!.Count;

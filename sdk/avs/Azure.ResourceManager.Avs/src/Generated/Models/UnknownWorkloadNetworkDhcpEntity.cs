@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> The UnknownWorkloadNetworkDhcpEntity. </summary>
     internal partial class UnknownWorkloadNetworkDhcpEntity : WorkloadNetworkDhcpEntity
     {
-        /// <summary> Initializes a new instance of UnknownWorkloadNetworkDhcpEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownWorkloadNetworkDhcpEntity"/>. </summary>
         /// <param name="dhcpType"> Type of DHCP: SERVER or RELAY. </param>
         /// <param name="displayName"> Display name of the DHCP entity. </param>
         /// <param name="segments"> NSX Segments consuming DHCP. </param>

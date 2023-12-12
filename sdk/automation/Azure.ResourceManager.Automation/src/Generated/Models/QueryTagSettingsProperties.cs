@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Tag filter information for the VM. </summary>
     public partial class QueryTagSettingsProperties
     {
-        /// <summary> Initializes a new instance of QueryTagSettingsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryTagSettingsProperties"/>. </summary>
         public QueryTagSettingsProperties()
         {
             Tags = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
-        /// <summary> Initializes a new instance of QueryTagSettingsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryTagSettingsProperties"/>. </summary>
         /// <param name="tags"> Dictionary of tags with its list of values. </param>
         /// <param name="filterOperator"> Filter VMs by Any or All specified tags. </param>
         internal QueryTagSettingsProperties(IDictionary<string, IList<string>> tags, QueryTagOperator? filterOperator)

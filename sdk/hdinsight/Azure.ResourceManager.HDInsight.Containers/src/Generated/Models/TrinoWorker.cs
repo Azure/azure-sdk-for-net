@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Trino worker. </summary>
     public partial class TrinoWorker
     {
-        /// <summary> Initializes a new instance of TrinoWorker. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrinoWorker"/>. </summary>
         public TrinoWorker()
         {
         }
 
-        /// <summary> Initializes a new instance of TrinoWorker. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrinoWorker"/>. </summary>
         /// <param name="isEnabled"> The flag that if enable debug or not. </param>
         /// <param name="port"> The debug port. </param>
         /// <param name="suspend"> The flag that if suspend debug or not. </param>

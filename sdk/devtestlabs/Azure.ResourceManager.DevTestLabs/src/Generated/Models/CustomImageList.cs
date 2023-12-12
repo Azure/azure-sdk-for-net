@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> The response of a list operation. </summary>
     internal partial class CustomImageList
     {
-        /// <summary> Initializes a new instance of CustomImageList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomImageList"/>. </summary>
         internal CustomImageList()
         {
             Value = new ChangeTrackingList<DevTestLabCustomImageData>();
         }
 
-        /// <summary> Initializes a new instance of CustomImageList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomImageList"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
         internal CustomImageList(IReadOnlyList<DevTestLabCustomImageData> value, string nextLink)

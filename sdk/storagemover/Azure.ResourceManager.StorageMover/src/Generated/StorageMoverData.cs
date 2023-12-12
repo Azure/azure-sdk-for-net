@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.StorageMover
     /// </summary>
     public partial class StorageMoverData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of StorageMoverData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverData"/>. </summary>
         /// <param name="location"> The location. </param>
         public StorageMoverData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of StorageMoverData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

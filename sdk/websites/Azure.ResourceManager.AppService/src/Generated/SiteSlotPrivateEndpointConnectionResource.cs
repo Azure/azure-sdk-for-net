@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _siteSlotPrivateEndpointConnectionWebAppsRestClient;
         private readonly RemotePrivateEndpointConnectionARMResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="SiteSlotPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected SiteSlotPrivateEndpointConnectionResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

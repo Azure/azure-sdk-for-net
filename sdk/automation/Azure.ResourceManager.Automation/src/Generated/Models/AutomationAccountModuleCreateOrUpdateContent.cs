@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update module operation. </summary>
     public partial class AutomationAccountModuleCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationAccountModuleCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountModuleCreateOrUpdateContent"/>. </summary>
         /// <param name="contentLink"> Gets or sets the module content link. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentLink"/> is null. </exception>
         public AutomationAccountModuleCreateOrUpdateContent(AutomationContentLink contentLink)
@@ -22,6 +22,19 @@ namespace Azure.ResourceManager.Automation.Models
             Argument.AssertNotNull(contentLink, nameof(contentLink));
 
             Tags = new ChangeTrackingDictionary<string, string>();
+            ContentLink = contentLink;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountModuleCreateOrUpdateContent"/>. </summary>
+        /// <param name="name"> Gets or sets name of the resource. </param>
+        /// <param name="location"> Gets or sets the location of the resource. </param>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <param name="contentLink"> Gets or sets the module content link. </param>
+        internal AutomationAccountModuleCreateOrUpdateContent(string name, AzureLocation? location, IDictionary<string, string> tags, AutomationContentLink contentLink)
+        {
+            Name = name;
+            Location = location;
+            Tags = tags;
             ContentLink = contentLink;
         }
 

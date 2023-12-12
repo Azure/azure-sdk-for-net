@@ -46,6 +46,9 @@ namespace Azure.ResourceManager.Peering
         private readonly RpUnbilledPrefixesRestOperations _rpUnbilledPrefixesRestClient;
         private readonly PeeringData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Peering/peerings";
+
         /// <summary> Initializes a new instance of the <see cref="PeeringResource"/> class for mocking. </summary>
         protected PeeringResource()
         {
@@ -76,9 +79,6 @@ namespace Azure.ResourceManager.Peering
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Peering/peerings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

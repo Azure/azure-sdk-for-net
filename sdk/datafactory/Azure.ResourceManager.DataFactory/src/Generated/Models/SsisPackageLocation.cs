@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> SSIS package location. </summary>
     public partial class SsisPackageLocation
     {
-        /// <summary> Initializes a new instance of SsisPackageLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisPackageLocation"/>. </summary>
         public SsisPackageLocation()
         {
             ChildPackages = new ChangeTrackingList<SsisChildPackage>();
         }
 
-        /// <summary> Initializes a new instance of SsisPackageLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisPackageLocation"/>. </summary>
         /// <param name="packagePath"> The SSIS package path. Type: string (or Expression with resultType string). </param>
         /// <param name="locationType"> The type of SSIS package location. </param>
         /// <param name="packagePassword"> Password of the package. </param>

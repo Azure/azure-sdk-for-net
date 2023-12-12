@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> benefit plan recommendation details. </summary>
     public partial class BenefitRecommendationModel : ResourceData
     {
-        /// <summary> Initializes a new instance of BenefitRecommendationModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="BenefitRecommendationModel"/>. </summary>
         public BenefitRecommendationModel()
         {
         }
 
-        /// <summary> Initializes a new instance of BenefitRecommendationModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="BenefitRecommendationModel"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Sql
         private readonly DatabaseAutomaticTuningRestOperations _sqlDatabaseAutomaticTuningDatabaseAutomaticTuningRestClient;
         private readonly SqlDatabaseAutomaticTuningData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/automaticTuning";
+
         /// <summary> Initializes a new instance of the <see cref="SqlDatabaseAutomaticTuningResource"/> class for mocking. </summary>
         protected SqlDatabaseAutomaticTuningResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/automaticTuning";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

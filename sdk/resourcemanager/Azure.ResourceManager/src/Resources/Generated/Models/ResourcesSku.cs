@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> SKU for the resource. </summary>
     public partial class ResourcesSku
     {
-        /// <summary> Initializes a new instance of ResourcesSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcesSku"/>. </summary>
         public ResourcesSku()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourcesSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcesSku"/>. </summary>
         /// <param name="name"> The SKU name. </param>
         /// <param name="tier"> The SKU tier. </param>
         /// <param name="size"> The SKU size. </param>

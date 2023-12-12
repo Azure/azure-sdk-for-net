@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.ManagedNetwork
         private readonly ManagedNetworkGroupsRestOperations _managedNetworkGroupRestClient;
         private readonly ManagedNetworkGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetwork/managedNetworks/managedNetworkGroups";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedNetworkGroupResource"/> class for mocking. </summary>
         protected ManagedNetworkGroupResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ManagedNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetwork/managedNetworks/managedNetworkGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

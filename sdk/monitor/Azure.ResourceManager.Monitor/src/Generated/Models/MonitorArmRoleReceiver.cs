@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An arm role receiver. </summary>
     public partial class MonitorArmRoleReceiver
     {
-        /// <summary> Initializes a new instance of MonitorArmRoleReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorArmRoleReceiver"/>. </summary>
         /// <param name="name"> The name of the arm role receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="roleId"> The arm role id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="roleId"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             RoleId = roleId;
         }
 
-        /// <summary> Initializes a new instance of MonitorArmRoleReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorArmRoleReceiver"/>. </summary>
         /// <param name="name"> The name of the arm role receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="roleId"> The arm role id. </param>
         /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>

@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class SecurityAdminConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityAdminConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAdminConfigurationData"/>. </summary>
         public SecurityAdminConfigurationData()
         {
             ApplyOnNetworkIntentPolicyBasedServices = new ChangeTrackingList<NetworkIntentPolicyBasedService>();
         }
 
-        /// <summary> Initializes a new instance of SecurityAdminConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAdminConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

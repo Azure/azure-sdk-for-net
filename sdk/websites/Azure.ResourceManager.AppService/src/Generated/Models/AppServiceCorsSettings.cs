@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Cross-Origin Resource Sharing (CORS) settings for the app. </summary>
     public partial class AppServiceCorsSettings
     {
-        /// <summary> Initializes a new instance of AppServiceCorsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCorsSettings"/>. </summary>
         public AppServiceCorsSettings()
         {
             AllowedOrigins = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceCorsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCorsSettings"/>. </summary>
         /// <param name="allowedOrigins">
         /// Gets or sets the list of origins that should be allowed to make cross-origin
         /// calls (for example: http://example.com:12345). Use "*" to allow all.

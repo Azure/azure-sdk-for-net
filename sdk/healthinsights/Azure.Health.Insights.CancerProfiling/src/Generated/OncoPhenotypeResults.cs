@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> The inference results for the Onco Phenotype request. </summary>
     public partial class OncoPhenotypeResults
     {
-        /// <summary> Initializes a new instance of OncoPhenotypeResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypeResults"/>. </summary>
         /// <param name="patients"> Results for the patients given in the request. </param>
         /// <param name="modelVersion"> The version of the model used for inference, expressed as the model date. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patients"/> or <paramref name="modelVersion"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.Health.Insights.CancerProfiling
             ModelVersion = modelVersion;
         }
 
-        /// <summary> Initializes a new instance of OncoPhenotypeResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypeResults"/>. </summary>
         /// <param name="patients"> Results for the patients given in the request. </param>
         /// <param name="modelVersion"> The version of the model used for inference, expressed as the model date. </param>
         internal OncoPhenotypeResults(IReadOnlyList<OncoPhenotypePatientResult> patients, string modelVersion)

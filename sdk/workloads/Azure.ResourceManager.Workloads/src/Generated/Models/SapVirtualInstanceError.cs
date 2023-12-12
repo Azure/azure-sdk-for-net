@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> An error response from the Virtual Instance for SAP Workload service. </summary>
     internal partial class SapVirtualInstanceError
     {
-        /// <summary> Initializes a new instance of SapVirtualInstanceError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceError"/>. </summary>
         internal SapVirtualInstanceError()
         {
         }
 
-        /// <summary> Initializes a new instance of SapVirtualInstanceError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceError"/>. </summary>
         /// <param name="properties"> The Virtual Instance for SAP error body. </param>
         internal SapVirtualInstanceError(SapVirtualInstanceErrorDetail properties)
         {

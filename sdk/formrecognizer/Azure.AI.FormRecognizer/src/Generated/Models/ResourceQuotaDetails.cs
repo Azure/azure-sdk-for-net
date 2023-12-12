@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Quota used, limit, and next reset date/time. </summary>
     public partial class ResourceQuotaDetails
     {
-        /// <summary> Initializes a new instance of ResourceQuotaDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceQuotaDetails"/>. </summary>
         /// <param name="used"> Amount of the resource quota used. </param>
         /// <param name="quota"> Resource quota limit. </param>
         /// <param name="quotaResetsOn"> Date/time when the resource quota usage will be reset. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> Defines the resource properties. </summary>
     public partial class Checkpoint
     {
-        /// <summary> Initializes a new instance of Checkpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="Checkpoint"/>. </summary>
         public Checkpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of Checkpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="Checkpoint"/>. </summary>
         /// <param name="parentCheckpointId"> Gets ID of parent of the checkpoint. </param>
         /// <param name="checkpointId"> Gets ID of the checkpoint. </param>
         /// <param name="name"> Gets name of the checkpoint. </param>

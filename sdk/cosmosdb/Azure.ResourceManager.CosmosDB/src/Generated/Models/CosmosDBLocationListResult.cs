@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains Cosmos DB locations and their properties. </summary>
     internal partial class CosmosDBLocationListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBLocationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBLocationListResult"/>. </summary>
         internal CosmosDBLocationListResult()
         {
             Value = new ChangeTrackingList<CosmosDBLocationData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBLocationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBLocationListResult"/>. </summary>
         /// <param name="value"> List of Cosmos DB locations and their properties. </param>
         internal CosmosDBLocationListResult(IReadOnlyList<CosmosDBLocationData> value)
         {

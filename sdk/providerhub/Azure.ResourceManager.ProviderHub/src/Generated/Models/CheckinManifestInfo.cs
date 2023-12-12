@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The CheckinManifestInfo. </summary>
     public partial class CheckinManifestInfo
     {
-        /// <summary> Initializes a new instance of CheckinManifestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckinManifestInfo"/>. </summary>
         /// <param name="isCheckedIn"></param>
         /// <param name="statusMessage"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="statusMessage"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             StatusMessage = statusMessage;
         }
 
-        /// <summary> Initializes a new instance of CheckinManifestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckinManifestInfo"/>. </summary>
         /// <param name="isCheckedIn"></param>
         /// <param name="statusMessage"></param>
         /// <param name="pullRequest"></param>

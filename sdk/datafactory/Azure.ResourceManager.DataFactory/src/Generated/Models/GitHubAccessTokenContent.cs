@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Get GitHub access token request definition. </summary>
     public partial class GitHubAccessTokenContent
     {
-        /// <summary> Initializes a new instance of GitHubAccessTokenContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenContent"/>. </summary>
         /// <param name="gitHubAccessCode"> GitHub access code. </param>
         /// <param name="gitHubAccessTokenBaseUri"> GitHub access token base URL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubAccessCode"/> or <paramref name="gitHubAccessTokenBaseUri"/> is null. </exception>
@@ -23,6 +23,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(gitHubAccessTokenBaseUri, nameof(gitHubAccessTokenBaseUri));
 
             GitHubAccessCode = gitHubAccessCode;
+            GitHubAccessTokenBaseUri = gitHubAccessTokenBaseUri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenContent"/>. </summary>
+        /// <param name="gitHubAccessCode"> GitHub access code. </param>
+        /// <param name="gitHubClientId"> GitHub application client ID. </param>
+        /// <param name="gitHubClientSecret"> GitHub bring your own app client secret information. </param>
+        /// <param name="gitHubAccessTokenBaseUri"> GitHub access token base URL. </param>
+        internal GitHubAccessTokenContent(string gitHubAccessCode, string gitHubClientId, FactoryGitHubClientSecret gitHubClientSecret, Uri gitHubAccessTokenBaseUri)
+        {
+            GitHubAccessCode = gitHubAccessCode;
+            GitHubClientId = gitHubClientId;
+            GitHubClientSecret = gitHubClientSecret;
             GitHubAccessTokenBaseUri = gitHubAccessTokenBaseUri;
         }
 

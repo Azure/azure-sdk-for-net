@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
@@ -59,12 +60,14 @@ namespace Azure.Core.Pipeline
         /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
         /// </summary>
         /// <param name="options">The <see cref="HttpPipelineTransportOptions"/> that to configure the behavior of the transport.</param>
-        internal HttpClientTransport(HttpPipelineTransportOptions? options = null) : this(CreateDefaultClient(options))
-        { }
+        internal HttpClientTransport(HttpPipelineTransportOptions? options = null)
+            : this(CreateDefaultClient(options))
+        {
+        }
 
         /// <inheritdoc />
         public sealed override Request CreateRequest()
-            => new RequestAdapter(new HttpClientTransportRequest());
+            => ((HttpMessage)_transport.CreateMessage()).Request;
 
         /// <inheritdoc />
         public override void Process(HttpMessage message)

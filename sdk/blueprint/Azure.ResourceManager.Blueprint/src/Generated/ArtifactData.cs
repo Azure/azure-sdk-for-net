@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Blueprint
     /// </summary>
     public partial class ArtifactData : ResourceData
     {
-        /// <summary> Initializes a new instance of ArtifactData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactData"/>. </summary>
         public ArtifactData()
         {
         }
 
-        /// <summary> Initializes a new instance of ArtifactData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

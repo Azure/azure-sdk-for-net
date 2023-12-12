@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> connect information from the AKS agent nodes to a single endpoint. </summary>
     public partial class ContainerServiceEndpointDetail
     {
-        /// <summary> Initializes a new instance of ContainerServiceEndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceEndpointDetail"/>. </summary>
         internal ContainerServiceEndpointDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceEndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceEndpointDetail"/>. </summary>
         /// <param name="ipAddress"> An IP Address that Domain Name currently resolves to. </param>
         /// <param name="port"> The port an endpoint is connected to. </param>
         /// <param name="protocol"> The protocol used for connection. </param>

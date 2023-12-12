@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network configuration diagnostic result corresponded provided traffic query. </summary>
     public partial class NetworkSecurityGroupResult
     {
-        /// <summary> Initializes a new instance of NetworkSecurityGroupResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityGroupResult"/>. </summary>
         internal NetworkSecurityGroupResult()
         {
             EvaluatedNetworkSecurityGroups = new ChangeTrackingList<EvaluatedNetworkSecurityGroup>();
         }
 
-        /// <summary> Initializes a new instance of NetworkSecurityGroupResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityGroupResult"/>. </summary>
         /// <param name="securityRuleAccessResult"> The network traffic is allowed or denied. </param>
         /// <param name="evaluatedNetworkSecurityGroups"> List of results network security groups diagnostic. </param>
         internal NetworkSecurityGroupResult(SecurityRuleAccess? securityRuleAccessResult, IReadOnlyList<EvaluatedNetworkSecurityGroup> evaluatedNetworkSecurityGroups)

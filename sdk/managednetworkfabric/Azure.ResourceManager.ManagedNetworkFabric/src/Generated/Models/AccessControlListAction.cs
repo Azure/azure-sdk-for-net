@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Action that need to performed. </summary>
     public partial class AccessControlListAction
     {
-        /// <summary> Initializes a new instance of AccessControlListAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessControlListAction"/>. </summary>
         public AccessControlListAction()
         {
         }
 
-        /// <summary> Initializes a new instance of AccessControlListAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessControlListAction"/>. </summary>
         /// <param name="aclActionType"> Type of actions that can be performed. </param>
         /// <param name="counterName"> Name of the counter block to get match count information. </param>
         internal AccessControlListAction(AclActionType? aclActionType, string counterName)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The integration account AS2 one-way agreement. </summary>
     public partial class AS2OneWayAgreement
     {
-        /// <summary> Initializes a new instance of AS2OneWayAgreement. </summary>
+        /// <summary> Initializes a new instance of <see cref="AS2OneWayAgreement"/>. </summary>
         /// <param name="senderBusinessIdentity"> The sender business identity. </param>
         /// <param name="receiverBusinessIdentity"> The receiver business identity. </param>
         /// <param name="protocolSettings"> The AS2 protocol settings. </param>

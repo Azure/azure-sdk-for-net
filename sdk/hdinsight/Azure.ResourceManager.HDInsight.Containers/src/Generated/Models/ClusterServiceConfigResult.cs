@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Cluster instance service config. </summary>
     public partial class ClusterServiceConfigResult
     {
-        /// <summary> Initializes a new instance of ClusterServiceConfigResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigResult"/>. </summary>
         internal ClusterServiceConfigResult()
         {
             CustomKeys = new ChangeTrackingDictionary<string, string>();
             DefaultKeys = new ChangeTrackingDictionary<string, ClusterServiceConfigValueEntity>();
         }
 
-        /// <summary> Initializes a new instance of ClusterServiceConfigResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigResult"/>. </summary>
         /// <param name="serviceName"> Service Config Name. </param>
         /// <param name="fileName"> File Name. </param>
         /// <param name="content"> Content in the service config file. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> Gets the application SSH endpoint. </summary>
     public partial class HDInsightApplicationEndpoint
     {
-        /// <summary> Initializes a new instance of HDInsightApplicationEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightApplicationEndpoint"/>. </summary>
         public HDInsightApplicationEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightApplicationEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightApplicationEndpoint"/>. </summary>
         /// <param name="endpointLocation"> The location of the endpoint. </param>
         /// <param name="destinationPort"> The destination port to connect to. </param>
         /// <param name="publicPort"> The public port to connect to. </param>

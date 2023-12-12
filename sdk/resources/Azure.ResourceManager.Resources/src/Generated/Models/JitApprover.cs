@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> JIT approver definition. </summary>
     public partial class JitApprover
     {
-        /// <summary> Initializes a new instance of JitApprover. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitApprover"/>. </summary>
         /// <param name="id"> The approver service principal Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public JitApprover(string id)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of JitApprover. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitApprover"/>. </summary>
         /// <param name="id"> The approver service principal Id. </param>
         /// <param name="approverType"> The approver type. </param>
         /// <param name="displayName"> The approver display name. </param>
