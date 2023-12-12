@@ -116,7 +116,7 @@ public class RequestRetryPolicy : PipelinePolicy
                     ExceptionDispatchInfo.Capture(lastException).Throw();
                 }
 
-                throw new AggregateException($"Retry failed after {message.RetryCount} tries.", exceptions);
+                throw new AggregateException($"Retry failed after {message.RetryCount + 1} tries.", exceptions);
 
                 //throw new AggregateException(
                 //    $"Retry failed after {message.RetryNumber + 1} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}" +
@@ -124,8 +124,8 @@ public class RequestRetryPolicy : PipelinePolicy
                 //    exceptions);
             }
 
-            // ShouldRetry returned false this iteration and
-            // the last request sent didn't cause an exception.
+            // ShouldRetry returned false this iteration and the last request
+            // we sent didn't cause an exception to be thrown.
             // So, we're done.  Exit the while loop.
             break;
         }
