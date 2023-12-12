@@ -417,7 +417,6 @@ namespace Azure.AI.OpenAI
     public partial class ChatRequestAssistantMessage : Azure.AI.OpenAI.ChatRequestMessage
     {
         public ChatRequestAssistantMessage(string content) { }
-        public string Content { get { throw null; } }
         public Azure.AI.OpenAI.FunctionCall FunctionCall { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatCompletionsToolCall> ToolCalls { get { throw null; } }
@@ -425,23 +424,22 @@ namespace Azure.AI.OpenAI
     public partial class ChatRequestFunctionMessage : Azure.AI.OpenAI.ChatRequestMessage
     {
         public ChatRequestFunctionMessage(string name, string content) { }
-        public string Content { get { throw null; } }
         public string Name { get { throw null; } }
     }
     public abstract partial class ChatRequestMessage
     {
         protected ChatRequestMessage() { }
+        public virtual string Content { get { throw null; } protected set { } }
+        public Azure.AI.OpenAI.ChatRole Role { get { throw null; } protected set { } }
     }
     public partial class ChatRequestSystemMessage : Azure.AI.OpenAI.ChatRequestMessage
     {
         public ChatRequestSystemMessage(string content) { }
-        public string Content { get { throw null; } }
         public string Name { get { throw null; } set { } }
     }
     public partial class ChatRequestToolMessage : Azure.AI.OpenAI.ChatRequestMessage
     {
         public ChatRequestToolMessage(string content, string toolCallId) { }
-        public string Content { get { throw null; } }
         public string ToolCallId { get { throw null; } }
     }
     public partial class ChatRequestUserMessage : Azure.AI.OpenAI.ChatRequestMessage
@@ -449,6 +447,8 @@ namespace Azure.AI.OpenAI
         public ChatRequestUserMessage(params Azure.AI.OpenAI.ChatMessageContentItem[] content) { }
         public ChatRequestUserMessage(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatMessageContentItem> content) { }
         public ChatRequestUserMessage(string content) { }
+        public override string Content { get { throw null; } protected set { } }
+        public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatMessageContentItem> MultimodalContent { get { throw null; } }
         public string Name { get { throw null; } set { } }
     }
     public partial class ChatResponseMessage

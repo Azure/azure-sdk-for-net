@@ -36,9 +36,6 @@ namespace Azure.AI.OpenAI
             Content = content;
             Name = name;
         }
-
-        /// <summary> The contents of the system message. </summary>
-        public string Content { get; }
         /// <summary> An optional name for the participant. </summary>
         public string Name { get; set; }
     }

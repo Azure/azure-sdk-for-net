@@ -41,9 +41,6 @@ namespace Azure.AI.OpenAI
             ToolCalls = toolCalls;
             FunctionCall = functionCall;
         }
-
-        /// <summary> The content of the message. </summary>
-        public string Content { get; }
         /// <summary> An optional name for the participant. </summary>
         public string Name { get; set; }
         /// <summary>

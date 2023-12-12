@@ -35,9 +35,6 @@ namespace Azure.AI.OpenAI
             Content = content;
             ToolCallId = toolCallId;
         }
-
-        /// <summary> The content of the message. </summary>
-        public string Content { get; }
         /// <summary> The ID of the tool call resolved by the provided content. </summary>
         public string ToolCallId { get; }
     }

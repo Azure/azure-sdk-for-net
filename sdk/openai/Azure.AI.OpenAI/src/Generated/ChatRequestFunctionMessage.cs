@@ -38,7 +38,5 @@ namespace Azure.AI.OpenAI
 
         /// <summary> The name of the function that was called to produce output. </summary>
         public string Name { get; }
-        /// <summary> The output of the function as requested by the function call. </summary>
-        public string Content { get; }
     }
 }
