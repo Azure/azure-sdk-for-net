@@ -13,7 +13,6 @@ public class MessageDelay
     private static readonly TimeSpan DefaultInitialDelay = TimeSpan.FromSeconds(0.8);
     private static readonly TimeSpan DefaultMaxDelay = TimeSpan.FromMinutes(1);
 
-    private int _delayCount;
     private readonly TimeSpan _initialDelay;
 
     public MessageDelay()
@@ -23,7 +22,7 @@ public class MessageDelay
 
     public void Delay(PipelineMessage message, CancellationToken cancellationToken)
     {
-        TimeSpan delay = GetDelayCore(message, _delayCount++);
+        TimeSpan delay = GetDelayCore(message, message.RetryCount);
         if (delay > TimeSpan.Zero)
         {
             WaitCore(delay, cancellationToken);
@@ -34,7 +33,7 @@ public class MessageDelay
 
     public async Task DelayAsync(PipelineMessage message, CancellationToken cancellationToken)
     {
-        TimeSpan delay = GetDelayCore(message, _delayCount++);
+        TimeSpan delay = GetDelayCore(message, message.RetryCount);
         if (delay > TimeSpan.Zero)
         {
             await WaitCoreAsync(delay, cancellationToken).ConfigureAwait(false);
