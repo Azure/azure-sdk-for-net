@@ -110,11 +110,6 @@ public class RequestRetryPolicy : PipelinePolicy
                 }
 
                 throw new AggregateException($"Retry failed after {message.RetryCount + 1} tries.", allTryExceptions);
-
-                //throw new AggregateException(
-                //    $"Retry failed after {message.RetryNumber + 1} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}" +
-                //    $" or by configuring a custom retry policy in {nameof(ClientOptions)}.{nameof(ClientOptions.RetryPolicy)}.",
-                //    exceptions);
             }
 
             // ShouldRetry returned false this iteration and the last request

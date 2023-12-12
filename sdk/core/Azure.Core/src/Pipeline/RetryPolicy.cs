@@ -55,13 +55,32 @@ namespace Azure.Core.Pipeline
         {
             AzureCorePipelineEnumerator processor = new(message, pipeline);
 
-            if (async)
+            try
             {
-                await _policy.ProcessAsync(message, processor).ConfigureAwait(false);
+                if (async)
+                {
+                    await _policy.ProcessAsync(message, processor).ConfigureAwait(false);
+                }
+                else
+                {
+                    _policy.Process(message, processor);
+                }
             }
-            else
+            catch (AggregateException e)
             {
-                _policy.Process(message, processor);
+                if (e.Message.StartsWith("Retry failed after"))
+                {
+                    string exceptionMessage = e.Message +
+                        $"Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}" +
+                        $" or by configuring a custom retry policy in {nameof(ClientOptions)}.{nameof(ClientOptions.RetryPolicy)}.";
+
+                    // Create a new exception from the thrown exception to keep the
+                    // collection of inner exceptions at the same level as the one
+                    // thrown by the ClientModel policy.
+                    throw new AggregateException(exceptionMessage, e.InnerExceptions);
+                }
+
+                throw e;
             }
         }
 
