@@ -256,7 +256,7 @@ namespace Azure.Identity.Tests
                         MaxRetries = 15,
                         MaxDelay = TimeSpan.FromSeconds(29),
                         Mode = RetryMode.Fixed,
-                        NetworkTimeout = TimeSpan.FromSeconds(13)
+                        NetworkTimeout = TimeSpan.FromSeconds(60)
                     },
                     Diagnostics =
                     {

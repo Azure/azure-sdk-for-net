@@ -77,7 +77,7 @@ namespace Azure.Identity
             TenantId = Validations.ValidateTenantId(options?.TenantId, $"{nameof(options)}.{nameof(options.TenantId)}", true);
             TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
-            ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(13);
+            ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(60);
             _isChainedCredential = options?.IsChainedCredential ?? false;
         }
 

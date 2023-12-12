@@ -219,14 +219,14 @@ namespace Azure.Identity.Tests
 
                 AzureCliCredential cred = (AzureCliCredential)factory.CreateAzureCliCredential();
 
-                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), cred.ProcessTimeout);
+                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(60), cred.ProcessTimeout);
                 Assert.AreEqual(expTenantId, cred.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
                 Assert.True(cred._isChainedCredential);
 
                 AzureDeveloperCliCredential credAzd = (AzureDeveloperCliCredential)factory.CreateAzureDeveloperCliCredential();
 
-                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), credAzd.ProcessTimeout);
+                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(60), credAzd.ProcessTimeout);
                 Assert.AreEqual(expTenantId, credAzd.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, credAzd.AdditionallyAllowedTenantIds);
                 Assert.True(credAzd._isChainedCredential);
