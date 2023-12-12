@@ -141,7 +141,9 @@ public partial class ClientPipeline
         IEnumerator<PipelinePolicy> enumerator = policies.GetEnumerator();
         if (enumerator.MoveNext())
         {
-            enumerator.Current.Process(message, policies);
+            PipelinePolicy policy = enumerator.Current;
+            enumerator.MoveNext();
+            policy.Process(message, policies);
         }
     }
 
@@ -151,7 +153,9 @@ public partial class ClientPipeline
         IEnumerator<PipelinePolicy> enumerator = policies.GetEnumerator();
         if (enumerator.MoveNext())
         {
-            await enumerator.Current.ProcessAsync(message, policies).ConfigureAwait(false);
+            PipelinePolicy policy = enumerator.Current;
+            enumerator.MoveNext();
+            await policy.ProcessAsync(message, policies).ConfigureAwait(false);
         }
     }
 

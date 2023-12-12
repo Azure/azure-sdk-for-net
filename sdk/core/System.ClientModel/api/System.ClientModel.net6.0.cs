@@ -244,8 +244,8 @@ namespace System.ClientModel.Primitives
         protected virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
         protected virtual void OnSendingRequest(System.ClientModel.Primitives.PipelineMessage message) { }
         protected virtual System.Threading.Tasks.ValueTask OnSendingRequestAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
-        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineProcessor pipeline) { }
-        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.PipelineProcessor pipeline) { throw null; }
+        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PipelinePolicy> pipeline) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PipelinePolicy> pipeline) { throw null; }
         protected virtual bool ShouldRetryCore(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception) { throw null; }
         protected virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryCoreAsync(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception) { throw null; }
     }

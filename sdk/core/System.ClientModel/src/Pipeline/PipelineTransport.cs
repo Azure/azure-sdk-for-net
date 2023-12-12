@@ -73,13 +73,13 @@ public abstract class PipelineTransport : PipelinePolicy
     {
         Process(message);
 
-        Debug.Assert(ProcessNext(message, pipeline) == false);
+        Debug.Assert(pipeline.GetEnumerator().MoveNext() == false);
     }
 
     public sealed override async ValueTask ProcessAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
     {
         await ProcessAsync(message).ConfigureAwait(false);
 
-        Debug.Assert(await ProcessNextAsync(message, pipeline).ConfigureAwait(false) == false);
+        Debug.Assert(pipeline.GetEnumerator().MoveNext() == false);
     }
 }

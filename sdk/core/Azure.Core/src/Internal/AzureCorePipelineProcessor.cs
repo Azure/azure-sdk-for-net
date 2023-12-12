@@ -8,13 +8,18 @@ using System.Collections.Generic;
 
 namespace Azure.Core.Pipeline
 {
-    internal class AzureCorePipelineProcessor : IEnumerable<PipelinePolicy>
+    internal struct AzureCorePipelineProcessor : IEnumerable<PipelinePolicy>
     {
         private readonly PolicyEnumerator _enumerator;
 
         public AzureCorePipelineProcessor(ReadOnlyMemory<HttpPipelinePolicy> policies)
         {
             _enumerator = new PolicyEnumerator(policies);
+
+            // Automatically advance the enumerator given the expectation of
+            // HttpPipelinePolicy.Process that the first policy will be the one
+            // after the policy whose Process method is currently being called.
+            _enumerator.MoveNext();
         }
 
         public ReadOnlyMemory<HttpPipelinePolicy> Policies

@@ -1025,9 +1025,7 @@ namespace Azure.Core.Pipeline
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline);
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PipelinePolicy> pipeline) { throw null; }
         protected static void ProcessNext(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
-        protected sealed override bool ProcessNext(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PipelinePolicy> pipeline) { throw null; }
         protected static System.Threading.Tasks.ValueTask ProcessNextAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
-        protected sealed override System.Threading.Tasks.Task<bool> ProcessNextAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.PipelinePolicy> pipeline) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicMethods)]
     public abstract partial class HttpPipelineSynchronousPolicy : Azure.Core.Pipeline.HttpPipelinePolicy

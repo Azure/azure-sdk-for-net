@@ -3,7 +3,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,10 +31,7 @@ namespace Azure.Core.Pipeline
 
         private async ValueTask ProcessSyncOrAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            AzureCorePipelineProcessor policies = new(pipeline);
-
-            // Match semantics of HttpPipelinePolicy.ProcessNext
-            policies.GetEnumerator().MoveNext();
+            AzureCorePipelineProcessor processor = new(pipeline);
 
             // Get the network timeout for this particular invocation of the pipeline.
             // We either use the default that the policy was constructed with at
@@ -51,11 +47,11 @@ namespace Azure.Core.Pipeline
             {
                 if (async)
                 {
-                    await _policy.ProcessAsync(message, policies).ConfigureAwait(false);
+                    await _policy.ProcessAsync(message, processor).ConfigureAwait(false);
                 }
                 else
                 {
-                    _policy.Process(message, policies);
+                    _policy.Process(message, processor);
                 }
 
                 if (!ResponseBufferingPolicy.TryGetBufferResponse(message, out bool bufferResponse))

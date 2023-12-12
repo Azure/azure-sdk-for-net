@@ -91,39 +91,5 @@ namespace Azure.Core.Pipeline
 
             Process(httpMessage, processor.Policies);
         }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="pipeline"></param>
-        /// <returns></returns>
-        protected sealed override bool ProcessNext(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
-        {
-            IEnumerator<PipelinePolicy> enumerator = pipeline.GetEnumerator();
-
-            PipelinePolicy policy = enumerator.Current;
-            bool more = enumerator.MoveNext();
-            policy.ProcessAsync(message, pipeline);
-
-            return more;
-        }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="pipeline"></param>
-        /// <returns></returns>
-        protected async sealed override Task<bool> ProcessNextAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
-        {
-            IEnumerator<PipelinePolicy> enumerator = pipeline.GetEnumerator();
-
-            PipelinePolicy policy = enumerator.Current;
-            bool more = enumerator.MoveNext();
-            await policy.ProcessAsync(message, pipeline).ConfigureAwait(false);
-
-            return more;
-        }
     }
 }
