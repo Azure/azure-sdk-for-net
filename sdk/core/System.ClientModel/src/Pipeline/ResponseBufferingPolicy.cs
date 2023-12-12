@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 namespace System.ClientModel.Primitives;
 
 /// <summary>
-/// Pipeline policy to buffer response content or add a timeout to response content managed by the client
+/// Pipeline policy to buffer response content or add a timeout to response content
+/// managed by the client.
 /// </summary>
 public class ResponseBufferingPolicy : PipelinePolicy
 {
@@ -87,12 +88,9 @@ public class ResponseBufferingPolicy : PipelinePolicy
             return;
         }
 
-        if (message.Response is null)
-        {
-            throw new InvalidOperationException("Response is not set on message.");
-        }
+        message.AssertResponse();
 
-        Stream? responseContentStream = message.Response.ContentStream;
+        Stream? responseContentStream = message.Response!.ContentStream;
         if (responseContentStream is null ||
             message.Response.TryGetBufferedContent(out var _))
         {
@@ -259,5 +257,4 @@ public class ResponseBufferingPolicy : PipelinePolicy
     private struct NetworkTimeoutPropertyKey { }
 
     #endregion
-
 }

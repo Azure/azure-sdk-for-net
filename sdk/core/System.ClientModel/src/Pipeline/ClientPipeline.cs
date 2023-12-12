@@ -61,8 +61,7 @@ public partial class ClientPipeline
             pipelineLength += options.BeforeTransportPolicies.Length;
         }
 
-        pipelineLength += options.RetryPolicy is null ? 0 : 1;
-
+        pipelineLength++; // for retry policy
         pipelineLength++; // for response buffering policy
         pipelineLength++; // for transport
 
@@ -84,6 +83,10 @@ public partial class ClientPipeline
         if (options.RetryPolicy != null)
         {
             pipeline[index++] = options.RetryPolicy;
+        }
+        else
+        {
+            pipeline[index++] = new RequestRetryPolicy();
         }
 
         perTryPolicies.CopyTo(pipeline.AsSpan(index));
