@@ -1,6 +1,6 @@
 # Microsoft Azure SpringAppDiscovery management client library for .NET
 
-**[Describe the service briefly first.]**
+**Microsoft Azure SpringAppDiscovery is a component to discovery spring apps in on-prem enviroment for customers. This component is integrated with the Azure Migrate platform and the discovered result can be assessed in cpu, memory and pricing dimensions.**
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -10,7 +10,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-## Getting started 
+## Getting started
 
 ### Install the package
 
