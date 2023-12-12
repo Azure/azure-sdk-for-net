@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
+using Azure.Communication.Messages.Models.Channels;
 
 namespace Azure.Communication.Messages
 {
@@ -16,7 +17,11 @@ namespace Azure.Communication.Messages
         internal static MessageTemplateItem DeserializeMessageTemplateResponseInternal(JsonElement element)
         {
             var messageTemplateResponseInternal = MessageTemplateResponseInternal.DeserializeMessageTemplateResponseInternal(element);
-            return new MessageTemplateItem(messageTemplateResponseInternal);
+            return messageTemplateResponseInternal.ChannelType.ToString() switch
+            {
+                "whatsApp" => new WhatsAppMessageTemplateItem(messageTemplateResponseInternal),
+                 _ => new MessageTemplateItem(messageTemplateResponseInternal),
+            };
         }
 
         /// <summary> Initializes a new instance of MessageTemplateItem. </summary>
