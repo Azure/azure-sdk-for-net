@@ -241,12 +241,13 @@ namespace Azure
         public abstract string ClientRequestId { get; set; }
         public virtual new System.BinaryData Content { get { throw null; } }
         public virtual new Azure.Core.ResponseHeaders Headers { get { throw null; } }
-        public virtual new bool IsError { get { throw null; } }
         protected internal abstract bool ContainsHeader(string name);
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         public static Azure.Response<T> FromValue<T>(T value, Azure.Response response) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected override System.ClientModel.Primitives.MessageHeaders GetHeadersCore() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected sealed override void SetIsErrorCore(bool isError) { }
         public override string ToString() { throw null; }
         protected internal abstract bool TryGetHeader(string name, out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values);

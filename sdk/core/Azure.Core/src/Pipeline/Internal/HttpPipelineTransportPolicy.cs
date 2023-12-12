@@ -29,7 +29,6 @@ namespace Azure.Core.Pipeline
             message.Response.RequestFailedDetailsParser = _errorParser;
             message.Response.Sanitizer = _sanitizer;
             message.Response.SetIsError(message.ResponseClassifier.IsErrorResponse(message));
-            //message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
         }
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -41,7 +40,6 @@ namespace Azure.Core.Pipeline
             message.Response.RequestFailedDetailsParser = _errorParser;
             message.Response.Sanitizer = _sanitizer;
             message.Response.SetIsError(message.ResponseClassifier.IsErrorResponse(message));
-            //message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
         }
     }
 }

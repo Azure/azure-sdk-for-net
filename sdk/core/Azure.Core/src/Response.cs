@@ -53,7 +53,16 @@ namespace Azure
 
         internal RequestFailedDetailsParser? RequestFailedDetailsParser { get; set; }
 
-        internal void SetIsError(bool value) => IsError = value;
+        internal void SetIsError(bool value) => SetIsErrorCore(value);
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="isError"></param>
+        // Azure.Core overrides this only so it can seal it.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected sealed override void SetIsErrorCore(bool isError)
+            => base.SetIsErrorCore(isError);
 
         /// <summary>
         /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.
