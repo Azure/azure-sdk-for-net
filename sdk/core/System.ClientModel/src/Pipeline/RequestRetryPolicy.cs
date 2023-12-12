@@ -78,12 +78,11 @@ public class RequestRetryPolicy : PipelinePolicy
                 OnRequestSent(message);
             }
 
-            // TODO: simplify should retry.
+            // TODO: simplify should retry boolean expression
             bool shouldRetry = false;
 
-            message.AssertResponse();
-
-            if (lastException is not null || message.Response!.IsError)
+            if (lastException is not null ||
+                (message.Response is not null && message.Response.IsError))
             {
                 shouldRetry = async ?
                     await ShouldRetryAsync(message, lastException).ConfigureAwait(false) :
@@ -102,7 +101,7 @@ public class RequestRetryPolicy : PipelinePolicy
                 }
 
                 // Dispose the content stream to free up a connection if the request has any
-                message.Response!.ContentStream?.Dispose();
+                message.Response?.ContentStream?.Dispose();
 
                 message.RetryCount++;
 
