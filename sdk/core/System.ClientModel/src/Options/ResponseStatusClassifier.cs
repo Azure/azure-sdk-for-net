@@ -7,7 +7,7 @@ namespace System.ClientModel.Primitives
 {
     internal class ResponseStatusClassifier : PipelineMessageClassifier
     {
-        // We need 10 ulongs to represent status codes 100 - 599.
+        // Until we have C# 12...
         private BitVector640 _successCodes;
 
         /// <summary>

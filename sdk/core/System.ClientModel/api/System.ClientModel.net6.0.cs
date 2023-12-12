@@ -161,6 +161,7 @@ namespace System.ClientModel.Primitives
     public partial class PipelineMessageClassifier
     {
         protected internal PipelineMessageClassifier() { }
+        public static System.ClientModel.Primitives.PipelineMessageClassifier Create(System.ReadOnlySpan<ushort> successStatusCodes) { throw null; }
         public virtual bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
     public partial class PipelineOptions
@@ -238,10 +239,5 @@ namespace System.ClientModel.Primitives
         public static void SetNetworkTimeout(System.ClientModel.Primitives.PipelineMessage message, System.TimeSpan networkTimeout) { }
         public static bool TryGetBufferResponse(System.ClientModel.Primitives.PipelineMessage message, out bool bufferResponse) { throw null; }
         public static bool TryGetNetworkTimeout(System.ClientModel.Primitives.PipelineMessage message, out System.TimeSpan networkTimeout) { throw null; }
-    }
-    public partial class ResponseStatusClassifier : System.ClientModel.Primitives.PipelineMessageClassifier
-    {
-        public ResponseStatusClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }
-        public sealed override bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
 }

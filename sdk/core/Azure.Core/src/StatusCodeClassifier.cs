@@ -2,8 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
-using static Azure.RequestContext;
+using System.ClientModel.Internal;
 
 namespace Azure.Core
 {
@@ -13,24 +12,28 @@ namespace Azure.Core
     /// </summary>
     public class StatusCodeClassifier : ResponseClassifier
     {
-        private readonly ReadOnlySpan<ushort> _origCodes;
-        private readonly PipelineMessageClassifier _statusCodeClassifier;
+        private BitVector640 _successCodes;
 
         internal ResponseClassificationHandler[]? Handlers { get; set; }
 
         /// <summary>
-        /// Creates a new instance of <see cref="StatusCodeClassifier"/>.
+        /// Creates a new instance of <see cref="StatusCodeClassifier"/>
         /// </summary>
         /// <param name="successStatusCodes">The status codes that this classifier will consider
         /// not to be errors.</param>
         public StatusCodeClassifier(ReadOnlySpan<ushort> successStatusCodes)
         {
-            _statusCodeClassifier = Create(successStatusCodes);
+            _successCodes = new();
+
+            foreach (int statusCode in successStatusCodes)
+            {
+                AddClassifier(statusCode, isError: false);
+            }
         }
 
-        private StatusCodeClassifier(PipelineMessageClassifier statusCodeClassifier, ResponseClassificationHandler[]? handlers)
+        private StatusCodeClassifier(BitVector640 successCodes, ResponseClassificationHandler[]? handlers)
         {
-            _statusCodeClassifier = statusCodeClassifier;
+            _successCodes = successCodes;
             Handlers = handlers;
         }
 
@@ -39,7 +42,7 @@ namespace Azure.Core
         {
             if (Handlers != null)
             {
-                foreach (var handler in Handlers)
+                foreach (ResponseClassificationHandler handler in Handlers)
                 {
                     if (handler.TryClassify(message, out bool isError))
                     {
@@ -48,21 +51,17 @@ namespace Azure.Core
                 }
             }
 
-            return base.IsErrorResponse(message);
+            return !_successCodes[message.Response.Status];
         }
 
-        internal virtual StatusCodeClassifier Clone(StatusCodeClassification[]? _statusCodes, ResponseClassificationHandler[]? _handlers)
-        {
-            if (_statusCodes != null)
-            {
-                foreach (StatusCodeClassification classification in _statusCodes)
-                {
-                    clone.AddClassifier(classification.Status, classification.IsError);
-                }
-            }
+        internal virtual StatusCodeClassifier Clone()
+            => new(_successCodes, Handlers);
 
-            // TODO: Update this logic
-            return new StatusCodeClassifier(_statusCodeClassifier, Handlers);
+        internal void AddClassifier(int statusCode, bool isError)
+        {
+            Argument.AssertInRange(statusCode, 0, 639, nameof(statusCode));
+
+            _successCodes[statusCode] = isError;
         }
     }
 }

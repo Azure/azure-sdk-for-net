@@ -71,11 +71,11 @@ namespace Azure.Core.Tests
         [Test]
         public void ClassifiesUsingStatusCodesAndEndOfChain()
         {
-            (int Status, bool IsError)[] classifications = new (int Status, bool IsError)[]
+            RequestContext.StatusCodeClassification[] classifications = new RequestContext.StatusCodeClassification[]
             {
-                (204, true),
-                (404, false),
-                (500, false),
+                new(204, true),
+                new(404, false),
+                new(500, false),
             };
 
             ChainingClassifier classifier = new ChainingClassifier(
@@ -101,10 +101,10 @@ namespace Azure.Core.Tests
         [Test]
         public void ClassifiesUsingAllHandlersTakePrecedenceOverStatusCodes()
         {
-            (int Status, bool IsError)[] classifications = new (int Status, bool IsError)[]
+            RequestContext.StatusCodeClassification[] classifications = new RequestContext.StatusCodeClassification[]
             {
-                (204, false),
-                (500, false),
+                new(204, false),
+                new(500, false),
             };
 
             ResponseClassificationHandler[] handlers = new ResponseClassificationHandler[]
