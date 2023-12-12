@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
     public partial class DiscoveredErrorSummaryData : Azure.ResourceManager.Models.ResourceData
     {
         public DiscoveredErrorSummaryData() { }
-        public Azure.ResourceManager.SpringAppDiscovery.Models.ErrorSummariesProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredErrorSummariesProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class ErrorSummaryResource : Azure.ResourceManager.ArmResource
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
     public static partial class ArmSpringAppDiscoveryModelFactory
     {
-        public static Azure.ResourceManager.SpringAppDiscovery.DiscoveredErrorSummaryData ErrorSummaryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SpringAppDiscovery.Models.ErrorSummariesProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.SpringAppDiscovery.DiscoveredErrorSummaryData ErrorSummaryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredErrorSummariesProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.SpringAppDiscovery.SpringBootAppsModelData SpringbootappsModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppsProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppsModelPatch SpringbootappsModelPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppsProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.SpringAppDiscovery.SpringBootServersModelData SpringbootserversModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServersProperties properties = null) { throw null; }
@@ -274,12 +274,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public string SummaryMessage { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedTimeStamp { get { throw null; } set { } }
     }
-    public partial class ErrorSummariesProperties
+    public partial class DiscoveredErrorSummariesProperties
     {
-        public ErrorSummariesProperties() { }
+        public DiscoveredErrorSummariesProperties() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredErrorSummaryModel> DiscoveryScopeErrorSummaries { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredError> Errors { get { throw null; } }
-        public Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState? ProvisioningState { get { throw null; } set { } }
     }
     public partial class DiscoveredErrorSummaryModel
     {
@@ -288,26 +288,26 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public string AffectedResourceType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState>
+    public readonly partial struct DiscoveredProvisioningState : System.IEquatable<Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState Accepted { get { throw null; } }
-        public static Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState Provisioning { get { throw null; } }
-        public static Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState other) { throw null; }
+        public DiscoveredProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState Provisioning { get { throw null; } }
+        public static Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState left, Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState left, Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState left, Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState left, Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SpringBootAppsModelPatch : Azure.ResourceManager.Models.ResourceData
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     public partial class SpringBootAppsProperties
     {
         public SpringBootAppsProperties() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppsPropertiesApplicationConfigurationsItem> ApplicationConfigurations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootApplicationConfigurationsItem> ApplicationConfigurations { get { throw null; } }
         public string AppName { get { throw null; } set { } }
         public int? AppPort { get { throw null; } set { } }
         public string AppType { get { throw null; } set { } }
@@ -341,16 +341,16 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MachineArmIds { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppsPropertiesMiscsItem> Miscs { get { throw null; } }
-        public Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState? ProvisioningState { get { throw null; } set { } }
         public string RuntimeJdkVersion { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Servers { get { throw null; } }
         public string SiteName { get { throw null; } set { } }
         public string SpringBootVersion { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> StaticContentLocations { get { throw null; } }
     }
-    public partial class SpringBootAppsPropertiesApplicationConfigurationsItem
+    public partial class SpringBootApplicationConfigurationsItem
     {
-        public SpringBootAppsPropertiesApplicationConfigurationsItem(string key) { }
+        public SpringBootApplicationConfigurationsItem(string key) { }
         public string Key { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public System.Collections.Generic.IList<string> FqdnAndIPAddressList { get { throw null; } }
         public string MachineArmId { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
-        public Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState? ProvisioningState { get { throw null; } set { } }
         public string Server { get { throw null; } set { } }
         public int? SpringBootApps { get { throw null; } set { } }
         public int? TotalApps { get { throw null; } set { } }
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public SpringBootSitesProperties() { }
         public string MasterSiteId { get { throw null; } set { } }
         public string MigrateProjectId { get { throw null; } set { } }
-        public Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState? ProvisioningState { get { throw null; } set { } }
     }
     public partial class DiscoveredSummariesProperties
     {
@@ -409,6 +409,6 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public long? DiscoveredApps { get { throw null; } set { } }
         public long? DiscoveredServers { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredError> Errors { get { throw null; } }
-        public Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState? ProvisioningState { get { throw null; } set { } }
     }
 }
