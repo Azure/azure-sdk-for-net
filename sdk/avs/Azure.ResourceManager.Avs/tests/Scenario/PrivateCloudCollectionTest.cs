@@ -24,8 +24,9 @@ namespace Azure.ResourceManager.Avs.Tests
             return _resourceGroup.GetAvsPrivateClouds();
         }
 
-      //  [TestCase]
-      //  [RecordedTest]
+        [TestCase]
+        [RecordedTest]
+        [AsyncOnly]
         public async Task CreateOrUpdate()
         {
             var collection = await  GetPrivateCloudCollectionAsync();
@@ -51,8 +52,8 @@ namespace Azure.ResourceManager.Avs.Tests
             ArmOperation<AvsPrivateCloudResource> lro = await  collection.CreateOrUpdateAsync(WaitUntil.Started, privateCloudName, data);
         }
 
-        [TestCase]
-        [RecordedTest]
+        //[TestCase]
+        //[RecordedTest]
         public async Task CreateOrUpdateStretched()
         {
             var collection = await GetPrivateCloudCollectionAsync();

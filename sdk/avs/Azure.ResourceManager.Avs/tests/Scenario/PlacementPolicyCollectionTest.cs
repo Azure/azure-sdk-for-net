@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
             {
                 Properties = new VmHostPlacementPolicyProperties(new ResourceIdentifier[]
             {
-new ResourceIdentifier($"/subscriptions/{DefaultSubscription.Data.SubscriptionId}/resourceGroups/{RESOURCE_GROUP_NAME}/providers/Microsoft.AVS/privateClouds/{PRIVATE_CLOUD_NAME}/clusters/{CLUSTER1_NAME}/virtualMachines/SDK-TEST-VM")
+new ResourceIdentifier($"/subscriptions/{DefaultSubscription.Data.SubscriptionId}/resourceGroups/{RESOURCE_GROUP_NAME}/providers/Microsoft.AVS/privateClouds/{PRIVATE_CLOUD_NAME}/clusters/{CLUSTER1_NAME}/virtualMachines/vm-1818")
             }, new string[]
             {"esx05-r20.p04.eastus.avs.azure.com"
             }, AvsPlacementPolicyAffinityType.Affinity)
@@ -50,7 +50,14 @@ new ResourceIdentifier($"/subscriptions/{DefaultSubscription.Data.SubscriptionId
         public async Task GetCollection()
         {
             var collection = await GetPlacementPolicyCollectionAsync();
-            Assert.IsTrue(collection.Count() > 0);
+            var policies = new List<PlacementPolicyResource>();
+            // invoke the operation and iterate over the result
+            await foreach (PlacementPolicyResource item in collection.GetAllAsync())
+            {
+                policies.Add(item);
+            }
+
+            Assert.IsTrue(policies.Any());
         }
     }
 }
