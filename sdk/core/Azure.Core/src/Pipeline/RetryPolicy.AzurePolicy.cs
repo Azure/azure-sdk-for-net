@@ -75,6 +75,7 @@ public partial class RetryPolicy
             _elapsedTime = default;
         }
 
+        // TODO: I like this pattern.  Where else can I apply it?
         private static HttpMessage AssertHttpMessage(PipelineMessage message)
         {
             if (message is not HttpMessage httpMessage)
@@ -108,6 +109,9 @@ public partial class RetryPolicy
                 Response? response = httpMessage.HasResponse ? httpMessage.Response : default;
                 return _strategy.GetNextDelay(response, delayCount);
             }
+
+            protected override void OnDelayComplete(PipelineMessage message)
+                => _retryPolicy.OnDelayComplete(message);
 
             protected override void WaitCore(TimeSpan duration, CancellationToken cancellationToken)
                 => _retryPolicy.Wait(duration, cancellationToken);
