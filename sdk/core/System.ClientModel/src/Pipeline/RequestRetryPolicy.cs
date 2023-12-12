@@ -35,11 +35,11 @@ public class RequestRetryPolicy : PipelinePolicy
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, PipelineProcessor pipeline, bool async)
     {
-        List<Exception>? exceptions = null;
+        List<Exception>? allTryExceptions = null;
 
         while (true)
         {
-            Exception? lastException = null;
+            Exception? thisTryException = null;
 
             if (async)
             {
@@ -63,10 +63,10 @@ public class RequestRetryPolicy : PipelinePolicy
             }
             catch (Exception ex)
             {
-                exceptions ??= new List<Exception>();
-                exceptions.Add(ex);
+                allTryExceptions ??= new List<Exception>();
+                allTryExceptions.Add(ex);
 
-                lastException = ex;
+                thisTryException = ex;
             }
 
             if (async)
@@ -78,16 +78,9 @@ public class RequestRetryPolicy : PipelinePolicy
                 OnRequestSent(message);
             }
 
-            // TODO: simplify should retry boolean expression
-            bool shouldRetry = false;
-
-            if (lastException is not null ||
-                (message.Response is not null && message.Response.IsError))
-            {
-                shouldRetry = async ?
-                    await ShouldRetryAsync(message, lastException).ConfigureAwait(false) :
-                    ShouldRetry(message, lastException);
-            }
+            bool shouldRetry = async ?
+                await ShouldRetryAsync(message, thisTryException).ConfigureAwait(false) :
+                ShouldRetry(message, thisTryException);
 
             if (shouldRetry)
             {
@@ -108,15 +101,15 @@ public class RequestRetryPolicy : PipelinePolicy
                 continue;
             }
 
-            if (lastException != null)
+            if (thisTryException != null)
             {
                 // Rethrow if there's only one exception.
-                if (exceptions!.Count == 1)
+                if (allTryExceptions!.Count == 1)
                 {
-                    ExceptionDispatchInfo.Capture(lastException).Throw();
+                    ExceptionDispatchInfo.Capture(thisTryException).Throw();
                 }
 
-                throw new AggregateException($"Retry failed after {message.RetryCount + 1} tries.", exceptions);
+                throw new AggregateException($"Retry failed after {message.RetryCount + 1} tries.", allTryExceptions);
 
                 //throw new AggregateException(
                 //    $"Retry failed after {message.RetryNumber + 1} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}" +
@@ -141,9 +134,15 @@ public class RequestRetryPolicy : PipelinePolicy
 
     protected virtual bool ShouldRetry(PipelineMessage message, Exception? exception)
     {
+        // If there was no exception and we got a success response, don't retry.
+        if (exception is null && message.Response is not null && !message.Response.IsError)
+        {
+            return false;
+        }
+
         if (message.RetryCount >= _maxRetries)
         {
-            // out of retries
+            // We've exceeded the maximum number of retries, so don't retry.
             return false;
         }
 
