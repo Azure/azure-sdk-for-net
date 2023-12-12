@@ -2074,6 +2074,26 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2024_05_04)]
+        public async Task GetPropertiesAsyncWithUPN()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem(publicAccessType: PublicAccessType.None);
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+
+            DataLakePathGetPropertiesOptions options = new DataLakePathGetPropertiesOptions
+            {
+                UserPrincipalName = true
+            };
+
+            // Act
+            Response<PathProperties> response = await file.GetPropertiesAsync(options);
+
+            // Assert
+            Assert.NotNull(response.Value.Owner);
+            Assert.NotNull(response.Value.Group);
+        }
+
+        [RecordedTest]
         public async Task GetPropertiesAsync_Oauth()
         {
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();

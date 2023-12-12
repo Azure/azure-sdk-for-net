@@ -4188,6 +4188,26 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2024_05_04)]
+        public async Task GetPropertiesAsyncWithUPN()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem(publicAccessType: PublicAccessType.None);;
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            DataLakePathGetPropertiesOptions options = new DataLakePathGetPropertiesOptions
+            {
+                UserPrincipalName = true
+            };
+
+            // Act
+            Response<PathProperties> response = await directory.GetPropertiesAsync(options);
+
+            // Assert
+            Assert.NotNull(response.Value.Owner);
+            Assert.NotNull(response.Value.Group);
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
         public async Task GetPropertiesAsync_EncryptionScope()
         {
@@ -4407,8 +4427,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
+                DataLakePathGetPropertiesOptions options = new DataLakePathGetPropertiesOptions
+                {
+                    Conditions = conditions
+                };
+
                 // Act
-                Response<PathProperties> response = await directory.GetPropertiesAsync(conditions: conditions);
+                Response<PathProperties> response = await directory.GetPropertiesAsync(options: options);
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -4428,12 +4453,17 @@ namespace Azure.Storage.Files.DataLake.Tests
                 parameters.NoneMatch = await SetupPathMatchCondition(directory, parameters.NoneMatch);
                 DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
 
+                DataLakePathGetPropertiesOptions options = new DataLakePathGetPropertiesOptions
+                {
+                    Conditions = conditions
+                };
+
                 // Act
                 await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
                         var _ = (await directory.GetPropertiesAsync(
-                            conditions: conditions)).Value;
+                            options: options)).Value;
                     });
             }
         }

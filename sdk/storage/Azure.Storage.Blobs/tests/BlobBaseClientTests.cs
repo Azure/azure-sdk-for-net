@@ -4539,9 +4539,13 @@ namespace Azure.Storage.Blobs.Test
                 BlobRequestConditions accessConditions = BuildAccessConditions(
                     parameters: parameters,
                     lease: true);
+                BlobGetPropertiesOptions options = new BlobGetPropertiesOptions
+                {
+                    Conditions = accessConditions
+                };
 
                 // Act
-                Response<BlobProperties> response = await blob.GetPropertiesAsync(conditions: accessConditions);
+                Response<BlobProperties> response = await blob.GetPropertiesAsync(options: options);
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -4562,12 +4566,17 @@ namespace Azure.Storage.Blobs.Test
                 parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                 BlobRequestConditions accessConditions = BuildAccessConditions(parameters);
 
+                BlobGetPropertiesOptions options = new BlobGetPropertiesOptions
+                {
+                    Conditions = accessConditions
+                };
+
                 // Act
                 await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
                         var _ = (await blob.GetPropertiesAsync(
-                            conditions: accessConditions)).Value;
+                            options: options)).Value;
                     });
             }
         }
@@ -4590,8 +4599,13 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
+            BlobGetPropertiesOptions options = new BlobGetPropertiesOptions
+            {
+                Conditions = conditions
+            };
+
             // Act
-            Response<BlobProperties> response = await blob.GetPropertiesAsync(conditions: conditions);
+            Response<BlobProperties> response = await blob.GetPropertiesAsync(options: options);
 
             // Assert
             Assert.IsNotNull(response.Value.ETag);
@@ -4610,9 +4624,14 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
+            BlobGetPropertiesOptions options = new BlobGetPropertiesOptions
+            {
+                Conditions = conditions
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                blob.GetPropertiesAsync(conditions: conditions),
+                blob.GetPropertiesAsync(options: options),
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 

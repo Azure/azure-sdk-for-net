@@ -1714,7 +1714,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 return base.GetProperties(
-                    options?.Conditions,
+                    options,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -1820,7 +1820,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 return await base.GetPropertiesAsync(
-                    options?.Conditions,
+                    options,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
