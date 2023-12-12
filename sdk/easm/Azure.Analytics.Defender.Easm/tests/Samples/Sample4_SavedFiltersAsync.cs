@@ -44,4 +44,3 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
         }
     }
 }
-

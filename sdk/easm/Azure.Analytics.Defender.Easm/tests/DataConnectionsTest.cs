@@ -80,6 +80,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
             var response = await client.CreateOrReplaceDataConnectionAsync(NewDataConnectionName, request).ConfigureAwait(false);
             Assert.AreEqual(NewDataConnectionName, response.Value.Name);
             Assert.AreEqual(NewDataConnectionName, response.Value.DisplayName);
+            Assert.True(response.Value.GetType() == typeof(AzureDataExplorerDataConnection));
             Assert.AreEqual(DataConnectionFrequency.Daily, response.Value.Frequency);
         }
     }

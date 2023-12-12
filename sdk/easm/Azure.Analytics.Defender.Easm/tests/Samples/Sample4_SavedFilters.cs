@@ -53,11 +53,11 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
             var savedFilterPageResponse = client.SavedFiltersList(monitorFilter);
             #else
             var savedFilterPageResponse = client.GetSavedFilters();
+            #endif
             foreach (SavedFilter savedFilter in savedFilterPageResponse)
             {
                 monitor(savedFilter);
             }
-            #endif
             #endregion
             #region Snippet:Sample4_SavedFilters_Update_Monitored_Assets
             AssetUpdateData assetUpdateRequest = new AssetUpdateData();

@@ -37,7 +37,7 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
             #endregion
             #region Snippet:Sample5_ExternalIds_Initialize_Mapping
             #if SNIPPET
-             Dictionary<string, string> asset1 = new Dictionary<string, string> {
+            Dictionary<string, string> asset1 = new Dictionary<string, string> {
                 {"name", "example.com" },
                 {"kind", "host" },
                 {"external_id", "EXT040" } };
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
                 {"external_id", "EXT041" } };
             List<Dictionary<string, string>> mapping = new List<Dictionary<string, string>> {
                 asset1, asset2
-
+            };
             #else
             string mappingJson = TestEnvironment.Mapping;
             List<Dictionary<string, string>> mapping = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(mappingJson);

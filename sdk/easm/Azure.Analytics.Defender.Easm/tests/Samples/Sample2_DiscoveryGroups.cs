@@ -13,7 +13,7 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
         [SyncOnly]
         public void DiscoveryGroupsScenario()
         {
-            #region Snippet:Sample1_DiscoveryGroups_Create_Client
+            #region Snippet:Sample2_DiscoveryGroups_Create_Client
 
             #if SNIPPET
             string endpoint = "https://<region>.easm.defender.microsoft.com";
@@ -63,7 +63,7 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
             client.CreateOrReplaceDiscoGroup(discoveryGroupName, request);
             #endregion
 
-            #region Snippet:Sample1_DiscoceryGroups_Run
+            #region Snippet:Sample2_DiscoveryGroups_Run
             client.RunDiscoGroup(discoveryGroupName);
             Pageable<DiscoGroup> response = client.GetDiscoGroups();
             foreach (DiscoGroup discoGroup in response)
