@@ -7,7 +7,6 @@ using System.Net;
 using System.Net.Security;
 using System.Net.Sockets;
 using Azure.Core;
-using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs
 {

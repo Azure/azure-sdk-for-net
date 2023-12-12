@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers;
 using System.ComponentModel;
-using System.Net.Security;
 using System.Text;
-using System.Text.Encodings.Web;
 using Azure.Core;
 
 namespace Azure.Messaging.EventHubs
