@@ -1,4 +1,4 @@
-# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.  COMMENT
 trigger:
   branches:
     include:
