@@ -31,7 +31,7 @@ dotnet add package Azure.Identity
 
 To create an EasmClient, you need your subscription ID, region, and some sort of credential. Below is an example using the DefaultAzureCredential.
 
-```C# Snippet:Sample1_Create_Client
+```C# Snippet:Sample1_AssetResources_Create_Client
 string endpoint = "https://<region>.easm.defender.microsoft.com";
 EasmClient client = new EasmClient(new System.Uri(endpoint),
                 "<Your_Subscription_Id>",
