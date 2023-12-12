@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Internal;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
@@ -10,11 +9,12 @@ public partial class ClientPipeline
 {
     private readonly int _perCallIndex;
     private readonly int _perTryIndex;
+    private readonly int _beforeTransportIndex;
 
     private readonly ReadOnlyMemory<PipelinePolicy> _policies;
     private readonly PipelineTransport _transport;
 
-    private ClientPipeline(ReadOnlyMemory<PipelinePolicy> policies, int perCallIndex, int perTryIndex)
+    private ClientPipeline(ReadOnlyMemory<PipelinePolicy> policies, int perCallIndex, int perTryIndex, int beforeTransportIndex)
     {
         if (perCallIndex > 255) throw new ArgumentOutOfRangeException(nameof(perCallIndex), "Cannot create pipeline with more than 255 policies.");
         if (perTryIndex > 255) throw new ArgumentOutOfRangeException(nameof(perTryIndex), "Cannot create pipeline with more than 255 policies.");
@@ -30,28 +30,35 @@ public partial class ClientPipeline
 
         _perCallIndex = perCallIndex;
         _perTryIndex = perTryIndex;
+        _beforeTransportIndex = beforeTransportIndex;
     }
 
-    public static ClientPipeline Create(ServiceClientOptions options, params PipelinePolicy[] perCallPolicies)
-        => Create(options, perCallPolicies, ReadOnlySpan<PipelinePolicy>.Empty);
+    public static ClientPipeline Create(PipelineOptions options, params PipelinePolicy[] perCallPolicies)
+        => Create(options, perCallPolicies, ReadOnlySpan<PipelinePolicy>.Empty, ReadOnlySpan<PipelinePolicy>.Empty);
 
     public static ClientPipeline Create(
-        ServiceClientOptions options,
+        PipelineOptions options,
         ReadOnlySpan<PipelinePolicy> perCallPolicies,
-        ReadOnlySpan<PipelinePolicy> perTryPolicies)
+        ReadOnlySpan<PipelinePolicy> perTryPolicies,
+        ReadOnlySpan<PipelinePolicy> beforeTransportPolicies)
     {
         if (options is null) throw new ArgumentNullException(nameof(options));
 
         int pipelineLength = perCallPolicies.Length + perTryPolicies.Length;
+
+        if (options.PerTryPolicies != null)
+        {
+            pipelineLength += options.PerTryPolicies.Length;
+        }
 
         if (options.PerCallPolicies != null)
         {
             pipelineLength += options.PerCallPolicies.Length;
         }
 
-        if (options.PerTryPolicies != null)
+        if (options.BeforeTransportPolicies != null)
         {
-            pipelineLength += options.PerTryPolicies.Length;
+            pipelineLength += options.BeforeTransportPolicies.Length;
         }
 
         pipelineLength++; // for retry policy
@@ -97,6 +104,17 @@ public partial class ClientPipeline
         ResponseBufferingPolicy bufferingPolicy = new(networkTimeout);
         pipeline[index++] = bufferingPolicy;
 
+        beforeTransportPolicies.CopyTo(pipeline.AsSpan(index));
+        index += beforeTransportPolicies.Length;
+
+        if (options.BeforeTransportPolicies != null)
+        {
+            options.BeforeTransportPolicies.CopyTo(pipeline.AsSpan(index));
+            index += options.BeforeTransportPolicies.Length;
+        }
+
+        int beforeTransportIndex = index;
+
         if (options.Transport != null)
         {
             pipeline[index++] = options.Transport;
@@ -107,7 +125,7 @@ public partial class ClientPipeline
             pipeline[index++] = HttpClientPipelineTransport.Shared;
         }
 
-        return new ClientPipeline(pipeline, perCallIndex, perTryIndex);
+        return new ClientPipeline(pipeline, perCallIndex, perTryIndex, beforeTransportIndex);
     }
 
     // TODO: note that without a common base type, nothing validates that MessagePipeline
@@ -135,8 +153,10 @@ public partial class ClientPipeline
                 _policies,
                 message.PerCallPolicies,
                 message.PerTryPolicies,
+                message.BeforeTransportPolicies,
                 _perCallIndex,
-                _perTryIndex);
+                _perTryIndex,
+                _beforeTransportIndex);
         }
 
         return new ClientPipelineProcessor(message, _policies);
@@ -154,21 +174,33 @@ public partial class ClientPipeline
             _policies = policies;
         }
 
-        public override int Length => _policies.Length;
-
         public override bool ProcessNext()
         {
+            if (_policies.Length == 0)
+            {
+                return false;
+            }
+
             var next = _policies.Span[0];
             _policies = _policies.Slice(1);
+
             next.Process(_message, this);
+
             return _policies.Length > 0;
         }
 
         public override async ValueTask<bool> ProcessNextAsync()
         {
+            if (_policies.Length == 0)
+            {
+                return false;
+            }
+
             var next = _policies.Span[0];
             _policies = _policies.Slice(1);
+
             await next.ProcessAsync(_message, this).ConfigureAwait(false);
+
             return _policies.Length > 0;
         }
     }

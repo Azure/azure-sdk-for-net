@@ -82,8 +82,9 @@ public class RequestRetryPolicy : PipelinePolicy
             // TODO: simplify should retry.
             bool shouldRetry = false;
 
-            if (lastException is not null ||
-                (message.TryGetResponse(out PipelineResponse response) && response.IsError))
+            message.AssertResponse();
+
+            if (lastException is not null || message.Response!.IsError)
             {
                 shouldRetry = async ?
                     await ShouldRetryAsync(message, lastException).ConfigureAwait(false) :
@@ -101,11 +102,8 @@ public class RequestRetryPolicy : PipelinePolicy
                     _delay.Delay(message, message.CancellationToken);
                 }
 
-                if (message.TryGetResponse(out response))
-                {
-                    // Dispose the content stream to free up a connection if the request has any
-                    response.ContentStream?.Dispose();
-                }
+                // Dispose the content stream to free up a connection if the request has any
+                message.Response!.ContentStream?.Dispose();
 
                 message.RetryCount++;
 
@@ -164,29 +162,33 @@ public class RequestRetryPolicy : PipelinePolicy
     // TODO: replace these with classifiers.  Keeping internal for the initial
     // implementation.
     private static bool IsRetriable(PipelineMessage message)
-        => message.Response.Status switch
-        {
-            // Request Timeout
-            408 => true,
+    {
+        message.AssertResponse();
 
-            // Too Many Requests
-            429 => true,
+        return message.Response!.Status switch
+           {
+               // Request Timeout
+               408 => true,
 
-            // Internal Server Error
-            500 => true,
+               // Too Many Requests
+               429 => true,
 
-            // Bad Gateway
-            502 => true,
+               // Internal Server Error
+               500 => true,
 
-            // Service Unavailable
-            503 => true,
+               // Bad Gateway
+               502 => true,
 
-            // Gateway Timeout
-            504 => true,
+               // Service Unavailable
+               503 => true,
 
-            // Default case
-            _ => false
-        };
+               // Gateway Timeout
+               504 => true,
+
+               // Default case
+               _ => false
+           };
+    }
 
     private static bool IsRetriable(PipelineMessage message, Exception exception)
         => IsRetriable(exception) ||
