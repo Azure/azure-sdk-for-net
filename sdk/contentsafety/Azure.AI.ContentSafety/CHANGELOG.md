@@ -1,10 +1,10 @@
 # Release History
 
-## 1.0.0 (Unreleased)
+## 1.0.0 (2023-12-15)
 
 ### Features Added
 
-- Support AAD Authentication
+- Support Microsoft Entra ID Authentication
 - Support 8 severity level for AnalyzeText
 
 ### Breaking Changes
@@ -14,17 +14,17 @@ Contract change for AnalyzeText, AnalyzeImage, Blocklist management related meth
 #### AnalyzeText
 
 - AnalyzeTextOptions
-  - Renamed breakByBlocklists to haltOnBlocklistHit
-  - Add AnalyzeTextOutputType
+  - Renamed BreakByBlocklists to HaltOnBlocklistHit
+  - Added AnalyzeTextOutputType
 - AnalyzeTextResult
-  - Renamed blocklistsMatchResults to blocklistsMatch
+  - Renamed BlocklistsMatchResults to BlocklistsMatch
   - Replaced TextAnalyzeSeverityResult by TextCategoriesAnalysis
 
 #### AnalyzeImage
 
 - AnalyzeImageOptions
   - Replaced ImageData by ContentSafetyImageData
-  - Add AnalyzeImageOutputType
+  - Added AnalyzeImageOutputType
 - AnalyzeImageResult
   - Replaced ImageAnalyzeSeverityResult by ImageCategoriesAnalysis
 

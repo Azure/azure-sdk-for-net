@@ -28,7 +28,8 @@ public class MapsClient
         _credential = credential;
         _apiVersion = options.Version;
 
-        _pipeline = ClientPipeline.Create(options, new KeyCredentialAuthenticationPolicy(_credential, "subscription-key"));
+        var authenticationPolicy = KeyCredentialAuthenticationPolicy.CreateHeaderPolicy(credential, "subscription-key");
+        _pipeline = ClientPipeline.Create(options, authenticationPolicy);
     }
 
     public virtual ClientResult<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress)
