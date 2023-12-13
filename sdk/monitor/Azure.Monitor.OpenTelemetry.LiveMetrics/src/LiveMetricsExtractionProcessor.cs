@@ -33,9 +33,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 return;
             }
 
-            if (_manager.liveMetricsResource == null && LiveMetricsResource != null)
+            // Resource is not available at initialization and must be set later.
+            if (_manager.LiveMetricsResource == null && LiveMetricsResource != null)
             {
-                _manager.liveMetricsResource = LiveMetricsResource;
+                _manager.LiveMetricsResource = LiveMetricsResource;
             }
 
             string? statusCodeAttributeValue = null;
