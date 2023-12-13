@@ -13,7 +13,7 @@ namespace Azure.Communication.Messages.Tests
     {
         private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
 
-        public MessagesLiveTestBase(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public MessagesLiveTestBase(bool isAsync) : base(isAsync)
         {
             SanitizedHeaders.Add("x-ms-content-sha256");
             SanitizedHeaders.Add("Repeatability-Request-ID");
