@@ -161,7 +161,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 if (failedNotifications.Any())
                 {
                     // TODO (kasobol-msft) this call to GetProperties is suboptimal figure out how to propagate data from listing here.
-                    latestScan = failedNotifications.Select(p => p.Blob).Min(n => n.BlobClient.GetProperties().Value.LastModified.UtcDateTime);
+                    latestScan = failedNotifications.Select(p => p.Blob).Min(n => n.BlobClient.GetProperties(conditions: null, cancellationToken: CancellationToken.None).Value.LastModified.UtcDateTime);
                 }
 
                 // Store our timestamp slightly earlier than the last timestamp. This is a failsafe for any blobs that created
