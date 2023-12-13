@@ -69,7 +69,10 @@ namespace Azure.Core.Pipeline
                 throw new InvalidOperationException($"Invalid type for pipeline: '{pipeline?.GetType()}'");
             }
 
-            await ProcessAsync(httpMessage, processor.Policies).ConfigureAwait(false);
+            // The contract across ClientModel policy and Azure.Core policy is different
+            // so if we're calling Process from a ClientModel policy, we need to pop some
+            // policies off the stack before calling Process on the Azure.Core policy.
+            await ProcessAsync(httpMessage, processor.Policies.Slice(currentIndex + 1)).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -91,7 +94,7 @@ namespace Azure.Core.Pipeline
                 throw new InvalidOperationException($"Invalid type for pipeline: '{pipeline?.GetType()}'");
             }
 
-            Process(httpMessage, processor.Policies);
+            Process(httpMessage, processor.Policies.Slice(currentIndex + 1));
         }
     }
 }
