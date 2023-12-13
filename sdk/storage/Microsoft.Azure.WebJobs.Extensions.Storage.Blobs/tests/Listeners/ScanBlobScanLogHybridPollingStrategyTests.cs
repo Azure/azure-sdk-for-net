@@ -465,7 +465,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             }
             var blobProperties = BlobsModelFactory.BlobProperties(lastModified: lastModified);
 
-            item.Setup(x => x.GetPropertiesAsync(CancellationToken: It.IsAny<CancellationToken>())).ReturnsAsync(Response.FromValue(blobProperties, null));
+            item.Setup(x => x.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>())).ReturnsAsync(Response.FromValue(blobProperties, null));
             item.Setup(x => x.Name).Returns(blobName);
 
             BlobItemProperties blobItemProperties = BlobsModelFactory.BlobItemProperties(true, lastModified: lastModified);
