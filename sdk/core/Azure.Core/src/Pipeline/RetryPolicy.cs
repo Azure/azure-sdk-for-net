@@ -53,17 +53,17 @@ namespace Azure.Core.Pipeline
 
         private async ValueTask ProcessSyncOrAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            AzureCorePipelineEnumerator processor = new(message, pipeline);
+            AzureCorePipelineProcessor processor = new(pipeline);
 
             try
             {
                 if (async)
                 {
-                    await _policy.ProcessAsync(message, processor).ConfigureAwait(false);
+                    await _policy.ProcessAsync(message, processor, -1).ConfigureAwait(false);
                 }
                 else
                 {
-                    _policy.Process(message, processor);
+                    _policy.Process(message, processor, -1);
                 }
             }
             catch (AggregateException e)
