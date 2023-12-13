@@ -146,8 +146,13 @@ public partial class ClientPipeline
         if (enumerator.MoveNext())
         {
             PipelinePolicy policy = enumerator.Current;
+
             enumerator.MoveNext();
+            message.NextPolicyIndex++;
+
             policy.Process(message, policies);
+
+            message.NextPolicyIndex--;
         }
     }
 
@@ -157,9 +162,16 @@ public partial class ClientPipeline
         IEnumerator<PipelinePolicy> enumerator = policies.GetEnumerator();
         if (enumerator.MoveNext())
         {
+            message.NextPolicyIndex++;
+
             PipelinePolicy policy = enumerator.Current;
+
             enumerator.MoveNext();
+            message.NextPolicyIndex++;
+
             await policy.ProcessAsync(message, policies).ConfigureAwait(false);
+
+            message.NextPolicyIndex--;
         }
     }
 
@@ -199,38 +211,38 @@ public partial class ClientPipeline
 
         readonly IEnumerator IEnumerable.GetEnumerator()
             => _enumerator;
+    }
 
-        private class PolicyEnumerator : IEnumerator<PipelinePolicy>
+    private class PolicyEnumerator : IEnumerator<PipelinePolicy>
+    {
+        private readonly IReadOnlyList<PipelinePolicy> _policies;
+        private int _current;
+
+        public PolicyEnumerator(IReadOnlyList<PipelinePolicy> policies)
         {
-            private readonly IReadOnlyList<PipelinePolicy> _policies;
-            private int _current;
-
-            public PolicyEnumerator(IReadOnlyList<PipelinePolicy> policies)
-            {
-                _policies = policies;
-                _current = -1;
-            }
-
-            public PipelinePolicy Current
-            {
-                get
-                {
-                    if (_current >= 0 && _current < _policies.Count)
-                    {
-                        return _policies[_current];
-                    }
-
-                    return null!;
-                }
-            }
-
-            object IEnumerator.Current => Current;
-
-            public bool MoveNext() => _current++ < _policies.Count;
-
-            public void Reset() => _current = -1;
-
-            public void Dispose() { }
+            _policies = policies;
+            _current = -1;
         }
+
+        public PipelinePolicy Current
+        {
+            get
+            {
+                if (_current >= 0 && _current < _policies.Count)
+                {
+                    return _policies[_current];
+                }
+
+                return null!;
+            }
+        }
+
+        object IEnumerator.Current => Current;
+
+        public bool MoveNext() => _current++ < _policies.Count;
+
+        public void Reset() => _current = -1;
+
+        public void Dispose() { }
     }
 }

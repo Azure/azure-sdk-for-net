@@ -55,6 +55,14 @@ public class PipelineMessage : IDisposable
 
     internal int RetryCount { get; set; }
 
+    /// <summary>
+    /// The index of the policy the message is currently visiting in the pipeline
+    /// it is flowing through.  This value is incremented prior to calling Process
+    /// on the next policy in the pipeline in order to keep track of the policy
+    /// enumerator index externally to the enumerator.
+    /// </summary>
+    internal int NextPolicyIndex { get; set; }
+
     #endregion
 
     #region Per-request pipeline

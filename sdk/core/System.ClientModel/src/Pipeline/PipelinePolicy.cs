@@ -8,8 +8,6 @@ namespace System.ClientModel.Primitives;
 
 public abstract class PipelinePolicy
 {
-    internal int PipelineIndex { get; set; }
-
     public abstract void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline);
 
     public abstract ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline);
@@ -25,7 +23,11 @@ public abstract class PipelinePolicy
         }
 
         bool more = enumerator.MoveNext();
+        message.NextPolicyIndex++;
+
         policy.Process(message, pipeline);
+
+        message.NextPolicyIndex--;
         return more;
     }
 
@@ -40,7 +42,11 @@ public abstract class PipelinePolicy
         }
 
         bool more = enumerator.MoveNext();
+        message.NextPolicyIndex++;
+
         await policy.ProcessAsync(message, pipeline).ConfigureAwait(false);
+
+        message.NextPolicyIndex--;
         return more;
     }
 }
