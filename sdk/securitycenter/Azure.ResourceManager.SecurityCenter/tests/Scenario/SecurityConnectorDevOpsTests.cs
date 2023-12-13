@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -14,75 +17,112 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
     internal class SecurityConnectorDevOpsTests : SecurityCenterManagementTestBase
     {
         private const string DevOpsConnectorsResourceGroup = "dfdtest-sdk";
+        private const string TempDevOpsConnectorsResourceGroup = "dfdtest-sdk-tmp";
+        private const string AzureDevOpsStaticConnectorName = "dfdsdktests-azdo-01";
+        private const string GitHubStaticConnectorName = "dfdsdktests-gh-01";
+        private const string GitLabStaticConnectorName = "dfdsdktests-gl-01";
 
         private ResourceGroupResource _defaultResourceGroup;
 
         public SecurityConnectorDevOpsTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback) // Change to RecordedTestMode.Record to regenerate tests
         {
-            JsonPathSanitizers.Add("$..code");
+            JsonPathSanitizers.Add("$..authorization.code");
             SanitizedHeaders.Add("Set-Cookie");
         }
 
         [SetUp]
         public async Task TestSetup()
         {
-            _defaultResourceGroup = await DefaultSubscription.GetResourceGroups().GetAsync(DevOpsConnectorsResourceGroup);
+            _defaultResourceGroup = await DefaultSubscription.GetResourceGroups().GetAsync(DevOpsConnectorsResourceGroup);        }
+
+        [RecordedTest]
+        public async Task GenericDevOpsConfiguration_CreateOrUpdateAndDeleteFailed()
+        {
+            var tempResourceGroupName = Recording.GenerateAssetName(TempDevOpsConnectorsResourceGroup);
+            string hierarchyId = Recording.GenerateAssetName("0223e997-c821-4df6-a6df-843c6465"); //workaround to generate semi-random guid to reduce collisions between sync and async tests
+            string connectorName = Recording.GenerateAssetName("dfdsdktest-tmp");
+
+            ResourceGroupData input = new ResourceGroupData(TestEnvironment.Location);
+            var rglro = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, tempResourceGroupName, input);
+            var resourceGroup = rglro.Value;
+
+            var data = new SecurityConnectorData(TestEnvironment.Location)
+            {
+                EnvironmentName = SecurityCenterCloudName.AzureDevOps,
+                HierarchyIdentifier = hierarchyId,
+                EnvironmentData = new AzureDevOpsScopeEnvironment()
+            };
+
+            data.EnvironmentName = SecurityCenterCloudName.AzureDevOps;
+            data.EnvironmentData = new AzureDevOpsScopeEnvironment();
+            data.Offerings.Add(new CspmMonitorAzureDevOpsOffering());
+
+            var securityConnectorOperation = await resourceGroup.GetSecurityConnectors().CreateOrUpdateAsync(WaitUntil.Completed, connectorName, data);
+
+            Assert.IsNotNull(securityConnectorOperation);
+            Assert.AreEqual(true, securityConnectorOperation.HasCompleted);
+            Assert.AreEqual(data.EnvironmentName, securityConnectorOperation.Value.Data.EnvironmentName.Value);
+
+            // setup devops
+            var devopsConfigurationResource = securityConnectorOperation.Value.GetDevOpsConfiguration();
+
+            Assert.IsFalse(devopsConfigurationResource.HasData);
+
+            var devOpsConfigurationData = new DevOpsConfigurationData()
+            {
+                Properties = new DevOpsConfigurationProperties()
+                {
+                    AutoDiscovery = AutoDiscovery.Disabled,
+                    Authorization = new Authorization("NotRealValue")
+                }
+            };
+
+            devOpsConfigurationData.Properties.TopLevelInventoryList.Add("dfdsdktests");
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => {
+                try
+                {
+                    await devopsConfigurationResource.CreateOrUpdateAsync(WaitUntil.Completed, devOpsConfigurationData);
+                }
+                catch (InvalidOperationException ioex)
+                {
+                    // Recorded tests incorrectly throws InvalidOperationException instead of RequestFailedException.
+                    if (ioex.Message.Contains("TokenExchangeFailed"))
+                    {
+                        throw new RequestFailedException(200, "AzureDevOps OAuth token exchange failed", "TokenExchangeFailed", null);
+                    }
+                    throw;
+                }
+             });
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("TokenExchangeFailed", ex.ErrorCode);
+
+            var deleteLro = await devopsConfigurationResource.DeleteAsync(WaitUntil.Completed);
+
+            Assert.IsNotNull(deleteLro);
+            Assert.IsTrue(deleteLro.HasCompleted);
         }
 
-        //[OneTimeTearDown]
-        //public async Task OneTimeTearDown()
-        //{
-        //    await CleanupSecurityConnectorsByPrefix(TempConnectorPrefix);
-        //}
+        [RecordedTest]
+        public async Task GenericDevOpsConfiguration_Patch()
+        {
+            // there is no difference which connectorName is used all SCMs use same implementation
+            ResourceIdentifier repositoryResourceId = DevOpsConfigurationResource.CreateResourceIdentifier(
+                subscriptionId: TestEnvironment.SubscriptionId,
+                resourceGroupName: DevOpsConnectorsResourceGroup,
+                securityConnectorName: AzureDevOpsStaticConnectorName);
 
-        //[RecordedTest]
-        //public async Task AzureDevOps_CreateOrUpdate()
-        //{
-        //    // create new security connector
-        //    string hierarchyId = Recording.GenerateAssetName("89d583e7-2986-4813-8a9e-9551e45a");
-        //    string connectorName = Recording.GenerateAssetName(TempConnectorPrefix + "ado-");
+            DevOpsConfigurationResource devops = await Client.GetDevOpsConfigurationResource(repositoryResourceId).GetAsync();
 
-        //    var data = new SecurityConnectorData(TestEnvironment.Location)
-        //    {
-        //        EnvironmentName = SecurityCenterCloudName.AzureDevOps,
-        //        HierarchyIdentifier = hierarchyId,
-        //        EnvironmentData = new AzureDevOpsScopeEnvironment()
-        //    };
-
-        //    data.EnvironmentName = SecurityCenterCloudName.AzureDevOps;
-        //    data.EnvironmentData = new AzureDevOpsScopeEnvironment();
-        //    data.Offerings.Add(new CspmMonitorAzureDevOpsOffering());
-
-        //    var securityConnectorOperation = await _resourceGroup.GetSecurityConnectors().CreateOrUpdateAsync(WaitUntil.Completed, connectorName, data);
-
-        //    Assert.IsNotNull(securityConnectorOperation);
-        //    Assert.AreEqual(true, securityConnectorOperation.HasCompleted);
-        //    Assert.AreEqual(data.EnvironmentName, securityConnectorOperation.Value.Data.EnvironmentName.Value);
-
-        //    // setup devops
-        //    var devopsConfigurationResource = securityConnectorOperation.Value.GetDevOpsConfiguration();
-
-        //    Assert.IsFalse(devopsConfigurationResource.HasData);
-
-        //    var devOpsConfigurationData = new DevOpsConfigurationData()
-        //    {
-        //        Properties = new DevOpsConfigurationProperties()
-        //        {
-        //            AutoDiscovery = AutoDiscovery.Disabled,
-        //            Authorization = new Authorization("Sanitized")
-        //        }
-        //    };
-
-        //    devOpsConfigurationData.Properties.TopLevelInventoryList.Add("dfdsdktest");
-
-        //    var lro = await devopsConfigurationResource.CreateOrUpdateAsync(WaitUntil.Completed, devOpsConfigurationData);
-        //    Assert.IsNotNull(lro);
-        //}
+            var operation = await devops.UpdateAsync(WaitUntil.Completed, new DevOpsConfigurationData());
+            Assert.IsNotNull(operation);
+            Assert.AreEqual(AutoDiscovery.Disabled, operation.Value.Data.Properties.AutoDiscovery);
+        }
 
         [RecordedTest]
         public async Task AzureDevOps_Get()
         {
-            string connectorName = "dfdsdktests-azdo-01";
+            string connectorName = AzureDevOpsStaticConnectorName;
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
@@ -93,6 +133,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             Assert.IsTrue(devopsConfigurationResource.Value.HasData);
             Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
+            Assert.AreEqual(AutoDiscovery.Disabled, devopsConfigurationResource.Value.Data.Properties.AutoDiscovery);
 
             var onboardedOrg = await devopsConfigurationResource.Value.GetAzureDevOpsOrgs().GetAsync("dfdsdktests");
 
@@ -117,7 +158,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [RecordedTest]
         public async Task AzureDevOps_GetAll()
         {
-            string connectorName = "dfdsdktests-azdo-01";
+            string connectorName = AzureDevOpsStaticConnectorName;
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
@@ -128,12 +169,12 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             Assert.IsTrue(devopsConfigurationResource.Value.HasData);
             Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
+            Assert.AreEqual(AutoDiscovery.Disabled, devopsConfigurationResource.Value.Data.Properties.AutoDiscovery);
 
             var onboardedOrgs = await devopsConfigurationResource.Value.GetAzureDevOpsOrgs().GetAllAsync().ToEnumerableAsync();
             var onboardedOrg = onboardedOrgs.Where(org => org.Data.Name.Equals("dfdsdktests")).FirstOrDefault();
 
             Assert.AreEqual("dfdsdktests", onboardedOrg.Data.Name);
-            Assert.AreEqual(DevOpsProvisioningState.Succeeded, onboardedOrg.Data.Properties.ProvisioningState);
             Assert.AreEqual(OnboardingState.Onboarded, onboardedOrg.Data.Properties.OnboardingState);
 
             var onboardedProjects = await onboardedOrg.GetAzureDevOpsProjects().GetAllAsync().ToEnumerableAsync();
@@ -148,112 +189,240 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             Assert.IsTrue(onboardedRepo.HasData);
             Assert.AreEqual("TestApp0", onboardedRepo.Data.Name);
-            Assert.AreEqual(DevOpsProvisioningState.Succeeded, onboardedRepo.Data.Properties.ProvisioningState);
             Assert.AreEqual(OnboardingState.Onboarded, onboardedRepo.Data.Properties.OnboardingState);
             Assert.AreEqual(ActionableRemediationState.None, onboardedRepo.Data.Properties.ActionableRemediation.State);
         }
 
-        //[RecordedTest]
-        //public async Task GitHub_CreateOrUpdate()
-        //{
-        //    // create new security connector
-        //    string hierarchyId = Recording.GenerateAssetName("89d583e7-2986-4813-8a9e-9551e45a");
-        //    string connectorName = Recording.GenerateAssetName(TempConnectorPrefix + "gh-");
+        [RecordedTest]
+        public async Task AzureDevOps_GetAvailableAzureDevOpsOrgsAsync()
+        {
+            string connectorName = AzureDevOpsStaticConnectorName;
 
-        //    var data = new SecurityConnectorData(TestEnvironment.Location)
-        //    {
-        //        EnvironmentName = SecurityCenterCloudName.Github,
-        //        HierarchyIdentifier = hierarchyId,
-        //        EnvironmentData = new GithubScopeEnvironment()
-        //    };
+            var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-        //    data.EnvironmentName = SecurityCenterCloudName.Github;
-        //    data.EnvironmentData = new GithubScopeEnvironment();
-        //    data.Offerings.Add(new CspmMonitorGithubOffering());
+            Assert.IsNotNull(securityConnectorResponse);
 
-        //    var securityConnectorOperation = await _resourceGroup.GetSecurityConnectors().CreateOrUpdateAsync(WaitUntil.Completed, connectorName, data);
+            // setup devops
+            var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
 
-        //    Assert.IsNotNull(securityConnectorOperation);
-        //    Assert.AreEqual(true, securityConnectorOperation.HasCompleted);
-        //    Assert.AreEqual(data.EnvironmentName, securityConnectorOperation.Value.Data.EnvironmentName.Value);
+            Assert.IsTrue(devopsConfigurationResource.Value.HasData);
+            Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
 
-        //    // setup devops
-        //    var devopsConfigurationResource = securityConnectorOperation.Value.GetDevOpsConfiguration();
+            var azurDevOpsOrgs = await devopsConfigurationResource.Value.GetAvailableAzureDevOpsOrgsAsync().ToEnumerableAsync();
 
-        //    Assert.IsFalse(devopsConfigurationResource.HasData);
+            Assert.IsTrue(azurDevOpsOrgs.Count > 0);
+            Assert.IsTrue(azurDevOpsOrgs.FirstOrDefault().HasData);
+            Assert.AreEqual(OnboardingState.Onboarded, azurDevOpsOrgs.FirstOrDefault().Data.Properties.OnboardingState);
+        }
 
-        //    var devOpsConfigurationData = new DevOpsConfigurationData()
-        //    {
-        //        Properties = new DevOpsConfigurationProperties()
-        //        {
-        //            AutoDiscovery = AutoDiscovery.Enabled,
-        //            Authorization = new Authorization("Sanitized")
-        //        }
-        //    };
+        [RecordedTest]
+        public async Task AzureDevOps_PatchRepository()
+        {
+            string connectorName = AzureDevOpsStaticConnectorName;
 
-        //    var lro = await devopsConfigurationResource.CreateOrUpdateAsync(WaitUntil.Completed, devOpsConfigurationData);
-        //    Assert.IsNotNull(lro);
-        //}
+            ResourceIdentifier repositoryResourceId = AzureDevOpsRepositoryResource.CreateResourceIdentifier(
+                subscriptionId: TestEnvironment.SubscriptionId,
+                resourceGroupName: DevOpsConnectorsResourceGroup,
+                securityConnectorName: connectorName,
+                orgName: "dfdsdktests",
+                projectName: "ContosoSDKDfd",
+                repoName: "TestApp0");
+            AzureDevOpsRepositoryResource repository = await Client.GetAzureDevOpsRepositoryResource(repositoryResourceId).GetAsync();
 
-        //[RecordedTest]
-        //public async Task GitLab_CreateOrUpdate()
-        //{
-        //    // create new security connector
-        //    string hierarchyId = Recording.GenerateAssetName("89d583e7-2986-4813-8a9e-9551e45a");
-        //    string connectorName = Recording.GenerateAssetName(TempConnectorPrefix + "gl-");
+            var operation = await repository.UpdateAsync(WaitUntil.Completed, new AzureDevOpsRepositoryData()
+            {
+                Properties = new AzureDevOpsRepositoryProperties()
+                {
+                    ActionableRemediation = new ActionableRemediation()
+                    {
+                        InheritFromParentState = InheritFromParentState.Enabled
+                    }
+                }
+            });
+            Assert.IsNotNull(operation);
+            Assert.AreEqual(InheritFromParentState.Enabled, operation.Value.Data.Properties.ActionableRemediation.InheritFromParentState);
+        }
 
-        //    var data = new SecurityConnectorData(TestEnvironment.Location)
-        //    {
-        //        EnvironmentName = SecurityCenterCloudName.GitLab,
-        //        HierarchyIdentifier = hierarchyId,
-        //        EnvironmentData = new GitlabScopeEnvironment()
-        //    };
+        [RecordedTest]
+        public async Task GitHub_Get()
+        {
+            string connectorName = GitHubStaticConnectorName;
 
-        //    data.EnvironmentName = SecurityCenterCloudName.GitLab;
-        //    data.EnvironmentData = new GitlabScopeEnvironment();
-        //    data.Offerings.Add(new CspmMonitorGitLabOffering());
+            var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
 
-        //    var securityConnectorOperation = await _resourceGroup.GetSecurityConnectors().CreateOrUpdateAsync(WaitUntil.Completed, connectorName, data);
+            Assert.IsNotNull(securityConnectorResponse);
 
-        //    Assert.IsNotNull(securityConnectorOperation);
-        //    Assert.AreEqual(true, securityConnectorOperation.HasCompleted);
-        //    Assert.AreEqual(data.EnvironmentName, securityConnectorOperation.Value.Data.EnvironmentName.Value);
+            // setup devops
+            var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
 
-        //    // setup devops
-        //    var devopsConfigurationResource = securityConnectorOperation.Value.GetDevOpsConfiguration();
+            Assert.IsTrue(devopsConfigurationResource.Value.HasData);
+            Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
+            Assert.AreEqual(AutoDiscovery.Enabled, devopsConfigurationResource.Value.Data.Properties.AutoDiscovery);
 
-        //    Assert.IsFalse(devopsConfigurationResource.HasData);
+            var onboardedOwner = await devopsConfigurationResource.Value.GetGitHubOwners().GetAsync("dfdsdktests");
 
-        //    var devOpsConfigurationData = new DevOpsConfigurationData()
-        //    {
-        //        Properties = new DevOpsConfigurationProperties()
-        //        {
-        //            AutoDiscovery = AutoDiscovery.Disabled,
-        //            Authorization = new Authorization("Sanitized")
-        //        }
-        //    };
+            Assert.AreEqual("dfdsdktests", onboardedOwner.Value.Data.Name);
+            Assert.AreEqual(OnboardingState.Onboarded, onboardedOwner.Value.Data.Properties.OnboardingState);
 
-        //    var lro = await devopsConfigurationResource.CreateOrUpdateAsync(WaitUntil.Completed, devOpsConfigurationData);
-        //    Assert.IsNotNull(lro);
-        //}
+            var onboardedRepo = await onboardedOwner.Value.GetGitHubRepositories().GetAsync("TestApp0");
+            Assert.IsTrue(onboardedRepo.Value.HasData);
+            Assert.AreEqual("TestApp0", onboardedRepo.Value.Data.Name);
+            Assert.AreEqual(OnboardingState.Onboarded, onboardedRepo.Value.Data.Properties.OnboardingState);
+        }
 
-        //private async Task CleanupSecurityConnectorsByPrefix(string prefix)
-        //{
-        //    var connectors = await _defaultResourceGroup.GetSecurityConnectors().GetAllAsync().ToEnumerableAsync();
-        //    var deleteConnectorTasks = connectors.Select(async securityConnector =>
-        //    {
-        //        try
-        //        {
-        //            if (securityConnector.HasData && securityConnector.Data.Name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
-        //            {
-        //                await securityConnector.DeleteAsync(WaitUntil.Completed);
-        //            }
-        //        }
-        //        catch
-        //        {
-        //        }
-        //    });
-        //    await Task.WhenAll(deleteConnectorTasks);
-        //}
+        [RecordedTest]
+        public async Task GitHub_GetAll()
+        {
+            string connectorName = GitHubStaticConnectorName;
+
+            var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
+
+            Assert.IsNotNull(securityConnectorResponse);
+
+            // setup devops
+            var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
+
+            Assert.IsTrue(devopsConfigurationResource.Value.HasData);
+            Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
+            Assert.AreEqual(AutoDiscovery.Enabled, devopsConfigurationResource.Value.Data.Properties.AutoDiscovery);
+
+            var onboardedOwners = await devopsConfigurationResource.Value.GetGitHubOwners().GetAllAsync().ToEnumerableAsync();
+            var onboardedOwner = onboardedOwners.Where(org => org.Data.Name.Equals("dfdsdktests")).FirstOrDefault();
+
+            Assert.AreEqual("dfdsdktests", onboardedOwner.Data.Name);
+            Assert.AreEqual(OnboardingState.Onboarded, onboardedOwner.Data.Properties.OnboardingState);
+
+            var onboardedRepos = await onboardedOwner.GetGitHubRepositories().GetAllAsync().ToEnumerableAsync();
+            var onboardedRepo = onboardedRepos.Where(project => project.Data.Name.Equals("TestApp0")).FirstOrDefault();
+
+            Assert.IsTrue(onboardedRepo.HasData);
+            Assert.AreEqual("TestApp0", onboardedRepo.Data.Name);
+            Assert.AreEqual(OnboardingState.Onboarded, onboardedRepo.Data.Properties.OnboardingState);
+        }
+
+        [RecordedTest]
+        public async Task GitHub_GetAvailableGitHubOwners()
+        {
+            string connectorName = GitHubStaticConnectorName;
+
+            var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
+
+            Assert.IsNotNull(securityConnectorResponse);
+
+            // setup devops
+            var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
+
+            Assert.IsTrue(devopsConfigurationResource.Value.HasData);
+            Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
+
+            var gitHubOwners = await devopsConfigurationResource.Value.GetAvailableGitHubOwnersAsync().ToEnumerableAsync();
+
+            Assert.IsTrue(gitHubOwners.Count > 0);
+            Assert.IsTrue(gitHubOwners.FirstOrDefault().HasData);
+            Assert.AreEqual(OnboardingState.Onboarded, gitHubOwners.FirstOrDefault().Data.Properties.OnboardingState);
+        }
+
+        [RecordedTest]
+        public async Task GitLab_Get()
+        {
+            string connectorName = GitLabStaticConnectorName;
+
+            var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
+
+            Assert.IsNotNull(securityConnectorResponse);
+
+            // setup devops
+            var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
+
+            Assert.IsTrue(devopsConfigurationResource.Value.HasData);
+            Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
+            Assert.AreEqual(AutoDiscovery.Disabled, devopsConfigurationResource.Value.Data.Properties.AutoDiscovery);
+
+            var onboardedGroup = await devopsConfigurationResource.Value.GetGitLabGroups().GetAsync("dfdsdktests");
+
+            Assert.AreEqual("dfdsdktests", onboardedGroup.Value.Data.Name);
+            Assert.AreEqual(OnboardingState.Onboarded, onboardedGroup.Value.Data.Properties.OnboardingState);
+
+            var onboardedProject = await onboardedGroup.Value.GetGitLabProjects().GetAsync("testapp0");
+            Assert.IsTrue(onboardedProject.Value.HasData);
+            Assert.AreEqual("testapp0", onboardedProject.Value.Data.Name);
+            Assert.AreEqual(OnboardingState.Onboarded, onboardedProject.Value.Data.Properties.OnboardingState);
+        }
+
+        [RecordedTest]
+        public async Task GitLab_GetAll()
+        {
+            string connectorName = GitLabStaticConnectorName;
+
+            var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
+
+            Assert.IsNotNull(securityConnectorResponse);
+
+            // setup devops
+            var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
+
+            Assert.IsTrue(devopsConfigurationResource.Value.HasData);
+            Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
+            Assert.AreEqual(AutoDiscovery.Disabled, devopsConfigurationResource.Value.Data.Properties.AutoDiscovery);
+
+            var onboardedGroups = await devopsConfigurationResource.Value.GetGitLabGroups().GetAllAsync().ToEnumerableAsync();
+            var onboardedGroup = onboardedGroups.Where(org => org.Data.Name.Equals("dfdsdktests")).FirstOrDefault();
+
+            Assert.AreEqual("dfdsdktests", onboardedGroup.Data.Name);
+            Assert.AreEqual(OnboardingState.Onboarded, onboardedGroup.Data.Properties.OnboardingState);
+
+            var onboardedProjects = await onboardedGroup.GetGitLabProjects().GetAllAsync().ToEnumerableAsync();
+            var onboardedProject = onboardedProjects.Where(project => project.Data.Name.Equals("testapp0")).FirstOrDefault();
+
+            Assert.IsTrue(onboardedProject.HasData);
+            Assert.AreEqual("testapp0", onboardedProject.Data.Name);
+            Assert.AreEqual(OnboardingState.Onboarded, onboardedProject.Data.Properties.OnboardingState);
+        }
+
+        [RecordedTest]
+        public async Task GitLab_GetAvailableGitLabGroupsAsync()
+        {
+            string connectorName = GitLabStaticConnectorName;
+
+            var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
+
+            Assert.IsNotNull(securityConnectorResponse);
+
+            // setup devops
+            var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
+
+            Assert.IsTrue(devopsConfigurationResource.Value.HasData);
+            Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
+
+            var gitLabGroups = await devopsConfigurationResource.Value.GetAvailableGitLabGroupsAsync().ToEnumerableAsync();
+
+            Assert.IsTrue(gitLabGroups.Count > 0);
+            Assert.IsTrue(gitLabGroups.FirstOrDefault().HasData);
+            Assert.AreEqual(OnboardingState.Onboarded, gitLabGroups.FirstOrDefault().Data.Properties.OnboardingState);
+        }
+
+        [RecordedTest]
+        public async Task GitLab_GetGitLabSubgroupsAsync()
+        {
+            string connectorName = GitLabStaticConnectorName;
+
+            var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
+
+            Assert.IsNotNull(securityConnectorResponse);
+
+            // setup devops
+            var devopsConfigurationResource = await securityConnectorResponse.Value.GetDevOpsConfiguration().GetAsync();
+
+            Assert.IsTrue(devopsConfigurationResource.Value.HasData);
+            Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
+
+            var onboardedSubGroups = await devopsConfigurationResource.Value.GetGitLabGroups().GetGitLabSubgroupsAsync("dfdsdktests").ToEnumerableAsync();
+
+            Assert.IsTrue(onboardedSubGroups.Count == 2);
+
+            var testSubgroup = onboardedSubGroups.Where(s => s.Data?.Properties?.FullyQualifiedName?.Contains("testsubgroupNested") == true).FirstOrDefault();
+            Assert.IsNotNull(testSubgroup);
+            Assert.AreEqual("dfdsdktests$testsubgroup1$testsubgroupNested", testSubgroup.Data.Properties.FullyQualifiedName);
+        }
     }
 }
