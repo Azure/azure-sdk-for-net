@@ -4863,7 +4863,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 async: false,
                 new RequestContext() { CancellationToken = cancellationToken },
-                options: options)
+                userPrincipalName: options?.UserPrincipalName)
                 .EnsureCompleted();
 
         /// <summary>
@@ -4937,7 +4937,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 async: true,
                 new RequestContext() { CancellationToken = cancellationToken },
-                options: options)
+                userPrincipalName: options?.UserPrincipalName)
                 .ConfigureAwait(false);
 
         /// <summary>
@@ -5001,9 +5001,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="operationName">
         /// The name of the calling operation.
         /// </param>
-        /// <param name="options">
-        /// Optional <see cref="BlobGetPropertiesOptions"/> to add
-        /// options on getting the blob's properties.
+        /// <param name="userPrincipalName">
+        /// Optional. Valid only when Hierarchical Namespace is enabled for the account.If "true",
+        /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
+        /// headers will be transformed from Azure Active Directory Object IDs to User Principal Names.
+        /// If "false", the values will be returned as Azure Active Directory Object IDs.The default
+        /// value is false. Note that group and application Object IDs are not translated because they
+        /// do not have unique friendly names.
         /// </param>
         /// <returns>
         /// A <see cref="Response{BlobProperties}"/> describing the
@@ -5018,7 +5022,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             RequestContext context,
             string operationName = default,
-            BlobGetPropertiesOptions options = default)
+            bool? userPrincipalName = default)
         {
             context ??= new RequestContext();
             operationName ??= $"{nameof(BlobBaseClient)}.{nameof(GetProperties)}";
@@ -5053,7 +5057,7 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm.ToEncryptionAlgorithmString(),
                             requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
-                            userPrincipalName: options?.UserPrincipalName,
+                            userPrincipalName: userPrincipalName,
                             context: context)
                             .ConfigureAwait(false);
                     }
@@ -5066,7 +5070,7 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm.ToEncryptionAlgorithmString(),
                             requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
-                            userPrincipalName: options?.UserPrincipalName,
+                            userPrincipalName: userPrincipalName,
                             context: context);
                     }
 
