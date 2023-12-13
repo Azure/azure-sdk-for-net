@@ -35,16 +35,16 @@ public class ResponseBufferingPolicy : PipelinePolicy
         _networkTimeout = networkTimeout;
     }
 
-    public sealed override void Process(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+    public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
 
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
         => ProcessSyncOrAsync(message, pipeline, async: false).AsTask().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 
-    public sealed override async ValueTask ProcessAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+    public sealed override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
         => await ProcessSyncOrAsync(message, pipeline, async: true).ConfigureAwait(false);
 
-    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline, bool async)
+    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, bool async)
     {
         CancellationToken oldToken = message.CancellationToken;
         using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);

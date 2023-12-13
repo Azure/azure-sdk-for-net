@@ -54,14 +54,14 @@ public class KeyCredentialAuthenticationPolicy : PipelinePolicy
         _keyPrefix = keyPrefix;
     }
 
-    public sealed override void Process(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+    public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
     {
         SetKey(message);
 
         ProcessNext(message, pipeline);
     }
 
-    public sealed override async ValueTask ProcessAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+    public sealed override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
     {
         SetKey(message);
 

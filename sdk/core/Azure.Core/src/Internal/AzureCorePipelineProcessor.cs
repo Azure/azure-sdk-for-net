@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Azure.Core.Pipeline
 {
-    internal struct AzureCorePipelineProcessor : IEnumerable<PipelinePolicy>
+    internal struct AzureCorePipelineProcessor : IReadOnlyList<PipelinePolicy>
     {
         private readonly PolicyEnumerator _enumerator;
 

@@ -570,7 +570,7 @@ public class CustomPipelineProcessorTests
             Id = id;
         }
 
-        public override void Process(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+        public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
         {
             Stamp(message, "Request");
 
@@ -579,7 +579,7 @@ public class CustomPipelineProcessorTests
             Stamp(message, "Response");
         }
 
-        public override async ValueTask ProcessAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+        public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
         {
             Stamp(message, "Request");
 

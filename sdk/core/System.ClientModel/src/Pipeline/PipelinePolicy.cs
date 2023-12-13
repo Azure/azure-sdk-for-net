@@ -8,11 +8,13 @@ namespace System.ClientModel.Primitives;
 
 public abstract class PipelinePolicy
 {
-    public abstract void Process(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline);
+    internal int PipelineIndex { get; set; }
 
-    public abstract ValueTask ProcessAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline);
+    public abstract void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline);
 
-    protected virtual bool ProcessNext(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+    public abstract ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline);
+
+    protected virtual bool ProcessNext(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
     {
         IEnumerator<PipelinePolicy> enumerator = pipeline.GetEnumerator();
 
@@ -27,7 +29,7 @@ public abstract class PipelinePolicy
         return more;
     }
 
-    protected virtual async Task<bool> ProcessNextAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+    protected virtual async Task<bool> ProcessNextAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
     {
         IEnumerator<PipelinePolicy> enumerator = pipeline.GetEnumerator();
 

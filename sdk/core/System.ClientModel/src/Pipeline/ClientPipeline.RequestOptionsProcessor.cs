@@ -12,7 +12,7 @@ public partial class ClientPipeline
     /// Pipeline processor to advance through policies for pipeline customized
     /// per-request by passing RequestOptions to a protocol method.
     /// </summary>
-    internal struct RequestOptionsProcessor : IEnumerable<PipelinePolicy>
+    internal struct RequestOptionsProcessor : IReadOnlyList<PipelinePolicy>
     {
         private readonly PolicyEnumerator _enumerator;
 

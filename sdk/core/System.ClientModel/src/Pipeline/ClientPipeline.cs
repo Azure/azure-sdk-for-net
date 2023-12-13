@@ -67,16 +67,16 @@ public partial class ClientPipeline
         pipelineLength++; // for response buffering policy
         pipelineLength++; // for transport
 
-        PipelinePolicy[] pipeline = new PipelinePolicy[pipelineLength];
+        PipelinePolicy[] policies = new PipelinePolicy[pipelineLength];
 
         int index = 0;
 
-        perCallPolicies.CopyTo(pipeline.AsSpan(index));
+        perCallPolicies.CopyTo(policies.AsSpan(index));
         index += perCallPolicies.Length;
 
         if (options.PerCallPolicies != null)
         {
-            options.PerCallPolicies.CopyTo(pipeline.AsSpan(index));
+            options.PerCallPolicies.CopyTo(policies.AsSpan(index));
             index += options.PerCallPolicies.Length;
         }
 
@@ -84,19 +84,19 @@ public partial class ClientPipeline
 
         if (options.RetryPolicy != null)
         {
-            pipeline[index++] = options.RetryPolicy;
+            policies[index++] = options.RetryPolicy;
         }
         else
         {
-            pipeline[index++] = new RequestRetryPolicy();
+            policies[index++] = new RequestRetryPolicy();
         }
 
-        perTryPolicies.CopyTo(pipeline.AsSpan(index));
+        perTryPolicies.CopyTo(policies.AsSpan(index));
         index += perTryPolicies.Length;
 
         if (options.PerTryPolicies != null)
         {
-            options.PerTryPolicies.CopyTo(pipeline.AsSpan(index));
+            options.PerTryPolicies.CopyTo(policies.AsSpan(index));
             index += options.PerTryPolicies.Length;
         }
 
@@ -104,14 +104,14 @@ public partial class ClientPipeline
 
         TimeSpan networkTimeout = options.NetworkTimeout ?? ResponseBufferingPolicy.DefaultNetworkTimeout;
         ResponseBufferingPolicy bufferingPolicy = new(networkTimeout);
-        pipeline[index++] = bufferingPolicy;
+        policies[index++] = bufferingPolicy;
 
-        beforeTransportPolicies.CopyTo(pipeline.AsSpan(index));
+        beforeTransportPolicies.CopyTo(policies.AsSpan(index));
         index += beforeTransportPolicies.Length;
 
         if (options.BeforeTransportPolicies != null)
         {
-            options.BeforeTransportPolicies.CopyTo(pipeline.AsSpan(index));
+            options.BeforeTransportPolicies.CopyTo(policies.AsSpan(index));
             index += options.BeforeTransportPolicies.Length;
         }
 
@@ -119,15 +119,19 @@ public partial class ClientPipeline
 
         if (options.Transport != null)
         {
-            pipeline[index++] = options.Transport;
+            policies[index++] = options.Transport;
         }
         else
         {
             // Add default transport.
-            pipeline[index++] = HttpClientPipelineTransport.Shared;
+            policies[index++] = HttpClientPipelineTransport.Shared;
         }
 
-        return new ClientPipeline(pipeline, perCallIndex, perTryIndex, beforeTransportIndex);
+        ClientPipeline pipeline = new ClientPipeline(policies, perCallIndex, perTryIndex, beforeTransportIndex);
+
+        // Tell each policy what its index is in the pipeline
+
+        return pipeline;
     }
 
     // TODO: note that without a common base type, nothing validates that MessagePipeline
@@ -137,7 +141,7 @@ public partial class ClientPipeline
 
     public void Send(PipelineMessage message)
     {
-        IEnumerable<PipelinePolicy> policies = GetProcessor(message);
+        IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
         IEnumerator<PipelinePolicy> enumerator = policies.GetEnumerator();
         if (enumerator.MoveNext())
         {
@@ -149,7 +153,7 @@ public partial class ClientPipeline
 
     public async ValueTask SendAsync(PipelineMessage message)
     {
-        IEnumerable<PipelinePolicy> policies = GetProcessor(message);
+        IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
         IEnumerator<PipelinePolicy> enumerator = policies.GetEnumerator();
         if (enumerator.MoveNext())
         {
@@ -159,7 +163,7 @@ public partial class ClientPipeline
         }
     }
 
-    private IEnumerable<PipelinePolicy> GetProcessor(PipelineMessage message)
+    private IReadOnlyList<PipelinePolicy> GetProcessor(PipelineMessage message)
     {
         if (message.CustomRequestPipeline)
         {
@@ -175,12 +179,20 @@ public partial class ClientPipeline
         return new PipelineProcessor(_policies);
     }
 
-    private struct PipelineProcessor : IEnumerable<PipelinePolicy>
+    private struct PipelineProcessor : IReadOnlyList<PipelinePolicy>
     {
+        private readonly ReadOnlyMemory<PipelinePolicy> _policies;
         private readonly PolicyEnumerator _enumerator;
 
         public PipelineProcessor(ReadOnlyMemory<PipelinePolicy> policies)
-            => _enumerator = new(policies);
+        {
+            _policies = policies;
+            _enumerator = new(this);
+        }
+
+        public PipelinePolicy this[int index] => _policies.Span[index];
+
+        public int Count => _policies.Length;
 
         public readonly IEnumerator<PipelinePolicy> GetEnumerator()
             => _enumerator;
@@ -190,20 +202,31 @@ public partial class ClientPipeline
 
         private class PolicyEnumerator : IEnumerator<PipelinePolicy>
         {
-            private readonly ReadOnlyMemory<PipelinePolicy> _policies;
+            private readonly IReadOnlyList<PipelinePolicy> _policies;
             private int _current;
 
-            public PolicyEnumerator(ReadOnlyMemory<PipelinePolicy> policies)
+            public PolicyEnumerator(IReadOnlyList<PipelinePolicy> policies)
             {
                 _policies = policies;
                 _current = -1;
             }
 
-            public bool MoveNext() => _current++ < _policies.Length;
+            public PipelinePolicy Current
+            {
+                get
+                {
+                    if (_current >= 0 && _current < _policies.Count)
+                    {
+                        return _policies[_current];
+                    }
 
-            public PipelinePolicy Current => _policies.Span[_current];
+                    return null!;
+                }
+            }
 
             object IEnumerator.Current => Current;
+
+            public bool MoveNext() => _current++ < _policies.Count;
 
             public void Reset() => _current = -1;
 

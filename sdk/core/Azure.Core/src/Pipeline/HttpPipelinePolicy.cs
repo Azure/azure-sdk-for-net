@@ -56,7 +56,7 @@ namespace Azure.Core.Pipeline
         /// <param name="pipeline"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override async ValueTask ProcessAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+        public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
         {
             if (message is not HttpMessage httpMessage)
             {
@@ -77,7 +77,7 @@ namespace Azure.Core.Pipeline
         /// <param name="message"></param>
         /// <param name="pipeline"></param>
         /// <exception cref="NotImplementedException"></exception>
-        public override void Process(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+        public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
         {
             if (message is not HttpMessage httpMessage)
             {

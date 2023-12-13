@@ -253,13 +253,13 @@ public class MapsClientTests
 
         public CustomPolicy() { }
 
-        public override void Process(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+        public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
         {
             ProcessNext(message, pipeline);
             ProcessedMessage = true;
         }
 
-        public override async ValueTask ProcessAsync(PipelineMessage message, IEnumerable<PipelinePolicy> pipeline)
+        public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
         {
             await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
             ProcessedMessage = true;
