@@ -62,7 +62,7 @@ namespace Azure.Core.Pipeline
         /// <param name="currentIndex"></param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+        public sealed override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
         {
             if (message is not HttpMessage httpMessage)
             {
@@ -84,7 +84,7 @@ namespace Azure.Core.Pipeline
         /// <param name="pipeline"></param>
         /// <param name="currentIndex"></param>
         /// <exception cref="InvalidOperationException"></exception>
-        public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+        public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
         {
             if (message is not HttpMessage httpMessage)
             {

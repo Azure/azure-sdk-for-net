@@ -106,6 +106,11 @@ namespace Azure.Core
 
         internal DateTimeOffset ProcessingStartTime { get; set; }
 
+        /// <summary>
+        /// The index of the policy the message is currently visiting in the pipeline
+        /// it is flowing through.  This value is incremented prior to calling Process
+        /// on the next policy in the pipeline.
+        /// </summary>
         internal int CurrentPolicyIndex { get; set; }
 
         /// <summary>

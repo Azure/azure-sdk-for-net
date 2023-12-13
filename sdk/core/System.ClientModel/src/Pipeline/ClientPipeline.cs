@@ -127,11 +127,7 @@ public partial class ClientPipeline
             policies[index++] = HttpClientPipelineTransport.Shared;
         }
 
-        ClientPipeline pipeline = new ClientPipeline(policies, perCallIndex, perTryIndex, beforeTransportIndex);
-
-        // Tell each policy what its index is in the pipeline
-
-        return pipeline;
+        return new ClientPipeline(policies, perCallIndex, perTryIndex, beforeTransportIndex); ;
     }
 
     // TODO: note that without a common base type, nothing validates that MessagePipeline
@@ -215,7 +211,7 @@ public partial class ClientPipeline
 
         object IEnumerator.Current => Current;
 
-        public bool MoveNext() => _current++ < _policies.Count;
+        public bool MoveNext() => ++_current < _policies.Count;
 
         public void Reset() => _current = -1;
 

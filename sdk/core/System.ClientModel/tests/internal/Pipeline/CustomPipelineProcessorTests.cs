@@ -667,7 +667,7 @@ public static class RequestOptionsProcessorExtensions
 {
     internal static void Process(this ClientPipeline.RequestOptionsProcessor processor, PipelineMessage message)
     {
-        processor[0].Process(message, processor, 1);
+        processor[0].Process(message, processor, 0);
     }
 }
 #endregion

@@ -10,8 +10,6 @@ using System.Threading.Tasks;
 
 namespace TestHelpers.Internal;
 
-internal class SimpleClientOptions : PipelineOptions { }
-
 internal class ObservableTransport : PipelineTransport
 {
     public string Id { get; }

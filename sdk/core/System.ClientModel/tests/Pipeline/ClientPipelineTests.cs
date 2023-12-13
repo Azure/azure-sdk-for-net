@@ -30,7 +30,7 @@ public class ClientPipelineTests
     [Test]
     public void RequestOptionsCanCustomizePipeline()
     {
-        PipelineOptions pipelineOptions = new SimpleClientOptions();
+        PipelineOptions pipelineOptions = new PipelineOptions();
         pipelineOptions.RetryPolicy = new ObservablePolicy("RetryPolicy");
         pipelineOptions.Transport = new ObservableTransport("Transport");
 

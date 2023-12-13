@@ -17,11 +17,6 @@ namespace Azure.Core.Pipeline
         {
             _policies = policies;
             _enumerator = new(this);
-
-            // Automatically advance the enumerator given the expectation of
-            // HttpPipelinePolicy.Process that the first policy will be the one
-            // after the policy whose Process method is currently being called.
-            _enumerator.MoveNext();
         }
 
         public ReadOnlyMemory<HttpPipelinePolicy> Policies
@@ -63,7 +58,7 @@ namespace Azure.Core.Pipeline
 
             object IEnumerator.Current => Current;
 
-            public bool MoveNext() => _current++ < _policies.Count;
+            public bool MoveNext() => ++_current < _policies.Count;
 
             public void Reset() => _current = -1;
 
