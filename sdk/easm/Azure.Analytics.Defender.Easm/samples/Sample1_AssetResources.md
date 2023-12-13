@@ -22,6 +22,6 @@ You can call the client's `AssetsList` method to view your assets.
 var response = client.GetAssetResources();
 foreach (AssetResource asset in response)
 {
-    Console.WriteLine(asset.Name);
+    Console.WriteLine($"Asset Name: {asset.Name}, Kind: {asset.GetType}");
 }
 ```

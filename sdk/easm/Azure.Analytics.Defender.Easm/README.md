@@ -65,13 +65,19 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/easm/Azure.Analytics.Defender.Easm/samples).
 
-### <scenario>
+### View Assets
 
-You can create a client and call the client's `<operation>` method.
+You can call the client's `AssetsList` method to view your assets.
 
-```C# Snippet:Azure_Analytics_Defender_Easm_Scenario
-Console.WriteLine("Hello, world!");
+```C# Snippet:Sample1_AssetResources_Get_Assets
+var response = client.GetAssetResources();
+foreach (AssetResource asset in response)
+{
+    Console.WriteLine($"Asset Name: {asset.Name}, Kind: {asset.GetType}");
+}
 ```
+
+
 
 ## Troubleshooting
 
