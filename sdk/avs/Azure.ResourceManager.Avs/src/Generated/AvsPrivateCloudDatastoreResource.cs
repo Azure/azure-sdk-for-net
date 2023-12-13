@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Avs
         private readonly DatastoresRestOperations _avsPrivateCloudDatastoreDatastoresRestClient;
         private readonly AvsPrivateCloudDatastoreData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/clusters/datastores";
+
         /// <summary> Initializes a new instance of the <see cref="AvsPrivateCloudDatastoreResource"/> class for mocking. </summary>
         protected AvsPrivateCloudDatastoreResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/clusters/datastores";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

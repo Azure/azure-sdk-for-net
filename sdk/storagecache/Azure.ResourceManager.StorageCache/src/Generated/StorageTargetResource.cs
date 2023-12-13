@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.StorageCache
         private readonly StorageTargetsRestOperations _storageTargetRestClient;
         private readonly StorageTargetData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StorageCache/caches/storageTargets";
+
         /// <summary> Initializes a new instance of the <see cref="StorageTargetResource"/> class for mocking. </summary>
         protected StorageTargetResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.StorageCache
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StorageCache/caches/storageTargets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

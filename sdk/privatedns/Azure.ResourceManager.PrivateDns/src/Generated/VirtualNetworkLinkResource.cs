@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.PrivateDns
         private readonly VirtualNetworkLinksRestOperations _virtualNetworkLinkRestClient;
         private readonly VirtualNetworkLinkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/privateDnsZones/virtualNetworkLinks";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualNetworkLinkResource"/> class for mocking. </summary>
         protected VirtualNetworkLinkResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.PrivateDns
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/privateDnsZones/virtualNetworkLinks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

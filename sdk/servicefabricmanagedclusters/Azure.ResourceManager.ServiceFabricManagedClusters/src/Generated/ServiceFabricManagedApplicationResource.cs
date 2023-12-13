@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         private readonly ApplicationsRestOperations _serviceFabricManagedApplicationApplicationsRestClient;
         private readonly ServiceFabricManagedApplicationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/managedclusters/applications";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceFabricManagedApplicationResource"/> class for mocking. </summary>
         protected ServiceFabricManagedApplicationResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/managedclusters/applications";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

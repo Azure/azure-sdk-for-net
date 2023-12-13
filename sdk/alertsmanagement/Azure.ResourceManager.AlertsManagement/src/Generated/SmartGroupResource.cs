@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.AlertsManagement
         private readonly SmartGroupsRestOperations _smartGroupRestClient;
         private readonly SmartGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AlertsManagement/smartGroups";
+
         /// <summary> Initializes a new instance of the <see cref="SmartGroupResource"/> class for mocking. </summary>
         protected SmartGroupResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AlertsManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AlertsManagement/smartGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

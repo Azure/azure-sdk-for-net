@@ -27,6 +27,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             Properties = properties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFactoryIntegrationRuntimeDebugInfo"/>. </summary>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="properties">
+        /// Integration runtime properties.
+        /// Please note <see cref="DataFactoryIntegrationRuntimeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
+        /// </param>
+        internal DataFactoryIntegrationRuntimeDebugInfo(string name, DataFactoryIntegrationRuntimeProperties properties) : base(name)
+        {
+            Properties = properties;
+        }
+
         /// <summary>
         /// Integration runtime properties.
         /// Please note <see cref="DataFactoryIntegrationRuntimeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

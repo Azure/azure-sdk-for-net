@@ -25,6 +25,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             SasUris = sasUris.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ImportRedisEnterpriseDatabaseContent"/>. </summary>
+        /// <param name="sasUris"> SAS URIs for the target blobs to import from. </param>
+        internal ImportRedisEnterpriseDatabaseContent(IList<Uri> sasUris)
+        {
+            SasUris = sasUris;
+        }
+
         /// <summary> SAS URIs for the target blobs to import from. </summary>
         public IList<Uri> SasUris { get; }
     }

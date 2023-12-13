@@ -19,6 +19,19 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             WorkItemProperties = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="WorkItemCreateConfiguration"/>. </summary>
+        /// <param name="connectorId"> Unique connector id. </param>
+        /// <param name="connectorDataConfiguration"> Serialized JSON object for detailed properties. </param>
+        /// <param name="isValidateOnly"> Boolean indicating validate only. </param>
+        /// <param name="workItemProperties"> Custom work item properties. </param>
+        internal WorkItemCreateConfiguration(string connectorId, string connectorDataConfiguration, bool? isValidateOnly, IDictionary<string, string> workItemProperties)
+        {
+            ConnectorId = connectorId;
+            ConnectorDataConfiguration = connectorDataConfiguration;
+            IsValidateOnly = isValidateOnly;
+            WorkItemProperties = workItemProperties;
+        }
+
         /// <summary> Unique connector id. </summary>
         public string ConnectorId { get; set; }
         /// <summary> Serialized JSON object for detailed properties. </summary>

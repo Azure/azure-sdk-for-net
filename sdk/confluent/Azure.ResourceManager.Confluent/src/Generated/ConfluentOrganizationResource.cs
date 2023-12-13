@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Confluent
         private readonly OrganizationRestOperations _confluentOrganizationOrganizationRestClient;
         private readonly ConfluentOrganizationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Confluent/organizations";
+
         /// <summary> Initializes a new instance of the <see cref="ConfluentOrganizationResource"/> class for mocking. </summary>
         protected ConfluentOrganizationResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Confluent
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Confluent/organizations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

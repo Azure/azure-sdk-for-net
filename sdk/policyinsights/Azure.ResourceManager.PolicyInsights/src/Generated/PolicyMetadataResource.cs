@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.PolicyInsights
         private readonly PolicyMetadataRestOperations _policyMetadataPolicyMetadataRestClient;
         private readonly PolicyMetadataData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.PolicyInsights/policyMetadata";
+
         /// <summary> Initializes a new instance of the <see cref="PolicyMetadataResource"/> class for mocking. </summary>
         protected PolicyMetadataResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.PolicyInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.PolicyInsights/policyMetadata";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

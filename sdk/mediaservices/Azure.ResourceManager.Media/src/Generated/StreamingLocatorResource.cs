@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Media
         private readonly StreamingLocatorsRestOperations _streamingLocatorRestClient;
         private readonly StreamingLocatorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaServices/streamingLocators";
+
         /// <summary> Initializes a new instance of the <see cref="StreamingLocatorResource"/> class for mocking. </summary>
         protected StreamingLocatorResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Media
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaServices/streamingLocators";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

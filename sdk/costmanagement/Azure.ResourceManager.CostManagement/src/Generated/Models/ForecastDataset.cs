@@ -24,6 +24,19 @@ namespace Azure.ResourceManager.CostManagement.Models
             Aggregation = aggregation;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ForecastDataset"/>. </summary>
+        /// <param name="granularity"> The granularity of rows in the forecast. </param>
+        /// <param name="configuration"> Has configuration information for the data in the export. The configuration will be ignored if aggregation and grouping are provided. </param>
+        /// <param name="aggregation"> Dictionary of aggregation expression to use in the forecast. The key of each item in the dictionary is the alias for the aggregated column. forecast can have up to 2 aggregation clauses. </param>
+        /// <param name="filter"> Has filter expression to use in the forecast. </param>
+        internal ForecastDataset(GranularityType? granularity, ForecastDatasetConfiguration configuration, IDictionary<string, ForecastAggregation> aggregation, ForecastFilter filter)
+        {
+            Granularity = granularity;
+            Configuration = configuration;
+            Aggregation = aggregation;
+            Filter = filter;
+        }
+
         /// <summary> The granularity of rows in the forecast. </summary>
         public GranularityType? Granularity { get; set; }
         /// <summary> Has configuration information for the data in the export. The configuration will be ignored if aggregation and grouping are provided. </summary>

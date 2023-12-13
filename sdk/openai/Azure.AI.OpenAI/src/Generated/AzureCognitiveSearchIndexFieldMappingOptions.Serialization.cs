@@ -32,7 +32,7 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsCollectionDefined(ContentFieldNames))
             {
-                writer.WritePropertyName("contentFieldNames"u8);
+                writer.WritePropertyName("contentFields"u8);
                 writer.WriteStartArray();
                 foreach (var item in ContentFieldNames)
                 {
@@ -42,7 +42,7 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsDefined(ContentFieldSeparator))
             {
-                writer.WritePropertyName("contentFieldSeparator"u8);
+                writer.WritePropertyName("contentFieldsSeparator"u8);
                 writer.WriteStringValue(ContentFieldSeparator);
             }
             if (Optional.IsCollectionDefined(VectorFieldNames))
@@ -55,7 +55,25 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(ImageVectorFieldNames))
+            {
+                writer.WritePropertyName("imageVectorFields"u8);
+                writer.WriteStartArray();
+                foreach (var item in ImageVectorFieldNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

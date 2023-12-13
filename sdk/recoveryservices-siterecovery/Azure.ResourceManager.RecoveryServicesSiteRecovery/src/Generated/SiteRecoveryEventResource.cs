@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly ReplicationEventsRestOperations _siteRecoveryEventReplicationEventsRestClient;
         private readonly SiteRecoveryEventData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationEvents";
+
         /// <summary> Initializes a new instance of the <see cref="SiteRecoveryEventResource"/> class for mocking. </summary>
         protected SiteRecoveryEventResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationEvents";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

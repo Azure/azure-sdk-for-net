@@ -18,6 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcm";
         }
 
+        /// <summary> Initializes a new instance of <see cref="InMageRcmTestFailoverContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="networkId"> The test network Id. </param>
+        /// <param name="recoveryPointId"> The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed. </param>
+        internal InMageRcmTestFailoverContent(string instanceType, ResourceIdentifier networkId, ResourceIdentifier recoveryPointId) : base(instanceType)
+        {
+            NetworkId = networkId;
+            RecoveryPointId = recoveryPointId;
+            InstanceType = instanceType ?? "InMageRcm";
+        }
+
         /// <summary> The test network Id. </summary>
         public ResourceIdentifier NetworkId { get; set; }
         /// <summary> The recovery point id to be passed to test failover to a particular recovery point. In case of latest recovery point, null should be passed. </summary>

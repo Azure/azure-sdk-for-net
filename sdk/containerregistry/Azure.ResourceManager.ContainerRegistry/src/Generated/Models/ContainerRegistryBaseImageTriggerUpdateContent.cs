@@ -23,6 +23,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Name = name;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryBaseImageTriggerUpdateContent"/>. </summary>
+        /// <param name="baseImageTriggerType"> The type of the auto trigger for base image dependency updates. </param>
+        /// <param name="updateTriggerEndpoint"> The endpoint URL for receiving update triggers. </param>
+        /// <param name="updateTriggerPayloadType"> Type of Payload body for Base image update triggers. </param>
+        /// <param name="status"> The current status of trigger. </param>
+        /// <param name="name"> The name of the trigger. </param>
+        internal ContainerRegistryBaseImageTriggerUpdateContent(ContainerRegistryBaseImageTriggerType? baseImageTriggerType, string updateTriggerEndpoint, ContainerRegistryUpdateTriggerPayloadType? updateTriggerPayloadType, ContainerRegistryTriggerStatus? status, string name)
+        {
+            BaseImageTriggerType = baseImageTriggerType;
+            UpdateTriggerEndpoint = updateTriggerEndpoint;
+            UpdateTriggerPayloadType = updateTriggerPayloadType;
+            Status = status;
+            Name = name;
+        }
+
         /// <summary> The type of the auto trigger for base image dependency updates. </summary>
         public ContainerRegistryBaseImageTriggerType? BaseImageTriggerType { get; set; }
         /// <summary> The endpoint URL for receiving update triggers. </summary>

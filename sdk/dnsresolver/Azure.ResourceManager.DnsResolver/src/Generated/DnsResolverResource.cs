@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DnsResolver
         private readonly DnsResolversRestOperations _dnsResolverRestClient;
         private readonly DnsResolverData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/dnsResolvers";
+
         /// <summary> Initializes a new instance of the <see cref="DnsResolverResource"/> class for mocking. </summary>
         protected DnsResolverResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DnsResolver
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/dnsResolvers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

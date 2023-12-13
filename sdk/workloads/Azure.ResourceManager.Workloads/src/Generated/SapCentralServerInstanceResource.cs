@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Workloads
         private readonly SAPCentralInstancesRestOperations _sapCentralServerInstanceSapCentralInstancesRestClient;
         private readonly SapCentralServerInstanceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Workloads/sapVirtualInstances/centralInstances";
+
         /// <summary> Initializes a new instance of the <see cref="SapCentralServerInstanceResource"/> class for mocking. </summary>
         protected SapCentralServerInstanceResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.Workloads
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Workloads/sapVirtualInstances/centralInstances";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

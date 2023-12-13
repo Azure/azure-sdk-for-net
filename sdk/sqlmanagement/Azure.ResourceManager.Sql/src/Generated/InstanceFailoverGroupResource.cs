@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Sql
         private readonly InstanceFailoverGroupsRestOperations _instanceFailoverGroupRestClient;
         private readonly InstanceFailoverGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/locations/instanceFailoverGroups";
+
         /// <summary> Initializes a new instance of the <see cref="InstanceFailoverGroupResource"/> class for mocking. </summary>
         protected InstanceFailoverGroupResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/locations/instanceFailoverGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

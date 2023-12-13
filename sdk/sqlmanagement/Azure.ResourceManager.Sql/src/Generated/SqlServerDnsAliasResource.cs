@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Sql
         private readonly ServerDnsAliasesRestOperations _sqlServerDnsAliasServerDnsAliasesRestClient;
         private readonly SqlServerDnsAliasData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/dnsAliases";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerDnsAliasResource"/> class for mocking. </summary>
         protected SqlServerDnsAliasResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/dnsAliases";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

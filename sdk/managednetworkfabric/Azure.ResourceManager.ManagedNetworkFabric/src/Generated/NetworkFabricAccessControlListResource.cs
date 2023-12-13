@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private readonly AccessControlListsRestOperations _networkFabricAccessControlListAccessControlListsRestClient;
         private readonly NetworkFabricAccessControlListData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/accessControlLists";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkFabricAccessControlListResource"/> class for mocking. </summary>
         protected NetworkFabricAccessControlListResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/accessControlLists";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

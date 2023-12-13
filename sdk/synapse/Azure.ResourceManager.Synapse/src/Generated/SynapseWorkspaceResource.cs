@@ -46,6 +46,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly WorkspaceManagedSqlServerUsagesRestOperations _workspaceManagedSqlServerUsagesRestClient;
         private readonly SynapseWorkspaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseWorkspaceResource"/> class for mocking. </summary>
         protected SynapseWorkspaceResource()
         {
@@ -77,9 +80,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

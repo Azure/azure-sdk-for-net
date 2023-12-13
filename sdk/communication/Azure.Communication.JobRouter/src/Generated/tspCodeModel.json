@@ -3018,10 +3018,10 @@
    "Description": "Describes a matching mode used for scheduling jobs to be queued at a future time. At the specified time, matching worker to a job will not start automatically.",
    "IsNullable": false,
    "DiscriminatorValue": "scheduleAndSuspend",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "252"
    },
-   "Usage": "Output",
    "Properties": [
     {
      "$id": "394",
@@ -3046,10 +3046,10 @@
    "Description": "Describes a matching mode where matching worker to a job is automatically started after job is queued successfully.",
    "IsNullable": false,
    "DiscriminatorValue": "queueAndMatch",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "252"
    },
-   "Usage": "Output",
    "Properties": []
   },
   {
@@ -3059,10 +3059,10 @@
    "Description": "Describes a matching mode where matching worker to a job is suspended.",
    "IsNullable": false,
    "DiscriminatorValue": "suspend",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "252"
    },
-   "Usage": "Output",
    "Properties": []
   },
   {
@@ -3072,10 +3072,10 @@
    "Description": "Jobs are distributed to the worker with the strongest abilities available.",
    "IsNullable": false,
    "DiscriminatorValue": "bestWorker",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "99"
    },
-   "Usage": "Output",
    "Properties": [
     {
      "$id": "399",
@@ -3176,10 +3176,10 @@
    "Description": "An action that marks a job as cancelled.",
    "IsNullable": false,
    "DiscriminatorValue": "cancel",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "154"
    },
-   "Usage": "Output",
    "Properties": [
     {
      "$id": "411",
@@ -3218,10 +3218,10 @@
    "Description": "Describes a set of queue selectors that will be attached if the given condition resolves to true.",
    "IsNullable": false,
    "DiscriminatorValue": "conditional",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "123"
    },
-   "Usage": "Output",
    "Properties": [
     {
      "$id": "416",
@@ -3308,10 +3308,10 @@
    "Description": "Describes a set of worker selectors that will be attached if the given condition resolves to true.",
    "IsNullable": false,
    "DiscriminatorValue": "conditional",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "130"
    },
-   "Usage": "Output",
    "Properties": [
     {
      "$id": "426",
@@ -3349,10 +3349,10 @@
    "Description": "A rule that return the same labels as the input labels.",
    "IsNullable": false,
    "DiscriminatorValue": "directMap",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "126"
    },
-   "Usage": "Output",
    "Properties": []
   },
   {
@@ -3362,10 +3362,10 @@
    "Description": "A rule providing inline expression rules.",
    "IsNullable": false,
    "DiscriminatorValue": "expression",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "126"
    },
-   "Usage": "Output",
    "Properties": [
     {
      "$id": "431",
@@ -3401,10 +3401,10 @@
    "Description": "A rule providing a binding to an HTTP Triggered Azure Function.",
    "IsNullable": false,
    "DiscriminatorValue": "function",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "126"
    },
-   "Usage": "Output",
    "Properties": [
     {
      "$id": "435",
@@ -3492,10 +3492,10 @@
    "Description": "Jobs are directed to the worker who has been idle longest.",
    "IsNullable": false,
    "DiscriminatorValue": "longestIdle",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "99"
    },
-   "Usage": "Output",
    "Properties": []
   },
   {
@@ -3505,10 +3505,10 @@
    "Description": "An action that manually reclassifies a job by providing the queue, priority and worker selectors.",
    "IsNullable": false,
    "DiscriminatorValue": "manualReclassify",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "154"
    },
-   "Usage": "Output",
    "Properties": [
     {
      "$id": "447",
@@ -3601,10 +3601,10 @@
    "Description": "Attaches a queue selector where the value is passed through from a job's label with the same key.",
    "IsNullable": false,
    "DiscriminatorValue": "passThrough",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "123"
    },
-   "Usage": "Output",
    "Properties": [
     {
      "$id": "459",
@@ -3640,10 +3640,10 @@
    "Description": "Attaches a worker selector where the value is passed through from a job's label with the same key.",
    "IsNullable": false,
    "DiscriminatorValue": "passThrough",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "130"
    },
-   "Usage": "Output",
    "Properties": [
     {
      "$id": "463",
@@ -3693,10 +3693,10 @@
    "Description": "Trigger for an exception action on exceeding queue length.",
    "IsNullable": false,
    "DiscriminatorValue": "queueLength",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "150"
    },
-   "Usage": "Output",
    "Properties": [
     {
      "$id": "469",
@@ -3761,10 +3761,10 @@
    "Description": "An action that modifies labels on a job and then reclassifies it.",
    "IsNullable": false,
    "DiscriminatorValue": "reclassify",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "154"
    },
-   "Usage": "Output",
    "Properties": [
     {
      "$id": "477",
@@ -3814,10 +3814,10 @@
    "Description": "Jobs are distributed in order to workers, starting with the worker that is after the last worker to receive a job.",
    "IsNullable": false,
    "DiscriminatorValue": "roundRobin",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "99"
    },
-   "Usage": "Output",
    "Properties": []
   },
   {
@@ -3827,10 +3827,10 @@
    "Description": "Attaches queue selectors to a job when the RouterRule is resolved.",
    "IsNullable": false,
    "DiscriminatorValue": "ruleEngine",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "123"
    },
-   "Usage": "Output",
    "Properties": [
     {
      "$id": "485",
@@ -3852,10 +3852,10 @@
    "Description": "Attaches worker selectors to a job when a RouterRule is resolved.",
    "IsNullable": false,
    "DiscriminatorValue": "ruleEngine",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "130"
    },
-   "Usage": "Output",
    "Properties": [
     {
      "$id": "487",
@@ -3877,10 +3877,10 @@
    "Description": "Describes a queue selector that will be attached to a job.",
    "IsNullable": false,
    "DiscriminatorValue": "static",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "123"
    },
-   "Usage": "Output",
    "Properties": [
     {
      "$id": "489",
@@ -3902,10 +3902,10 @@
    "Description": "A rule providing static rules that always return the same result, regardless of input.",
    "IsNullable": false,
    "DiscriminatorValue": "static",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "126"
    },
-   "Usage": "Output",
    "Properties": [
     {
      "$id": "491",
@@ -3930,10 +3930,10 @@
    "Description": "Describes a worker selector that will be attached to a job.",
    "IsNullable": false,
    "DiscriminatorValue": "static",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "130"
    },
-   "Usage": "Output",
    "Properties": [
     {
      "$id": "494",
@@ -3955,10 +3955,10 @@
    "Description": "Trigger for an exception action on exceeding wait time.",
    "IsNullable": false,
    "DiscriminatorValue": "waitTime",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "150"
    },
-   "Usage": "Output",
    "Properties": [
     {
      "$id": "496",
@@ -3983,10 +3983,10 @@
    "Description": "A rule providing a binding to an external web server.",
    "IsNullable": false,
    "DiscriminatorValue": "webhook",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "126"
    },
-   "Usage": "Output",
    "Properties": [
     {
      "$id": "499",
@@ -4036,10 +4036,10 @@
    "Description": "Describes multiple sets of queue selectors, of which one will be selected and attached according to a weighting.",
    "IsNullable": false,
    "DiscriminatorValue": "weightedAllocation",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "123"
    },
-   "Usage": "Output",
    "Properties": [
     {
      "$id": "505",
@@ -4066,10 +4066,10 @@
    "Description": "Describes multiple sets of worker selectors, of which one will be selected and attached according to a weighting.",
    "IsNullable": false,
    "DiscriminatorValue": "weightedAllocation",
+   "Usage": "Output",
    "BaseModel": {
     "$ref": "130"
    },
-   "Usage": "Output",
    "Properties": [
     {
      "$id": "508",

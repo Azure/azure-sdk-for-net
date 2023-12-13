@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.StorageMover.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="StorageMoverPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="description"> A description for the Storage Mover. </param>
+        internal StorageMoverPatch(IDictionary<string, string> tags, string description)
+        {
+            Tags = tags;
+            Description = description;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> A description for the Storage Mover. </summary>

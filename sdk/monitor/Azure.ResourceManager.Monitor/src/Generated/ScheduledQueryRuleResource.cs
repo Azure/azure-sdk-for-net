@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Monitor
         private readonly ScheduledQueryRulesRestOperations _scheduledQueryRuleRestClient;
         private readonly ScheduledQueryRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/scheduledQueryRules";
+
         /// <summary> Initializes a new instance of the <see cref="ScheduledQueryRuleResource"/> class for mocking. </summary>
         protected ScheduledQueryRuleResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Monitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/scheduledQueryRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ContainerAppsDiagnosticsRestOperations _containerAppDetectorContainerAppsDiagnosticsRestClient;
         private readonly ContainerAppDiagnosticData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/detectors";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppDetectorResource"/> class for mocking. </summary>
         protected ContainerAppDetectorResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/detectors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

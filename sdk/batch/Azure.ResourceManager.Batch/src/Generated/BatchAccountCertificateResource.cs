@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Batch
         private readonly CertificateRestOperations _batchAccountCertificateCertificateRestClient;
         private readonly BatchAccountCertificateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Batch/batchAccounts/certificates";
+
         /// <summary> Initializes a new instance of the <see cref="BatchAccountCertificateResource"/> class for mocking. </summary>
         protected BatchAccountCertificateResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Batch
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Batch/batchAccounts/certificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

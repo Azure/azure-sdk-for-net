@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly SchedulesRestOperations _machineLearningScheduleSchedulesRestClient;
         private readonly MachineLearningScheduleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/schedules";
+
         /// <summary> Initializes a new instance of the <see cref="MachineLearningScheduleResource"/> class for mocking. </summary>
         protected MachineLearningScheduleResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.MachineLearning
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/schedules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

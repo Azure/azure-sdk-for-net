@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private readonly AzureADAdministratorsRestOperations _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient;
         private readonly MySqlFlexibleServerAadAdministratorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/flexibleServers/administrators";
+
         /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServerAadAdministratorResource"/> class for mocking. </summary>
         protected MySqlFlexibleServerAadAdministratorResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/flexibleServers/administrators";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

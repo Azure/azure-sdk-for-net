@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.KeyVault
         private readonly PrivateEndpointConnectionsRestOperations _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly KeyVaultPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.KeyVault/vaults/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="KeyVaultPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected KeyVaultPrivateEndpointConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.KeyVault
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.KeyVault/vaults/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

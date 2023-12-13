@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.EventGrid
         private readonly EventSubscriptionsRestOperations _eventSubscriptionRestClient;
         private readonly EventGridSubscriptionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/eventSubscriptions";
+
         /// <summary> Initializes a new instance of the <see cref="EventSubscriptionResource"/> class for mocking. </summary>
         protected EventSubscriptionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/eventSubscriptions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

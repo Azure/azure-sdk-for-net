@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.Nginx.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentUpdateProperties"/>. </summary>
+        /// <param name="enableDiagnosticsSupport"></param>
+        /// <param name="logging"></param>
+        internal NginxDeploymentUpdateProperties(bool? enableDiagnosticsSupport, NginxLogging logging)
+        {
+            EnableDiagnosticsSupport = enableDiagnosticsSupport;
+            Logging = logging;
+        }
+
         /// <summary> Gets or sets the enable diagnostics support. </summary>
         public bool? EnableDiagnosticsSupport { get; set; }
         /// <summary> Gets or sets the logging. </summary>

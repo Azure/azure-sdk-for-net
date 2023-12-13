@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.ServiceBus
         private readonly QueuesRestOperations _serviceBusQueueQueuesRestClient;
         private readonly ServiceBusQueueData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/queues";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceBusQueueResource"/> class for mocking. </summary>
         protected ServiceBusQueueResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ServiceBus
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/queues";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

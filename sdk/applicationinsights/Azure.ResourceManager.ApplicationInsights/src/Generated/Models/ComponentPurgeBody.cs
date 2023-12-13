@@ -28,6 +28,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Filters = filters.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ComponentPurgeBody"/>. </summary>
+        /// <param name="table"> Table from which to purge data. </param>
+        /// <param name="filters"> The set of columns and filters (queries) to run over them to purge the resulting data. </param>
+        internal ComponentPurgeBody(string table, IList<ComponentPurgeBodyFilters> filters)
+        {
+            Table = table;
+            Filters = filters;
+        }
+
         /// <summary> Table from which to purge data. </summary>
         public string Table { get; }
         /// <summary> The set of columns and filters (queries) to run over them to purge the resulting data. </summary>

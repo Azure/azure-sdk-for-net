@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.SecurityInsights
         private readonly ThreatIntelligenceIndicatorsRestOperations _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient;
         private readonly SecurityInsightsThreatIntelligenceIndicatorBaseData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/threatIntelligence/indicators";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> class for mocking. </summary>
         protected SecurityInsightsThreatIntelligenceIndicatorResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.SecurityInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/threatIntelligence/indicators";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

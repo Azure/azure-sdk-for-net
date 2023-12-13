@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Nginx
         private readonly CertificatesRestOperations _nginxCertificateCertificatesRestClient;
         private readonly NginxCertificateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Nginx.NginxPlus/nginxDeployments/certificates";
+
         /// <summary> Initializes a new instance of the <see cref="NginxCertificateResource"/> class for mocking. </summary>
         protected NginxCertificateResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Nginx
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Nginx.NginxPlus/nginxDeployments/certificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

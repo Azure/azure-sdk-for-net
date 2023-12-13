@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedBackupShortTermRetentionPoliciesRestOperations _managedBackupShortTermRetentionPolicyRestClient;
         private readonly ManagedBackupShortTermRetentionPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/backupShortTermRetentionPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedBackupShortTermRetentionPolicyResource"/> class for mocking. </summary>
         protected ManagedBackupShortTermRetentionPolicyResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/backupShortTermRetentionPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

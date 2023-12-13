@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.NetApp
         private readonly SubvolumesRestOperations _netAppSubvolumeInfoSubvolumesRestClient;
         private readonly NetAppSubvolumeInfoData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/subvolumes";
+
         /// <summary> Initializes a new instance of the <see cref="NetAppSubvolumeInfoResource"/> class for mocking. </summary>
         protected NetAppSubvolumeInfoResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.NetApp
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/subvolumes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

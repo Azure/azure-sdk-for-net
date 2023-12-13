@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.NetworkCloud
         private readonly ConsolesRestOperations _networkCloudVirtualMachineConsoleConsolesRestClient;
         private readonly NetworkCloudVirtualMachineConsoleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/virtualMachines/consoles";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkCloudVirtualMachineConsoleResource"/> class for mocking. </summary>
         protected NetworkCloudVirtualMachineConsoleResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.NetworkCloud
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/virtualMachines/consoles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

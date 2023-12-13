@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.CostManagement
         private readonly ExportsRestOperations _costManagementExportExportsRestClient;
         private readonly CostManagementExportData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CostManagement/exports";
+
         /// <summary> Initializes a new instance of the <see cref="CostManagementExportResource"/> class for mocking. </summary>
         protected CostManagementExportResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.CostManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CostManagement/exports";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

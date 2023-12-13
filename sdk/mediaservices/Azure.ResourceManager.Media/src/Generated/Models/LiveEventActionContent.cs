@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Media.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="LiveEventActionContent"/>. </summary>
+        /// <param name="removeOutputsOnStop"> The flag indicates whether live outputs are automatically deleted when live event is being stopped. Deleting live outputs do not delete the underlying assets. </param>
+        internal LiveEventActionContent(bool? removeOutputsOnStop)
+        {
+            RemoveOutputsOnStop = removeOutputsOnStop;
+        }
+
         /// <summary> The flag indicates whether live outputs are automatically deleted when live event is being stopped. Deleting live outputs do not delete the underlying assets. </summary>
         public bool? RemoveOutputsOnStop { get; set; }
     }

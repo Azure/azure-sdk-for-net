@@ -21,12 +21,7 @@ namespace Azure.Core.Pipeline
         private readonly DiagnosticListener? _source;
         private readonly bool _suppressNestedClientActivities;
         private readonly bool _isStable;
-
-#if NETCOREAPP2_1
-        private static readonly ConcurrentDictionary<string, object?> ActivitySources = new();
-#else
         private static readonly ConcurrentDictionary<string, ActivitySource?> ActivitySources = new();
-#endif
 
         /// <summary>
         /// Creates diagnostic scope factory.
@@ -61,11 +56,7 @@ namespace Azure.Core.Pipeline
         public bool IsActivityEnabled { get; }
 
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "The DiagnosticScope constructor is marked as RequiresUnreferencedCode because of the usage of the diagnosticSourceArgs parameter. Since we are passing in null here we can suppress this warning.")]
-#if NETCOREAPP2_1
-        public DiagnosticScope CreateScope(string name, DiagnosticScope.ActivityKind kind = DiagnosticScope.ActivityKind.Internal)
-#else
         public DiagnosticScope CreateScope(string name, System.Diagnostics.ActivityKind kind = ActivityKind.Internal)
-#endif
         {
             if (_source == null)
             {
@@ -94,18 +85,11 @@ namespace Azure.Core.Pipeline
         ///     name: BlobClient.DownloadTo
         ///     result Azure.Storage.Blobs.BlobClient
         /// </summary>
-#if NETCOREAPP2_1
-        private object? GetActivitySource(string ns, string name)
-#else
         private ActivitySource? GetActivitySource(string ns, string name)
-#endif
         {
             bool enabled = _isStable;
-#if NETCOREAPP2_1
-            enabled |= ActivityExtensions.SupportsActivitySource();
-#else
             enabled |= ActivityExtensions.SupportsActivitySource;
-#endif
+
             if (!enabled)
             {
                 return null;
@@ -114,11 +98,7 @@ namespace Azure.Core.Pipeline
             int indexOfDot = name.IndexOf(".", StringComparison.OrdinalIgnoreCase);
             string clientName = ns + "." + ((indexOfDot < 0) ? name : name.Substring(0, indexOfDot));
 
-#if NETCOREAPP2_1
-            return ActivitySources.GetOrAdd(clientName, static n => ActivityExtensions.CreateActivitySource(n));
-#else
             return ActivitySources.GetOrAdd(clientName, static n => new ActivitySource(n));
-#endif
         }
     }
 }
