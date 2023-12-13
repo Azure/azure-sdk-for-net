@@ -52,20 +52,8 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         public DistributionMode Mode { get; set; }
 
-        [CodeGenMember("Etag")]
-        internal string _etag
-        {
-            get
-            {
-                return ETag.ToString();
-            }
-            set
-            {
-                ETag = new ETag(value);
-            }
-        }
-
         /// <summary> The entity tag for this resource. </summary>
+        [CodeGenMember("Etag")]
         public ETag ETag { get; internal set; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)

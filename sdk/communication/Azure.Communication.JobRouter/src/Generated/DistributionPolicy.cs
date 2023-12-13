@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Policy governing how jobs are distributed to workers. </summary>
@@ -16,14 +18,14 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of <see cref="DistributionPolicy"/>. </summary>
-        /// <param name="etag"> The entity tag for this resource. </param>
+        /// <param name="eTag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of a distribution policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
         /// <param name="offerExpiresAfterSeconds"> Number of seconds after which any offers created under this policy will be expired. </param>
         /// <param name="mode"> Mode governing the specific distribution method. </param>
-        internal DistributionPolicy(string etag, string id, string name, double? offerExpiresAfterSeconds, DistributionMode mode)
+        internal DistributionPolicy(ETag eTag, string id, string name, double? offerExpiresAfterSeconds, DistributionMode mode)
         {
-            _etag = etag;
+            ETag = eTag;
             Id = id;
             Name = name;
             _offerExpiresAfterSeconds = offerExpiresAfterSeconds;
