@@ -170,13 +170,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
             JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions();
-            jsonSerializerOptions.Converters.Add(new ModelJsonConverter(options));
+            jsonSerializerOptions.Converters.Add(new JsonModelConverter(options));
             return BinaryData.FromString(JsonSerializer.Serialize(model, jsonSerializerOptions));
         }
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
             JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions();
-            jsonSerializerOptions.Converters.Add(new ModelJsonConverter(options));
+            jsonSerializerOptions.Converters.Add(new JsonModelConverter(options));
             return JsonSerializer.Deserialize<T>(payload, jsonSerializerOptions) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
         }
     }

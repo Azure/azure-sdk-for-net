@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core.Tests.ModelReaderWriterTests.Models;
@@ -19,7 +18,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
             string modelXResponse = "{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"extra\":\"stuff\"}";
 
             var options = new JsonSerializerOptions();
-            options.Converters.Add(new ModelJsonConverter(new ModelReaderWriterOptions(format)));
+            options.Converters.Add(new JsonModelConverter(new ModelReaderWriterOptions(format)));
             ModelY modelY = JsonSerializer.Deserialize<ModelY>(modelYResponse, options);
 
             Assert.AreEqual("Y", modelY.Kind);

@@ -15,7 +15,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public ModelJsonConverterTests()
         {
             _options = new JsonSerializerOptions();
-            _options.Converters.Add(new ModelJsonConverter());
+            _options.Converters.Add(new JsonModelConverter());
         }
 
         [TestCaseSource(typeof(ReaderWriterTestSource), "NullBinaryData")]

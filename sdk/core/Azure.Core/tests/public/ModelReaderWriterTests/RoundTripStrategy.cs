@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
-using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.IO;
 using System.Text;
 using System.Text.Json;
 using Azure.Core.TestFramework;
@@ -211,13 +210,13 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
             JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions();
-            jsonSerializerOptions.Converters.Add(new ModelJsonConverter(options));
+            jsonSerializerOptions.Converters.Add(new JsonModelConverter(options));
             return BinaryData.FromString(JsonSerializer.Serialize(model, jsonSerializerOptions));
         }
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
             JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions();
-            jsonSerializerOptions.Converters.Add(new ModelJsonConverter(options));
+            jsonSerializerOptions.Converters.Add(new JsonModelConverter(options));
             return JsonSerializer.Deserialize<T>(payload, jsonSerializerOptions);
         }
     }

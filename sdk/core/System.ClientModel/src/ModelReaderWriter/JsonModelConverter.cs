@@ -12,7 +12,7 @@ namespace System.ClientModel.Primitives
     /// </summary>
     [RequiresUnreferencedCode("The constructors of the type being deserialized are dynamically accessed and may be trimmed.")]
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-    public class ModelJsonConverter : JsonConverter<IJsonModel<object>>
+    public class JsonModelConverter : JsonConverter<IJsonModel<object>>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         /// <summary>
@@ -21,16 +21,16 @@ namespace System.ClientModel.Primitives
         public ModelReaderWriterOptions Options { get; }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="ModelJsonConverter"/> with a default options of <see cref="ModelReaderWriterOptions.Json"/>.
+        /// Initializes a new instance of <see cref="JsonModelConverter"/> with a default options of <see cref="ModelReaderWriterOptions.Json"/>.
         /// </summary>
-        public ModelJsonConverter()
+        public JsonModelConverter()
             : this(ModelReaderWriterOptions.Json) { }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="ModelJsonConverter"/>.
+        /// Initializes a new instance of <see cref="JsonModelConverter"/>.
         /// </summary>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
-        public ModelJsonConverter(ModelReaderWriterOptions options)
+        public JsonModelConverter(ModelReaderWriterOptions options)
         {
             Options = options;
         }
