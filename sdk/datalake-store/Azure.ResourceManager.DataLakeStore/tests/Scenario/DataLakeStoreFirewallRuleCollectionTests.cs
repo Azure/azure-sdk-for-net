@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataLakeStore.Tests.Scenario
             {
                 count++;
             }
-            Assert.Equals(2, count);
+            Assert.AreEqual(2, count);
         }
 
         [RecordedTest]
