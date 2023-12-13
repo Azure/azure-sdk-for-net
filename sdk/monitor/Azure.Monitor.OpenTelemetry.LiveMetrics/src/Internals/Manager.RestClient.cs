@@ -18,7 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         /// </summary>
         private string _etag = string.Empty;
 
-        private void OnPing(object state)
+        private void OnPing()
         {
             try
             {
@@ -46,7 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 if (response.GetRawResponse().Headers.TryGetValue("x-ms-qps-subscribed", out string? subscribedValue) && Convert.ToBoolean(subscribedValue))
                 {
                     Debug.WriteLine($"OnPing: Subscribed: {subscribedValue}");
-                    SetPostTimer();
+                    SetPostState();
                 }
             }
             catch (Exception ex)
@@ -58,7 +58,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         /// <summary>
         /// Send data to LiveMetrics service.
         /// </summary>
-        /// <param name="state"></param>
         /// <remarks>
         /// dataPoint.Metrics.Add(new MetricPoint { Name = "\\ApplicationInsights\\Requests/Sec", Value = 0, Weight = 1 });
         /// dataPoint.Metrics.Add(new MetricPoint { Name = "\\ApplicationInsights\\Request Duration", Value = 0, Weight = 0 });
@@ -72,7 +71,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         /// dataPoint.Metrics.Add(new MetricPoint { Name = "\\Memory\\Committed Bytes", Value = 41372430336, Weight = 1 });
         /// dataPoint.Metrics.Add(new MetricPoint { Name = "\\Processor(_Total)\\% Processor Time", Value = 14.1891f, Weight = 1 });.
         /// </remarks>
-        private void OnPost(object state)
+        private void OnPost()
         {
             try
             {
@@ -85,7 +84,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     apikey: null,
                     xMsQpsConfigurationEtag: _etag,
                     xMsQpsTransmissionTime: null,
-                    monitoringDataPoints: new MonitoringDataPoint[] { dataPoint },
+                    monitoringDataPoints: new MonitoringDataPoint[] { dataPoint }, // TODO: CHECK WITH SERVICE TEAM. WHY DOES THIS NEED TO BE A COLLECITON?
                     cancellationToken: default);
 
                 if (response.GetRawResponse().Headers.TryGetValue("x-ms-qps-configuration-etag", out string? etagValue) && etagValue != _etag)
@@ -98,7 +97,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 {
                     Debug.WriteLine($"OnPost: Subscribed: {subscribedValue}");
                     _etag = string.Empty;
-                    SetPingTimer();
+                    SetPingState();
                 }
             }
             catch (Exception ex)

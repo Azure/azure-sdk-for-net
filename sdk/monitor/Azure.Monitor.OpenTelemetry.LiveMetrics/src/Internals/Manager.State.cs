@@ -3,6 +3,8 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 {
@@ -12,26 +14,50 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
     /// </summary>
     internal partial class Manager
     {
-        private Timer _timer;
-
-        private Action<object> _callbackAction = obj => { };
+        private Action _callbackAction = () => { };
 
         internal readonly State _state = new();
 
-        private void SetPingTimer()
+        internal TimeSpan _period;
+        private readonly TimeSpan _pingPeriod = TimeSpan.FromSeconds(5);
+        private readonly TimeSpan _postPeriod = TimeSpan.FromSeconds(1);
+
+        private void InitializeState()
+        {
+            SetPingState();
+            Task.Run(() => Run(CancellationToken.None)); // TODO: USE AN ACTUAL CANCELLATION TOKEN
+        }
+
+        private void SetPingState()
         {
             _state.Update(LiveMetricsState.Ping);
             _callbackAction = OnPing;
-            _timer.Change(dueTime: 0, period: 5000);
+            _period = _pingPeriod;
         }
 
-        private void SetPostTimer()
+        private void SetPostState()
         {
             _state.Update(LiveMetricsState.Post);
             _callbackAction = OnPost;
-            _timer.Change(dueTime: 0, period: 1000);
+            _period = _postPeriod;
         }
 
-        private void OnCallback(object state) => _callbackAction.Invoke(state);
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0102", Justification = "TODO: FIND THE AZURE COMPLIANT WAY TO DO TASK.DELAY().")]
+        private void Run(CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                var callbackStarted = DateTime.UtcNow;
+
+                _callbackAction.Invoke();
+
+                // try to factor in the time spend in this tick when scheduling the next one so that the average period is close to the intended
+                var timeSpentInThisTick = DateTime.UtcNow - callbackStarted;
+                var nextTick = _period - timeSpentInThisTick;
+                nextTick = nextTick > TimeSpan.Zero ? nextTick : TimeSpan.Zero;
+
+                Task.Delay(nextTick, cancellationToken).GetAwaiter().GetResult();
+            }
+        }
     }
 }

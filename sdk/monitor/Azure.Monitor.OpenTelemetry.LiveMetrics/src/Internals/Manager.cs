@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
@@ -24,11 +23,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             _connectionVars = InitializeConnectionVars(options, platform);
             _quickPulseSDKClientAPIsRestClient = InitializeRestClient(options, _connectionVars, out _isAadEnabled);
 
-            _timer = new Timer(callback: OnCallback, state: null, dueTime: Timeout.Infinite, period: Timeout.Infinite);
-
             if (options.EnableLiveMetrics)
             {
-                SetPingTimer();
+                InitializeState();
             }
         }
 
