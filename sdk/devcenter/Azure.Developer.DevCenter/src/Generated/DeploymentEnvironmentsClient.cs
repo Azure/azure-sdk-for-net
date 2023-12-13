@@ -727,7 +727,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='DeleteEnvironmentAsync(WaitUntil,string,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation> DeleteEnvironmentAsync(WaitUntil waitUntil, string projectName, string userId, string environmentName, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> DeleteEnvironmentAsync(WaitUntil waitUntil, string projectName, string userId, string environmentName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -738,7 +738,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateDeleteEnvironmentRequest(projectName, userId, environmentName, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DeploymentEnvironmentsClient.DeleteEnvironment", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DeploymentEnvironmentsClient.DeleteEnvironment", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -767,7 +767,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='DeleteEnvironment(WaitUntil,string,string,string,RequestContext)']/*" />
-        public virtual Operation DeleteEnvironment(WaitUntil waitUntil, string projectName, string userId, string environmentName, RequestContext context = null)
+        public virtual Operation<BinaryData> DeleteEnvironment(WaitUntil waitUntil, string projectName, string userId, string environmentName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -778,7 +778,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateDeleteEnvironmentRequest(projectName, userId, environmentName, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DeploymentEnvironmentsClient.DeleteEnvironment", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DeploymentEnvironmentsClient.DeleteEnvironment", OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
             catch (Exception e)
             {

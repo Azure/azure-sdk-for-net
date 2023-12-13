@@ -842,7 +842,11 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            Operation operation = client.DeleteEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>");
+            Operation<BinaryData> operation = client.DeleteEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", null);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("body").GetProperty("status").ToString());
         }
 
         [Test]
@@ -853,7 +857,11 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            Operation operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>");
+            Operation<BinaryData> operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", null);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("body").GetProperty("status").ToString());
         }
 
         [Test]
@@ -864,7 +872,20 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            Operation operation = client.DeleteEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>");
+            Operation<BinaryData> operation = client.DeleteEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", null);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("body").GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("body").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("body").GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("body").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("body").GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("body").GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("body").GetProperty("percentComplete").ToString());
+            Console.WriteLine(result.GetProperty("body").GetProperty("properties").ToString());
+            Console.WriteLine(result.GetProperty("body").GetProperty("error").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("body").GetProperty("error").GetProperty("message").ToString());
         }
 
         [Test]
@@ -875,7 +896,20 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            Operation operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>");
+            Operation<BinaryData> operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", null);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("body").GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("body").GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("body").GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("body").GetProperty("resourceId").ToString());
+            Console.WriteLine(result.GetProperty("body").GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("body").GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("body").GetProperty("percentComplete").ToString());
+            Console.WriteLine(result.GetProperty("body").GetProperty("properties").ToString());
+            Console.WriteLine(result.GetProperty("body").GetProperty("error").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("body").GetProperty("error").GetProperty("message").ToString());
         }
     }
 }

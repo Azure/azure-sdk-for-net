@@ -759,40 +759,74 @@ Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetPrope
     </member>
     <member name="DeleteEnvironmentAsync(WaitUntil,string,string,string,RequestContext)">
       <example>
-This sample shows how to call DeleteEnvironmentAsync.
+This sample shows how to call DeleteEnvironmentAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Operation operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>");
+Operation<BinaryData> operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", null);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("body").GetProperty("status").ToString());
 ]]></code>
-This sample shows how to call DeleteEnvironmentAsync with all parameters.
+This sample shows how to call DeleteEnvironmentAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Operation operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>");
+Operation<BinaryData> operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", null);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("body").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("body").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("body").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("body").GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("body").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("body").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("body").GetProperty("percentComplete").ToString());
+Console.WriteLine(result.GetProperty("body").GetProperty("properties").ToString());
+Console.WriteLine(result.GetProperty("body").GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("body").GetProperty("error").GetProperty("message").ToString());
 ]]></code></example>
     </member>
     <member name="DeleteEnvironment(WaitUntil,string,string,string,RequestContext)">
       <example>
-This sample shows how to call DeleteEnvironment.
+This sample shows how to call DeleteEnvironment and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Operation operation = client.DeleteEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>");
+Operation<BinaryData> operation = client.DeleteEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", null);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("body").GetProperty("status").ToString());
 ]]></code>
-This sample shows how to call DeleteEnvironment with all parameters.
+This sample shows how to call DeleteEnvironment with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-Operation operation = client.DeleteEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>");
+Operation<BinaryData> operation = client.DeleteEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", null);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("body").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("body").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("body").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("body").GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("body").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("body").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("body").GetProperty("percentComplete").ToString());
+Console.WriteLine(result.GetProperty("body").GetProperty("properties").ToString());
+Console.WriteLine(result.GetProperty("body").GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("body").GetProperty("error").GetProperty("message").ToString());
 ]]></code></example>
     </member>
   </members>
