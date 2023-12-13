@@ -27,8 +27,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             {
                 Version = SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength),
                 InvariantVersion = 5,
-                Instance = liveMetricsResource?.RoleInstance ?? "UNKNOWN_INSTANCE",
-                RoleName = liveMetricsResource?.RoleName,
+                Instance = LiveMetricsResource?.RoleInstance ?? "UNKNOWN_INSTANCE",
+                RoleName = LiveMetricsResource?.RoleName,
                 MachineName = Environment.MachineName, // TODO: MOVE TO PLATFORM
                                                        // TODO: Is the Stream ID expected to be unique per post? Testing suggests this is not necessary.
                 StreamId = _streamId,

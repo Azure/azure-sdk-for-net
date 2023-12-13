@@ -29,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             }
         }
 
-        public LiveMetricsResource? liveMetricsResource { get; set; }
+        public LiveMetricsResource? LiveMetricsResource { get; set; }
 
         internal static ConnectionVars InitializeConnectionVars(LiveMetricsExporterOptions options, IPlatform platform)
         {
