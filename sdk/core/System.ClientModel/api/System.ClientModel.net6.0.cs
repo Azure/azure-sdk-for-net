@@ -71,7 +71,7 @@ namespace System.ClientModel
 }
 namespace System.ClientModel.Primitives
 {
-    public partial class ClientPipeline
+    public sealed partial class ClientPipeline
     {
         internal ClientPipeline() { }
         public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.Primitives.PipelineOptions options, params System.ClientModel.Primitives.PipelinePolicy[] perCallPolicies) { throw null; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
-public partial class ClientPipeline
+public sealed partial class ClientPipeline
 {
     private readonly int _perCallIndex;
     private readonly int _perTryIndex;
