@@ -4,9 +4,10 @@
 
 ### Features Added
 
-- The abstract `ChatRequestMessage` now includes a gettable `Content` string to facilitate easier use of plain text content across messages.
-  `ChatRequestUserMessage` retains the option to specify a collection of `ChatMessageContentItem` instances instead of plain text for its
-  content, but this collection is now represented as a list named `MultimodalContentItems` present only on the specific derived type.
+- To facilitate reuse of user message contents, `ChatRequestUserMessage` now provides a public `Content` property (`string`) as well as a public `MultimodalContentItems` property (`IList<ChatMessageContentItem`).
+  - `Content` is the conventional plain-text content and will be populated as non-null when the a `ChatRequestUserMessage()` constructor accepting a string is used to instantiate the message.
+  - `MultimodalContentItems` is the new compound content type, currently only usable with `gpt-4-vision-preview`, that allows hybrid use of text and image references. It will be populated when an appropriate `ChatRequestUserMessage()` constructor accepting a collection of `ChatMessageContentItem` instances is used.
+  - `Role` is also restored to common visibility to `ChatRequestUserMessage`.
 
 ### Breaking Changes
 

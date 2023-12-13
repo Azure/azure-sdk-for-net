@@ -431,6 +431,7 @@ namespace Azure.AI.OpenAI
     public abstract partial class ChatRequestMessage
     {
         protected ChatRequestMessage() { }
+        public Azure.AI.OpenAI.ChatRole Role { get { throw null; } set { } }
     }
     public partial class ChatRequestSystemMessage : Azure.AI.OpenAI.ChatRequestMessage
     {
