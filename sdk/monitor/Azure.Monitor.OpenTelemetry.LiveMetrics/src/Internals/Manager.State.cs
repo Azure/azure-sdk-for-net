@@ -27,6 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         {
             SetPingState();
             Task.Run(() => Run(CancellationToken.None)); // TODO: USE AN ACTUAL CANCELLATION TOKEN
+            // TODO: Investigate use of a dedicated thread here.
         }
 
         private void SetPingState()
