@@ -4933,7 +4933,6 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Response<BlobProperties>> GetPropertiesAsync(
             BlobGetPropertiesOptions options = default,
             CancellationToken cancellationToken = default) =>
-            // TODO: this remains hidden until we have more options that are non-HNS
             await GetPropertiesInternal(
                 options?.Conditions,
                 async: true,
