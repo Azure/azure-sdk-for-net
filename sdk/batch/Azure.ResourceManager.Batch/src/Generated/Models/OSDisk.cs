@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Settings for the operating system disk of the virtual machine. </summary>
-    internal partial class OSDisk
+    public partial class OSDisk
     {
         /// <summary> Initializes a new instance of <see cref="OSDisk"/>. </summary>
         public OSDisk()
@@ -17,9 +17,17 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Initializes a new instance of <see cref="OSDisk"/>. </summary>
         /// <param name="ephemeralOSDiskSettings"> Specifies the ephemeral Disk Settings for the operating system disk used by the virtual machine. </param>
-        internal OSDisk(DiffDiskSettings ephemeralOSDiskSettings)
+        /// <param name="caching"> The type of caching to enable for the disk. </param>
+        /// <param name="managedDisk"></param>
+        /// <param name="diskSizeGB"> The initial disk size in GB when creating new OS disk. </param>
+        /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
+        internal OSDisk(DiffDiskSettings ephemeralOSDiskSettings, BatchDiskCachingType? caching, ManagedDisk managedDisk, int? diskSizeGB, bool? writeAcceleratorEnabled)
         {
             EphemeralOSDiskSettings = ephemeralOSDiskSettings;
+            Caching = caching;
+            ManagedDisk = managedDisk;
+            DiskSizeGB = diskSizeGB;
+            WriteAcceleratorEnabled = writeAcceleratorEnabled;
         }
 
         /// <summary> Specifies the ephemeral Disk Settings for the operating system disk used by the virtual machine. </summary>
@@ -35,5 +43,26 @@ namespace Azure.ResourceManager.Batch.Models
                 EphemeralOSDiskSettings.Placement = value;
             }
         }
+
+        /// <summary> The type of caching to enable for the disk. </summary>
+        public BatchDiskCachingType? Caching { get; set; }
+        /// <summary> Gets or sets the managed disk. </summary>
+        internal ManagedDisk ManagedDisk { get; set; }
+        /// <summary> The storage account type for use in creating data disks or OS disk. </summary>
+        public BatchStorageAccountType? ManagedDiskStorageAccountType
+        {
+            get => ManagedDisk is null ? default : ManagedDisk.StorageAccountType;
+            set
+            {
+                if (ManagedDisk is null)
+                    ManagedDisk = new ManagedDisk();
+                ManagedDisk.StorageAccountType = value;
+            }
+        }
+
+        /// <summary> The initial disk size in GB when creating new OS disk. </summary>
+        public int? DiskSizeGB { get; set; }
+        /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
+        public bool? WriteAcceleratorEnabled { get; set; }
     }
 }

@@ -1,14 +1,22 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (2023-12-20)
 
 ### Features Added
+- Add `ResourceTags` support to Pool Creation
+   - Added `resourceTags` property to `BatchAccountPoolData` definition
+   - Added `resourceTags` property to `ArmBatchModelFactory` definition
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Add `SecurityProfile` support to Pool Creation
+   - Added `serviceArtifactReference` property to `BatchVmConfiguration`definition
+   - Added `securityProfile` property to `BatchVmConfiguration` definition
+   
+- Add `ServiceArtifactReference` and `OSDisk` support to Pool Creation
+   - Added `standardssd_lrs` value to `BatchStorageAccountType` enum
+   - Added `caching` property to `BatchNodePlacementPolicyType` definition
+   - Added `managedDisk` property to `BatchNodePlacementPolicyType` definition
+   - Added `diskSizeGB` property to `BatchNodePlacementPolicyType` definition
+   - Added `writeAcceleratorEnabled` property to `BatchNodePlacementPolicyType` definition
 
 ## 1.2.1 (2023-11-27)
 

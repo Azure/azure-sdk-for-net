@@ -164,6 +164,7 @@ namespace Azure.ResourceManager.Batch
         public Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState? ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? ProvisioningStateTransitOn { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.BatchResizeOperationStatus ResizeOperationStatus { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> ResourceTags { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.BatchAccountPoolScaleSettings ScaleSettings { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchAccountPoolStartTask StartTask { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.NodeCommunicationMode? TargetNodeCommunicationMode { get { throw null; } set { } }
@@ -465,6 +466,7 @@ namespace Azure.ResourceManager.Batch.Models
         public static Azure.ResourceManager.Batch.Models.BatchAccountKeys BatchAccountKeys(string accountName = null, string primary = null, string secondary = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.BatchAccountOutboundEnvironmentEndpoint BatchAccountOutboundEnvironmentEndpoint(string category = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchAccountEndpointDependency> endpoints = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.BatchAccountPoolAutoScaleRun BatchAccountPoolAutoScaleRun(System.DateTimeOffset evaluationOn = default(System.DateTimeOffset), string results = null, Azure.ResponseError error = null) { throw null; }
+        public static Azure.ResourceManager.Batch.BatchAccountPoolData BatchAccountPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string displayName = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState? provisioningState = default(Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState?), System.DateTimeOffset? provisioningStateTransitOn = default(System.DateTimeOffset?), Azure.ResourceManager.Batch.Models.BatchAccountPoolAllocationState? allocationState = default(Azure.ResourceManager.Batch.Models.BatchAccountPoolAllocationState?), System.DateTimeOffset? allocationStateTransitionOn = default(System.DateTimeOffset?), string vmSize = null, Azure.ResourceManager.Batch.Models.BatchDeploymentConfiguration deploymentConfiguration = null, int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), Azure.ResourceManager.Batch.Models.BatchAccountPoolScaleSettings scaleSettings = null, Azure.ResourceManager.Batch.Models.BatchAccountPoolAutoScaleRun autoScaleRun = null, Azure.ResourceManager.Batch.Models.InterNodeCommunicationState? interNodeCommunication = default(Azure.ResourceManager.Batch.Models.InterNodeCommunicationState?), Azure.ResourceManager.Batch.Models.BatchNetworkConfiguration networkConfiguration = null, int? taskSlotsPerNode = default(int?), Azure.ResourceManager.Batch.Models.BatchNodeFillType? taskSchedulingNodeFillType = default(Azure.ResourceManager.Batch.Models.BatchNodeFillType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchUserAccount> userAccounts = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchAccountPoolMetadataItem> metadata = null, Azure.ResourceManager.Batch.Models.BatchAccountPoolStartTask startTask = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchCertificateReference> certificates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchApplicationPackageReference> applicationPackages = null, System.Collections.Generic.IEnumerable<string> applicationLicenses = null, Azure.ResourceManager.Batch.Models.BatchResizeOperationStatus resizeOperationStatus = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchMountConfiguration> mountConfiguration = null, Azure.ResourceManager.Batch.Models.NodeCommunicationMode? targetNodeCommunicationMode = default(Azure.ResourceManager.Batch.Models.NodeCommunicationMode?), Azure.ResourceManager.Batch.Models.NodeCommunicationMode? currentNodeCommunicationMode = default(Azure.ResourceManager.Batch.Models.NodeCommunicationMode?), System.Collections.Generic.IDictionary<string, string> resourceTags = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.Batch.BatchAccountPoolData BatchAccountPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string displayName = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState? provisioningState = default(Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState?), System.DateTimeOffset? provisioningStateTransitOn = default(System.DateTimeOffset?), Azure.ResourceManager.Batch.Models.BatchAccountPoolAllocationState? allocationState = default(Azure.ResourceManager.Batch.Models.BatchAccountPoolAllocationState?), System.DateTimeOffset? allocationStateTransitionOn = default(System.DateTimeOffset?), string vmSize = null, Azure.ResourceManager.Batch.Models.BatchDeploymentConfiguration deploymentConfiguration = null, int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), Azure.ResourceManager.Batch.Models.BatchAccountPoolScaleSettings scaleSettings = null, Azure.ResourceManager.Batch.Models.BatchAccountPoolAutoScaleRun autoScaleRun = null, Azure.ResourceManager.Batch.Models.InterNodeCommunicationState? interNodeCommunication = default(Azure.ResourceManager.Batch.Models.InterNodeCommunicationState?), Azure.ResourceManager.Batch.Models.BatchNetworkConfiguration networkConfiguration = null, int? taskSlotsPerNode = default(int?), Azure.ResourceManager.Batch.Models.BatchNodeFillType? taskSchedulingNodeFillType = default(Azure.ResourceManager.Batch.Models.BatchNodeFillType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchUserAccount> userAccounts = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchAccountPoolMetadataItem> metadata = null, Azure.ResourceManager.Batch.Models.BatchAccountPoolStartTask startTask = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchCertificateReference> certificates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchApplicationPackageReference> applicationPackages = null, System.Collections.Generic.IEnumerable<string> applicationLicenses = null, Azure.ResourceManager.Batch.Models.BatchResizeOperationStatus resizeOperationStatus = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchMountConfiguration> mountConfiguration = null, Azure.ResourceManager.Batch.Models.NodeCommunicationMode? targetNodeCommunicationMode = default(Azure.ResourceManager.Batch.Models.NodeCommunicationMode?), Azure.ResourceManager.Batch.Models.NodeCommunicationMode? currentNodeCommunicationMode = default(Azure.ResourceManager.Batch.Models.NodeCommunicationMode?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.Batch.BatchApplicationData BatchApplicationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, bool? allowUpdates = default(bool?), string defaultVersion = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.Batch.BatchApplicationPackageData BatchApplicationPackageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Batch.Models.BatchApplicationPackageState? state = default(Azure.ResourceManager.Batch.Models.BatchApplicationPackageState?), string format = null, System.Uri storageUri = null, System.DateTimeOffset? storageUriExpireOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastActivatedOn = default(System.DateTimeOffset?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
@@ -1070,6 +1072,7 @@ namespace Azure.ResourceManager.Batch.Models
     {
         StandardLrs = 0,
         PremiumLrs = 1,
+        StandardSSDLRS = 2,
     }
     public partial class BatchSupportedSku
     {
@@ -1112,13 +1115,16 @@ namespace Azure.ResourceManager.Batch.Models
         public Azure.ResourceManager.Batch.Models.BatchVmContainerConfiguration ContainerConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchVmDataDisk> DataDisks { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchDiskEncryptionTarget> DiskEncryptionTargets { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.BatchDiffDiskPlacement? EphemeralOSDiskPlacement { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchDiffDiskPlacement? EphemeralOSDiskPlacement { get { throw null; } [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)] set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchVmExtension> Extensions { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.BatchImageReference ImageReference { get { throw null; } set { } }
         public bool? IsAutomaticUpdateEnabled { get { throw null; } set { } }
         public string LicenseType { get { throw null; } set { } }
         public string NodeAgentSkuId { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchNodePlacementPolicyType? NodePlacementPolicy { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.OSDisk OSDisk { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.SecurityProfile SecurityProfile { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ServiceArtifactReferenceId { get { throw null; } set { } }
     }
     public partial class BatchVmContainerConfiguration
     {
@@ -1201,5 +1207,44 @@ namespace Azure.ResourceManager.Batch.Models
         Default = 0,
         Classic = 1,
         Simplified = 2,
+    }
+    public partial class OSDisk
+    {
+        public OSDisk() { }
+        public Azure.ResourceManager.Batch.Models.BatchDiskCachingType? Caching { get { throw null; } set { } }
+        public int? DiskSizeGB { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchDiffDiskPlacement? EphemeralOSDiskPlacement { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchStorageAccountType? ManagedDiskStorageAccountType { get { throw null; } set { } }
+        public bool? WriteAcceleratorEnabled { get { throw null; } set { } }
+    }
+    public partial class SecurityProfile
+    {
+        public SecurityProfile() { }
+        public bool? EncryptionAtHost { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.SecurityType? SecurityType { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.UefiSettings UefiSettings { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SecurityType : System.IEquatable<Azure.ResourceManager.Batch.Models.SecurityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SecurityType(string value) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.SecurityType TrustedLaunch { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Batch.Models.SecurityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Batch.Models.SecurityType left, Azure.ResourceManager.Batch.Models.SecurityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.SecurityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Batch.Models.SecurityType left, Azure.ResourceManager.Batch.Models.SecurityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class UefiSettings
+    {
+        public UefiSettings() { }
+        public bool? SecureBootEnabled { get { throw null; } set { } }
+        public bool? VTpmEnabled { get { throw null; } set { } }
     }
 }

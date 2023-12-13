@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    internal partial class OSDisk : IUtf8JsonSerializable
+    public partial class OSDisk : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,6 +19,26 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 writer.WritePropertyName("ephemeralOSDiskSettings"u8);
                 writer.WriteObjectValue(EphemeralOSDiskSettings);
+            }
+            if (Optional.IsDefined(Caching))
+            {
+                writer.WritePropertyName("caching"u8);
+                writer.WriteStringValue(Caching.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(ManagedDisk))
+            {
+                writer.WritePropertyName("managedDisk"u8);
+                writer.WriteObjectValue(ManagedDisk);
+            }
+            if (Optional.IsDefined(DiskSizeGB))
+            {
+                writer.WritePropertyName("diskSizeGB"u8);
+                writer.WriteNumberValue(DiskSizeGB.Value);
+            }
+            if (Optional.IsDefined(WriteAcceleratorEnabled))
+            {
+                writer.WritePropertyName("writeAcceleratorEnabled"u8);
+                writer.WriteBooleanValue(WriteAcceleratorEnabled.Value);
             }
             writer.WriteEndObject();
         }
@@ -30,6 +50,10 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             Optional<DiffDiskSettings> ephemeralOSDiskSettings = default;
+            Optional<BatchDiskCachingType> caching = default;
+            Optional<ManagedDisk> managedDisk = default;
+            Optional<int> diskSizeGB = default;
+            Optional<bool> writeAcceleratorEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ephemeralOSDiskSettings"u8))
@@ -41,8 +65,44 @@ namespace Azure.ResourceManager.Batch.Models
                     ephemeralOSDiskSettings = DiffDiskSettings.DeserializeDiffDiskSettings(property.Value);
                     continue;
                 }
+                if (property.NameEquals("caching"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    caching = property.Value.GetString().ToBatchDiskCachingType();
+                    continue;
+                }
+                if (property.NameEquals("managedDisk"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managedDisk = ManagedDisk.DeserializeManagedDisk(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("diskSizeGB"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskSizeGB = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("writeAcceleratorEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    writeAcceleratorEnabled = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new OSDisk(ephemeralOSDiskSettings.Value);
+            return new OSDisk(ephemeralOSDiskSettings.Value, Optional.ToNullable(caching), managedDisk.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(writeAcceleratorEnabled));
         }
     }
 }

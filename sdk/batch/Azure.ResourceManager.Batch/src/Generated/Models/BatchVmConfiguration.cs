@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -46,7 +47,9 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="nodePlacementConfiguration"> This configuration will specify rules on how nodes in the pool will be physically allocated. </param>
         /// <param name="extensions"> If specified, the extensions mentioned in this configuration will be installed on each node. </param>
         /// <param name="osDisk"> Contains configuration for ephemeral OSDisk settings. </param>
-        internal BatchVmConfiguration(BatchImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration, IList<BatchVmDataDisk> dataDisks, string licenseType, BatchVmContainerConfiguration containerConfiguration, DiskEncryptionConfiguration diskEncryptionConfiguration, NodePlacementConfiguration nodePlacementConfiguration, IList<BatchVmExtension> extensions, OSDisk osDisk)
+        /// <param name="securityProfile"> Specifies the security profile settings for the virtual machine or virtual machine scale set. </param>
+        /// <param name="serviceArtifactReference"> The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </param>
+        internal BatchVmConfiguration(BatchImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration, IList<BatchVmDataDisk> dataDisks, string licenseType, BatchVmContainerConfiguration containerConfiguration, DiskEncryptionConfiguration diskEncryptionConfiguration, NodePlacementConfiguration nodePlacementConfiguration, IList<BatchVmExtension> extensions, OSDisk osDisk, SecurityProfile securityProfile, WritableSubResource serviceArtifactReference)
         {
             ImageReference = imageReference;
             NodeAgentSkuId = nodeAgentSkuId;
@@ -58,6 +61,8 @@ namespace Azure.ResourceManager.Batch.Models
             NodePlacementConfiguration = nodePlacementConfiguration;
             Extensions = extensions;
             OSDisk = osDisk;
+            SecurityProfile = securityProfile;
+            ServiceArtifactReference = serviceArtifactReference;
         }
 
         /// <summary> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the 'List supported node agent SKUs' operation. </summary>
@@ -120,16 +125,20 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> If specified, the extensions mentioned in this configuration will be installed on each node. </summary>
         public IList<BatchVmExtension> Extensions { get; }
         /// <summary> Contains configuration for ephemeral OSDisk settings. </summary>
-        internal OSDisk OSDisk { get; set; }
-        /// <summary> This property can be used by user in the request to choose which location the operating system should be in. e.g., cache disk space for Ephemeral OS disk provisioning. For more information on Ephemeral OS disk size requirements, please refer to Ephemeral OS disk size requirements for Windows VMs at https://docs.microsoft.com/en-us/azure/virtual-machines/windows/ephemeral-os-disks#size-requirements and Linux VMs at https://docs.microsoft.com/en-us/azure/virtual-machines/linux/ephemeral-os-disks#size-requirements. </summary>
-        public BatchDiffDiskPlacement? EphemeralOSDiskPlacement
+        public OSDisk OSDisk { get; set; }
+        /// <summary> Specifies the security profile settings for the virtual machine or virtual machine scale set. </summary>
+        public SecurityProfile SecurityProfile { get; set; }
+        /// <summary> The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </summary>
+        internal WritableSubResource ServiceArtifactReference { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier ServiceArtifactReferenceId
         {
-            get => OSDisk is null ? default : OSDisk.EphemeralOSDiskPlacement;
+            get => ServiceArtifactReference is null ? default : ServiceArtifactReference.Id;
             set
             {
-                if (OSDisk is null)
-                    OSDisk = new OSDisk();
-                OSDisk.EphemeralOSDiskPlacement = value;
+                if (ServiceArtifactReference is null)
+                    ServiceArtifactReference = new WritableSubResource();
+                ServiceArtifactReference.Id = value;
             }
         }
     }

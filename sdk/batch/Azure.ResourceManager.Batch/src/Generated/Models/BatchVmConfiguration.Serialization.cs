@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -70,6 +71,16 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("osDisk"u8);
                 writer.WriteObjectValue(OSDisk);
             }
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                writer.WritePropertyName("securityProfile"u8);
+                writer.WriteObjectValue(SecurityProfile);
+            }
+            if (Optional.IsDefined(ServiceArtifactReference))
+            {
+                writer.WritePropertyName("serviceArtifactReference"u8);
+                JsonSerializer.Serialize(writer, ServiceArtifactReference);
+            }
             writer.WriteEndObject();
         }
 
@@ -89,6 +100,8 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<NodePlacementConfiguration> nodePlacementConfiguration = default;
             Optional<IList<BatchVmExtension>> extensions = default;
             Optional<OSDisk> osDisk = default;
+            Optional<SecurityProfile> securityProfile = default;
+            Optional<WritableSubResource> serviceArtifactReference = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageReference"u8))
@@ -179,8 +192,26 @@ namespace Azure.ResourceManager.Batch.Models
                     osDisk = OSDisk.DeserializeOSDisk(property.Value);
                     continue;
                 }
+                if (property.NameEquals("securityProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    securityProfile = SecurityProfile.DeserializeSecurityProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("serviceArtifactReference"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serviceArtifactReference = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    continue;
+                }
             }
-            return new BatchVmConfiguration(imageReference, nodeAgentSkuId, windowsConfiguration.Value, Optional.ToList(dataDisks), licenseType.Value, containerConfiguration.Value, diskEncryptionConfiguration.Value, nodePlacementConfiguration.Value, Optional.ToList(extensions), osDisk.Value);
+            return new BatchVmConfiguration(imageReference, nodeAgentSkuId, windowsConfiguration.Value, Optional.ToList(dataDisks), licenseType.Value, containerConfiguration.Value, diskEncryptionConfiguration.Value, nodePlacementConfiguration.Value, Optional.ToList(extensions), osDisk.Value, securityProfile.Value, serviceArtifactReference);
         }
     }
 }
