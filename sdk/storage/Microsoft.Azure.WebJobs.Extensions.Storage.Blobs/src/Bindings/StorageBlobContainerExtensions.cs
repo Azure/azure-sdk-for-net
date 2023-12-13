@@ -44,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
 
         public static async Task<(BlobBaseClient Client, BlobProperties Properties)> GetBlobReferenceFromServerAsync(this BlobContainerClient container, string blobName, CancellationToken cancellationToken = default)
         {
-            BlobProperties blobProperties = await container.GetBlobClient(blobName).GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            BlobProperties blobProperties = await container.GetBlobClient(blobName).GetPropertiesAsync(conditions: null, cancellationToken: cancellationToken).ConfigureAwait(false);
             switch (blobProperties.BlobType)
             {
                 case BlobType.Append:

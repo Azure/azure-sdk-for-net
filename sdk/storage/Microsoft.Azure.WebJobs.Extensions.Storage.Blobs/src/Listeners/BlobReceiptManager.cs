@@ -150,7 +150,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         public async Task MarkCompletedAsync(BlockBlobClient blob, string leaseId,
             CancellationToken cancellationToken)
         {
-            var metadata = (await blob.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Metadata;
+            var metadata = (await blob.GetPropertiesAsync(conditions: null, cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Metadata;
             BlobReceipt.Complete.ToMetadata(metadata);
 
             try

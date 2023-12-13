@@ -241,7 +241,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>Returns the properties of the Page Blob Storage Resource. See <see cref="StorageResourceProperties"/></returns>
         protected override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            Response<BlobProperties> response = await BlobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            Response<BlobProperties> response = await BlobClient.GetPropertiesAsync(conditions: null, cancellationToken: cancellationToken).ConfigureAwait(false);
             GrabEtag(response.GetRawResponse());
             return response.Value.ToStorageResourceProperties();
         }

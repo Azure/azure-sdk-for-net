@@ -169,7 +169,7 @@ namespace Azure.Storage.Blobs.Models
 
             // Get the latest status
             Response<BlobProperties> update = async
-                ? await _client.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false)
+                ? await _client.GetPropertiesAsync(conditions: null, cancellationToken: cancellationToken).ConfigureAwait(false)
                 : _client.GetProperties(cancellationToken: cancellationToken);
 
             // Check if the operation is no longer running
