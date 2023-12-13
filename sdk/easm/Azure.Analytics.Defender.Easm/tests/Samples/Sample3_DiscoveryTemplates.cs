@@ -17,7 +17,7 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
         [SyncOnly]
         public void discoTemplateScenario()
         {
-            #region MyRegion
+            #region Snippet:Sample3_DiscoTemplates_Create_Client
             #if SNIPPET
             string endpoint = "https://<region>.easm.defender.microsoft.com";
             EasmClient client = new EasmClient(new System.Uri(endpoint),

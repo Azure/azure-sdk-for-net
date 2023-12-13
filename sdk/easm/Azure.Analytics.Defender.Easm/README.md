@@ -77,21 +77,59 @@ foreach (AssetResource asset in response)
 }
 ```
 
+### Create Discovery Group
+ 
+You can call the client's `DiscoGroupCreateOrReplace` method to create or replace your disco group
+
+```C# Snippet:Sample2_DiscoveryGroups_Create_Discovery_Group
+string discoveryGroupName = "Sample Disco From C#";
+string discoveryGroupDescription = "This is a sample discovery group generated from C#";
+DiscoGroupData request = new DiscoGroupData();
+foreach (var host in hosts)
+{
+    DiscoSource seed = new DiscoSource();
+    seed.Kind = DiscoSourceKind.Host;
+    seed.Name = host;
+    request.Seeds.Add(seed);
+}
+foreach (var domain in domains)
+{
+    DiscoSource seed = new DiscoSource();
+    seed.Kind = DiscoSourceKind.Domain;
+    seed.Name = domain;
+    request.Seeds.Add(seed);
+}
+request.Name = discoveryGroupName;
+request.Description = discoveryGroupDescription;
+client.CreateOrReplaceDiscoGroup(discoveryGroupName, request);
+```
+
+### Run the Discovery Group
+
+You can call client's `DiscoGroupRun` method to run a disco group
+
+```C# Snippet:Sample2_DiscoveryGroups_Run
+client.RunDiscoGroup(discoveryGroupName);
+Pageable<DiscoGroup> response = client.GetDiscoGroups();
+foreach (DiscoGroup discoGroup in response)
+{
+    Console.WriteLine(discoGroup.Name);
+    Pageable<DiscoRunResult> discoRunPageResponse = client.GetRuns(discoGroup.Name);
+    int index = 0;
+    foreach (DiscoRunResult discoRun in discoRunPageResponse)
+    {
+        Console.WriteLine($" - started: {discoRun.StartedDate}, finished: {discoRun.CompletedDate}, assets found: {discoRun.TotalAssetsFoundCount}, status: {discoRun.State}");
+        if (++index == 5){
+            break;
+        }
+    }
+}
+```
 
 
 ## Troubleshooting
 
-Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
-
-Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
-
-If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
-
 ## Next steps
-
-* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
-* If appropriate, point users to other packages that might be useful.
-* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
 
 ## Contributing
 
