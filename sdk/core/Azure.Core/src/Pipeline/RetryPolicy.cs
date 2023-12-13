@@ -59,11 +59,11 @@ namespace Azure.Core.Pipeline
             {
                 if (async)
                 {
-                    await _policy.ProcessAsync(message, processor, 0).ConfigureAwait(false);
+                    await _policy.ProcessAsync(message, processor, processor.First).ConfigureAwait(false);
                 }
                 else
                 {
-                    _policy.Process(message, processor, 0);
+                    _policy.Process(message, processor, processor.First);
                 }
             }
             catch (AggregateException e)

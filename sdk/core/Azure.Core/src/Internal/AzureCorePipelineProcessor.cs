@@ -10,6 +10,8 @@ namespace Azure.Core.Pipeline
 {
     internal struct AzureCorePipelineProcessor : IReadOnlyList<PipelinePolicy>
     {
+        public readonly int First => -1;
+
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _policies;
         private PolicyEnumerator? _enumerator;
 
