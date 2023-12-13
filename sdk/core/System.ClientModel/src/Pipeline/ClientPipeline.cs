@@ -142,37 +142,13 @@ public partial class ClientPipeline
     public void Send(PipelineMessage message)
     {
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
-        IEnumerator<PipelinePolicy> enumerator = policies.GetEnumerator();
-        if (enumerator.MoveNext())
-        {
-            PipelinePolicy policy = enumerator.Current;
-
-            enumerator.MoveNext();
-            message.NextPolicyIndex++;
-
-            policy.Process(message, policies);
-
-            message.NextPolicyIndex--;
-        }
+        policies[0].Process(message, policies, 0);
     }
 
     public async ValueTask SendAsync(PipelineMessage message)
     {
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
-        IEnumerator<PipelinePolicy> enumerator = policies.GetEnumerator();
-        if (enumerator.MoveNext())
-        {
-            message.NextPolicyIndex++;
-
-            PipelinePolicy policy = enumerator.Current;
-
-            enumerator.MoveNext();
-            message.NextPolicyIndex++;
-
-            await policy.ProcessAsync(message, policies).ConfigureAwait(false);
-
-            message.NextPolicyIndex--;
-        }
+        await policies[0].ProcessAsync(message, policies, 0).ConfigureAwait(false);
     }
 
     private IReadOnlyList<PipelinePolicy> GetProcessor(PipelineMessage message)

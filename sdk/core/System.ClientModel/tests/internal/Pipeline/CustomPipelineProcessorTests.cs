@@ -570,20 +570,20 @@ public class CustomPipelineProcessorTests
             Id = id;
         }
 
-        public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
+        public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
         {
             Stamp(message, "Request");
 
-            ProcessNext(message, pipeline);
+            ProcessNext(message, pipeline, currentIndex);
 
             Stamp(message, "Response");
         }
 
-        public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
+        public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
         {
             Stamp(message, "Request");
 
-            await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+            await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
 
             Stamp(message, "Response");
         }
@@ -667,13 +667,7 @@ public static class RequestOptionsProcessorExtensions
 {
     internal static void Process(this ClientPipeline.RequestOptionsProcessor processor, PipelineMessage message)
     {
-        IEnumerator<PipelinePolicy> enumerator = processor.GetEnumerator();
-        if (enumerator.MoveNext())
-        {
-            PipelinePolicy policy = enumerator.Current;
-            enumerator.MoveNext();
-            policy.Process(message, processor);
-        }
+        processor[0].Process(message, processor, 1);
     }
 }
 #endregion

@@ -35,16 +35,16 @@ public class ResponseBufferingPolicy : PipelinePolicy
         _networkTimeout = networkTimeout;
     }
 
-    public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
+    public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
 
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-        => ProcessSyncOrAsync(message, pipeline, async: false).AsTask().GetAwaiter().GetResult();
+        => ProcessSyncOrAsync(message, pipeline, currentIndex, async: false).AsTask().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 
-    public sealed override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
-        => await ProcessSyncOrAsync(message, pipeline, async: true).ConfigureAwait(false);
+    public sealed override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+        => await ProcessSyncOrAsync(message, pipeline, currentIndex, async: true).ConfigureAwait(false);
 
-    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, bool async)
+    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
         CancellationToken oldToken = message.CancellationToken;
         using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
@@ -65,11 +65,11 @@ public class ResponseBufferingPolicy : PipelinePolicy
             message.CancellationToken = cts.Token;
             if (async)
             {
-                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
             }
             else
             {
-                ProcessNext(message, pipeline);
+                ProcessNext(message, pipeline, currentIndex);
             }
         }
         catch (OperationCanceledException ex)

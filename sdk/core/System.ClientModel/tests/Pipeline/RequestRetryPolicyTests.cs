@@ -23,7 +23,10 @@ public class RequestRetryPolicyTests
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(1, observations.Count);
+
+        // We visited the transport twice due to retries
+        Assert.AreEqual(2, observations.Count);
+        Assert.AreEqual("Transport:Transport", observations[index++]);
         Assert.AreEqual("Transport:Transport", observations[index++]);
     }
 }

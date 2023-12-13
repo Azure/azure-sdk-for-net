@@ -36,7 +36,10 @@ namespace Azure.Core.Pipeline
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
         protected static ValueTask ProcessNextAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            return pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1));
+            message.CurrentPolicyIndex++;
+            ValueTask value = pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1));
+            message.CurrentPolicyIndex--;
+            return value;
         }
 
         /// <summary>
@@ -46,7 +49,9 @@ namespace Azure.Core.Pipeline
         /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after next one.</param>
         protected static void ProcessNext(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
+            message.CurrentPolicyIndex++;
             pipeline.Span[0].Process(message, pipeline.Slice(1));
+            message.CurrentPolicyIndex--;
         }
 
         /// <summary>
@@ -54,9 +59,10 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="message"></param>
         /// <param name="pipeline"></param>
+        /// <param name="currentIndex"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
+        /// <exception cref="InvalidOperationException"></exception>
+        public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
         {
             if (message is not HttpMessage httpMessage)
             {
@@ -76,8 +82,9 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="message"></param>
         /// <param name="pipeline"></param>
-        /// <exception cref="NotImplementedException"></exception>
-        public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
+        /// <param name="currentIndex"></param>
+        /// <exception cref="InvalidOperationException"></exception>
+        public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
         {
             if (message is not HttpMessage httpMessage)
             {
@@ -89,6 +96,7 @@ namespace Azure.Core.Pipeline
                 throw new InvalidOperationException($"Invalid type for pipeline: '{pipeline?.GetType()}'");
             }
 
+            httpMessage.CurrentPolicyIndex = currentIndex;
             Process(httpMessage, processor.Policies);
         }
     }

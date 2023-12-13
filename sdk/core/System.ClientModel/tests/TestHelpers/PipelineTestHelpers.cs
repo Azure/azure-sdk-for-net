@@ -160,20 +160,20 @@ internal class ObservablePolicy : PipelinePolicy
         Id = id;
     }
 
-    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
+    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         Stamp(message, "Request");
 
-        ProcessNext(message, pipeline);
+        ProcessNext(message, pipeline, currentIndex);
 
         Stamp(message, "Response");
     }
 
-    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
+    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         Stamp(message, "Request");
 
-        await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+        await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
 
         Stamp(message, "Response");
     }

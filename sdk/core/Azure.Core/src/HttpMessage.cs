@@ -106,6 +106,8 @@ namespace Azure.Core
 
         internal DateTimeOffset ProcessingStartTime { get; set; }
 
+        internal int CurrentPolicyIndex { get; set; }
+
         /// <summary>
         /// The processing context for the message.
         /// </summary>

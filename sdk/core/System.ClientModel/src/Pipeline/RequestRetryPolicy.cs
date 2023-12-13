@@ -25,15 +25,15 @@ public class RequestRetryPolicy : PipelinePolicy
         _delay = delay;
     }
 
-    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
+    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-        => ProcessSyncOrAsync(message, pipeline, async: false).AsTask().GetAwaiter().GetResult();
+        => ProcessSyncOrAsync(message, pipeline, currentIndex, async: false).AsTask().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 
-    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
-        => await ProcessSyncOrAsync(message, pipeline, async: true).ConfigureAwait(false);
+    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+        => await ProcessSyncOrAsync(message, pipeline, currentIndex, async: true).ConfigureAwait(false);
 
-    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, bool async)
+    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
         List<Exception>? allTryExceptions = null;
 
@@ -54,11 +54,11 @@ public class RequestRetryPolicy : PipelinePolicy
             {
                 if (async)
                 {
-                    await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                    await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
                 }
                 else
                 {
-                    ProcessNext(message, pipeline);
+                    ProcessNext(message, pipeline, currentIndex);
                 }
             }
             catch (Exception ex)

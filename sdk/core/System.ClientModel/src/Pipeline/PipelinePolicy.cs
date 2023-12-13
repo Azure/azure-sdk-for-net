@@ -8,45 +8,21 @@ namespace System.ClientModel.Primitives;
 
 public abstract class PipelinePolicy
 {
-    public abstract void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline);
+    public abstract void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex);
 
-    public abstract ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline);
+    public abstract ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex);
 
-    protected virtual bool ProcessNext(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
+    protected virtual bool ProcessNext(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
-        IEnumerator<PipelinePolicy> enumerator = pipeline.GetEnumerator();
-
-        PipelinePolicy policy = enumerator.Current;
-        if (policy is null)
-        {
-            return false;
-        }
-
-        bool more = enumerator.MoveNext();
-        message.NextPolicyIndex++;
-
-        policy.Process(message, pipeline);
-
-        message.NextPolicyIndex--;
-        return more;
+        currentIndex++;
+        pipeline[currentIndex].Process(message, pipeline, currentIndex);
+        return currentIndex < pipeline.Count;
     }
 
-    protected virtual async Task<bool> ProcessNextAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline)
+    protected virtual async Task<bool> ProcessNextAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
-        IEnumerator<PipelinePolicy> enumerator = pipeline.GetEnumerator();
-
-        PipelinePolicy policy = enumerator.Current;
-        if (policy is null)
-        {
-            return false;
-        }
-
-        bool more = enumerator.MoveNext();
-        message.NextPolicyIndex++;
-
-        await policy.ProcessAsync(message, pipeline).ConfigureAwait(false);
-
-        message.NextPolicyIndex--;
-        return more;
+        currentIndex++;
+        await pipeline[currentIndex].ProcessAsync(message, pipeline, currentIndex).ConfigureAwait(false);
+        return currentIndex < pipeline.Count;
     }
 }
