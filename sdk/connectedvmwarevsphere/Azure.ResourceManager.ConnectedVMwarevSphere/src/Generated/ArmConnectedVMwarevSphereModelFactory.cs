@@ -353,6 +353,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VMwareVirtualNetworkData(id, name, resourceType, systemData, tags, location, extendedLocation, kind, uuid, vCenterId, moRefId, inventoryItemId, moName, customResourceName, statuses?.ToList(), provisioningState);
         }
 
+        /// <summary> Initializes a new instance of <see cref="ConnectedVMwarevSphere.VCenterInventoryItemData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="managedResourceId"> Gets or sets the tracked resource id corresponding to the inventory resource. </param>
+        /// <param name="moRefId"> Gets or sets the MoRef (Managed Object Reference) ID for the inventory item. </param>
+        /// <param name="moName"> Gets or sets the vCenter Managed Object name for the inventory item. </param>
+        /// <param name="provisioningState"> Gets the provisioning state. </param>
+        /// <returns> A new <see cref="ConnectedVMwarevSphere.VCenterInventoryItemData"/> instance for mocking. </returns>
+        public static VCenterInventoryItemData VCenterInventoryItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string managedResourceId = null, string moRefId = null, string moName = null, VMwareResourceProvisioningState? provisioningState = null)
+        {
+            return new VCenterInventoryItemData(id, name, resourceType, systemData, kind, inventoryType: default, managedResourceId, moRefId, moName, provisioningState);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ConnectedVMwarevSphere.VMwareVmInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

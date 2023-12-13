@@ -14,6 +14,44 @@ namespace Azure.Communication.JobRouter
     /// <summary> Model factory for models. </summary>
     public static partial class JobRouterModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="JobRouter.DistributionPolicy"/>. </summary>
+        /// <param name="id"> Id of a distribution policy. </param>
+        /// <param name="name"> Friendly name of this policy. </param>
+        /// <param name="mode"> Mode governing the specific distribution method. </param>
+        /// <returns> A new <see cref="JobRouter.DistributionPolicy"/> instance for mocking. </returns>
+        public static DistributionPolicy DistributionPolicy(string id = null, string name = null, DistributionMode mode = null)
+        {
+            return new DistributionPolicy(etag: null, id, name, offerExpiresAfterSeconds: default, mode);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.ClassificationPolicy"/>. </summary>
+        /// <param name="id"> Id of a classification policy. </param>
+        /// <param name="name"> Friendly name of this policy. </param>
+        /// <param name="fallbackQueueId"> Id of a fallback queue to select if queue selector attachments doesn't find a match. </param>
+        /// <param name="queueSelectorAttachments"> Queue selector attachments used to resolve a queue for a job. </param>
+        /// <param name="prioritizationRule"> A rule to determine a priority score for a job. </param>
+        /// <param name="workerSelectorAttachments"> Worker selector attachments used to attach worker selectors to a job. </param>
+        /// <returns> A new <see cref="JobRouter.ClassificationPolicy"/> instance for mocking. </returns>
+        public static ClassificationPolicy ClassificationPolicy(string id = null, string name = null, string fallbackQueueId = null, IEnumerable<QueueSelectorAttachment> queueSelectorAttachments = null, RouterRule prioritizationRule = null, IEnumerable<WorkerSelectorAttachment> workerSelectorAttachments = null)
+        {
+            queueSelectorAttachments ??= new List<QueueSelectorAttachment>();
+            workerSelectorAttachments ??= new List<WorkerSelectorAttachment>();
+
+            return new ClassificationPolicy(etag: null, id, name, fallbackQueueId, queueSelectorAttachments?.ToList(), prioritizationRule, workerSelectorAttachments?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.ExceptionPolicy"/>. </summary>
+        /// <param name="id"> Id of an exception policy. </param>
+        /// <param name="name"> Friendly name of this policy. </param>
+        /// <param name="exceptionRules"> A collection of exception rules on the exception policy. </param>
+        /// <returns> A new <see cref="JobRouter.ExceptionPolicy"/> instance for mocking. </returns>
+        public static ExceptionPolicy ExceptionPolicy(string id = null, string name = null, IEnumerable<ExceptionRule> exceptionRules = null)
+        {
+            exceptionRules ??= new List<ExceptionRule>();
+
+            return new ExceptionPolicy(etag: null, id, name, exceptionRules?.ToList());
+        }
+
         /// <summary> Initializes a new instance of <see cref="JobRouter.ExceptionRule"/>. </summary>
         /// <param name="id"> Id of an exception rule. </param>
         /// <param name="trigger"> The trigger for this exception rule. </param>
@@ -35,6 +73,56 @@ namespace Azure.Communication.JobRouter
             return new UnknownExceptionAction(id, kind);
         }
 
+        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterQueue"/>. </summary>
+        /// <param name="id"> Id of a queue. </param>
+        /// <param name="name"> Friendly name of this queue. </param>
+        /// <param name="distributionPolicyId"> Id of a distribution policy that will determine how a job is distributed to workers. </param>
+        /// <param name="exceptionPolicyId"> Id of an exception policy that determines various job escalation rules. </param>
+        /// <returns> A new <see cref="JobRouter.RouterQueue"/> instance for mocking. </returns>
+        public static RouterQueue RouterQueue(string id = null, string name = null, string distributionPolicyId = null, string exceptionPolicyId = null)
+        {
+            return new RouterQueue(etag: null, id, name, distributionPolicyId, labels: null, exceptionPolicyId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterJob"/>. </summary>
+        /// <param name="id"> Id of a job. </param>
+        /// <param name="channelReference"> Reference to an external parent context, eg. call ID. </param>
+        /// <param name="status"> The status of the job. </param>
+        /// <param name="enqueuedAt"> Timestamp a job was queued in UTC. </param>
+        /// <param name="channelId"> The channel identifier. eg. voice, chat, etc. </param>
+        /// <param name="classificationPolicyId"> Id of a classification policy used for classifying this job. </param>
+        /// <param name="queueId"> Id of a queue that this job is queued to. </param>
+        /// <param name="priority"> Priority of this job. </param>
+        /// <param name="dispositionCode"> Reason code for cancelled or closed jobs. </param>
+        /// <param name="requestedWorkerSelectors"> A collection of manually specified worker selectors, which a worker must satisfy in order to process this job. </param>
+        /// <param name="attachedWorkerSelectors"> A collection of worker selectors attached by a classification policy, which a worker must satisfy in order to process this job. </param>
+        /// <param name="assignments"> A collection of the assignments of the job. Key is AssignmentId. </param>
+        /// <param name="notes"> Notes attached to a job, sorted by timestamp. </param>
+        /// <param name="scheduledAt"> If set, job will be scheduled to be enqueued at a given time. </param>
+        /// <param name="matchingMode"> If provided, will determine how job matching will be carried out. Default mode: QueueAndMatchMode. </param>
+        /// <returns> A new <see cref="JobRouter.RouterJob"/> instance for mocking. </returns>
+        public static RouterJob RouterJob(string id = null, string channelReference = null, RouterJobStatus? status = null, DateTimeOffset? enqueuedAt = null, string channelId = null, string classificationPolicyId = null, string queueId = null, int? priority = null, string dispositionCode = null, IEnumerable<RouterWorkerSelector> requestedWorkerSelectors = null, IEnumerable<RouterWorkerSelector> attachedWorkerSelectors = null, IReadOnlyDictionary<string, RouterJobAssignment> assignments = null, IEnumerable<RouterJobNote> notes = null, DateTimeOffset? scheduledAt = null, JobMatchingMode matchingMode = null)
+        {
+            requestedWorkerSelectors ??= new List<RouterWorkerSelector>();
+            attachedWorkerSelectors ??= new List<RouterWorkerSelector>();
+            assignments ??= new Dictionary<string, RouterJobAssignment>();
+            notes ??= new List<RouterJobNote>();
+
+            return new RouterJob(etag: null, id, channelReference, status, enqueuedAt, channelId, classificationPolicyId, queueId, priority, dispositionCode, requestedWorkerSelectors?.ToList(), attachedWorkerSelectors?.ToList(), labels: null, assignments, tags: null, notes?.ToList(), scheduledAt, matchingMode);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterWorkerSelector"/>. </summary>
+        /// <param name="key"> The label key to query against. </param>
+        /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the worker selector. </param>
+        /// <param name="expedite"> Pushes a job to the front of the queue as long as this selector is active. </param>
+        /// <param name="status"> Status of the worker selector. </param>
+        /// <param name="expiresAt"> The time at which this worker selector expires in UTC. </param>
+        /// <returns> A new <see cref="JobRouter.RouterWorkerSelector"/> instance for mocking. </returns>
+        public static RouterWorkerSelector RouterWorkerSelector(string key = null, LabelOperator labelOperator = default, bool? expedite = null, RouterWorkerSelectorStatus? status = null, DateTimeOffset? expiresAt = null)
+        {
+            return new RouterWorkerSelector(key, labelOperator, value: null, expiresAfterSeconds: default, expedite, status, expiresAt);
+        }
+
         /// <summary> Initializes a new instance of <see cref="JobRouter.RouterJobAssignment"/>. </summary>
         /// <param name="assignmentId"> Id of a job assignment. </param>
         /// <param name="workerId"> Id of the Worker assigned to the job. </param>
@@ -54,6 +142,27 @@ namespace Azure.Communication.JobRouter
         public static RouterJobNote RouterJobNote(string message = null, DateTimeOffset? addedAt = null)
         {
             return new RouterJobNote(message, addedAt);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterJobPositionDetails"/>. </summary>
+        /// <param name="jobId"> Id of the job these details are about. </param>
+        /// <param name="position"> Position of the job in question within that queue. </param>
+        /// <param name="queueId"> Id of the queue this job is enqueued in. </param>
+        /// <param name="queueLength"> Length of the queue: total number of enqueued jobs. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="queueId"/> is null. </exception>
+        /// <returns> A new <see cref="JobRouter.RouterJobPositionDetails"/> instance for mocking. </returns>
+        public static RouterJobPositionDetails RouterJobPositionDetails(string jobId = null, int position = default, string queueId = null, int queueLength = default)
+        {
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (queueId == null)
+            {
+                throw new ArgumentNullException(nameof(queueId));
+            }
+
+            return new RouterJobPositionDetails(jobId, position, queueId, queueLength, estimatedWaitTimeMinutes: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.UnassignJobResult"/>. </summary>
@@ -93,6 +202,37 @@ namespace Azure.Communication.JobRouter
             }
 
             return new AcceptJobOfferResult(assignmentId, jobId, workerId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterQueueStatistics"/>. </summary>
+        /// <param name="queueId"> Id of the queue these details are about. </param>
+        /// <param name="length"> Length of the queue: total number of enqueued jobs. </param>
+        /// <param name="longestJobWaitTimeMinutes"> The wait time of the job that has been enqueued in this queue for the longest. </param>
+        /// <returns> A new <see cref="JobRouter.RouterQueueStatistics"/> instance for mocking. </returns>
+        public static RouterQueueStatistics RouterQueueStatistics(string queueId = null, int length = default, double? longestJobWaitTimeMinutes = null)
+        {
+            return new RouterQueueStatistics(queueId, length, estimatedWaitTimeMinutes: null, longestJobWaitTimeMinutes);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterWorker"/>. </summary>
+        /// <param name="id"> Id of a worker. </param>
+        /// <param name="state"> Current state of a worker. </param>
+        /// <param name="queues"> Collection of queue(s) that this worker can receive work from. </param>
+        /// <param name="capacity"> The total capacity score this worker has to manage multiple concurrent jobs. </param>
+        /// <param name="channels"> Collection of channel(s) this worker can handle and their impact on the workers capacity. </param>
+        /// <param name="offers"> A list of active offers issued to this worker. </param>
+        /// <param name="assignedJobs"> A list of assigned jobs attached to this worker. </param>
+        /// <param name="loadRatio"> A value indicating the workers capacity. A value of '1' means all capacity is consumed. A value of '0' means no capacity is currently consumed. </param>
+        /// <param name="availableForOffers"> A flag indicating this worker is open to receive offers or not. </param>
+        /// <returns> A new <see cref="JobRouter.RouterWorker"/> instance for mocking. </returns>
+        public static RouterWorker RouterWorker(string id = null, RouterWorkerState? state = null, IEnumerable<string> queues = null, int? capacity = null, IEnumerable<RouterChannel> channels = null, IEnumerable<RouterJobOffer> offers = null, IEnumerable<RouterWorkerAssignment> assignedJobs = null, double? loadRatio = null, bool? availableForOffers = null)
+        {
+            queues ??= new List<string>();
+            channels ??= new List<RouterChannel>();
+            offers ??= new List<RouterJobOffer>();
+            assignedJobs ??= new List<RouterWorkerAssignment>();
+
+            return new RouterWorker(etag: null, id, state, queues?.ToList(), capacity, labels: null, tags: null, channels?.ToList(), offers?.ToList(), assignedJobs?.ToList(), loadRatio, availableForOffers);
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.RouterChannel"/>. </summary>
@@ -167,6 +307,15 @@ namespace Azure.Communication.JobRouter
             return new ConditionalQueueSelectorAttachment(QueueSelectorAttachmentKind.Conditional, condition, queueSelectors?.ToList());
         }
 
+        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterQueueSelector"/>. </summary>
+        /// <param name="key"> The label key to query against. </param>
+        /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the label selector. </param>
+        /// <returns> A new <see cref="JobRouter.RouterQueueSelector"/> instance for mocking. </returns>
+        public static RouterQueueSelector RouterQueueSelector(string key = null, LabelOperator labelOperator = default)
+        {
+            return new RouterQueueSelector(key, labelOperator, value: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="JobRouter.ConditionalWorkerSelectorAttachment"/>. </summary>
         /// <param name="condition"> The condition that must be true for the worker selectors to be attached. </param>
         /// <param name="workerSelectors"> The worker selectors to attach. </param>
@@ -176,6 +325,14 @@ namespace Azure.Communication.JobRouter
             workerSelectors ??= new List<RouterWorkerSelector>();
 
             return new ConditionalWorkerSelectorAttachment(WorkerSelectorAttachmentKind.Conditional, condition, workerSelectors?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.ExpressionRouterRule"/>. </summary>
+        /// <param name="expression"> An expression to evaluate. Should contain return statement with calculated values. </param>
+        /// <returns> A new <see cref="JobRouter.ExpressionRouterRule"/> instance for mocking. </returns>
+        public static ExpressionRouterRule ExpressionRouterRule(string expression = null)
+        {
+            return new ExpressionRouterRule(RouterRuleKind.Expression, language: null, expression);
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.FunctionRouterRule"/>. </summary>
@@ -209,6 +366,15 @@ namespace Azure.Communication.JobRouter
             return new PassThroughQueueSelectorAttachment(QueueSelectorAttachmentKind.PassThrough, key, labelOperator);
         }
 
+        /// <summary> Initializes a new instance of <see cref="JobRouter.PassThroughWorkerSelectorAttachment"/>. </summary>
+        /// <param name="key"> The label key to query against. </param>
+        /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
+        /// <returns> A new <see cref="JobRouter.PassThroughWorkerSelectorAttachment"/> instance for mocking. </returns>
+        public static PassThroughWorkerSelectorAttachment PassThroughWorkerSelectorAttachment(string key = null, LabelOperator labelOperator = default)
+        {
+            return new PassThroughWorkerSelectorAttachment(WorkerSelectorAttachmentKind.PassThrough, key, labelOperator, expiresAfterSeconds: default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="JobRouter.QueueLengthExceptionTrigger"/>. </summary>
         /// <param name="threshold"> Threshold of number of jobs ahead in the queue to for this trigger to fire. </param>
         /// <returns> A new <see cref="JobRouter.QueueLengthExceptionTrigger"/> instance for mocking. </returns>
@@ -226,6 +392,15 @@ namespace Azure.Communication.JobRouter
             queueSelectors ??= new List<RouterQueueSelector>();
 
             return new QueueWeightedAllocation(weight, queueSelectors?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.ReclassifyExceptionAction"/>. </summary>
+        /// <param name="id"> Unique Id of the exception action. </param>
+        /// <param name="classificationPolicyId"> The new classification policy that will determine queue, priority and worker selectors. </param>
+        /// <returns> A new <see cref="JobRouter.ReclassifyExceptionAction"/> instance for mocking. </returns>
+        public static ReclassifyExceptionAction ReclassifyExceptionAction(string id = null, string classificationPolicyId = null)
+        {
+            return new ReclassifyExceptionAction(id, ExceptionActionKind.Reclassify, classificationPolicyId, labelsToUpsert: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.RuleEngineQueueSelectorAttachment"/>. </summary>
