@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.MetricsAdvisor;
 using Azure.AI.MetricsAdvisor.Administration;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -24,6 +25,58 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static DataSourceCredentialEntity DataSourceCredentialEntity(string credentialKind = "Unknown", string id = null, string name = null, string description = null)
         {
             return new UnknownDataSourceCredential(credentialKind, id, name, description);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricsAdvisor.MetricFeedback"/>. </summary>
+        /// <param name="feedbackKind"> feedback type. </param>
+        /// <param name="id"> feedback unique id. </param>
+        /// <param name="createdOn"> feedback created time. </param>
+        /// <param name="userPrincipal"> user who gives this feedback. </param>
+        /// <param name="metricId"> metric unique id. </param>
+        /// <returns> A new <see cref="MetricsAdvisor.MetricFeedback"/> instance for mocking. </returns>
+        public static MetricFeedback MetricFeedback(string feedbackKind = "Unknown", string id = null, DateTimeOffset? createdOn = null, string userPrincipal = null, string metricId = null)
+        {
+            return new UnknownMetricFeedback(feedbackKind, id, createdOn, userPrincipal, metricId, dimensionFilter: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Administration.NotificationHook"/>. </summary>
+        /// <param name="hookKind"> hook type. </param>
+        /// <param name="id"> Hook unique id. </param>
+        /// <param name="name"> hook unique name. </param>
+        /// <param name="description"> hook description. </param>
+        /// <param name="administrators"> hook administrators. </param>
+        /// <returns> A new <see cref="Administration.NotificationHook"/> instance for mocking. </returns>
+        public static NotificationHook NotificationHook(string hookKind = "Unknown", string id = null, string name = null, string description = null, IEnumerable<string> administrators = null)
+        {
+            administrators ??= new List<string>();
+
+            return new UnknownHookInfo(hookKind, id, name, description, internalExternalLink: null, administrators?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MetricSeriesData"/>. </summary>
+        /// <param name="timestamps"> timestamps of the data related to this time series. </param>
+        /// <param name="metricValues"> values of the data related to this time series. </param>
+        /// <returns> A new <see cref="Models.MetricSeriesData"/> instance for mocking. </returns>
+        public static MetricSeriesData MetricSeriesData(IEnumerable<DateTimeOffset> timestamps = null, IEnumerable<double> metricValues = null)
+        {
+            timestamps ??= new List<DateTimeOffset>();
+            metricValues ??= new List<double>();
+
+            return new MetricSeriesData(definition: null, timestamps?.ToList(), metricValues?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MetricSeriesDefinition"/>. </summary>
+        /// <param name="metricId"> metric unique id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metricId"/> is null. </exception>
+        /// <returns> A new <see cref="Models.MetricSeriesDefinition"/> instance for mocking. </returns>
+        public static MetricSeriesDefinition MetricSeriesDefinition(string metricId = null)
+        {
+            if (metricId == null)
+            {
+                throw new ArgumentNullException(nameof(metricId));
+            }
+
+            return new MetricSeriesDefinition(metricId, dimension: null);
         }
     }
 }
