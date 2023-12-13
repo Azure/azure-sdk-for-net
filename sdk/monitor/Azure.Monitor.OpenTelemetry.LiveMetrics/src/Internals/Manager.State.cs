@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 {
@@ -21,6 +21,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         internal TimeSpan _period;
         private readonly TimeSpan _pingPeriod = TimeSpan.FromSeconds(5);
         private readonly TimeSpan _postPeriod = TimeSpan.FromSeconds(1);
+        // TODO: WILL NEED ADDITIONAL PERIODS DEFINED FOR BACKOFF.
 
         private void InitializeState()
         {
@@ -42,7 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             _period = _postPeriod;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0102", Justification = "TODO: FIND THE AZURE COMPLIANT WAY TO DO TASK.DELAY().")]
+        [SuppressMessage("Usage", "AZC0102: Do not use GetAwaiter().GetResult().", Justification = "The EnsureCompleted() extension method is a wrapper around GetAwaiter().GetResult() without adding value. Worse, it breaks during Debug making it impossible to test Live Metrics.")]
         private void Run(CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
@@ -51,7 +52,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
                 _callbackAction.Invoke();
 
-                // try to factor in the time spend in this tick when scheduling the next one so that the average period is close to the intended
+                // Subtract the time spent in this tick when scheduling the next tick so that the average period is close to the intended.
                 var timeSpentInThisTick = DateTime.UtcNow - callbackStarted;
                 var nextTick = _period - timeSpentInThisTick;
                 nextTick = nextTick > TimeSpan.Zero ? nextTick : TimeSpan.Zero;
