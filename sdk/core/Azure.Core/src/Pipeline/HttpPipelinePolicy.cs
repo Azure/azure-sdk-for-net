@@ -36,10 +36,7 @@ namespace Azure.Core.Pipeline
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
         protected static ValueTask ProcessNextAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            message.CurrentPolicyIndex++;
-            ValueTask value = pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1));
-            message.CurrentPolicyIndex--;
-            return value;
+            return pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1));
         }
 
         /// <summary>
@@ -49,9 +46,7 @@ namespace Azure.Core.Pipeline
         /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after next one.</param>
         protected static void ProcessNext(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            message.CurrentPolicyIndex++;
             pipeline.Span[0].Process(message, pipeline.Slice(1));
-            message.CurrentPolicyIndex--;
         }
 
         /// <summary>
@@ -96,7 +91,6 @@ namespace Azure.Core.Pipeline
                 throw new InvalidOperationException($"Invalid type for pipeline: '{pipeline?.GetType()}'");
             }
 
-            httpMessage.CurrentPolicyIndex = currentIndex;
             Process(httpMessage, processor.Policies);
         }
     }

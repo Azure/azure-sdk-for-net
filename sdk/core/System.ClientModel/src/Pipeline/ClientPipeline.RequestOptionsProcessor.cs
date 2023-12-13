@@ -31,7 +31,7 @@ public partial class ClientPipeline
         // Custom per-try policies used for the scope of the method invocation.
         private readonly ReadOnlyMemory<PipelinePolicy> _customBeforeTransportPolicies;
 
-        private readonly PolicyEnumerator _enumerator;
+        private PolicyEnumerator? _enumerator;
 
         public RequestOptionsProcessor(
             ReadOnlyMemory<PipelinePolicy> fixedPolicies,
@@ -61,8 +61,6 @@ public partial class ClientPipeline
                 _customPerCallPolicies.Length +
                 _customPerTryPolicies.Length +
                 _customBeforeTransportPolicies.Length;
-
-            _enumerator = new(this);
         }
 
         public PipelinePolicy this[int index]
@@ -77,10 +75,10 @@ public partial class ClientPipeline
         public int Count => _length;
 
         public IEnumerator<PipelinePolicy> GetEnumerator()
-            => _enumerator;
+            => _enumerator ??= new(this);
 
         IEnumerator IEnumerable.GetEnumerator()
-            => _enumerator;
+            => GetEnumerator();
 
         /// <summary>
         /// This custom pipeline is divided into seven segments by the per-call,

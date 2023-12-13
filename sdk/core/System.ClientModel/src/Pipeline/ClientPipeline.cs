@@ -166,23 +166,20 @@ public partial class ClientPipeline
     private struct PipelineProcessor : IReadOnlyList<PipelinePolicy>
     {
         private readonly ReadOnlyMemory<PipelinePolicy> _policies;
-        private readonly PolicyEnumerator _enumerator;
+        private PolicyEnumerator? _enumerator;
 
         public PipelineProcessor(ReadOnlyMemory<PipelinePolicy> policies)
-        {
-            _policies = policies;
-            _enumerator = new(this);
-        }
+            => _policies = policies;
 
         public PipelinePolicy this[int index] => _policies.Span[index];
 
         public int Count => _policies.Length;
 
-        public readonly IEnumerator<PipelinePolicy> GetEnumerator()
-            => _enumerator;
+        public IEnumerator<PipelinePolicy> GetEnumerator()
+            => _enumerator ??= new(this);
 
-        readonly IEnumerator IEnumerable.GetEnumerator()
-            => _enumerator;
+        IEnumerator IEnumerable.GetEnumerator()
+            => GetEnumerator();
     }
 
     private class PolicyEnumerator : IEnumerator<PipelinePolicy>

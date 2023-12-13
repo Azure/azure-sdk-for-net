@@ -11,13 +11,10 @@ namespace Azure.Core.Pipeline
     internal struct AzureCorePipelineProcessor : IReadOnlyList<PipelinePolicy>
     {
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _policies;
-        private readonly PolicyEnumerator _enumerator;
+        private PolicyEnumerator? _enumerator;
 
         public AzureCorePipelineProcessor(ReadOnlyMemory<HttpPipelinePolicy> policies)
-        {
-            _policies = policies;
-            _enumerator = new(this);
-        }
+            => _policies = policies;
 
         public ReadOnlyMemory<HttpPipelinePolicy> Policies
             => _policies;
@@ -27,10 +24,10 @@ namespace Azure.Core.Pipeline
         public int Count => _policies.Length;
 
         public IEnumerator<PipelinePolicy> GetEnumerator()
-            => _enumerator;
+            => _enumerator ??= new(this);
 
         IEnumerator IEnumerable.GetEnumerator()
-            => _enumerator;
+            => GetEnumerator();
 
         private class PolicyEnumerator : IEnumerator<PipelinePolicy>
         {
