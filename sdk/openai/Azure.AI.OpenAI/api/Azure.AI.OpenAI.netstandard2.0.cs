@@ -433,6 +433,7 @@ namespace Azure.AI.OpenAI
     public abstract partial class ChatRequestMessage
     {
         protected ChatRequestMessage() { }
+        public Azure.AI.OpenAI.ChatRole Role { get { throw null; } set { } }
     }
     public partial class ChatRequestSystemMessage : Azure.AI.OpenAI.ChatRequestMessage
     {
@@ -451,6 +452,8 @@ namespace Azure.AI.OpenAI
         public ChatRequestUserMessage(params Azure.AI.OpenAI.ChatMessageContentItem[] content) { }
         public ChatRequestUserMessage(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatMessageContentItem> content) { }
         public ChatRequestUserMessage(string content) { }
+        public string Content { get { throw null; } protected set { } }
+        public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatMessageContentItem> MultimodalContentItems { get { throw null; } }
         public string Name { get { throw null; } set { } }
     }
     public partial class ChatResponseMessage

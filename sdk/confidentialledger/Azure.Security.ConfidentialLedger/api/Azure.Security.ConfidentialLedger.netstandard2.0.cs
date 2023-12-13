@@ -41,6 +41,7 @@ namespace Azure.Security.ConfidentialLedger
     {
         public ConfidentialLedgerClientOptions(Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion version = Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion.V2022_05_13) { }
         public System.Uri CertificateEndpoint { get { throw null; } set { } }
+        public bool VerifyConnection { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2022_05_13 = 1,

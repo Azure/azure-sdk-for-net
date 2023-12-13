@@ -253,5 +253,89 @@ namespace Azure.ResourceManager.ArcScVmm.Models
 
             return new ScVmmAvailabilitySetData(id, name, resourceType, systemData, tags, location, extendedLocation, availabilitySetName, vmmServerId, provisioningState);
         }
+
+        /// <summary> Initializes a new instance of <see cref="ArcScVmm.InventoryItemData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties">
+        /// Resource properties.
+        /// Please note <see cref="Models.InventoryItemProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.CloudInventoryItem"/>, <see cref="Models.VirtualMachineInventoryItem"/>, <see cref="Models.VirtualMachineTemplateInventoryItem"/> and <see cref="Models.VirtualNetworkInventoryItem"/>.
+        /// </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <returns> A new <see cref="ArcScVmm.InventoryItemData"/> instance for mocking. </returns>
+        public static InventoryItemData InventoryItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, InventoryItemProperties properties = null, string kind = null)
+        {
+            return new InventoryItemData(id, name, resourceType, systemData, properties, kind);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InventoryItemProperties"/>. </summary>
+        /// <param name="inventoryType"> They inventory type. </param>
+        /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
+        /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
+        /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
+        /// <param name="provisioningState"> Gets the provisioning state. </param>
+        /// <returns> A new <see cref="Models.InventoryItemProperties"/> instance for mocking. </returns>
+        public static InventoryItemProperties InventoryItemProperties(string inventoryType = "Unknown", string managedResourceId = null, string uuid = null, string inventoryItemName = null, string provisioningState = null)
+        {
+            return new UnknownInventoryItemProperties(inventoryType, managedResourceId, uuid, inventoryItemName, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CloudInventoryItem"/>. </summary>
+        /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
+        /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
+        /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
+        /// <param name="provisioningState"> Gets the provisioning state. </param>
+        /// <returns> A new <see cref="Models.CloudInventoryItem"/> instance for mocking. </returns>
+        public static CloudInventoryItem CloudInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, string provisioningState = null)
+        {
+            return new CloudInventoryItem(InventoryType.Cloud, managedResourceId, uuid, inventoryItemName, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkInventoryItem"/>. </summary>
+        /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
+        /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
+        /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
+        /// <param name="provisioningState"> Gets the provisioning state. </param>
+        /// <returns> A new <see cref="Models.VirtualNetworkInventoryItem"/> instance for mocking. </returns>
+        public static VirtualNetworkInventoryItem VirtualNetworkInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, string provisioningState = null)
+        {
+            return new VirtualNetworkInventoryItem(InventoryType.VirtualNetwork, managedResourceId, uuid, inventoryItemName, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineTemplateInventoryItem"/>. </summary>
+        /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
+        /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
+        /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
+        /// <param name="provisioningState"> Gets the provisioning state. </param>
+        /// <param name="cpuCount"> Gets or sets the desired number of vCPUs for the vm. </param>
+        /// <param name="memoryMB"> MemoryMB is the desired size of a virtual machine's memory, in MB. </param>
+        /// <param name="osType"> Gets or sets the type of the os. </param>
+        /// <param name="osName"> Gets or sets os name. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineTemplateInventoryItem"/> instance for mocking. </returns>
+        public static VirtualMachineTemplateInventoryItem VirtualMachineTemplateInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, string provisioningState = null, int? cpuCount = null, int? memoryMB = null, OSType? osType = null, string osName = null)
+        {
+            return new VirtualMachineTemplateInventoryItem(InventoryType.VirtualMachineTemplate, managedResourceId, uuid, inventoryItemName, provisioningState, cpuCount, memoryMB, osType, osName);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineInventoryItem"/>. </summary>
+        /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
+        /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
+        /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
+        /// <param name="provisioningState"> Gets the provisioning state. </param>
+        /// <param name="osType"> Gets or sets the type of the os. </param>
+        /// <param name="osName"> Gets or sets os name. </param>
+        /// <param name="powerState"> Gets the power state of the virtual machine. </param>
+        /// <param name="ipAddresses"> Gets or sets the nic ip addresses. </param>
+        /// <param name="cloud"> Cloud inventory resource details where the VM is present. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineInventoryItem"/> instance for mocking. </returns>
+        public static VirtualMachineInventoryItem VirtualMachineInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, string provisioningState = null, OSType? osType = null, string osName = null, string powerState = null, IEnumerable<string> ipAddresses = null, InventoryItemDetails cloud = null)
+        {
+            ipAddresses ??= new List<string>();
+
+            return new VirtualMachineInventoryItem(InventoryType.VirtualMachine, managedResourceId, uuid, inventoryItemName, provisioningState, osType, osName, powerState, ipAddresses?.ToList(), cloud);
+        }
     }
 }
