@@ -105,6 +105,7 @@ namespace Azure.Core
         internal int RetryNumber { get; set; }
 
         internal DateTimeOffset ProcessingStartTime { get; set; }
+
         /// <summary>
         /// The processing context for the message.
         /// </summary>
