@@ -11,11 +11,8 @@ namespace System.ClientModel.Tests;
 public class CustomPipelineProcessorTests
 {
     [Test]
-    public void EmptyProcessorReturnsFalse()
+    public void EmptyProcessorWontMoveNext()
     {
-        PipelineRequest request = new MockRequest();
-        PipelineMessage message = new PipelineMessage(request);
-
         ClientPipeline.RequestOptionsProcessor processor = new(
             fixedPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
             perCallPolicies: ReadOnlyMemory<PipelinePolicy>.Empty,
@@ -25,7 +22,8 @@ public class CustomPipelineProcessorTests
             perTryIndex: 0,
             beforeTransportIndex: 0);
 
-        processor.GetEnumerator().Current.ProcessAsync(message, processor);
+        IEnumerator<PipelinePolicy> enumerator = processor.GetEnumerator();
+        Assert.IsFalse(enumerator.MoveNext());
     }
 
     [Test]
@@ -95,12 +93,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 0,
             beforeTransportIndex: 0);
 
-        IEnumerator<PipelinePolicy> enumerator = processor.GetEnumerator();
-        enumerator.MoveNext();
-        PipelinePolicy policy = enumerator.Current;
-        policy.ProcessAsync(message, processor);
-
-        //processor.GetEnumerator().Current.ProcessAsync(message, processor);
+        processor.Process(message);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -127,7 +120,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 0,
             beforeTransportIndex: 0);
 
-        processor.GetEnumerator().Current.ProcessAsync(message, processor);
+        processor.Process(message);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -157,7 +150,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 0,
             beforeTransportIndex: 0);
 
-        processor.GetEnumerator().Current.ProcessAsync(message, processor);
+        processor.Process(message);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -192,7 +185,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 0,
             beforeTransportIndex: 0);
 
-        processor.GetEnumerator().Current.ProcessAsync(message, processor);
+        processor.Process(message);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -234,7 +227,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 2,
             beforeTransportIndex: 2);
 
-        processor.GetEnumerator().Current.ProcessAsync(message, processor);
+        processor.Process(message);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -276,7 +269,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 2,
             beforeTransportIndex: 2);
 
-        processor.GetEnumerator().Current.ProcessAsync(message, processor);
+        processor.Process(message);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -318,7 +311,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 0,
             beforeTransportIndex: 0);
 
-        processor.GetEnumerator().Current.ProcessAsync(message, processor);
+        processor.Process(message);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -360,7 +353,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 2,
             beforeTransportIndex: 2);
 
-        processor.GetEnumerator().Current.ProcessAsync(message, processor);
+        processor.Process(message);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -402,7 +395,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 2,
             beforeTransportIndex: 2);
 
-        processor.GetEnumerator().Current.ProcessAsync(message, processor);
+        processor.Process(message);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -447,7 +440,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 0,
             beforeTransportIndex: 0);
 
-        processor.GetEnumerator().Current.ProcessAsync(message, processor);
+        processor.Process(message);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -494,7 +487,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 2,
             beforeTransportIndex: 2);
 
-        processor.GetEnumerator().Current.ProcessAsync(message, processor);
+        processor.Process(message);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -543,7 +536,7 @@ public class CustomPipelineProcessorTests
             perTryIndex: 2,
             beforeTransportIndex: 2);
 
-        processor.GetEnumerator().Current.ProcessAsync(message, processor);
+        processor.Process(message);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -619,6 +612,7 @@ public class CustomPipelineProcessorTests
 
             return prop is List<string> list ? list : new List<string>();
         }
+        public override string ToString() => $"ObservablePolicy:{Id}";
     }
 
     internal class MockRequest : PipelineRequest
@@ -663,5 +657,23 @@ public class CustomPipelineProcessorTests
             throw new NotImplementedException();
         }
     }
+
     #endregion
 }
+
+#region Extension helpers
+
+public static class RequestOptionsProcessorExtensions
+{
+    internal static void Process(this ClientPipeline.RequestOptionsProcessor processor, PipelineMessage message)
+    {
+        IEnumerator<PipelinePolicy> enumerator = processor.GetEnumerator();
+        if (enumerator.MoveNext())
+        {
+            PipelinePolicy policy = enumerator.Current;
+            enumerator.MoveNext();
+            policy.Process(message, processor);
+        }
+    }
+}
+#endregion
