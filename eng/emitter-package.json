@@ -9,6 +9,7 @@
     "@typespec/versioning": "0.50.0",
     "@azure-tools/typespec-client-generator-core": "0.36.1",
     "@azure-tools/typespec-azure-core": "0.36.0",
+    "@azure-tools/typespec-azure-resource-manager": "0.36.0",
     "@typespec/rest": "0.50.0"
   }
 }
