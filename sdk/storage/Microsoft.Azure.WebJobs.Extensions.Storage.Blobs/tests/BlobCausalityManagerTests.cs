@@ -117,7 +117,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
             if (isFetchSuccess.HasValue)
             {
-                var fetchAttributesSetup = blobMock.Setup(s => s.GetPropertiesAsync(It.IsAny<CancellationToken>()));
+                var fetchAttributesSetup = blobMock.Setup(s => s.GetPropertiesAsync(CancellationToken: It.IsAny<CancellationToken>()));
                 if (isFetchSuccess.Value)
                 {
                     var blobProperties = BlobsModelFactory.BlobProperties(metadata: metadata);
