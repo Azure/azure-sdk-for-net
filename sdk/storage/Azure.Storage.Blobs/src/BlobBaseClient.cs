@@ -4859,7 +4859,6 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response<BlobProperties> GetProperties(
             BlobGetPropertiesOptions options = default,
             CancellationToken cancellationToken = default) =>
-            // TODO: this remains hidden until we have more options that are non-HNS
             GetPropertiesInternal(
                 options?.Conditions,
                 async: false,
@@ -4894,9 +4893,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        #pragma warning disable AZC0002
+#pragma warning disable AZC0002
         public virtual Response<BlobProperties> GetProperties(
-            #pragma warning restore AZC0002
+#pragma warning restore AZC0002
             BlobRequestConditions conditions,
             CancellationToken cancellationToken) =>
             GetPropertiesInternal(
@@ -4969,9 +4968,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        #pragma warning disable AZC0002
+#pragma warning disable AZC0002
         public virtual async Task<Response<BlobProperties>> GetPropertiesAsync(
-            #pragma warning restore AZC0002
+#pragma warning restore AZC0002
             BlobRequestConditions conditions,
             CancellationToken cancellationToken) =>
             await GetPropertiesInternal(

@@ -1703,8 +1703,8 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
 #pragma warning disable CS0114 // Member hides inherited member; missing override keyword
         public virtual Response<PathProperties> GetProperties(
-            DataLakePathGetPropertiesOptions options = default,
 #pragma warning restore CS0114 // Member hides inherited member; missing override keyword
+            DataLakePathGetPropertiesOptions options = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(GetProperties)}");
@@ -1862,9 +1862,9 @@ namespace Azure.Storage.Files.DataLake
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        #pragma warning disable AZC0002
+#pragma warning disable AZC0002
         public override async Task<Response<PathProperties>> GetPropertiesAsync(
-            #pragma warning restore AZC0002
+#pragma warning restore AZC0002
             DataLakeRequestConditions conditions,
             CancellationToken cancellationToken)
         {

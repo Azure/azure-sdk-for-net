@@ -4191,7 +4191,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2024_05_04)]
         public async Task GetPropertiesAsyncWithUPN()
         {
-            await using DisposingFileSystem test = await GetNewFileSystem(publicAccessType: PublicAccessType.None);;
+            await using DisposingFileSystem test = await GetNewFileSystem(publicAccessType: PublicAccessType.None);
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
 
             DataLakePathGetPropertiesOptions options = new DataLakePathGetPropertiesOptions
