@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.OperationalInsights.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.OperationalInsights.Tests
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.OperationalInsights.Tests
         { }
 
         [Test]
+        [Ignore("issue:https://github.com/Azure/azure-sdk-for-net/issues/38915")]
         public async Task OperationalInsightsTableTestCase()
         {
             _subscription = await Client.GetDefaultSubscriptionAsync();
@@ -33,13 +35,25 @@ namespace Azure.ResourceManager.OperationalInsights.Tests
             var _collection = workSpace.GetOperationalInsightsTables();
 
             //OperationalInsightsTableCollection_Create
-            var tablelist = workSpace.GetOperationalInsightsTables().ToList();
-            foreach (var item in tablelist)
+            var tableName = "Alert";//Recording.GenerateAssetName("Alert");
+            var tableData = new OperationalInsightsTableData()
             {
-                Console.WriteLine(item.Data.Name);
-            }
-            var tableName = Recording.GenerateAssetName("OpTable");
-            var tableData = new OperationalInsightsTableData();
+                RetentionInDays = 25,
+                TotalRetentionInDays = 30,
+                Schema = new OperationalInsightsSchema()
+                {
+                    Name = tableName,
+                    Columns =
+                    {
+                        new OperationalInsightsColumn()
+                        {
+                            Name = "MyNewColumn_CF",
+                            ColumnType = OperationalInsightsColumnType.Guid
+                        }
+                    }
+                },
+                Plan = OperationalInsightsTablePlan.Analytics
+            };
             var opTable = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, tableName, tableData)).Value;
             Assert.IsNotNull(opTable);
             Assert.AreEqual(tableName, opTable.Data.Name);

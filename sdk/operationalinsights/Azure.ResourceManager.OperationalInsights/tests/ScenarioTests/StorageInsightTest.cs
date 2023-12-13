@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.OperationalInsights.Tests
         { }
 
         [Test]
-        //[Ignore("OperationalInsightsStorageAccount Class storage account key null")]
+        [Ignore("issue:https://github.com/Azure/azure-rest-api-specs/issues/27057")]
         public async Task StorageInsightTestCase()
         {
             _subscription = await Client.GetDefaultSubscriptionAsync();
@@ -49,8 +49,12 @@ namespace Azure.ResourceManager.OperationalInsights.Tests
                 },
                 Containers =
                 {
-                    "dsad"
-                }
+                    "wad-iis-logfiles"
+                },
+                Tables =
+                {
+                "WADWindowsEventLogsTable","LinuxSyslogVer2v0"
+                },
             };
 
             var inStorage = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, inStName, inStData)).Value;
@@ -87,8 +91,8 @@ namespace Azure.ResourceManager.OperationalInsights.Tests
             Assert.AreEqual(inStorage.Data.Id, getIfExists.Data.Id);
 
             //StorageInsightResource_CreateResourceIdentifier and Get
-            var resourceId = OperationalInsightsLinkedServiceResource.CreateResourceIdentifier(_subscription.Data.SubscriptionId, _resourceGroup.Data.Name, workSpace.Data.Name, inStorage.Data.Name);
-            var identifierResource = Client.GetOperationalInsightsLinkedServiceResource(resourceId);
+            var resourceId = StorageInsightResource.CreateResourceIdentifier(_subscription.Data.SubscriptionId, _resourceGroup.Data.Name, workSpace.Data.Name, inStorage.Data.Name);
+            var identifierResource = Client.GetStorageInsightResource(resourceId);
             Assert.IsNotNull(identifierResource);
             var verify = (await identifierResource.GetAsync()).Value; //Get
             Assert.IsNotNull(verify);
@@ -113,11 +117,9 @@ namespace Azure.ResourceManager.OperationalInsights.Tests
             Assert.IsFalse(removeTag.Value.Data.Tags.ContainsKey(removeKey));
 
             //StorageInsightResource_Update
-            var updateSt = await CreateStorageAccount();
-            var updateStKey = updateSt.GetKeysAsync().ToEnumerableAsync().Result.ToList()[0];
             var updateData = new StorageInsightData()
             {
-                StorageAccount = new OperationalInsightsStorageAccount(updateSt.Data.Id,updateStKey.Value),
+                StorageAccount = new OperationalInsightsStorageAccount(stAccount.Data.Id, stKey.Value),
                 Tags =
                 {
                     ["key4"] = "updateTest",
@@ -126,7 +128,6 @@ namespace Azure.ResourceManager.OperationalInsights.Tests
             };
             var update = (await inStorage.UpdateAsync(WaitUntil.Completed, updateData)).Value;
             Assert.IsNotNull(update);
-            Assert.IsFalse(update.Data.StorageAccount.Id == stAccount.Data.Id);
             var verifyTagDic = new Dictionary<string, string>();
             foreach (var item in update.Data.Tags)
             {

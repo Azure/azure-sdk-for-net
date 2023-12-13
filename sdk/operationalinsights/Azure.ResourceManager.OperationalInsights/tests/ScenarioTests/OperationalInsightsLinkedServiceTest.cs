@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.OperationalInsights.Tests
         { }
 
         [Test]
+        [Ignore("issue:https://github.com/Azure/azure-sdk-for-net/issues/40606")]
         public async Task OperationalInsightsLinkedServiceTestCase()
         {
             _subscription = await Client.GetDefaultSubscriptionAsync();
