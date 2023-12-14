@@ -7,7 +7,7 @@ This sample shows you how to create discovery groups using templates provided by
 To create an EasmClient, you need your subscription ID, region, and some sort of credential.
 
 ```C# Snippet:Sample3_DiscoTemplates_Create_Client
-string endpoint = "https://<region>.easm.defender.microsoft.com";
+            string endpoint = "https://<region>.easm.defender.microsoft.com";
 EasmClient client = new EasmClient(new System.Uri(endpoint),
                 "<Your_Subscription_Id>",
                 "<Your_Resource_Group_Name>",
@@ -20,8 +20,8 @@ EasmClient client = new EasmClient(new System.Uri(endpoint),
 The `DiscoveryTemplatesList` method can be used to find a discovery template using a filter. The endpoint will return templates based on a partial match on the name field.
 
 ```C# Snippet:Sample3_DiscoTemplates_Get_Templates
-string partialName = "<partial_name>";
-var response = client.GetDiscoTemplates(partialName);
+            string partialName = "<partial_name>";
+                        var response = client.GetDiscoTemplates(partialName);
 foreach (DiscoTemplate template in response)
 {
     Console.WriteLine($"{template.Id}: {template.DisplayName}");
@@ -34,7 +34,22 @@ foreach (DiscoTemplate template in response)
 To get more detail about a disco template, we can use the `DiscoveryTemplatesGet` method. From here, we can see the names and seeds which would be used in a discovery run.
 
 ```C# Snippet:Sample3_DiscoTemplates_Get_Template_Seeds
-string templateId = Console.ReadLine();
+            string templateId = Console.ReadLine();
+                        var discoTemplateResponse = client.GetDiscoTemplate(templateId);
+DiscoTemplate discoTemplate = discoTemplateResponse.Value;
+Console.WriteLine($"Chosen template id: {discoTemplate.Id}");
+Console.WriteLine("The following names will be used:");
+foreach (DiscoSource seed in discoTemplate.Seeds)
+{
+    Console.WriteLine($"{seed.Kind}: {seed.Name}");
+}
+```
+
+## Run Discovery with a Template
+
+To start a discovery from a template, we can use `DiscoveryRun` method with a template id.
+
+```C# Snippet:Sample3_DiscoTemplates_Run_Disco_Group
 string groupName = "Discovery Group from Template";
 DiscoGroupData discoGroupRequest = new DiscoGroupData();
 discoGroupRequest.TemplateId = templateId;

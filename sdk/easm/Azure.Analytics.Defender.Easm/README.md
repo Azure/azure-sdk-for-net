@@ -32,7 +32,7 @@ dotnet add package Azure.Identity
 To create an EasmClient, you need your subscription ID, region, and some sort of credential. Below is an example using the DefaultAzureCredential.
 
 ```C# Snippet:Sample1_AssetResources_Create_Client
-string endpoint = "https://<region>.easm.defender.microsoft.com";
+            string endpoint = "https://<region>.easm.defender.microsoft.com";
 EasmClient client = new EasmClient(new System.Uri(endpoint),
                 "<Your_Subscription_Id>",
                 "<Your_Resource_Group_Name>",
@@ -71,9 +71,14 @@ You can call the client's `AssetsList` method to view your assets.
 
 ```C# Snippet:Sample1_AssetResources_Get_Assets
 var response = client.GetAssetResources();
+int index = 0;
 foreach (AssetResource asset in response)
 {
     Console.WriteLine($"Asset Name: {asset.Name}, Kind: {asset.GetType}");
+    if (index++ > 5)
+    {
+        break;
+    }
 }
 ```
 
@@ -84,7 +89,9 @@ You can call the client's `DiscoGroupCreateOrReplace` method to create or replac
 ```C# Snippet:Sample2_DiscoveryGroups_Create_Discovery_Group
 string discoveryGroupName = "Sample Disco From C#";
 string discoveryGroupDescription = "This is a sample discovery group generated from C#";
-DiscoGroupData request = new DiscoGroupData();
+            string[] hosts = ["<host1>.<org>.com", "<host2>.<org>.com"];
+string[] domains = ["<domain1>.com", "<domain2>.com"];
+                        DiscoGroupData request = new DiscoGroupData();
 foreach (var host in hosts)
 {
     DiscoSource seed = new DiscoSource();
@@ -99,6 +106,7 @@ foreach (var domain in domains)
     seed.Name = domain;
     request.Seeds.Add(seed);
 }
+
 request.Name = discoveryGroupName;
 request.Description = discoveryGroupDescription;
 client.CreateOrReplaceDiscoGroup(discoveryGroupName, request);

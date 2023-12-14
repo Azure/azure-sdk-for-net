@@ -57,7 +57,7 @@ namespace Azure.Analytics.Defender.Easm
             AuditTrail = auditTrail;
             Reason = reason;
         }
-    
+
         /// <summary> Discriminator. </summary>
         internal string Kind { get; set; }
         /// <summary> The system generated unique id for the resource. </summary>

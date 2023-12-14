@@ -7,7 +7,7 @@ External IDs can be a useful method of keeping track of assets in multiple syste
 To create an EasmClient, you need your subscription ID, region, and some sort of credential.
 
 ```C# Snippet:Sample5_ExternalIds_Create_Client
-string endpoint = "https://<region>.easm.defender.microsoft.com";
+            string endpoint = "https://<region>.easm.defender.microsoft.com";
 EasmClient client = new EasmClient(new System.Uri(endpoint),
                 "<Your_Subscription_Id>",
                 "<Your_Resource_Group_Name>",
@@ -20,16 +20,16 @@ EasmClient client = new EasmClient(new System.Uri(endpoint),
 Assets in EASM can be uniquely distinguished by `name` and `kind`, so we can create a simple dictionary containing `name`, `kind`, and `external_id`. In a more realistic case, this could be generated using an export from the external system we're using for tagging
 
 ```C# Snippet:Sample5_ExternalIds_Initialize_Mapping
-Dictionary<string, string> asset1 = new Dictionary<string, string> {
-                {"name", "example.com" },
-                {"kind", "host" },
-                {"external_id", "EXT040" } };
+            Dictionary<string, string> asset1 = new Dictionary<string, string> {
+    {"name", "example.com" },
+    {"kind", "host" },
+    {"external_id", "EXT040" } };
 Dictionary<string, string> asset2 = new Dictionary<string, string> {
-                {"name", "example.com" },
-                {"kind", "domain" },
-                {"external_id", "EXT041" } };
+    {"name", "example.com" },
+    {"kind", "domain" },
+    {"external_id", "EXT041" } };
 List<Dictionary<string, string>> mapping = new List<Dictionary<string, string>> {
-                asset1, asset2 
+    asset1, asset2
 };
 ```
 
