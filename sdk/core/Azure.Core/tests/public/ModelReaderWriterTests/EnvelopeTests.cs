@@ -18,7 +18,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         //protected override Func<Type, ObjectSerializer> GetObjectSerializerFactory(ModelReaderWriterFormat format)
         //{
-        //    if (format == "W")
+        //    if (format == ModelReaderWriterFormat.Wire)
         //    {
         //        JsonSerializerSettings settings = new JsonSerializerSettings
         //        {
@@ -34,7 +34,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         //protected override void CompareModels(Envelope<ModelC> model, Envelope<ModelC> model2, ModelReaderWriterFormat format)
         //{
-        //    if (format == "J")
+        //    if (format == ModelReaderWriterFormat.Json)
         //    {
         //        Assert.AreEqual(model.ReadOnlyProperty, model2.ReadOnlyProperty);
         //        Assert.AreEqual(model.ModelA.LatinName, model2.ModelA.LatinName);
@@ -50,12 +50,12 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         //protected override string GetExpectedResult(ModelReaderWriterFormat format)
         //{
         //    StringBuilder expectedSerialized = new StringBuilder("{");
-        //    if (format == "J")
+        //    if (format == ModelReaderWriterFormat.Json)
         //    {
         //        expectedSerialized.Append("\"readOnlyProperty\":\"read\",");
         //    }
         //    expectedSerialized.Append("\"modelA\":{");
-        //    if (format == "J")
+        //    if (format == ModelReaderWriterFormat.Json)
         //    {
         //        expectedSerialized.Append("\"latinName\":\"Felis catus\",\"hasWhiskers\":false,");
         //    }
@@ -68,7 +68,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         //protected override void VerifyModel(Envelope<ModelC> model, ModelReaderWriterFormat format)
         //{
         //    Assert.IsNotNull(model.ModelA);
-        //    if (format == "J")
+        //    if (format == ModelReaderWriterFormat.Json)
         //    {
         //        Assert.AreEqual("read", model.ReadOnlyProperty);
         //        Assert.AreEqual("Felis catus", model.ModelA.LatinName);

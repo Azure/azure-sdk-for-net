@@ -9,8 +9,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core.Tests.Models.ResourceManager.Resources;
 using Azure.Core.Tests.Common;
+using Azure.Core.Tests.Models.ResourceManager.Resources;
 
 namespace Azure.Core.Tests.Models.ResourceManager.Compute
 {
