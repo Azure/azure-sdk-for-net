@@ -1343,9 +1343,10 @@ namespace Azure.Storage.Blobs.Test
                 BlobsClientBuilder.GetServiceClient_SharedKey(options));
             BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
 
-            assertPolicy.CheckRequest = true;
-            await blob.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(1024)));
-            assertPolicy.CheckRequest = false;
+            using (assertPolicy.CheckRequestScope())
+            {
+                await blob.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(1024)));
+            }
         }
         #endregion Upload
 
