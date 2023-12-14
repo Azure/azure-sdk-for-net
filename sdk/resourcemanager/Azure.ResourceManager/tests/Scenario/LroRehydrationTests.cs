@@ -45,7 +45,6 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(response.Headers.Count(), rehydratedOrgResponse.Headers.Count());
 
             // fake LRO - Delete
-            using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(System.Diagnostics.Tracing.EventLevel.Verbose);
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
             PolicyAssignmentResource policyAssignment = await CreatePolicyAssignment(subscription, policyAssignmentName);
             var deleteOp = await policyAssignment.DeleteAsync(WaitUntil.Started);
