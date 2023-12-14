@@ -3,6 +3,7 @@
 
 using System.Buffers;
 using System.ClientModel.Internal;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,7 +11,8 @@ using System.Threading.Tasks;
 namespace System.ClientModel.Primitives;
 
 /// <summary>
-/// Pipeline policy to buffer response content or add a timeout to response content managed by the client
+/// Pipeline policy to buffer response content or add a timeout to response content
+/// managed by the client.
 /// </summary>
 public class ResponseBufferingPolicy : PipelinePolicy
 {
@@ -33,16 +35,16 @@ public class ResponseBufferingPolicy : PipelinePolicy
         _networkTimeout = networkTimeout;
     }
 
-    public sealed override void Process(PipelineMessage message, PipelineProcessor pipeline)
+    public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
 
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-        => ProcessSyncOrAsync(message, pipeline, async: false).AsTask().GetAwaiter().GetResult();
+        => ProcessSyncOrAsync(message, pipeline, currentIndex, async: false).AsTask().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 
-    public sealed override async ValueTask ProcessAsync(PipelineMessage message, PipelineProcessor pipeline)
-        => await ProcessSyncOrAsync(message, pipeline, async: true).ConfigureAwait(false);
+    public sealed override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+        => await ProcessSyncOrAsync(message, pipeline, currentIndex, async: true).ConfigureAwait(false);
 
-    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, PipelineProcessor pipeline, bool async)
+    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
         CancellationToken oldToken = message.CancellationToken;
         using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
@@ -63,11 +65,11 @@ public class ResponseBufferingPolicy : PipelinePolicy
             message.CancellationToken = cts.Token;
             if (async)
             {
-                await pipeline.ProcessNextAsync().ConfigureAwait(false);
+                await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
             }
             else
             {
-                pipeline.ProcessNext();
+                ProcessNext(message, pipeline, currentIndex);
             }
         }
         catch (OperationCanceledException ex)
@@ -87,12 +89,9 @@ public class ResponseBufferingPolicy : PipelinePolicy
             return;
         }
 
-        if (message.Response is null)
-        {
-            throw new InvalidOperationException("Response is not set on message.");
-        }
+        message.AssertResponse();
 
-        Stream? responseContentStream = message.Response.ContentStream;
+        Stream? responseContentStream = message.Response!.ContentStream;
         if (responseContentStream is null ||
             message.Response.TryGetBufferedContent(out var _))
         {
@@ -259,5 +258,4 @@ public class ResponseBufferingPolicy : PipelinePolicy
     private struct NetworkTimeoutPropertyKey { }
 
     #endregion
-
 }

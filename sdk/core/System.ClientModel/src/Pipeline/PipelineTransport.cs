@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -21,7 +22,7 @@ public abstract class PipelineTransport : PipelinePolicy
             throw new InvalidOperationException("Response was not set by transport.");
         }
 
-        message.Response.IsError = message.MessageClassifier?.IsErrorResponse(message) ?? default;
+        message.Response.SetIsError(ClassifyResponse(message));
     }
 
     /// <summary>
@@ -37,8 +38,12 @@ public abstract class PipelineTransport : PipelinePolicy
             throw new InvalidOperationException("Response was not set by transport.");
         }
 
-        message.Response.IsError = message.MessageClassifier?.IsErrorResponse(message) ?? default;
+        message.Response.SetIsError(ClassifyResponse(message));
     }
+
+    private static bool ClassifyResponse(PipelineMessage message) =>
+        message.MessageClassifier?.IsErrorResponse(message) ??
+        PipelineMessageClassifier.Default.IsErrorResponse(message);
 
     protected abstract void ProcessCore(PipelineMessage message);
 
@@ -68,17 +73,17 @@ public abstract class PipelineTransport : PipelinePolicy
 
     // These methods from PipelinePolicy just say "you've reached the end
     // of the line", i.e. they stop the invocation of the policy chain.
-    public sealed override void Process(PipelineMessage message, PipelineProcessor pipeline)
+    public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         Process(message);
 
-        Debug.Assert(pipeline.ProcessNext() == false);
+        Debug.Assert(++currentIndex == pipeline.Count);
     }
 
-    public sealed override async ValueTask ProcessAsync(PipelineMessage message, PipelineProcessor pipeline)
+    public sealed override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         await ProcessAsync(message).ConfigureAwait(false);
 
-        Debug.Assert(await pipeline.ProcessNextAsync().ConfigureAwait(false) == false);
+        Debug.Assert(++currentIndex == pipeline.Count);
     }
 }

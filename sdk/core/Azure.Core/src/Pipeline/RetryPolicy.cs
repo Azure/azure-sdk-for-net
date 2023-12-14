@@ -2,38 +2,32 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.ExceptionServices;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline
 {
     /// <summary>
     /// Represents a policy that can be overriden to customize whether or not a request will be retried and how long to wait before retrying.
     /// </summary>
-    public class RetryPolicy : HttpPipelinePolicy
+    public partial class RetryPolicy : HttpPipelinePolicy
     {
         private readonly int _maxRetries;
-
-        /// <summary>
-        /// Gets the delay to use for computing the interval between retry attempts.
-        /// </summary>
         private readonly DelayStrategy _delayStrategy;
+        private readonly AzureCoreRetryPolicy _policy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryPolicy"/> class.
         /// </summary>
         /// <param name="maxRetries">The maximum number of retries to attempt.</param>
         /// <param name="delayStrategy">The delay to use for computing the interval between retry attempts.</param>
-        public RetryPolicy(int maxRetries = 3, DelayStrategy? delayStrategy = default)
+        public RetryPolicy(int maxRetries = RetryOptions.DefaultMaxRetries, DelayStrategy? delayStrategy = default)
         {
             _maxRetries = maxRetries;
             _delayStrategy = delayStrategy ?? DelayStrategy.CreateExponentialDelayStrategy();
+
+            _policy = new AzureCoreRetryPolicy(maxRetries, _delayStrategy, this);
         }
 
         /// <summary>
@@ -44,10 +38,8 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
         /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after current one.</param>
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
-        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            return ProcessAsync(message, pipeline, true);
-        }
+        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            => await ProcessSyncOrAsync(message, pipeline, async: true).ConfigureAwait(false);
 
         /// <summary>
         /// This method can be overriden to take full control over the retry policy. If this is overriden and the base method isn't called,
@@ -57,124 +49,39 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
         /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after current one.</param>
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            ProcessAsync(message, pipeline, false).EnsureCompleted();
-        }
+            => ProcessSyncOrAsync(message, pipeline, async: false).EnsureCompleted();
 
-        private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        private async ValueTask ProcessSyncOrAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            List<Exception>? exceptions = null;
-            while (true)
+            AzureCorePipelineProcessor processor = new(pipeline);
+
+            try
             {
-                Exception? lastException = null;
-                var before = Stopwatch.GetTimestamp();
                 if (async)
                 {
-                    await OnSendingRequestAsync(message).ConfigureAwait(false);
+                    await _policy.ProcessAsync(message, processor, -1).ConfigureAwait(false);
                 }
                 else
                 {
-                    OnSendingRequest(message);
+                    _policy.Process(message, processor, -1);
                 }
-                try
-                {
-                    if (async)
-                    {
-                        await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        ProcessNext(message, pipeline);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    if (exceptions == null)
-                    {
-                        exceptions = new List<Exception>();
-                    }
-
-                    exceptions.Add(ex);
-
-                    lastException = ex;
-                }
-
-                if (async)
-                {
-                    await OnRequestSentAsync(message).ConfigureAwait(false);
-                }
-                else
-                {
-                    OnRequestSent(message);
-                }
-
-                var after = Stopwatch.GetTimestamp();
-                double elapsed = (after - before) / (double)Stopwatch.Frequency;
-
-                bool shouldRetry = false;
-
-                // We only invoke ShouldRetry for errors. If a user needs full control they can either override HttpPipelinePolicy directly
-                // or modify the ResponseClassifier.
-
-                if (lastException != null || (message.HasResponse && message.Response.IsError))
-                {
-                    shouldRetry = async ? await ShouldRetryAsync(message, lastException).ConfigureAwait(false) : ShouldRetry(message, lastException);
-                }
-
-                if (shouldRetry)
-                {
-                    var retryAfter = message.HasResponse ? message.Response.Headers.RetryAfter : default;
-                    TimeSpan delay = async ? await GetNextDelayAsync(message, retryAfter).ConfigureAwait(false) : GetNextDelay(message, retryAfter);
-                    if (delay > TimeSpan.Zero)
-                    {
-                        if (async)
-                        {
-                            await WaitAsync(delay, message.CancellationToken).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            Wait(delay, message.CancellationToken);
-                        }
-                    }
-
-                    if (message.HasResponse)
-                    {
-                        // Dispose the content stream to free up a connection if the request has any
-                        message.Response.ContentStream?.Dispose();
-                    }
-
-                    message.RetryNumber++;
-                    AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, message.RetryNumber, elapsed);
-                    continue;
-                }
-
-                if (lastException != null)
-                {
-                    // Rethrow a singular exception
-                    if (exceptions!.Count == 1)
-                    {
-                        ExceptionDispatchInfo.Capture(lastException).Throw();
-                    }
-
-                    throw new AggregateException(
-                        $"Retry failed after {message.RetryNumber + 1} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}" +
-                        $" or by configuring a custom retry policy in {nameof(ClientOptions)}.{nameof(ClientOptions.RetryPolicy)}.",
-                        exceptions);
-                }
-
-                // We are not retrying and the last attempt didn't result in an exception.
-                break;
             }
-        }
+            catch (AggregateException e)
+            {
+                if (e.Message.StartsWith("Retry failed after"))
+                {
+                    string exceptionMessage = e.Message +
+                        $"Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}" +
+                        $" or by configuring a custom retry policy in {nameof(ClientOptions)}.{nameof(ClientOptions.RetryPolicy)}.";
 
-        internal virtual async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
-        {
-            await Task.Delay(time, cancellationToken).ConfigureAwait(false);
-        }
+                    // Create a new exception from the thrown exception to keep the
+                    // collection of inner exceptions at the same level as the one
+                    // thrown by the ClientModel policy.
+                    throw new AggregateException(exceptionMessage, e.InnerExceptions);
+                }
 
-        internal virtual void Wait(TimeSpan time, CancellationToken cancellationToken)
-        {
-            cancellationToken.WaitHandle.WaitOne(time);
+                throw e;
+            }
         }
 
         /// <summary>
@@ -185,7 +92,18 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The message containing the request and response.</param>
         /// <param name="exception">The exception that occurred, if any, which can be used to determine if a retry should occur.</param>
         /// <returns>Whether or not to retry.</returns>
-        protected internal virtual bool ShouldRetry(HttpMessage message, Exception? exception) => ShouldRetryInternal(message, exception);
+        protected virtual bool ShouldRetry(HttpMessage message, Exception? exception)
+        {
+            if (message.RetryNumber >= _maxRetries)
+            {
+                // We've exceeded the maximum number of retries, so don't retry.
+                return false;
+            }
+
+            return exception is null ?
+                message.ResponseClassifier.IsRetriableResponse(message) :
+                message.ResponseClassifier.IsRetriable(message, exception);
+        }
 
         /// <summary>
         /// This method can be overriden to control whether a request should be retried.  It will be called for any response where
@@ -195,78 +113,48 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The message containing the request and response.</param>
         /// <param name="exception">The exception that occurred, if any, which can be used to determine if a retry should occur.</param>
         /// <returns>Whether or not to retry.</returns>
-        protected internal virtual ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception? exception) => new(ShouldRetryInternal(message, exception));
-
-        private bool ShouldRetryInternal(HttpMessage message, Exception? exception)
-        {
-            if (message.RetryNumber < _maxRetries)
-            {
-                if (exception != null)
-                {
-                    return message.ResponseClassifier.IsRetriable(message, exception);
-                }
-
-                // Response.IsError is true if we get here
-                return message.ResponseClassifier.IsRetriableResponse(message);
-            }
-
-            // out of retries
-            return false;
-        }
-
-        /// <summary>
-        /// This method can be overriden to control how long to delay before retrying. This method will only be called for sync methods.
-        /// </summary>
-        /// <param name="message">The message containing the request and response.</param>
-        /// <param name="retryAfter">The Retry-After header value, if any, returned from the service.</param>
-        /// <returns>The amount of time to delay before retrying.</returns>
-        internal TimeSpan GetNextDelay(HttpMessage message, TimeSpan? retryAfter) => GetNextDelayInternal(message);
-
-        /// <summary>
-        /// This method can be overriden to control how long to delay before retrying. This method will only be called for async methods.
-        /// </summary>
-        /// <param name="message">The message containing the request and response.</param>
-        /// <param name="retryAfter">The Retry-After header value, if any, returned from the service.</param>
-        /// <returns>The amount of time to delay before retrying.</returns>
-        internal ValueTask<TimeSpan> GetNextDelayAsync(HttpMessage message, TimeSpan? retryAfter) => new(GetNextDelayInternal(message));
+        protected virtual ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception? exception)
+            => new(ShouldRetry(message, exception));
 
         /// <summary>
         /// This method can be overridden to introduce logic before each request attempt is sent. This will run even for the first attempt.
         /// This method will only be called for sync methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
-        protected internal virtual void OnSendingRequest(HttpMessage message)
-        {
-        }
+        protected virtual void OnSendingRequest(HttpMessage message) { }
 
         /// <summary>
         /// This method can be overriden to introduce logic that runs before the request is sent. This will run even for the first attempt.
         /// This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
-        protected internal virtual ValueTask OnSendingRequestAsync(HttpMessage message) => default;
+        protected virtual ValueTask OnSendingRequestAsync(HttpMessage message) => default;
 
         /// <summary>
         /// This method can be overridden to introduce logic that runs after the request is sent through the pipeline and control is returned to the retry
         /// policy. This method will only be called for sync methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
-        protected internal virtual void OnRequestSent(HttpMessage message)
-        {
-        }
+        protected virtual void OnRequestSent(HttpMessage message) { }
 
         /// <summary>
         /// This method can be overridden to introduce logic that runs after the request is sent through the pipeline and control is returned to the retry
         /// policy. This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
-        protected internal virtual ValueTask OnRequestSentAsync(HttpMessage message) => default;
+        protected virtual ValueTask OnRequestSentAsync(HttpMessage message) => default;
 
-        private TimeSpan GetNextDelayInternal(HttpMessage message)
+        internal void OnDelayComplete(PipelineMessage message)
+            => _policy.OnDelayComplete(message);
+
+        internal virtual async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
         {
-            return _delayStrategy.GetNextDelay(
-                message.HasResponse ? message.Response : default,
-                message.RetryNumber);
+            await Task.Delay(time, cancellationToken).ConfigureAwait(false);
+        }
+
+        internal virtual void Wait(TimeSpan time, CancellationToken cancellationToken)
+        {
+            cancellationToken.WaitHandle.WaitOne(time);
         }
     }
 }
