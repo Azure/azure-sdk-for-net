@@ -1,14 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using ClientModel.TestHelpers.Mocks;
 using NUnit.Framework;
 using System.ClientModel.Primitives;
-using TestHelpers.Internal;
 
 namespace System.ClientModel.Tests;
 
 public class ClientResultTests
 {
+    #region ClientResult
+
+    #endregion
+
+    #region OptionalClientResult<T>
     [Test]
     public void CanCreateOptionalResultFromBool()
     {
@@ -41,6 +46,11 @@ public class ClientResultTests
         Assert.IsFalse(result.HasValue);
         Assert.AreEqual(response.Status, result.GetRawResponse().Status);
     }
+    #endregion
+
+    #region ClientResult<T>
+
+    #endregion
 
     #region Helpers
     private class MockErrorResult<T> : OptionalClientResult<T>
