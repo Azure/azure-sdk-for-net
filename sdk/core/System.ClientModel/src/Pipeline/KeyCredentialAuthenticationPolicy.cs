@@ -42,6 +42,21 @@ public class KeyCredentialAuthenticationPolicy : PipelinePolicy
         return new KeyCredentialAuthenticationPolicy(credential, queryName, KeyLocation.Query);
     }
 
+    /// <summary>
+    /// Create a new instance of the <see cref="KeyCredentialAuthenticationPolicy"/> class, where the
+    /// credential value will be specified in a request header.
+    /// </summary>
+    /// <param name="credential">The <see cref="KeyCredential"/> used to authenticate requests.</param>
+    /// <param name="headerName">The name of the request header used to send the key credential in the request.</param>
+    /// <param name="keyPrefix">A prefix to prepend before the key credential in the header value.
+    /// If provided, the prefix string will be followed by a space and then the credential string.
+    /// For example, setting <c>valuePrefix</c> to "SharedAccessKey" will result in the header value
+    /// being set fo "SharedAccessKey {credential.Key}".</param>
+    public KeyCredentialAuthenticationPolicy(KeyCredential credential, string headerName = "Authorization", string? keyPrefix = null)
+        : this(credential, headerName, KeyLocation.Header, keyPrefix)
+    {
+    }
+
     private KeyCredentialAuthenticationPolicy(KeyCredential credential, string name, KeyLocation keyLocation, string? keyPrefix = null)
     {
         ClientUtilities.AssertNotNull(credential, nameof(credential));

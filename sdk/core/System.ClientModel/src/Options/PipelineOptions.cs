@@ -12,6 +12,9 @@ namespace System.ClientModel.Primitives;
 // add an analyzer to validate it via static analysis.
 public class PipelineOptions
 {
+    private static readonly PipelineOptions _defaultOptions = new();
+    internal static PipelineOptions Default => _defaultOptions;
+
     #region Pipeline creation: User-specified policies
 
     internal PipelinePolicy[]? PerCallPolicies { get; set; }
