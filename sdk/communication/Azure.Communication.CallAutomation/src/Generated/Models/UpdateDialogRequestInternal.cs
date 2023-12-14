@@ -11,23 +11,23 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The UpdateDialogRequest. </summary>
-    public partial class UpdateDialogRequest
+    internal partial class UpdateDialogRequestInternal
     {
-        /// <summary> Initializes a new instance of <see cref="UpdateDialogRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateDialogRequestInternal"/>. </summary>
         /// <param name="dialog">
         /// Dialog context.
         /// Please note <see cref="DialogUpdateBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureOpenAIDialogUpdate"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dialog"/> is null. </exception>
-        public UpdateDialogRequest(DialogUpdateBase dialog)
+        public UpdateDialogRequestInternal(DialogUpdateBase dialog)
         {
             Argument.AssertNotNull(dialog, nameof(dialog));
 
             Dialog = dialog;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpdateDialogRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateDialogRequestInternal"/>. </summary>
         /// <param name="dialog">
         /// Dialog context.
         /// Please note <see cref="DialogUpdateBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -38,7 +38,7 @@ namespace Azure.Communication.CallAutomation
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
-        internal UpdateDialogRequest(DialogUpdateBase dialog, string operationCallbackUri, string operationContext)
+        internal UpdateDialogRequestInternal(DialogUpdateBase dialog, string operationCallbackUri, string operationContext)
         {
             Dialog = dialog;
             OperationCallbackUri = operationCallbackUri;

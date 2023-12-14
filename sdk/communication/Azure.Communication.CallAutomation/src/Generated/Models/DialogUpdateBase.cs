@@ -31,10 +31,5 @@ namespace Azure.Communication.CallAutomation
             Kind = kind;
             Context = context;
         }
-
-        /// <summary> Determines the type of the dialog. </summary>
-        internal DialogInputType Kind { get; set; }
-        /// <summary> Dialog context. </summary>
-        public IDictionary<string, object> Context { get; }
     }
 }

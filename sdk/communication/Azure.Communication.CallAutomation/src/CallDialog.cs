@@ -114,18 +114,58 @@ namespace Azure.Communication.CallAutomation
             return startDialogRequestInternal;
         }
 
+        /// <summary>
+        /// Update Dialog.
+        /// </summary>
+        /// <param name="updateDialogOptions">Configuration attributes for updating dialog.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Returns <see cref="DialogResult"/>, which can be used to wait for Dialog's related events.</returns>
         public virtual async Task<Response<DialogResult>> UpdateDialogAsync(UpdateDialog updateDialogOptions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallDialog)}.{nameof(StartDialog)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallDialog)}.{nameof(UpdateDialog)}");
             scope.Start();
             try
             {
-                UpdateDialogRequestInternal request = CreateUpdateDialogRequest(startDialog);
+                UpdateDialogRequestInternal request = CreateUpdateDialogRequest(updateDialogOptions);
 
-                var response = CallDialogRestClient.UpdateDialogAsync
+                var response = await CallDialogRestClient.UpdateDialogAsync
                     (CallConnectionId,
                     updateDialogOptions.DialogId,
                     request,
+                    request.OperationCallbackUri,
+                    cancellationToken).ConfigureAwait(false);
+
+                var result = new DialogResult(updateDialogOptions.DialogId);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update Dialog.
+        /// </summary>
+        /// <param name="updateDialogOptions">Configuration attributes for updating dialog.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Returns <see cref="DialogResult"/>, which can be used to wait for Dialog's related events.</returns>
+        public virtual Response<DialogResult> UpdateDialog(UpdateDialog updateDialogOptions, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallDialog)}.{nameof(UpdateDialog)}");
+            scope.Start();
+            try
+            {
+                UpdateDialogRequestInternal request = CreateUpdateDialogRequest(updateDialogOptions);
+
+                var response = CallDialogRestClient.UpdateDialog
+                    (CallConnectionId,
+                    updateDialogOptions.DialogId,
+                    request,
+                    request.OperationCallbackUri,
                     cancellationToken);
 
                 var result = new DialogResult(updateDialogOptions.DialogId);

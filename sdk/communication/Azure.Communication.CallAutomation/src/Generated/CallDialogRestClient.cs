@@ -212,7 +212,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateUpdateDialogRequest(string callConnectionId, string dialogId, UpdateDialogRequest updateDialogRequest, string operationCallbackUri)
+        internal HttpMessage CreateUpdateDialogRequest(string callConnectionId, string dialogId, UpdateDialogRequestInternal updateDialogRequest, string operationCallbackUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -245,7 +245,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="dialogId"/> or <paramref name="updateDialogRequest"/> is null. </exception>
         /// <remarks> Update a dialog. </remarks>
-        public async Task<Response<DialogStateResponseInternal>> UpdateDialogAsync(string callConnectionId, string dialogId, UpdateDialogRequest updateDialogRequest, string operationCallbackUri = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DialogStateResponseInternal>> UpdateDialogAsync(string callConnectionId, string dialogId, UpdateDialogRequestInternal updateDialogRequest, string operationCallbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -284,7 +284,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="dialogId"/> or <paramref name="updateDialogRequest"/> is null. </exception>
         /// <remarks> Update a dialog. </remarks>
-        public Response<DialogStateResponseInternal> UpdateDialog(string callConnectionId, string dialogId, UpdateDialogRequest updateDialogRequest, string operationCallbackUri = null, CancellationToken cancellationToken = default)
+        public Response<DialogStateResponseInternal> UpdateDialog(string callConnectionId, string dialogId, UpdateDialogRequestInternal updateDialogRequest, string operationCallbackUri = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
