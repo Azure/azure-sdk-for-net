@@ -5,10 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.ComponentModel;
 
-namespace ClientModel.Tests.Client.Models.ResourceManager
+namespace System.ClientModel.Tests.Client.Models.ResourceManager
 {
     /// <summary> The type of identity that created the resource. </summary>
     public readonly partial struct CreatedByType : IEquatable<CreatedByType>

@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using ClientModel.Tests.ClientShared;
-using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using System.Text.Json;
+using ClientModel.Tests.ClientShared;
 
-namespace ClientModel.Tests.Client.ModelReaderWriterTests.Models
+namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
     public class ModelY : BaseModel, IJsonModel<ModelY>
     {

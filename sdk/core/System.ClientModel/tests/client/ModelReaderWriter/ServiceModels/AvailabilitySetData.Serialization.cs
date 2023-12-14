@@ -5,14 +5,13 @@
 
 #nullable disable
 
-using ClientModel.Tests.Client.Models.ResourceManager.Resources;
-using ClientModel.Tests.ClientShared;
-using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ClientModel.Primitives;
+using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
 using System.Text.Json;
+using ClientModel.Tests.ClientShared;
 
-namespace ClientModel.Tests.Client.Models.ResourceManager.Compute
+namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 {
     public partial class AvailabilitySetData : IJsonModel<AvailabilitySetData>
     {

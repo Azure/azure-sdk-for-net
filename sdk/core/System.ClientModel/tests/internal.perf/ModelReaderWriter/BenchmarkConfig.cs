@@ -6,7 +6,7 @@ using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Reports;
 using Perfolizer.Horology;
 
-namespace ClientModel.Tests.Internal.Perf
+namespace System.ClientModel.Tests.Internal.Perf
 {
     internal class BenchmarkConfig : ManualConfig
     {

@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using ClientModel.Tests.ClientShared;
 
-namespace ClientModel.Tests.Client.Models.ResourceManager.Resources
+namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     /// <summary> Resource type managed by the resource provider. </summary>
     public partial class ProviderResourceType

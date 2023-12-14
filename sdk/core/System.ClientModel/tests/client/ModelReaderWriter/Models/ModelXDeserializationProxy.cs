@@ -3,7 +3,7 @@
 
 using System.ClientModel.Primitives;
 
-namespace ClientModel.Tests.Client.ModelReaderWriterTests.Models
+namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
     [PersistableModelProxy(typeof(ModelX))]
     public class ModelXDeserializationProxy

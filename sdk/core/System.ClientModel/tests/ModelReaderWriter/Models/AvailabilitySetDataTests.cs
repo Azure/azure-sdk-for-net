@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using ClientModel.Tests.Client.Data;
-using ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
+using System.ClientModel.Tests.Client;
+using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 
-namespace ClientModel.Tests.ModelReaderWriterTests.Models
+namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
     internal class AvailabilitySetDataTests : ModelJsonTests<AvailabilitySetData>
     {

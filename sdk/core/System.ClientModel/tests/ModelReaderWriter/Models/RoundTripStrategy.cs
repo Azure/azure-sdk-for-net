@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.ClientModel.Primitives;
 using System.IO;
+using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
 
 #pragma warning disable SA1402 // File may only contain a single type
-namespace ClientModel.Tests.ModelReaderWriterTests.Models
+namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
     public abstract class RoundTripStrategy<T>
     {

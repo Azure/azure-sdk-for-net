@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 using ClientModel.Tests.ClientShared;
-using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace ClientModel.Tests.Client.ModelReaderWriterTests.Models
+namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
     [PersistableModelProxy(typeof(UnknownBaseModel))]
     public abstract class BaseModel : IJsonModel<BaseModel>

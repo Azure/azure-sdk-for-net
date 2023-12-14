@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System;
-
-namespace ClientModel.Tests.Client.Models.ResourceManager.Resources
+namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     internal static partial class ResourceTypeAliasTypeExtensions
     {

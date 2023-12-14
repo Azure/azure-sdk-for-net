@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.Text.Json;
+using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 
-namespace ClientModel.Tests.Internal.Perf
+namespace System.ClientModel.Tests.Internal.Perf
 {
     public class AvailabilitySetDataModel : JsonModelBenchmark<AvailabilitySetData>
     {

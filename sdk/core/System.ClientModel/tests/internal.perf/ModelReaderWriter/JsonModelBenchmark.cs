@@ -3,15 +3,14 @@
 
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
-using ClientModel.Tests.Client.Models;
-using System;
-using System.ClientModel.Internal;
-using System.ClientModel.Primitives;
 using System.IO;
+using System.ClientModel.Primitives;
+using System.ClientModel.Tests.Client.Models;
 using System.Reflection;
 using System.Text.Json;
+using System.ClientModel.Internal;
 
-namespace ClientModel.Tests.Internal.Perf
+namespace System.ClientModel.Tests.Internal.Perf
 {
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
     public abstract class JsonModelBenchmark<T>

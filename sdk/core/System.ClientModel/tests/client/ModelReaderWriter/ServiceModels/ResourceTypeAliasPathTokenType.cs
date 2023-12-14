@@ -5,10 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.ComponentModel;
 
-namespace ClientModel.Tests.Client.Models.ResourceManager.Resources
+namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     /// <summary> The type of the token that the alias path is referring to. </summary>
     public readonly partial struct ResourceTypeAliasPathTokenType : IEquatable<ResourceTypeAliasPathTokenType>

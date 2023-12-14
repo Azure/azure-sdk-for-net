@@ -4,7 +4,7 @@
 using System.ClientModel.Primitives;
 using NUnit.Framework;
 
-namespace ClientModel.Tests.ModelReaderWriterTests.Models
+namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
     internal abstract class ModelJsonTests<T> : ModelTests<T> where T : IJsonModel<T>
     {

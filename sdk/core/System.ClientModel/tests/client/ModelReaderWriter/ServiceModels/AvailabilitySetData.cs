@@ -5,14 +5,12 @@
 
 #nullable disable
 
-using ClientModel.Tests.Client.Models.ResourceManager.Resources;
-using ClientModel.Tests.ClientShared;
-using System;
-using System.ClientModel;
+using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
 using System.Collections.Generic;
 using System.Text.Json;
+using ClientModel.Tests.ClientShared;
 
-namespace ClientModel.Tests.Client.Models.ResourceManager.Compute
+namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing the AvailabilitySet data model.

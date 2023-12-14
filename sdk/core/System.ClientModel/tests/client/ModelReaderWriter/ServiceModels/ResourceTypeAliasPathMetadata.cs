@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace ClientModel.Tests.Client.Models.ResourceManager.Resources
+namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     /// <summary> The ResourceTypeAliasPathMetadata. </summary>
     public partial class ResourceTypeAliasPathMetadata

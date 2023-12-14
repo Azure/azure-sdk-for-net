@@ -5,12 +5,11 @@
 
 #nullable disable
 
-using ClientModel.Tests.ClientShared;
-using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using ClientModel.Tests.ClientShared;
 
-namespace ClientModel.Tests.Client.Models.ResourceManager.Compute
+namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 {
     public partial class ComputeSku : IJsonModel<ComputeSku>
     {

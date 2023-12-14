@@ -5,10 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.ComponentModel;
 
-namespace ClientModel.Tests.Client.Models.ResourceManager.Resources
+namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     /// <summary> The provider authorization consent state. </summary>
     public readonly partial struct ProviderAuthorizationConsentState : IEquatable<ProviderAuthorizationConsentState>

@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using ClientModel.Tests.ClientShared;
 
-namespace ClientModel.Tests.Client.Models.ResourceManager.Resources
+namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     /// <summary> The ZoneMapping. </summary>
     public partial class ZoneMapping
