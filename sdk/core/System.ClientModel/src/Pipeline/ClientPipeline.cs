@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
-public partial class ClientPipeline
+public sealed partial class ClientPipeline
 {
     private readonly int _perCallIndex;
     private readonly int _perTryIndex;
@@ -34,6 +34,9 @@ public partial class ClientPipeline
         _perTryIndex = perTryIndex;
         _beforeTransportIndex = beforeTransportIndex;
     }
+
+    public static ClientPipeline Create()
+        => Create(PipelineOptions.Default, ReadOnlySpan<PipelinePolicy>.Empty, ReadOnlySpan<PipelinePolicy>.Empty, ReadOnlySpan<PipelinePolicy>.Empty);
 
     public static ClientPipeline Create(PipelineOptions options, params PipelinePolicy[] perCallPolicies)
         => Create(options, perCallPolicies, ReadOnlySpan<PipelinePolicy>.Empty, ReadOnlySpan<PipelinePolicy>.Empty);
