@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Storage Profile properties of a server. </summary>
     public partial class MySqlStorageProfile
     {
-        /// <summary> Initializes a new instance of MySqlStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlStorageProfile"/>. </summary>
         public MySqlStorageProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlStorageProfile"/>. </summary>
         /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
         /// <param name="geoRedundantBackup"> Enable Geo-redundant or not for server backup. </param>
         /// <param name="storageInMB"> Max storage allowed for a server. </param>

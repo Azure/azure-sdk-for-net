@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceTypeSkuProperties. </summary>
     public partial class ResourceTypeSkuProperties
     {
-        /// <summary> Initializes a new instance of ResourceTypeSkuProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuProperties"/>. </summary>
         /// <param name="skuSettings"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="skuSettings"/> is null. </exception>
         public ResourceTypeSkuProperties(IEnumerable<ResourceTypeSkuSetting> skuSettings)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             SkuSettings = skuSettings.ToList();
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeSkuProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuProperties"/>. </summary>
         /// <param name="skuSettings"></param>
         /// <param name="provisioningState"></param>
         internal ResourceTypeSkuProperties(IList<ResourceTypeSkuSetting> skuSettings, ProviderHubProvisioningState? provisioningState)

@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     internal partial class DataLakeAnalyticsStorageAccountInformationListResult
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsStorageAccountInformationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsStorageAccountInformationListResult"/>. </summary>
         internal DataLakeAnalyticsStorageAccountInformationListResult()
         {
             Value = new ChangeTrackingList<DataLakeAnalyticsStorageAccountInformationData>();
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsStorageAccountInformationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsStorageAccountInformationListResult"/>. </summary>
         /// <param name="value">
         /// The results of the list operation.
         /// Serialized Name: StorageAccountInformationListResult.value

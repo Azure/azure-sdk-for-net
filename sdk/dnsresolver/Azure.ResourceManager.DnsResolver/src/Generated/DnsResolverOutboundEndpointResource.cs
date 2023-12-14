@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DnsResolver
 {
     /// <summary>
     /// A Class representing a DnsResolverOutboundEndpoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DnsResolverOutboundEndpointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDnsResolverOutboundEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DnsResolverResource" /> using the GetDnsResolverOutboundEndpoint method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DnsResolverOutboundEndpointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDnsResolverOutboundEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DnsResolverResource"/> using the GetDnsResolverOutboundEndpoint method.
     /// </summary>
     public partial class DnsResolverOutboundEndpointResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.DnsResolver
         private readonly OutboundEndpointsRestOperations _dnsResolverOutboundEndpointOutboundEndpointsRestClient;
         private readonly DnsResolverOutboundEndpointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/dnsResolvers/outboundEndpoints";
+
         /// <summary> Initializes a new instance of the <see cref="DnsResolverOutboundEndpointResource"/> class for mocking. </summary>
         protected DnsResolverOutboundEndpointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DnsResolverOutboundEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DnsResolverOutboundEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DnsResolverOutboundEndpointResource(ArmClient client, DnsResolverOutboundEndpointData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DnsResolver
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/dnsResolvers/outboundEndpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

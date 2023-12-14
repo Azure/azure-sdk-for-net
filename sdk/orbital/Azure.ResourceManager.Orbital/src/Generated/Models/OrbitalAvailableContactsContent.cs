@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> Parameters that define the contact resource. </summary>
     public partial class OrbitalAvailableContactsContent
     {
-        /// <summary> Initializes a new instance of OrbitalAvailableContactsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalAvailableContactsContent"/>. </summary>
         /// <param name="contactProfile"> The reference to the contact profile resource. </param>
         /// <param name="groundStationName"> Name of Azure Ground Station. </param>
         /// <param name="startOn"> Start time of a contact (ISO 8601 UTC standard). </param>

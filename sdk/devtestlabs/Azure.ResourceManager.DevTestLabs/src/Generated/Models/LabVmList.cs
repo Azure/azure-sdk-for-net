@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> The response of a list operation. </summary>
     internal partial class LabVmList
     {
-        /// <summary> Initializes a new instance of LabVmList. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVmList"/>. </summary>
         internal LabVmList()
         {
             Value = new ChangeTrackingList<DevTestLabVmData>();
         }
 
-        /// <summary> Initializes a new instance of LabVmList. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVmList"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
         internal LabVmList(IReadOnlyList<DevTestLabVmData> value, string nextLink)

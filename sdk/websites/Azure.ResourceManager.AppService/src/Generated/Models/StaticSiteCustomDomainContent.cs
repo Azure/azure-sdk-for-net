@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Static Site Custom Domain Request Properties ARM resource. </summary>
     public partial class StaticSiteCustomDomainContent : ResourceData
     {
-        /// <summary> Initializes a new instance of StaticSiteCustomDomainContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteCustomDomainContent"/>. </summary>
         public StaticSiteCustomDomainContent()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteCustomDomainContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteCustomDomainContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

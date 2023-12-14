@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Grafana
     /// </summary>
     public partial class GrafanaPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of GrafanaPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaPrivateLinkResourceData"/>. </summary>
         public GrafanaPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of GrafanaPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

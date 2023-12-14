@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class TopLevelDomainData : ResourceData
     {
-        /// <summary> Initializes a new instance of TopLevelDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopLevelDomainData"/>. </summary>
         public TopLevelDomainData()
         {
         }
 
-        /// <summary> Initializes a new instance of TopLevelDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopLevelDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

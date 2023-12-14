@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Settings for Extended Groups username and group download. </summary>
     public partial class StorageCacheUsernameDownloadSettings
     {
-        /// <summary> Initializes a new instance of StorageCacheUsernameDownloadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUsernameDownloadSettings"/>. </summary>
         public StorageCacheUsernameDownloadSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageCacheUsernameDownloadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUsernameDownloadSettings"/>. </summary>
         /// <param name="enableExtendedGroups"> Whether or not Extended Groups is enabled. </param>
         /// <param name="usernameSource"> This setting determines how the cache gets username and group names for clients. </param>
         /// <param name="groupFileUri"> The URI of the file containing group information (in /etc/group file format). This field must be populated when 'usernameSource' is set to 'File'. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Query results. </summary>
     internal partial class PolicyTrackedResourcesQueryResults
     {
-        /// <summary> Initializes a new instance of PolicyTrackedResourcesQueryResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyTrackedResourcesQueryResults"/>. </summary>
         internal PolicyTrackedResourcesQueryResults()
         {
             Value = new ChangeTrackingList<PolicyTrackedResourceRecord>();
         }
 
-        /// <summary> Initializes a new instance of PolicyTrackedResourcesQueryResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyTrackedResourcesQueryResults"/>. </summary>
         /// <param name="value"> Query results. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal PolicyTrackedResourcesQueryResults(IReadOnlyList<PolicyTrackedResourceRecord> value, string nextLink)

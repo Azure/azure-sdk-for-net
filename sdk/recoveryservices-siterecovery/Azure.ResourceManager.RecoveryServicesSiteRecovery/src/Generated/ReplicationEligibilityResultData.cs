@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// </summary>
     public partial class ReplicationEligibilityResultData : ResourceData
     {
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationEligibilityResultData"/>. </summary>
         internal ReplicationEligibilityResultData()
         {
         }
 
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationEligibilityResultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

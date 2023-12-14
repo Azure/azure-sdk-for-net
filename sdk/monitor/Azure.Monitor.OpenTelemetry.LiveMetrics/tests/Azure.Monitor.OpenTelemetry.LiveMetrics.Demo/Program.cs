@@ -19,11 +19,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 
         public static void Main(string[] args)
         {
-            var options = new LiveMetricsExporterOptions { ConnectionString = ConnectionString };
-
             using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
                             .AddSource(ActivitySourceName)
-                            .AddProcessor(new SimpleActivityExportProcessor(new LiveMetricsTraceExporter(options: options)))
                             .AddLiveMetrics(configure => configure.ConnectionString = ConnectionString)
                             .Build();
 

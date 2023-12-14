@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Azure backup discrete RecoveryPoint. </summary>
     public partial class DataProtectionBackupDiscreteRecoveryPointProperties : DataProtectionBackupRecoveryPointProperties
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupDiscreteRecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDiscreteRecoveryPointProperties"/>. </summary>
         /// <param name="recoverOn"></param>
         public DataProtectionBackupDiscreteRecoveryPointProperties(DateTimeOffset recoverOn)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = "AzureBackupDiscreteRecoveryPoint";
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupDiscreteRecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDiscreteRecoveryPointProperties"/>. </summary>
         /// <param name="objectType"></param>
         /// <param name="friendlyName"></param>
         /// <param name="recoveryPointDataStoresDetails"></param>
@@ -35,7 +35,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="retentionTagName"></param>
         /// <param name="retentionTagVersion"></param>
         /// <param name="expireOn"></param>
-        internal DataProtectionBackupDiscreteRecoveryPointProperties(string objectType, string friendlyName, IList<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion, DateTimeOffset? expireOn) : base(objectType)
+        /// <param name="recoveryPointState"> Specifies recovery point completeness. Partial (i.e., only some of the intended items were backed up), or Completed (i.e., ALL intended items were backed up). </param>
+        internal DataProtectionBackupDiscreteRecoveryPointProperties(string objectType, string friendlyName, IList<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion, DateTimeOffset? expireOn, DataProtectionBackupRecoveryPointCompletionState? recoveryPointState) : base(objectType)
         {
             FriendlyName = friendlyName;
             RecoveryPointDataStoresDetails = recoveryPointDataStoresDetails;
@@ -47,6 +48,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             RetentionTagName = retentionTagName;
             RetentionTagVersion = retentionTagVersion;
             ExpireOn = expireOn;
+            RecoveryPointState = recoveryPointState;
             ObjectType = objectType ?? "AzureBackupDiscreteRecoveryPoint";
         }
 
@@ -70,5 +72,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public string RetentionTagVersion { get; set; }
         /// <summary> Gets the expire on. </summary>
         public DateTimeOffset? ExpireOn { get; }
+        /// <summary> Specifies recovery point completeness. Partial (i.e., only some of the intended items were backed up), or Completed (i.e., ALL intended items were backed up). </summary>
+        public DataProtectionBackupRecoveryPointCompletionState? RecoveryPointState { get; set; }
     }
 }

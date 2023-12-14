@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> An InputDefinition for a single file.  TrackSelections are scoped to the file specified. </summary>
     public partial class MediaJobInputFile : MediaJobInputDefinition
     {
-        /// <summary> Initializes a new instance of MediaJobInputFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputFile"/>. </summary>
         public MediaJobInputFile()
         {
             OdataType = "#Microsoft.Media.InputFile";
         }
 
-        /// <summary> Initializes a new instance of MediaJobInputFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputFile"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="includedTracks">
         /// The list of TrackDescriptors which define the metadata and selection of tracks in the input.

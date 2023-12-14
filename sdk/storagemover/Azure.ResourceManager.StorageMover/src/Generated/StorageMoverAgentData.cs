@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.StorageMover
     /// </summary>
     public partial class StorageMoverAgentData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageMoverAgentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverAgentData"/>. </summary>
         /// <param name="arcResourceId"> The fully qualified resource ID of the Hybrid Compute resource for the Agent. </param>
         /// <param name="arcVmUuid"> The VM UUID of the Hybrid Compute resource for the Agent. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="arcResourceId"/> or <paramref name="arcVmUuid"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StorageMover
             ArcVmUuid = arcVmUuid;
         }
 
-        /// <summary> Initializes a new instance of StorageMoverAgentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverAgentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

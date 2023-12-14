@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Support
 {
     /// <summary>
     /// A Class representing a SupportAzureService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SupportAzureServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSupportAzureServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetSupportAzureService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SupportAzureServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSupportAzureServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetSupportAzureService method.
     /// </summary>
     public partial class SupportAzureServiceResource : ArmResource
     {
@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.Support
         private readonly ServicesRestOperations _supportAzureServiceServicesRestClient;
         private readonly SupportAzureServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Support/services";
+
         /// <summary> Initializes a new instance of the <see cref="SupportAzureServiceResource"/> class for mocking. </summary>
         protected SupportAzureServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SupportAzureServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SupportAzureServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SupportAzureServiceResource(ArmClient client, SupportAzureServiceData data) : this(client, data.Id)
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Support
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Support/services";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

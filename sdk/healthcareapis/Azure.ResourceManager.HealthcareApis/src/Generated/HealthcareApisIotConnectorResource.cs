@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
     /// A Class representing a HealthcareApisIotConnector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HealthcareApisIotConnectorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHealthcareApisIotConnectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HealthcareApisWorkspaceResource" /> using the GetHealthcareApisIotConnector method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HealthcareApisIotConnectorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHealthcareApisIotConnectorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HealthcareApisWorkspaceResource"/> using the GetHealthcareApisIotConnector method.
     /// </summary>
     public partial class HealthcareApisIotConnectorResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.HealthcareApis
         private readonly IotConnectorsRestOperations _healthcareApisIotConnectorIotConnectorsRestClient;
         private readonly HealthcareApisIotConnectorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/workspaces/iotconnectors";
+
         /// <summary> Initializes a new instance of the <see cref="HealthcareApisIotConnectorResource"/> class for mocking. </summary>
         protected HealthcareApisIotConnectorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HealthcareApisIotConnectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HealthcareApisIotConnectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HealthcareApisIotConnectorResource(ArmClient client, HealthcareApisIotConnectorData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.HealthcareApis
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/workspaces/iotconnectors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

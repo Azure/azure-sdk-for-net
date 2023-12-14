@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// </summary>
     public partial class ContainerRegistryRunData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerRegistryRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunData"/>. </summary>
         public ContainerRegistryRunData()
         {
             OutputImages = new ChangeTrackingList<ContainerRegistryImageDescriptor>();
             CustomRegistries = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

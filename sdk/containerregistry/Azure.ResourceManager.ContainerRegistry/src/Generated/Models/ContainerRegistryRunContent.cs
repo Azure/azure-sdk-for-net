@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// </summary>
     public abstract partial class ContainerRegistryRunContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryRunContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunContent"/>. </summary>
         protected ContainerRegistryRunContent()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryRunContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryRunContent"/>. </summary>
         /// <param name="runRequestType"> The type of the run request. </param>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled for the run or not. </param>
         /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>

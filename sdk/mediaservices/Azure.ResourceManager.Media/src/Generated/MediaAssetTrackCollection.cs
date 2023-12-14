@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Media
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MediaAssetTrackResource" /> and their operations.
-    /// Each <see cref="MediaAssetTrackResource" /> in the collection will belong to the same instance of <see cref="MediaAssetResource" />.
-    /// To get a <see cref="MediaAssetTrackCollection" /> instance call the GetMediaAssetTracks method from an instance of <see cref="MediaAssetResource" />.
+    /// A class representing a collection of <see cref="MediaAssetTrackResource"/> and their operations.
+    /// Each <see cref="MediaAssetTrackResource"/> in the collection will belong to the same instance of <see cref="MediaAssetResource"/>.
+    /// To get a <see cref="MediaAssetTrackCollection"/> instance call the GetMediaAssetTracks method from an instance of <see cref="MediaAssetResource"/>.
     /// </summary>
     public partial class MediaAssetTrackCollection : ArmCollection, IEnumerable<MediaAssetTrackResource>, IAsyncEnumerable<MediaAssetTrackResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MediaAssetTrackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MediaAssetTrackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MediaAssetTrackResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetTrackTracksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MediaAssetTrackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MediaAssetTrackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MediaAssetTrackResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetTrackTracksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

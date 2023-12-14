@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Base class for file properties. </summary>
     public partial class ProjectFileProperties
     {
-        /// <summary> Initializes a new instance of ProjectFileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectFileProperties"/>. </summary>
         public ProjectFileProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ProjectFileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectFileProperties"/>. </summary>
         /// <param name="extension"> Optional File extension. If submitted it should not have a leading period and must match the extension from filePath. </param>
         /// <param name="filePath"> Relative path of this file resource. This property can be set when creating or updating the file resource. </param>
         /// <param name="lastModified"> Modification DateTime. </param>

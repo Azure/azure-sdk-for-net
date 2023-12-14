@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Represents an alert sync setting. </summary>
     public partial class SecurityAlertSyncSettings : SecuritySettingData
     {
-        /// <summary> Initializes a new instance of SecurityAlertSyncSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertSyncSettings"/>. </summary>
         public SecurityAlertSyncSettings()
         {
             Kind = SettingKind.AlertSyncSettings;
         }
 
-        /// <summary> Initializes a new instance of SecurityAlertSyncSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertSyncSettings"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

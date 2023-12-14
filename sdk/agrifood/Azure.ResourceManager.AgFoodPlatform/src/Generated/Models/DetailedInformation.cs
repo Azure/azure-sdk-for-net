@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     /// <summary> Model to capture detailed information for farmBeatsExtensions. </summary>
     public partial class DetailedInformation
     {
-        /// <summary> Initializes a new instance of DetailedInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetailedInformation"/>. </summary>
         internal DetailedInformation()
         {
             CustomParameters = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             ApiInputParameters = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DetailedInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetailedInformation"/>. </summary>
         /// <param name="apiName"> ApiName available for the farmBeatsExtension. </param>
         /// <param name="customParameters"> List of customParameters. </param>
         /// <param name="platformParameters"> List of platformParameters. </param>

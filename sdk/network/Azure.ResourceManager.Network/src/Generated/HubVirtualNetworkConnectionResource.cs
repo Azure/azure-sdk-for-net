@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a HubVirtualNetworkConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HubVirtualNetworkConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHubVirtualNetworkConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualHubResource" /> using the GetHubVirtualNetworkConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HubVirtualNetworkConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHubVirtualNetworkConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualHubResource"/> using the GetHubVirtualNetworkConnection method.
     /// </summary>
     public partial class HubVirtualNetworkConnectionResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Network
         private readonly HubVirtualNetworkConnectionsRestOperations _hubVirtualNetworkConnectionRestClient;
         private readonly HubVirtualNetworkConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs/hubVirtualNetworkConnections";
+
         /// <summary> Initializes a new instance of the <see cref="HubVirtualNetworkConnectionResource"/> class for mocking. </summary>
         protected HubVirtualNetworkConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HubVirtualNetworkConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HubVirtualNetworkConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HubVirtualNetworkConnectionResource(ArmClient client, HubVirtualNetworkConnectionData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs/hubVirtualNetworkConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

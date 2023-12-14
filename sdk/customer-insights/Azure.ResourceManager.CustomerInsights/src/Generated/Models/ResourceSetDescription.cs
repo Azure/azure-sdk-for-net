@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The resource set description. </summary>
     public partial class ResourceSetDescription
     {
-        /// <summary> Initializes a new instance of ResourceSetDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSetDescription"/>. </summary>
         public ResourceSetDescription()
         {
             Elements = new ChangeTrackingList<string>();
             Exceptions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceSetDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSetDescription"/>. </summary>
         /// <param name="elements"> The elements included in the set. </param>
         /// <param name="exceptions"> The elements that are not included in the set, in case elements contains '*' indicating 'all'. </param>
         internal ResourceSetDescription(IList<string> elements, IList<string> exceptions)

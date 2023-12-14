@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> IoT Central Application Template. </summary>
     public partial class IotCentralAppTemplate
     {
-        /// <summary> Initializes a new instance of IotCentralAppTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppTemplate"/>. </summary>
         internal IotCentralAppTemplate()
         {
             Locations = new ChangeTrackingList<IotCentralAppTemplateLocation>();
         }
 
-        /// <summary> Initializes a new instance of IotCentralAppTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppTemplate"/>. </summary>
         /// <param name="manifestId"> The ID of the template. </param>
         /// <param name="manifestVersion"> The version of the template. </param>
         /// <param name="name"> The name of the template. </param>

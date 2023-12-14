@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The plan object in Azure Resource Manager, represents a marketplace plan. </summary>
     public partial class AppServiceArmPlan
     {
-        /// <summary> Initializes a new instance of AppServiceArmPlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceArmPlan"/>. </summary>
         internal AppServiceArmPlan()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceArmPlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceArmPlan"/>. </summary>
         /// <param name="name"> The name. </param>
         /// <param name="publisher"> The publisher. </param>
         /// <param name="product"> The product. </param>

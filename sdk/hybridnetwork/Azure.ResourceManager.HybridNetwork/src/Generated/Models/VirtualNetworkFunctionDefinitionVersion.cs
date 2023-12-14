@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Virtual network function network function definition version properties. </summary>
     public partial class VirtualNetworkFunctionDefinitionVersion : NetworkFunctionDefinitionVersionPropertiesFormat
     {
-        /// <summary> Initializes a new instance of VirtualNetworkFunctionDefinitionVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkFunctionDefinitionVersion"/>. </summary>
         public VirtualNetworkFunctionDefinitionVersion()
         {
             NetworkFunctionType = NetworkFunctionType.VirtualNetworkFunction;
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkFunctionDefinitionVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkFunctionDefinitionVersion"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function definition version resource. </param>
         /// <param name="versionState"> The network function definition version state. </param>
         /// <param name="description"> The network function definition version description. </param>

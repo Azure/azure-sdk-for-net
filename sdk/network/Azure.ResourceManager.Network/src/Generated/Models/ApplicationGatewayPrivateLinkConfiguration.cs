@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Private Link Configuration on an application gateway. </summary>
     public partial class ApplicationGatewayPrivateLinkConfiguration : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayPrivateLinkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkConfiguration"/>. </summary>
         public ApplicationGatewayPrivateLinkConfiguration()
         {
             IPConfigurations = new ChangeTrackingList<ApplicationGatewayPrivateLinkIPConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayPrivateLinkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

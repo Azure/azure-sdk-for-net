@@ -16,11 +16,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class RestoreTargetInfoBase
     {
-        /// <summary> Initializes a new instance of RestoreTargetInfoBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreTargetInfoBase"/>. </summary>
         /// <param name="recoverySetting"> Recovery Option. </param>
         protected RestoreTargetInfoBase(RecoverySetting recoverySetting)
         {
             RecoverySetting = recoverySetting;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RestoreTargetInfoBase"/>. </summary>
+        /// <param name="objectType"> Type of Datasource object, used to initialize the right inherited type. </param>
+        /// <param name="recoverySetting"> Recovery Option. </param>
+        /// <param name="restoreLocation"> Target Restore region. </param>
+        internal RestoreTargetInfoBase(string objectType, RecoverySetting recoverySetting, AzureLocation? restoreLocation)
+        {
+            ObjectType = objectType;
+            RecoverySetting = recoverySetting;
+            RestoreLocation = restoreLocation;
         }
 
         /// <summary> Type of Datasource object, used to initialize the right inherited type. </summary>

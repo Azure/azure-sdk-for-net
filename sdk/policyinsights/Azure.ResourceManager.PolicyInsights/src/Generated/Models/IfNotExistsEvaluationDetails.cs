@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Evaluation details of IfNotExists effect. </summary>
     public partial class IfNotExistsEvaluationDetails
     {
-        /// <summary> Initializes a new instance of IfNotExistsEvaluationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="IfNotExistsEvaluationDetails"/>. </summary>
         internal IfNotExistsEvaluationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of IfNotExistsEvaluationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="IfNotExistsEvaluationDetails"/>. </summary>
         /// <param name="resourceId"> ID of the last evaluated resource for IfNotExists effect. </param>
         /// <param name="totalResources"> Total number of resources to which the existence condition is applicable. </param>
         internal IfNotExistsEvaluationDetails(ResourceIdentifier resourceId, int? totalResources)

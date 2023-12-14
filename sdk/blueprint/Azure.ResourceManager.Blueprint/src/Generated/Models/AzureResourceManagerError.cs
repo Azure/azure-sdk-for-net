@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Error code and message. </summary>
     public partial class AzureResourceManagerError
     {
-        /// <summary> Initializes a new instance of AzureResourceManagerError. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureResourceManagerError"/>. </summary>
         public AzureResourceManagerError()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureResourceManagerError. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureResourceManagerError"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         internal AzureResourceManagerError(string code, string message)

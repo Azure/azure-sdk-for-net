@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Billing information related properties of a server. </summary>
     public partial class MySqlSku
     {
-        /// <summary> Initializes a new instance of MySqlSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlSku"/>. </summary>
         /// <param name="name"> The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public MySqlSku(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MySql.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of MySqlSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlSku"/>. </summary>
         /// <param name="name"> The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8. </param>
         /// <param name="tier"> The tier of the particular SKU, e.g. Basic. </param>
         /// <param name="capacity"> The scale up/out capacity, representing server's compute units. </param>

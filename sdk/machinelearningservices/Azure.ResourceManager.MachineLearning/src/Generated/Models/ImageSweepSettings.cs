@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Model sweeping and hyperparameter sweeping related settings. </summary>
     public partial class ImageSweepSettings
     {
-        /// <summary> Initializes a new instance of ImageSweepSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageSweepSettings"/>. </summary>
         /// <param name="samplingAlgorithm"> [Required] Type of the hyperparameter sampling algorithms. </param>
         public ImageSweepSettings(SamplingAlgorithmType samplingAlgorithm)
         {
             SamplingAlgorithm = samplingAlgorithm;
         }
 
-        /// <summary> Initializes a new instance of ImageSweepSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageSweepSettings"/>. </summary>
         /// <param name="earlyTermination">
         /// Type of early termination policy.
         /// Please note <see cref="MachineLearningEarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Recipient User list representation. </summary>
     internal partial class RecipientEmailListResult
     {
-        /// <summary> Initializes a new instance of RecipientEmailListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecipientEmailListResult"/>. </summary>
         internal RecipientEmailListResult()
         {
             Value = new ChangeTrackingList<RecipientEmailContract>();
         }
 
-        /// <summary> Initializes a new instance of RecipientEmailListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecipientEmailListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

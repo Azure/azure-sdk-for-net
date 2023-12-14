@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Exclude variables from managed rule evaluation. </summary>
     public partial class ManagedRuleExclusion
     {
-        /// <summary> Initializes a new instance of ManagedRuleExclusion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleExclusion"/>. </summary>
         /// <param name="matchVariable"> The variable type to be excluded. </param>
         /// <param name="selectorMatchOperator"> Comparison operator to apply to the selector when specifying which elements in the collection this exclusion applies to. </param>
         /// <param name="selector"> Selector value for which elements in the collection this exclusion applies to. </param>

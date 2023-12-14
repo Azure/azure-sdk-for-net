@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteSlotVirtualNetworkConnectionGatewayResource" /> and their operations.
-    /// Each <see cref="SiteSlotVirtualNetworkConnectionGatewayResource" /> in the collection will belong to the same instance of <see cref="SiteSlotVirtualNetworkConnectionResource" />.
-    /// To get a <see cref="SiteSlotVirtualNetworkConnectionGatewayCollection" /> instance call the GetSiteSlotVirtualNetworkConnectionGateways method from an instance of <see cref="SiteSlotVirtualNetworkConnectionResource" />.
+    /// A class representing a collection of <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/> and their operations.
+    /// Each <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/> in the collection will belong to the same instance of <see cref="SiteSlotVirtualNetworkConnectionResource"/>.
+    /// To get a <see cref="SiteSlotVirtualNetworkConnectionGatewayCollection"/> instance call the GetSiteSlotVirtualNetworkConnectionGateways method from an instance of <see cref="SiteSlotVirtualNetworkConnectionResource"/>.
     /// </summary>
     public partial class SiteSlotVirtualNetworkConnectionGatewayCollection : ArmCollection
     {

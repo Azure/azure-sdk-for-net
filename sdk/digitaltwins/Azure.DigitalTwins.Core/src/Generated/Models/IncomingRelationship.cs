@@ -10,12 +10,12 @@ namespace Azure.DigitalTwins.Core
     /// <summary> An incoming relationship. </summary>
     public partial class IncomingRelationship
     {
-        /// <summary> Initializes a new instance of IncomingRelationship. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncomingRelationship"/>. </summary>
         internal IncomingRelationship()
         {
         }
 
-        /// <summary> Initializes a new instance of IncomingRelationship. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncomingRelationship"/>. </summary>
         /// <param name="relationshipId"> A user-provided string representing the id of this relationship, unique in the context of the source digital twin, i.e. sourceId + relationshipId is unique in the context of the service. </param>
         /// <param name="sourceId"> The id of the source digital twin. </param>
         /// <param name="relationshipName"> The name of the relationship. </param>

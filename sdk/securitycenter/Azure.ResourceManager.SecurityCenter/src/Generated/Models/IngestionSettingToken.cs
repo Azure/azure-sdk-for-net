@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Configures how to correlate scan data and logs with resources associated with the subscription. </summary>
     public partial class IngestionSettingToken
     {
-        /// <summary> Initializes a new instance of IngestionSettingToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionSettingToken"/>. </summary>
         internal IngestionSettingToken()
         {
         }
 
-        /// <summary> Initializes a new instance of IngestionSettingToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionSettingToken"/>. </summary>
         /// <param name="token"> The token is used for correlating security data and logs with the resources in the subscription. </param>
         internal IngestionSettingToken(string token)
         {

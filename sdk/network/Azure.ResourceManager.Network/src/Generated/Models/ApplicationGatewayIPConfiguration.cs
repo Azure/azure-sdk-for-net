@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> IP configuration of an application gateway. Currently 1 public and 1 private IP configuration is allowed. </summary>
     public partial class ApplicationGatewayIPConfiguration : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayIPConfiguration"/>. </summary>
         public ApplicationGatewayIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayIPConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

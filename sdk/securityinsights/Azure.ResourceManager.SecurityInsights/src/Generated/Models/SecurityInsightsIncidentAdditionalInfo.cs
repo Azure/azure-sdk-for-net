@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Incident additional data property bag. </summary>
     public partial class SecurityInsightsIncidentAdditionalInfo
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentAdditionalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentAdditionalInfo"/>. </summary>
         internal SecurityInsightsIncidentAdditionalInfo()
         {
             AlertProductNames = new ChangeTrackingList<string>();
             Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentAdditionalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentAdditionalInfo"/>. </summary>
         /// <param name="alertsCount"> The number of alerts in the incident. </param>
         /// <param name="bookmarksCount"> The number of bookmarks in the incident. </param>
         /// <param name="commentsCount"> The number of comments in the incident. </param>

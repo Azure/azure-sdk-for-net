@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.MachineLearning
     /// </summary>
     public partial class MachineLearningComputeData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MachineLearningComputeData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

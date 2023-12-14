@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> The managed resources in customer subscription. </summary>
     public partial class PurviewManagedResource
     {
-        /// <summary> Initializes a new instance of PurviewManagedResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewManagedResource"/>. </summary>
         internal PurviewManagedResource()
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewManagedResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewManagedResource"/>. </summary>
         /// <param name="eventHubNamespace"> Gets the managed event hub namespace resource identifier. </param>
         /// <param name="resourceGroup"> Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account. </param>
         /// <param name="storageAccount"> Gets the managed storage account resource identifier. </param>

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a RestorePoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RestorePointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRestorePointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RestorePointGroupResource" /> using the GetRestorePoint method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RestorePointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRestorePointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RestorePointGroupResource"/> using the GetRestorePoint method.
     /// </summary>
     public partial class RestorePointResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Compute
         private readonly RestorePointsRestOperations _restorePointRestClient;
         private readonly RestorePointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/restorePointCollections/restorePoints";
+
         /// <summary> Initializes a new instance of the <see cref="RestorePointResource"/> class for mocking. </summary>
         protected RestorePointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RestorePointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RestorePointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RestorePointResource(ArmClient client, RestorePointData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/restorePointCollections/restorePoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

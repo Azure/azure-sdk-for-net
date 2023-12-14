@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> ClusterAvailableVersion represents the cluster version that the cluster manager can be asked to create and manage. </summary>
     public partial class ClusterAvailableVersion
     {
-        /// <summary> Initializes a new instance of ClusterAvailableVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterAvailableVersion"/>. </summary>
         internal ClusterAvailableVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterAvailableVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterAvailableVersion"/>. </summary>
         /// <param name="supportExpiryDate"> The last date the version of the platform is supported. </param>
         /// <param name="targetClusterVersion"> The version of the cluster to be deployed. </param>
         internal ClusterAvailableVersion(string supportExpiryDate, string targetClusterVersion)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The KPI alias. </summary>
     public partial class KpiAlias
     {
-        /// <summary> Initializes a new instance of KpiAlias. </summary>
+        /// <summary> Initializes a new instance of <see cref="KpiAlias"/>. </summary>
         /// <param name="aliasName"> KPI alias name. </param>
         /// <param name="expression"> The expression. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> or <paramref name="expression"/> is null. </exception>

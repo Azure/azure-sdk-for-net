@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> SQL pool SKU. </summary>
     public partial class SynapseSku
     {
-        /// <summary> Initializes a new instance of SynapseSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSku"/>. </summary>
         public SynapseSku()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSku"/>. </summary>
         /// <param name="tier"> The service tier. </param>
         /// <param name="name"> The SKU name. </param>
         /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>

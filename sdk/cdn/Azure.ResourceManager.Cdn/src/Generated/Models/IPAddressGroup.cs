@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> CDN Ip address group. </summary>
     public partial class IPAddressGroup
     {
-        /// <summary> Initializes a new instance of IPAddressGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPAddressGroup"/>. </summary>
         public IPAddressGroup()
         {
             IPv4Addresses = new ChangeTrackingList<CidrIPAddress>();
             IPv6Addresses = new ChangeTrackingList<CidrIPAddress>();
         }
 
-        /// <summary> Initializes a new instance of IPAddressGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPAddressGroup"/>. </summary>
         /// <param name="deliveryRegion"> The delivery region of the ip address group. </param>
         /// <param name="ipv4Addresses"> The list of ip v4 addresses. </param>
         /// <param name="ipv6Addresses"> The list of ip v6 addresses. </param>

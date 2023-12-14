@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> General planned failover model custom properties. </summary>
     public partial class GeneralPlannedFailoverModelCustomProperties : PlannedFailoverModelCustomProperties
     {
-        /// <summary> Initializes a new instance of GeneralPlannedFailoverModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeneralPlannedFailoverModelCustomProperties"/>. </summary>
         public GeneralPlannedFailoverModelCustomProperties()
         {
             InstanceType = "PlannedFailoverModelCustomProperties";
         }
 
-        /// <summary> Initializes a new instance of GeneralPlannedFailoverModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeneralPlannedFailoverModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         internal GeneralPlannedFailoverModelCustomProperties(string instanceType) : base(instanceType)
         {

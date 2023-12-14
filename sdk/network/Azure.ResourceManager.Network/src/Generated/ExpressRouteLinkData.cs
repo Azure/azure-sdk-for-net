@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ExpressRouteLinkData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ExpressRouteLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteLinkData"/>. </summary>
         public ExpressRouteLinkData()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteLinkData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SignalR
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SignalRPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="SignalRPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="SignalRResource" />.
-    /// To get a <see cref="SignalRPrivateEndpointConnectionCollection" /> instance call the GetSignalRPrivateEndpointConnections method from an instance of <see cref="SignalRResource" />.
+    /// A class representing a collection of <see cref="SignalRPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="SignalRPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="SignalRResource"/>.
+    /// To get a <see cref="SignalRPrivateEndpointConnectionCollection"/> instance call the GetSignalRPrivateEndpointConnections method from an instance of <see cref="SignalRResource"/>.
     /// </summary>
     public partial class SignalRPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<SignalRPrivateEndpointConnectionResource>, IAsyncEnumerable<SignalRPrivateEndpointConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SignalRPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SignalRPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SignalRPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRPrivateEndpointConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SignalRPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SignalRPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SignalRPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRPrivateEndpointConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

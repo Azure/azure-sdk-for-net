@@ -13,7 +13,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The related metadata items for the category. </summary>
     internal partial class MetadataCategoryRelated
     {
-        /// <summary> Initializes a new instance of MetadataCategoryRelated. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataCategoryRelated"/>. </summary>
         internal MetadataCategoryRelated()
         {
             Tables = new ChangeTrackingList<string>();
@@ -21,6 +21,21 @@ namespace Azure.Monitor.Query.Models
             ResourceTypes = new ChangeTrackingList<string>();
             Queries = new ChangeTrackingList<string>();
             Solutions = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataCategoryRelated"/>. </summary>
+        /// <param name="tables"> The tables related to the category. </param>
+        /// <param name="functions"> The functions related to the category. </param>
+        /// <param name="resourceTypes"> The resource types related to the category. </param>
+        /// <param name="queries"> The saved queries related to the category. </param>
+        /// <param name="solutions"> The Log Analytics solutions related to the category. </param>
+        internal MetadataCategoryRelated(IReadOnlyList<string> tables, IReadOnlyList<string> functions, IReadOnlyList<string> resourceTypes, IReadOnlyList<string> queries, IReadOnlyList<string> solutions)
+        {
+            Tables = tables;
+            Functions = functions;
+            ResourceTypes = resourceTypes;
+            Queries = queries;
+            Solutions = solutions;
         }
 
         /// <summary> The tables related to the category. </summary>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Edifact agreement envelope settings. </summary>
     public partial class EdifactEnvelopeSettings
     {
-        /// <summary> Initializes a new instance of EdifactEnvelopeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactEnvelopeSettings"/>. </summary>
         /// <param name="applyDelimiterStringAdvice"> The value indicating whether to apply delimiter string advice. </param>
         /// <param name="createGroupingSegments"> The value indicating whether to create grouping segments. </param>
         /// <param name="enableDefaultGroupHeaders"> The value indicating whether to enable default group headers. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Logic.Models
             IsTestInterchange = isTestInterchange;
         }
 
-        /// <summary> Initializes a new instance of EdifactEnvelopeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactEnvelopeSettings"/>. </summary>
         /// <param name="groupAssociationAssignedCode"> The group association assigned code. </param>
         /// <param name="communicationAgreementId"> The communication agreement id. </param>
         /// <param name="applyDelimiterStringAdvice"> The value indicating whether to apply delimiter string advice. </param>

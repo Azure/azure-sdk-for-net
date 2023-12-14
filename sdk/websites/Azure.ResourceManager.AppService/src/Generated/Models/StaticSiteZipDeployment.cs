@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Static site zip deployment ARM resource. </summary>
     public partial class StaticSiteZipDeployment : ResourceData
     {
-        /// <summary> Initializes a new instance of StaticSiteZipDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteZipDeployment"/>. </summary>
         public StaticSiteZipDeployment()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteZipDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteZipDeployment"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

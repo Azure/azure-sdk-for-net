@@ -13,13 +13,13 @@ namespace Azure.Maps.Search.Models
     /// <summary> This object is returned from a successful Search Address Reverse call. </summary>
     public partial class ReverseSearchAddressResult
     {
-        /// <summary> Initializes a new instance of ReverseSearchAddressResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReverseSearchAddressResult"/>. </summary>
         internal ReverseSearchAddressResult()
         {
             Addresses = new ChangeTrackingList<ReverseSearchAddressItem>();
         }
 
-        /// <summary> Initializes a new instance of ReverseSearchAddressResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReverseSearchAddressResult"/>. </summary>
         /// <param name="summary"> Summary object for a Search Address Reverse response. </param>
         /// <param name="addresses"> Addresses array. </param>
         internal ReverseSearchAddressResult(SearchSummary summary, IReadOnlyList<ReverseSearchAddressItem> addresses)

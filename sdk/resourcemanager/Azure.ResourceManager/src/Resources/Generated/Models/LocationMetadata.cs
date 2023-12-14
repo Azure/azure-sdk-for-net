@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Location metadata information. </summary>
     public partial class LocationMetadata
     {
-        /// <summary> Initializes a new instance of LocationMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocationMetadata"/>. </summary>
         internal LocationMetadata()
         {
             PairedRegions = new ChangeTrackingList<PairedRegion>();
         }
 
-        /// <summary> Initializes a new instance of LocationMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocationMetadata"/>. </summary>
         /// <param name="regionType"> The type of the region. </param>
         /// <param name="regionCategory"> The category of the region. </param>
         /// <param name="geography"> The geography of the location. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The properties associated with a private endpoint. </summary>
     public partial class StreamAnalyticsPrivateEndpointProperties
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsPrivateEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsPrivateEndpointProperties"/>. </summary>
         public StreamAnalyticsPrivateEndpointProperties()
         {
             ManualPrivateLinkServiceConnections = new ChangeTrackingList<StreamAnalyticsPrivateLinkServiceConnection>();
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsPrivateEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsPrivateEndpointProperties"/>. </summary>
         /// <param name="createdOn"> The date when this private endpoint was created. </param>
         /// <param name="manualPrivateLinkServiceConnections"> A list of connections to the remote resource. Immutable after it is set. </param>
         internal StreamAnalyticsPrivateEndpointProperties(DateTimeOffset? createdOn, IList<StreamAnalyticsPrivateLinkServiceConnection> manualPrivateLinkServiceConnections)

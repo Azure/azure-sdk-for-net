@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A Class representing a DevTestLabSecret along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevTestLabSecretResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevTestLabSecretResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevTestLabUserResource" /> using the GetDevTestLabSecret method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabSecretResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabSecretResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabUserResource"/> using the GetDevTestLabSecret method.
     /// </summary>
     public partial class DevTestLabSecretResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly SecretsRestOperations _devTestLabSecretSecretsRestClient;
         private readonly DevTestLabSecretData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/users/secrets";
+
         /// <summary> Initializes a new instance of the <see cref="DevTestLabSecretResource"/> class for mocking. </summary>
         protected DevTestLabSecretResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevTestLabSecretResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabSecretResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevTestLabSecretResource(ArmClient client, DevTestLabSecretData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.DevTestLabs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/users/secrets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

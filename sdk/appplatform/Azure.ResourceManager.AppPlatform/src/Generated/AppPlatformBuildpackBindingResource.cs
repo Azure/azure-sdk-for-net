@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformBuildpackBinding along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformBuildpackBindingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformBuildpackBindingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformBuilderResource" /> using the GetAppPlatformBuildpackBinding method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformBuildpackBindingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformBuildpackBindingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformBuilderResource"/> using the GetAppPlatformBuildpackBinding method.
     /// </summary>
     public partial class AppPlatformBuildpackBindingResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly BuildpackBindingRestOperations _appPlatformBuildpackBindingBuildpackBindingRestClient;
         private readonly AppPlatformBuildpackBindingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/buildServices/builders/buildpackBindings";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformBuildpackBindingResource"/> class for mocking. </summary>
         protected AppPlatformBuildpackBindingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformBuildpackBindingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformBuildpackBindingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformBuildpackBindingResource(ArmClient client, AppPlatformBuildpackBindingData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/buildServices/builders/buildpackBindings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

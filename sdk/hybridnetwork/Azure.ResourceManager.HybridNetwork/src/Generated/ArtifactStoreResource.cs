@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary>
     /// A Class representing an ArtifactStore along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ArtifactStoreResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetArtifactStoreResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PublisherResource" /> using the GetArtifactStore method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ArtifactStoreResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetArtifactStoreResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PublisherResource"/> using the GetArtifactStore method.
     /// </summary>
     public partial class ArtifactStoreResource : ArmResource
     {
@@ -44,12 +44,15 @@ namespace Azure.ResourceManager.HybridNetwork
         private readonly ProxyArtifactRestOperations _proxyArtifactRestClient;
         private readonly ArtifactStoreData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers/artifactStores";
+
         /// <summary> Initializes a new instance of the <see cref="ArtifactStoreResource"/> class for mocking. </summary>
         protected ArtifactStoreResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ArtifactStoreResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArtifactStoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ArtifactStoreResource(ArmClient client, ArtifactStoreData data) : this(client, data.Id)
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.HybridNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers/artifactStores";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProxyArtifactListOverview" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ProxyArtifactListOverview"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProxyArtifactListOverview> GetProxyArtifactsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _proxyArtifactRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProxyArtifactListOverview" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ProxyArtifactListOverview"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProxyArtifactListOverview> GetProxyArtifacts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _proxyArtifactRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="artifactName"> The name of the artifact. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ProxyArtifactVersionsListOverview" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ProxyArtifactVersionsListOverview"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProxyArtifactVersionsListOverview> GetProxyArtifactsAsync(string artifactName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(artifactName, nameof(artifactName));
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="artifactName"> The name of the artifact. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ProxyArtifactVersionsListOverview" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ProxyArtifactVersionsListOverview"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProxyArtifactVersionsListOverview> GetProxyArtifacts(string artifactName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(artifactName, nameof(artifactName));

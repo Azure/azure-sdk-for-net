@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Volumes associated with snapshot policy. </summary>
     internal partial class SnapshotPolicyVolumeList
     {
-        /// <summary> Initializes a new instance of SnapshotPolicyVolumeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyVolumeList"/>. </summary>
         internal SnapshotPolicyVolumeList()
         {
             Value = new ChangeTrackingList<NetAppVolumeData>();
         }
 
-        /// <summary> Initializes a new instance of SnapshotPolicyVolumeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyVolumeList"/>. </summary>
         /// <param name="value"> List of volumes. </param>
         internal SnapshotPolicyVolumeList(IReadOnlyList<NetAppVolumeData> value)
         {

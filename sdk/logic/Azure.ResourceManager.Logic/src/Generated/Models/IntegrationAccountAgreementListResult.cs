@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The list of integration account agreements. </summary>
     internal partial class IntegrationAccountAgreementListResult
     {
-        /// <summary> Initializes a new instance of IntegrationAccountAgreementListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountAgreementListResult"/>. </summary>
         internal IntegrationAccountAgreementListResult()
         {
             Value = new ChangeTrackingList<IntegrationAccountAgreementData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountAgreementListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountAgreementListResult"/>. </summary>
         /// <param name="value"> The list of integration account agreements. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal IntegrationAccountAgreementListResult(IReadOnlyList<IntegrationAccountAgreementData> value, string nextLink)

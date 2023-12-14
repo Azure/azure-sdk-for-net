@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Confluent.Models
     /// <summary> Response of a list operation. </summary>
     internal partial class ConfluentAgreementListResult
     {
-        /// <summary> Initializes a new instance of ConfluentAgreementListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentAgreementListResult"/>. </summary>
         internal ConfluentAgreementListResult()
         {
             Value = new ChangeTrackingList<ConfluentAgreement>();
         }
 
-        /// <summary> Initializes a new instance of ConfluentAgreementListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentAgreementListResult"/>. </summary>
         /// <param name="value"> Results of a list operation. </param>
         /// <param name="nextLink"> Link to the next set of results, if any. </param>
         internal ConfluentAgreementListResult(IReadOnlyList<ConfluentAgreement> value, string nextLink)

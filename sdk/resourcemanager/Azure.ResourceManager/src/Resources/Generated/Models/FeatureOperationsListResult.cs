@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of previewed features. </summary>
     internal partial class FeatureOperationsListResult
     {
-        /// <summary> Initializes a new instance of FeatureOperationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureOperationsListResult"/>. </summary>
         internal FeatureOperationsListResult()
         {
             Value = new ChangeTrackingList<FeatureData>();
         }
 
-        /// <summary> Initializes a new instance of FeatureOperationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureOperationsListResult"/>. </summary>
         /// <param name="value"> The array of features. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal FeatureOperationsListResult(IReadOnlyList<FeatureData> value, string nextLink)

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A Class representing an ActionGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ActionGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetActionGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetActionGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ActionGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetActionGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetActionGroup method.
     /// </summary>
     public partial class ActionGroupResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Monitor
         private readonly ActionGroupsRestOperations _actionGroupRestClient;
         private readonly ActionGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/actionGroups";
+
         /// <summary> Initializes a new instance of the <see cref="ActionGroupResource"/> class for mocking. </summary>
         protected ActionGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ActionGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ActionGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ActionGroupResource(ArmClient client, ActionGroupData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Monitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/actionGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

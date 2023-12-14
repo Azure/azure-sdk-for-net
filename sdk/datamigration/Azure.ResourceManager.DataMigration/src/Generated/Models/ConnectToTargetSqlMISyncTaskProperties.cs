@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that validates connection to Azure SQL Database Managed Instance. </summary>
     public partial class ConnectToTargetSqlMISyncTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of ConnectToTargetSqlMISyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlMISyncTaskProperties"/>. </summary>
         public ConnectToTargetSqlMISyncTaskProperties()
         {
             Output = new ChangeTrackingList<ConnectToTargetSqlMISyncTaskOutput>();
             TaskType = TaskType.ConnectToTargetAzureSqlDBMISyncLRS;
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetSqlMISyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlMISyncTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>

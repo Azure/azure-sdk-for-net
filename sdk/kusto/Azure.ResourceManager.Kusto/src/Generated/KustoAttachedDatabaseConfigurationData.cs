@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Kusto
     /// </summary>
     public partial class KustoAttachedDatabaseConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of KustoAttachedDatabaseConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoAttachedDatabaseConfigurationData"/>. </summary>
         public KustoAttachedDatabaseConfigurationData()
         {
             AttachedDatabaseNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of KustoAttachedDatabaseConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoAttachedDatabaseConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

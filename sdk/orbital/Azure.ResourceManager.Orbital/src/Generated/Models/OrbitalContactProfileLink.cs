@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> Contact Profile Link. </summary>
     public partial class OrbitalContactProfileLink
     {
-        /// <summary> Initializes a new instance of OrbitalContactProfileLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactProfileLink"/>. </summary>
         /// <param name="name"> Link name. </param>
         /// <param name="polarization"> Polarization. e.g. (RHCP, LHCP). </param>
         /// <param name="direction"> Direction (uplink or downlink). </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Orbital.Models
             Channels = channels.ToList();
         }
 
-        /// <summary> Initializes a new instance of OrbitalContactProfileLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactProfileLink"/>. </summary>
         /// <param name="name"> Link name. </param>
         /// <param name="polarization"> Polarization. e.g. (RHCP, LHCP). </param>
         /// <param name="direction"> Direction (uplink or downlink). </param>

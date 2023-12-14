@@ -12,9 +12,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Defines the virtualMachineInstanceUpdate. </summary>
     public partial class VMwareVmInstancePatch
     {
-        /// <summary> Initializes a new instance of VMwareVmInstancePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareVmInstancePatch"/>. </summary>
         public VMwareVmInstancePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareVmInstancePatch"/>. </summary>
+        /// <param name="hardwareProfile"> Specifies the hardware settings for the virtual machine. </param>
+        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
+        /// <param name="networkProfile"> Specifies the network interfaces of the virtual machine. </param>
+        internal VMwareVmInstancePatch(VmInstanceHardwareProfile hardwareProfile, StorageProfileUpdate storageProfile, VMwareNetworkProfileUpdate networkProfile)
+        {
+            HardwareProfile = hardwareProfile;
+            StorageProfile = storageProfile;
+            NetworkProfile = networkProfile;
         }
 
         /// <summary> Specifies the hardware settings for the virtual machine. </summary>

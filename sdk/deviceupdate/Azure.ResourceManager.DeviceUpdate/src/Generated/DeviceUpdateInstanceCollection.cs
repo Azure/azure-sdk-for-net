@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DeviceUpdateInstanceResource" /> and their operations.
-    /// Each <see cref="DeviceUpdateInstanceResource" /> in the collection will belong to the same instance of <see cref="DeviceUpdateAccountResource" />.
-    /// To get a <see cref="DeviceUpdateInstanceCollection" /> instance call the GetDeviceUpdateInstances method from an instance of <see cref="DeviceUpdateAccountResource" />.
+    /// A class representing a collection of <see cref="DeviceUpdateInstanceResource"/> and their operations.
+    /// Each <see cref="DeviceUpdateInstanceResource"/> in the collection will belong to the same instance of <see cref="DeviceUpdateAccountResource"/>.
+    /// To get a <see cref="DeviceUpdateInstanceCollection"/> instance call the GetDeviceUpdateInstances method from an instance of <see cref="DeviceUpdateAccountResource"/>.
     /// </summary>
     public partial class DeviceUpdateInstanceCollection : ArmCollection, IEnumerable<DeviceUpdateInstanceResource>, IAsyncEnumerable<DeviceUpdateInstanceResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeviceUpdateInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DeviceUpdateInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceUpdateInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceUpdateInstanceInstancesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceUpdateInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeviceUpdateInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceUpdateInstanceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceUpdateInstanceInstancesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

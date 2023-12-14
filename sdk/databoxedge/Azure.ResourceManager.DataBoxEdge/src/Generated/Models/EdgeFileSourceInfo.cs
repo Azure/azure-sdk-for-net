@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> File source details. </summary>
     public partial class EdgeFileSourceInfo
     {
-        /// <summary> Initializes a new instance of EdgeFileSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeFileSourceInfo"/>. </summary>
         /// <param name="shareId"> File share ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareId"/> is null. </exception>
         public EdgeFileSourceInfo(ResourceIdentifier shareId)

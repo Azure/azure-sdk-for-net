@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VMwareResourcePoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VMwareResourcePoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VMwareResourcePoolResource> GetVMwareResourcePoolsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareResourcePoolResourcePoolsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VMwareResourcePoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VMwareResourcePoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VMwareResourcePoolResource> GetVMwareResourcePools(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareResourcePoolResourcePoolsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VMwareClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VMwareClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VMwareClusterResource> GetVMwareClustersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VMwareClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VMwareClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VMwareClusterResource> GetVMwareClusters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VMwareHostResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VMwareHostResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VMwareHostResource> GetVMwareHostsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareHostHostsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VMwareHostResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VMwareHostResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VMwareHostResource> GetVMwareHosts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareHostHostsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VMwareDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VMwareDatastoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VMwareDatastoreResource> GetVMwareDatastoresAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareDatastoreDatastoresRestClient.CreateListRequest(Id.SubscriptionId);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VMwareDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VMwareDatastoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VMwareDatastoreResource> GetVMwareDatastores(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareDatastoreDatastoresRestClient.CreateListRequest(Id.SubscriptionId);
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VMwareVCenterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VMwareVCenterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VMwareVCenterResource> GetVMwareVCentersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareVCenterVCentersRestClient.CreateListRequest(Id.SubscriptionId);
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VMwareVCenterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VMwareVCenterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VMwareVCenterResource> GetVMwareVCenters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareVCenterVCentersRestClient.CreateListRequest(Id.SubscriptionId);
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VMwareVmTemplateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VMwareVmTemplateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VMwareVmTemplateResource> GetVMwareVmTemplatesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareVmTemplateVirtualMachineTemplatesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VMwareVmTemplateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VMwareVmTemplateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VMwareVmTemplateResource> GetVMwareVmTemplates(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareVmTemplateVirtualMachineTemplatesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VMwareVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VMwareVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VMwareVirtualNetworkResource> GetVMwareVirtualNetworksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareVirtualNetworkVirtualNetworksRestClient.CreateListRequest(Id.SubscriptionId);
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VMwareVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VMwareVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VMwareVirtualNetworkResource> GetVMwareVirtualNetworks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareVirtualNetworkVirtualNetworksRestClient.CreateListRequest(Id.SubscriptionId);

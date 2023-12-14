@@ -13,13 +13,13 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary> The PathList. </summary>
     internal partial class PathList
     {
-        /// <summary> Initializes a new instance of PathList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PathList"/>. </summary>
         internal PathList()
         {
             Paths = new ChangeTrackingList<Path>();
         }
 
-        /// <summary> Initializes a new instance of PathList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PathList"/>. </summary>
         /// <param name="paths"></param>
         internal PathList(IReadOnlyList<Path> paths)
         {

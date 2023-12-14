@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
     /// A Class representing a DataBoxEdgeRole along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataBoxEdgeRoleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataBoxEdgeRoleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeDeviceResource" /> using the GetDataBoxEdgeRole method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataBoxEdgeRoleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataBoxEdgeRoleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeDeviceResource"/> using the GetDataBoxEdgeRole method.
     /// </summary>
     public partial class DataBoxEdgeRoleResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.DataBoxEdge
         private readonly RolesRestOperations _dataBoxEdgeRoleRolesRestClient;
         private readonly DataBoxEdgeRoleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles";
+
         /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeRoleResource"/> class for mocking. </summary>
         protected DataBoxEdgeRoleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataBoxEdgeRoleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeRoleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataBoxEdgeRoleResource(ArmClient client, DataBoxEdgeRoleData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DataBoxEdge
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Gets an object representing a MonitoringMetricConfigurationResource along with the instance operations that can be performed on it in the DataBoxEdgeRole. </summary>
-        /// <returns> Returns a <see cref="MonitoringMetricConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MonitoringMetricConfigurationResource"/> object. </returns>
         public virtual MonitoringMetricConfigurationResource GetMonitoringMetricConfiguration()
         {
             return new MonitoringMetricConfigurationResource(Client, Id.AppendChildResource("monitoringConfig", "default"));

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningWorkspaceConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningWorkspaceConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningWorkspaceConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource" /> using the GetMachineLearningWorkspaceConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningWorkspaceConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningWorkspaceConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetMachineLearningWorkspaceConnection method.
     /// </summary>
     public partial class MachineLearningWorkspaceConnectionResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly WorkspaceConnectionsRestOperations _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient;
         private readonly MachineLearningWorkspaceConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/connections";
+
         /// <summary> Initializes a new instance of the <see cref="MachineLearningWorkspaceConnectionResource"/> class for mocking. </summary>
         protected MachineLearningWorkspaceConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MachineLearningWorkspaceConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningWorkspaceConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningWorkspaceConnectionResource(ArmClient client, MachineLearningWorkspaceConnectionData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.MachineLearning
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/connections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

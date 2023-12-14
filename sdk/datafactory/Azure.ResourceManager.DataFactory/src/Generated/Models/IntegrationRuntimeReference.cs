@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Integration runtime reference type. </summary>
     public partial class IntegrationRuntimeReference
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeReference"/>. </summary>
         /// <param name="referenceType"> Type of integration runtime. </param>
         /// <param name="referenceName"> Reference integration runtime name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Parameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeReference"/>. </summary>
         /// <param name="referenceType"> Type of integration runtime. </param>
         /// <param name="referenceName"> Reference integration runtime name. </param>
         /// <param name="parameters"> Arguments for integration runtime. </param>

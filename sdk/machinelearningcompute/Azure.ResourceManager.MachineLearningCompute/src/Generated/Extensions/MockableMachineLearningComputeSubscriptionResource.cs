@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Mocking
         /// </summary>
         /// <param name="skiptoken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalizationClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OperationalizationClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalizationClusterResource> GetOperationalizationClustersAsync(string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OperationalizationClusterRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId, skiptoken);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Mocking
         /// </summary>
         /// <param name="skiptoken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalizationClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalizationClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalizationClusterResource> GetOperationalizationClusters(string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OperationalizationClusterRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId, skiptoken);

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Relay.Models
     /// <summary> Result of the list of all private endpoint connections operation. </summary>
     internal partial class RelayPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of RelayPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayPrivateEndpointConnectionListResult"/>. </summary>
         internal RelayPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<RelayPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of RelayPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> A collection of private endpoint connection resources. </param>
         /// <param name="nextLink"> A link for the next page of private endpoint connection resources. </param>
         internal RelayPrivateEndpointConnectionListResult(IReadOnlyList<RelayPrivateEndpointConnectionData> value, string nextLink)

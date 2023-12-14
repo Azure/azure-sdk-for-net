@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The response of the action validate configuration. </summary>
     public partial class ValidateConfigurationResult : NetworkFabricErrorResult
     {
-        /// <summary> Initializes a new instance of ValidateConfigurationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateConfigurationResult"/>. </summary>
         internal ValidateConfigurationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ValidateConfigurationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateConfigurationResult"/>. </summary>
         /// <param name="error"> The error object. </param>
         /// <param name="configurationState"> Gets the configuration state. </param>
         /// <param name="uri"> URL for the details of the response. </param>

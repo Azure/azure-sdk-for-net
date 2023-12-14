@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// </summary>
     public partial class AlertRuleLeafCondition
     {
-        /// <summary> Initializes a new instance of AlertRuleLeafCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleLeafCondition"/>. </summary>
         public AlertRuleLeafCondition()
         {
             ContainsAny = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AlertRuleLeafCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleLeafCondition"/>. </summary>
         /// <param name="field">
         /// The name of the Activity Log event's field that this condition will examine.
         /// The possible values for this field are (case-insensitive): 'resourceId', 'category', 'caller', 'level', 'operationName', 'resourceGroup', 'resourceProvider', 'status', 'subStatus', 'resourceType', or anything beginning with 'properties'.

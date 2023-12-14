@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for task that migrates SSIS packages from SQL Server databases to Azure SQL Database Managed Instance. </summary>
     public partial class MigrateSsisTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of MigrateSsisTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskProperties"/>. </summary>
         public MigrateSsisTaskProperties()
         {
             Output = new ChangeTrackingList<MigrateSsisTaskOutput>();
             TaskType = TaskType.MigrateSsis;
         }
 
-        /// <summary> Initializes a new instance of MigrateSsisTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Alert processing rule properties defining scopes, conditions and scheduling logic for alert processing rule. </summary>
     public partial class AlertProcessingRuleProperties
     {
-        /// <summary> Initializes a new instance of AlertProcessingRuleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleProperties"/>. </summary>
         /// <param name="scopes"> Scopes on which alert processing rule will apply. </param>
         /// <param name="actions">
         /// Actions to be applied.
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Actions = actions.ToList();
         }
 
-        /// <summary> Initializes a new instance of AlertProcessingRuleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleProperties"/>. </summary>
         /// <param name="scopes"> Scopes on which alert processing rule will apply. </param>
         /// <param name="conditions"> Conditions on which alerts will be filtered. </param>
         /// <param name="schedule"> Scheduling for alert processing rule. </param>

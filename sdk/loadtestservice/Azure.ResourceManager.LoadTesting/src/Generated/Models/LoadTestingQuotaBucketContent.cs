@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.LoadTesting.Models
     /// <summary> Request object of new quota for a quota bucket. </summary>
     public partial class LoadTestingQuotaBucketContent : ResourceData
     {
-        /// <summary> Initializes a new instance of LoadTestingQuotaBucketContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaBucketContent"/>. </summary>
         public LoadTestingQuotaBucketContent()
         {
         }
 
-        /// <summary> Initializes a new instance of LoadTestingQuotaBucketContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaBucketContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

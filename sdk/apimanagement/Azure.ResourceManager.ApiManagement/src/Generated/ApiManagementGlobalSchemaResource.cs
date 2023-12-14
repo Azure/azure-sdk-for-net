@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementGlobalSchema along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementGlobalSchemaResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementGlobalSchemaResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementGlobalSchema method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementGlobalSchemaResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementGlobalSchemaResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementGlobalSchema method.
     /// </summary>
     public partial class ApiManagementGlobalSchemaResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly GlobalSchemaRestOperations _apiManagementGlobalSchemaGlobalSchemaRestClient;
         private readonly ApiManagementGlobalSchemaData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/schemas";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementGlobalSchemaResource"/> class for mocking. </summary>
         protected ApiManagementGlobalSchemaResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementGlobalSchemaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementGlobalSchemaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementGlobalSchemaResource(ArmClient client, ApiManagementGlobalSchemaData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/schemas";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sphere.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSphereModelFactory
     {
-        /// <summary> Initializes a new instance of SphereCatalogData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sphere.SphereCatalogData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sphere.Models
             return new SphereCatalogData(id, name, resourceType, systemData, tags, location, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of SphereCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sphere.SphereCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sphere.Models
             return new SphereCertificateData(id, name, resourceType, systemData, certificate, status, subject, thumbprint, expiryUtc, notBeforeUtc, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of SphereCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SphereCertificateProperties"/>. </summary>
         /// <param name="certificate">
         /// The certificate as a UTF-8 encoded base 64 string.
         /// Serialized Name: CertificateProperties.certificate
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Sphere.Models
             return new SphereCertificateProperties(certificate, status, subject, thumbprint, expiryUtc, notBeforeUtc, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of SphereCertificateChainResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SphereCertificateChainResult"/>. </summary>
         /// <param name="certificateChain">
         /// The certificate chain.
         /// Serialized Name: CertificateChainResponse.certificateChain
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sphere.Models
             return new SphereCertificateChainResult(certificateChain);
         }
 
-        /// <summary> Initializes a new instance of ProofOfPossessionNonceResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProofOfPossessionNonceResponse"/>. </summary>
         /// <param name="certificate">
         /// The certificate as a UTF-8 encoded base 64 string.
         /// Serialized Name: CertificateProperties.certificate
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Sphere.Models
             return new ProofOfPossessionNonceResponse(certificate, status, subject, thumbprint, expiryUtc, notBeforeUtc, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of CountDeviceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CountDeviceResult"/>. </summary>
         /// <param name="value">
         /// Number of children resources in parent resource.
         /// Serialized Name: CountElementsResponse.value
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sphere.Models
             return new CountDeviceResult(value);
         }
 
-        /// <summary> Initializes a new instance of CountElementsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CountElementsResult"/>. </summary>
         /// <param name="value">
         /// Number of children resources in parent resource.
         /// Serialized Name: CountElementsResponse.value
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Sphere.Models
             return new CountElementsResult(value);
         }
 
-        /// <summary> Initializes a new instance of SphereImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sphere.SphereImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Sphere.Models
             return new SphereImageData(id, name, resourceType, systemData, image, imageId, imageName, regionalDataBoundary, uri, description, componentId, imageType, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of SphereDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sphere.SphereDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Sphere.Models
             return new SphereDeploymentData(id, name, resourceType, systemData, deploymentId, deployedImages?.ToList(), deploymentDateUtc, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of SphereDeviceGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sphere.SphereDeviceGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Sphere.Models
             return new SphereDeviceGroupData(id, name, resourceType, systemData, description, osFeedType, updatePolicy, allowCrashDumpsCollection, regionalDataBoundary, hasDeployment, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of SphereDeviceInsight. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SphereDeviceInsight"/>. </summary>
         /// <param name="deviceId">
         /// Device ID
         /// Serialized Name: DeviceInsight.deviceId
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Sphere.Models
             return new SphereDeviceInsight(deviceId, description, startTimestampUtc, endTimestampUtc, eventCategory, eventClass, eventType, eventCount);
         }
 
-        /// <summary> Initializes a new instance of SphereDeviceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sphere.SphereDeviceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Sphere.Models
             return new SphereDeviceData(id, name, resourceType, systemData, deviceId, chipSku, lastAvailableOSVersion, lastInstalledOSVersion, lastOSUpdateUtc, lastUpdateRequestUtc, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of SphereProductData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Sphere.SphereProductData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Sphere.Models
             return new SphereProductData(id, name, resourceType, systemData, description, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of SignedCapabilityImageResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SignedCapabilityImageResponse"/>. </summary>
         /// <param name="image">
         /// The signed device capability image as a UTF-8 encoded base 64 string.
         /// Serialized Name: SignedCapabilityImageResponse.image

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Set the access level and network port settings for SQL Server. </summary>
     public partial class SqlConnectivityUpdateSettings
     {
-        /// <summary> Initializes a new instance of SqlConnectivityUpdateSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlConnectivityUpdateSettings"/>. </summary>
         public SqlConnectivityUpdateSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlConnectivityUpdateSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlConnectivityUpdateSettings"/>. </summary>
         /// <param name="connectivityType"> SQL Server connectivity option. </param>
         /// <param name="port"> SQL Server port. </param>
         /// <param name="sqlAuthUpdateUserName"> SQL Server sysadmin login to create. </param>

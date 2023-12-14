@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A domain name that the managed instance service needs to communicate with, along with additional details. </summary>
     public partial class ManagedInstanceEndpointDependency
     {
-        /// <summary> Initializes a new instance of ManagedInstanceEndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceEndpointDependency"/>. </summary>
         internal ManagedInstanceEndpointDependency()
         {
             EndpointDetails = new ChangeTrackingList<ManagedInstanceEndpointDetail>();
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceEndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceEndpointDependency"/>. </summary>
         /// <param name="domainName"> The domain name of the dependency. </param>
         /// <param name="endpointDetails"> The IP Addresses and Ports used when connecting to DomainName. </param>
         internal ManagedInstanceEndpointDependency(string domainName, IReadOnlyList<ManagedInstanceEndpointDetail> endpointDetails)

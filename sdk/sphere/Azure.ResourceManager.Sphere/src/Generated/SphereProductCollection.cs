@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sphere
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SphereProductResource" /> and their operations.
-    /// Each <see cref="SphereProductResource" /> in the collection will belong to the same instance of <see cref="SphereCatalogResource" />.
-    /// To get a <see cref="SphereProductCollection" /> instance call the GetSphereProducts method from an instance of <see cref="SphereCatalogResource" />.
+    /// A class representing a collection of <see cref="SphereProductResource"/> and their operations.
+    /// Each <see cref="SphereProductResource"/> in the collection will belong to the same instance of <see cref="SphereCatalogResource"/>.
+    /// To get a <see cref="SphereProductCollection"/> instance call the GetSphereProducts method from an instance of <see cref="SphereCatalogResource"/>.
     /// </summary>
     public partial class SphereProductCollection : ArmCollection, IEnumerable<SphereProductResource>, IAsyncEnumerable<SphereProductResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sphere
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SphereProductResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SphereProductResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SphereProductResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereProductProductsRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sphere
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SphereProductResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SphereProductResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SphereProductResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereProductProductsRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

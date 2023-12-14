@@ -10,12 +10,12 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> Supported parameters for a Healthcare task. </summary>
     internal partial class HealthcareTaskParameters : PreBuiltTaskParameters
     {
-        /// <summary> Initializes a new instance of HealthcareTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareTaskParameters"/>. </summary>
         public HealthcareTaskParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"></param>
         /// <param name="modelVersion"></param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary>
     /// A Class representing an ElasticSanPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ElasticSanPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetElasticSanPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ElasticSanResource" /> using the GetElasticSanPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ElasticSanPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetElasticSanPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ElasticSanResource"/> using the GetElasticSanPrivateEndpointConnection method.
     /// </summary>
     public partial class ElasticSanPrivateEndpointConnectionResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.ElasticSan
         private readonly PrivateEndpointConnectionsRestOperations _elasticSanPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly ElasticSanPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ElasticSan/elasticSans/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="ElasticSanPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected ElasticSanPrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ElasticSanPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ElasticSanPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ElasticSanPrivateEndpointConnectionResource(ArmClient client, ElasticSanPrivateEndpointConnectionData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ElasticSan
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ElasticSan/elasticSans/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

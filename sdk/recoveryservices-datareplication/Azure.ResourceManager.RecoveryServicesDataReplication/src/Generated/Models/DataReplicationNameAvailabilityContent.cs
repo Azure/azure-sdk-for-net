@@ -12,9 +12,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Check name availability model. </summary>
     public partial class DataReplicationNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of DataReplicationNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationNameAvailabilityContent"/>. </summary>
         public DataReplicationNameAvailabilityContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Gets or sets the resource name. </param>
+        /// <param name="resourceType"> Gets or sets the resource type. </param>
+        internal DataReplicationNameAvailabilityContent(string name, ResourceType? resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> Gets or sets the resource name. </summary>

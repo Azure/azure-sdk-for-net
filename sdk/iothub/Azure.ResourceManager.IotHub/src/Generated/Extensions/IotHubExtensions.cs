@@ -45,9 +45,12 @@ namespace Azure.ResourceManager.IotHub
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotHubDescriptionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="IotHubDescriptionResource"/> object. </returns>
         public static IotHubDescriptionResource GetIotHubDescriptionResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableIotHubArmClient(client).GetIotHubDescriptionResource(id);
         }
 
@@ -61,9 +64,12 @@ namespace Azure.ResourceManager.IotHub
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventHubConsumerGroupInfoResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EventHubConsumerGroupInfoResource"/> object. </returns>
         public static EventHubConsumerGroupInfoResource GetEventHubConsumerGroupInfoResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableIotHubArmClient(client).GetEventHubConsumerGroupInfoResource(id);
         }
 
@@ -77,9 +83,12 @@ namespace Azure.ResourceManager.IotHub
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotHubCertificateDescriptionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="IotHubCertificateDescriptionResource"/> object. </returns>
         public static IotHubCertificateDescriptionResource GetIotHubCertificateDescriptionResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableIotHubArmClient(client).GetIotHubCertificateDescriptionResource(id);
         }
 
@@ -93,9 +102,12 @@ namespace Azure.ResourceManager.IotHub
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotHubPrivateEndpointGroupInformationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="IotHubPrivateEndpointGroupInformationResource"/> object. </returns>
         public static IotHubPrivateEndpointGroupInformationResource GetIotHubPrivateEndpointGroupInformationResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableIotHubArmClient(client).GetIotHubPrivateEndpointGroupInformationResource(id);
         }
 
@@ -109,9 +121,12 @@ namespace Azure.ResourceManager.IotHub
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotHubPrivateEndpointConnectionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="IotHubPrivateEndpointConnectionResource"/> object. </returns>
         public static IotHubPrivateEndpointConnectionResource GetIotHubPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableIotHubArmClient(client).GetIotHubPrivateEndpointConnectionResource(id);
         }
 
@@ -123,9 +138,12 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of IotHubDescriptionResources and their operations over a IotHubDescriptionResource. </returns>
         public static IotHubDescriptionCollection GetIotHubDescriptions(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableIotHubResourceGroupResource(resourceGroupResource).GetIotHubDescriptions();
         }
 
@@ -149,11 +167,13 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<IotHubDescriptionResource>> GetIotHubDescriptionAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableIotHubResourceGroupResource(resourceGroupResource).GetIotHubDescriptionAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -177,11 +197,13 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<IotHubDescriptionResource> GetIotHubDescription(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableIotHubResourceGroupResource(resourceGroupResource).GetIotHubDescription(resourceName, cancellationToken);
         }
 
@@ -204,9 +226,12 @@ namespace Azure.ResourceManager.IotHub
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotHubDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="IotHubDescriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<IotHubDescriptionResource> GetIotHubDescriptionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableIotHubSubscriptionResource(subscriptionResource).GetIotHubDescriptionsAsync(cancellationToken);
         }
 
@@ -229,9 +254,12 @@ namespace Azure.ResourceManager.IotHub
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotHubDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="IotHubDescriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<IotHubDescriptionResource> GetIotHubDescriptions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableIotHubSubscriptionResource(subscriptionResource).GetIotHubDescriptions(cancellationToken);
         }
 
@@ -255,9 +283,11 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<IotHubNameAvailabilityResponse>> CheckIotHubNameAvailabilityAsync(this SubscriptionResource subscriptionResource, IotHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableIotHubSubscriptionResource(subscriptionResource).CheckIotHubNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
@@ -281,9 +311,11 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<IotHubNameAvailabilityResponse> CheckIotHubNameAvailability(this SubscriptionResource subscriptionResource, IotHubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableIotHubSubscriptionResource(subscriptionResource).CheckIotHubNameAvailability(content, cancellationToken);
         }
 
@@ -306,9 +338,12 @@ namespace Azure.ResourceManager.IotHub
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotHubUserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="IotHubUserSubscriptionQuota"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuotaAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableIotHubSubscriptionResource(subscriptionResource).GetIotHubUserSubscriptionQuotaAsync(cancellationToken);
         }
 
@@ -331,9 +366,12 @@ namespace Azure.ResourceManager.IotHub
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotHubUserSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="IotHubUserSubscriptionQuota"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<IotHubUserSubscriptionQuota> GetIotHubUserSubscriptionQuota(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableIotHubSubscriptionResource(subscriptionResource).GetIotHubUserSubscriptionQuota(cancellationToken);
         }
     }

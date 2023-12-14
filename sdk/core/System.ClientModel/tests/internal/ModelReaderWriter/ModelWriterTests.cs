@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.ClientModel.Internal;
 
 namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 {
@@ -33,7 +34,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public void ThrowsIfUnsupportedFormat()
         {
-            ModelX? model = ClientModel.ModelReaderWriter.Read<ModelX>(BinaryData.FromString(File.ReadAllText(TestData.GetLocation("ModelX/ModelX.json"))));
+            ModelX? model = ModelReaderWriter.Read<ModelX>(BinaryData.FromString(File.ReadAllText(TestData.GetLocation("ModelX/ModelX.json"))));
             Assert.IsNotNull(model);
             ModelWriter writer = new ModelWriter(model!, new ModelReaderWriterOptions("x"));
             Assert.Throws<FormatException>(() => writer.ToBinaryData());
@@ -287,7 +288,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public void ParallelComputLength()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
+            using ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
 
             Parallel.For(0, 1000000, i =>
             {
@@ -299,7 +300,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public void ParallelCopy()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
+            using ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
 
             Parallel.For(0, 10000, i =>
             {
@@ -312,7 +313,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public void ParallelCopyAsync()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
+            using ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
 
             Parallel.For(0, 10000, async i =>
             {
@@ -320,6 +321,54 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
                 await writer.CopyToAsync(stream, default);
                 Assert.AreEqual(_modelSize, stream.Length);
             });
+        }
+
+        [Test]
+        public async Task CancellationToken()
+        {
+            using ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
+            writer.TryComputeLength(out var length);
+            using MemoryStream stream = new MemoryStream();
+            CancellationTokenSource tokenSource = new CancellationTokenSource();
+            var task = Task.Run(() => writer.CopyTo(stream, tokenSource.Token));
+            bool exceptionThrown = false;
+            try
+            {
+                while (stream.Position == 0) { } // wait for the stream to start filling
+                tokenSource.Cancel();
+                await task;
+            }
+            catch (OperationCanceledException)
+            {
+                exceptionThrown = true;
+            }
+            Assert.IsTrue(exceptionThrown);
+            Assert.Greater(stream.Length, 0);
+            Assert.Less(stream.Length, length);
+        }
+
+        [Test]
+        public async Task CancellationTokenAsync()
+        {
+            using ModelWriter writer = new ModelWriter(_resourceProviderData, _wireOptions);
+            writer.TryComputeLength(out var length);
+            using MemoryStream stream = new MemoryStream();
+            CancellationTokenSource tokenSource = new CancellationTokenSource();
+            var task = Task.Run(() => writer.CopyToAsync(stream, tokenSource.Token));
+            bool exceptionThrown = false;
+            try
+            {
+                while (stream.Position == 0) { } // wait for the stream to start filling
+                tokenSource.Cancel();
+                await task;
+            }
+            catch (OperationCanceledException)
+            {
+                exceptionThrown = true;
+            }
+            Assert.IsTrue(exceptionThrown);
+            Assert.Greater(stream.Length, 0);
+            Assert.Less(stream.Length, length);
         }
 
         private class ExplodingModel : IJsonModel<ExplodingModel>

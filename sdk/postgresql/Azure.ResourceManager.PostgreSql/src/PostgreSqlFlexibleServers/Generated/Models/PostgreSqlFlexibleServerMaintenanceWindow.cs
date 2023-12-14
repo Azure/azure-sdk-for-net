@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Maintenance window properties of a server. </summary>
     public partial class PostgreSqlFlexibleServerMaintenanceWindow
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerMaintenanceWindow. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerMaintenanceWindow"/>. </summary>
         public PostgreSqlFlexibleServerMaintenanceWindow()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerMaintenanceWindow. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerMaintenanceWindow"/>. </summary>
         /// <param name="customWindow"> indicates whether custom window is enabled or disabled. </param>
         /// <param name="startHour"> start hour for maintenance window. </param>
         /// <param name="startMinute"> start minute for maintenance window. </param>

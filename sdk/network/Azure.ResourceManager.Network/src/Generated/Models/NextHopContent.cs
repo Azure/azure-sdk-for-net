@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define the source and destination endpoint. </summary>
     public partial class NextHopContent
     {
-        /// <summary> Initializes a new instance of NextHopContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NextHopContent"/>. </summary>
         /// <param name="targetResourceId"> The resource identifier of the target resource against which the action is to be performed. </param>
         /// <param name="sourceIPAddress"> The source IP address. </param>
         /// <param name="destinationIPAddress"> The destination IP address. </param>
@@ -27,6 +27,19 @@ namespace Azure.ResourceManager.Network.Models
             TargetResourceId = targetResourceId;
             SourceIPAddress = sourceIPAddress;
             DestinationIPAddress = destinationIPAddress;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NextHopContent"/>. </summary>
+        /// <param name="targetResourceId"> The resource identifier of the target resource against which the action is to be performed. </param>
+        /// <param name="sourceIPAddress"> The source IP address. </param>
+        /// <param name="destinationIPAddress"> The destination IP address. </param>
+        /// <param name="targetNicResourceId"> The NIC ID. (If VM has multiple NICs and IP forwarding is enabled on any of the nics, then this parameter must be specified. Otherwise optional). </param>
+        internal NextHopContent(ResourceIdentifier targetResourceId, string sourceIPAddress, string destinationIPAddress, ResourceIdentifier targetNicResourceId)
+        {
+            TargetResourceId = targetResourceId;
+            SourceIPAddress = sourceIPAddress;
+            DestinationIPAddress = destinationIPAddress;
+            TargetNicResourceId = targetNicResourceId;
         }
 
         /// <summary> The resource identifier of the target resource against which the action is to be performed. </summary>

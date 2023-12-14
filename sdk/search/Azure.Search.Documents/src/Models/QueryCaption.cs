@@ -26,6 +26,11 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="QueryCaption"/> class.
+        /// </summary>
+        internal QueryCaption() { }
+
+        /// <summary>
         /// A value that specifies whether <see cref="SemanticSearchResult.Captions"/> should be returned as part of the search response.
         /// <para>The default value is <see cref="QueryCaptionType.None"/>.</para>
         /// </summary>

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a SecurityAlertsSuppressionRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityAlertsSuppressionRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityAlertsSuppressionRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSecurityAlertsSuppressionRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityAlertsSuppressionRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityAlertsSuppressionRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSecurityAlertsSuppressionRule method.
     /// </summary>
     public partial class SecurityAlertsSuppressionRuleResource : ArmResource
     {
@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly AlertsSuppressionRulesRestOperations _securityAlertsSuppressionRuleAlertsSuppressionRulesRestClient;
         private readonly SecurityAlertsSuppressionRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/alertsSuppressionRules";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityAlertsSuppressionRuleResource"/> class for mocking. </summary>
         protected SecurityAlertsSuppressionRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityAlertsSuppressionRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityAlertsSuppressionRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityAlertsSuppressionRuleResource(ArmClient client, SecurityAlertsSuppressionRuleData data) : this(client, data.Id)
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/alertsSuppressionRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

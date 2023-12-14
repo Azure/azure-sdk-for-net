@@ -3,8 +3,10 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
+using Castle.Core.Resource;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
@@ -30,12 +32,89 @@ namespace Azure.ResourceManager.AppContainers.Tests
             Client = GetArmClient();
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected async Task<ResourceGroupResource> CreateResourceGroup(string rgNamePrefix, AzureLocation location)
         {
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
             ResourceGroupData input = new ResourceGroupData(location);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
+        }
+
+        protected async Task<ContainerAppManagedEnvironmentResource> CreateContainerAppManagedEnvironment(ResourceGroupResource resourceGroup, string envName)
+        {
+            ContainerAppManagedEnvironmentData data = new ContainerAppManagedEnvironmentData(AzureLocation.WestUS)
+            {
+                WorkloadProfiles =
+                {
+                    new ContainerAppWorkloadProfile("Consumption", "Consumption"),
+                    new ContainerAppWorkloadProfile("gp1", "D4")
+                    {
+                        MinimumCount = 1,
+                        MaximumCount = 3
+                    }
+                }
+            };
+            var containerAppManagedEnvironmentCollection = resourceGroup.GetContainerAppManagedEnvironments();
+            var envResource = await containerAppManagedEnvironmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, envName, data);
+            return envResource.Value;
+        }
+
+        protected async Task<ContainerAppResource> CreateContainerApp(ResourceGroupResource resourceGroup, ContainerAppManagedEnvironmentResource env,string containerAppName)
+        {
+            ContainerAppData appData = new ContainerAppData(AzureLocation.WestUS)
+            {
+                WorkloadProfileName = "gp1",
+                ManagedEnvironmentId = new ResourceIdentifier(env.Data.Id),
+                Configuration = new ContainerAppConfiguration
+                {
+                    Ingress = new ContainerAppIngressConfiguration
+                    {
+                        External = true,
+                        TargetPort = 3000
+                    },
+                },
+                Template = new ContainerAppTemplate
+                {
+                    Containers =
+                        {
+                            new ContainerAppContainer
+                            {
+                                Image = $"mcr.microsoft.com/k8se/quickstart-jobs:latest",
+                                Name = "appcontainer",
+                                Resources = new AppContainerResources
+                                {
+                                    Cpu = 0.25,
+                                    Memory = "0.5Gi"
+                                }
+                            }
+                        },
+                    Scale = new ContainerAppScale
+                    {
+                        MinReplicas = 1,
+                        MaxReplicas = 5,
+                        Rules =
+                            {
+                                new ContainerAppScaleRule
+                                {
+                                    Name = "httpscale",
+                                    Custom = new ContainerAppCustomScaleRule
+                                    {
+                                        CustomScaleRuleType = "http",
+                                        Metadata =
+                                        {
+                                            { "concurrentRequests", "50" }
+                                        }
+                                    }
+                                }
+                            }
+                    },
+                }
+            };
+
+            var ContainerAppCollection = resourceGroup.GetContainerApps();
+            var containerApp = await ContainerAppCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerAppName, appData);
+            return containerApp.Value;
         }
     }
 }

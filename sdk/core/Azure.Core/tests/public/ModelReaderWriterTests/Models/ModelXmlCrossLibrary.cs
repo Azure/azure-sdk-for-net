@@ -2,10 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
-using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
 using System.Xml;
@@ -66,7 +65,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 writer.WriteValue(ReadOnlyProperty);
                 writer.WriteEndElement();
             }
-            var childModelXml = System.ClientModel.ModelReaderWriter.Write(ChildModelXml, options);
+            var childModelXml = ModelReaderWriter.Write(ChildModelXml, options);
             var bytes = childModelXml.ToArray();
             int start = bytes.AsSpan(1).IndexOf((byte)'>') + 2;
             var chars = Encoding.UTF8.GetChars(bytes, start, bytes.Length - start);
@@ -118,7 +117,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 BinaryData data = stream.Position > int.MaxValue
                     ? BinaryData.FromStream(stream)
                     : new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
-                childModelXml = System.ClientModel.ModelReaderWriter.Read<ChildModelXml>(data, options);
+                childModelXml = ModelReaderWriter.Read<ChildModelXml>(data, options);
             }
             return new ModelXmlCrossLibrary(key, value, readonlyProperty, childModelXml);
         }
@@ -178,7 +177,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 }
                 if (property.NameEquals("childTag"u8))
                 {
-                    childModelXml = System.ClientModel.ModelReaderWriter.Read<ChildModelXml>(BinaryData.FromString(property.Value.GetRawText()), options);// ChildModelXml.DeserializeChildModelXml(property.Value, options);
+                    childModelXml = ModelReaderWriter.Read<ChildModelXml>(BinaryData.FromString(property.Value.GetRawText()), options);// ChildModelXml.DeserializeChildModelXml(property.Value, options);
                     continue;
                 }
             }

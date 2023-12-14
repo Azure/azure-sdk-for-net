@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.ApplicationInsights
 {
     /// <summary>
     /// A Class representing a MyWorkbook along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MyWorkbookResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMyWorkbookResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetMyWorkbook method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MyWorkbookResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMyWorkbookResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetMyWorkbook method.
     /// </summary>
     public partial class MyWorkbookResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.ApplicationInsights
         private readonly MyWorkbooksRestOperations _myWorkbookRestClient;
         private readonly MyWorkbookData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/myWorkbooks";
+
         /// <summary> Initializes a new instance of the <see cref="MyWorkbookResource"/> class for mocking. </summary>
         protected MyWorkbookResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MyWorkbookResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MyWorkbookResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MyWorkbookResource(ArmClient client, MyWorkbookData data) : this(client, new ResourceIdentifier(data.Id))
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ApplicationInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/myWorkbooks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

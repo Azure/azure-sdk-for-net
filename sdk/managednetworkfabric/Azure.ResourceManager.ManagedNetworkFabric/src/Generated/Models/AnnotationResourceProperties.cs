@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Switch configuration entries require a description to discern between configuration groups. </summary>
     public partial class AnnotationResourceProperties
     {
-        /// <summary> Initializes a new instance of AnnotationResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnnotationResourceProperties"/>. </summary>
         public AnnotationResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AnnotationResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnnotationResourceProperties"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         internal AnnotationResourceProperties(string annotation)
         {

@@ -8,15 +8,10 @@
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE;HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
-    
-    <!-- TODO: is it really ok to drop support for netcoreapp2.1? -->
-    <TargetFrameworks>$(RequiredTargetFrameworks);net461;net472;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net461;net472;net6.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
-
-    <!-- net5.0 is out of support -->
-    <NoWarn>$(NoWarn);NETSDK1138</NoWarn>
     <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net472'">net461</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Update migration item input properties. </summary>
     internal partial class UpdateMigrationItemProperties
     {
-        /// <summary> Initializes a new instance of UpdateMigrationItemProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateMigrationItemProperties"/>. </summary>
         /// <param name="providerSpecificDetails">
         /// The provider specific input to update migration item.
         /// Please note <see cref="UpdateMigrationItemProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

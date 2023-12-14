@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a ManagedDisk along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedDiskResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedDiskResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetManagedDisk method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedDiskResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedDiskResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetManagedDisk method.
     /// </summary>
     public partial class ManagedDiskResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Compute
         private readonly DisksRestOperations _managedDiskDisksRestClient;
         private readonly ManagedDiskData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/disks";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedDiskResource"/> class for mocking. </summary>
         protected ManagedDiskResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedDiskResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedDiskResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedDiskResource(ArmClient client, ManagedDiskData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/disks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

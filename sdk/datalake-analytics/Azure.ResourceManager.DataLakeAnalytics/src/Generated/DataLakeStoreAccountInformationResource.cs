@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 {
     /// <summary>
     /// A Class representing a DataLakeStoreAccountInformation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataLakeStoreAccountInformationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataLakeStoreAccountInformationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataLakeAnalyticsAccountResource" /> using the GetDataLakeStoreAccountInformation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataLakeStoreAccountInformationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataLakeStoreAccountInformationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataLakeAnalyticsAccountResource"/> using the GetDataLakeStoreAccountInformation method.
     /// </summary>
     public partial class DataLakeStoreAccountInformationResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         private readonly DataLakeStoreAccountsRestOperations _dataLakeStoreAccountInformationDataLakeStoreAccountsRestClient;
         private readonly DataLakeStoreAccountInformationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataLakeAnalytics/accounts/dataLakeStoreAccounts";
+
         /// <summary> Initializes a new instance of the <see cref="DataLakeStoreAccountInformationResource"/> class for mocking. </summary>
         protected DataLakeStoreAccountInformationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataLakeStoreAccountInformationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataLakeStoreAccountInformationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataLakeStoreAccountInformationResource(ArmClient client, DataLakeStoreAccountInformationData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataLakeAnalytics/accounts/dataLakeStoreAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

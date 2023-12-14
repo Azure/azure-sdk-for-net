@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> For more details see [managed AAD on AKS](https://docs.microsoft.com/azure/aks/managed-aad). </summary>
     public partial class ManagedClusterAadProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterAadProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAadProfile"/>. </summary>
         public ManagedClusterAadProfile()
         {
             AdminGroupObjectIds = new ChangeTrackingList<Guid>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterAadProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAadProfile"/>. </summary>
         /// <param name="isManagedAadEnabled"> Whether to enable managed AAD. </param>
         /// <param name="isAzureRbacEnabled"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
         /// <param name="adminGroupObjectIds"> The list of AAD group object IDs that will have admin role of the cluster. </param>

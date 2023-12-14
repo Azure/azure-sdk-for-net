@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a DeletedServer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeletedServerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDeletedServerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetDeletedServer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeletedServerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDeletedServerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetDeletedServer method.
     /// </summary>
     public partial class DeletedServerResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Sql
         private readonly DeletedServersRestOperations _deletedServerRestClient;
         private readonly DeletedServerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/locations/deletedServers";
+
         /// <summary> Initializes a new instance of the <see cref="DeletedServerResource"/> class for mocking. </summary>
         protected DeletedServerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeletedServerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeletedServerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeletedServerResource(ArmClient client, DeletedServerData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/locations/deletedServers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

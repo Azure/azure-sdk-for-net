@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Linked service for an HTTP source. </summary>
     public partial class HttpLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of HttpLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpLinkedService"/>. </summary>
         /// <param name="url"> The base URL of the HTTP endpoint, e.g. http://www.microsoft.com. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public HttpLinkedService(object url)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "HttpServer";
         }
 
-        /// <summary> Initializes a new instance of HttpLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the Threshold Values for Top Metrics Health. </summary>
     public partial class SapLandscapeMonitorMetricThresholds
     {
-        /// <summary> Initializes a new instance of SapLandscapeMonitorMetricThresholds. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapLandscapeMonitorMetricThresholds"/>. </summary>
         public SapLandscapeMonitorMetricThresholds()
         {
         }
 
-        /// <summary> Initializes a new instance of SapLandscapeMonitorMetricThresholds. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapLandscapeMonitorMetricThresholds"/>. </summary>
         /// <param name="name"> Gets or sets the name of the threshold. </param>
         /// <param name="green"> Gets or sets the threshold value for Green. </param>
         /// <param name="yellow"> Gets or sets the threshold value for Yellow. </param>

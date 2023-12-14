@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> An A record. </summary>
     public partial class DnsARecordInfo
     {
-        /// <summary> Initializes a new instance of DnsARecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsARecordInfo"/>. </summary>
         public DnsARecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DnsARecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsARecordInfo"/>. </summary>
         /// <param name="ipv4Address"> The IPv4 address of this A record. </param>
         internal DnsARecordInfo(IPAddress ipv4Address)
         {

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Trigger reference type. </summary>
     public partial class DataFactoryTriggerReference
     {
-        /// <summary> Initializes a new instance of DataFactoryTriggerReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerReference"/>. </summary>
         /// <param name="referenceType"> Trigger reference type. </param>
         /// <param name="referenceName"> Reference trigger name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>

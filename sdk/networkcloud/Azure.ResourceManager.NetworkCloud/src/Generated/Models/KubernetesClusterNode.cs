@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> KubernetesClusterNode represents the details of a node in a Kubernetes cluster. </summary>
     public partial class KubernetesClusterNode
     {
-        /// <summary> Initializes a new instance of KubernetesClusterNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterNode"/>. </summary>
         internal KubernetesClusterNode()
         {
             Labels = new ChangeTrackingList<KubernetesLabel>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Taints = new ChangeTrackingList<KubernetesLabel>();
         }
 
-        /// <summary> Initializes a new instance of KubernetesClusterNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterNode"/>. </summary>
         /// <param name="agentPoolId"> The resource ID of the agent pool that this node belongs to. This value is not represented on control plane nodes. </param>
         /// <param name="availabilityZone"> The availability zone this node is running within. </param>
         /// <param name="bareMetalMachineId"> The resource ID of the bare metal machine that hosts this node. </param>

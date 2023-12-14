@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.HDInsight
 {
     /// <summary>
     /// A Class representing a HDInsightCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HDInsightClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHDInsightClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetHDInsightCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HDInsightClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHDInsightClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHDInsightCluster method.
     /// </summary>
     public partial class HDInsightClusterResource : ArmResource
     {
@@ -52,12 +52,15 @@ namespace Azure.ResourceManager.HDInsight
         private readonly VirtualMachinesRestOperations _virtualMachinesRestClient;
         private readonly HDInsightClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HDInsight/clusters";
+
         /// <summary> Initializes a new instance of the <see cref="HDInsightClusterResource"/> class for mocking. </summary>
         protected HDInsightClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HDInsightClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HDInsightClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HDInsightClusterResource(ArmClient client, HDInsightClusterData data) : this(client, data.Id)
@@ -88,9 +91,6 @@ namespace Azure.ResourceManager.HDInsight
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HDInsight/clusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -2070,7 +2070,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RuntimeScriptActionDetail" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RuntimeScriptActionDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RuntimeScriptActionDetail> GetScriptActionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptActionsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -2092,7 +2092,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RuntimeScriptActionDetail" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RuntimeScriptActionDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RuntimeScriptActionDetail> GetScriptActions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptActionsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -2254,7 +2254,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RuntimeScriptActionDetail" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RuntimeScriptActionDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RuntimeScriptActionDetail> GetScriptExecutionHistoriesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptExecutionHistoryRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -2276,7 +2276,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RuntimeScriptActionDetail" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RuntimeScriptActionDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RuntimeScriptActionDetail> GetScriptExecutionHistories(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptExecutionHistoryRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -2368,7 +2368,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HDInsightClusterHostInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HDInsightClusterHostInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HDInsightClusterHostInfo> GetVirtualMachineHostsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachinesRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -2389,7 +2389,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HDInsightClusterHostInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HDInsightClusterHostInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HDInsightClusterHostInfo> GetVirtualMachineHosts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachinesRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

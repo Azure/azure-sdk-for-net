@@ -12,7 +12,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes a matching mode used for scheduling jobs to be queued at a future time. At the specified time, matching worker to a job will not start automatically. </summary>
     public partial class ScheduleAndSuspendMode : JobMatchingMode
     {
-        /// <summary> Initializes a new instance of ScheduleAndSuspendMode. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleAndSuspendMode"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of JobMatchingMode. </param>
         /// <param name="scheduleAt"> Requested schedule time. </param>
         internal ScheduleAndSuspendMode(JobMatchingModeKind kind, DateTimeOffset scheduleAt) : base(kind)

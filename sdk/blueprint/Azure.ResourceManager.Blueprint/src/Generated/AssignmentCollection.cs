@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Blueprint
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AssignmentResource" /> and their operations.
-    /// Each <see cref="AssignmentResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get an <see cref="AssignmentCollection" /> instance call the GetAssignments method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="AssignmentResource"/> and their operations.
+    /// Each <see cref="AssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get an <see cref="AssignmentCollection"/> instance call the GetAssignments method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class AssignmentCollection : ArmCollection, IEnumerable<AssignmentResource>, IAsyncEnumerable<AssignmentResource>
     {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Blueprint
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _assignmentRestClient.CreateListRequest(Id);
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Blueprint
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _assignmentRestClient.CreateListRequest(Id);

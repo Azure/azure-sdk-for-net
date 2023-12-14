@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the dsc node report error type. </summary>
     public partial class DscReportError
     {
-        /// <summary> Initializes a new instance of DscReportError. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscReportError"/>. </summary>
         internal DscReportError()
         {
         }
 
-        /// <summary> Initializes a new instance of DscReportError. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscReportError"/>. </summary>
         /// <param name="errorSource"> Gets or sets the source of the error. </param>
         /// <param name="resourceId"> Gets or sets the resource ID which generated the error. </param>
         /// <param name="errorCode"> Gets or sets the error code. </param>

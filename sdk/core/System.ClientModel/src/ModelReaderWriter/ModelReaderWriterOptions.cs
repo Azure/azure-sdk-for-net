@@ -1,40 +1,32 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace System.ClientModel
+namespace System.ClientModel.Primitives
 {
     /// <summary>
     /// Provides the client options for reading and writing models.
     /// </summary>
     public class ModelReaderWriterOptions
     {
-        private bool _isFrozen;
-
-        private static ModelReaderWriterOptions? _jsonOptions;
+        private static ModelReaderWriterOptions? s_jsonOptions;
         /// <summary>
         /// Default options for writing models into JSON format.
         /// </summary>
-        public static ModelReaderWriterOptions Json => _jsonOptions ??= new ModelReaderWriterOptions("J", true);
+        public static ModelReaderWriterOptions Json => s_jsonOptions ??= new ModelReaderWriterOptions("J");
 
-        private static ModelReaderWriterOptions? _xmlOptions;
+        private static ModelReaderWriterOptions? s_xmlOptions;
         /// <summary>
         /// Default options for writing models into XML format.
         /// </summary>
-        public static ModelReaderWriterOptions Xml => _xmlOptions ??= new ModelReaderWriterOptions("X", true);
+        public static ModelReaderWriterOptions Xml => s_xmlOptions ??= new ModelReaderWriterOptions("X");
 
         /// <summary>
         /// Initializes a new instance of <see cref="ModelReaderWriterOptions"/>.
         /// </summary>
         /// <param name="format">The format to read and write models.</param>
         public ModelReaderWriterOptions (string format)
-            : this(format, false)
-        {
-        }
-
-        private ModelReaderWriterOptions(string format, bool isFrozen)
         {
             Format = format;
-            _isFrozen = isFrozen;
         }
 
         /// <summary>

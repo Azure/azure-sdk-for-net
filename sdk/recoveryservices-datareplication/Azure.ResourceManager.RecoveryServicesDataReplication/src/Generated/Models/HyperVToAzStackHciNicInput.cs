@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> HyperVToAzStackHCI NIC properties. </summary>
     public partial class HyperVToAzStackHciNicInput
     {
-        /// <summary> Initializes a new instance of HyperVToAzStackHciNicInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciNicInput"/>. </summary>
         /// <param name="nicId"> Gets or sets the NIC Id. </param>
         /// <param name="targetNetworkId"> Gets or sets the target network Id within AzStackHCI Cluster. </param>
         /// <param name="testNetworkId"> Gets or sets the target test network Id within AzStackHCI Cluster. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             SelectionTypeForFailover = selectionTypeForFailover;
         }
 
-        /// <summary> Initializes a new instance of HyperVToAzStackHciNicInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciNicInput"/>. </summary>
         /// <param name="nicId"> Gets or sets the NIC Id. </param>
         /// <param name="networkName"> Gets or sets the network name. </param>
         /// <param name="targetNetworkId"> Gets or sets the target network Id within AzStackHCI Cluster. </param>

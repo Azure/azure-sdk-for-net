@@ -13,11 +13,22 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Routing message. </summary>
     public partial class RoutingMessage
     {
-        /// <summary> Initializes a new instance of RoutingMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingMessage"/>. </summary>
         public RoutingMessage()
         {
             AppProperties = new ChangeTrackingDictionary<string, string>();
             SystemProperties = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RoutingMessage"/>. </summary>
+        /// <param name="body"> Body of routing message. </param>
+        /// <param name="appProperties"> App properties. </param>
+        /// <param name="systemProperties"> System properties. </param>
+        internal RoutingMessage(string body, IDictionary<string, string> appProperties, IDictionary<string, string> systemProperties)
+        {
+            Body = body;
+            AppProperties = appProperties;
+            SystemProperties = systemProperties;
         }
 
         /// <summary> Body of routing message. </summary>

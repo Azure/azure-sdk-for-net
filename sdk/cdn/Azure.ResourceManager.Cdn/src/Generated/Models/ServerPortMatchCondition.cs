@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for ServerPort match conditions. </summary>
     public partial class ServerPortMatchCondition
     {
-        /// <summary> Initializes a new instance of ServerPortMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerPortMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="serverPortOperator"> Describes operator to be matched. </param>
         public ServerPortMatchCondition(ServerPortMatchConditionType conditionType, ServerPortOperator serverPortOperator)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
-        /// <summary> Initializes a new instance of ServerPortMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerPortMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="serverPortOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>

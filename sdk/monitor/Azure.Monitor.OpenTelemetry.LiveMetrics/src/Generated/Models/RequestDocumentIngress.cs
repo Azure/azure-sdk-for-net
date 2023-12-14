@@ -5,14 +5,32 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
     /// <summary> Request type document. </summary>
     internal partial class RequestDocumentIngress : DocumentIngress
     {
-        /// <summary> Initializes a new instance of RequestDocumentIngress. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestDocumentIngress"/>. </summary>
         public RequestDocumentIngress()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RequestDocumentIngress"/>. </summary>
+        /// <param name="documentType"> Telemetry type. Types not defined in enum will get replaced with a 'Unknown' type. </param>
+        /// <param name="documentStreamIds"> An array of document streaming ids. Each id identifies a flow of documents customized by UX customers. </param>
+        /// <param name="properties"> Collection of custom properties. </param>
+        /// <param name="name"> Name of the request, e.g., 'GET /values/{id}'. </param>
+        /// <param name="url"> Request URL with all query string parameters. </param>
+        /// <param name="responseCode"> Result of a request execution. For http requestss, it could be some HTTP status code. </param>
+        /// <param name="duration"> Request duration in ISO 8601 duration format, i.e., P[n]Y[n]M[n]DT[n]H[n]M[n]S or P[n]W. </param>
+        internal RequestDocumentIngress(DocumentIngressDocumentType? documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, string name, string url, string responseCode, string duration) : base(documentType, documentStreamIds, properties)
+        {
+            Name = name;
+            Url = url;
+            ResponseCode = responseCode;
+            Duration = duration;
         }
 
         /// <summary> Name of the request, e.g., 'GET /values/{id}'. </summary>

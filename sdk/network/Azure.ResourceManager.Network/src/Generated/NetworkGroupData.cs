@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetworkGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkGroupData"/>. </summary>
         public NetworkGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

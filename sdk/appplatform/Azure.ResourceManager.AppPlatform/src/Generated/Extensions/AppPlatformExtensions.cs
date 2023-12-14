@@ -50,9 +50,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformServiceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformServiceResource"/> object. </returns>
         public static AppPlatformServiceResource GetAppPlatformServiceResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformServiceResource(id);
         }
 
@@ -66,9 +69,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformConfigServerResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformConfigServerResource"/> object. </returns>
         public static AppPlatformConfigServerResource GetAppPlatformConfigServerResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformConfigServerResource(id);
         }
 
@@ -82,9 +88,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformConfigurationServiceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformConfigurationServiceResource"/> object. </returns>
         public static AppPlatformConfigurationServiceResource GetAppPlatformConfigurationServiceResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformConfigurationServiceResource(id);
         }
 
@@ -98,9 +107,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformServiceRegistryResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformServiceRegistryResource"/> object. </returns>
         public static AppPlatformServiceRegistryResource GetAppPlatformServiceRegistryResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformServiceRegistryResource(id);
         }
 
@@ -114,9 +126,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformBuildServiceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformBuildServiceResource"/> object. </returns>
         public static AppPlatformBuildServiceResource GetAppPlatformBuildServiceResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformBuildServiceResource(id);
         }
 
@@ -130,9 +145,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformBuildResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformBuildResource"/> object. </returns>
         public static AppPlatformBuildResource GetAppPlatformBuildResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformBuildResource(id);
         }
 
@@ -146,9 +164,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformBuildResultResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformBuildResultResource"/> object. </returns>
         public static AppPlatformBuildResultResource GetAppPlatformBuildResultResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformBuildResultResource(id);
         }
 
@@ -162,9 +183,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformSupportedBuildpackResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformSupportedBuildpackResource"/> object. </returns>
         public static AppPlatformSupportedBuildpackResource GetAppPlatformSupportedBuildpackResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformSupportedBuildpackResource(id);
         }
 
@@ -178,9 +202,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformSupportedStackResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformSupportedStackResource"/> object. </returns>
         public static AppPlatformSupportedStackResource GetAppPlatformSupportedStackResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformSupportedStackResource(id);
         }
 
@@ -194,9 +221,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformBuildpackBindingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformBuildpackBindingResource"/> object. </returns>
         public static AppPlatformBuildpackBindingResource GetAppPlatformBuildpackBindingResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformBuildpackBindingResource(id);
         }
 
@@ -210,9 +240,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformBuilderResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformBuilderResource"/> object. </returns>
         public static AppPlatformBuilderResource GetAppPlatformBuilderResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformBuilderResource(id);
         }
 
@@ -226,9 +259,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformBuildServiceAgentPoolResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformBuildServiceAgentPoolResource"/> object. </returns>
         public static AppPlatformBuildServiceAgentPoolResource GetAppPlatformBuildServiceAgentPoolResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformBuildServiceAgentPoolResource(id);
         }
 
@@ -242,9 +278,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformMonitoringSettingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformMonitoringSettingResource"/> object. </returns>
         public static AppPlatformMonitoringSettingResource GetAppPlatformMonitoringSettingResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformMonitoringSettingResource(id);
         }
 
@@ -258,9 +297,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformAppResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformAppResource"/> object. </returns>
         public static AppPlatformAppResource GetAppPlatformAppResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformAppResource(id);
         }
 
@@ -274,9 +316,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformBindingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformBindingResource"/> object. </returns>
         public static AppPlatformBindingResource GetAppPlatformBindingResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformBindingResource(id);
         }
 
@@ -290,9 +335,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformStorageResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformStorageResource"/> object. </returns>
         public static AppPlatformStorageResource GetAppPlatformStorageResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformStorageResource(id);
         }
 
@@ -306,9 +354,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformCertificateResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformCertificateResource"/> object. </returns>
         public static AppPlatformCertificateResource GetAppPlatformCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformCertificateResource(id);
         }
 
@@ -322,9 +373,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformCustomDomainResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformCustomDomainResource"/> object. </returns>
         public static AppPlatformCustomDomainResource GetAppPlatformCustomDomainResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformCustomDomainResource(id);
         }
 
@@ -338,9 +392,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformDeploymentResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformDeploymentResource"/> object. </returns>
         public static AppPlatformDeploymentResource GetAppPlatformDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformDeploymentResource(id);
         }
 
@@ -354,9 +411,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformGatewayResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformGatewayResource"/> object. </returns>
         public static AppPlatformGatewayResource GetAppPlatformGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformGatewayResource(id);
         }
 
@@ -370,9 +430,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformGatewayRouteConfigResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformGatewayRouteConfigResource"/> object. </returns>
         public static AppPlatformGatewayRouteConfigResource GetAppPlatformGatewayRouteConfigResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformGatewayRouteConfigResource(id);
         }
 
@@ -386,9 +449,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformGatewayCustomDomainResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformGatewayCustomDomainResource"/> object. </returns>
         public static AppPlatformGatewayCustomDomainResource GetAppPlatformGatewayCustomDomainResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformGatewayCustomDomainResource(id);
         }
 
@@ -402,9 +468,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformApiPortalResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformApiPortalResource"/> object. </returns>
         public static AppPlatformApiPortalResource GetAppPlatformApiPortalResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformApiPortalResource(id);
         }
 
@@ -418,9 +487,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppPlatformApiPortalCustomDomainResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppPlatformApiPortalCustomDomainResource"/> object. </returns>
         public static AppPlatformApiPortalCustomDomainResource GetAppPlatformApiPortalCustomDomainResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppPlatformArmClient(client).GetAppPlatformApiPortalCustomDomainResource(id);
         }
 
@@ -432,9 +504,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of AppPlatformServiceResources and their operations over a AppPlatformServiceResource. </returns>
         public static AppPlatformServiceCollection GetAppPlatformServices(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableAppPlatformResourceGroupResource(resourceGroupResource).GetAppPlatformServices();
         }
 
@@ -458,11 +533,13 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serviceName"> The name of the Service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<AppPlatformServiceResource>> GetAppPlatformServiceAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableAppPlatformResourceGroupResource(resourceGroupResource).GetAppPlatformServiceAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -486,11 +563,13 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serviceName"> The name of the Service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<AppPlatformServiceResource> GetAppPlatformService(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableAppPlatformResourceGroupResource(resourceGroupResource).GetAppPlatformService(serviceName, cancellationToken);
         }
 
@@ -515,9 +594,11 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="location"> the region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<AppPlatformNameAvailabilityResult>> CheckAppPlatformNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, AppPlatformNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableAppPlatformSubscriptionResource(subscriptionResource).CheckAppPlatformNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
@@ -542,9 +623,11 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="location"> the region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<AppPlatformNameAvailabilityResult> CheckAppPlatformNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, AppPlatformNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableAppPlatformSubscriptionResource(subscriptionResource).CheckAppPlatformNameAvailability(location, content, cancellationToken);
         }
 
@@ -567,9 +650,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppPlatformServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AppPlatformServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppPlatformServiceResource> GetAppPlatformServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableAppPlatformSubscriptionResource(subscriptionResource).GetAppPlatformServicesAsync(cancellationToken);
         }
 
@@ -592,9 +678,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppPlatformServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AppPlatformServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppPlatformServiceResource> GetAppPlatformServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableAppPlatformSubscriptionResource(subscriptionResource).GetAppPlatformServices(cancellationToken);
         }
 
@@ -617,9 +706,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailableAppPlatformSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AvailableAppPlatformSku"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableAppPlatformSku> GetSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableAppPlatformSubscriptionResource(subscriptionResource).GetSkusAsync(cancellationToken);
         }
 
@@ -642,9 +734,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableAppPlatformSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AvailableAppPlatformSku"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableAppPlatformSku> GetSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableAppPlatformSubscriptionResource(subscriptionResource).GetSkus(cancellationToken);
         }
 
@@ -667,9 +762,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppPlatformSupportedRuntimeVersion" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AppPlatformSupportedRuntimeVersion"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppPlatformSupportedRuntimeVersion> GetRuntimeVersionsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
             return GetMockableAppPlatformTenantResource(tenantResource).GetRuntimeVersionsAsync(cancellationToken);
         }
 
@@ -692,9 +790,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppPlatformSupportedRuntimeVersion" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AppPlatformSupportedRuntimeVersion"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppPlatformSupportedRuntimeVersion> GetRuntimeVersions(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
             return GetMockableAppPlatformTenantResource(tenantResource).GetRuntimeVersions(cancellationToken);
         }
     }

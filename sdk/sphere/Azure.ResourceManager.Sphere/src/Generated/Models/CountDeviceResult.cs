@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class CountDeviceResult : CountElementsResult
     {
-        /// <summary> Initializes a new instance of CountDeviceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CountDeviceResult"/>. </summary>
         /// <param name="value">
         /// Number of children resources in parent resource.
         /// Serialized Name: CountElementsResponse.value

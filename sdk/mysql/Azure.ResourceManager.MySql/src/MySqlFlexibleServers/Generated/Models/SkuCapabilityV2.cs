@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Sku capability. </summary>
     public partial class SkuCapabilityV2
     {
-        /// <summary> Initializes a new instance of SkuCapabilityV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuCapabilityV2"/>. </summary>
         internal SkuCapabilityV2()
         {
             SupportedZones = new ChangeTrackingList<string>();
             SupportedHAMode = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SkuCapabilityV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuCapabilityV2"/>. </summary>
         /// <param name="name"> vCore name. </param>
         /// <param name="vCores"> supported vCores. </param>
         /// <param name="supportedIops"> supported IOPS. </param>

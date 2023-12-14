@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> The ConnectionDetail. </summary>
     public partial class ConnectionDetail
     {
-        /// <summary> Initializes a new instance of ConnectionDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionDetail"/>. </summary>
         internal ConnectionDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionDetail"/>. </summary>
         /// <param name="id"> Azure resource Id. </param>
         /// <param name="privateIPAddress"> The private endpoint connection private ip address. </param>
         /// <param name="linkIdentifier"> The private endpoint connection link identifier. </param>

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> ARM resource for a certificate order that is purchased through Azure. </summary>
     public partial class AppServiceCertificateOrderPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceCertificateOrderPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateOrderPatch"/>. </summary>
         public AppServiceCertificateOrderPatch()
         {
             Certificates = new ChangeTrackingDictionary<string, AppServiceCertificateProperties>();
             AppServiceCertificateNotRenewableReasons = new ChangeTrackingList<AppServiceCertificateNotRenewableReason>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificateOrderPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateOrderPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

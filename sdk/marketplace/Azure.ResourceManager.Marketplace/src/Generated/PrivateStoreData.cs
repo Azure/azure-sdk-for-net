@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Marketplace
     /// </summary>
     public partial class PrivateStoreData : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateStoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreData"/>. </summary>
         public PrivateStoreData()
         {
             CollectionIds = new ChangeTrackingList<Guid>();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Marketplace
             Recipients = new ChangeTrackingList<NotificationRecipient>();
         }
 
-        /// <summary> Initializes a new instance of PrivateStoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

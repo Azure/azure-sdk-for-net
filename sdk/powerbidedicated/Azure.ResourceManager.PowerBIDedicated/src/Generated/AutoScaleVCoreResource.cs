@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
 {
     /// <summary>
     /// A Class representing an AutoScaleVCore along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutoScaleVCoreResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutoScaleVCoreResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAutoScaleVCore method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutoScaleVCoreResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutoScaleVCoreResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAutoScaleVCore method.
     /// </summary>
     public partial class AutoScaleVCoreResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.PowerBIDedicated
         private readonly AutoScaleVCoresRestOperations _autoScaleVCoreRestClient;
         private readonly AutoScaleVCoreData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.PowerBIDedicated/autoScaleVCores";
+
         /// <summary> Initializes a new instance of the <see cref="AutoScaleVCoreResource"/> class for mocking. </summary>
         protected AutoScaleVCoreResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutoScaleVCoreResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutoScaleVCoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutoScaleVCoreResource(ArmClient client, AutoScaleVCoreData data) : this(client, new ResourceIdentifier(data.Id))
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.PowerBIDedicated
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.PowerBIDedicated/autoScaleVCores";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

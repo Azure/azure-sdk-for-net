@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AuthorizationPolicyResourceFormatResource" /> and their operations.
-    /// Each <see cref="AuthorizationPolicyResourceFormatResource" /> in the collection will belong to the same instance of <see cref="HubResource" />.
-    /// To get an <see cref="AuthorizationPolicyResourceFormatCollection" /> instance call the GetAuthorizationPolicyResourceFormats method from an instance of <see cref="HubResource" />.
+    /// A class representing a collection of <see cref="AuthorizationPolicyResourceFormatResource"/> and their operations.
+    /// Each <see cref="AuthorizationPolicyResourceFormatResource"/> in the collection will belong to the same instance of <see cref="HubResource"/>.
+    /// To get an <see cref="AuthorizationPolicyResourceFormatCollection"/> instance call the GetAuthorizationPolicyResourceFormats method from an instance of <see cref="HubResource"/>.
     /// </summary>
     public partial class AuthorizationPolicyResourceFormatCollection : ArmCollection, IEnumerable<AuthorizationPolicyResourceFormatResource>, IAsyncEnumerable<AuthorizationPolicyResourceFormatResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AuthorizationPolicyResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AuthorizationPolicyResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AuthorizationPolicyResourceFormatResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationPolicyResourceFormatAuthorizationPoliciesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AuthorizationPolicyResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AuthorizationPolicyResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AuthorizationPolicyResourceFormatResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationPolicyResourceFormatAuthorizationPoliciesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

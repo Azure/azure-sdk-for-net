@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Describes the properties of a resource type that has been onboarded to private link service. </summary>
     public partial class ShareablePrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of ShareablePrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareablePrivateLinkResourceProperties"/>. </summary>
         public ShareablePrivateLinkResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ShareablePrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareablePrivateLinkResourceProperties"/>. </summary>
         /// <param name="description"> The description of the resource type that has been onboarded to private link service. </param>
         /// <param name="groupId"> The resource provider group id for the resource that has been onboarded to private link service. </param>
         /// <param name="shareablePrivateLinkResourcePropertiesType"> The resource provider type for the resource that has been onboarded to private link service. </param>

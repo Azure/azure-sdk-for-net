@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Static definitions of the ProactiveDetection configuration rule (same values for all components). </summary>
     public partial class ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions"/>. </summary>
         public ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions"/>. </summary>
         /// <param name="name"> The rule name. </param>
         /// <param name="displayName"> The rule name as it is displayed in UI. </param>
         /// <param name="description"> The rule description. </param>

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a SecureScore along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecureScoreResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecureScoreResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSecureScore method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecureScoreResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecureScoreResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSecureScore method.
     /// </summary>
     public partial class SecureScoreResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly SecureScoreControlsRestOperations _secureScoreControlsRestClient;
         private readonly SecureScoreData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/secureScores";
+
         /// <summary> Initializes a new instance of the <see cref="SecureScoreResource"/> class for mocking. </summary>
         protected SecureScoreResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecureScoreResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecureScoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecureScoreResource(ArmClient client, SecureScoreData data) : this(client, data.Id)
@@ -70,9 +73,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/secureScores";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecureScoreControlDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecureScoreControlDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecureScoreControlDetails> GetSecureScoreControlsAsync(SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _secureScoreControlsRestClient.CreateListBySecureScoreRequest(Id.SubscriptionId, Id.Name, expand);
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecureScoreControlDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecureScoreControlDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecureScoreControlDetails> GetSecureScoreControls(SecurityScoreODataExpand? expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _secureScoreControlsRestClient.CreateListBySecureScoreRequest(Id.SubscriptionId, Id.Name, expand);

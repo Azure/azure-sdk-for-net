@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes a partitioning scheme where an integer range is allocated evenly across a number of partitions. </summary>
     public partial class UniformInt64RangePartitionSchemeDescription : PartitionSchemeDescription
     {
-        /// <summary> Initializes a new instance of UniformInt64RangePartitionSchemeDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="UniformInt64RangePartitionSchemeDescription"/>. </summary>
         /// <param name="count"> The number of partitions. </param>
         /// <param name="lowKey">
         /// String indicating the lower bound of the partition key range that
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             PartitionScheme = ApplicationPartitionScheme.UniformInt64Range;
         }
 
-        /// <summary> Initializes a new instance of UniformInt64RangePartitionSchemeDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="UniformInt64RangePartitionSchemeDescription"/>. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
         /// <param name="count"> The number of partitions. </param>
         /// <param name="lowKey">

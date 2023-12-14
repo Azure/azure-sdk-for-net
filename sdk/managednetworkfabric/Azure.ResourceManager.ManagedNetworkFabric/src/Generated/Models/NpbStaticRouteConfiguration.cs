@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> NPB Static Route Configuration properties. </summary>
     public partial class NpbStaticRouteConfiguration
     {
-        /// <summary> Initializes a new instance of NpbStaticRouteConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NpbStaticRouteConfiguration"/>. </summary>
         public NpbStaticRouteConfiguration()
         {
             IPv4Routes = new ChangeTrackingList<StaticRouteProperties>();
             IPv6Routes = new ChangeTrackingList<StaticRouteProperties>();
         }
 
-        /// <summary> Initializes a new instance of NpbStaticRouteConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NpbStaticRouteConfiguration"/>. </summary>
         /// <param name="bfdConfiguration"> BFD Configuration properties. </param>
         /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
         /// <param name="ipv6Routes"> List of IPv6 Routes. </param>

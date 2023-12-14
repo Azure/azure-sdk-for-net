@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> A marketplace resource. </summary>
     public partial class ConsumptionMarketplace : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumptionMarketplace. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionMarketplace"/>. </summary>
         internal ConsumptionMarketplace()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionMarketplace. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionMarketplace"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

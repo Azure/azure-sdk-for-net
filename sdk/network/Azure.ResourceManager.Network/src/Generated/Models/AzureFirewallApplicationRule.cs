@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Properties of an application rule. </summary>
     public partial class AzureFirewallApplicationRule
     {
-        /// <summary> Initializes a new instance of AzureFirewallApplicationRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallApplicationRule"/>. </summary>
         public AzureFirewallApplicationRule()
         {
             SourceAddresses = new ChangeTrackingList<string>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             SourceIPGroups = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallApplicationRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallApplicationRule"/>. </summary>
         /// <param name="name"> Name of the application rule. </param>
         /// <param name="description"> Description of the rule. </param>
         /// <param name="sourceAddresses"> List of source IP addresses for this rule. </param>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSecurityCenterModelFactory
     {
-        /// <summary> Initializes a new instance of MdeOnboarding. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MdeOnboarding"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new MdeOnboarding(id, name, resourceType, systemData, onboardingPackageWindows, onboardingPackageLinux);
         }
 
-        /// <summary> Initializes a new instance of CustomAssessmentAutomationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.CustomAssessmentAutomationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new CustomAssessmentAutomationData(id, name, resourceType, systemData, compressedQuery, supportedCloud, severity, displayName, description, remediationDescription, assessmentKey);
         }
 
-        /// <summary> Initializes a new instance of CustomAssessmentAutomationCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CustomAssessmentAutomationCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new CustomAssessmentAutomationCreateOrUpdateContent(id, name, resourceType, systemData, compressedQuery, supportedCloud, severity, displayName, description, remediationDescription);
         }
 
-        /// <summary> Initializes a new instance of CustomEntityStoreAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.CustomEntityStoreAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new CustomEntityStoreAssignmentData(id, name, resourceType, systemData, principal, entityStoreDatabaseLink);
         }
 
-        /// <summary> Initializes a new instance of ComplianceResultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.ComplianceResultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new ComplianceResultData(id, name, resourceType, systemData, resourceStatus);
         }
 
-        /// <summary> Initializes a new instance of SecurityCenterPricingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityCenterPricingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityCenterPricingData(id, name, resourceType, systemData, pricingTier, subPlan, freeTrialRemainingTime, enabledOn, isDeprecated, replacedBy?.ToList(), extensions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PlanExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PlanExtension"/>. </summary>
         /// <param name="name">
         /// The extension name. Supported values are: &lt;br&gt;&lt;br&gt;**AgentlessDiscoveryForKubernetes** - API-based discovery of information about Kubernetes cluster architecture, workload objects, and setup. Required for Kubernetes inventory, identity and network exposure detection, attack path analysis and risk hunting as part of the cloud security explorer.
         /// Available for CloudPosture plan.&lt;br&gt;&lt;br&gt;**OnUploadMalwareScanning** - Limits the GB to be scanned per month for each storage account within the subscription. Once this limit reached on a given storage account, Blobs won't be scanned during current calendar month.
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new PlanExtension(name, isEnabled, additionalExtensionProperties, operationStatus);
         }
 
-        /// <summary> Initializes a new instance of ExtensionOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExtensionOperationStatus"/>. </summary>
         /// <param name="code"> The operation status code. </param>
         /// <param name="message"> Additional information regarding the success/failure of the operation. </param>
         /// <returns> A new <see cref="Models.ExtensionOperationStatus"/> instance for mocking. </returns>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new ExtensionOperationStatus(code, message);
         }
 
-        /// <summary> Initializes a new instance of AdvancedThreatProtectionSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.AdvancedThreatProtectionSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AdvancedThreatProtectionSettingData(id, name, resourceType, systemData, isEnabled);
         }
 
-        /// <summary> Initializes a new instance of DeviceSecurityGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.DeviceSecurityGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DeviceSecurityGroupData(id, name, resourceType, systemData, thresholdRules?.ToList(), timeWindowRules?.ToList(), allowlistRules?.ToList(), denylistRules?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ThresholdCustomAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ThresholdCustomAlertRule"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new ThresholdCustomAlertRule(displayName, description, isEnabled, "ThresholdCustomAlertRule", minThreshold, maxThreshold);
         }
 
-        /// <summary> Initializes a new instance of CustomAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CustomAlertRule"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new UnknownCustomAlertRule(displayName, description, isEnabled, ruleType);
         }
 
-        /// <summary> Initializes a new instance of TimeWindowCustomAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TimeWindowCustomAlertRule"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new TimeWindowCustomAlertRule(displayName, description, isEnabled, "TimeWindowCustomAlertRule", minThreshold, maxThreshold, timeWindowSize);
         }
 
-        /// <summary> Initializes a new instance of AllowlistCustomAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AllowlistCustomAlertRule"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AllowlistCustomAlertRule(displayName, description, isEnabled, "AllowlistCustomAlertRule", valueType, allowlistValues?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ListCustomAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ListCustomAlertRule"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new ListCustomAlertRule(displayName, description, isEnabled, "ListCustomAlertRule", valueType);
         }
 
-        /// <summary> Initializes a new instance of DenylistCustomAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DenylistCustomAlertRule"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DenylistCustomAlertRule(displayName, description, isEnabled, "DenylistCustomAlertRule", valueType, denylistValues?.ToList());
         }
 
-        /// <summary> Initializes a new instance of IotSecuritySolutionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.IotSecuritySolutionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new IotSecuritySolutionData(id, name, resourceType, systemData, tags, location, workspace, displayName, status, export?.ToList(), disabledDataSources?.ToList(), iotHubs?.ToList(), userDefinedResources, autoDiscoveredResources?.ToList(), recommendationsConfiguration?.ToList(), unmaskedIPLoggingStatus, additionalWorkspaces?.ToList());
         }
 
-        /// <summary> Initializes a new instance of RecommendationConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecommendationConfigurationProperties"/>. </summary>
         /// <param name="recommendationType"> The type of IoT Security recommendation. </param>
         /// <param name="name"></param>
         /// <param name="status"> Recommendation status. When the recommendation status is disabled recommendations are not generated. </param>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new RecommendationConfigurationProperties(recommendationType, name, status);
         }
 
-        /// <summary> Initializes a new instance of IotSecuritySolutionAnalyticsModelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.IotSecuritySolutionAnalyticsModelData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new IotSecuritySolutionAnalyticsModelData(id, name, resourceType, systemData, metrics, unhealthyDeviceCount, devicesMetrics?.ToList(), topAlertedDevices?.ToList(), mostPrevalentDeviceAlerts?.ToList(), mostPrevalentDeviceRecommendations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of IotSeverityMetrics. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotSeverityMetrics"/>. </summary>
         /// <param name="high"> Count of high severity alerts/recommendations. </param>
         /// <param name="medium"> Count of medium severity alerts/recommendations. </param>
         /// <param name="low"> Count of low severity alerts/recommendations. </param>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new IotSeverityMetrics(high, medium, low);
         }
 
-        /// <summary> Initializes a new instance of IotSecuritySolutionAnalyticsModelDevicesMetrics. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotSecuritySolutionAnalyticsModelDevicesMetrics"/>. </summary>
         /// <param name="date"> Aggregation of IoT Security solution device alert metrics by date. </param>
         /// <param name="devicesMetrics"> Device alert count by severity. </param>
         /// <returns> A new <see cref="Models.IotSecuritySolutionAnalyticsModelDevicesMetrics"/> instance for mocking. </returns>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new IotSecuritySolutionAnalyticsModelDevicesMetrics(date, devicesMetrics);
         }
 
-        /// <summary> Initializes a new instance of IotSecurityAlertedDevice. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotSecurityAlertedDevice"/>. </summary>
         /// <param name="deviceId"> Device identifier. </param>
         /// <param name="alertsCount"> Number of alerts raised for this device. </param>
         /// <returns> A new <see cref="Models.IotSecurityAlertedDevice"/> instance for mocking. </returns>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new IotSecurityAlertedDevice(deviceId, alertsCount);
         }
 
-        /// <summary> Initializes a new instance of IotSecurityDeviceAlert. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotSecurityDeviceAlert"/>. </summary>
         /// <param name="alertDisplayName"> Display name of the alert. </param>
         /// <param name="reportedSeverity"> Assessed Alert severity. </param>
         /// <param name="alertsCount"> Number of alerts raised for this alert type. </param>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new IotSecurityDeviceAlert(alertDisplayName, reportedSeverity, alertsCount);
         }
 
-        /// <summary> Initializes a new instance of IotSecurityDeviceRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotSecurityDeviceRecommendation"/>. </summary>
         /// <param name="recommendationDisplayName"> Display name of the recommendation. </param>
         /// <param name="reportedSeverity"> Assessed recommendation severity. </param>
         /// <param name="devicesCount"> Number of devices with this recommendation. </param>
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new IotSecurityDeviceRecommendation(recommendationDisplayName, reportedSeverity, devicesCount);
         }
 
-        /// <summary> Initializes a new instance of IotSecurityAggregatedAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.IotSecurityAggregatedAlertData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new IotSecurityAggregatedAlertData(id, name, resourceType, systemData, alertType, alertDisplayName, aggregatedOn, vendorName, reportedSeverity, remediationSteps, description, count, effectedResourceType, systemSource, actionTaken, logAnalyticsQuery, topDevicesList?.ToList(), tags);
         }
 
-        /// <summary> Initializes a new instance of IotSecurityAggregatedAlertTopDevice. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotSecurityAggregatedAlertTopDevice"/>. </summary>
         /// <param name="deviceId"> Name of the device. </param>
         /// <param name="alertsCount"> Number of alerts raised for this device. </param>
         /// <param name="lastOccurrence"> Most recent time this alert was raised for this device, on this day. </param>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new IotSecurityAggregatedAlertTopDevice(deviceId, alertsCount, lastOccurrence);
         }
 
-        /// <summary> Initializes a new instance of IotSecurityAggregatedRecommendationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.IotSecurityAggregatedRecommendationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new IotSecurityAggregatedRecommendationData(id, name, resourceType, systemData, recommendationName, recommendationDisplayName, description, recommendationTypeId, detectedBy, remediationSteps, reportedSeverity, healthyDevices, unhealthyDeviceCount, logAnalyticsQuery, tags);
         }
 
-        /// <summary> Initializes a new instance of SecurityCenterLocationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityCenterLocationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityCenterLocationData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of SecurityTaskData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityTaskData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityTaskData(id, name, resourceType, systemData, state, createdOn, securityTaskParameters, lastStateChangedOn, subState);
         }
 
-        /// <summary> Initializes a new instance of SecurityTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityTaskProperties"/>. </summary>
         /// <param name="name"> Name of the task type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.SecurityTaskProperties"/> instance for mocking. </returns>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityTaskProperties(name, additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of AutoProvisioningSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.AutoProvisioningSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AutoProvisioningSettingData(id, name, resourceType, systemData, autoProvision);
         }
 
-        /// <summary> Initializes a new instance of SecurityComplianceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityComplianceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityComplianceData(id, name, resourceType, systemData, assessedOn, resourceCount, assessmentResult?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ComplianceSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ComplianceSegment"/>. </summary>
         /// <param name="segmentType"> The segment type, e.g. compliant, non-compliance, insufficient coverage, N/A, etc. </param>
         /// <param name="percentage"> The size (%) of the segment. </param>
         /// <returns> A new <see cref="Models.ComplianceSegment"/> instance for mocking. </returns>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new ComplianceSegment(segmentType, percentage);
         }
 
-        /// <summary> Initializes a new instance of InformationProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InformationProtectionPolicy"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new InformationProtectionPolicy(id, name, resourceType, systemData, lastModifiedUtc, version, labels, informationTypes);
         }
 
-        /// <summary> Initializes a new instance of SecurityContactData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityContactData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityContactData(id, name, resourceType, systemData, emails, phone, alertNotifications, notificationsByRole);
         }
 
-        /// <summary> Initializes a new instance of SecurityWorkspaceSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityWorkspaceSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityWorkspaceSettingData(id, name, resourceType, systemData, workspaceId, scope);
         }
 
-        /// <summary> Initializes a new instance of RegulatoryComplianceStandardData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.RegulatoryComplianceStandardData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new RegulatoryComplianceStandardData(id, name, resourceType, systemData, state, passedControls, failedControls, skippedControls, unsupportedControls);
         }
 
-        /// <summary> Initializes a new instance of RegulatoryComplianceControlData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.RegulatoryComplianceControlData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new RegulatoryComplianceControlData(id, name, resourceType, systemData, description, state, passedAssessments, failedAssessments, skippedAssessments);
         }
 
-        /// <summary> Initializes a new instance of RegulatoryComplianceAssessmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.RegulatoryComplianceAssessmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new RegulatoryComplianceAssessmentData(id, name, resourceType, systemData, description, assessmentType, assessmentDetailsLink, state, passedResources, failedResources, skippedResources, unsupportedResources);
         }
 
-        /// <summary> Initializes a new instance of SecuritySubAssessmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecuritySubAssessmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecuritySubAssessmentData(id, name, resourceType, systemData, vulnerabilityId, displayName, status, remediation, impact, category, description, generatedOn, resourceDetails, additionalData);
         }
 
-        /// <summary> Initializes a new instance of SubAssessmentStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SubAssessmentStatus"/>. </summary>
         /// <param name="code"> Programmatic code for the status of the assessment. </param>
         /// <param name="cause"> Programmatic code for the cause of the assessment status. </param>
         /// <param name="description"> Human readable description of the assessment status. </param>
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SubAssessmentStatus(code, cause, description, severity);
         }
 
-        /// <summary> Initializes a new instance of SecurityAutomationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityAutomationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityAutomationData(id, name, resourceType, systemData, tags, location, description, isEnabled, scopes?.ToList(), sources?.ToList(), actions?.ToList(), kind, eTag);
         }
 
-        /// <summary> Initializes a new instance of SecurityAutomationValidationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityAutomationValidationStatus"/>. </summary>
         /// <param name="isValid"> Indicates whether the model is valid or not. </param>
         /// <param name="message"> The validation message. </param>
         /// <returns> A new <see cref="Models.SecurityAutomationValidationStatus"/> instance for mocking. </returns>
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityAutomationValidationStatus(isValid, message);
         }
 
-        /// <summary> Initializes a new instance of SecurityAlertsSuppressionRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityAlertsSuppressionRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityAlertsSuppressionRuleData(id, name, resourceType, systemData, alertType, lastModifiedOn, expireOn, reason, state, comment, suppressionAlertsScopeAllOf != null ? new SuppressionAlertsScope(suppressionAlertsScopeAllOf?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of ServerVulnerabilityAssessmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.ServerVulnerabilityAssessmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new ServerVulnerabilityAssessmentData(id, name, resourceType, systemData, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of SecurityAssessmentMetadataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityAssessmentMetadataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityAssessmentMetadataData(id, name, resourceType, systemData, displayName, policyDefinitionId, description, remediationDescription, categories?.ToList(), severity, userImpact, implementationEffort, threats?.ToList(), isPreview, assessmentType, partnerData, publishDates, plannedDeprecationDate, tactics?.ToList(), techniques?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SecurityAssessmentMetadataProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityAssessmentMetadataProperties"/>. </summary>
         /// <param name="displayName"> User friendly display name of the assessment. </param>
         /// <param name="policyDefinitionId"> Azure resource ID of the policy definition that turns this assessment calculation on. </param>
         /// <param name="description"> Human readable description of the assessment. </param>
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityAssessmentMetadataProperties(displayName, policyDefinitionId, description, remediationDescription, categories?.ToList(), severity, userImpact, implementationEffort, threats?.ToList(), isPreview, assessmentType, partnerData);
         }
 
-        /// <summary> Initializes a new instance of SecurityAssessmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityAssessmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityAssessmentData(id, name, resourceType, systemData, resourceDetails, displayName, additionalData, linksAzurePortalUri != null ? new AssessmentLinks(linksAzurePortalUri) : null, metadata, partnersData, status);
         }
 
-        /// <summary> Initializes a new instance of SecurityAssessmentStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityAssessmentStatusResult"/>. </summary>
         /// <param name="code"> Programmatic code for the status of the assessment. </param>
         /// <param name="cause"> Programmatic code for the cause of the assessment status. </param>
         /// <param name="description"> Human readable description of the assessment status. </param>
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityAssessmentStatusResult(code, cause, description, firstEvaluatedOn, statusChangeOn);
         }
 
-        /// <summary> Initializes a new instance of SecurityAssessmentCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityAssessmentCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityAssessmentCreateOrUpdateContent(id, name, resourceType, systemData, resourceDetails, displayName, additionalData, linksAzurePortalUri != null ? new AssessmentLinks(linksAzurePortalUri) : null, metadata, partnersData, status);
         }
 
-        /// <summary> Initializes a new instance of AdaptiveApplicationControlGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.AdaptiveApplicationControlGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -855,7 +855,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AdaptiveApplicationControlGroupData(id, name, resourceType, systemData, enforcementMode, protectionMode, configurationStatus, recommendationStatus, issues?.ToList(), sourceSystem, vmRecommendations?.ToList(), pathRecommendations?.ToList(), location);
         }
 
-        /// <summary> Initializes a new instance of AdaptiveApplicationControlIssueSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AdaptiveApplicationControlIssueSummary"/>. </summary>
         /// <param name="issue"> An alert that machines within a group can have. </param>
         /// <param name="numberOfVms"> The number of machines in the group that have this alert. </param>
         /// <returns> A new <see cref="Models.AdaptiveApplicationControlIssueSummary"/> instance for mocking. </returns>
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AdaptiveApplicationControlIssueSummary(issue, numberOfVms);
         }
 
-        /// <summary> Initializes a new instance of AdaptiveNetworkHardeningData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.AdaptiveNetworkHardeningData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -881,7 +881,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AdaptiveNetworkHardeningData(id, name, resourceType, systemData, rules?.ToList(), rulesCalculatedOn, effectiveNetworkSecurityGroups?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SecurityCenterAllowedConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityCenterAllowedConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -897,7 +897,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityCenterAllowedConnection(id, name, resourceType, systemData, calculatedOn, connectableResources?.ToList(), location);
         }
 
-        /// <summary> Initializes a new instance of ConnectableResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectableResourceInfo"/>. </summary>
         /// <param name="id"> The Azure resource id. </param>
         /// <param name="inboundConnectedResources"> The list of Azure resources that the resource has inbound allowed connection from. </param>
         /// <param name="outboundConnectedResources"> The list of Azure resources that the resource has outbound allowed connection to. </param>
@@ -910,7 +910,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new ConnectableResourceInfo(id, inboundConnectedResources?.ToList(), outboundConnectedResources?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectedResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectedResourceInfo"/>. </summary>
         /// <param name="connectedResourceId"> The Azure resource id of the connected resource. </param>
         /// <param name="tcpPorts"> The allowed tcp ports. </param>
         /// <param name="udpPorts"> The allowed udp ports. </param>
@@ -920,7 +920,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new ConnectedResourceInfo(connectedResourceId, tcpPorts, udpPorts);
         }
 
-        /// <summary> Initializes a new instance of SecurityTopologyResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityTopologyResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -936,7 +936,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityTopologyResource(id, name, resourceType, systemData, calculatedOn, topologyResources?.ToList(), location);
         }
 
-        /// <summary> Initializes a new instance of TopologySingleResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TopologySingleResource"/>. </summary>
         /// <param name="resourceId"> Azure resource id. </param>
         /// <param name="severity"> The security severity of the resource. </param>
         /// <param name="recommendationsExist"> Indicates if the resource has security recommendations. </param>
@@ -954,7 +954,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new TopologySingleResource(resourceId, severity, recommendationsExist, networkZones, topologyScore, location, parents?.ToList(), children?.ToList());
         }
 
-        /// <summary> Initializes a new instance of TopologySingleResourceParent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TopologySingleResourceParent"/>. </summary>
         /// <param name="resourceId"> Azure resource id which serves as parent resource in topology view. </param>
         /// <returns> A new <see cref="Models.TopologySingleResourceParent"/> instance for mocking. </returns>
         public static TopologySingleResourceParent TopologySingleResourceParent(ResourceIdentifier resourceId = null)
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new TopologySingleResourceParent(resourceId);
         }
 
-        /// <summary> Initializes a new instance of TopologySingleResourceChild. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TopologySingleResourceChild"/>. </summary>
         /// <param name="resourceId"> Azure resource id which serves as child resource in topology view. </param>
         /// <returns> A new <see cref="Models.TopologySingleResourceChild"/> instance for mocking. </returns>
         public static TopologySingleResourceChild TopologySingleResourceChild(ResourceIdentifier resourceId = null)
@@ -970,7 +970,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new TopologySingleResourceChild(resourceId);
         }
 
-        /// <summary> Initializes a new instance of JitNetworkAccessPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.JitNetworkAccessPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -989,7 +989,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new JitNetworkAccessPolicyData(id, name, resourceType, systemData, virtualMachines?.ToList(), requests?.ToList(), provisioningState, kind, location);
         }
 
-        /// <summary> Initializes a new instance of DiscoveredSecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DiscoveredSecuritySolution"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1005,7 +1005,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DiscoveredSecuritySolution(id, name, resourceType, systemData, securityFamily, offer, publisher, sku, location);
         }
 
-        /// <summary> Initializes a new instance of SecuritySolutionsReferenceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecuritySolutionsReferenceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1024,7 +1024,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecuritySolutionsReferenceData(id, name, resourceType, systemData, securityFamily, alertVendorName, packageInfoUri, productName, publisher, publisherDisplayName, template, location);
         }
 
-        /// <summary> Initializes a new instance of ExternalSecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExternalSecuritySolution"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1037,7 +1037,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new ExternalSecuritySolution(id, name, resourceType, systemData, kind, location);
         }
 
-        /// <summary> Initializes a new instance of SecureScoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecureScoreData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecureScoreData(id, name, resourceType, systemData, displayName, weight, max, current, percentage);
         }
 
-        /// <summary> Initializes a new instance of SecureScoreControlDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecureScoreControlDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1073,7 +1073,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecureScoreControlDetails(id, name, resourceType, systemData, displayName, healthyResourceCount, unhealthyResourceCount, notApplicableResourceCount, weight, definition, max, current, percentage);
         }
 
-        /// <summary> Initializes a new instance of SecureScoreControlDefinitionItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecureScoreControlDefinitionItem"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1091,7 +1091,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecureScoreControlDefinitionItem(id, name, resourceType, systemData, displayName, description, maxScore, sourceType != null ? new SecureScoreControlDefinitionSource(sourceType) : null, assessmentDefinitions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecuritySolution"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1107,7 +1107,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecuritySolution(id, name, resourceType, systemData, securityFamily, provisioningState, template, protectionStatus, location);
         }
 
-        /// <summary> Initializes a new instance of SecurityCloudConnectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityCloudConnectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1124,7 +1124,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityCloudConnectorData(id, name, resourceType, systemData, hybridComputeSettings, authenticationDetails);
         }
 
-        /// <summary> Initializes a new instance of HybridComputeSettingsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeSettingsProperties"/>. </summary>
         /// <param name="hybridComputeProvisioningState"> State of the service principal and its secret. </param>
         /// <param name="autoProvision"> Whether or not to automatically install Azure Arc (hybrid compute) agents on machines. </param>
         /// <param name="resourceGroupName"> The name of the resource group where Arc (Hybrid Compute) connectors are connected. </param>
@@ -1137,7 +1137,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new HybridComputeSettingsProperties(hybridComputeProvisioningState, autoProvision, resourceGroupName, region, proxyServer, servicePrincipal);
         }
 
-        /// <summary> Initializes a new instance of AuthenticationDetailsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AuthenticationDetailsProperties"/>. </summary>
         /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
         /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
         /// <param name="authenticationType"> Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials. </param>
@@ -1149,7 +1149,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new UnknownAuthenticationDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), authenticationType);
         }
 
-        /// <summary> Initializes a new instance of SecurityAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityAlertData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1199,7 +1199,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityAlertData(id, name, resourceType, systemData, version, alertType, systemAlertId, productComponentName, alertDisplayName, description, severity, intent, startOn, endOn, resourceIdentifiers?.ToList(), remediationSteps?.ToList(), vendorName, status, extendedLinks?.ToList(), alertUri, generatedOn, productName, processingEndOn, entities?.ToList(), isIncident, correlationKey, extendedProperties, compromisedEntity, techniques?.ToList(), subTechniques?.ToList(), supportingEvidence);
         }
 
-        /// <summary> Initializes a new instance of SecurityAlertEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityAlertEntity"/>. </summary>
         /// <param name="alertEntityType"> Type of entity. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.SecurityAlertEntity"/> instance for mocking. </returns>
@@ -1210,7 +1210,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityAlertEntity(alertEntityType, additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of SecurityAlertSupportingEvidence. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityAlertSupportingEvidence"/>. </summary>
         /// <param name="securityAlertSupportingEvidenceType"> Type of the supportingEvidence. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.SecurityAlertSupportingEvidence"/> instance for mocking. </returns>
@@ -1221,7 +1221,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityAlertSupportingEvidence(securityAlertSupportingEvidenceType, additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of SecuritySettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecuritySettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1233,7 +1233,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecuritySettingData(id, name, resourceType, systemData, kind);
         }
 
-        /// <summary> Initializes a new instance of IngestionSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.IngestionSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1245,7 +1245,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new IngestionSettingData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of IngestionSettingToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IngestionSettingToken"/>. </summary>
         /// <param name="token"> The token is used for correlating security data and logs with the resources in the subscription. </param>
         /// <returns> A new <see cref="Models.IngestionSettingToken"/> instance for mocking. </returns>
         public static IngestionSettingToken IngestionSettingToken(string token = null)
@@ -1253,7 +1253,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new IngestionSettingToken(token);
         }
 
-        /// <summary> Initializes a new instance of IngestionConnectionString. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IngestionConnectionString"/>. </summary>
         /// <param name="location"> The region where ingested logs and data resides. </param>
         /// <param name="value"> Connection string value. </param>
         /// <returns> A new <see cref="Models.IngestionConnectionString"/> instance for mocking. </returns>
@@ -1262,7 +1262,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new IngestionConnectionString(location, value);
         }
 
-        /// <summary> Initializes a new instance of SoftwareInventoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SoftwareInventoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1282,7 +1282,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SoftwareInventoryData(id, name, resourceType, systemData, deviceId, osPlatform, vendor, softwareName, version, endOfSupportStatus, endOfSupportDate, numberOfKnownVulnerabilities, firstSeenOn);
         }
 
-        /// <summary> Initializes a new instance of SecurityConnectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityConnectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1313,7 +1313,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityConnectorData(id, name, resourceType, systemData, tags, location, hierarchyIdentifier, hierarchyIdentifierTrialEndOn, environmentName, offerings?.ToList(), environmentData, kind, eTag);
         }
 
-        /// <summary> Initializes a new instance of SecurityCenterCloudOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityCenterCloudOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
         /// <returns> A new <see cref="Models.SecurityCenterCloudOffering"/> instance for mocking. </returns>
@@ -1322,7 +1322,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new UnknownCloudOffering(offeringType, description);
         }
 
-        /// <summary> Initializes a new instance of GovernanceRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.GovernanceRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1351,7 +1351,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GovernanceRuleData(id, name, resourceType, systemData, tenantId, displayName, description, remediationTimeframe, isGracePeriod, rulePriority, isDisabled, ruleType, sourceResourceType, excludedScopes?.ToList(), conditionSets?.ToList(), includeMemberScopes, ownerSource, governanceEmailNotification, metadata);
         }
 
-        /// <summary> Initializes a new instance of GovernanceRuleMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GovernanceRuleMetadata"/>. </summary>
         /// <param name="createdBy"> Governance rule Created by object id (GUID). </param>
         /// <param name="createdOn"> Governance rule creation date. </param>
         /// <param name="updatedBy"> Governance rule last updated by object id (GUID). </param>
@@ -1362,7 +1362,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GovernanceRuleMetadata(createdBy, createdOn, updatedBy, updatedOn);
         }
 
-        /// <summary> Initializes a new instance of GovernanceAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.GovernanceAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1379,7 +1379,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GovernanceAssignmentData(id, name, resourceType, systemData, owner, remediationDueOn, remediationEta, isGracePeriod, governanceEmailNotification, additionalData);
         }
 
-        /// <summary> Initializes a new instance of SecurityApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityApplicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1396,7 +1396,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityApplicationData(id, name, resourceType, systemData, displayName, description, sourceResourceType, conditionSets?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentScanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SqlVulnerabilityAssessmentScanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1408,7 +1408,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SqlVulnerabilityAssessmentScanData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentScanResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentScanResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1420,7 +1420,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SqlVulnerabilityAssessmentScanResult(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of SqlVulnerabilityAssessmentBaselineRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1434,7 +1434,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SqlVulnerabilityAssessmentBaselineRuleData(id, name, resourceType, systemData, ruleResults != null ? new RuleResultsProperties(ruleResults?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of ConnectionToIPNotAllowed. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectionToIPNotAllowed"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -1448,7 +1448,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new ConnectionToIPNotAllowed(displayName, description, isEnabled, "ConnectionToIpNotAllowed", valueType, allowlistValues?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectionFromIPNotAllowed. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectionFromIPNotAllowed"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -1462,7 +1462,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new ConnectionFromIPNotAllowed(displayName, description, isEnabled, "ConnectionFromIpNotAllowed", valueType, allowlistValues?.ToList());
         }
 
-        /// <summary> Initializes a new instance of LocalUserNotAllowed. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LocalUserNotAllowed"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -1476,7 +1476,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new LocalUserNotAllowed(displayName, description, isEnabled, "LocalUserNotAllowed", valueType, allowlistValues?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ProcessNotAllowed. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProcessNotAllowed"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -1490,7 +1490,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new ProcessNotAllowed(displayName, description, isEnabled, "ProcessNotAllowed", valueType, allowlistValues?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ActiveConnectionsNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ActiveConnectionsNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -1503,7 +1503,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new ActiveConnectionsNotInAllowedRange(displayName, description, isEnabled, "ActiveConnectionsNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
         }
 
-        /// <summary> Initializes a new instance of AmqpC2DMessagesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AmqpC2DMessagesNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -1516,7 +1516,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AmqpC2DMessagesNotInAllowedRange(displayName, description, isEnabled, "AmqpC2DMessagesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
         }
 
-        /// <summary> Initializes a new instance of MqttC2DMessagesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MqttC2DMessagesNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -1529,7 +1529,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new MqttC2DMessagesNotInAllowedRange(displayName, description, isEnabled, "MqttC2DMessagesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
         }
 
-        /// <summary> Initializes a new instance of HttpC2DMessagesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HttpC2DMessagesNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -1542,7 +1542,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new HttpC2DMessagesNotInAllowedRange(displayName, description, isEnabled, "HttpC2DMessagesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
         }
 
-        /// <summary> Initializes a new instance of AmqpC2DRejectedMessagesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AmqpC2DRejectedMessagesNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -1555,7 +1555,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AmqpC2DRejectedMessagesNotInAllowedRange(displayName, description, isEnabled, "AmqpC2DRejectedMessagesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
         }
 
-        /// <summary> Initializes a new instance of MqttC2DRejectedMessagesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MqttC2DRejectedMessagesNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -1568,7 +1568,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new MqttC2DRejectedMessagesNotInAllowedRange(displayName, description, isEnabled, "MqttC2DRejectedMessagesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
         }
 
-        /// <summary> Initializes a new instance of HttpC2DRejectedMessagesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HttpC2DRejectedMessagesNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -1581,7 +1581,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new HttpC2DRejectedMessagesNotInAllowedRange(displayName, description, isEnabled, "HttpC2DRejectedMessagesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
         }
 
-        /// <summary> Initializes a new instance of AmqpD2CMessagesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AmqpD2CMessagesNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -1594,7 +1594,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AmqpD2CMessagesNotInAllowedRange(displayName, description, isEnabled, "AmqpD2CMessagesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
         }
 
-        /// <summary> Initializes a new instance of MqttD2CMessagesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MqttD2CMessagesNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -1607,7 +1607,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new MqttD2CMessagesNotInAllowedRange(displayName, description, isEnabled, "MqttD2CMessagesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
         }
 
-        /// <summary> Initializes a new instance of HttpD2CMessagesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HttpD2CMessagesNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -1620,7 +1620,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new HttpD2CMessagesNotInAllowedRange(displayName, description, isEnabled, "HttpD2CMessagesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
         }
 
-        /// <summary> Initializes a new instance of DirectMethodInvokesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DirectMethodInvokesNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -1633,7 +1633,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DirectMethodInvokesNotInAllowedRange(displayName, description, isEnabled, "DirectMethodInvokesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
         }
 
-        /// <summary> Initializes a new instance of FailedLocalLoginsNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FailedLocalLoginsNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -1646,7 +1646,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new FailedLocalLoginsNotInAllowedRange(displayName, description, isEnabled, "FailedLocalLoginsNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
         }
 
-        /// <summary> Initializes a new instance of FileUploadsNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FileUploadsNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -1659,7 +1659,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new FileUploadsNotInAllowedRange(displayName, description, isEnabled, "FileUploadsNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
         }
 
-        /// <summary> Initializes a new instance of QueuePurgesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QueuePurgesNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -1672,7 +1672,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new QueuePurgesNotInAllowedRange(displayName, description, isEnabled, "QueuePurgesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
         }
 
-        /// <summary> Initializes a new instance of TwinUpdatesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TwinUpdatesNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -1685,7 +1685,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new TwinUpdatesNotInAllowedRange(displayName, description, isEnabled, "TwinUpdatesNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
         }
 
-        /// <summary> Initializes a new instance of UnauthorizedOperationsNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.UnauthorizedOperationsNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -1698,7 +1698,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new UnauthorizedOperationsNotInAllowedRange(displayName, description, isEnabled, "UnauthorizedOperationsNotInAllowedRange", minThreshold, maxThreshold, timeWindowSize);
         }
 
-        /// <summary> Initializes a new instance of SqlServerVulnerabilityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlServerVulnerabilityProperties"/>. </summary>
         /// <param name="sqlServerVulnerabilityType"> The resource type the sub assessment refers to in its resource details. </param>
         /// <param name="query"> The T-SQL query that runs on your SQL database to perform the particular check. </param>
         /// <returns> A new <see cref="Models.SqlServerVulnerabilityProperties"/> instance for mocking. </returns>
@@ -1707,7 +1707,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SqlServerVulnerabilityProperties(AssessedResourceType.SqlServerVulnerability, sqlServerVulnerabilityType, query);
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryVulnerabilityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryVulnerabilityProperties"/>. </summary>
         /// <param name="containerRegistryVulnerabilityPropertiesType"> Vulnerability Type. e.g: Vulnerability, Potential Vulnerability, Information Gathered, Vulnerability. </param>
         /// <param name="cvss"> Dictionary from cvss version to cvss details object. </param>
         /// <param name="isPatchable"> Indicates whether a patch is available or not. </param>
@@ -1726,7 +1726,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new ContainerRegistryVulnerabilityProperties(AssessedResourceType.ContainerRegistryVulnerability, containerRegistryVulnerabilityPropertiesType, cvss, isPatchable, cve?.ToList(), publishedOn, vendorReferences?.ToList(), repositoryName, imageDigest);
         }
 
-        /// <summary> Initializes a new instance of SecurityCvss. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityCvss"/>. </summary>
         /// <param name="base"> CVSS base. </param>
         /// <returns> A new <see cref="Models.SecurityCvss"/> instance for mocking. </returns>
         public static SecurityCvss SecurityCvss(float? @base = null)
@@ -1734,7 +1734,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityCvss(@base);
         }
 
-        /// <summary> Initializes a new instance of SecurityCve. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityCve"/>. </summary>
         /// <param name="title"> CVE title. </param>
         /// <param name="link"> Link url. </param>
         /// <returns> A new <see cref="Models.SecurityCve"/> instance for mocking. </returns>
@@ -1743,7 +1743,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityCve(title, link);
         }
 
-        /// <summary> Initializes a new instance of VendorReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VendorReference"/>. </summary>
         /// <param name="title"> Link title. </param>
         /// <param name="link"> Link url. </param>
         /// <returns> A new <see cref="Models.VendorReference"/> instance for mocking. </returns>
@@ -1752,7 +1752,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new VendorReference(title, link);
         }
 
-        /// <summary> Initializes a new instance of ServerVulnerabilityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServerVulnerabilityProperties"/>. </summary>
         /// <param name="serverVulnerabilityType"> Vulnerability Type. e.g: Vulnerability, Potential Vulnerability, Information Gathered. </param>
         /// <param name="cvss"> Dictionary from cvss version to cvss details object. </param>
         /// <param name="isPatchable"> Indicates whether a patch is available or not. </param>
@@ -1770,7 +1770,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new ServerVulnerabilityProperties(new AssessedResourceType("ServerVulnerabilityAssessment"), serverVulnerabilityType, cvss, isPatchable, cve?.ToList(), threat, publishedOn, vendorReferences?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SecurityAutomationActionEventHub. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityAutomationActionEventHub"/>. </summary>
         /// <param name="eventHubResourceId"> The target Event Hub Azure Resource ID. </param>
         /// <param name="sasPolicyName"> The target Event Hub SAS policy name. </param>
         /// <param name="connectionString"> The target Event Hub connection string (it will not be included in any response). </param>
@@ -1780,7 +1780,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityAutomationActionEventHub(ActionType.EventHub, eventHubResourceId, sasPolicyName, connectionString);
         }
 
-        /// <summary> Initializes a new instance of CefExternalSecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CefExternalSecuritySolution"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1793,7 +1793,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new CefExternalSecuritySolution(id, name, resourceType, systemData, ExternalSecuritySolutionKind.Cef, location, properties);
         }
 
-        /// <summary> Initializes a new instance of AtaExternalSecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AtaExternalSecuritySolution"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1806,7 +1806,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AtaExternalSecuritySolution(id, name, resourceType, systemData, ExternalSecuritySolutionKind.Ata, location, properties);
         }
 
-        /// <summary> Initializes a new instance of AadExternalSecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AadExternalSecuritySolution"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1819,7 +1819,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AadExternalSecuritySolution(id, name, resourceType, systemData, ExternalSecuritySolutionKind.Aad, location, properties);
         }
 
-        /// <summary> Initializes a new instance of AwsCredsAuthenticationDetailsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AwsCredsAuthenticationDetailsProperties"/>. </summary>
         /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
         /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
         /// <param name="accountId"> The ID of the cloud account. </param>
@@ -1833,7 +1833,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AwsCredsAuthenticationDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), AuthenticationType.AwsCreds, accountId, awsAccessKeyId, awsSecretAccessKey);
         }
 
-        /// <summary> Initializes a new instance of AwsAssumeRoleAuthenticationDetailsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AwsAssumeRoleAuthenticationDetailsProperties"/>. </summary>
         /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
         /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
         /// <param name="accountId"> The ID of the cloud account. </param>
@@ -1847,7 +1847,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AwsAssumeRoleAuthenticationDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), AuthenticationType.AwsAssumeRole, accountId, awsAssumeRoleArn, awsExternalId);
         }
 
-        /// <summary> Initializes a new instance of GcpCredentialsDetailsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GcpCredentialsDetailsProperties"/>. </summary>
         /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
         /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
         /// <param name="organizationId"> The organization ID of the GCP cloud account. </param>
@@ -1869,7 +1869,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GcpCredentialsDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), AuthenticationType.GcpCredentials, organizationId, gcpCredentialType, projectId, privateKeyId, privateKey, clientEmail, clientId, authUri, tokenUri, authProviderX509CertUri, clientX509CertUri);
         }
 
-        /// <summary> Initializes a new instance of AzureResourceIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AzureResourceIdentifier"/>. </summary>
         /// <param name="azureResourceId"> ARM resource identifier for the cloud resource being alerted on. </param>
         /// <returns> A new <see cref="Models.AzureResourceIdentifier"/> instance for mocking. </returns>
         public static AzureResourceIdentifier AzureResourceIdentifier(ResourceIdentifier azureResourceId = null)
@@ -1877,7 +1877,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AzureResourceIdentifier(ResourceIdentifierType.AzureResource, azureResourceId);
         }
 
-        /// <summary> Initializes a new instance of LogAnalyticsIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogAnalyticsIdentifier"/>. </summary>
         /// <param name="workspaceId"> The LogAnalytics workspace id that stores this alert. </param>
         /// <param name="workspaceSubscriptionId"> The azure subscription id for the LogAnalytics workspace storing this alert. </param>
         /// <param name="workspaceResourceGroup"> The azure resource group for the LogAnalytics workspace storing this alert. </param>
@@ -1888,7 +1888,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new LogAnalyticsIdentifier(ResourceIdentifierType.LogAnalytics, workspaceId, workspaceSubscriptionId, workspaceResourceGroup, agentId);
         }
 
-        /// <summary> Initializes a new instance of DataExportSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataExportSettings"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1900,7 +1900,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DataExportSettings(id, name, resourceType, systemData, SettingKind.DataExportSettings, isEnabled);
         }
 
-        /// <summary> Initializes a new instance of SecurityAlertSyncSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityAlertSyncSettings"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1912,7 +1912,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityAlertSyncSettings(id, name, resourceType, systemData, SettingKind.AlertSyncSettings, isEnabled);
         }
 
-        /// <summary> Initializes a new instance of GcpProjectDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GcpProjectDetails"/>. </summary>
         /// <param name="projectNumber"> The unique GCP Project number. </param>
         /// <param name="projectId"> The GCP Project id. </param>
         /// <param name="workloadIdentityPoolId"> The GCP workload identity federation pool id. </param>
@@ -1922,7 +1922,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GcpProjectDetails(projectNumber, projectId, workloadIdentityPoolId);
         }
 
-        /// <summary> Initializes a new instance of CspmMonitorAwsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CspmMonitorAwsOffering"/>. </summary>
         /// <param name="description"> The offering description. </param>
         /// <param name="cloudRoleArn"> The native cloud connection configuration. </param>
         /// <returns> A new <see cref="Models.CspmMonitorAwsOffering"/> instance for mocking. </returns>
@@ -1931,7 +1931,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new CspmMonitorAwsOffering(OfferingType.CspmMonitorAws, description, cloudRoleArn != null ? new CspmMonitorAwsOfferingNativeCloudConnection(cloudRoleArn) : null);
         }
 
-        /// <summary> Initializes a new instance of DefenderForContainersAwsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DefenderForContainersAwsOffering"/>. </summary>
         /// <param name="description"> The offering description. </param>
         /// <param name="kubernetesServiceCloudRoleArn"> The kubernetes service connection configuration. </param>
         /// <param name="kubernetesScubaReaderCloudRoleArn"> The kubernetes to scuba connection configuration. </param>
@@ -1949,7 +1949,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DefenderForContainersAwsOffering(OfferingType.DefenderForContainersAws, description, kubernetesServiceCloudRoleArn != null ? new DefenderForContainersAwsOfferingKubernetesService(kubernetesServiceCloudRoleArn) : null, kubernetesScubaReaderCloudRoleArn != null ? new DefenderForContainersAwsOfferingKubernetesScubaReader(kubernetesScubaReaderCloudRoleArn) : null, cloudRoleArn != null ? new DefenderForContainersAwsOfferingCloudWatchToKinesis(cloudRoleArn) : null, kinesisToS3CloudRoleArn != null ? new DefenderForContainersAwsOfferingKinesisToS3(kinesisToS3CloudRoleArn) : null, containerVulnerabilityAssessmentCloudRoleArn != null ? new DefenderForContainersAwsOfferingContainerVulnerabilityAssessment(containerVulnerabilityAssessmentCloudRoleArn) : null, containerVulnerabilityAssessmentTaskCloudRoleArn != null ? new DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask(containerVulnerabilityAssessmentTaskCloudRoleArn) : null, isContainerVulnerabilityAssessmentEnabled, isAutoProvisioningEnabled, kubeAuditRetentionTime, scubaExternalId);
         }
 
-        /// <summary> Initializes a new instance of DefenderForServersAwsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DefenderForServersAwsOffering"/>. </summary>
         /// <param name="description"> The offering description. </param>
         /// <param name="defenderForServersCloudRoleArn"> The Defender for servers connection configuration. </param>
         /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
@@ -1963,7 +1963,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DefenderForServersAwsOffering(OfferingType.DefenderForServersAws, description, defenderForServersCloudRoleArn != null ? new AwsDefenderForServersInfo(defenderForServersCloudRoleArn) : null, arcAutoProvisioning, vaAutoProvisioning, mdeAutoProvisioning, availableSubPlanType != null ? new DefenderForServersAwsOfferingSubPlan(availableSubPlanType) : null, vmScanners);
         }
 
-        /// <summary> Initializes a new instance of DefenderForDatabasesAwsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DefenderForDatabasesAwsOffering"/>. </summary>
         /// <param name="description"> The offering description. </param>
         /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
         /// <param name="rds"> The RDS configuration. </param>
@@ -1973,7 +1973,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DefenderForDatabasesAwsOffering(OfferingType.DefenderForDatabasesAws, description, arcAutoProvisioning, rds);
         }
 
-        /// <summary> Initializes a new instance of InformationProtectionAwsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InformationProtectionAwsOffering"/>. </summary>
         /// <param name="description"> The offering description. </param>
         /// <param name="informationProtectionCloudRoleArn"> The native cloud connection configuration. </param>
         /// <returns> A new <see cref="Models.InformationProtectionAwsOffering"/> instance for mocking. </returns>
@@ -1982,7 +1982,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new InformationProtectionAwsOffering(OfferingType.InformationProtectionAws, description, informationProtectionCloudRoleArn != null ? new AwsInformationProtection(informationProtectionCloudRoleArn) : null);
         }
 
-        /// <summary> Initializes a new instance of CspmMonitorGcpOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CspmMonitorGcpOffering"/>. </summary>
         /// <param name="description"> The offering description. </param>
         /// <param name="nativeCloudConnection"> The native cloud connection configuration. </param>
         /// <returns> A new <see cref="Models.CspmMonitorGcpOffering"/> instance for mocking. </returns>
@@ -1991,7 +1991,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new CspmMonitorGcpOffering(OfferingType.CspmMonitorGcp, description, nativeCloudConnection);
         }
 
-        /// <summary> Initializes a new instance of DefenderForServersGcpOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DefenderForServersGcpOffering"/>. </summary>
         /// <param name="description"> The offering description. </param>
         /// <param name="defenderForServers"> The Defender for servers connection configuration. </param>
         /// <param name="isEnabled"> The ARC autoprovisioning configuration. </param>
@@ -2004,7 +2004,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DefenderForServersGcpOffering(OfferingType.DefenderForServersGcp, description, defenderForServers, isEnabled != null ? new DefenderForServersGcpOfferingArcAutoProvisioning(isEnabled) : null, vulnerabilityAssessmentAutoProvisioning, mdeAutoProvisioning, availableSubPlanType != null ? new DefenderForServersGcpOfferingSubPlan(availableSubPlanType) : null);
         }
 
-        /// <summary> Initializes a new instance of DefenderForDatabasesGcpOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DefenderForDatabasesGcpOffering"/>. </summary>
         /// <param name="description"> The offering description. </param>
         /// <param name="isEnabled"> The ARC autoprovisioning configuration. </param>
         /// <param name="defenderForDatabasesArcAutoProvisioning"> The native cloud connection configuration. </param>
@@ -2014,7 +2014,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DefenderForDatabasesGcpOffering(OfferingType.DefenderForDatabasesGcp, description, isEnabled != null ? new DefenderForDatabasesGcpOfferingArcAutoProvisioning(isEnabled) : null, defenderForDatabasesArcAutoProvisioning);
         }
 
-        /// <summary> Initializes a new instance of DefenderForContainersGcpOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DefenderForContainersGcpOffering"/>. </summary>
         /// <param name="description"> The offering description. </param>
         /// <param name="nativeCloudConnection"> The native cloud connection configuration. </param>
         /// <param name="dataPipelineNativeCloudConnection"> The native cloud connection configuration. </param>
@@ -2027,7 +2027,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DefenderForContainersGcpOffering(OfferingType.DefenderForContainersGcp, description, nativeCloudConnection, dataPipelineNativeCloudConnection, isAuditLogsAutoProvisioningEnabled, isDefenderAgentAutoProvisioningEnabled, isPolicyAgentAutoProvisioningEnabled);
         }
 
-        /// <summary> Initializes a new instance of CspmMonitorGithubOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CspmMonitorGithubOffering"/>. </summary>
         /// <param name="description"> The offering description. </param>
         /// <returns> A new <see cref="Models.CspmMonitorGithubOffering"/> instance for mocking. </returns>
         public static CspmMonitorGithubOffering CspmMonitorGithubOffering(string description = null)
@@ -2035,7 +2035,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new CspmMonitorGithubOffering(OfferingType.CspmMonitorGithub, description);
         }
 
-        /// <summary> Initializes a new instance of CspmMonitorAzureDevOpsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CspmMonitorAzureDevOpsOffering"/>. </summary>
         /// <param name="description"> The offering description. </param>
         /// <returns> A new <see cref="Models.CspmMonitorAzureDevOpsOffering"/> instance for mocking. </returns>
         public static CspmMonitorAzureDevOpsOffering CspmMonitorAzureDevOpsOffering(string description = null)
@@ -2043,7 +2043,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new CspmMonitorAzureDevOpsOffering(OfferingType.CspmMonitorAzureDevOps, description);
         }
 
-        /// <summary> Initializes a new instance of DefenderCspmAwsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DefenderCspmAwsOffering"/>. </summary>
         /// <param name="description"> The offering description. </param>
         /// <param name="vmScanners"> The Microsoft Defender for Server VM scanning configuration. </param>
         /// <returns> A new <see cref="Models.DefenderCspmAwsOffering"/> instance for mocking. </returns>
@@ -2052,7 +2052,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DefenderCspmAwsOffering(OfferingType.DefenderCspmAws, description, vmScanners);
         }
 
-        /// <summary> Initializes a new instance of DefenderCspmGcpOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DefenderCspmGcpOffering"/>. </summary>
         /// <param name="description"> The offering description. </param>
         /// <returns> A new <see cref="Models.DefenderCspmGcpOffering"/> instance for mocking. </returns>
         public static DefenderCspmGcpOffering DefenderCspmGcpOffering(string description = null)
@@ -2060,7 +2060,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DefenderCspmGcpOffering(OfferingType.DefenderCspmGcp, description);
         }
 
-        /// <summary> Initializes a new instance of DefenderForDevOpsGithubOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DefenderForDevOpsGithubOffering"/>. </summary>
         /// <param name="description"> The offering description. </param>
         /// <returns> A new <see cref="Models.DefenderForDevOpsGithubOffering"/> instance for mocking. </returns>
         public static DefenderForDevOpsGithubOffering DefenderForDevOpsGithubOffering(string description = null)
@@ -2068,7 +2068,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DefenderForDevOpsGithubOffering(OfferingType.DefenderForDevOpsGithub, description);
         }
 
-        /// <summary> Initializes a new instance of DefenderForDevOpsAzureDevOpsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DefenderForDevOpsAzureDevOpsOffering"/>. </summary>
         /// <param name="description"> The offering description. </param>
         /// <returns> A new <see cref="Models.DefenderForDevOpsAzureDevOpsOffering"/> instance for mocking. </returns>
         public static DefenderForDevOpsAzureDevOpsOffering DefenderForDevOpsAzureDevOpsOffering(string description = null)
@@ -2076,7 +2076,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DefenderForDevOpsAzureDevOpsOffering(OfferingType.DefenderForDevOpsAzureDevOps, description);
         }
 
-        /// <summary> Initializes a new instance of AzureResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AzureResourceDetails"/>. </summary>
         /// <param name="id"> Azure resource Id of the assessed resource. </param>
         /// <returns> A new <see cref="Models.AzureResourceDetails"/> instance for mocking. </returns>
         public static AzureResourceDetails AzureResourceDetails(string id = null)

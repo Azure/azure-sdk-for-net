@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Defines a specific configuration to be used in the context of semantic capabilities. </summary>
     public partial class SemanticConfiguration
     {
-        /// <summary> Initializes a new instance of SemanticConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SemanticConfiguration"/>. </summary>
         /// <param name="name"> The name of the semantic configuration. </param>
         /// <param name="prioritizedFields"> Describes the title, content, and keyword fields to be used for semantic ranking, captions, highlights, and answers. At least one of the three sub properties (titleField, prioritizedKeywordsFields and prioritizedContentFields) need to be set. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="prioritizedFields"/> is null. </exception>

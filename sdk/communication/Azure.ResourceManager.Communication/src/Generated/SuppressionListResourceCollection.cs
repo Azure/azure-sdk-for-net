@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Communication
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SuppressionListResource" /> and their operations.
-    /// Each <see cref="SuppressionListResource" /> in the collection will belong to the same instance of <see cref="CommunicationDomainResource" />.
-    /// To get a <see cref="SuppressionListResourceCollection" /> instance call the GetSuppressionListResources method from an instance of <see cref="CommunicationDomainResource" />.
+    /// A class representing a collection of <see cref="SuppressionListResource"/> and their operations.
+    /// Each <see cref="SuppressionListResource"/> in the collection will belong to the same instance of <see cref="CommunicationDomainResource"/>.
+    /// To get a <see cref="SuppressionListResourceCollection"/> instance call the GetSuppressionListResources method from an instance of <see cref="CommunicationDomainResource"/>.
     /// </summary>
     public partial class SuppressionListResourceCollection : ArmCollection, IEnumerable<SuppressionListResource>, IAsyncEnumerable<SuppressionListResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Communication
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SuppressionListResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SuppressionListResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SuppressionListResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _suppressionListResourceSuppressionListsRestClient.CreateListByDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Communication
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SuppressionListResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SuppressionListResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SuppressionListResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _suppressionListResourceSuppressionListsRestClient.CreateListByDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

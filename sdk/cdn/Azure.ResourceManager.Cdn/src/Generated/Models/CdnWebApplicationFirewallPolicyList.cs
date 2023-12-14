@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines a list of WebApplicationFirewallPolicies for Azure CDN. It contains a list of WebApplicationFirewallPolicy objects and a URL link to get the next set of results. </summary>
     internal partial class CdnWebApplicationFirewallPolicyList
     {
-        /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnWebApplicationFirewallPolicyList"/>. </summary>
         internal CdnWebApplicationFirewallPolicyList()
         {
             Value = new ChangeTrackingList<CdnWebApplicationFirewallPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnWebApplicationFirewallPolicyList"/>. </summary>
         /// <param name="value"> List of Azure CDN WebApplicationFirewallPolicies within a resource group. </param>
         /// <param name="nextLink"> URL to get the next set of WebApplicationFirewallPolicy objects if there are any. </param>
         internal CdnWebApplicationFirewallPolicyList(IReadOnlyList<CdnWebApplicationFirewallPolicyData> value, string nextLink)

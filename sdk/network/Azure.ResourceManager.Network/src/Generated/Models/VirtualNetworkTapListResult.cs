@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListVirtualNetworkTap API service call. </summary>
     internal partial class VirtualNetworkTapListResult
     {
-        /// <summary> Initializes a new instance of VirtualNetworkTapListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkTapListResult"/>. </summary>
         internal VirtualNetworkTapListResult()
         {
             Value = new ChangeTrackingList<VirtualNetworkTapData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkTapListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkTapListResult"/>. </summary>
         /// <param name="value"> A list of VirtualNetworkTaps in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal VirtualNetworkTapListResult(IReadOnlyList<VirtualNetworkTapData> value, string nextLink)

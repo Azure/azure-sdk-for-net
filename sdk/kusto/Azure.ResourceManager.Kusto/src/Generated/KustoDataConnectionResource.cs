@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
     /// A Class representing a KustoDataConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="KustoDataConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetKustoDataConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="KustoDatabaseResource" /> using the GetKustoDataConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="KustoDataConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetKustoDataConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="KustoDatabaseResource"/> using the GetKustoDataConnection method.
     /// </summary>
     public partial class KustoDataConnectionResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Kusto
         private readonly DataConnectionsRestOperations _kustoDataConnectionDataConnectionsRestClient;
         private readonly KustoDataConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters/databases/dataConnections";
+
         /// <summary> Initializes a new instance of the <see cref="KustoDataConnectionResource"/> class for mocking. </summary>
         protected KustoDataConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "KustoDataConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="KustoDataConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal KustoDataConnectionResource(ArmClient client, KustoDataConnectionData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Kusto
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters/databases/dataConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

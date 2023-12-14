@@ -343,22 +343,22 @@ namespace Azure.Monitor.Query.Tests
 
             var resourceId = TestEnvironment.StorageAccountId;
 
-            Response<MetricResultsResponse> metricsResultsResponse = await client.QueryBatchAsync(
+            Response<MetricsBatchResult> metricsResultsResponse = await client.QueryBatchAsync(
                 resourceIds: new List<string> { resourceId },
                 metricNames: new List<string> { "Ingress" },
                 metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
 
-            MetricResultsResponse metricsQueryResults = metricsResultsResponse.Value;
+            MetricsBatchResult metricsQueryResults = metricsResultsResponse.Value;
             Assert.AreEqual(1, metricsQueryResults.Values.Count);
             Assert.AreEqual(TestEnvironment.StorageAccountId, metricsQueryResults.Values[0].ResourceId.ToString());
             Assert.AreEqual("Microsoft.Storage/storageAccounts", metricsQueryResults.Values[0].Namespace);
             for (int i = 0; i < metricsQueryResults.Values.Count; i++)
             {
-                foreach (var value in metricsQueryResults.Values[i].Value)
+                foreach (MetricResult value in metricsQueryResults.Values[i].Metrics)
                 {
-                    for (int j = 0; j < value.Timeseries.Count; j++)
+                    for (int j = 0; j < value.TimeSeries.Count; j++)
                     {
-                        Assert.GreaterOrEqual(value.Timeseries[j].Data[i].Total, 0);
+                        Assert.GreaterOrEqual(value.TimeSeries[j].Values[i].Total, 0);
                     }
                 }
             }

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The service properties when target service type is ConfluentSchemaRegistry. </summary>
     public partial class ConfluentSchemaRegistryInfo : TargetServiceBaseInfo
     {
-        /// <summary> Initializes a new instance of ConfluentSchemaRegistryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentSchemaRegistryInfo"/>. </summary>
         public ConfluentSchemaRegistryInfo()
         {
             TargetServiceType = TargetServiceType.ConfluentSchemaRegistry;
         }
 
-        /// <summary> Initializes a new instance of ConfluentSchemaRegistryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentSchemaRegistryInfo"/>. </summary>
         /// <param name="targetServiceType"> The target service type. </param>
         /// <param name="endpoint"> The endpoint of service. </param>
         internal ConfluentSchemaRegistryInfo(TargetServiceType targetServiceType, string endpoint) : base(targetServiceType)

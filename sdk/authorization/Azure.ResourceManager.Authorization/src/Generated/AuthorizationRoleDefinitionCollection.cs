@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AuthorizationRoleDefinitionResource" /> and their operations.
-    /// Each <see cref="AuthorizationRoleDefinitionResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get an <see cref="AuthorizationRoleDefinitionCollection" /> instance call the GetAuthorizationRoleDefinitions method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="AuthorizationRoleDefinitionResource"/> and their operations.
+    /// Each <see cref="AuthorizationRoleDefinitionResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get an <see cref="AuthorizationRoleDefinitionCollection"/> instance call the GetAuthorizationRoleDefinitions method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class AuthorizationRoleDefinitionCollection : ArmCollection, IEnumerable<AuthorizationRoleDefinitionResource>, IAsyncEnumerable<AuthorizationRoleDefinitionResource>
     {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Authorization
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AuthorizationRoleDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AuthorizationRoleDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AuthorizationRoleDefinitionResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListRequest(Id, filter);
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Authorization
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AuthorizationRoleDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AuthorizationRoleDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AuthorizationRoleDefinitionResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListRequest(Id, filter);

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.LoadTesting
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LoadTestingQuotaResource" /> and their operations.
-    /// Each <see cref="LoadTestingQuotaResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="LoadTestingQuotaCollection" /> instance call the GetLoadTestingQuota method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="LoadTestingQuotaResource"/> and their operations.
+    /// Each <see cref="LoadTestingQuotaResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="LoadTestingQuotaCollection"/> instance call the GetLoadTestingQuota method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class LoadTestingQuotaCollection : ArmCollection, IEnumerable<LoadTestingQuotaResource>, IAsyncEnumerable<LoadTestingQuotaResource>
     {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LoadTestingQuotaResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LoadTestingQuotaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LoadTestingQuotaResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _loadTestingQuotaQuotasRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location));
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LoadTestingQuotaResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LoadTestingQuotaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LoadTestingQuotaResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _loadTestingQuotaQuotasRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location));

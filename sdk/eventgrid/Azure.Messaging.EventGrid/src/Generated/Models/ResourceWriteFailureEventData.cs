@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceWriteFailure event. This is raised when a resource create or update operation fails. </summary>
     public partial class ResourceWriteFailureEventData
     {
-        /// <summary> Initializes a new instance of ResourceWriteFailureEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceWriteFailureEventData"/>. </summary>
         internal ResourceWriteFailureEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceWriteFailureEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceWriteFailureEventData"/>. </summary>
         /// <param name="tenantId"> The tenant ID of the resource. </param>
         /// <param name="subscriptionId"> The subscription ID of the resource. </param>
         /// <param name="resourceGroup"> The resource group of the resource. </param>

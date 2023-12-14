@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> SKU of an application gateway. </summary>
     public partial class ApplicationGatewaySku
     {
-        /// <summary> Initializes a new instance of ApplicationGatewaySku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySku"/>. </summary>
         public ApplicationGatewaySku()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewaySku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySku"/>. </summary>
         /// <param name="name"> Name of an application gateway SKU. </param>
         /// <param name="tier"> Tier of an application gateway. </param>
         /// <param name="capacity"> Capacity (instance count) of an application gateway. </param>

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ManagedNetwork
 {
     /// <summary>
     /// A Class representing a ScopeAssignment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScopeAssignmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetScopeAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetScopeAssignment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScopeAssignmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScopeAssignmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetScopeAssignment method.
     /// </summary>
     public partial class ScopeAssignmentResource : ArmResource
     {
@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.ManagedNetwork
         private readonly ScopeAssignmentsRestOperations _scopeAssignmentRestClient;
         private readonly ScopeAssignmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetwork/scopeAssignments";
+
         /// <summary> Initializes a new instance of the <see cref="ScopeAssignmentResource"/> class for mocking. </summary>
         protected ScopeAssignmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ScopeAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScopeAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScopeAssignmentResource(ArmClient client, ScopeAssignmentData data) : this(client, data.Id)
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.ManagedNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetwork/scopeAssignments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The spark cluster profile. </summary>
     public partial class SparkProfile
     {
-        /// <summary> Initializes a new instance of SparkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkProfile"/>. </summary>
         public SparkProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of SparkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkProfile"/>. </summary>
         /// <param name="defaultStorageUriString"> The default storage URL. </param>
         /// <param name="metastoreSpec"> The metastore specification for Spark cluster. </param>
         /// <param name="userPluginsSpec"> Spark user plugins spec. </param>

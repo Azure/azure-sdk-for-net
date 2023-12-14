@@ -10,12 +10,12 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary> Role assignment properties with scope. </summary>
     public partial class KeyVaultRoleAssignmentProperties
     {
-        /// <summary> Initializes a new instance of KeyVaultRoleAssignmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleAssignmentProperties"/>. </summary>
         internal KeyVaultRoleAssignmentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultRoleAssignmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleAssignmentProperties"/>. </summary>
         /// <param name="scope"> The role scope. </param>
         /// <param name="roleDefinitionId"> The role definition ID. </param>
         /// <param name="principalId"> The principal ID. </param>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The list dedicated host operation response. </summary>
     internal partial class DedicatedHostListResult
     {
-        /// <summary> Initializes a new instance of DedicatedHostListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedHostListResult"/>. </summary>
         /// <param name="value"> The list of dedicated hosts. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DedicatedHostListResult(IEnumerable<DedicatedHostData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DedicatedHostListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedHostListResult"/>. </summary>
         /// <param name="value"> The list of dedicated hosts. </param>
         /// <param name="nextLink"> The URI to fetch the next page of dedicated hosts. Call ListNext() with this URI to fetch the next page of dedicated hosts. </param>
         internal DedicatedHostListResult(IReadOnlyList<DedicatedHostData> value, string nextLink)

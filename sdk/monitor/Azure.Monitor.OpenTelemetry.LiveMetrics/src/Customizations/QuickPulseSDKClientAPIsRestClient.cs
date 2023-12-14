@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text.Json;
 using System.Threading;
 using Azure.Core;
@@ -57,8 +58,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 case 503:
                     {
                         ServiceError value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceError.DeserializeServiceError(document.RootElement);
+                        if (message.Response.Headers.ContentLength != 0)
+                        {
+                            using var document = JsonDocument.Parse(message.Response.ContentStream);
+                            value = ServiceError.DeserializeServiceError(document.RootElement);
+                        }
+
+                        Debug.WriteLine($"{DateTime.Now}: Ping FAILED: {message.Response.Status} {message.Response.ReasonPhrase}.");
                         return ResponseWithHeaders.FromValue<object, QuickPulseSDKClientAPIsPingHeaders>(value, headers, message.Response);
                     }
                 default:
@@ -104,8 +110,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 case 503:
                     {
                         ServiceError value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceError.DeserializeServiceError(document.RootElement);
+                        if (message.Response.Headers.ContentLength != 0)
+                        {
+                            using var document = JsonDocument.Parse(message.Response.ContentStream);
+                            value = ServiceError.DeserializeServiceError(document.RootElement);
+                        }
+
+                        Debug.WriteLine($"{DateTime.Now}: Post FAILED: {message.Response.Status} {message.Response.ReasonPhrase}.");
                         return ResponseWithHeaders.FromValue<object, QuickPulseSDKClientAPIsPostHeaders>(value, headers, message.Response);
                     }
                 default:

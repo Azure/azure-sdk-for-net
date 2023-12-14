@@ -16,9 +16,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SelfHelp
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SolutionResource" /> and their operations.
-    /// Each <see cref="SolutionResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="SolutionResourceCollection" /> instance call the GetSolutionResources method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="SolutionResource"/> and their operations.
+    /// Each <see cref="SolutionResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="SolutionResourceCollection"/> instance call the GetSolutionResources method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class SolutionResourceCollection : ArmCollection
     {

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of databases. </summary>
     internal partial class DatabaseListResult
     {
-        /// <summary> Initializes a new instance of DatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseListResult"/>. </summary>
         internal DatabaseListResult()
         {
             Value = new ChangeTrackingList<SqlDatabaseData>();
         }
 
-        /// <summary> Initializes a new instance of DatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal DatabaseListResult(IReadOnlyList<SqlDatabaseData> value, string nextLink)

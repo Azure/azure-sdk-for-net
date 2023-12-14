@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Cognitive Services Model. </summary>
     public partial class CognitiveServicesModel
     {
-        /// <summary> Initializes a new instance of CognitiveServicesModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesModel"/>. </summary>
         internal CognitiveServicesModel()
         {
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesModel"/>. </summary>
         /// <param name="model"> Model Metadata. </param>
         /// <param name="kind"> The Kind of the Model. </param>
         /// <param name="skuName"> The SKU of the Model. </param>

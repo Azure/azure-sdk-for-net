@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class AdminRuleGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of AdminRuleGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdminRuleGroupData"/>. </summary>
         public AdminRuleGroupData()
         {
             AppliesToGroups = new ChangeTrackingList<NetworkManagerSecurityGroupItem>();
         }
 
-        /// <summary> Initializes a new instance of AdminRuleGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdminRuleGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

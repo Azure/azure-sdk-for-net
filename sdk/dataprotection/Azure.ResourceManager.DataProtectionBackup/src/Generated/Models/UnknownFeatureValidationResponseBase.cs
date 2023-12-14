@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> The UnknownFeatureValidationResponseBase. </summary>
     internal partial class UnknownFeatureValidationResponseBase : BackupFeatureValidationResultBase
     {
-        /// <summary> Initializes a new instance of UnknownFeatureValidationResponseBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownFeatureValidationResponseBase"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         internal UnknownFeatureValidationResponseBase(string objectType) : base(objectType)
         {

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> A RouteMap Rule. </summary>
     public partial class RouteMapRule
     {
-        /// <summary> Initializes a new instance of RouteMapRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteMapRule"/>. </summary>
         public RouteMapRule()
         {
             MatchCriteria = new ChangeTrackingList<RouteCriterion>();
             Actions = new ChangeTrackingList<RouteMapAction>();
         }
 
-        /// <summary> Initializes a new instance of RouteMapRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteMapRule"/>. </summary>
         /// <param name="name"> The unique name for the rule. </param>
         /// <param name="matchCriteria"> List of matching criterion which will be applied to traffic. </param>
         /// <param name="actions"> List of actions which will be applied on a match. </param>

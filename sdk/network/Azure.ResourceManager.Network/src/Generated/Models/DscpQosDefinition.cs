@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Quality of Service defines the traffic configuration between endpoints. Mandatory to have one marking. </summary>
     public partial class DscpQosDefinition
     {
-        /// <summary> Initializes a new instance of DscpQosDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscpQosDefinition"/>. </summary>
         public DscpQosDefinition()
         {
             Markings = new ChangeTrackingList<int>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             DestinationPortRanges = new ChangeTrackingList<QosPortRange>();
         }
 
-        /// <summary> Initializes a new instance of DscpQosDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscpQosDefinition"/>. </summary>
         /// <param name="markings"> List of markings to be used in the configuration. </param>
         /// <param name="sourceIPRanges"> Source IP ranges. </param>
         /// <param name="destinationIPRanges"> Destination IP ranges. </param>

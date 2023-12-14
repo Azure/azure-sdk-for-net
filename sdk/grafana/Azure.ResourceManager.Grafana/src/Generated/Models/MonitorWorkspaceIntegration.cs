@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> Integrations for Azure Monitor Workspace. </summary>
     public partial class MonitorWorkspaceIntegration
     {
-        /// <summary> Initializes a new instance of MonitorWorkspaceIntegration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceIntegration"/>. </summary>
         public MonitorWorkspaceIntegration()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorWorkspaceIntegration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceIntegration"/>. </summary>
         /// <param name="monitorWorkspaceResourceId"> The resource Id of the connected Azure Monitor Workspace. </param>
         internal MonitorWorkspaceIntegration(ResourceIdentifier monitorWorkspaceResourceId)
         {

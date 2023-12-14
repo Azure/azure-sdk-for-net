@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Sub-protection policy which includes schedule and retention. </summary>
     public partial class SubProtectionPolicy
     {
-        /// <summary> Initializes a new instance of SubProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubProtectionPolicy"/>. </summary>
         public SubProtectionPolicy()
         {
             TieringPolicy = new ChangeTrackingDictionary<string, BackupTieringPolicy>();
         }
 
-        /// <summary> Initializes a new instance of SubProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubProtectionPolicy"/>. </summary>
         /// <param name="policyType"> Type of backup policy type. </param>
         /// <param name="schedulePolicy">
         /// Backup schedule specified as part of backup policy.

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Describes the allowed inbound and outbound traffic of an Azure resource. </summary>
     public partial class ConnectableResourceInfo
     {
-        /// <summary> Initializes a new instance of ConnectableResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectableResourceInfo"/>. </summary>
         internal ConnectableResourceInfo()
         {
             InboundConnectedResources = new ChangeTrackingList<ConnectedResourceInfo>();
             OutboundConnectedResources = new ChangeTrackingList<ConnectedResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of ConnectableResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectableResourceInfo"/>. </summary>
         /// <param name="id"> The Azure resource id. </param>
         /// <param name="inboundConnectedResources"> The list of Azure resources that the resource has inbound allowed connection from. </param>
         /// <param name="outboundConnectedResources"> The list of Azure resources that the resource has outbound allowed connection to. </param>

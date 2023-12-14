@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> Properties of a private link resource. </summary>
     public partial class PostgreSqlPrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of PostgreSqlPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateLinkResourceProperties"/>. </summary>
         internal PostgreSqlPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         internal PostgreSqlPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers)

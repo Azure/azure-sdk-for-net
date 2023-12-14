@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> A private link resource. </summary>
     public partial class ElasticSanPrivateLinkResource : ResourceData
     {
-        /// <summary> Initializes a new instance of ElasticSanPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateLinkResource"/>. </summary>
         public ElasticSanPrivateLinkResource()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ElasticSanPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

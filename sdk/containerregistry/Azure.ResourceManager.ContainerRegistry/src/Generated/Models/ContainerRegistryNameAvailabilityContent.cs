@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> A request to check whether a container registry name is available. </summary>
     public partial class ContainerRegistryNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name of the container registry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ContainerRegistryNameAvailabilityContent(string name)
@@ -22,6 +22,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
             Name = name;
             ResourceType = ContainerRegistryResourceType.MicrosoftContainerRegistryRegistries;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name of the container registry. </param>
+        /// <param name="resourceType"> The resource type of the container registry. This field must be set to 'Microsoft.ContainerRegistry/registries'. </param>
+        internal ContainerRegistryNameAvailabilityContent(string name, ContainerRegistryResourceType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> The name of the container registry. </summary>

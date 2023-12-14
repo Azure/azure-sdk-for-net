@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
     /// A Class representing a PostgreSqlLtrServerBackupOperation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PostgreSqlLtrServerBackupOperationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPostgreSqlLtrServerBackupOperationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource" /> using the GetPostgreSqlLtrServerBackupOperation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PostgreSqlLtrServerBackupOperationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPostgreSqlLtrServerBackupOperationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource"/> using the GetPostgreSqlLtrServerBackupOperation method.
     /// </summary>
     public partial class PostgreSqlLtrServerBackupOperationResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         private readonly LtrBackupRestOperations _postgreSqlLtrServerBackupOperationltrBackupOperationsRestClient;
         private readonly PostgreSqlLtrServerBackupOperationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/ltrBackupOperations";
+
         /// <summary> Initializes a new instance of the <see cref="PostgreSqlLtrServerBackupOperationResource"/> class for mocking. </summary>
         protected PostgreSqlLtrServerBackupOperationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PostgreSqlLtrServerBackupOperationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlLtrServerBackupOperationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PostgreSqlLtrServerBackupOperationResource(ArmClient client, PostgreSqlLtrServerBackupOperationData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/ltrBackupOperations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -21,9 +21,9 @@ using Azure.ResourceManager.MachineLearning.Models;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningFeatureSetVersionResource" /> and their operations.
-    /// Each <see cref="MachineLearningFeatureSetVersionResource" /> in the collection will belong to the same instance of <see cref="MachineLearningFeatureSetContainerResource" />.
-    /// To get a <see cref="MachineLearningFeatureSetVersionCollection" /> instance call the GetMachineLearningFeatureSetVersions method from an instance of <see cref="MachineLearningFeatureSetContainerResource" />.
+    /// A class representing a collection of <see cref="MachineLearningFeatureSetVersionResource"/> and their operations.
+    /// Each <see cref="MachineLearningFeatureSetVersionResource"/> in the collection will belong to the same instance of <see cref="MachineLearningFeatureSetContainerResource"/>.
+    /// To get a <see cref="MachineLearningFeatureSetVersionCollection"/> instance call the GetMachineLearningFeatureSetVersions method from an instance of <see cref="MachineLearningFeatureSetContainerResource"/>.
     /// </summary>
     public partial class MachineLearningFeatureSetVersionCollection : ArmCollection, IEnumerable<MachineLearningFeatureSetVersionResource>, IAsyncEnumerable<MachineLearningFeatureSetVersionResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningFeatureSetVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningFeatureSetVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningFeatureSetVersionResource> GetAllAsync(MachineLearningFeatureSetVersionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new MachineLearningFeatureSetVersionCollectionGetAllOptions();
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningFeatureSetVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningFeatureSetVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningFeatureSetVersionResource> GetAll(MachineLearningFeatureSetVersionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new MachineLearningFeatureSetVersionCollectionGetAllOptions();

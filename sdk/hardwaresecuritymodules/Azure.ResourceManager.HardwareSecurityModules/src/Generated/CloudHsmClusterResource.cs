@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 {
     /// <summary>
     /// A Class representing a CloudHsmCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CloudHsmClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCloudHsmClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetCloudHsmCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CloudHsmClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCloudHsmClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetCloudHsmCluster method.
     /// </summary>
     public partial class CloudHsmClusterResource : ArmResource
     {
@@ -44,12 +44,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         private readonly CloudHsmClusterPrivateLinkResourcesRestOperations _cloudHsmClusterPrivateLinkResourcesRestClient;
         private readonly CloudHsmClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HardwareSecurityModules/cloudHsmClusters";
+
         /// <summary> Initializes a new instance of the <see cref="CloudHsmClusterResource"/> class for mocking. </summary>
         protected CloudHsmClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CloudHsmClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudHsmClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CloudHsmClusterResource(ArmClient client, CloudHsmClusterData data) : this(client, data.Id)
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HardwareSecurityModules/cloudHsmClusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HardwareSecurityModulesPrivateLinkData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HardwareSecurityModulesPrivateLinkData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HardwareSecurityModulesPrivateLinkData> GetCloudHsmClusterPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudHsmClusterPrivateLinkResourcesRestClient.CreateListByCloudHsmClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HardwareSecurityModulesPrivateLinkData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HardwareSecurityModulesPrivateLinkData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HardwareSecurityModulesPrivateLinkData> GetCloudHsmClusterPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudHsmClusterPrivateLinkResourcesRestClient.CreateListByCloudHsmClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

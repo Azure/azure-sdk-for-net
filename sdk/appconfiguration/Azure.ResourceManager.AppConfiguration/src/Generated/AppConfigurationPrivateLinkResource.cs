@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary>
     /// A Class representing an AppConfigurationPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppConfigurationPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppConfigurationPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppConfigurationStoreResource" /> using the GetAppConfigurationPrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppConfigurationPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppConfigurationPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppConfigurationStoreResource"/> using the GetAppConfigurationPrivateLinkResource method.
     /// </summary>
     public partial class AppConfigurationPrivateLinkResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.AppConfiguration
         private readonly PrivateLinkResourcesRestOperations _appConfigurationPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly AppConfigurationPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppConfiguration/configurationStores/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="AppConfigurationPrivateLinkResource"/> class for mocking. </summary>
         protected AppConfigurationPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppConfigurationPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppConfigurationPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppConfigurationPrivateLinkResource(ArmClient client, AppConfigurationPrivateLinkResourceData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AppConfiguration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppConfiguration/configurationStores/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

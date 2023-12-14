@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The baseline values for a single sensitivity value. </summary>
     public partial class MonitorSingleBaseline
     {
-        /// <summary> Initializes a new instance of MonitorSingleBaseline. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorSingleBaseline"/>. </summary>
         /// <param name="sensitivity"> the sensitivity of the baseline. </param>
         /// <param name="lowThresholds"> The low thresholds of the baseline. </param>
         /// <param name="highThresholds"> The high thresholds of the baseline. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
             HighThresholds = highThresholds.ToList();
         }
 
-        /// <summary> Initializes a new instance of MonitorSingleBaseline. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorSingleBaseline"/>. </summary>
         /// <param name="sensitivity"> the sensitivity of the baseline. </param>
         /// <param name="lowThresholds"> The low thresholds of the baseline. </param>
         /// <param name="highThresholds"> The high thresholds of the baseline. </param>

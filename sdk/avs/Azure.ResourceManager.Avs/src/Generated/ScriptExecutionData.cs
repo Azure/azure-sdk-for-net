@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class ScriptExecutionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ScriptExecutionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptExecutionData"/>. </summary>
         public ScriptExecutionData()
         {
             Parameters = new ChangeTrackingList<ScriptExecutionParameterDetails>();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Avs
             Errors = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ScriptExecutionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptExecutionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

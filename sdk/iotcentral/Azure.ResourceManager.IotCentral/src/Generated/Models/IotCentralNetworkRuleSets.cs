@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> Network Rule Set Properties of this IoT Central application. </summary>
     public partial class IotCentralNetworkRuleSets
     {
-        /// <summary> Initializes a new instance of IotCentralNetworkRuleSets. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralNetworkRuleSets"/>. </summary>
         public IotCentralNetworkRuleSets()
         {
             IPRules = new ChangeTrackingList<IotCentralNetworkRuleSetIPRule>();
         }
 
-        /// <summary> Initializes a new instance of IotCentralNetworkRuleSets. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralNetworkRuleSets"/>. </summary>
         /// <param name="applyToDevices"> Whether these rules apply for device connectivity to IoT Hub and Device Provisioning service associated with this application. </param>
         /// <param name="applyToIotCentral"> Whether these rules apply for connectivity via IoT Central web portal and APIs. </param>
         /// <param name="defaultAction"> The default network action to apply. </param>

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class ReplicationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of ReplicationProviderSpecificSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationProviderSpecificSettings"/>. </summary>
         protected ReplicationProviderSpecificSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ReplicationProviderSpecificSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationProviderSpecificSettings"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
         internal ReplicationProviderSpecificSettings(string instanceType)
         {

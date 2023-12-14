@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The list of Linker. </summary>
     internal partial class LinkerList
     {
-        /// <summary> Initializes a new instance of LinkerList. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerList"/>. </summary>
         internal LinkerList()
         {
             Value = new ChangeTrackingList<LinkerResourceData>();
         }
 
-        /// <summary> Initializes a new instance of LinkerList. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of Linker list. </param>
         /// <param name="value"> The list of Linkers. </param>
         internal LinkerList(string nextLink, IReadOnlyList<LinkerResourceData> value)

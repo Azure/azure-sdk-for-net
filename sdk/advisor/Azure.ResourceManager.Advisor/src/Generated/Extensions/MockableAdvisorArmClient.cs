@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.Advisor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MetadataEntityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MetadataEntityResource.CreateResourceIdentifier" /> to create a <see cref="MetadataEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MetadataEntityResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MetadataEntityResource.CreateResourceIdentifier" /> to create a <see cref="MetadataEntityResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MetadataEntityResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MetadataEntityResource"/> object. </returns>
         public virtual MetadataEntityResource GetMetadataEntityResource(ResourceIdentifier id)
         {
             MetadataEntityResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.Advisor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ResourceRecommendationBaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceRecommendationBaseResource.CreateResourceIdentifier" /> to create a <see cref="ResourceRecommendationBaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ResourceRecommendationBaseResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceRecommendationBaseResource.CreateResourceIdentifier" /> to create a <see cref="ResourceRecommendationBaseResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceRecommendationBaseResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ResourceRecommendationBaseResource"/> object. </returns>
         public virtual ResourceRecommendationBaseResource GetResourceRecommendationBaseResource(ResourceIdentifier id)
         {
             ResourceRecommendationBaseResource.ValidateResourceId(id);
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.Advisor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SuppressionContractResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SuppressionContractResource.CreateResourceIdentifier" /> to create a <see cref="SuppressionContractResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SuppressionContractResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SuppressionContractResource.CreateResourceIdentifier" /> to create a <see cref="SuppressionContractResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SuppressionContractResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SuppressionContractResource"/> object. </returns>
         public virtual SuppressionContractResource GetSuppressionContractResource(ResourceIdentifier id)
         {
             SuppressionContractResource.ValidateResourceId(id);

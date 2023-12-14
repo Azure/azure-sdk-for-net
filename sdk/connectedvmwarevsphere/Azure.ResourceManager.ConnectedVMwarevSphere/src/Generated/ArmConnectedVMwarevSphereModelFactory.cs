@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmConnectedVMwarevSphereModelFactory
     {
-        /// <summary> Initializes a new instance of VMwareResourcePoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedVMwarevSphere.VMwareResourcePoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VMwareResourcePoolData(id, name, resourceType, systemData, tags, location, extendedLocation, kind, uuid, vCenterId, moRefId, inventoryItemId, moName, cpuSharesLevel, cpuReservationMHz, cpuLimitMHz, memSharesLevel, memReservationMB, memLimitMB, memOverallUsageGB, memCapacityGB, cpuOverallUsageMHz, cpuCapacityMHz, customResourceName, datastoreIds?.ToList(), networkIds?.ToList(), statuses?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of VMwareResourceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VMwareResourceStatus"/>. </summary>
         /// <param name="resourceStatusType"> The type of the condition. </param>
         /// <param name="status"> Status of the condition. </param>
         /// <param name="reason"> The reason for the condition's status. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VMwareResourceStatus(resourceStatusType, status, reason, message, severity, lastUpdatedOn);
         }
 
-        /// <summary> Initializes a new instance of VMwareClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedVMwarevSphere.VMwareClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VMwareClusterData(id, name, resourceType, systemData, tags, location, extendedLocation, kind, uuid, vCenterId, moRefId, inventoryItemId, moName, statuses?.ToList(), customResourceName, usedMemoryGB, totalMemoryGB, usedCpuMHz, totalCpuMHz, datastoreIds?.ToList(), networkIds?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of VMwareHostData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedVMwarevSphere.VMwareHostData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VMwareHostData(id, name, resourceType, systemData, tags, location, extendedLocation, kind, uuid, vCenterId, moRefId, inventoryItemId, moName, statuses?.ToList(), customResourceName, overallMemoryUsageGB, memorySizeGB, overallCpuUsageMHz, cpuMhz, datastoreIds?.ToList(), networkIds?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of VMwareDatastoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedVMwarevSphere.VMwareDatastoreData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VMwareDatastoreData(id, name, resourceType, systemData, tags, location, extendedLocation, kind, uuid, vCenterId, moRefId, inventoryItemId, moName, statuses?.ToList(), customResourceName, capacityGB, freeSpaceGB, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of VMwareVCenterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedVMwarevSphere.VMwareVCenterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VMwareVCenterData(id, name, resourceType, systemData, tags, location, extendedLocation, kind, uuid, fqdn, port, version, instanceUuid, connectionStatus, customResourceName, credentials, statuses?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of VMwareVmTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedVMwarevSphere.VMwareVmTemplateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VMwareVmTemplateData(id, name, resourceType, systemData, tags, location, extendedLocation, kind, uuid, vCenterId, moRefId, inventoryItemId, moName, memorySizeMB, numCpus, numCoresPerSocket, osType, osName, folderPath, networkInterfaces?.ToList(), disks?.ToList(), customResourceName, toolsVersionStatus, toolsVersion, firmwareType, statuses?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of VMwareNetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VMwareNetworkInterface"/>. </summary>
         /// <param name="name"> Gets or sets the name of the network interface. </param>
         /// <param name="label"> Gets or sets the label of the virtual network in vCenter that the nic is connected to. </param>
         /// <param name="ipAddresses"> Gets or sets the nic ip addresses. </param>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VMwareNetworkInterface(name, label, ipAddresses?.ToList(), macAddress, networkId, nicType, powerOnBoot, networkMoRefId, networkMoName, deviceKey, ipSettings);
         }
 
-        /// <summary> Initializes a new instance of NicIPSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NicIPSettings"/>. </summary>
         /// <param name="allocationMethod"> Gets or sets the nic allocation method. </param>
         /// <param name="dnsServers"> Gets or sets the dns servers. </param>
         /// <param name="gateway"> Gets or sets the gateway. </param>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new NicIPSettings(allocationMethod, dnsServers?.ToList(), gateway?.ToList(), ipAddress, subnetMask, primaryWinsServer, secondaryWinsServer, ipAddressInfo?.ToList());
         }
 
-        /// <summary> Initializes a new instance of NicIPAddressSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NicIPAddressSettings"/>. </summary>
         /// <param name="allocationMethod"> Gets the ip address allocation method. </param>
         /// <param name="ipAddress"> Gets the ip address for the nic. </param>
         /// <param name="subnetMask"> Gets the mask. </param>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new NicIPAddressSettings(allocationMethod, ipAddress, subnetMask);
         }
 
-        /// <summary> Initializes a new instance of VMwareVirtualDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VMwareVirtualDisk"/>. </summary>
         /// <param name="name"> Gets or sets the name of the virtual disk. </param>
         /// <param name="label"> Gets or sets the label of the virtual disk in vCenter. </param>
         /// <param name="diskObjectId"> Gets or sets the disk object id. </param>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VMwareVirtualDisk(name, label, diskObjectId, diskSizeGB, deviceKey, diskMode, controllerKey, unitNumber, deviceName, diskType);
         }
 
-        /// <summary> Initializes a new instance of VMwareVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedVMwarevSphere.VMwareVirtualNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VMwareVirtualNetworkData(id, name, resourceType, systemData, tags, location, extendedLocation, kind, uuid, vCenterId, moRefId, inventoryItemId, moName, customResourceName, statuses?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of VMwareVmInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedVMwarevSphere.VMwareVmInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VMwareVmInstanceData(id, name, resourceType, systemData, extendedLocation, placementProfile, osProfile, hardwareProfile, networkInterfaces != null ? new VMwareNetworkProfile(networkInterfaces?.ToList()) : null, storageProfile, secureBootEnabled != null ? new SecurityProfile(new UefiSettings(secureBootEnabled)) : null, infrastructureProfile, powerState, statuses?.ToList(), provisioningState, resourceUid);
         }
 
-        /// <summary> Initializes a new instance of OSProfileForVmInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OSProfileForVmInstance"/>. </summary>
         /// <param name="computerName"> Gets or sets computer name. </param>
         /// <param name="adminUsername"> Gets or sets administrator username. </param>
         /// <param name="adminPassword"> Sets administrator password. </param>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new OSProfileForVmInstance(computerName, adminUsername, adminPassword, guestId, osType, osSku, toolsRunningStatus, toolsVersionStatus, toolsVersion);
         }
 
-        /// <summary> Initializes a new instance of VmInstanceHardwareProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VmInstanceHardwareProfile"/>. </summary>
         /// <param name="memorySizeMB"> Gets or sets memory size in MBs for the vm. </param>
         /// <param name="numCpus"> Gets or sets the number of vCPUs for the vm. </param>
         /// <param name="numCoresPerSocket"> Gets or sets the number of cores per socket for the vm. Defaults to 1 if unspecified. </param>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VmInstanceHardwareProfile(memorySizeMB, numCpus, numCoresPerSocket, cpuHotAddEnabled, cpuHotRemoveEnabled, memoryHotAddEnabled);
         }
 
-        /// <summary> Initializes a new instance of VMwareStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VMwareStorageProfile"/>. </summary>
         /// <param name="disks"> Gets or sets the list of virtual disks associated with the virtual machine. </param>
         /// <param name="scsiControllers"> Gets or sets the list of virtual SCSI controllers associated with the virtual machine. </param>
         /// <returns> A new <see cref="Models.VMwareStorageProfile"/> instance for mocking. </returns>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VMwareStorageProfile(disks?.ToList(), scsiControllers?.ToList());
         }
 
-        /// <summary> Initializes a new instance of VirtualScsiController. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualScsiController"/>. </summary>
         /// <param name="scsiControllerType"> Gets or sets the controller type. </param>
         /// <param name="controllerKey"> Gets or sets the key of the controller. </param>
         /// <param name="busNumber"> Gets or sets the bus number of the controller. </param>
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VirtualScsiController(scsiControllerType, controllerKey, busNumber, scsiCtlrUnitNumber, sharing);
         }
 
-        /// <summary> Initializes a new instance of VCenterInfrastructureProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VCenterInfrastructureProfile"/>. </summary>
         /// <param name="templateId"> Gets or sets the ARM Id of the template resource to deploy the virtual machine. </param>
         /// <param name="vCenterId"> Gets or sets the ARM Id of the vCenter resource in which this resource pool resides. </param>
         /// <param name="moRefId"> Gets or sets the vCenter MoRef (Managed Object Reference) ID for the virtual machine. </param>
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VCenterInfrastructureProfile(templateId, vCenterId, moRefId, inventoryItemId, moName, folderPath, instanceUuid, smbiosUuid, firmwareType, customResourceName);
         }
 
-        /// <summary> Initializes a new instance of VmInstanceHybridIdentityMetadataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedVMwarevSphere.VmInstanceHybridIdentityMetadataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VmInstanceHybridIdentityMetadataData(id, name, resourceType, systemData, resourceUid, publicKey, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of VmInstanceGuestAgentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedVMwarevSphere.VmInstanceGuestAgentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

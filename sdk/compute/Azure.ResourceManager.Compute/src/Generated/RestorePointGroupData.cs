@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class RestorePointGroupData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of RestorePointGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointGroupData"/>. </summary>
         /// <param name="location"> The location. </param>
         public RestorePointGroupData(AzureLocation location) : base(location)
         {
             RestorePoints = new ChangeTrackingList<RestorePointData>();
         }
 
-        /// <summary> Initializes a new instance of RestorePointGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

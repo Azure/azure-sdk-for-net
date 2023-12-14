@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The tracking events definition. </summary>
     public partial class IntegrationAccountTrackingEventsContent
     {
-        /// <summary> Initializes a new instance of IntegrationAccountTrackingEventsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountTrackingEventsContent"/>. </summary>
         /// <param name="sourceType"> The source type. </param>
         /// <param name="events"> The events. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceType"/> or <paramref name="events"/> is null. </exception>
@@ -26,6 +26,17 @@ namespace Azure.ResourceManager.Logic.Models
 
             SourceType = sourceType;
             Events = events.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountTrackingEventsContent"/>. </summary>
+        /// <param name="sourceType"> The source type. </param>
+        /// <param name="trackEventsOptions"> The track events options. </param>
+        /// <param name="events"> The events. </param>
+        internal IntegrationAccountTrackingEventsContent(string sourceType, IntegrationAccountTrackEventOperationOption? trackEventsOptions, IList<IntegrationAccountTrackingEvent> events)
+        {
+            SourceType = sourceType;
+            TrackEventsOptions = trackEventsOptions;
+            Events = events;
         }
 
         /// <summary> The source type. </summary>

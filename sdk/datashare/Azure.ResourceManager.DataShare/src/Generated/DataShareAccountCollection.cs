@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataShareAccountResource" /> and their operations.
-    /// Each <see cref="DataShareAccountResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DataShareAccountCollection" /> instance call the GetDataShareAccounts method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DataShareAccountResource"/> and their operations.
+    /// Each <see cref="DataShareAccountResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DataShareAccountCollection"/> instance call the GetDataShareAccounts method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DataShareAccountCollection : ArmCollection, IEnumerable<DataShareAccountResource>, IAsyncEnumerable<DataShareAccountResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataShareAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataShareAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataShareAccountResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataShareAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataShareAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataShareAccountResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken);

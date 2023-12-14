@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Elastic
 {
     /// <summary>
     /// A Class representing an ElasticMonitorResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ElasticMonitorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetElasticMonitorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetElasticMonitorResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ElasticMonitorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetElasticMonitorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetElasticMonitorResource method.
     /// </summary>
     public partial class ElasticMonitorResource : ArmResource
     {
@@ -52,12 +52,15 @@ namespace Azure.ResourceManager.Elastic
         private readonly VMCollectionRestOperations _vmCollectionRestClient;
         private readonly ElasticMonitorResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Elastic/monitors";
+
         /// <summary> Initializes a new instance of the <see cref="ElasticMonitorResource"/> class for mocking. </summary>
         protected ElasticMonitorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ElasticMonitorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ElasticMonitorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ElasticMonitorResource(ArmClient client, ElasticMonitorResourceData data) : this(client, data.Id)
@@ -88,9 +91,6 @@ namespace Azure.ResourceManager.Elastic
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Elastic/monitors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Elastic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitoredResourceContent" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MonitoredResourceContent"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitoredResourceContent> GetMonitoredResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitoredResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Elastic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitoredResourceContent" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MonitoredResourceContent"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitoredResourceContent> GetMonitoredResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitoredResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Elastic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VmResources" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VmResources"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VmResources> GetVMHostsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vmHostRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Elastic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VmResources" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VmResources"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VmResources> GetVMHosts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vmHostRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

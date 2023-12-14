@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Vault level Job. </summary>
     public partial class VaultBackupJob : BackupGenericJob
     {
-        /// <summary> Initializes a new instance of VaultBackupJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultBackupJob"/>. </summary>
         public VaultBackupJob()
         {
             ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             JobType = "VaultJob";
         }
 
-        /// <summary> Initializes a new instance of VaultBackupJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultBackupJob"/>. </summary>
         /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
         /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
         /// <param name="operation"> The operation name. </param>

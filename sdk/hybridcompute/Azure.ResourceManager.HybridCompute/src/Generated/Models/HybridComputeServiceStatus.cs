@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Describes the status and behavior of a service. </summary>
     public partial class HybridComputeServiceStatus
     {
-        /// <summary> Initializes a new instance of HybridComputeServiceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeServiceStatus"/>. </summary>
         public HybridComputeServiceStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of HybridComputeServiceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeServiceStatus"/>. </summary>
         /// <param name="status"> The current status of the service. </param>
         /// <param name="startupType"> The behavior of the service when the Arc-enabled machine starts up. </param>
         internal HybridComputeServiceStatus(string status, string startupType)

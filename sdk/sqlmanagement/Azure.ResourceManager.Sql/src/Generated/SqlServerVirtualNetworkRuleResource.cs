@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlServerVirtualNetworkRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlServerVirtualNetworkRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlServerVirtualNetworkRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetSqlServerVirtualNetworkRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerVirtualNetworkRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlServerVirtualNetworkRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetSqlServerVirtualNetworkRule method.
     /// </summary>
     public partial class SqlServerVirtualNetworkRuleResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Sql
         private readonly VirtualNetworkRulesRestOperations _sqlServerVirtualNetworkRuleVirtualNetworkRulesRestClient;
         private readonly SqlServerVirtualNetworkRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/virtualNetworkRules";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerVirtualNetworkRuleResource"/> class for mocking. </summary>
         protected SqlServerVirtualNetworkRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlServerVirtualNetworkRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlServerVirtualNetworkRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlServerVirtualNetworkRuleResource(ArmClient client, SqlServerVirtualNetworkRuleData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/virtualNetworkRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

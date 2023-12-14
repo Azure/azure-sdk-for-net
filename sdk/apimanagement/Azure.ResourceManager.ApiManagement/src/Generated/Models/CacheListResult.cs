@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Caches list representation. </summary>
     internal partial class CacheListResult
     {
-        /// <summary> Initializes a new instance of CacheListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CacheListResult"/>. </summary>
         internal CacheListResult()
         {
             Value = new ChangeTrackingList<ApiManagementCacheData>();
         }
 
-        /// <summary> Initializes a new instance of CacheListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CacheListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

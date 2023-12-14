@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceConnectorApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceConnectorApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceConnectorApplianceResource> GetResourceConnectorAppliancesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceConnectorApplianceAppliancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceConnectorApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceConnectorApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceConnectorApplianceResource> GetResourceConnectorAppliances(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceConnectorApplianceAppliancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

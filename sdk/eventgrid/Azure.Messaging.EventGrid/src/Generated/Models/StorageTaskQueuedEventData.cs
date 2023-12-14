@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Storage.StorageTaskQueued event. </summary>
     public partial class StorageTaskQueuedEventData
     {
-        /// <summary> Initializes a new instance of StorageTaskQueuedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageTaskQueuedEventData"/>. </summary>
         internal StorageTaskQueuedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageTaskQueuedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageTaskQueuedEventData"/>. </summary>
         /// <param name="queuedDateTime"> The time at which a storage task was queued. </param>
         /// <param name="taskExecutionId"> The execution id for a storage task. </param>
         internal StorageTaskQueuedEventData(DateTimeOffset? queuedDateTime, string taskExecutionId)

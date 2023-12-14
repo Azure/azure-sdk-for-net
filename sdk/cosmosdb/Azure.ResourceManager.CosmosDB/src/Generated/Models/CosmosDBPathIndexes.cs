@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The indexes for the path. </summary>
     public partial class CosmosDBPathIndexes
     {
-        /// <summary> Initializes a new instance of CosmosDBPathIndexes. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBPathIndexes"/>. </summary>
         public CosmosDBPathIndexes()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBPathIndexes. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBPathIndexes"/>. </summary>
         /// <param name="dataType"> The datatype for which the indexing behavior is applied to. </param>
         /// <param name="precision"> The precision of the index. -1 is maximum precision. </param>
         /// <param name="kind"> Indicates the type of index. </param>

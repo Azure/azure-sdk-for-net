@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmFluidRelayModelFactory
     {
-        /// <summary> Initializes a new instance of FluidRelayServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FluidRelay.FluidRelayServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             return new FluidRelayServerData(id, name, resourceType, systemData, tags, location, identity, frsTenantId, fluidRelayEndpoints, provisioningState, customerManagedKeyEncryption != null ? new EncryptionProperties(customerManagedKeyEncryption) : null, storageSku);
         }
 
-        /// <summary> Initializes a new instance of FluidRelayEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FluidRelayEndpoints"/>. </summary>
         /// <param name="ordererEndpoints"> The Fluid Relay Orderer endpoints. </param>
         /// <param name="storageEndpoints"> The Fluid Relay storage endpoints. </param>
         /// <param name="serviceEndpoints"> The Fluid Relay service endpoints. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             return new FluidRelayEndpoints(ordererEndpoints?.ToList(), storageEndpoints?.ToList(), serviceEndpoints?.ToList());
         }
 
-        /// <summary> Initializes a new instance of FluidRelayServerKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FluidRelayServerKeys"/>. </summary>
         /// <param name="primaryKey"> The primary key for this server. </param>
         /// <param name="secondaryKey"> The secondary key for this server. </param>
         /// <returns> A new <see cref="Models.FluidRelayServerKeys"/> instance for mocking. </returns>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             return new FluidRelayServerKeys(primaryKey, secondaryKey);
         }
 
-        /// <summary> Initializes a new instance of FluidRelayContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FluidRelay.FluidRelayContainerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

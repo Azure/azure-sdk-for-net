@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Grafana
 {
     /// <summary>
     /// A Class representing a ManagedPrivateEndpointModel along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedPrivateEndpointModelResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedPrivateEndpointModelResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedGrafanaResource" /> using the GetManagedPrivateEndpointModel method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedPrivateEndpointModelResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedPrivateEndpointModelResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedGrafanaResource"/> using the GetManagedPrivateEndpointModel method.
     /// </summary>
     public partial class ManagedPrivateEndpointModelResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Grafana
         private readonly ManagedPrivateEndpointsRestOperations _managedPrivateEndpointModelManagedPrivateEndpointsRestClient;
         private readonly ManagedPrivateEndpointModelData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Dashboard/grafana/managedPrivateEndpoints";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedPrivateEndpointModelResource"/> class for mocking. </summary>
         protected ManagedPrivateEndpointModelResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedPrivateEndpointModelResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedPrivateEndpointModelResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedPrivateEndpointModelResource(ArmClient client, ManagedPrivateEndpointModelData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Grafana
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Dashboard/grafana/managedPrivateEndpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

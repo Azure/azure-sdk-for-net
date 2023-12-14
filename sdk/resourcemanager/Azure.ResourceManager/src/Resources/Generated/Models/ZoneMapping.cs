@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The ZoneMapping. </summary>
     public partial class ZoneMapping
     {
-        /// <summary> Initializes a new instance of ZoneMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="ZoneMapping"/>. </summary>
         internal ZoneMapping()
         {
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ZoneMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="ZoneMapping"/>. </summary>
         /// <param name="location"> The location of the zone mapping. </param>
         /// <param name="zones"></param>
         internal ZoneMapping(AzureLocation? location, IReadOnlyList<string> zones)

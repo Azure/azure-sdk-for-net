@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The ServiceAccountQuotaLimit. </summary>
     public partial class ServiceAccountQuotaLimit
     {
-        /// <summary> Initializes a new instance of ServiceAccountQuotaLimit. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountQuotaLimit"/>. </summary>
         internal ServiceAccountQuotaLimit()
         {
             Rules = new ChangeTrackingList<ServiceAccountThrottlingRule>();
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountQuotaLimit. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountQuotaLimit"/>. </summary>
         /// <param name="count"></param>
         /// <param name="renewalPeriod"></param>
         /// <param name="rules"></param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Description of an operation available for Microsoft.Web resource provider. </summary>
     public partial class CsmOperationDescription
     {
-        /// <summary> Initializes a new instance of CsmOperationDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsmOperationDescription"/>. </summary>
         internal CsmOperationDescription()
         {
         }
 
-        /// <summary> Initializes a new instance of CsmOperationDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsmOperationDescription"/>. </summary>
         /// <param name="name"></param>
         /// <param name="isDataAction"></param>
         /// <param name="display"> Meta data about operation used for display in portal. </param>

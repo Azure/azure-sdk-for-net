@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Configurable properties that the user can set locally via the azcmagent config command, or remotely via ARM. </summary>
     public partial class AgentConfiguration
     {
-        /// <summary> Initializes a new instance of AgentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentConfiguration"/>. </summary>
         internal AgentConfiguration()
         {
             IncomingConnectionsPorts = new ChangeTrackingList<string>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             ProxyBypass = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AgentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentConfiguration"/>. </summary>
         /// <param name="proxyUri"> Specifies the URL of the proxy to be used. </param>
         /// <param name="incomingConnectionsPorts"> Specifies the list of ports that the agent will be able to listen on. </param>
         /// <param name="extensionsAllowList"> Array of extensions that are allowed to be installed or updated. </param>

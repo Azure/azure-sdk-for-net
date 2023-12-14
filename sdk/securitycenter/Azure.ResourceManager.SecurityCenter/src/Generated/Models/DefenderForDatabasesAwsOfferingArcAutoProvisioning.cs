@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The ARC autoprovisioning configuration. </summary>
     public partial class DefenderForDatabasesAwsOfferingArcAutoProvisioning
     {
-        /// <summary> Initializes a new instance of DefenderForDatabasesAwsOfferingArcAutoProvisioning. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesAwsOfferingArcAutoProvisioning"/>. </summary>
         public DefenderForDatabasesAwsOfferingArcAutoProvisioning()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForDatabasesAwsOfferingArcAutoProvisioning. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesAwsOfferingArcAutoProvisioning"/>. </summary>
         /// <param name="isEnabled"> Is arc auto provisioning enabled. </param>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
         internal DefenderForDatabasesAwsOfferingArcAutoProvisioning(bool? isEnabled, string cloudRoleArn)

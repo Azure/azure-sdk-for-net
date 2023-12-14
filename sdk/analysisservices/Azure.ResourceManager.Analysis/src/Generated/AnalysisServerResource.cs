@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Analysis
 {
     /// <summary>
     /// A Class representing an AnalysisServer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AnalysisServerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAnalysisServerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAnalysisServer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AnalysisServerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAnalysisServerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAnalysisServer method.
     /// </summary>
     public partial class AnalysisServerResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.Analysis
         private readonly ServersRestOperations _analysisServerServersRestClient;
         private readonly AnalysisServerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AnalysisServices/servers";
+
         /// <summary> Initializes a new instance of the <see cref="AnalysisServerResource"/> class for mocking. </summary>
         protected AnalysisServerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AnalysisServerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AnalysisServerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AnalysisServerResource(ArmClient client, AnalysisServerData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.Analysis
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AnalysisServices/servers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Analysis
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AnalysisExistingSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AnalysisExistingSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AnalysisExistingSku> GetExistingSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _analysisServerServersRestClient.CreateListSkusForExistingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Analysis
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AnalysisExistingSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AnalysisExistingSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AnalysisExistingSku> GetExistingSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _analysisServerServersRestClient.CreateListSkusForExistingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

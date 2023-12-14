@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Create network mappings input. </summary>
     public partial class SiteRecoveryNetworkMappingCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryNetworkMappingCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryNetworkMappingCreateOrUpdateContent"/>. </summary>
         /// <param name="properties"> Input properties for creating network mapping. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public SiteRecoveryNetworkMappingCreateOrUpdateContent(SiteRecoveryCreateReplicationNetworkMappingProperties properties)

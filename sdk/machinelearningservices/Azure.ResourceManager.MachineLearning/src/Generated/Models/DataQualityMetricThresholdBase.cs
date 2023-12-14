@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class DataQualityMetricThresholdBase
     {
-        /// <summary> Initializes a new instance of DataQualityMetricThresholdBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataQualityMetricThresholdBase"/>. </summary>
         protected DataQualityMetricThresholdBase()
         {
         }
 
-        /// <summary> Initializes a new instance of DataQualityMetricThresholdBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataQualityMetricThresholdBase"/>. </summary>
         /// <param name="dataType"> [Required] Specifies the data type of the metric threshold. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
         internal DataQualityMetricThresholdBase(MonitoringFeatureDataType dataType, MonitoringThreshold threshold)

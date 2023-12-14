@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Server endpoint cloud tiering status object. </summary>
     public partial class CloudTieringCachePerformance
     {
-        /// <summary> Initializes a new instance of CloudTieringCachePerformance. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudTieringCachePerformance"/>. </summary>
         internal CloudTieringCachePerformance()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudTieringCachePerformance. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudTieringCachePerformance"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="cacheHitBytes"> Count of bytes that were served from the local server. </param>
         /// <param name="cacheMissBytes"> Count of bytes that were served from the cloud. </param>

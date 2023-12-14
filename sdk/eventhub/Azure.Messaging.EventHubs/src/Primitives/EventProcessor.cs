@@ -20,6 +20,7 @@ using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Processor;
+using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.EventHubs.Primitives
 {
@@ -146,19 +147,16 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 if (_runningProcessorTask == null)
                 {
-                    try
+                    if (!ProcessorRunningGuard.Wait(100))
                     {
-                        if (!ProcessorRunningGuard.Wait(100))
-                        {
-                            return (_statusOverride ?? EventProcessorStatus.NotRunning);
-                        }
+                        return (_statusOverride ?? EventProcessorStatus.NotRunning);
+                    }
 
-                        statusOverride = _statusOverride;
-                    }
-                    finally
-                    {
-                        ProcessorRunningGuard.Release();
-                    }
+                    // If we reach this point, the semaphore was acquired and should
+                    // be released.
+
+                    statusOverride = _statusOverride;
+                    ProcessorRunningGuard.Release();
                 }
                 else
                 {
@@ -755,13 +753,17 @@ namespace Azure.Messaging.EventHubs.Primitives
                 // was passed.  In the event that initialization is run and encounters an
                 // exception, it takes responsibility for firing the error handler.
 
-                var (startingPosition, checkpointUsed) = startingPositionOverride switch
+                var (startingPosition, checkpoint) = startingPositionOverride switch
                 {
-                    _ when startingPositionOverride.HasValue => (startingPositionOverride.Value, false),
+                    _ when startingPositionOverride.HasValue => (startingPositionOverride.Value, null),
                     _ => await InitializePartitionForProcessingAsync(partition, cancellationSource.Token).ConfigureAwait(false)
                 };
 
-                Logger.EventProcessorPartitionProcessingEventPositionDetermined(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.ToString(), checkpointUsed);
+                var checkpointUsed = (checkpoint != null);
+                var checkpointLastModified = checkpointUsed ? checkpoint.LastModified : null;
+                var checkpointAuthor = checkpointUsed ? checkpoint.ClientIdentifier : null;
+
+                Logger.EventProcessorPartitionProcessingEventPositionDetermined(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.ToString(), checkpointUsed, checkpointLastModified, checkpointAuthor);
 
                 // Create the connection to be used for spawning consumers; if the creation
                 // fails, then consider the processing task to be failed.  The main processing
@@ -1071,9 +1073,22 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected virtual Task UpdateCheckpointAsync(string partitionId,
                                                      long offset,
                                                      long? sequenceNumber,
+                                                     CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, new CheckpointPosition(sequenceNumber ?? long.MinValue, offset), cancellationToken);
+
+        /// <summary>
+        ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
+        ///   that an event processor should begin reading from.
+        /// </summary>
+        /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
+        /// <param name="checkpointStartingPosition">The starting position to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
+        ///
+        protected virtual Task UpdateCheckpointAsync(string partitionId,
+                                                     CheckpointPosition checkpointStartingPosition,
                                                      CancellationToken cancellationToken) => throw new NotImplementedException();
 
         /// <summary>
@@ -1285,7 +1300,6 @@ namespace Azure.Messaging.EventHubs.Primitives
             Logger.EventProcessorStart(Identifier, EventHubName, ConsumerGroup);
 
             var capturedValidationException = default(Exception);
-            var releaseGuard = false;
 
             try
             {
@@ -1301,7 +1315,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                     ProcessorRunningGuard.Wait(cancellationToken);
                 }
 
-                releaseGuard = true;
                 _statusOverride = EventProcessorStatus.Starting;
 
                 // If the processor is already running, then it was started before the
@@ -1403,7 +1416,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 // If the cancellation token was signaled during the attempt to acquire the
                 // semaphore, it cannot be safely released; ensure that it is held.
 
-                if (releaseGuard)
+                if (ProcessorRunningGuard.CurrentCount == 0)
                 {
                     ProcessorRunningGuard.Release();
                 }
@@ -1449,7 +1462,6 @@ namespace Azure.Messaging.EventHubs.Primitives
             Logger.EventProcessorStop(Identifier, EventHubName, ConsumerGroup);
 
             var processingException = default(Exception);
-            var releaseGuard = false;
 
             try
             {
@@ -1465,7 +1477,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                     ProcessorRunningGuard.Wait(cancellationToken);
                 }
 
-                releaseGuard = true;
                 _statusOverride = EventProcessorStatus.Stopping;
 
                 // If the processor is not running, then it was never started or has been stopped
@@ -1568,7 +1579,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 // If the cancellation token was signaled during the attempt to acquire the
                 // semaphore, it cannot be safely released; ensure that it is held.
 
-                if (releaseGuard)
+                if (ProcessorRunningGuard.CurrentCount == 0)
                 {
                     ProcessorRunningGuard.Release();
                 }
@@ -1813,8 +1824,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   exception will then be bubbled to callers.
         /// </remarks>
         ///
-        private async Task<(EventPosition Position, bool CheckpointUsed)> InitializePartitionForProcessingAsync(TPartition partition,
-                                                                                                                CancellationToken cancellationToken)
+        private async Task<(EventPosition Position, EventProcessorCheckpoint CheckpointUsed)> InitializePartitionForProcessingAsync(TPartition partition,
+                                                                                                                                    CancellationToken cancellationToken)
         {
             var operationDescription = Resources.OperationClaimOwnership;
 
@@ -1835,10 +1846,10 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 if (checkpoint != null)
                 {
-                    return (checkpoint.StartingPosition, true);
+                    return (checkpoint.StartingPosition, checkpoint);
                 }
 
-                return (Options.DefaultStartingPosition, false);
+                return (Options.DefaultStartingPosition, null);
             }
             catch (Exception ex)
             {
@@ -2048,17 +2059,20 @@ namespace Azure.Messaging.EventHubs.Primitives
             await using var connectionAwaiter = connection.ConfigureAwait(false);
 
             var properties = await connection.GetPropertiesAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
+            var partitionIndex = new Random().Next(0, (properties.PartitionIds.Length - 1));
 
             // To ensure validity of the requested consumer group and that at least one partition exists,
             // attempt to read from a partition.
 
-            var consumer = CreateConsumer(ConsumerGroup, properties.PartitionIds[0], $"SV-{ Identifier }", EventPosition.Earliest, connection, Options, false);
+            var consumer = CreateConsumer(ConsumerGroup, properties.PartitionIds[partitionIndex], $"SV-{ Identifier }", EventPosition.Earliest, connection, Options, false);
 
             try
             {
                 await consumer.ReceiveAsync(1, TimeSpan.FromMilliseconds(5), cancellationToken).ConfigureAwait(false);
             }
-            catch (EventHubsException ex) when (ex.Reason == EventHubsException.FailureReason.ConsumerDisconnected)
+            catch (EventHubsException ex)
+                when ((ex.Reason == EventHubsException.FailureReason.ConsumerDisconnected)
+                    || (ex.Reason == EventHubsException.FailureReason.QuotaExceeded))
             {
                 // This is expected when another processor is already running; no action is needed, as it
                 // validates that the reader was able to connect.
@@ -2192,17 +2206,17 @@ namespace Azure.Messaging.EventHubs.Primitives
             /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
             /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
             /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
-            /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
-            /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
+            /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
+            /// <param name="checkpointStartingPosition">The starting position to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
             /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
             ///
             public async override Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
                                                              string eventHubName,
                                                              string consumerGroup,
                                                              string partitionId,
-                                                             long offset,
-                                                             long? sequenceNumber,
-                                                             CancellationToken cancellationToken) => await Processor.UpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationToken).ConfigureAwait(false);
+                                                             string clientIdentifier,
+                                                             CheckpointPosition checkpointStartingPosition,
+                                                             CancellationToken cancellationToken) => await Processor.UpdateCheckpointAsync(partitionId, checkpointStartingPosition, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

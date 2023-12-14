@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A list of trigger runs. </summary>
     public partial class TriggerRunsQueryResponse
     {
-        /// <summary> Initializes a new instance of TriggerRunsQueryResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerRunsQueryResponse"/>. </summary>
         /// <param name="value"> List of trigger runs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TriggerRunsQueryResponse(IEnumerable<TriggerRun> value)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of TriggerRunsQueryResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerRunsQueryResponse"/>. </summary>
         /// <param name="value"> List of trigger runs. </param>
         /// <param name="continuationToken"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
         internal TriggerRunsQueryResponse(IReadOnlyList<TriggerRun> value, string continuationToken)

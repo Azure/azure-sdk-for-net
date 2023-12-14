@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Reservation recommendation details. </summary>
     public partial class ConsumptionReservationRecommendationDetails : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumptionReservationRecommendationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionReservationRecommendationDetails"/>. </summary>
         internal ConsumptionReservationRecommendationDetails()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionReservationRecommendationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionReservationRecommendationDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

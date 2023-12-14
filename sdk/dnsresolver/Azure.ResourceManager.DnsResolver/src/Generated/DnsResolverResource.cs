@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.DnsResolver
 {
     /// <summary>
     /// A Class representing a DnsResolver along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DnsResolverResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDnsResolverResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDnsResolver method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DnsResolverResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDnsResolverResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDnsResolver method.
     /// </summary>
     public partial class DnsResolverResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.DnsResolver
         private readonly DnsResolversRestOperations _dnsResolverRestClient;
         private readonly DnsResolverData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/dnsResolvers";
+
         /// <summary> Initializes a new instance of the <see cref="DnsResolverResource"/> class for mocking. </summary>
         protected DnsResolverResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DnsResolverResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DnsResolverResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DnsResolverResource(ArmClient client, DnsResolverData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DnsResolver
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/dnsResolvers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

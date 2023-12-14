@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformApiPortalCustomDomain along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformApiPortalCustomDomainResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformApiPortalCustomDomainResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformApiPortalResource" /> using the GetAppPlatformApiPortalCustomDomain method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformApiPortalCustomDomainResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformApiPortalCustomDomainResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformApiPortalResource"/> using the GetAppPlatformApiPortalCustomDomain method.
     /// </summary>
     public partial class AppPlatformApiPortalCustomDomainResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly ApiPortalCustomDomainsRestOperations _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient;
         private readonly AppPlatformApiPortalCustomDomainData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/apiPortals/domains";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformApiPortalCustomDomainResource"/> class for mocking. </summary>
         protected AppPlatformApiPortalCustomDomainResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformApiPortalCustomDomainResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformApiPortalCustomDomainResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformApiPortalCustomDomainResource(ArmClient client, AppPlatformApiPortalCustomDomainData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/apiPortals/domains";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

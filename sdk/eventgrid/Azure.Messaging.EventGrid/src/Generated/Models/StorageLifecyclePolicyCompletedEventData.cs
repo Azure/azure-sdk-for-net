@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Storage.LifecyclePolicyCompleted event. </summary>
     public partial class StorageLifecyclePolicyCompletedEventData
     {
-        /// <summary> Initializes a new instance of StorageLifecyclePolicyCompletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyCompletedEventData"/>. </summary>
         internal StorageLifecyclePolicyCompletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageLifecyclePolicyCompletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyCompletedEventData"/>. </summary>
         /// <param name="scheduleTime"> The time the policy task was scheduled. </param>
         /// <param name="deleteSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <param name="tierToCoolSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>

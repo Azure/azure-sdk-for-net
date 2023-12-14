@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The DatabaseSource. </summary>
     public partial class DatabaseSource : DataImportSource
     {
-        /// <summary> Initializes a new instance of DatabaseSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseSource"/>. </summary>
         public DatabaseSource()
         {
             StoredProcedureParams = new ChangeTrackingList<IDictionary<string, string>>();
             SourceType = DataImportSourceType.Database;
         }
 
-        /// <summary> Initializes a new instance of DatabaseSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseSource"/>. </summary>
         /// <param name="connection"> Workspace connection for data import source storage. </param>
         /// <param name="sourceType"> [Required] Specifies the type of data. </param>
         /// <param name="query"> SQL Query statement for data import Database source. </param>

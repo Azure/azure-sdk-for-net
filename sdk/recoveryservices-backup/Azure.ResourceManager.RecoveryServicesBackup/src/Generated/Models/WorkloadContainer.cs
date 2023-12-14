@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class WorkloadContainer : BackupGenericProtectionContainer
     {
-        /// <summary> Initializes a new instance of WorkloadContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadContainer"/>. </summary>
         public WorkloadContainer()
         {
             ContainerType = ProtectableContainerType.AzureWorkloadContainer;
         }
 
-        /// <summary> Initializes a new instance of WorkloadContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>

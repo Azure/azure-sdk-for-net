@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A list of change data capture resources. </summary>
     internal partial class ChangeDataCaptureListResult
     {
-        /// <summary> Initializes a new instance of ChangeDataCaptureListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChangeDataCaptureListResult"/>. </summary>
         /// <param name="value"> Lists all resources of type change data capture. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ChangeDataCaptureListResult(IEnumerable<DataFactoryChangeDataCaptureData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ChangeDataCaptureListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChangeDataCaptureListResult"/>. </summary>
         /// <param name="value"> Lists all resources of type change data capture. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal ChangeDataCaptureListResult(IReadOnlyList<DataFactoryChangeDataCaptureData> value, string nextLink)

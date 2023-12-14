@@ -14,7 +14,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> A unit of work to be routed. </summary>
     public partial class RouterJob
     {
-        /// <summary> Initializes a new instance of RouterJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterJob"/>. </summary>
         internal RouterJob()
         {
             RequestedWorkerSelectors = new ChangeTrackingList<RouterWorkerSelector>();
@@ -25,7 +25,7 @@ namespace Azure.Communication.JobRouter
             Notes = new ChangeTrackingList<RouterJobNote>();
         }
 
-        /// <summary> Initializes a new instance of RouterJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterJob"/>. </summary>
         /// <param name="etag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of a job. </param>
         /// <param name="channelReference"> Reference to an external parent context, eg. call ID. </param>

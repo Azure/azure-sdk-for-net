@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The response to a metrics query. </summary>
     internal partial class MonitorResponse
     {
-        /// <summary> Initializes a new instance of MonitorResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorResponse"/>. </summary>
         /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="value"> the value of the collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timespan"/> or <paramref name="value"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of MonitorResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorResponse"/>. </summary>
         /// <param name="cost"> The integer value representing the relative cost of the query. </param>
         /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>

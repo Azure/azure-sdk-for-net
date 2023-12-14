@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of Azure SQL instance pools. </summary>
     internal partial class InstancePoolListResult
     {
-        /// <summary> Initializes a new instance of InstancePoolListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancePoolListResult"/>. </summary>
         internal InstancePoolListResult()
         {
             Value = new ChangeTrackingList<InstancePoolData>();
         }
 
-        /// <summary> Initializes a new instance of InstancePoolListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancePoolListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal InstancePoolListResult(IReadOnlyList<InstancePoolData> value, string nextLink)

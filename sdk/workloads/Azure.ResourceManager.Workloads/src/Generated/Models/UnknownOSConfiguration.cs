@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The UnknownOSConfiguration. </summary>
     internal partial class UnknownOSConfiguration : SapOSConfiguration
     {
-        /// <summary> Initializes a new instance of UnknownOSConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownOSConfiguration"/>. </summary>
         /// <param name="osType"> The OS Type. </param>
         internal UnknownOSConfiguration(SapOSType osType) : base(osType)
         {

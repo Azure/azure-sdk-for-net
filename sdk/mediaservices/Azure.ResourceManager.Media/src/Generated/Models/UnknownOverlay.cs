@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The UnknownOverlay. </summary>
     internal partial class UnknownOverlay : MediaOverlayBase
     {
-        /// <summary> Initializes a new instance of UnknownOverlay. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownOverlay"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="inputLabel"> The label of the job input which is to be used as an overlay. The Input must specify exactly one file. You can specify an image file in JPG, PNG, GIF or BMP format, or an audio file (such as a WAV, MP3, WMA or M4A file), or a video file. See https://aka.ms/mesformats for the complete list of supported audio and video file formats. </param>
         /// <param name="start"> The start position, with reference to the input video, at which the overlay starts. The value should be in ISO 8601 format. For example, PT05S to start the overlay at 5 seconds into the input video. If not specified the overlay starts from the beginning of the input video. </param>

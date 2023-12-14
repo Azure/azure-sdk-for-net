@@ -10,12 +10,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> A filter set on UX. </summary>
     internal partial class FilterInfo
     {
-        /// <summary> Initializes a new instance of FilterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterInfo"/>. </summary>
         internal FilterInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of FilterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterInfo"/>. </summary>
         /// <param name="fieldName"> dimension name of the filter. </param>
         /// <param name="predicate"> Operator of the filter. </param>
         /// <param name="comparand"></param>

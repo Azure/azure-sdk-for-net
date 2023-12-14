@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Diagnostics for an App Service Environment. </summary>
     public partial class HostingEnvironmentDiagnostics
     {
-        /// <summary> Initializes a new instance of HostingEnvironmentDiagnostics. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostingEnvironmentDiagnostics"/>. </summary>
         internal HostingEnvironmentDiagnostics()
         {
         }
 
-        /// <summary> Initializes a new instance of HostingEnvironmentDiagnostics. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostingEnvironmentDiagnostics"/>. </summary>
         /// <param name="name"> Name/identifier of the diagnostics. </param>
         /// <param name="diagnosticsOutput"> Diagnostics output. </param>
         internal HostingEnvironmentDiagnostics(string name, string diagnosticsOutput)

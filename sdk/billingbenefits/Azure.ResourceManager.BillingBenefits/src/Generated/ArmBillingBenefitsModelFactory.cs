@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmBillingBenefitsModelFactory
     {
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanOrderAliasData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new BillingBenefitsSavingsPlanOrderAliasData(id, name, resourceType, systemData, skuName != null ? new BillingBenefitsSku(skuName) : null, kind, displayName, savingsPlanOrderId, provisioningState, billingScopeId, term, billingPlan, appliedScopeType, appliedScopeProperties, commitment);
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanOrderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefits.BillingBenefitsSavingsPlanOrderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new BillingBenefitsSavingsPlanOrderData(id, name, resourceType, systemData, skuName != null ? new BillingBenefitsSku(skuName) : null, displayName, provisioningState, billingScopeId, billingProfileId, customerId, billingAccountId, term, billingPlan, expireOn, benefitStartOn, planInformation, savingsPlans?.ToList(), extendedStatusInfo);
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanOrderPaymentDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SavingsPlanOrderPaymentDetail"/>. </summary>
         /// <param name="dueOn"> Date when the payment needs to be done. </param>
         /// <param name="payOn"> Date when the transaction is completed. Is null when it is scheduled. </param>
         /// <param name="pricingCurrencyTotal"> Amount in pricing currency. Tax not included. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new SavingsPlanOrderPaymentDetail(dueOn, payOn, pricingCurrencyTotal, billingCurrencyTotal, status, extendedStatusInfo, billingAccount);
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsExtendedStatusInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingBenefitsExtendedStatusInfo"/>. </summary>
         /// <param name="statusCode"> Status code providing additional information. </param>
         /// <param name="message"> The message giving detailed information about the status code. </param>
         /// <returns> A new <see cref="Models.BillingBenefitsExtendedStatusInfo"/> instance for mocking. </returns>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new BillingBenefitsExtendedStatusInfo(statusCode, message);
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsRoleAssignmentEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingBenefitsRoleAssignmentEntity"/>. </summary>
         /// <param name="id"> Role assignment entity id. </param>
         /// <param name="name"> Role assignment entity name. </param>
         /// <param name="principalId"> Principal Id. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new BillingBenefitsRoleAssignmentEntity(id, name, principalId, roleDefinitionId, scope);
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefits.BillingBenefitsSavingsPlanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new BillingBenefitsSavingsPlanData(id, name, resourceType, systemData, skuName != null ? new BillingBenefitsSku(skuName) : null, displayName, provisioningState, displayProvisioningState, billingScopeId, billingProfileId, customerId, billingAccountId, term, billingPlan, appliedScopeType, userFriendlyAppliedScopeType, appliedScopeProperties, commitment, effectOn, expireOn, purchaseOn, benefitStartOn, extendedStatusInfo, isRenewed, utilization, renewSource, renewDestination, renewPurchaseProperties != null ? new RenewProperties(renewPurchaseProperties) : null);
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanUtilization. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingBenefitsSavingsPlanUtilization"/>. </summary>
         /// <param name="trend"> The number of days trend for a savings plan. </param>
         /// <param name="aggregates"> The array of aggregates of a savings plan's utilization. </param>
         /// <returns> A new <see cref="Models.BillingBenefitsSavingsPlanUtilization"/> instance for mocking. </returns>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new BillingBenefitsSavingsPlanUtilization(trend, aggregates?.ToList());
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanUtilizationAggregate. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingBenefitsSavingsPlanUtilizationAggregate"/>. </summary>
         /// <param name="grain"> The grain of the aggregate. </param>
         /// <param name="grainUnit"> The grain unit of the aggregate. </param>
         /// <param name="value"> The aggregate value. </param>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new BillingBenefitsSavingsPlanUtilizationAggregate(grain, grainUnit, value, valueUnit);
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsPurchaseContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingBenefitsPurchaseContent"/>. </summary>
         /// <param name="skuName"> The SKU to be applied for this resource. </param>
         /// <param name="displayName"> Friendly name of the savings plan. </param>
         /// <param name="billingScopeId"> Subscription that will be charged for purchasing the benefit. </param>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new BillingBenefitsPurchaseContent(skuName != null ? new BillingBenefitsSku(skuName) : null, displayName, billingScopeId, term, billingPlan, appliedScopeType, commitment, effectOn, isRenewed, appliedScopeProperties);
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SavingsPlanValidateResult"/>. </summary>
         /// <param name="isValid"> Indicates if the provided input was valid. </param>
         /// <param name="reasonCode"> Failure reason code if the provided input was invalid. </param>
         /// <param name="reason"> Failure reason if the provided input was invalid. </param>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new SavingsPlanValidateResult(isValid, reasonCode, reason);
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsReservationOrderAliasCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BillingBenefitsReservationOrderAliasCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new BillingBenefitsReservationOrderAliasCreateOrUpdateContent(id, name, resourceType, systemData, skuName != null ? new BillingBenefitsSku(skuName) : null, location, displayName, billingScopeId, term, billingPlan, appliedScopeType, appliedScopeProperties, quantity, isRenewed, reservedResourceType, reviewOn, reservedResourceInstanceFlexibility != null ? new ReservationOrderAliasRequestPropertiesReservedResourceProperties(reservedResourceInstanceFlexibility) : null);
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsReservationOrderAliasData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefits.BillingBenefitsReservationOrderAliasData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

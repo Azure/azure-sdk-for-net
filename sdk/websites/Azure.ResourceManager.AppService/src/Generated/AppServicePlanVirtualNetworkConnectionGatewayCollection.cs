@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource" /> and their operations.
-    /// Each <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource" /> in the collection will belong to the same instance of <see cref="AppServicePlanVirtualNetworkConnectionResource" />.
-    /// To get an <see cref="AppServicePlanVirtualNetworkConnectionGatewayCollection" /> instance call the GetAppServicePlanVirtualNetworkConnectionGateways method from an instance of <see cref="AppServicePlanVirtualNetworkConnectionResource" />.
+    /// A class representing a collection of <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource"/> and their operations.
+    /// Each <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource"/> in the collection will belong to the same instance of <see cref="AppServicePlanVirtualNetworkConnectionResource"/>.
+    /// To get an <see cref="AppServicePlanVirtualNetworkConnectionGatewayCollection"/> instance call the GetAppServicePlanVirtualNetworkConnectionGateways method from an instance of <see cref="AppServicePlanVirtualNetworkConnectionResource"/>.
     /// </summary>
     public partial class AppServicePlanVirtualNetworkConnectionGatewayCollection : ArmCollection
     {

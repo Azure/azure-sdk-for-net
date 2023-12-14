@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-01";
+            _apiVersion = apiVersion ?? "2023-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Lists all IoT Connectors for the given workspace. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Lists all IoT Connectors for the given workspace. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Gets the properties of the specified IoT Connector. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Gets the properties of the specified IoT Connector. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Creates or updates an IoT Connector resource with the specified parameters. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Creates or updates an IoT Connector resource with the specified parameters. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Patch an IoT Connector. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Patch an IoT Connector. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Deletes an IoT Connector. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Deletes an IoT Connector. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="iotConnectorName"> The name of IoT Connector resource. </param>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary> Lists all IoT Connectors for the given workspace. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary> Lists all IoT Connectors for the given workspace. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

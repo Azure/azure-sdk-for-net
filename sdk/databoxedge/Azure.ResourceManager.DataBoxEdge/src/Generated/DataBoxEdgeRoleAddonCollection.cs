@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataBoxEdgeRoleAddonResource" /> and their operations.
-    /// Each <see cref="DataBoxEdgeRoleAddonResource" /> in the collection will belong to the same instance of <see cref="DataBoxEdgeRoleResource" />.
-    /// To get a <see cref="DataBoxEdgeRoleAddonCollection" /> instance call the GetDataBoxEdgeRoleAddons method from an instance of <see cref="DataBoxEdgeRoleResource" />.
+    /// A class representing a collection of <see cref="DataBoxEdgeRoleAddonResource"/> and their operations.
+    /// Each <see cref="DataBoxEdgeRoleAddonResource"/> in the collection will belong to the same instance of <see cref="DataBoxEdgeRoleResource"/>.
+    /// To get a <see cref="DataBoxEdgeRoleAddonCollection"/> instance call the GetDataBoxEdgeRoleAddons method from an instance of <see cref="DataBoxEdgeRoleResource"/>.
     /// </summary>
     public partial class DataBoxEdgeRoleAddonCollection : ArmCollection, IEnumerable<DataBoxEdgeRoleAddonResource>, IAsyncEnumerable<DataBoxEdgeRoleAddonResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataBoxEdgeRoleAddonResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataBoxEdgeRoleAddonResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeRoleAddonResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeRoleAddonAddonsRestClient.CreateListByRoleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataBoxEdgeRoleAddonResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataBoxEdgeRoleAddonResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeRoleAddonResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeRoleAddonAddonsRestClient.CreateListByRoleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

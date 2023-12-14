@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EventHubsApplicationGroupResource" /> and their operations.
-    /// Each <see cref="EventHubsApplicationGroupResource" /> in the collection will belong to the same instance of <see cref="EventHubsNamespaceResource" />.
-    /// To get an <see cref="EventHubsApplicationGroupCollection" /> instance call the GetEventHubsApplicationGroups method from an instance of <see cref="EventHubsNamespaceResource" />.
+    /// A class representing a collection of <see cref="EventHubsApplicationGroupResource"/> and their operations.
+    /// Each <see cref="EventHubsApplicationGroupResource"/> in the collection will belong to the same instance of <see cref="EventHubsNamespaceResource"/>.
+    /// To get an <see cref="EventHubsApplicationGroupCollection"/> instance call the GetEventHubsApplicationGroups method from an instance of <see cref="EventHubsNamespaceResource"/>.
     /// </summary>
     public partial class EventHubsApplicationGroupCollection : ArmCollection, IEnumerable<EventHubsApplicationGroupResource>, IAsyncEnumerable<EventHubsApplicationGroupResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventHubsApplicationGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EventHubsApplicationGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventHubsApplicationGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsApplicationGroupApplicationGroupRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventHubsApplicationGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EventHubsApplicationGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventHubsApplicationGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsApplicationGroupApplicationGroupRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

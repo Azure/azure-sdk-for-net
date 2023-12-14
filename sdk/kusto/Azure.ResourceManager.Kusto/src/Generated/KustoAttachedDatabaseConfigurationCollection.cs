@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
-    /// A class representing a collection of <see cref="KustoAttachedDatabaseConfigurationResource" /> and their operations.
-    /// Each <see cref="KustoAttachedDatabaseConfigurationResource" /> in the collection will belong to the same instance of <see cref="KustoClusterResource" />.
-    /// To get a <see cref="KustoAttachedDatabaseConfigurationCollection" /> instance call the GetKustoAttachedDatabaseConfigurations method from an instance of <see cref="KustoClusterResource" />.
+    /// A class representing a collection of <see cref="KustoAttachedDatabaseConfigurationResource"/> and their operations.
+    /// Each <see cref="KustoAttachedDatabaseConfigurationResource"/> in the collection will belong to the same instance of <see cref="KustoClusterResource"/>.
+    /// To get a <see cref="KustoAttachedDatabaseConfigurationCollection"/> instance call the GetKustoAttachedDatabaseConfigurations method from an instance of <see cref="KustoClusterResource"/>.
     /// </summary>
     public partial class KustoAttachedDatabaseConfigurationCollection : ArmCollection, IEnumerable<KustoAttachedDatabaseConfigurationResource>, IAsyncEnumerable<KustoAttachedDatabaseConfigurationResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Kusto
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoAttachedDatabaseConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KustoAttachedDatabaseConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoAttachedDatabaseConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Kusto
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoAttachedDatabaseConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoAttachedDatabaseConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoAttachedDatabaseConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

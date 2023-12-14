@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> The settings of Application Configuration Service. </summary>
     public partial class AppPlatformConfigurationServiceSettings
     {
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceSettings"/>. </summary>
         public AppPlatformConfigurationServiceSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceSettings"/>. </summary>
         /// <param name="gitProperty"> Property of git environment. </param>
         internal AppPlatformConfigurationServiceSettings(ConfigurationServiceGitProperty gitProperty)
         {

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> API route config of the Spring Cloud Gateway. </summary>
     public partial class AppPlatformGatewayRouteConfigProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformGatewayRouteConfigProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayRouteConfigProperties"/>. </summary>
         public AppPlatformGatewayRouteConfigProperties()
         {
             Routes = new ChangeTrackingList<AppPlatformGatewayApiRoute>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayRouteConfigProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayRouteConfigProperties"/>. </summary>
         /// <param name="provisioningState"> State of the Spring Cloud Gateway route config. </param>
         /// <param name="appResourceId"> The resource Id of the Azure Spring Apps app, required unless route defines `uri`. </param>
         /// <param name="openApi"> OpenAPI properties of Spring Cloud Gateway route config. </param>

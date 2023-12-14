@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
     /// A Class representing an OperationalInsightsLinkedService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OperationalInsightsLinkedServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetOperationalInsightsLinkedServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceResource" /> using the GetOperationalInsightsLinkedService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OperationalInsightsLinkedServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetOperationalInsightsLinkedServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceResource"/> using the GetOperationalInsightsLinkedService method.
     /// </summary>
     public partial class OperationalInsightsLinkedServiceResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.OperationalInsights
         private readonly LinkedServicesRestOperations _operationalInsightsLinkedServiceLinkedServicesRestClient;
         private readonly OperationalInsightsLinkedServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/linkedServices";
+
         /// <summary> Initializes a new instance of the <see cref="OperationalInsightsLinkedServiceResource"/> class for mocking. </summary>
         protected OperationalInsightsLinkedServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OperationalInsightsLinkedServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OperationalInsightsLinkedServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal OperationalInsightsLinkedServiceResource(ArmClient client, OperationalInsightsLinkedServiceData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.OperationalInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/linkedServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

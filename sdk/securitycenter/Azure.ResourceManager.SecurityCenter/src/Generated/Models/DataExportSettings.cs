@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Represents a data export setting. </summary>
     public partial class DataExportSettings : SecuritySettingData
     {
-        /// <summary> Initializes a new instance of DataExportSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataExportSettings"/>. </summary>
         public DataExportSettings()
         {
             Kind = SettingKind.DataExportSettings;
         }
 
-        /// <summary> Initializes a new instance of DataExportSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataExportSettings"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

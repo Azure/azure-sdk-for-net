@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AgFoodPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ExtensionResource" /> and their operations.
-    /// Each <see cref="ExtensionResource" /> in the collection will belong to the same instance of <see cref="FarmBeatResource" />.
-    /// To get an <see cref="ExtensionCollection" /> instance call the GetExtensions method from an instance of <see cref="FarmBeatResource" />.
+    /// A class representing a collection of <see cref="ExtensionResource"/> and their operations.
+    /// Each <see cref="ExtensionResource"/> in the collection will belong to the same instance of <see cref="FarmBeatResource"/>.
+    /// To get an <see cref="ExtensionCollection"/> instance call the GetExtensions method from an instance of <see cref="FarmBeatResource"/>.
     /// </summary>
     public partial class ExtensionCollection : ArmCollection, IEnumerable<ExtensionResource>, IAsyncEnumerable<ExtensionResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExtensionResource> GetAllAsync(IEnumerable<string> extensionIds = null, IEnumerable<string> extensionCategories = null, int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _extensionRestClient.CreateListByFarmBeatsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken);
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExtensionResource> GetAll(IEnumerable<string> extensionIds = null, IEnumerable<string> extensionCategories = null, int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _extensionRestClient.CreateListByFarmBeatsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken);

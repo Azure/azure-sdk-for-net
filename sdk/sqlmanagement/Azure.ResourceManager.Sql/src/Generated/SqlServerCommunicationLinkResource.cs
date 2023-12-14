@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlServerCommunicationLink along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlServerCommunicationLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlServerCommunicationLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetSqlServerCommunicationLink method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerCommunicationLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlServerCommunicationLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetSqlServerCommunicationLink method.
     /// </summary>
     public partial class SqlServerCommunicationLinkResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Sql
         private readonly ServerCommunicationLinksRestOperations _sqlServerCommunicationLinkServerCommunicationLinksRestClient;
         private readonly SqlServerCommunicationLinkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/communicationLinks";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerCommunicationLinkResource"/> class for mocking. </summary>
         protected SqlServerCommunicationLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlServerCommunicationLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlServerCommunicationLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlServerCommunicationLinkResource(ArmClient client, SqlServerCommunicationLinkData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/communicationLinks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

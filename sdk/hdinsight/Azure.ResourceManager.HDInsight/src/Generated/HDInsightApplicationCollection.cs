@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HDInsight
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HDInsightApplicationResource" /> and their operations.
-    /// Each <see cref="HDInsightApplicationResource" /> in the collection will belong to the same instance of <see cref="HDInsightClusterResource" />.
-    /// To get a <see cref="HDInsightApplicationCollection" /> instance call the GetHDInsightApplications method from an instance of <see cref="HDInsightClusterResource" />.
+    /// A class representing a collection of <see cref="HDInsightApplicationResource"/> and their operations.
+    /// Each <see cref="HDInsightApplicationResource"/> in the collection will belong to the same instance of <see cref="HDInsightClusterResource"/>.
+    /// To get a <see cref="HDInsightApplicationCollection"/> instance call the GetHDInsightApplications method from an instance of <see cref="HDInsightClusterResource"/>.
     /// </summary>
     public partial class HDInsightApplicationCollection : ArmCollection, IEnumerable<HDInsightApplicationResource>, IAsyncEnumerable<HDInsightApplicationResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HDInsightApplicationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HDInsightApplicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HDInsightApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightApplicationApplicationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HDInsightApplicationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HDInsightApplicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HDInsightApplicationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightApplicationApplicationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

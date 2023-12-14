@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Describes the network information on this machine. </summary>
     public partial class NetworkProfile
     {
-        /// <summary> Initializes a new instance of NetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfile"/>. </summary>
         internal NetworkProfile()
         {
             NetworkInterfaces = new ChangeTrackingList<NetworkInterface>();
         }
 
-        /// <summary> Initializes a new instance of NetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfile"/>. </summary>
         /// <param name="networkInterfaces"> The list of network interfaces. </param>
         internal NetworkProfile(IReadOnlyList<NetworkInterface> networkInterfaces)
         {

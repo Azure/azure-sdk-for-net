@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
     /// A Class representing a HealthcareApisServicePrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HealthcareApisServicePrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHealthcareApisServicePrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HealthcareApisServiceResource" /> using the GetHealthcareApisServicePrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHealthcareApisServicePrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HealthcareApisServiceResource"/> using the GetHealthcareApisServicePrivateEndpointConnection method.
     /// </summary>
     public partial class HealthcareApisServicePrivateEndpointConnectionResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.HealthcareApis
         private readonly PrivateEndpointConnectionsRestOperations _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly HealthcareApisPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/services/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected HealthcareApisServicePrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HealthcareApisServicePrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HealthcareApisServicePrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HealthcareApisServicePrivateEndpointConnectionResource(ArmClient client, HealthcareApisPrivateEndpointConnectionData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.HealthcareApis
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/services/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

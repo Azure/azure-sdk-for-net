@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A data connection check name availability request. </summary>
     public partial class KustoDataConnectionNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KustoDataConnectionNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoDataConnectionNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Data Connection name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoDataConnectionNameAvailabilityContent(string name)
@@ -22,6 +22,15 @@ namespace Azure.ResourceManager.Kusto.Models
 
             Name = name;
             ResourceType = KustoDataConnectionType.MicrosoftKustoClustersDatabasesDataConnections;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoDataConnectionNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Data Connection name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters/databases/dataConnections. </param>
+        internal KustoDataConnectionNameAvailabilityContent(string name, KustoDataConnectionType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> Data Connection name. </summary>

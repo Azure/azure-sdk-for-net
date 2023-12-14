@@ -10,9 +10,26 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the update source control operation. </summary>
     public partial class AutomationSourceControlPatch
     {
-        /// <summary> Initializes a new instance of AutomationSourceControlPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationSourceControlPatch"/>. </summary>
         public AutomationSourceControlPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationSourceControlPatch"/>. </summary>
+        /// <param name="branch"> The repo branch of the source control. </param>
+        /// <param name="folderPath"> The folder path of the source control. Path must be relative. </param>
+        /// <param name="isAutoSyncEnabled"> The auto sync of the source control. Default is false. </param>
+        /// <param name="isAutoPublishRunbookEnabled"> The auto publish of the source control. Default is true. </param>
+        /// <param name="securityToken"> The authorization token for the repo of the source control. </param>
+        /// <param name="description"> The user description of the source control. </param>
+        internal AutomationSourceControlPatch(string branch, string folderPath, bool? isAutoSyncEnabled, bool? isAutoPublishRunbookEnabled, SourceControlSecurityTokenProperties securityToken, string description)
+        {
+            Branch = branch;
+            FolderPath = folderPath;
+            IsAutoSyncEnabled = isAutoSyncEnabled;
+            IsAutoPublishRunbookEnabled = isAutoPublishRunbookEnabled;
+            SecurityToken = securityToken;
+            Description = description;
         }
 
         /// <summary> The repo branch of the source control. </summary>

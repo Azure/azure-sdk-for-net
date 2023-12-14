@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public abstract partial class EventSubscriptionDestination
     {
-        /// <summary> Initializes a new instance of EventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventSubscriptionDestination"/>. </summary>
         protected EventSubscriptionDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of EventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
         internal EventSubscriptionDestination(EndpointType endpointType)
         {

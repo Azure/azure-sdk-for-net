@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> List of stop sell offers and plans notifications. </summary>
     public partial class StopSellOffersPlansNotificationsList
     {
-        /// <summary> Initializes a new instance of StopSellOffersPlansNotificationsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StopSellOffersPlansNotificationsList"/>. </summary>
         internal StopSellOffersPlansNotificationsList()
         {
             StopSellNotifications = new ChangeTrackingList<StopSellOffersPlansNotificationsResult>();
         }
 
-        /// <summary> Initializes a new instance of StopSellOffersPlansNotificationsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StopSellOffersPlansNotificationsList"/>. </summary>
         /// <param name="stopSellNotifications"></param>
         internal StopSellOffersPlansNotificationsList(IReadOnlyList<StopSellOffersPlansNotificationsResult> stopSellNotifications)
         {

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     /// </summary>
     public partial class MySqlFlexibleServerAadAdministratorData : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerAadAdministratorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerAadAdministratorData"/>. </summary>
         public MySqlFlexibleServerAadAdministratorData()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerAadAdministratorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerAadAdministratorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

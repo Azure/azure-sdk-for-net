@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementCacheData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementCacheData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementCacheData"/>. </summary>
         public ApiManagementCacheData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementCacheData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementCacheData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

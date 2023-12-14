@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListPeering API service call retrieves all peerings that belong to an ExpressRouteCircuit. </summary>
     internal partial class ExpressRouteCircuitPeeringListResult
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitPeeringListResult"/>. </summary>
         internal ExpressRouteCircuitPeeringListResult()
         {
             Value = new ChangeTrackingList<ExpressRouteCircuitPeeringData>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitPeeringListResult"/>. </summary>
         /// <param name="value"> The peerings in an express route circuit. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal ExpressRouteCircuitPeeringListResult(IReadOnlyList<ExpressRouteCircuitPeeringData> value, string nextLink)

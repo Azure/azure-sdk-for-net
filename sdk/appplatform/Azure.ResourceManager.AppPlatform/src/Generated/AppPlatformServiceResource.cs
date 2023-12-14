@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAppPlatformService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAppPlatformService method.
     /// </summary>
     public partial class AppPlatformServiceResource : ArmResource
     {
@@ -46,12 +46,15 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly DeploymentsRestOperations _appPlatformDeploymentDeploymentsRestClient;
         private readonly AppPlatformServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformServiceResource"/> class for mocking. </summary>
         protected AppPlatformServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformServiceResource(ArmClient client, AppPlatformServiceData data) : this(client, data.Id)
@@ -79,9 +82,6 @@ namespace Azure.ResourceManager.AppPlatform
 #endif
         }
 
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring";
-
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppPlatform
         }
 
         /// <summary> Gets an object representing a AppPlatformConfigServerResource along with the instance operations that can be performed on it in the AppPlatformService. </summary>
-        /// <returns> Returns a <see cref="AppPlatformConfigServerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AppPlatformConfigServerResource"/> object. </returns>
         public virtual AppPlatformConfigServerResource GetAppPlatformConfigServer()
         {
             return new AppPlatformConfigServerResource(Client, Id.AppendChildResource("configServers", "default"));
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.AppPlatform
         }
 
         /// <summary> Gets an object representing a AppPlatformMonitoringSettingResource along with the instance operations that can be performed on it in the AppPlatformService. </summary>
-        /// <returns> Returns a <see cref="AppPlatformMonitoringSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AppPlatformMonitoringSettingResource"/> object. </returns>
         public virtual AppPlatformMonitoringSettingResource GetAppPlatformMonitoringSetting()
         {
             return new AppPlatformMonitoringSettingResource(Client, Id.AppendChildResource("monitoringSettings", "default"));
@@ -1226,7 +1226,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="version"> Version of the deployments to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppPlatformDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppPlatformDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformDeploymentResource> GetDeploymentsAsync(IEnumerable<string> version = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformDeploymentDeploymentsRestClient.CreateListForClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version);
@@ -1249,7 +1249,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="version"> Version of the deployments to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppPlatformDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppPlatformDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformDeploymentResource> GetDeployments(IEnumerable<string> version = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformDeploymentDeploymentsRestClient.CreateListForClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version);

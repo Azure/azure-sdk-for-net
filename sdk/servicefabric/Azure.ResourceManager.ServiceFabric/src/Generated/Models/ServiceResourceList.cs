@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> The list of service resources. </summary>
     internal partial class ServiceResourceList
     {
-        /// <summary> Initializes a new instance of ServiceResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceResourceList"/>. </summary>
         internal ServiceResourceList()
         {
             Value = new ChangeTrackingList<ServiceFabricServiceData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceResourceList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of service list results if there are any. </param>
         internal ServiceResourceList(IReadOnlyList<ServiceFabricServiceData> value, string nextLink)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The native cloud connection configuration. </summary>
     public partial class DefenderForContainersGcpOfferingNativeCloudConnection
     {
-        /// <summary> Initializes a new instance of DefenderForContainersGcpOfferingNativeCloudConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersGcpOfferingNativeCloudConnection"/>. </summary>
         public DefenderForContainersGcpOfferingNativeCloudConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForContainersGcpOfferingNativeCloudConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersGcpOfferingNativeCloudConnection"/>. </summary>
         /// <param name="serviceAccountEmailAddress"> The service account email address in GCP for this offering. </param>
         /// <param name="workloadIdentityProviderId"> The GCP workload identity provider id for this offering. </param>
         internal DefenderForContainersGcpOfferingNativeCloudConnection(string serviceAccountEmailAddress, string workloadIdentityProviderId)

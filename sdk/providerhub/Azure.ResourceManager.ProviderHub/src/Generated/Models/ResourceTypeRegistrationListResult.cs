@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceTypeRegistrationListResult. </summary>
     internal partial class ResourceTypeRegistrationListResult
     {
-        /// <summary> Initializes a new instance of ResourceTypeRegistrationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeRegistrationListResult"/>. </summary>
         internal ResourceTypeRegistrationListResult()
         {
             Value = new ChangeTrackingList<ResourceTypeRegistrationData>();
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeRegistrationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeRegistrationListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URL to get to the next set of results, if there are any. </param>
         internal ResourceTypeRegistrationListResult(IReadOnlyList<ResourceTypeRegistrationData> value, string nextLink)

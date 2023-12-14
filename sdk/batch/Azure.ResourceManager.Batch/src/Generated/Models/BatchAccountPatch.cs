@@ -14,11 +14,30 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Parameters for updating an Azure Batch account. </summary>
     public partial class BatchAccountPatch
     {
-        /// <summary> Initializes a new instance of BatchAccountPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountPatch"/>. </summary>
         public BatchAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             AllowedAuthenticationModes = new ChangeTrackingList<BatchAuthenticationMode>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchAccountPatch"/>. </summary>
+        /// <param name="tags"> The user-specified tags associated with the account. </param>
+        /// <param name="identity"> The identity of the Batch account. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="autoStorage"> The properties related to the auto-storage account. </param>
+        /// <param name="encryption"> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </param>
+        /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
+        /// <param name="publicNetworkAccess"> If not specified, the default value is 'enabled'. </param>
+        /// <param name="networkProfile"> The network profile only takes effect when publicNetworkAccess is enabled. </param>
+        internal BatchAccountPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, BatchAccountAutoStorageBaseConfiguration autoStorage, BatchAccountEncryptionConfiguration encryption, IList<BatchAuthenticationMode> allowedAuthenticationModes, BatchPublicNetworkAccess? publicNetworkAccess, BatchNetworkProfile networkProfile)
+        {
+            Tags = tags;
+            Identity = identity;
+            AutoStorage = autoStorage;
+            Encryption = encryption;
+            AllowedAuthenticationModes = allowedAuthenticationModes;
+            PublicNetworkAccess = publicNetworkAccess;
+            NetworkProfile = networkProfile;
         }
 
         /// <summary> The user-specified tags associated with the account. </summary>

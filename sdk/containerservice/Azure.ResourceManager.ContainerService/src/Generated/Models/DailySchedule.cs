@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> For schedules like: 'recur every day' or 'recur every 3 days'. </summary>
     internal partial class DailySchedule
     {
-        /// <summary> Initializes a new instance of DailySchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DailySchedule"/>. </summary>
         /// <param name="intervalDays"> Specifies the number of days between each set of occurrences. </param>
         public DailySchedule(int intervalDays)
         {

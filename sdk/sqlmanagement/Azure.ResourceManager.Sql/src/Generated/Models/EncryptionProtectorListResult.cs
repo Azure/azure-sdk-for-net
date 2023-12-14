@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of server encryption protectors. </summary>
     internal partial class EncryptionProtectorListResult
     {
-        /// <summary> Initializes a new instance of EncryptionProtectorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionProtectorListResult"/>. </summary>
         internal EncryptionProtectorListResult()
         {
             Value = new ChangeTrackingList<EncryptionProtectorData>();
         }
 
-        /// <summary> Initializes a new instance of EncryptionProtectorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionProtectorListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal EncryptionProtectorListResult(IReadOnlyList<EncryptionProtectorData> value, string nextLink)

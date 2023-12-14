@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeOrderData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeOrderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeOrderData"/>. </summary>
         public DataBoxEdgeOrderData()
         {
             OrderHistory = new ChangeTrackingList<DataBoxEdgeOrderStatus>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             ReturnTrackingInfo = new ChangeTrackingList<DataBoxEdgeTrackingInfo>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeOrderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeOrderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     /// <summary> Sensor integration request model. </summary>
     public partial class SensorIntegration
     {
-        /// <summary> Initializes a new instance of SensorIntegration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SensorIntegration"/>. </summary>
         public SensorIntegration()
         {
         }
 
-        /// <summary> Initializes a new instance of SensorIntegration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SensorIntegration"/>. </summary>
         /// <param name="enabled"> Sensor integration enable state. Allowed values are True, None. </param>
         /// <param name="provisioningState"> Sensor integration instance provisioning state. </param>
         /// <param name="provisioningInfo"> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </param>

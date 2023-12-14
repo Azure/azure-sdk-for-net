@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The instance view of a disk restore point. </summary>
     public partial class DiskRestorePointReplicationStatus
     {
-        /// <summary> Initializes a new instance of DiskRestorePointReplicationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskRestorePointReplicationStatus"/>. </summary>
         internal DiskRestorePointReplicationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of DiskRestorePointReplicationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskRestorePointReplicationStatus"/>. </summary>
         /// <param name="status"> The resource status information. </param>
         /// <param name="completionPercent"> Replication completion percentage. </param>
         internal DiskRestorePointReplicationStatus(InstanceViewStatus status, int? completionPercent)

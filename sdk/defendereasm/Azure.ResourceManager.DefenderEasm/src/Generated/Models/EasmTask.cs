@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DefenderEasm.Models
     /// <summary> Task details. </summary>
     public partial class EasmTask : ResourceData
     {
-        /// <summary> Initializes a new instance of EasmTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="EasmTask"/>. </summary>
         public EasmTask()
         {
         }
 
-        /// <summary> Initializes a new instance of EasmTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="EasmTask"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

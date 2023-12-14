@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> Definition of the properties for a TagRules resource. </summary>
     public partial class MonitoringTagRulesProperties
     {
-        /// <summary> Initializes a new instance of MonitoringTagRulesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesProperties"/>. </summary>
         public MonitoringTagRulesProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitoringTagRulesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
         /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>

@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> The properties of a service instance. </summary>
     public partial class HealthcareApisServiceProperties
     {
-        /// <summary> Initializes a new instance of HealthcareApisServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceProperties"/>. </summary>
         public HealthcareApisServiceProperties()
         {
             AccessPolicies = new ChangeTrackingList<HealthcareApisServiceAccessPolicyEntry>();
             PrivateEndpointConnections = new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="accessPolicies"> The access policies of the service instance. </param>
         /// <param name="cosmosDbConfiguration"> The settings for the Cosmos DB database backing the service. </param>

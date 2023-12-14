@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> A domain name that a service is reached at, including details of the current connection status. </summary>
     public partial class AppServiceEndpointDependency
     {
-        /// <summary> Initializes a new instance of AppServiceEndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceEndpointDependency"/>. </summary>
         internal AppServiceEndpointDependency()
         {
             EndpointDetails = new ChangeTrackingList<AppServiceEndpointDetail>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceEndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceEndpointDependency"/>. </summary>
         /// <param name="domainName"> The domain name of the dependency. </param>
         /// <param name="endpointDetails"> The IP Addresses and Ports used when connecting to DomainName. </param>
         internal AppServiceEndpointDependency(string domainName, IReadOnlyList<AppServiceEndpointDetail> endpointDetails)

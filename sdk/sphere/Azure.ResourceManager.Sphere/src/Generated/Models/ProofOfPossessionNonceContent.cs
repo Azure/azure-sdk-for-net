@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class ProofOfPossessionNonceContent
     {
-        /// <summary> Initializes a new instance of ProofOfPossessionNonceContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProofOfPossessionNonceContent"/>. </summary>
         /// <param name="proofOfPossessionNonce">
         /// The proof of possession nonce
         /// Serialized Name: ProofOfPossessionNonceRequest.proofOfPossessionNonce

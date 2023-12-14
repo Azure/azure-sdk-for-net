@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt NIC details. </summary>
     public partial class VMwareCbtNicDetails
     {
-        /// <summary> Initializes a new instance of VMwareCbtNicDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtNicDetails"/>. </summary>
         internal VMwareCbtNicDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of VMwareCbtNicDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtNicDetails"/>. </summary>
         /// <param name="nicId"> The NIC Id. </param>
         /// <param name="isPrimaryNic"> A value indicating whether this is the primary NIC. </param>
         /// <param name="sourceIPAddress"> The source IP address. </param>

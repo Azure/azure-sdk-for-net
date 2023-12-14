@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Workbook list result. </summary>
     internal partial class WorkbooksListResult
     {
-        /// <summary> Initializes a new instance of WorkbooksListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkbooksListResult"/>. </summary>
         internal WorkbooksListResult()
         {
             Value = new ChangeTrackingList<WorkbookData>();
         }
 
-        /// <summary> Initializes a new instance of WorkbooksListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkbooksListResult"/>. </summary>
         /// <param name="value"> An array of workbooks. </param>
         /// <param name="nextLink"></param>
         internal WorkbooksListResult(IReadOnlyList<WorkbookData> value, string nextLink)

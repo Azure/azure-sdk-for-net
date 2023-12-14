@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class DscCompilationJobData : ResourceData
     {
-        /// <summary> Initializes a new instance of DscCompilationJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscCompilationJobData"/>. </summary>
         public DscCompilationJobData()
         {
             Parameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DscCompilationJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscCompilationJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

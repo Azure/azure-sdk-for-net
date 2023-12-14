@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> List of AssignmentOperation. </summary>
     internal partial class AssignmentOperationList
     {
-        /// <summary> Initializes a new instance of AssignmentOperationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentOperationList"/>. </summary>
         internal AssignmentOperationList()
         {
             Value = new ChangeTrackingList<AssignmentOperationData>();
         }
 
-        /// <summary> Initializes a new instance of AssignmentOperationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentOperationList"/>. </summary>
         /// <param name="value"> List of AssignmentOperation. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         internal AssignmentOperationList(IReadOnlyList<AssignmentOperationData> value, string nextLink)

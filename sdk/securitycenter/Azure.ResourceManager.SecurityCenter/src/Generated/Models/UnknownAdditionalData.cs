@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The UnknownAdditionalData. </summary>
     internal partial class UnknownAdditionalData : SecuritySubAssessmentAdditionalInfo
     {
-        /// <summary> Initializes a new instance of UnknownAdditionalData. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAdditionalData"/>. </summary>
         /// <param name="assessedResourceType"> Sub-assessment resource type. </param>
         internal UnknownAdditionalData(AssessedResourceType assessedResourceType) : base(assessedResourceType)
         {

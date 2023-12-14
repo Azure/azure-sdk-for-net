@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Storage edition capability. </summary>
     public partial class PostgreSqlFlexibleServerStorageEditionCapability : PostgreSqlBaseCapability
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageEditionCapability"/>. </summary>
         internal PostgreSqlFlexibleServerStorageEditionCapability()
         {
             SupportedStorageCapabilities = new ChangeTrackingList<PostgreSqlFlexibleServerStorageCapability>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageEditionCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="name"> Storage edition name. </param>

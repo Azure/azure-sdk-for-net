@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> Information about the VM. </summary>
     public partial class GuestConfigurationVmInfo
     {
-        /// <summary> Initializes a new instance of GuestConfigurationVmInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationVmInfo"/>. </summary>
         public GuestConfigurationVmInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of GuestConfigurationVmInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationVmInfo"/>. </summary>
         /// <param name="id"> Azure resource Id of the VM. </param>
         /// <param name="uuid"> UUID(Universally Unique Identifier) of the VM. </param>
         internal GuestConfigurationVmInfo(ResourceIdentifier id, Guid? uuid)

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> A container instance. </summary>
     public partial class ContainerInstanceContainer
     {
-        /// <summary> Initializes a new instance of ContainerInstanceContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceContainer"/>. </summary>
         /// <param name="name"> The user-provided name of the container instance. </param>
         /// <param name="image"> The name of the image used to create the container instance. </param>
         /// <param name="resources"> The resource requirements of the container instance. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             VolumeMounts = new ChangeTrackingList<ContainerVolumeMount>();
         }
 
-        /// <summary> Initializes a new instance of ContainerInstanceContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceContainer"/>. </summary>
         /// <param name="name"> The user-provided name of the container instance. </param>
         /// <param name="image"> The name of the image used to create the container instance. </param>
         /// <param name="command"> The commands to execute within the container instance in exec form. </param>

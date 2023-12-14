@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
     /// A Class representing a NetworkCloudClusterMetricsConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkCloudClusterMetricsConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkCloudClusterMetricsConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkCloudClusterResource" /> using the GetNetworkCloudClusterMetricsConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudClusterMetricsConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkCloudClusterMetricsConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkCloudClusterResource"/> using the GetNetworkCloudClusterMetricsConfiguration method.
     /// </summary>
     public partial class NetworkCloudClusterMetricsConfigurationResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.NetworkCloud
         private readonly MetricsConfigurationsRestOperations _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient;
         private readonly NetworkCloudClusterMetricsConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/clusters/metricsConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkCloudClusterMetricsConfigurationResource"/> class for mocking. </summary>
         protected NetworkCloudClusterMetricsConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkCloudClusterMetricsConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudClusterMetricsConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkCloudClusterMetricsConfigurationResource(ArmClient client, NetworkCloudClusterMetricsConfigurationData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.NetworkCloud
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/clusters/metricsConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

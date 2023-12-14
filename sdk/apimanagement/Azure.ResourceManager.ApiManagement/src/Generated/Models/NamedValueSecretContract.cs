@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Client or app secret used in IdentityProviders, Aad, OpenID or OAuth. </summary>
     public partial class NamedValueSecretContract
     {
-        /// <summary> Initializes a new instance of NamedValueSecretContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamedValueSecretContract"/>. </summary>
         internal NamedValueSecretContract()
         {
         }
 
-        /// <summary> Initializes a new instance of NamedValueSecretContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamedValueSecretContract"/>. </summary>
         /// <param name="value"> This is secret value of the NamedValue entity. </param>
         internal NamedValueSecretContract(string value)
         {

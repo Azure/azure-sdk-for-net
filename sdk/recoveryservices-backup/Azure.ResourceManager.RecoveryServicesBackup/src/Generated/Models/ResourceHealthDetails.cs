@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Health Details for backup items. </summary>
     public partial class ResourceHealthDetails
     {
-        /// <summary> Initializes a new instance of ResourceHealthDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthDetails"/>. </summary>
         public ResourceHealthDetails()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthDetails"/>. </summary>
         /// <param name="code"> Health Code. </param>
         /// <param name="title"> Health Title. </param>
         /// <param name="message"> Health Message. </param>

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
     /// A Class representing a FrontDoorCustomDomain along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FrontDoorCustomDomainResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFrontDoorCustomDomainResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProfileResource" /> using the GetFrontDoorCustomDomain method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FrontDoorCustomDomainResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFrontDoorCustomDomainResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProfileResource"/> using the GetFrontDoorCustomDomain method.
     /// </summary>
     public partial class FrontDoorCustomDomainResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Cdn
         private readonly FrontDoorCustomDomainsRestOperations _frontDoorCustomDomainRestClient;
         private readonly FrontDoorCustomDomainData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/customDomains";
+
         /// <summary> Initializes a new instance of the <see cref="FrontDoorCustomDomainResource"/> class for mocking. </summary>
         protected FrontDoorCustomDomainResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FrontDoorCustomDomainResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorCustomDomainResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FrontDoorCustomDomainResource(ArmClient client, FrontDoorCustomDomainData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Cdn
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/customDomains";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

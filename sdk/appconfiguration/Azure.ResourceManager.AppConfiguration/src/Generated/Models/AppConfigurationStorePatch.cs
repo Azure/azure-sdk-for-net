@@ -14,10 +14,29 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     /// <summary> The parameters for updating a configuration store. </summary>
     public partial class AppConfigurationStorePatch
     {
-        /// <summary> Initializes a new instance of AppConfigurationStorePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationStorePatch"/>. </summary>
         public AppConfigurationStorePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationStorePatch"/>. </summary>
+        /// <param name="identity"> The managed identity information for the configuration store. </param>
+        /// <param name="sku"> The SKU of the configuration store. </param>
+        /// <param name="tags"> The ARM resource tags. </param>
+        /// <param name="encryption"> The encryption settings of the configuration store. </param>
+        /// <param name="disableLocalAuth"> Disables all authentication methods other than AAD authentication. </param>
+        /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
+        /// <param name="enablePurgeProtection"> Property specifying whether protection against purge is enabled for this configuration store. </param>
+        internal AppConfigurationStorePatch(ManagedServiceIdentity identity, AppConfigurationSku sku, IDictionary<string, string> tags, AppConfigurationStoreEncryptionProperties encryption, bool? disableLocalAuth, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? enablePurgeProtection)
+        {
+            Identity = identity;
+            Sku = sku;
+            Tags = tags;
+            Encryption = encryption;
+            DisableLocalAuth = disableLocalAuth;
+            PublicNetworkAccess = publicNetworkAccess;
+            EnablePurgeProtection = enablePurgeProtection;
         }
 
         /// <summary> The managed identity information for the configuration store. </summary>

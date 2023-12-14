@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> This class contains the minimal job details required to navigate to the desired drill down. </summary>
     public partial class SiteRecoveryJobEntity
     {
-        /// <summary> Initializes a new instance of SiteRecoveryJobEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobEntity"/>. </summary>
         internal SiteRecoveryJobEntity()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJobEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobEntity"/>. </summary>
         /// <param name="jobId"> The job id. </param>
         /// <param name="jobFriendlyName"> The job display name. </param>
         /// <param name="targetObjectId"> The object id. </param>

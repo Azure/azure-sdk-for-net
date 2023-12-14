@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The routes table associated with the ExpressRouteCircuit. </summary>
     public partial class ExpressRouteCircuitRoutesTable
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitRoutesTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitRoutesTable"/>. </summary>
         internal ExpressRouteCircuitRoutesTable()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitRoutesTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitRoutesTable"/>. </summary>
         /// <param name="network"> IP address of a network entity. </param>
         /// <param name="nextHop"> NextHop address. </param>
         /// <param name="locPrf"> Local preference value as set with the set local-preference route-map configuration command. </param>

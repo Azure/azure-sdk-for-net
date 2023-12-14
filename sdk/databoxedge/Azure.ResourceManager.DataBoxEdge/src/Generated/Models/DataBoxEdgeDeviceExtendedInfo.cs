@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The extended Info of the Data Box Edge/Gateway device. </summary>
     public partial class DataBoxEdgeDeviceExtendedInfo : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceExtendedInfo"/>. </summary>
         public DataBoxEdgeDeviceExtendedInfo()
         {
             DeviceSecrets = new ChangeTrackingDictionary<string, DataBoxEdgeDeviceSecret>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceExtendedInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for using CDN managed certificate for securing custom domain. </summary>
     public partial class CdnCertificateSource
     {
-        /// <summary> Initializes a new instance of CdnCertificateSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnCertificateSource"/>. </summary>
         /// <param name="sourceType"></param>
         /// <param name="certificateType"> Type of certificate used. </param>
         public CdnCertificateSource(CdnCertificateSourceType sourceType, CdnManagedCertificateType certificateType)

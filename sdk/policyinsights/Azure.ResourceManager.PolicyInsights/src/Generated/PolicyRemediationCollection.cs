@@ -20,9 +20,9 @@ using Azure.ResourceManager.PolicyInsights.Models;
 namespace Azure.ResourceManager.PolicyInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PolicyRemediationResource" /> and their operations.
-    /// Each <see cref="PolicyRemediationResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="PolicyRemediationCollection" /> instance call the GetPolicyRemediations method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="PolicyRemediationResource"/> and their operations.
+    /// Each <see cref="PolicyRemediationResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="PolicyRemediationCollection"/> instance call the GetPolicyRemediations method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class PolicyRemediationCollection : ArmCollection, IEnumerable<PolicyRemediationResource>, IAsyncEnumerable<PolicyRemediationResource>
     {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// </summary>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyRemediationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PolicyRemediationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyRemediationResource> GetAllAsync(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyRemediationRemediationsRestClient.CreateListForResourceRequest(Id, policyQuerySettings);
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// </summary>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyRemediationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PolicyRemediationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyRemediationResource> GetAll(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyRemediationRemediationsRestClient.CreateListForResourceRequest(Id, policyQuerySettings);

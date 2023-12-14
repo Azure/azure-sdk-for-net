@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for the ListRouteTable API service call. </summary>
     internal partial class RouteTableListResult
     {
-        /// <summary> Initializes a new instance of RouteTableListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteTableListResult"/>. </summary>
         internal RouteTableListResult()
         {
             Value = new ChangeTrackingList<RouteTableData>();
         }
 
-        /// <summary> Initializes a new instance of RouteTableListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteTableListResult"/>. </summary>
         /// <param name="value"> A list of route tables in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal RouteTableListResult(IReadOnlyList<RouteTableData> value, string nextLink)

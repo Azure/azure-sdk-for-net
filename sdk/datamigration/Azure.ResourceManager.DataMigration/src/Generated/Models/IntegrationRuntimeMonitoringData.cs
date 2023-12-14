@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Integration Runtime Monitoring Data. </summary>
     public partial class IntegrationRuntimeMonitoringData
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeMonitoringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeMonitoringData"/>. </summary>
         internal IntegrationRuntimeMonitoringData()
         {
             Nodes = new ChangeTrackingList<NodeMonitoringData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeMonitoringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeMonitoringData"/>. </summary>
         /// <param name="name"> The name of Integration Runtime. </param>
         /// <param name="nodes"> Integration Runtime node monitoring data. </param>
         internal IntegrationRuntimeMonitoringData(string name, IReadOnlyList<NodeMonitoringData> nodes)

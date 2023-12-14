@@ -229,11 +229,11 @@ namespace Azure.ResourceManager.Quota.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CurrentUsagesBaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CurrentUsagesBaseResource.CreateResourceIdentifier" /> to create a <see cref="CurrentUsagesBaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CurrentUsagesBaseResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CurrentUsagesBaseResource.CreateResourceIdentifier" /> to create a <see cref="CurrentUsagesBaseResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CurrentUsagesBaseResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CurrentUsagesBaseResource"/> object. </returns>
         public virtual CurrentUsagesBaseResource GetCurrentUsagesBaseResource(ResourceIdentifier id)
         {
             CurrentUsagesBaseResource.ValidateResourceId(id);
@@ -241,11 +241,11 @@ namespace Azure.ResourceManager.Quota.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CurrentQuotaLimitBaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CurrentQuotaLimitBaseResource.CreateResourceIdentifier" /> to create a <see cref="CurrentQuotaLimitBaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CurrentQuotaLimitBaseResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CurrentQuotaLimitBaseResource.CreateResourceIdentifier" /> to create a <see cref="CurrentQuotaLimitBaseResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CurrentQuotaLimitBaseResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CurrentQuotaLimitBaseResource"/> object. </returns>
         public virtual CurrentQuotaLimitBaseResource GetCurrentQuotaLimitBaseResource(ResourceIdentifier id)
         {
             CurrentQuotaLimitBaseResource.ValidateResourceId(id);
@@ -253,11 +253,11 @@ namespace Azure.ResourceManager.Quota.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="QuotaRequestDetailResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="QuotaRequestDetailResource.CreateResourceIdentifier" /> to create a <see cref="QuotaRequestDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="QuotaRequestDetailResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="QuotaRequestDetailResource.CreateResourceIdentifier" /> to create a <see cref="QuotaRequestDetailResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="QuotaRequestDetailResource" /> object. </returns>
+        /// <returns> Returns a <see cref="QuotaRequestDetailResource"/> object. </returns>
         public virtual QuotaRequestDetailResource GetQuotaRequestDetailResource(ResourceIdentifier id)
         {
             QuotaRequestDetailResource.ValidateResourceId(id);

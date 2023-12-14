@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// </summary>
     public abstract partial class DeploymentResourceIdReference
     {
-        /// <summary> Initializes a new instance of DeploymentResourceIdReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentResourceIdReference"/>. </summary>
         protected DeploymentResourceIdReference()
         {
         }
 
-        /// <summary> Initializes a new instance of DeploymentResourceIdReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentResourceIdReference"/>. </summary>
         /// <param name="idType"> The resource reference arm id type. </param>
         internal DeploymentResourceIdReference(IdType idType)
         {

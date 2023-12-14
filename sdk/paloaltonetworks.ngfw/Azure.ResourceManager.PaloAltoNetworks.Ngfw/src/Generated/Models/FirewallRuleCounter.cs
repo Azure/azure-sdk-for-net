@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Rule counter. </summary>
     public partial class FirewallRuleCounter
     {
-        /// <summary> Initializes a new instance of FirewallRuleCounter. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleCounter"/>. </summary>
         /// <param name="priority"> priority number. </param>
         /// <param name="ruleName"> rule name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="priority"/> or <paramref name="ruleName"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             RuleName = ruleName;
         }
 
-        /// <summary> Initializes a new instance of FirewallRuleCounter. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleCounter"/>. </summary>
         /// <param name="priority"> priority number. </param>
         /// <param name="ruleStackName"> rule Stack Name. </param>
         /// <param name="ruleListName"> rule list name. </param>

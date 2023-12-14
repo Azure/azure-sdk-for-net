@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
     /// A Class representing an OperationalInsightsLinkedStorageAccounts along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OperationalInsightsLinkedStorageAccountsResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetOperationalInsightsLinkedStorageAccountsResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceResource" /> using the GetOperationalInsightsLinkedStorageAccounts method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OperationalInsightsLinkedStorageAccountsResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetOperationalInsightsLinkedStorageAccountsResource method.
+    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceResource"/> using the GetOperationalInsightsLinkedStorageAccounts method.
     /// </summary>
     public partial class OperationalInsightsLinkedStorageAccountsResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.OperationalInsights
         private readonly LinkedStorageAccountsRestOperations _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient;
         private readonly OperationalInsightsLinkedStorageAccountsData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/linkedStorageAccounts";
+
         /// <summary> Initializes a new instance of the <see cref="OperationalInsightsLinkedStorageAccountsResource"/> class for mocking. </summary>
         protected OperationalInsightsLinkedStorageAccountsResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OperationalInsightsLinkedStorageAccountsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OperationalInsightsLinkedStorageAccountsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal OperationalInsightsLinkedStorageAccountsResource(ArmClient client, OperationalInsightsLinkedStorageAccountsData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.OperationalInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces/linkedStorageAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

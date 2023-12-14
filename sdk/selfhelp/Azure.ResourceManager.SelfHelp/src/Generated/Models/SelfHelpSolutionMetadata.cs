@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Metadata resource. </summary>
     public partial class SelfHelpSolutionMetadata : ResourceData
     {
-        /// <summary> Initializes a new instance of SelfHelpSolutionMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpSolutionMetadata"/>. </summary>
         public SelfHelpSolutionMetadata()
         {
             Solutions = new ChangeTrackingList<SolutionMetadataProperties>();
         }
 
-        /// <summary> Initializes a new instance of SelfHelpSolutionMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpSolutionMetadata"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

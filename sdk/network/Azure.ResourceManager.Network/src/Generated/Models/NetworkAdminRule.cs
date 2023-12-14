@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network admin rule. </summary>
     public partial class NetworkAdminRule : BaseAdminRuleData
     {
-        /// <summary> Initializes a new instance of NetworkAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkAdminRule"/>. </summary>
         public NetworkAdminRule()
         {
             Sources = new ChangeTrackingList<AddressPrefixItem>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             Kind = AdminRuleKind.Custom;
         }
 
-        /// <summary> Initializes a new instance of NetworkAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkAdminRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

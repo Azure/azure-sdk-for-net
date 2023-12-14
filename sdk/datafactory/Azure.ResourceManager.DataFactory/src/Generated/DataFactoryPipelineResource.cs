@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
     /// A Class representing a DataFactoryPipeline along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataFactoryPipelineResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataFactoryPipelineResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource" /> using the GetDataFactoryPipeline method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataFactoryPipelineResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataFactoryPipelineResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource"/> using the GetDataFactoryPipeline method.
     /// </summary>
     public partial class DataFactoryPipelineResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.DataFactory
         private readonly PipelinesRestOperations _dataFactoryPipelinePipelinesRestClient;
         private readonly DataFactoryPipelineData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/pipelines";
+
         /// <summary> Initializes a new instance of the <see cref="DataFactoryPipelineResource"/> class for mocking. </summary>
         protected DataFactoryPipelineResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataFactoryPipelineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryPipelineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataFactoryPipelineResource(ArmClient client, DataFactoryPipelineData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DataFactory
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/pipelines";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

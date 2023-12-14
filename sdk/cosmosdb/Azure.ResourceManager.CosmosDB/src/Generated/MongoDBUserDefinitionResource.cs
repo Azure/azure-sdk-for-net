@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a MongoDBUserDefinition along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MongoDBUserDefinitionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMongoDBUserDefinitionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource" /> using the GetMongoDBUserDefinition method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MongoDBUserDefinitionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMongoDBUserDefinitionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource"/> using the GetMongoDBUserDefinition method.
     /// </summary>
     public partial class MongoDBUserDefinitionResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly MongoDBResourcesRestOperations _mongoDBUserDefinitionMongoDBResourcesRestClient;
         private readonly MongoDBUserDefinitionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/mongodbUserDefinitions";
+
         /// <summary> Initializes a new instance of the <see cref="MongoDBUserDefinitionResource"/> class for mocking. </summary>
         protected MongoDBUserDefinitionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MongoDBUserDefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MongoDBUserDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MongoDBUserDefinitionResource(ArmClient client, MongoDBUserDefinitionData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/mongodbUserDefinitions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

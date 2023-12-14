@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> HyperVToAzStack disk input. </summary>
     public partial class HyperVToAzStackHciDiskInput
     {
-        /// <summary> Initializes a new instance of HyperVToAzStackHciDiskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciDiskInput"/>. </summary>
         /// <param name="diskId"> Gets or sets the disk Id. </param>
         /// <param name="diskSizeGB"> Gets or sets the disk size in GB. </param>
         /// <param name="diskFileFormat"> Gets or sets the type of the virtual hard disk, vhd or vhdx. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             IsOSDisk = isOSDisk;
         }
 
-        /// <summary> Initializes a new instance of HyperVToAzStackHciDiskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciDiskInput"/>. </summary>
         /// <param name="diskId"> Gets or sets the disk Id. </param>
         /// <param name="storageContainerId"> Gets or sets the target storage account ARM Id. </param>
         /// <param name="isDynamic">

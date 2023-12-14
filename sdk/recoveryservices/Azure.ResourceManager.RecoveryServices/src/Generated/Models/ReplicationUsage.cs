@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Replication usages of a vault. </summary>
     public partial class ReplicationUsage
     {
-        /// <summary> Initializes a new instance of ReplicationUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationUsage"/>. </summary>
         internal ReplicationUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of ReplicationUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationUsage"/>. </summary>
         /// <param name="monitoringSummary"> Summary of the replication monitoring data for this vault. </param>
         /// <param name="jobsSummary"> Summary of the replication jobs data for this vault. </param>
         /// <param name="protectedItemCount"> Number of replication protected items for this vault. </param>

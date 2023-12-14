@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Rule of type network. </summary>
     public partial class NetworkRule : FirewallPolicyRule
     {
-        /// <summary> Initializes a new instance of NetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRule"/>. </summary>
         public NetworkRule()
         {
             IPProtocols = new ChangeTrackingList<FirewallPolicyRuleNetworkProtocol>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             RuleType = FirewallPolicyRuleType.NetworkRule;
         }
 
-        /// <summary> Initializes a new instance of NetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRule"/>. </summary>
         /// <param name="name"> Name of the rule. </param>
         /// <param name="description"> Description of the rule. </param>
         /// <param name="ruleType"> Rule Type. </param>

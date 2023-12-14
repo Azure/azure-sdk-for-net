@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Relay
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RelayHybridConnectionAuthorizationRuleResource" /> and their operations.
-    /// Each <see cref="RelayHybridConnectionAuthorizationRuleResource" /> in the collection will belong to the same instance of <see cref="RelayHybridConnectionResource" />.
-    /// To get a <see cref="RelayHybridConnectionAuthorizationRuleCollection" /> instance call the GetRelayHybridConnectionAuthorizationRules method from an instance of <see cref="RelayHybridConnectionResource" />.
+    /// A class representing a collection of <see cref="RelayHybridConnectionAuthorizationRuleResource"/> and their operations.
+    /// Each <see cref="RelayHybridConnectionAuthorizationRuleResource"/> in the collection will belong to the same instance of <see cref="RelayHybridConnectionResource"/>.
+    /// To get a <see cref="RelayHybridConnectionAuthorizationRuleCollection"/> instance call the GetRelayHybridConnectionAuthorizationRules method from an instance of <see cref="RelayHybridConnectionResource"/>.
     /// </summary>
     public partial class RelayHybridConnectionAuthorizationRuleCollection : ArmCollection, IEnumerable<RelayHybridConnectionAuthorizationRuleResource>, IAsyncEnumerable<RelayHybridConnectionAuthorizationRuleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Relay
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RelayHybridConnectionAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RelayHybridConnectionAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RelayHybridConnectionAuthorizationRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relayHybridConnectionAuthorizationRuleHybridConnectionsRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Relay
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RelayHybridConnectionAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RelayHybridConnectionAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RelayHybridConnectionAuthorizationRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relayHybridConnectionAuthorizationRuleHybridConnectionsRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

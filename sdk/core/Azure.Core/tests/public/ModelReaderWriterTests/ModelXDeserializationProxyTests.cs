@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text;
 using Azure.Core.Tests.ModelReaderWriterTests.Models;
 using NUnit.Framework;
@@ -17,7 +17,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         {
             ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
             BinaryData data = new BinaryData(Encoding.UTF8.GetBytes("{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"extra\":\"stuff\"}"));
-            object modelX = System.ClientModel.ModelReaderWriter.Read(data, typeof(ModelXDeserializationProxy), options);
+            object modelX = ModelReaderWriter.Read(data, typeof(ModelXDeserializationProxy), options);
             Assert.IsNotNull(modelX);
             Assert.IsInstanceOf<ModelX>(modelX);
             Assert.AreEqual("X", ((ModelX)modelX).Kind);

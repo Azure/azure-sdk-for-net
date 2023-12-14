@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Order item details. </summary>
     public partial class EdgeOrderItemDetails
     {
-        /// <summary> Initializes a new instance of EdgeOrderItemDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemDetails"/>. </summary>
         /// <param name="productDetails"> Unique identifier for configuration. </param>
         /// <param name="orderItemType"> Order item type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="productDetails"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             ManagementRPDetailsList = new ChangeTrackingList<ResourceProviderDetails>();
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderItemDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemDetails"/>. </summary>
         /// <param name="productDetails"> Unique identifier for configuration. </param>
         /// <param name="orderItemType"> Order item type. </param>
         /// <param name="currentStage"> Current Order item Status. </param>

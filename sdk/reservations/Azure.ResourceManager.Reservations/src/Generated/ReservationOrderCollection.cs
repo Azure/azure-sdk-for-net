@@ -22,9 +22,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Reservations
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ReservationOrderResource" /> and their operations.
-    /// Each <see cref="ReservationOrderResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="ReservationOrderCollection" /> instance call the GetReservationOrders method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="ReservationOrderResource"/> and their operations.
+    /// Each <see cref="ReservationOrderResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="ReservationOrderCollection"/> instance call the GetReservationOrders method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class ReservationOrderCollection : ArmCollection, IEnumerable<ReservationOrderResource>, IAsyncEnumerable<ReservationOrderResource>
     {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Reservations
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReservationOrderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ReservationOrderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReservationOrderResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationOrderRestClient.CreateListRequest();
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Reservations
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReservationOrderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ReservationOrderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReservationOrderResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationOrderRestClient.CreateListRequest();

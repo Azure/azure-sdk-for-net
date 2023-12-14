@@ -14,9 +14,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class TestMigrateProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of TestMigrateProviderSpecificContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestMigrateProviderSpecificContent"/>. </summary>
         protected TestMigrateProviderSpecificContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TestMigrateProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        internal TestMigrateProviderSpecificContent(string instanceType)
+        {
+            InstanceType = instanceType;
         }
 
         /// <summary> The class type. </summary>

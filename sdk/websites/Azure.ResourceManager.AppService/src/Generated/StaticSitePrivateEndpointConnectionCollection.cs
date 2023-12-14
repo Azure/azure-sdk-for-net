@@ -21,9 +21,9 @@ using Azure.ResourceManager.AppService.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StaticSitePrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="StaticSitePrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="StaticSiteResource" />.
-    /// To get a <see cref="StaticSitePrivateEndpointConnectionCollection" /> instance call the GetStaticSitePrivateEndpointConnections method from an instance of <see cref="StaticSiteResource" />.
+    /// A class representing a collection of <see cref="StaticSitePrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="StaticSitePrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="StaticSiteResource"/>.
+    /// To get a <see cref="StaticSitePrivateEndpointConnectionCollection"/> instance call the GetStaticSitePrivateEndpointConnections method from an instance of <see cref="StaticSiteResource"/>.
     /// </summary>
     public partial class StaticSitePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<StaticSitePrivateEndpointConnectionResource>, IAsyncEnumerable<StaticSitePrivateEndpointConnectionResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StaticSitePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StaticSitePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StaticSitePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSitePrivateEndpointConnectionStaticSitesRestClient.CreateGetPrivateEndpointConnectionListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StaticSitePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StaticSitePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StaticSitePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSitePrivateEndpointConnectionStaticSitesRestClient.CreateGetPrivateEndpointConnectionListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The CassandraDataCenterSeedNode. </summary>
     public partial class CassandraDataCenterSeedNode
     {
-        /// <summary> Initializes a new instance of CassandraDataCenterSeedNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraDataCenterSeedNode"/>. </summary>
         public CassandraDataCenterSeedNode()
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraDataCenterSeedNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraDataCenterSeedNode"/>. </summary>
         /// <param name="ipAddress"> IP address of this seed node. </param>
         internal CassandraDataCenterSeedNode(string ipAddress)
         {

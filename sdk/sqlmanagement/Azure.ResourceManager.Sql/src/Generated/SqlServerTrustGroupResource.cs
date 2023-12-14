@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlServerTrustGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlServerTrustGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlServerTrustGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSqlServerTrustGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerTrustGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlServerTrustGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSqlServerTrustGroup method.
     /// </summary>
     public partial class SqlServerTrustGroupResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Sql
         private readonly ServerTrustGroupsRestOperations _sqlServerTrustGroupServerTrustGroupsRestClient;
         private readonly SqlServerTrustGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/locations/serverTrustGroups";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerTrustGroupResource"/> class for mocking. </summary>
         protected SqlServerTrustGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlServerTrustGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlServerTrustGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlServerTrustGroupResource(ArmClient client, SqlServerTrustGroupData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/locations/serverTrustGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

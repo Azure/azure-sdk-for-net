@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Option B configuration to be used for Management VPN. </summary>
     public partial class OptionBProperties
     {
-        /// <summary> Initializes a new instance of OptionBProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="OptionBProperties"/>. </summary>
         public OptionBProperties()
         {
             ImportRouteTargets = new ChangeTrackingList<string>();
             ExportRouteTargets = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of OptionBProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="OptionBProperties"/>. </summary>
         /// <param name="importRouteTargets"> Route Targets to be applied for incoming routes into CE. This is for backward compatibility. </param>
         /// <param name="exportRouteTargets"> Route Targets to be applied for outgoing routes from CE. This is for backward compatibility. </param>
         /// <param name="routeTargets"> Route Targets to be applied. </param>

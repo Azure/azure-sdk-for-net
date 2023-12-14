@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> List of ResourceGuardProxyBase resources. </summary>
     internal partial class ResourceGuardProxyBaseResourceList
     {
-        /// <summary> Initializes a new instance of ResourceGuardProxyBaseResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyBaseResourceList"/>. </summary>
         internal ResourceGuardProxyBaseResourceList()
         {
             Value = new ChangeTrackingList<ResourceGuardProxyData>();
         }
 
-        /// <summary> Initializes a new instance of ResourceGuardProxyBaseResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyBaseResourceList"/>. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
         internal ResourceGuardProxyBaseResourceList(IReadOnlyList<ResourceGuardProxyData> value, string nextLink)

@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.ServiceBus
     /// </summary>
     public partial class MigrationConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of MigrationConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationConfigurationData"/>. </summary>
         public MigrationConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrationConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

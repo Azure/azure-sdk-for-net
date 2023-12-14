@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ConfidentialLedgerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfidentialLedgerResource.CreateResourceIdentifier" /> to create a <see cref="ConfidentialLedgerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ConfidentialLedgerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConfidentialLedgerResource.CreateResourceIdentifier" /> to create a <see cref="ConfidentialLedgerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfidentialLedgerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ConfidentialLedgerResource"/> object. </returns>
         public virtual ConfidentialLedgerResource GetConfidentialLedgerResource(ResourceIdentifier id)
         {
             ConfidentialLedgerResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedCcfResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedCcfResource.CreateResourceIdentifier" /> to create a <see cref="ManagedCcfResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ManagedCcfResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedCcfResource.CreateResourceIdentifier" /> to create a <see cref="ManagedCcfResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedCcfResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ManagedCcfResource"/> object. </returns>
         public virtual ManagedCcfResource GetManagedCcfResource(ResourceIdentifier id)
         {
             ManagedCcfResource.ValidateResourceId(id);

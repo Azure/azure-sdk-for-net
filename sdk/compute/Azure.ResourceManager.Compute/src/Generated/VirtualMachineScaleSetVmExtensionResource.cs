@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a VirtualMachineScaleSetVmExtension along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VirtualMachineScaleSetVmExtensionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVirtualMachineScaleSetVmExtensionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualMachineScaleSetVmResource" /> using the GetVirtualMachineScaleSetVmExtension method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualMachineScaleSetVmExtensionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVirtualMachineScaleSetVmExtensionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualMachineScaleSetVmResource"/> using the GetVirtualMachineScaleSetVmExtension method.
     /// </summary>
     public partial class VirtualMachineScaleSetVmExtensionResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Compute
         private readonly VirtualMachineScaleSetVMExtensionsRestOperations _virtualMachineScaleSetVmExtensionVirtualMachineScaleSetVmExtensionsRestClient;
         private readonly VirtualMachineScaleSetVmExtensionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/extensions";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualMachineScaleSetVmExtensionResource"/> class for mocking. </summary>
         protected VirtualMachineScaleSetVmExtensionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VirtualMachineScaleSetVmExtensionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualMachineScaleSetVmExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VirtualMachineScaleSetVmExtensionResource(ArmClient client, VirtualMachineScaleSetVmExtensionData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/extensions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

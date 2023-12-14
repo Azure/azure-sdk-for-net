@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Media
 {
     /// <summary>
     /// A Class representing a MediaServicesAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MediaServicesAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMediaServicesAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetMediaServicesAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MediaServicesAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMediaServicesAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetMediaServicesAccount method.
     /// </summary>
     public partial class MediaServicesAccountResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Media
         private readonly MediaservicesRestOperations _mediaServicesAccountMediaservicesRestClient;
         private readonly MediaServicesAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaservices";
+
         /// <summary> Initializes a new instance of the <see cref="MediaServicesAccountResource"/> class for mocking. </summary>
         protected MediaServicesAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MediaServicesAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MediaServicesAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MediaServicesAccountResource(ArmClient client, MediaServicesAccountData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Media
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaservices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Media
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The String to use. </param>
+        /// <param name="name"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Media
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The String to use. </param>
+        /// <param name="name"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Media
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The String to use. </param>
+        /// <param name="name"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Media
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The String to use. </param>
+        /// <param name="name"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>

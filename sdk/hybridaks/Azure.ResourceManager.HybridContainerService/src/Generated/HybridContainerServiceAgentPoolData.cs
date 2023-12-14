@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HybridContainerService
     /// </summary>
     public partial class HybridContainerServiceAgentPoolData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of HybridContainerServiceAgentPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridContainerServiceAgentPoolData"/>. </summary>
         /// <param name="location"> The location. </param>
         public HybridContainerServiceAgentPoolData(AzureLocation location) : base(location)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HybridContainerService
             NodeTaints = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HybridContainerServiceAgentPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridContainerServiceAgentPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Workloads
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SapDatabaseInstanceResource" /> and their operations.
-    /// Each <see cref="SapDatabaseInstanceResource" /> in the collection will belong to the same instance of <see cref="SapVirtualInstanceResource" />.
-    /// To get a <see cref="SapDatabaseInstanceCollection" /> instance call the GetSapDatabaseInstances method from an instance of <see cref="SapVirtualInstanceResource" />.
+    /// A class representing a collection of <see cref="SapDatabaseInstanceResource"/> and their operations.
+    /// Each <see cref="SapDatabaseInstanceResource"/> in the collection will belong to the same instance of <see cref="SapVirtualInstanceResource"/>.
+    /// To get a <see cref="SapDatabaseInstanceCollection"/> instance call the GetSapDatabaseInstances method from an instance of <see cref="SapVirtualInstanceResource"/>.
     /// </summary>
     public partial class SapDatabaseInstanceCollection : ArmCollection, IEnumerable<SapDatabaseInstanceResource>, IAsyncEnumerable<SapDatabaseInstanceResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SapDatabaseInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SapDatabaseInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SapDatabaseInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapDatabaseInstanceSapDatabaseInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SapDatabaseInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SapDatabaseInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SapDatabaseInstanceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapDatabaseInstanceSapDatabaseInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

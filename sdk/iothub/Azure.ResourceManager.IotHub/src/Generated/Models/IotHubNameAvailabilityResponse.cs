@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties indicating whether a given IoT hub name is available. </summary>
     public partial class IotHubNameAvailabilityResponse
     {
-        /// <summary> Initializes a new instance of IotHubNameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubNameAvailabilityResponse"/>. </summary>
         internal IotHubNameAvailabilityResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubNameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubNameAvailabilityResponse"/>. </summary>
         /// <param name="isNameAvailable"> The value which indicates whether the provided name is available. </param>
         /// <param name="reason"> The reason for unavailability. </param>
         /// <param name="message"> The detailed reason message. </param>

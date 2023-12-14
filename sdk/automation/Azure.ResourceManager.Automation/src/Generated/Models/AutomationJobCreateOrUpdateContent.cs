@@ -13,10 +13,21 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create job operation. </summary>
     public partial class AutomationJobCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationJobCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationJobCreateOrUpdateContent"/>. </summary>
         public AutomationJobCreateOrUpdateContent()
         {
             Parameters = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationJobCreateOrUpdateContent"/>. </summary>
+        /// <param name="runbook"> Gets or sets the runbook. </param>
+        /// <param name="parameters"> Gets or sets the parameters of the job. </param>
+        /// <param name="runOn"> Gets or sets the runOn which specifies the group name where the job is to be executed. </param>
+        internal AutomationJobCreateOrUpdateContent(RunbookAssociationProperty runbook, IDictionary<string, string> parameters, string runOn)
+        {
+            Runbook = runbook;
+            Parameters = parameters;
+            RunOn = runOn;
         }
 
         /// <summary> Gets or sets the runbook. </summary>

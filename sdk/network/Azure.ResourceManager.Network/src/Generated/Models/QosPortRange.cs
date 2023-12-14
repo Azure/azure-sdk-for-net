@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Qos Traffic Profiler Port range properties. </summary>
     public partial class QosPortRange
     {
-        /// <summary> Initializes a new instance of QosPortRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="QosPortRange"/>. </summary>
         public QosPortRange()
         {
         }
 
-        /// <summary> Initializes a new instance of QosPortRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="QosPortRange"/>. </summary>
         /// <param name="start"> Qos Port Range start. </param>
         /// <param name="end"> Qos Port Range end. </param>
         internal QosPortRange(int? start, int? end)

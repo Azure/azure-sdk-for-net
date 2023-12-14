@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class RestorableDroppedDatabaseData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of RestorableDroppedDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableDroppedDatabaseData"/>. </summary>
         /// <param name="location"> The location. </param>
         public RestorableDroppedDatabaseData(AzureLocation location) : base(location)
         {
             Keys = new ChangeTrackingDictionary<string, SqlDatabaseKey>();
         }
 
-        /// <summary> Initializes a new instance of RestorableDroppedDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableDroppedDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

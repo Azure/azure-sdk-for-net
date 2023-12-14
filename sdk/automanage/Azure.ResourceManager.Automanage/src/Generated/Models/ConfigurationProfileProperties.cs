@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Automanage.Models
     /// <summary> Automanage configuration profile properties. </summary>
     internal partial class ConfigurationProfileProperties
     {
-        /// <summary> Initializes a new instance of ConfigurationProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationProfileProperties"/>. </summary>
         public ConfigurationProfileProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfigurationProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationProfileProperties"/>. </summary>
         /// <param name="configuration"> configuration dictionary of the configuration profile. </param>
         internal ConfigurationProfileProperties(BinaryData configuration)
         {

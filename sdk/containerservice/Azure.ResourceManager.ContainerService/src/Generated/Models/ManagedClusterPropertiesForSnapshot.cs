@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> managed cluster properties for snapshot, these properties are read only. </summary>
     public partial class ManagedClusterPropertiesForSnapshot
     {
-        /// <summary> Initializes a new instance of ManagedClusterPropertiesForSnapshot. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPropertiesForSnapshot"/>. </summary>
         internal ManagedClusterPropertiesForSnapshot()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterPropertiesForSnapshot. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPropertiesForSnapshot"/>. </summary>
         /// <param name="kubernetesVersion"> The current kubernetes version. </param>
         /// <param name="sku"> The current managed cluster sku. </param>
         /// <param name="enableRbac"> Whether the cluster has enabled Kubernetes Role-Based Access Control or not. </param>

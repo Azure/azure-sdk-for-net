@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Validation configuration properties. </summary>
     public partial class ValidateConfigurationContent
     {
-        /// <summary> Initializes a new instance of ValidateConfigurationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateConfigurationContent"/>. </summary>
         public ValidateConfigurationContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ValidateConfigurationContent"/>. </summary>
+        /// <param name="validateAction"> Validate action that to be performed. </param>
+        internal ValidateConfigurationContent(NetworkFabricValidateAction? validateAction)
+        {
+            ValidateAction = validateAction;
         }
 
         /// <summary> Validate action that to be performed. </summary>

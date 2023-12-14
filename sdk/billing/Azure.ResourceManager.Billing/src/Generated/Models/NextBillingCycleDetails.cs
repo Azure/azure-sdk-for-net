@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> The next billing cycle details of the subscription. </summary>
     internal partial class NextBillingCycleDetails
     {
-        /// <summary> Initializes a new instance of NextBillingCycleDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="NextBillingCycleDetails"/>. </summary>
         internal NextBillingCycleDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of NextBillingCycleDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="NextBillingCycleDetails"/>. </summary>
         /// <param name="nextBillingCycleBillingFrequency"> The billing frequency of the subscription in the next billing cycle. </param>
         internal NextBillingCycleDetails(string nextBillingCycleBillingFrequency)
         {

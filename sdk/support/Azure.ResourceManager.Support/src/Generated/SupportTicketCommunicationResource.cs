@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Support
 {
     /// <summary>
     /// A Class representing a SupportTicketCommunication along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SupportTicketCommunicationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSupportTicketCommunicationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionSupportTicketResource" /> using the GetSupportTicketCommunication method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SupportTicketCommunicationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSupportTicketCommunicationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionSupportTicketResource"/> using the GetSupportTicketCommunication method.
     /// </summary>
     public partial class SupportTicketCommunicationResource : ArmResource
     {
@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.Support
         private readonly CommunicationsRestOperations _supportTicketCommunicationCommunicationsRestClient;
         private readonly SupportTicketCommunicationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Support/supportTickets/communications";
+
         /// <summary> Initializes a new instance of the <see cref="SupportTicketCommunicationResource"/> class for mocking. </summary>
         protected SupportTicketCommunicationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SupportTicketCommunicationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SupportTicketCommunicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SupportTicketCommunicationResource(ArmClient client, SupportTicketCommunicationData data) : this(client, data.Id)
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Support
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Support/supportTickets/communications";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

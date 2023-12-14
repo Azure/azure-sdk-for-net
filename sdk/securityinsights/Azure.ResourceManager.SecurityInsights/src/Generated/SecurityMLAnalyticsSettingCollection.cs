@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityMLAnalyticsSettingResource" /> and their operations.
-    /// Each <see cref="SecurityMLAnalyticsSettingResource" /> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" />.
-    /// To get a <see cref="SecurityMLAnalyticsSettingCollection" /> instance call the GetSecurityMLAnalyticsSettings method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" />.
+    /// A class representing a collection of <see cref="SecurityMLAnalyticsSettingResource"/> and their operations.
+    /// Each <see cref="SecurityMLAnalyticsSettingResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
+    /// To get a <see cref="SecurityMLAnalyticsSettingCollection"/> instance call the GetSecurityMLAnalyticsSettings method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
     /// </summary>
     public partial class SecurityMLAnalyticsSettingCollection : ArmCollection, IEnumerable<SecurityMLAnalyticsSettingResource>, IAsyncEnumerable<SecurityMLAnalyticsSettingResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityMLAnalyticsSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityMLAnalyticsSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityMLAnalyticsSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityMLAnalyticsSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityMLAnalyticsSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityMLAnalyticsSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityMLAnalyticsSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityMLAnalyticsSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

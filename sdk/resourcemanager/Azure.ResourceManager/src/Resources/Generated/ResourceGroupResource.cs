@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing a ResourceGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetResourceGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetResourceGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ResourceGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetResourceGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetResourceGroup method.
     /// </summary>
     public partial class ResourceGroupResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.Resources
         private readonly ResourcesRestOperations _resourceGroupResourcesRestClient;
         private readonly ResourceGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/resourceGroups";
+
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResource"/> class for mocking. </summary>
         protected ResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ResourceGroupResource(ArmClient client, ResourceGroupData data) : this(client, data.Id)
@@ -71,9 +74,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/resourceGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

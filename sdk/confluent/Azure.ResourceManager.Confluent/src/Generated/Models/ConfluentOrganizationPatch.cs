@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.Confluent.Models
     /// <summary> Organization Resource update. </summary>
     public partial class ConfluentOrganizationPatch
     {
-        /// <summary> Initializes a new instance of ConfluentOrganizationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentOrganizationPatch"/>. </summary>
         public ConfluentOrganizationPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConfluentOrganizationPatch"/>. </summary>
+        /// <param name="tags"> ARM resource tags. </param>
+        internal ConfluentOrganizationPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> ARM resource tags. </summary>

@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.EnergyServices.Models
     /// <summary> The resource model definition used for updating a tracked ARM resource. </summary>
     public partial class EnergyServicePatch
     {
-        /// <summary> Initializes a new instance of EnergyServicePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnergyServicePatch"/>. </summary>
         public EnergyServicePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EnergyServicePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal EnergyServicePatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Define a match condition. </summary>
     public partial class WebApplicationRuleMatchCondition
     {
-        /// <summary> Initializes a new instance of WebApplicationRuleMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebApplicationRuleMatchCondition"/>. </summary>
         /// <param name="matchVariable"> Request variable to compare with. </param>
         /// <param name="operator"> Comparison type to use for matching with the variable value. </param>
         /// <param name="matchValue"> List of possible match values. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Transforms = new ChangeTrackingList<WebApplicationRuleMatchTransformType>();
         }
 
-        /// <summary> Initializes a new instance of WebApplicationRuleMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebApplicationRuleMatchCondition"/>. </summary>
         /// <param name="matchVariable"> Request variable to compare with. </param>
         /// <param name="selector"> Match against a specific key from the QueryString, PostArgs, RequestHeader or Cookies variables. Default is null. </param>
         /// <param name="operator"> Comparison type to use for matching with the variable value. </param>

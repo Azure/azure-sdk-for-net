@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary>
     /// A Class representing an ElasticSanSnapshot along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ElasticSanSnapshotResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetElasticSanSnapshotResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ElasticSanVolumeGroupResource" /> using the GetElasticSanSnapshot method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ElasticSanSnapshotResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetElasticSanSnapshotResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ElasticSanVolumeGroupResource"/> using the GetElasticSanSnapshot method.
     /// </summary>
     public partial class ElasticSanSnapshotResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.ElasticSan
         private readonly VolumeSnapshotsRestOperations _elasticSanSnapshotVolumeSnapshotsRestClient;
         private readonly ElasticSanSnapshotData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ElasticSan/elasticSans/volumegroups/snapshots";
+
         /// <summary> Initializes a new instance of the <see cref="ElasticSanSnapshotResource"/> class for mocking. </summary>
         protected ElasticSanSnapshotResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ElasticSanSnapshotResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ElasticSanSnapshotResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ElasticSanSnapshotResource(ArmClient client, ElasticSanSnapshotData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ElasticSan
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ElasticSan/elasticSans/volumegroups/snapshots";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
-    /// A class representing a collection of <see cref="FhirServiceResource" /> and their operations.
-    /// Each <see cref="FhirServiceResource" /> in the collection will belong to the same instance of <see cref="HealthcareApisWorkspaceResource" />.
-    /// To get a <see cref="FhirServiceCollection" /> instance call the GetFhirServices method from an instance of <see cref="HealthcareApisWorkspaceResource" />.
+    /// A class representing a collection of <see cref="FhirServiceResource"/> and their operations.
+    /// Each <see cref="FhirServiceResource"/> in the collection will belong to the same instance of <see cref="HealthcareApisWorkspaceResource"/>.
+    /// To get a <see cref="FhirServiceCollection"/> instance call the GetFhirServices method from an instance of <see cref="HealthcareApisWorkspaceResource"/>.
     /// </summary>
     public partial class FhirServiceCollection : ArmCollection, IEnumerable<FhirServiceResource>, IAsyncEnumerable<FhirServiceResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FhirServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FhirServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FhirServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fhirServiceRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FhirServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FhirServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FhirServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fhirServiceRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

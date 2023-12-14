@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> The response of a TagRule list operation. </summary>
     internal partial class NewRelicObservabilityTagRuleListResult
     {
-        /// <summary> Initializes a new instance of NewRelicObservabilityTagRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityTagRuleListResult"/>. </summary>
         /// <param name="value"> The TagRule items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal NewRelicObservabilityTagRuleListResult(IEnumerable<NewRelicObservabilityTagRuleData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityTagRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityTagRuleListResult"/>. </summary>
         /// <param name="value"> The TagRule items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal NewRelicObservabilityTagRuleListResult(IReadOnlyList<NewRelicObservabilityTagRuleData> value, Uri nextLink)

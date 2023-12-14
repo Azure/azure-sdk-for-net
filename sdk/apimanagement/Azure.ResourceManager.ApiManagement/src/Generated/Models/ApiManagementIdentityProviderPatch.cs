@@ -13,10 +13,35 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Parameters supplied to update Identity Provider. </summary>
     public partial class ApiManagementIdentityProviderPatch
     {
-        /// <summary> Initializes a new instance of ApiManagementIdentityProviderPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementIdentityProviderPatch"/>. </summary>
         public ApiManagementIdentityProviderPatch()
         {
             AllowedTenants = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementIdentityProviderPatch"/>. </summary>
+        /// <param name="identityProviderType"> Identity Provider Type identifier. </param>
+        /// <param name="signInTenant"> The TenantId to use instead of Common when logging into Active Directory. </param>
+        /// <param name="allowedTenants"> List of Allowed Tenants when configuring Azure Active Directory login. </param>
+        /// <param name="authority"> OpenID Connect discovery endpoint hostname for AAD or AAD B2C. </param>
+        /// <param name="signUpPolicyName"> Signup Policy Name. Only applies to AAD B2C Identity Provider. </param>
+        /// <param name="signInPolicyName"> Signin Policy Name. Only applies to AAD B2C Identity Provider. </param>
+        /// <param name="profileEditingPolicyName"> Profile Editing Policy Name. Only applies to AAD B2C Identity Provider. </param>
+        /// <param name="passwordResetPolicyName"> Password Reset Policy Name. Only applies to AAD B2C Identity Provider. </param>
+        /// <param name="clientId"> Client Id of the Application in the external Identity Provider. It is App ID for Facebook login, Client ID for Google login, App ID for Microsoft. </param>
+        /// <param name="clientSecret"> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. </param>
+        internal ApiManagementIdentityProviderPatch(IdentityProviderType? identityProviderType, string signInTenant, IList<string> allowedTenants, string authority, string signUpPolicyName, string signInPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientId, string clientSecret)
+        {
+            IdentityProviderType = identityProviderType;
+            SignInTenant = signInTenant;
+            AllowedTenants = allowedTenants;
+            Authority = authority;
+            SignUpPolicyName = signUpPolicyName;
+            SignInPolicyName = signInPolicyName;
+            ProfileEditingPolicyName = profileEditingPolicyName;
+            PasswordResetPolicyName = passwordResetPolicyName;
+            ClientId = clientId;
+            ClientSecret = clientSecret;
         }
 
         /// <summary> Identity Provider Type identifier. </summary>

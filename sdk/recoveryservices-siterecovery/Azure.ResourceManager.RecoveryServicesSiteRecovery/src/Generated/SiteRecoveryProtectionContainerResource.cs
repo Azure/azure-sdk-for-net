@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A Class representing a SiteRecoveryProtectionContainer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteRecoveryProtectionContainerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteRecoveryProtectionContainerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryFabricResource" /> using the GetSiteRecoveryProtectionContainer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteRecoveryProtectionContainerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteRecoveryProtectionContainerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryFabricResource"/> using the GetSiteRecoveryProtectionContainer method.
     /// </summary>
     public partial class SiteRecoveryProtectionContainerResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly ReplicationProtectionContainersRestOperations _siteRecoveryProtectionContainerReplicationProtectionContainersRestClient;
         private readonly SiteRecoveryProtectionContainerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers";
+
         /// <summary> Initializes a new instance of the <see cref="SiteRecoveryProtectionContainerResource"/> class for mocking. </summary>
         protected SiteRecoveryProtectionContainerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteRecoveryProtectionContainerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryProtectionContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteRecoveryProtectionContainerResource(ArmClient client, SiteRecoveryProtectionContainerData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

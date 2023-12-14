@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Purview
     /// </summary>
     public partial class PurviewPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of PurviewPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewPrivateEndpointConnectionData"/>. </summary>
         public PurviewPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

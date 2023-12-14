@@ -13,13 +13,13 @@ namespace Azure.Maps.Routing.Models
     /// <summary> Reports the effective settings used in the current call. </summary>
     public partial class RouteReport
     {
-        /// <summary> Initializes a new instance of RouteReport. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteReport"/>. </summary>
         internal RouteReport()
         {
             EffectiveSettings = new ChangeTrackingList<EffectiveSetting>();
         }
 
-        /// <summary> Initializes a new instance of RouteReport. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteReport"/>. </summary>
         /// <param name="effectiveSettings"> Effective parameters or data used when calling this Route API. </param>
         internal RouteReport(IReadOnlyList<EffectiveSetting> effectiveSettings)
         {

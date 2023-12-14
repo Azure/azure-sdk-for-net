@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> An array of available PrivateEndpoint types. </summary>
     internal partial class AvailablePrivateEndpointTypesResult
     {
-        /// <summary> Initializes a new instance of AvailablePrivateEndpointTypesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailablePrivateEndpointTypesResult"/>. </summary>
         internal AvailablePrivateEndpointTypesResult()
         {
             Value = new ChangeTrackingList<AvailablePrivateEndpointType>();
         }
 
-        /// <summary> Initializes a new instance of AvailablePrivateEndpointTypesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailablePrivateEndpointTypesResult"/>. </summary>
         /// <param name="value"> An array of available privateEndpoint type. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal AvailablePrivateEndpointTypesResult(IReadOnlyList<AvailablePrivateEndpointType> value, string nextLink)

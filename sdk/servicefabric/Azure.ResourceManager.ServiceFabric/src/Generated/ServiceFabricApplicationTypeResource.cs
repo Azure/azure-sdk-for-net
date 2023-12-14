@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary>
     /// A Class representing a ServiceFabricApplicationType along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceFabricApplicationTypeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceFabricApplicationTypeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceFabricClusterResource" /> using the GetServiceFabricApplicationType method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceFabricApplicationTypeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceFabricApplicationTypeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceFabricClusterResource"/> using the GetServiceFabricApplicationType method.
     /// </summary>
     public partial class ServiceFabricApplicationTypeResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.ServiceFabric
         private readonly ApplicationTypesRestOperations _serviceFabricApplicationTypeApplicationTypesRestClient;
         private readonly ServiceFabricApplicationTypeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/clusters/applicationTypes";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceFabricApplicationTypeResource"/> class for mocking. </summary>
         protected ServiceFabricApplicationTypeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceFabricApplicationTypeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceFabricApplicationTypeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceFabricApplicationTypeResource(ArmClient client, ServiceFabricApplicationTypeData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ServiceFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/clusters/applicationTypes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

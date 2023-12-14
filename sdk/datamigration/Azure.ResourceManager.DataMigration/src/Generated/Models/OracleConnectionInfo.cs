@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Information for connecting to Oracle server. </summary>
     public partial class OracleConnectionInfo : ConnectionInfo
     {
-        /// <summary> Initializes a new instance of OracleConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleConnectionInfo"/>. </summary>
         /// <param name="dataSource"> EZConnect or TNSName connection string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
         public OracleConnectionInfo(string dataSource)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ConnectionInfoType = "OracleConnectionInfo";
         }
 
-        /// <summary> Initializes a new instance of OracleConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="OracleConnectionInfo"/>. </summary>
         /// <param name="connectionInfoType"> Type of connection info. </param>
         /// <param name="userName"> User name. </param>
         /// <param name="password"> Password credential. </param>

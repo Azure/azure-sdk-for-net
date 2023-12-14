@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The artifact manifest updating request payload. Only the 'Uploaded' state is allowed for updates. Other states are used for internal state transitioning. </summary>
     public partial class ArtifactManifestUpdateState
     {
-        /// <summary> Initializes a new instance of ArtifactManifestUpdateState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactManifestUpdateState"/>. </summary>
         public ArtifactManifestUpdateState()
         {
         }
 
-        /// <summary> Initializes a new instance of ArtifactManifestUpdateState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactManifestUpdateState"/>. </summary>
         /// <param name="artifactManifestState"> The artifact manifest state. </param>
         internal ArtifactManifestUpdateState(ArtifactManifestState? artifactManifestState)
         {

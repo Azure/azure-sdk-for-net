@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RoleManagementPolicyAssignmentResource" /> and their operations.
-    /// Each <see cref="RoleManagementPolicyAssignmentResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="RoleManagementPolicyAssignmentCollection" /> instance call the GetRoleManagementPolicyAssignments method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="RoleManagementPolicyAssignmentResource"/> and their operations.
+    /// Each <see cref="RoleManagementPolicyAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="RoleManagementPolicyAssignmentCollection"/> instance call the GetRoleManagementPolicyAssignments method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class RoleManagementPolicyAssignmentCollection : ArmCollection, IEnumerable<RoleManagementPolicyAssignmentResource>, IAsyncEnumerable<RoleManagementPolicyAssignmentResource>
     {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Authorization
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RoleManagementPolicyAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RoleManagementPolicyAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoleManagementPolicyAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleManagementPolicyAssignmentRestClient.CreateListForScopeRequest(Id);
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Authorization
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RoleManagementPolicyAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RoleManagementPolicyAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoleManagementPolicyAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleManagementPolicyAssignmentRestClient.CreateListForScopeRequest(Id);

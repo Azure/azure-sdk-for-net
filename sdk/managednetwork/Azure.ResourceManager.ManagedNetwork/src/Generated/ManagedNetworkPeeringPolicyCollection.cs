@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedNetwork
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedNetworkPeeringPolicyResource" /> and their operations.
-    /// Each <see cref="ManagedNetworkPeeringPolicyResource" /> in the collection will belong to the same instance of <see cref="ManagedNetworkResource" />.
-    /// To get a <see cref="ManagedNetworkPeeringPolicyCollection" /> instance call the GetManagedNetworkPeeringPolicies method from an instance of <see cref="ManagedNetworkResource" />.
+    /// A class representing a collection of <see cref="ManagedNetworkPeeringPolicyResource"/> and their operations.
+    /// Each <see cref="ManagedNetworkPeeringPolicyResource"/> in the collection will belong to the same instance of <see cref="ManagedNetworkResource"/>.
+    /// To get a <see cref="ManagedNetworkPeeringPolicyCollection"/> instance call the GetManagedNetworkPeeringPolicies method from an instance of <see cref="ManagedNetworkResource"/>.
     /// </summary>
     public partial class ManagedNetworkPeeringPolicyCollection : ArmCollection, IEnumerable<ManagedNetworkPeeringPolicyResource>, IAsyncEnumerable<ManagedNetworkPeeringPolicyResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <param name="top"> May be used to limit the number of results in a page for list queries. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedNetworkPeeringPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedNetworkPeeringPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedNetworkPeeringPolicyResource> GetAllAsync(int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedNetworkPeeringPolicyRestClient.CreateListByManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <param name="top"> May be used to limit the number of results in a page for list queries. </param>
         /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedNetworkPeeringPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedNetworkPeeringPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedNetworkPeeringPolicyResource> GetAll(int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedNetworkPeeringPolicyRestClient.CreateListByManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);

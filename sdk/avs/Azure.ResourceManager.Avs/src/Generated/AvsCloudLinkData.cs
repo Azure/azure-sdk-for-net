@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class AvsCloudLinkData : ResourceData
     {
-        /// <summary> Initializes a new instance of AvsCloudLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsCloudLinkData"/>. </summary>
         public AvsCloudLinkData()
         {
         }
 
-        /// <summary> Initializes a new instance of AvsCloudLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsCloudLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

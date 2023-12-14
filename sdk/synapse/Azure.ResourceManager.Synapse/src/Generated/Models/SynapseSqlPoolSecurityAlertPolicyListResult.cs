@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A list of SQL pool security alert policies. </summary>
     internal partial class SynapseSqlPoolSecurityAlertPolicyListResult
     {
-        /// <summary> Initializes a new instance of SynapseSqlPoolSecurityAlertPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSqlPoolSecurityAlertPolicyListResult"/>. </summary>
         internal SynapseSqlPoolSecurityAlertPolicyListResult()
         {
             Value = new ChangeTrackingList<SynapseSqlPoolSecurityAlertPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseSqlPoolSecurityAlertPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSqlPoolSecurityAlertPolicyListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SynapseSqlPoolSecurityAlertPolicyListResult(IReadOnlyList<SynapseSqlPoolSecurityAlertPolicyData> value, string nextLink)
