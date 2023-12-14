@@ -92,7 +92,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
             Assert.AreEqual(204, response.Status);
         }
         [Test]
-        public async System.Threading.Tasks.Task DisocRunListTest()
+        public async System.Threading.Tasks.Task DiscoRunListTest()
         {
             var response = client.GetRunsAsync(knownGroupName).ConfigureAwait(false);
             await foreach (var run in response)

@@ -67,7 +67,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
         }
 
         [Test]
-        public async System.Threading.Tasks.Task DataConenctionsCreateOrReplaceTest()
+        public async System.Threading.Tasks.Task DataConnectionsCreateOrReplaceTest()
         {
             AzureDataExplorerDataConnectionProperties properties = new AzureDataExplorerDataConnectionProperties();
             properties.ClusterName = ClusterName;
