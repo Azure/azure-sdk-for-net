@@ -2032,8 +2032,8 @@ namespace Azure.Messaging.EventHubs.Tests
             await Task.WhenAny(handlerCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            Assert.That(async () => await InvokeTryStopProcessingPartitionAsync(mockProcessor.Object, partition.PartitionId, Processor.ProcessingStoppedReason.OwnershipLost, cancellationSource.Token), Is.True, "Processing should have been stopped.");
-            Assert.That(async () => await partitionProcessor.ProcessingTask, Throws.InstanceOf<TaskCanceledException>(), "The partition processor should have been canceled.");
+            Assert.That(async () => await InvokeStopProcessingPartitionAsync(mockProcessor.Object, partition.PartitionId, Processor.ProcessingStoppedReason.OwnershipLost, cancellationSource.Token), Throws.Nothing, "Processing should have been stopped.");
+            Assert.That(partitionProcessor.CancellationSource.IsCancellationRequested, Is.True, "The partition processor should have been canceled.");
 
             mockLogger
                 .Verify(log => log.PartitionProcessorStoppingCancellationWarning(
