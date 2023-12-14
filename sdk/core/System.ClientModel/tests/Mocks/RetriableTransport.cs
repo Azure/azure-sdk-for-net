@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace ClientModel.TestHelpers.Mocks;
+namespace ClientModel.Tests.Mocks;
 
 internal class RetriableTransport : PipelineTransport
 {

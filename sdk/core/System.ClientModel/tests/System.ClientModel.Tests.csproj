@@ -27,4 +27,8 @@
     <None Remove="internal.perf/**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TestHelpers\" />
+  </ItemGroup>
+
 </Project>

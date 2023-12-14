@@ -5,7 +5,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 
-namespace ClientModel.TestHelpers.Mocks;
+namespace ClientModel.Tests.Mocks;
 
 internal class MockPipelineRequest : PipelineRequest
 {

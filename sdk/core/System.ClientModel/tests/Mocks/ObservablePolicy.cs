@@ -5,7 +5,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ClientModel.TestHelpers.Mocks;
+namespace ClientModel.Tests.Mocks;
 
 internal class ObservablePolicy : PipelinePolicy
 {

@@ -5,7 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
-namespace ClientModel.TestHelpers.Mocks;
+namespace ClientModel.Tests.Mocks;
 
 public class MockMessageHeaders : MessageHeaders
 {
