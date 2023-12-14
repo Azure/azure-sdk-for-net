@@ -11,16 +11,16 @@ using Azure.Core;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> A pool of Dev Boxes. </summary>
-    public partial class DevBoxesPool
+    public partial class DevBoxPool
     {
-        /// <summary> Initializes a new instance of <see cref="DevBoxesPool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevBoxPool"/>. </summary>
         /// <param name="location"> Azure region where Dev Boxes in the pool are located. </param>
         /// <param name="healthStatus">
         /// Overall health status of the Pool. Indicates whether or not the Pool is
         /// available to create Dev Boxes.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        internal DevBoxesPool(string location, PoolHealthStatus healthStatus)
+        internal DevBoxPool(string location, PoolHealthStatus healthStatus)
         {
             Argument.AssertNotNull(location, nameof(location));
 
@@ -28,7 +28,7 @@ namespace Azure.Developer.DevCenter.Models
             HealthStatus = healthStatus;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxesPool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevBoxPool"/>. </summary>
         /// <param name="name"> Pool name. </param>
         /// <param name="location"> Azure region where Dev Boxes in the pool are located. </param>
         /// <param name="osType"> The operating system type of Dev Boxes in this pool. </param>
@@ -36,7 +36,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="hibernateSupport"> Indicates whether hibernate is enabled/disabled or unknown. </param>
         /// <param name="storageProfile"> Storage settings for Dev Box created in this pool. </param>
         /// <param name="imageReference"> Image settings for Dev Boxes create in this pool. </param>
-        /// <param name="localAdministrator">
+        /// <param name="localAdministratorStatus">
         /// Indicates whether owners of Dev Boxes in this pool are local administrators on
         /// the Dev Boxes.
         /// </param>
@@ -45,16 +45,16 @@ namespace Azure.Developer.DevCenter.Models
         /// Overall health status of the Pool. Indicates whether or not the Pool is
         /// available to create Dev Boxes.
         /// </param>
-        internal DevBoxesPool(string name, string location, OsType? osType, HardwareProfile hardwareProfile, HibernateSupport? hibernateSupport, StorageProfile storageProfile, ImageReference imageReference, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect, PoolHealthStatus healthStatus)
+        internal DevBoxPool(string name, string location, string osType, DevBoxHardwareProfile hardwareProfile, HibernateSupport? hibernateSupport, DevBoxStorageProfile storageProfile, DevBoxImageReference imageReference, string localAdministratorStatus, StopOnDisconnectConfiguration stopOnDisconnect, PoolHealthStatus healthStatus)
         {
             Name = name;
             Location = location;
-            OsType = osType;
+            OSType = osType;
             HardwareProfile = hardwareProfile;
             HibernateSupport = hibernateSupport;
             StorageProfile = storageProfile;
             ImageReference = imageReference;
-            LocalAdministrator = localAdministrator;
+            LocalAdministratorStatus = localAdministratorStatus;
             StopOnDisconnect = stopOnDisconnect;
             HealthStatus = healthStatus;
         }
@@ -64,20 +64,20 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> Azure region where Dev Boxes in the pool are located. </summary>
         public string Location { get; }
         /// <summary> The operating system type of Dev Boxes in this pool. </summary>
-        public OsType? OsType { get; }
+        public string OSType { get; }
         /// <summary> Hardware settings for the Dev Boxes created in this pool. </summary>
-        public HardwareProfile HardwareProfile { get; }
+        public DevBoxHardwareProfile HardwareProfile { get; }
         /// <summary> Indicates whether hibernate is enabled/disabled or unknown. </summary>
         public HibernateSupport? HibernateSupport { get; }
         /// <summary> Storage settings for Dev Box created in this pool. </summary>
-        public StorageProfile StorageProfile { get; }
+        public DevBoxStorageProfile StorageProfile { get; }
         /// <summary> Image settings for Dev Boxes create in this pool. </summary>
-        public ImageReference ImageReference { get; }
+        public DevBoxImageReference ImageReference { get; }
         /// <summary>
         /// Indicates whether owners of Dev Boxes in this pool are local administrators on
         /// the Dev Boxes.
         /// </summary>
-        public LocalAdminStatus? LocalAdministrator { get; }
+        public string LocalAdministratorStatus { get; }
         /// <summary> Stop on disconnect configuration settings for Dev Boxes created in this pool. </summary>
         public StopOnDisconnectConfiguration StopOnDisconnect { get; }
         /// <summary>

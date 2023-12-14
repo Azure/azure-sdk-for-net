@@ -30,7 +30,7 @@ namespace Azure.Developer.DevCenter.Models
 #endif
             }
             writer.WritePropertyName("environmentType"u8);
-            writer.WriteStringValue(EnvironmentType);
+            writer.WriteStringValue(EnvironmentTypeName);
             writer.WritePropertyName("catalogName"u8);
             writer.WriteStringValue(CatalogName);
             writer.WritePropertyName("environmentDefinitionName"u8);
@@ -47,8 +47,8 @@ namespace Azure.Developer.DevCenter.Models
             Optional<BinaryData> parameters = default;
             Optional<string> name = default;
             string environmentType = default;
-            Optional<string> user = default;
-            Optional<string> provisioningState = default;
+            Optional<Guid> user = default;
+            Optional<EnvironmentProvisioningState> provisioningState = default;
             Optional<string> resourceGroupId = default;
             string catalogName = default;
             string environmentDefinitionName = default;
@@ -76,12 +76,20 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("user"u8))
                 {
-                    user = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    user = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
                 {
-                    provisioningState = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new EnvironmentProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceGroupId"u8))
@@ -109,7 +117,7 @@ namespace Azure.Developer.DevCenter.Models
                     continue;
                 }
             }
-            return new DevCenterEnvironment(parameters.Value, name.Value, environmentType, user.Value, provisioningState.Value, resourceGroupId.Value, catalogName, environmentDefinitionName, error.Value);
+            return new DevCenterEnvironment(parameters.Value, name.Value, environmentType, Optional.ToNullable(user), Optional.ToNullable(provisioningState), resourceGroupId.Value, catalogName, environmentDefinitionName, error.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

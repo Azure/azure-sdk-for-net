@@ -285,7 +285,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            Response<EnvironmentDefinitionModel> response = client.GetEnvironmentDefinition("<projectName>", "<catalogName>", "<definitionName>");
+            Response<EnvironmentDefinition> response = client.GetEnvironmentDefinition("<projectName>", "<catalogName>", "<definitionName>");
         }
 
         [Test]
@@ -296,7 +296,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            Response<EnvironmentDefinitionModel> response = await client.GetEnvironmentDefinitionAsync("<projectName>", "<catalogName>", "<definitionName>");
+            Response<EnvironmentDefinition> response = await client.GetEnvironmentDefinitionAsync("<projectName>", "<catalogName>", "<definitionName>");
         }
 
         [Test]
@@ -361,7 +361,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            Response<EnvironmentDefinitionModel> response = client.GetEnvironmentDefinition("<projectName>", "<catalogName>", "<definitionName>");
+            Response<EnvironmentDefinition> response = client.GetEnvironmentDefinition("<projectName>", "<catalogName>", "<definitionName>");
         }
 
         [Test]
@@ -372,7 +372,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            Response<EnvironmentDefinitionModel> response = await client.GetEnvironmentDefinitionAsync("<projectName>", "<catalogName>", "<definitionName>");
+            Response<EnvironmentDefinition> response = await client.GetEnvironmentDefinitionAsync("<projectName>", "<catalogName>", "<definitionName>");
         }
 
         [Test]
@@ -805,7 +805,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            foreach (EnvironmentDefinitionModel item in client.GetEnvironmentDefinitions("<projectName>"))
+            foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitions("<projectName>"))
             {
             }
         }
@@ -818,7 +818,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            await foreach (EnvironmentDefinitionModel item in client.GetEnvironmentDefinitionsAsync("<projectName>"))
+            await foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsAsync("<projectName>"))
             {
             }
         }
@@ -887,7 +887,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            foreach (EnvironmentDefinitionModel item in client.GetEnvironmentDefinitions("<projectName>", maxCount: 1234))
+            foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitions("<projectName>", maxCount: 1234))
             {
             }
         }
@@ -900,7 +900,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            await foreach (EnvironmentDefinitionModel item in client.GetEnvironmentDefinitionsAsync("<projectName>", maxCount: 1234))
+            await foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsAsync("<projectName>", maxCount: 1234))
             {
             }
         }
@@ -947,7 +947,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            foreach (EnvironmentDefinitionModel item in client.GetEnvironmentDefinitionsByCatalog("<projectName>", "<catalogName>"))
+            foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsByCatalog("<projectName>", "<catalogName>"))
             {
             }
         }
@@ -960,7 +960,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            await foreach (EnvironmentDefinitionModel item in client.GetEnvironmentDefinitionsByCatalogAsync("<projectName>", "<catalogName>"))
+            await foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsByCatalogAsync("<projectName>", "<catalogName>"))
             {
             }
         }
@@ -1029,7 +1029,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            foreach (EnvironmentDefinitionModel item in client.GetEnvironmentDefinitionsByCatalog("<projectName>", "<catalogName>", maxCount: 1234))
+            foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsByCatalog("<projectName>", "<catalogName>", maxCount: 1234))
             {
             }
         }
@@ -1042,7 +1042,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            await foreach (EnvironmentDefinitionModel item in client.GetEnvironmentDefinitionsByCatalogAsync("<projectName>", "<catalogName>", maxCount: 1234))
+            await foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsByCatalogAsync("<projectName>", "<catalogName>", maxCount: 1234))
             {
             }
         }
@@ -1089,7 +1089,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            foreach (EnvironmentType item in client.GetEnvironmentTypes("<projectName>"))
+            foreach (DevCenterEnvironmentType item in client.GetEnvironmentTypes("<projectName>"))
             {
             }
         }
@@ -1102,7 +1102,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            await foreach (EnvironmentType item in client.GetEnvironmentTypesAsync("<projectName>"))
+            await foreach (DevCenterEnvironmentType item in client.GetEnvironmentTypesAsync("<projectName>"))
             {
             }
         }
@@ -1149,7 +1149,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            foreach (EnvironmentType item in client.GetEnvironmentTypes("<projectName>", maxCount: 1234))
+            foreach (DevCenterEnvironmentType item in client.GetEnvironmentTypes("<projectName>", maxCount: 1234))
             {
             }
         }
@@ -1162,7 +1162,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            await foreach (EnvironmentType item in client.GetEnvironmentTypesAsync("<projectName>", maxCount: 1234))
+            await foreach (DevCenterEnvironmentType item in client.GetEnvironmentTypesAsync("<projectName>", maxCount: 1234))
             {
             }
         }

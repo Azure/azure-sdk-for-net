@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class DevBoxesPool
+    public partial class DevBoxPool
     {
-        internal static DevBoxesPool DeserializeDevBoxesPool(JsonElement element)
+        internal static DevBoxPool DeserializeDevBoxPool(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -21,12 +21,12 @@ namespace Azure.Developer.DevCenter.Models
             }
             string name = default;
             string location = default;
-            Optional<OsType> osType = default;
-            Optional<HardwareProfile> hardwareProfile = default;
+            Optional<string> osType = default;
+            Optional<DevBoxHardwareProfile> hardwareProfile = default;
             Optional<HibernateSupport> hibernateSupport = default;
-            Optional<StorageProfile> storageProfile = default;
-            Optional<ImageReference> imageReference = default;
-            Optional<LocalAdminStatus> localAdministrator = default;
+            Optional<DevBoxStorageProfile> storageProfile = default;
+            Optional<DevBoxImageReference> imageReference = default;
+            Optional<string> localAdministrator = default;
             Optional<StopOnDisconnectConfiguration> stopOnDisconnect = default;
             PoolHealthStatus healthStatus = default;
             foreach (var property in element.EnumerateObject())
@@ -43,11 +43,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("osType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    osType = new OsType(property.Value.GetString());
+                    osType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("hardwareProfile"u8))
@@ -56,7 +52,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property.Value);
+                    hardwareProfile = DevBoxHardwareProfile.DeserializeDevBoxHardwareProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("hibernateSupport"u8))
@@ -74,7 +70,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    storageProfile = StorageProfile.DeserializeStorageProfile(property.Value);
+                    storageProfile = DevBoxStorageProfile.DeserializeDevBoxStorageProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("imageReference"u8))
@@ -83,16 +79,12 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    imageReference = ImageReference.DeserializeImageReference(property.Value);
+                    imageReference = DevBoxImageReference.DeserializeDevBoxImageReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("localAdministrator"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    localAdministrator = new LocalAdminStatus(property.Value.GetString());
+                    localAdministrator = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("stopOnDisconnect"u8))
@@ -110,15 +102,15 @@ namespace Azure.Developer.DevCenter.Models
                     continue;
                 }
             }
-            return new DevBoxesPool(name, location, Optional.ToNullable(osType), hardwareProfile.Value, Optional.ToNullable(hibernateSupport), storageProfile.Value, imageReference.Value, Optional.ToNullable(localAdministrator), stopOnDisconnect.Value, healthStatus);
+            return new DevBoxPool(name, location, osType.Value, hardwareProfile.Value, Optional.ToNullable(hibernateSupport), storageProfile.Value, imageReference.Value, localAdministrator.Value, stopOnDisconnect.Value, healthStatus);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DevBoxesPool FromResponse(Response response)
+        internal static DevBoxPool FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDevBoxesPool(document.RootElement);
+            return DeserializeDevBoxPool(document.RootElement);
         }
     }
 }

@@ -45,13 +45,13 @@ namespace Azure.Developer.DevCenter.Models
         /// Virtual Network it is attached to.
         /// </param>
         /// <param name="osType"> The operating system type of this Dev Box. </param>
-        /// <param name="user"> The AAD object id of the user this Dev Box is assigned to. </param>
+        /// <param name="userId"> The AAD object id of the user this Dev Box is assigned to. </param>
         /// <param name="hardwareProfile"> Information about the Dev Box's hardware resources. </param>
         /// <param name="storageProfile"> Storage settings for this Dev Box. </param>
         /// <param name="imageReference"> Information about the image used for this Dev Box. </param>
         /// <param name="createdTime"> Creation time of this Dev Box. </param>
-        /// <param name="localAdministrator"> Indicates whether the owner of the Dev Box is a local administrator. </param>
-        internal DevBox(string name, string projectName, string poolName, HibernateSupport? hibernateSupport, string provisioningState, string actionState, PowerState? powerState, string uniqueId, ResponseError error, string location, OsType? osType, string user, HardwareProfile hardwareProfile, StorageProfile storageProfile, ImageReference imageReference, DateTimeOffset? createdTime, LocalAdminStatus? localAdministrator)
+        /// <param name="localAdministratorStatus"> Indicates whether the owner of the Dev Box is a local administrator. </param>
+        internal DevBox(string name, string projectName, string poolName, HibernateSupport? hibernateSupport, DevBoxProvisioningState? provisioningState, string actionState, PowerState powerState, Guid? uniqueId, ResponseError error, string location, string osType, Guid? userId, DevBoxHardwareProfile hardwareProfile, DevBoxStorageProfile storageProfile, DevBoxImageReference imageReference, DateTimeOffset? createdTime, string localAdministratorStatus)
         {
             Name = name;
             ProjectName = projectName;
@@ -63,13 +63,13 @@ namespace Azure.Developer.DevCenter.Models
             UniqueId = uniqueId;
             Error = error;
             Location = location;
-            OsType = osType;
-            User = user;
+            OSType = osType;
+            UserId = userId;
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
             ImageReference = imageReference;
             CreatedTime = createdTime;
-            LocalAdministrator = localAdministrator;
+            LocalAdministratorStatus = localAdministratorStatus;
         }
 
         /// <summary> Display name for the Dev Box. </summary>
@@ -81,19 +81,19 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> Indicates whether hibernate is enabled/disabled or unknown. </summary>
         public HibernateSupport? HibernateSupport { get; }
         /// <summary> The current provisioning state of the Dev Box. </summary>
-        public string ProvisioningState { get; }
+        public DevBoxProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// The current action state of the Dev Box. This is state is based on previous
         /// action performed by user.
         /// </summary>
         public string ActionState { get; }
         /// <summary> The current power state of the Dev Box. </summary>
-        public PowerState? PowerState { get; }
+        public PowerState PowerState { get; }
         /// <summary>
         /// A unique identifier for the Dev Box. This is a GUID-formatted string (e.g.
         /// 00000000-0000-0000-0000-000000000000).
         /// </summary>
-        public string UniqueId { get; }
+        public Guid? UniqueId { get; }
         /// <summary> Provisioning or action error details. Populated only for error states. </summary>
         public ResponseError Error { get; }
         /// <summary>
@@ -102,18 +102,18 @@ namespace Azure.Developer.DevCenter.Models
         /// </summary>
         public string Location { get; }
         /// <summary> The operating system type of this Dev Box. </summary>
-        public OsType? OsType { get; }
+        public string OSType { get; }
         /// <summary> The AAD object id of the user this Dev Box is assigned to. </summary>
-        public string User { get; }
+        public Guid? UserId { get; }
         /// <summary> Information about the Dev Box's hardware resources. </summary>
-        public HardwareProfile HardwareProfile { get; }
+        public DevBoxHardwareProfile HardwareProfile { get; }
         /// <summary> Storage settings for this Dev Box. </summary>
-        public StorageProfile StorageProfile { get; }
+        public DevBoxStorageProfile StorageProfile { get; }
         /// <summary> Information about the image used for this Dev Box. </summary>
-        public ImageReference ImageReference { get; }
+        public DevBoxImageReference ImageReference { get; }
         /// <summary> Creation time of this Dev Box. </summary>
         public DateTimeOffset? CreatedTime { get; }
         /// <summary> Indicates whether the owner of the Dev Box is a local administrator. </summary>
-        public LocalAdminStatus? LocalAdministrator { get; set; }
+        public string LocalAdministratorStatus { get; set; }
     }
 }

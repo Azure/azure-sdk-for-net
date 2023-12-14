@@ -30,14 +30,14 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="actionType"> The action that will be taken. </param>
         /// <param name="sourceId"> The id of the resource which triggered this action. </param>
         /// <param name="suspendedUntil"> The earliest time that the action could occur (UTC). </param>
-        /// <param name="next"> Details about the next run of this action. </param>
-        internal DevBoxAction(string name, DevBoxActionType actionType, string sourceId, DateTimeOffset? suspendedUntil, DevBoxNextAction next)
+        /// <param name="nextAction"> Details about the next run of this action. </param>
+        internal DevBoxAction(string name, DevBoxActionType actionType, string sourceId, DateTimeOffset? suspendedUntil, DevBoxNextAction nextAction)
         {
             Name = name;
             ActionType = actionType;
             SourceId = sourceId;
             SuspendedUntil = suspendedUntil;
-            Next = next;
+            NextAction = nextAction;
         }
 
         /// <summary> The name of the action. </summary>
@@ -49,6 +49,6 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> The earliest time that the action could occur (UTC). </summary>
         public DateTimeOffset? SuspendedUntil { get; }
         /// <summary> Details about the next run of this action. </summary>
-        public DevBoxNextAction Next { get; }
+        public DevBoxNextAction NextAction { get; }
     }
 }

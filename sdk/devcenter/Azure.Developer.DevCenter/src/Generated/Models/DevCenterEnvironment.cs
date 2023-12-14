@@ -15,17 +15,17 @@ namespace Azure.Developer.DevCenter.Models
     public partial class DevCenterEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="DevCenterEnvironment"/>. </summary>
-        /// <param name="environmentType"> Environment type. </param>
+        /// <param name="environmentTypeName"> Environment type. </param>
         /// <param name="catalogName"> Name of the catalog. </param>
         /// <param name="environmentDefinitionName"> Name of the environment definition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="environmentType"/>, <paramref name="catalogName"/> or <paramref name="environmentDefinitionName"/> is null. </exception>
-        public DevCenterEnvironment(string environmentType, string catalogName, string environmentDefinitionName)
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/>, <paramref name="catalogName"/> or <paramref name="environmentDefinitionName"/> is null. </exception>
+        public DevCenterEnvironment(string environmentTypeName, string catalogName, string environmentDefinitionName)
         {
-            Argument.AssertNotNull(environmentType, nameof(environmentType));
+            Argument.AssertNotNull(environmentTypeName, nameof(environmentTypeName));
             Argument.AssertNotNull(catalogName, nameof(catalogName));
             Argument.AssertNotNull(environmentDefinitionName, nameof(environmentDefinitionName));
 
-            EnvironmentType = environmentType;
+            EnvironmentTypeName = environmentTypeName;
             CatalogName = catalogName;
             EnvironmentDefinitionName = environmentDefinitionName;
         }
@@ -33,19 +33,19 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="DevCenterEnvironment"/>. </summary>
         /// <param name="parameters"> Parameters object for the environment. </param>
         /// <param name="name"> Environment name. </param>
-        /// <param name="environmentType"> Environment type. </param>
-        /// <param name="user"> The AAD object id of the owner of this Environment. </param>
+        /// <param name="environmentTypeName"> Environment type. </param>
+        /// <param name="userId"> The AAD object id of the owner of this Environment. </param>
         /// <param name="provisioningState"> The provisioning state of the environment. </param>
         /// <param name="resourceGroupId"> The identifier of the resource group containing the environment's resources. </param>
         /// <param name="catalogName"> Name of the catalog. </param>
         /// <param name="environmentDefinitionName"> Name of the environment definition. </param>
         /// <param name="error"> Provisioning error details. Populated only for error states. </param>
-        internal DevCenterEnvironment(BinaryData parameters, string name, string environmentType, string user, string provisioningState, string resourceGroupId, string catalogName, string environmentDefinitionName, ResponseError error)
+        internal DevCenterEnvironment(BinaryData parameters, string name, string environmentTypeName, Guid? userId, EnvironmentProvisioningState? provisioningState, string resourceGroupId, string catalogName, string environmentDefinitionName, ResponseError error)
         {
             Parameters = parameters;
             Name = name;
-            EnvironmentType = environmentType;
-            User = user;
+            EnvironmentTypeName = environmentTypeName;
+            UserId = userId;
             ProvisioningState = provisioningState;
             ResourceGroupId = resourceGroupId;
             CatalogName = catalogName;
@@ -87,11 +87,11 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> Environment name. </summary>
         public string Name { get; }
         /// <summary> Environment type. </summary>
-        public string EnvironmentType { get; set; }
+        public string EnvironmentTypeName { get; set; }
         /// <summary> The AAD object id of the owner of this Environment. </summary>
-        public string User { get; }
+        public Guid? UserId { get; }
         /// <summary> The provisioning state of the environment. </summary>
-        public string ProvisioningState { get; }
+        public EnvironmentProvisioningState? ProvisioningState { get; }
         /// <summary> The identifier of the resource group containing the environment's resources. </summary>
         public string ResourceGroupId { get; }
         /// <summary> Name of the catalog. </summary>

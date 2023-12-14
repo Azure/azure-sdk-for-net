@@ -12,32 +12,33 @@ using Azure.Core;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Properties of an Environment Definition parameter. </summary>
-    public partial class EnvironmentDefinitionParameterModel
+    public partial class EnvironmentDefinitionParameter
     {
-        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionParameterModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionParameter"/>. </summary>
         /// <param name="id"> Unique ID of the parameter. </param>
-        /// <param name="type">
+        /// <param name="parameterType">
         /// A string of one of the basic JSON types (number, integer, array, object,
         /// boolean, string)
         /// </param>
         /// <param name="required"> Whether or not this parameter is required. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal EnvironmentDefinitionParameterModel(string id, ParameterType type, bool required)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="parameterType"/> is null. </exception>
+        internal EnvironmentDefinitionParameter(string id, string parameterType, bool required)
         {
             Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(parameterType, nameof(parameterType));
 
             Id = id;
-            Type = type;
+            ParameterType = parameterType;
             Required = required;
             Allowed = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionParameterModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionParameter"/>. </summary>
         /// <param name="id"> Unique ID of the parameter. </param>
         /// <param name="name"> Display name of the parameter. </param>
         /// <param name="description"> Description of the parameter. </param>
-        /// <param name="default"> Default value of the parameter. </param>
-        /// <param name="type">
+        /// <param name="defaultValue"> Default value of the parameter. </param>
+        /// <param name="parameterType">
         /// A string of one of the basic JSON types (number, integer, array, object,
         /// boolean, string)
         /// </param>
@@ -47,13 +48,13 @@ namespace Azure.Developer.DevCenter.Models
         /// </param>
         /// <param name="required"> Whether or not this parameter is required. </param>
         /// <param name="allowed"> An array of allowed values. </param>
-        internal EnvironmentDefinitionParameterModel(string id, string name, string description, string @default, ParameterType type, bool? readOnly, bool required, IReadOnlyList<string> allowed)
+        internal EnvironmentDefinitionParameter(string id, string name, string description, BinaryData defaultValue, string parameterType, bool? readOnly, bool required, IReadOnlyList<string> allowed)
         {
             Id = id;
             Name = name;
             Description = description;
-            Default = @default;
-            Type = type;
+            DefaultValue = defaultValue;
+            ParameterType = parameterType;
             ReadOnly = readOnly;
             Required = required;
             Allowed = allowed;
@@ -65,13 +66,42 @@ namespace Azure.Developer.DevCenter.Models
         public string Name { get; }
         /// <summary> Description of the parameter. </summary>
         public string Description { get; }
-        /// <summary> Default value of the parameter. </summary>
-        public string Default { get; }
+        /// <summary>
+        /// Default value of the parameter
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData DefaultValue { get; }
         /// <summary>
         /// A string of one of the basic JSON types (number, integer, array, object,
         /// boolean, string)
         /// </summary>
-        public ParameterType Type { get; }
+        public string ParameterType { get; }
         /// <summary>
         /// Whether or not this parameter is read-only.  If true, default should have a
         /// value.

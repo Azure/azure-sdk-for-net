@@ -20,7 +20,7 @@ namespace Azure.Developer.DevCenter.Models
                 return null;
             }
             string name = default;
-            DevBoxActionDelayResultStatus result = default;
+            string result = default;
             Optional<DevBoxAction> action = default;
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
@@ -32,7 +32,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("result"u8))
                 {
-                    result = new DevBoxActionDelayResultStatus(property.Value.GetString());
+                    result = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("action"u8))

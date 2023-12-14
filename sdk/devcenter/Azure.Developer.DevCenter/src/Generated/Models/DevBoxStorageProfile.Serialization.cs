@@ -11,58 +11,47 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class HardwareProfile : IUtf8JsonSerializable
+    public partial class DevBoxStorageProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(OSDisk))
+            {
+                writer.WritePropertyName("osDisk"u8);
+                writer.WriteObjectValue(OSDisk);
+            }
             writer.WriteEndObject();
         }
 
-        internal static HardwareProfile DeserializeHardwareProfile(JsonElement element)
+        internal static DevBoxStorageProfile DeserializeDevBoxStorageProfile(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> skuName = default;
-            Optional<int> vcpUs = default;
-            Optional<int> memoryGB = default;
+            Optional<OSDisk> osDisk = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("skuName"u8))
-                {
-                    skuName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("vCPUs"u8))
+                if (property.NameEquals("osDisk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vcpUs = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("memoryGB"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    memoryGB = property.Value.GetInt32();
+                    osDisk = OSDisk.DeserializeOSDisk(property.Value);
                     continue;
                 }
             }
-            return new HardwareProfile(skuName.Value, Optional.ToNullable(vcpUs), Optional.ToNullable(memoryGB));
+            return new DevBoxStorageProfile(osDisk.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static HardwareProfile FromResponse(Response response)
+        internal static DevBoxStorageProfile FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeHardwareProfile(document.RootElement);
+            return DeserializeDevBoxStorageProfile(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

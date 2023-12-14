@@ -11,47 +11,62 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class StorageProfile : IUtf8JsonSerializable
+    public partial class DevBoxHardwareProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OsDisk))
-            {
-                writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue(OsDisk);
-            }
             writer.WriteEndObject();
         }
 
-        internal static StorageProfile DeserializeStorageProfile(JsonElement element)
+        internal static DevBoxHardwareProfile DeserializeDevBoxHardwareProfile(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<OSDisk> osDisk = default;
+            Optional<SkuName> skuName = default;
+            Optional<int> vcpUs = default;
+            Optional<int> memoryGB = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("osDisk"u8))
+                if (property.NameEquals("skuName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osDisk = OSDisk.DeserializeOSDisk(property.Value);
+                    skuName = new SkuName(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("vCPUs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vcpUs = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("memoryGB"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    memoryGB = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new StorageProfile(osDisk.Value);
+            return new DevBoxHardwareProfile(Optional.ToNullable(skuName), Optional.ToNullable(vcpUs), Optional.ToNullable(memoryGB));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static StorageProfile FromResponse(Response response)
+        internal static DevBoxHardwareProfile FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeStorageProfile(document.RootElement);
+            return DeserializeDevBoxHardwareProfile(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

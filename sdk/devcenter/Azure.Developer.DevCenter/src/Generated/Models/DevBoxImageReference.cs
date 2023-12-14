@@ -10,25 +10,25 @@ using System;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Specifies information about the image used. </summary>
-    public partial class ImageReference
+    public partial class DevBoxImageReference
     {
-        /// <summary> Initializes a new instance of <see cref="ImageReference"/>. </summary>
-        public ImageReference()
+        /// <summary> Initializes a new instance of <see cref="DevBoxImageReference"/>. </summary>
+        public DevBoxImageReference()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevBoxImageReference"/>. </summary>
         /// <param name="name"> The name of the image used. </param>
         /// <param name="version"> The version of the image. </param>
         /// <param name="operatingSystem"> The operating system of the image. </param>
         /// <param name="osBuildNumber"> The operating system build number of the image. </param>
         /// <param name="publishedDate"> The datetime that the backing image version was published. </param>
-        internal ImageReference(string name, string version, string operatingSystem, string osBuildNumber, DateTimeOffset? publishedDate)
+        internal DevBoxImageReference(string name, string version, string operatingSystem, string osBuildNumber, DateTimeOffset? publishedDate)
         {
             Name = name;
             Version = version;
             OperatingSystem = operatingSystem;
-            OsBuildNumber = osBuildNumber;
+            OSBuildNumber = osBuildNumber;
             PublishedDate = publishedDate;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> The operating system of the image. </summary>
         public string OperatingSystem { get; }
         /// <summary> The operating system build number of the image. </summary>
-        public string OsBuildNumber { get; }
+        public string OSBuildNumber { get; }
         /// <summary> The datetime that the backing image version was published. </summary>
         public DateTimeOffset? PublishedDate { get; }
     }

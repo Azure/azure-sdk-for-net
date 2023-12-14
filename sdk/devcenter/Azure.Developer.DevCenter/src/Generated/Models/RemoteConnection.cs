@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Provides remote connection information for a Dev Box. </summary>
@@ -16,17 +18,17 @@ namespace Azure.Developer.DevCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RemoteConnection"/>. </summary>
-        /// <param name="webUrl"> URL to open a browser based RDP session. </param>
-        /// <param name="rdpConnectionUrl"> Link to open a Remote Desktop session. </param>
-        internal RemoteConnection(string webUrl, string rdpConnectionUrl)
+        /// <param name="webUri"> URL to open a browser based RDP session. </param>
+        /// <param name="rdpConnectionUri"> Link to open a Remote Desktop session. </param>
+        internal RemoteConnection(Uri webUri, Uri rdpConnectionUri)
         {
-            WebUrl = webUrl;
-            RdpConnectionUrl = rdpConnectionUrl;
+            WebUri = webUri;
+            RdpConnectionUri = rdpConnectionUri;
         }
 
         /// <summary> URL to open a browser based RDP session. </summary>
-        public string WebUrl { get; }
+        public Uri WebUri { get; }
         /// <summary> Link to open a Remote Desktop session. </summary>
-        public string RdpConnectionUrl { get; }
+        public Uri RdpConnectionUri { get; }
     }
 }

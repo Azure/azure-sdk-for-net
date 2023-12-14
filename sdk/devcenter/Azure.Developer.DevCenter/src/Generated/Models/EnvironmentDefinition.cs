@@ -12,14 +12,14 @@ using Azure.Core;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> An environment definition. </summary>
-    public partial class EnvironmentDefinitionModel
+    public partial class EnvironmentDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinition"/>. </summary>
         /// <param name="id"> The ID of the environment definition. </param>
         /// <param name="name"> Name of the environment definition. </param>
         /// <param name="catalogName"> Name of the catalog. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/> or <paramref name="catalogName"/> is null. </exception>
-        internal EnvironmentDefinitionModel(string id, string name, string catalogName)
+        internal EnvironmentDefinition(string id, string name, string catalogName)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(name, nameof(name));
@@ -28,10 +28,10 @@ namespace Azure.Developer.DevCenter.Models
             Id = id;
             Name = name;
             CatalogName = catalogName;
-            Parameters = new ChangeTrackingList<EnvironmentDefinitionParameterModel>();
+            Parameters = new ChangeTrackingList<EnvironmentDefinitionParameter>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinitionModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentDefinition"/>. </summary>
         /// <param name="id"> The ID of the environment definition. </param>
         /// <param name="name"> Name of the environment definition. </param>
         /// <param name="catalogName"> Name of the catalog. </param>
@@ -39,7 +39,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="parameters"> Input parameters passed to an environment. </param>
         /// <param name="parametersSchema"> JSON schema defining the parameters object passed to an environment. </param>
         /// <param name="templatePath"> Path to the Environment Definition entrypoint file. </param>
-        internal EnvironmentDefinitionModel(string id, string name, string catalogName, string description, IReadOnlyList<EnvironmentDefinitionParameterModel> parameters, string parametersSchema, string templatePath)
+        internal EnvironmentDefinition(string id, string name, string catalogName, string description, IReadOnlyList<EnvironmentDefinitionParameter> parameters, BinaryData parametersSchema, string templatePath)
         {
             Id = id;
             Name = name;
@@ -59,9 +59,24 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> A short description of the environment definition. </summary>
         public string Description { get; }
         /// <summary> Input parameters passed to an environment. </summary>
-        public IReadOnlyList<EnvironmentDefinitionParameterModel> Parameters { get; }
-        /// <summary> JSON schema defining the parameters object passed to an environment. </summary>
-        public string ParametersSchema { get; }
+        public IReadOnlyList<EnvironmentDefinitionParameter> Parameters { get; }
+        /// <summary>
+        /// JSON schema defining the parameters object passed to an environment.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
+        /// <description>Creates a payload of "AQID".</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData ParametersSchema { get; }
         /// <summary> Path to the Environment Definition entrypoint file. </summary>
         public string TemplatePath { get; }
     }

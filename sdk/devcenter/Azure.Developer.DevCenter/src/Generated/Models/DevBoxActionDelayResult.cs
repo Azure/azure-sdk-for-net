@@ -15,34 +15,35 @@ namespace Azure.Developer.DevCenter.Models
     public partial class DevBoxActionDelayResult
     {
         /// <summary> Initializes a new instance of <see cref="DevBoxActionDelayResult"/>. </summary>
-        /// <param name="name"> The name of the action. </param>
+        /// <param name="actionName"> The name of the action. </param>
         /// <param name="result"> The result of the delay operation on this action. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal DevBoxActionDelayResult(string name, DevBoxActionDelayResultStatus result)
+        /// <exception cref="ArgumentNullException"> <paramref name="actionName"/> or <paramref name="result"/> is null. </exception>
+        internal DevBoxActionDelayResult(string actionName, string result)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(actionName, nameof(actionName));
+            Argument.AssertNotNull(result, nameof(result));
 
-            Name = name;
+            ActionName = actionName;
             Result = result;
         }
 
         /// <summary> Initializes a new instance of <see cref="DevBoxActionDelayResult"/>. </summary>
-        /// <param name="name"> The name of the action. </param>
+        /// <param name="actionName"> The name of the action. </param>
         /// <param name="result"> The result of the delay operation on this action. </param>
         /// <param name="action"> The delayed action. </param>
         /// <param name="error"> Information about the error that occurred. Only populated on error. </param>
-        internal DevBoxActionDelayResult(string name, DevBoxActionDelayResultStatus result, DevBoxAction action, ResponseError error)
+        internal DevBoxActionDelayResult(string actionName, string result, DevBoxAction action, ResponseError error)
         {
-            Name = name;
+            ActionName = actionName;
             Result = result;
             Action = action;
             Error = error;
         }
 
         /// <summary> The name of the action. </summary>
-        public string Name { get; }
+        public string ActionName { get; }
         /// <summary> The result of the delay operation on this action. </summary>
-        public DevBoxActionDelayResultStatus Result { get; }
+        public string Result { get; }
         /// <summary> The delayed action. </summary>
         public DevBoxAction Action { get; }
         /// <summary> Information about the error that occurred. Only populated on error. </summary>

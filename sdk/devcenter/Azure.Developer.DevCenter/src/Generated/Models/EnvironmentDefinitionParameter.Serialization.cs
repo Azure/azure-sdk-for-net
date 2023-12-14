@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -12,9 +13,9 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class EnvironmentDefinitionParameterModel
+    public partial class EnvironmentDefinitionParameter
     {
-        internal static EnvironmentDefinitionParameterModel DeserializeEnvironmentDefinitionParameterModel(JsonElement element)
+        internal static EnvironmentDefinitionParameter DeserializeEnvironmentDefinitionParameter(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -23,8 +24,8 @@ namespace Azure.Developer.DevCenter.Models
             string id = default;
             Optional<string> name = default;
             Optional<string> description = default;
-            Optional<string> @default = default;
-            ParameterType type = default;
+            Optional<BinaryData> @default = default;
+            string type = default;
             Optional<bool> readOnly = default;
             bool required = default;
             Optional<IReadOnlyList<string>> allowed = default;
@@ -47,12 +48,16 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("default"u8))
                 {
-                    @default = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    @default = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ParameterType(property.Value.GetString());
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("readOnly"u8))
@@ -84,15 +89,15 @@ namespace Azure.Developer.DevCenter.Models
                     continue;
                 }
             }
-            return new EnvironmentDefinitionParameterModel(id, name.Value, description.Value, @default.Value, type, Optional.ToNullable(readOnly), required, Optional.ToList(allowed));
+            return new EnvironmentDefinitionParameter(id, name.Value, description.Value, @default.Value, type, Optional.ToNullable(readOnly), required, Optional.ToList(allowed));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static EnvironmentDefinitionParameterModel FromResponse(Response response)
+        internal static EnvironmentDefinitionParameter FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeEnvironmentDefinitionParameterModel(document.RootElement);
+            return DeserializeEnvironmentDefinitionParameter(document.RootElement);
         }
     }
 }

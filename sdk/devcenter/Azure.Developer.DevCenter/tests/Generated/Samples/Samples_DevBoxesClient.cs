@@ -59,7 +59,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Response<DevBoxesPool> response = client.GetPool("<projectName>", "<poolName>");
+            Response<DevBoxPool> response = client.GetPool("<projectName>", "<poolName>");
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Response<DevBoxesPool> response = await client.GetPoolAsync("<projectName>", "<poolName>");
+            Response<DevBoxPool> response = await client.GetPoolAsync("<projectName>", "<poolName>");
         }
 
         [Test]
@@ -141,7 +141,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Response<DevBoxesPool> response = client.GetPool("<projectName>", "<poolName>");
+            Response<DevBoxPool> response = client.GetPool("<projectName>", "<poolName>");
         }
 
         [Test]
@@ -152,7 +152,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Response<DevBoxesPool> response = await client.GetPoolAsync("<projectName>", "<poolName>");
+            Response<DevBoxPool> response = await client.GetPoolAsync("<projectName>", "<poolName>");
         }
 
         [Test]
@@ -284,6 +284,7 @@ namespace Azure.Developer.DevCenter.Samples
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("poolName").ToString());
+            Console.WriteLine(result.GetProperty("powerState").ToString());
         }
 
         [Test]
@@ -299,6 +300,7 @@ namespace Azure.Developer.DevCenter.Samples
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("poolName").ToString());
+            Console.WriteLine(result.GetProperty("powerState").ToString());
         }
 
         [Test]
@@ -843,7 +845,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            foreach (DevBoxesPool item in client.GetPools("<projectName>"))
+            foreach (DevBoxPool item in client.GetPools("<projectName>"))
             {
             }
         }
@@ -856,7 +858,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            await foreach (DevBoxesPool item in client.GetPoolsAsync("<projectName>"))
+            await foreach (DevBoxPool item in client.GetPoolsAsync("<projectName>"))
             {
             }
         }
@@ -931,7 +933,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            foreach (DevBoxesPool item in client.GetPools("<projectName>", filter: "<filter>", maxCount: 1234))
+            foreach (DevBoxPool item in client.GetPools("<projectName>", filter: "<filter>", maxCount: 1234))
             {
             }
         }
@@ -944,7 +946,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            await foreach (DevBoxesPool item in client.GetPoolsAsync("<projectName>", filter: "<filter>", maxCount: 1234))
+            await foreach (DevBoxPool item in client.GetPoolsAsync("<projectName>", filter: "<filter>", maxCount: 1234))
             {
             }
         }
@@ -1090,6 +1092,7 @@ namespace Azure.Developer.DevCenter.Samples
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("poolName").ToString());
+                Console.WriteLine(result.GetProperty("powerState").ToString());
             }
         }
 
@@ -1106,6 +1109,7 @@ namespace Azure.Developer.DevCenter.Samples
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("poolName").ToString());
+                Console.WriteLine(result.GetProperty("powerState").ToString());
             }
         }
 
@@ -1254,6 +1258,7 @@ namespace Azure.Developer.DevCenter.Samples
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("poolName").ToString());
+                Console.WriteLine(result.GetProperty("powerState").ToString());
             }
         }
 
@@ -1270,6 +1275,7 @@ namespace Azure.Developer.DevCenter.Samples
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("poolName").ToString());
+                Console.WriteLine(result.GetProperty("powerState").ToString());
             }
         }
 
@@ -1418,6 +1424,7 @@ namespace Azure.Developer.DevCenter.Samples
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("poolName").ToString());
+                Console.WriteLine(result.GetProperty("powerState").ToString());
             }
         }
 
@@ -1434,6 +1441,7 @@ namespace Azure.Developer.DevCenter.Samples
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("name").ToString());
                 Console.WriteLine(result.GetProperty("poolName").ToString());
+                Console.WriteLine(result.GetProperty("powerState").ToString());
             }
         }
 
@@ -1845,6 +1853,7 @@ namespace Azure.Developer.DevCenter.Samples
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("poolName").ToString());
+            Console.WriteLine(result.GetProperty("powerState").ToString());
         }
 
         [Test]
@@ -1865,6 +1874,7 @@ namespace Azure.Developer.DevCenter.Samples
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
             Console.WriteLine(result.GetProperty("poolName").ToString());
+            Console.WriteLine(result.GetProperty("powerState").ToString());
         }
 
         [Test]
@@ -1875,8 +1885,8 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            DevBox body = new DevBox("<poolName>");
-            Operation<DevBox> operation = client.CreateDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", body);
+            DevBox devBox = new DevBox("<poolName>");
+            Operation<DevBox> operation = client.CreateDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", devBox);
             DevBox responseData = operation.Value;
         }
 
@@ -1888,8 +1898,8 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            DevBox body = new DevBox("<poolName>");
-            Operation<DevBox> operation = await client.CreateDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", body);
+            DevBox devBox = new DevBox("<poolName>");
+            Operation<DevBox> operation = await client.CreateDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", devBox);
             DevBox responseData = operation.Value;
         }
 
@@ -1991,11 +2001,11 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            DevBox body = new DevBox("<poolName>")
+            DevBox devBox = new DevBox("<poolName>")
             {
-                LocalAdministrator = LocalAdminStatus.Enabled,
+                LocalAdministratorStatus = "Enabled",
             };
-            Operation<DevBox> operation = client.CreateDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", body);
+            Operation<DevBox> operation = client.CreateDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", devBox);
             DevBox responseData = operation.Value;
         }
 
@@ -2007,11 +2017,11 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            DevBox body = new DevBox("<poolName>")
+            DevBox devBox = new DevBox("<poolName>")
             {
-                LocalAdministrator = LocalAdminStatus.Enabled,
+                LocalAdministratorStatus = "Enabled",
             };
-            Operation<DevBox> operation = await client.CreateDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", body);
+            Operation<DevBox> operation = await client.CreateDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", devBox);
             DevBox responseData = operation.Value;
         }
 
@@ -2097,8 +2107,8 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Operation<OperationStatus> operation = client.StartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
-            OperationStatus responseData = operation.Value;
+            Operation<DevCenterOperationDetails> operation = client.StartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
+            DevCenterOperationDetails responseData = operation.Value;
         }
 
         [Test]
@@ -2109,8 +2119,8 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Operation<OperationStatus> operation = await client.StartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
-            OperationStatus responseData = operation.Value;
+            Operation<DevCenterOperationDetails> operation = await client.StartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
+            DevCenterOperationDetails responseData = operation.Value;
         }
 
         [Test]
@@ -2135,6 +2145,8 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("properties").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
         }
 
         [Test]
@@ -2159,6 +2171,8 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("properties").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
         }
 
         [Test]
@@ -2169,8 +2183,8 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Operation<OperationStatus> operation = client.StartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
-            OperationStatus responseData = operation.Value;
+            Operation<DevCenterOperationDetails> operation = client.StartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
+            DevCenterOperationDetails responseData = operation.Value;
         }
 
         [Test]
@@ -2181,8 +2195,8 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Operation<OperationStatus> operation = await client.StartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
-            OperationStatus responseData = operation.Value;
+            Operation<DevCenterOperationDetails> operation = await client.StartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
+            DevCenterOperationDetails responseData = operation.Value;
         }
 
         [Test]
@@ -2223,8 +2237,8 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Operation<OperationStatus> operation = client.StopDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
-            OperationStatus responseData = operation.Value;
+            Operation<DevCenterOperationDetails> operation = client.StopDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
+            DevCenterOperationDetails responseData = operation.Value;
         }
 
         [Test]
@@ -2235,8 +2249,8 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Operation<OperationStatus> operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
-            OperationStatus responseData = operation.Value;
+            Operation<DevCenterOperationDetails> operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
+            DevCenterOperationDetails responseData = operation.Value;
         }
 
         [Test]
@@ -2261,6 +2275,8 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("properties").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
         }
 
         [Test]
@@ -2285,6 +2301,8 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("properties").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
         }
 
         [Test]
@@ -2295,8 +2313,8 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Operation<OperationStatus> operation = client.StopDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", hibernate: true);
-            OperationStatus responseData = operation.Value;
+            Operation<DevCenterOperationDetails> operation = client.StopDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", hibernate: true);
+            DevCenterOperationDetails responseData = operation.Value;
         }
 
         [Test]
@@ -2307,8 +2325,8 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Operation<OperationStatus> operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", hibernate: true);
-            OperationStatus responseData = operation.Value;
+            Operation<DevCenterOperationDetails> operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", hibernate: true);
+            DevCenterOperationDetails responseData = operation.Value;
         }
 
         [Test]
@@ -2349,8 +2367,8 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Operation<OperationStatus> operation = client.RestartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
-            OperationStatus responseData = operation.Value;
+            Operation<DevCenterOperationDetails> operation = client.RestartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
+            DevCenterOperationDetails responseData = operation.Value;
         }
 
         [Test]
@@ -2361,8 +2379,8 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Operation<OperationStatus> operation = await client.RestartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
-            OperationStatus responseData = operation.Value;
+            Operation<DevCenterOperationDetails> operation = await client.RestartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
+            DevCenterOperationDetails responseData = operation.Value;
         }
 
         [Test]
@@ -2387,6 +2405,8 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("properties").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
         }
 
         [Test]
@@ -2411,6 +2431,8 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("properties").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
         }
 
         [Test]
@@ -2421,8 +2443,8 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Operation<OperationStatus> operation = client.RestartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
-            OperationStatus responseData = operation.Value;
+            Operation<DevCenterOperationDetails> operation = client.RestartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
+            DevCenterOperationDetails responseData = operation.Value;
         }
 
         [Test]
@@ -2433,8 +2455,8 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-            Operation<OperationStatus> operation = await client.RestartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
-            OperationStatus responseData = operation.Value;
+            Operation<DevCenterOperationDetails> operation = await client.RestartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
+            DevCenterOperationDetails responseData = operation.Value;
         }
     }
 }

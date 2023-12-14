@@ -8,28 +8,28 @@
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Hardware specifications for the Dev Box. </summary>
-    public partial class HardwareProfile
+    public partial class DevBoxHardwareProfile
     {
-        /// <summary> Initializes a new instance of <see cref="HardwareProfile"/>. </summary>
-        public HardwareProfile()
+        /// <summary> Initializes a new instance of <see cref="DevBoxHardwareProfile"/>. </summary>
+        public DevBoxHardwareProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HardwareProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevBoxHardwareProfile"/>. </summary>
         /// <param name="skuName"> The name of the SKU. </param>
-        /// <param name="vcpUs"> The number of vCPUs available for the Dev Box. </param>
+        /// <param name="vCpus"> The number of vCPUs available for the Dev Box. </param>
         /// <param name="memoryGB"> The amount of memory available for the Dev Box. </param>
-        internal HardwareProfile(string skuName, int? vcpUs, int? memoryGB)
+        internal DevBoxHardwareProfile(SkuName? skuName, int? vCpus, int? memoryGB)
         {
             SkuName = skuName;
-            VCPUs = vcpUs;
+            VCpus = vCpus;
             MemoryGB = memoryGB;
         }
 
         /// <summary> The name of the SKU. </summary>
-        public string SkuName { get; }
+        public SkuName? SkuName { get; }
         /// <summary> The number of vCPUs available for the Dev Box. </summary>
-        public int? VCPUs { get; }
+        public int? VCpus { get; }
         /// <summary> The amount of memory available for the Dev Box. </summary>
         public int? MemoryGB { get; }
     }

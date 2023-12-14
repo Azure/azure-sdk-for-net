@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -20,8 +22,8 @@ namespace Azure.Developer.DevCenter.Models
             }
             string name = default;
             ScheduledType type = default;
-            ScheduledFrequency frequency = default;
-            string time = default;
+            string frequency = default;
+            TimeSpan time = default;
             string timeZone = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,12 +39,12 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("frequency"u8))
                 {
-                    frequency = new ScheduledFrequency(property.Value.GetString());
+                    frequency = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("time"u8))
                 {
-                    time = property.Value.GetString();
+                    time = property.Value.GetTimeSpan("T");
                     continue;
                 }
                 if (property.NameEquals("timeZone"u8))

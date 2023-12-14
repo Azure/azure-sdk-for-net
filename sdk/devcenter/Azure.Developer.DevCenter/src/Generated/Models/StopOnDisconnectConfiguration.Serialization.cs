@@ -19,13 +19,13 @@ namespace Azure.Developer.DevCenter.Models
             {
                 return null;
             }
-            StopOnDisconnectEnableStatus status = default;
+            string status = default;
             Optional<int> gracePeriodMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
                 {
-                    status = new StopOnDisconnectEnableStatus(property.Value.GetString());
+                    status = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("gracePeriodMinutes"u8))

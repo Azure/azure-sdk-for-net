@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class ImageReference : IUtf8JsonSerializable
+    public partial class DevBoxImageReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.Developer.DevCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static ImageReference DeserializeImageReference(JsonElement element)
+        internal static DevBoxImageReference DeserializeDevBoxImageReference(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -63,15 +63,15 @@ namespace Azure.Developer.DevCenter.Models
                     continue;
                 }
             }
-            return new ImageReference(name.Value, version.Value, operatingSystem.Value, osBuildNumber.Value, Optional.ToNullable(publishedDate));
+            return new DevBoxImageReference(name.Value, version.Value, operatingSystem.Value, osBuildNumber.Value, Optional.ToNullable(publishedDate));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ImageReference FromResponse(Response response)
+        internal static DevBoxImageReference FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeImageReference(document.RootElement);
+            return DeserializeDevBoxImageReference(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

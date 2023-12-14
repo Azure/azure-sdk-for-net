@@ -6,20 +6,25 @@
 #nullable disable
 
 using System;
+using Azure;
+using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> The current status of an async operation. </summary>
-    public partial class OperationStatus
+    public partial class DevCenterOperationDetails
     {
-        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterOperationDetails"/>. </summary>
         /// <param name="status"> Provisioning state of the resource. </param>
-        internal OperationStatus(OperationStatusValue status)
+        /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
+        internal DevCenterOperationDetails(string status)
         {
+            Argument.AssertNotNull(status, nameof(status));
+
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterOperationDetails"/>. </summary>
         /// <param name="id"> Fully qualified ID for the operation status. </param>
         /// <param name="name"> The operation id name. </param>
         /// <param name="status"> Provisioning state of the resource. </param>
@@ -29,7 +34,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="percentComplete"> Percent of the operation that is complete. </param>
         /// <param name="properties"> Custom operation properties, populated only for a successful operation. </param>
         /// <param name="error"> Operation Error message. </param>
-        internal OperationStatus(string id, string name, OperationStatusValue status, string resourceId, DateTimeOffset? startTime, DateTimeOffset? endTime, float? percentComplete, BinaryData properties, OperationStatusError error)
+        internal DevCenterOperationDetails(string id, string name, string status, string resourceId, DateTimeOffset? startTime, DateTimeOffset? endTime, float? percentComplete, BinaryData properties, ResponseError error)
         {
             Id = id;
             Name = name;
@@ -47,7 +52,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> The operation id name. </summary>
         public string Name { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public OperationStatusValue Status { get; }
+        public string Status { get; }
         /// <summary> The id of the resource. </summary>
         public string ResourceId { get; }
         /// <summary> The start time of the operation. </summary>
@@ -88,6 +93,6 @@ namespace Azure.Developer.DevCenter.Models
         /// </summary>
         public BinaryData Properties { get; }
         /// <summary> Operation Error message. </summary>
-        public OperationStatusError Error { get; }
+        public ResponseError Error { get; }
     }
 }

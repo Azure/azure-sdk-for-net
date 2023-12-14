@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -19,18 +20,26 @@ namespace Azure.Developer.DevCenter.Models
             {
                 return null;
             }
-            Optional<string> webUrl = default;
-            Optional<string> rdpConnectionUrl = default;
+            Optional<Uri> webUrl = default;
+            Optional<Uri> rdpConnectionUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("webUrl"u8))
                 {
-                    webUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    webUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rdpConnectionUrl"u8))
                 {
-                    rdpConnectionUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rdpConnectionUrl = new Uri(property.Value.GetString());
                     continue;
                 }
             }

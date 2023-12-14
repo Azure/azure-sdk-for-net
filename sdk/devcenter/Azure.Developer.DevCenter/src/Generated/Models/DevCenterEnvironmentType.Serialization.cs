@@ -10,9 +10,9 @@ using Azure;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class EnvironmentType
+    public partial class DevCenterEnvironmentType
     {
-        internal static EnvironmentType DeserializeEnvironmentType(JsonElement element)
+        internal static DevCenterEnvironmentType DeserializeDevCenterEnvironmentType(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -20,7 +20,7 @@ namespace Azure.Developer.DevCenter.Models
             }
             string name = default;
             string deploymentTargetId = default;
-            EnvironmentTypeEnableStatus status = default;
+            string status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -35,19 +35,19 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new EnvironmentTypeEnableStatus(property.Value.GetString());
+                    status = property.Value.GetString();
                     continue;
                 }
             }
-            return new EnvironmentType(name, deploymentTargetId, status);
+            return new DevCenterEnvironmentType(name, deploymentTargetId, status);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static EnvironmentType FromResponse(Response response)
+        internal static DevCenterEnvironmentType FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeEnvironmentType(document.RootElement);
+            return DeserializeDevCenterEnvironmentType(document.RootElement);
         }
     }
 }

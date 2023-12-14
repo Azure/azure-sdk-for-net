@@ -8,21 +8,21 @@
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Storage settings for the Dev Box's disks. </summary>
-    public partial class StorageProfile
+    public partial class DevBoxStorageProfile
     {
-        /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
-        public StorageProfile()
+        /// <summary> Initializes a new instance of <see cref="DevBoxStorageProfile"/>. </summary>
+        public DevBoxStorageProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevBoxStorageProfile"/>. </summary>
         /// <param name="osDisk"> Settings for the operating system disk. </param>
-        internal StorageProfile(OSDisk osDisk)
+        internal DevBoxStorageProfile(OSDisk osDisk)
         {
-            OsDisk = osDisk;
+            OSDisk = osDisk;
         }
 
         /// <summary> Settings for the operating system disk. </summary>
-        public OSDisk OsDisk { get; set; }
+        public OSDisk OSDisk { get; set; }
     }
 }

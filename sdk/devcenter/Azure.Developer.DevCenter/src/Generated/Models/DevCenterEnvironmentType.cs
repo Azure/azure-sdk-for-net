@@ -11,9 +11,9 @@ using Azure.Core;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Properties of an environment type. </summary>
-    public partial class EnvironmentType
+    public partial class DevCenterEnvironmentType
     {
-        /// <summary> Initializes a new instance of <see cref="EnvironmentType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironmentType"/>. </summary>
         /// <param name="name"> Name of the environment type. </param>
         /// <param name="deploymentTargetId">
         /// Id of a subscription or management group that the environment type will be
@@ -21,11 +21,12 @@ namespace Azure.Developer.DevCenter.Models
         /// or management group.
         /// </param>
         /// <param name="status"> Indicates whether this environment type is enabled for use in this project. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="deploymentTargetId"/> is null. </exception>
-        internal EnvironmentType(string name, string deploymentTargetId, EnvironmentTypeEnableStatus status)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="deploymentTargetId"/> or <paramref name="status"/> is null. </exception>
+        internal DevCenterEnvironmentType(string name, string deploymentTargetId, string status)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(deploymentTargetId, nameof(deploymentTargetId));
+            Argument.AssertNotNull(status, nameof(status));
 
             Name = name;
             DeploymentTargetId = deploymentTargetId;
@@ -41,6 +42,6 @@ namespace Azure.Developer.DevCenter.Models
         /// </summary>
         public string DeploymentTargetId { get; }
         /// <summary> Indicates whether this environment type is enabled for use in this project. </summary>
-        public EnvironmentTypeEnableStatus Status { get; }
+        public string Status { get; }
     }
 }

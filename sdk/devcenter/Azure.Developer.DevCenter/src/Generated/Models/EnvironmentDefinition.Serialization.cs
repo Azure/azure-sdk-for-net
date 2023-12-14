@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -12,9 +13,9 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class EnvironmentDefinitionModel
+    public partial class EnvironmentDefinition
     {
-        internal static EnvironmentDefinitionModel DeserializeEnvironmentDefinitionModel(JsonElement element)
+        internal static EnvironmentDefinition DeserializeEnvironmentDefinition(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -24,8 +25,8 @@ namespace Azure.Developer.DevCenter.Models
             string name = default;
             string catalogName = default;
             Optional<string> description = default;
-            Optional<IReadOnlyList<EnvironmentDefinitionParameterModel>> parameters = default;
-            Optional<string> parametersSchema = default;
+            Optional<IReadOnlyList<EnvironmentDefinitionParameter>> parameters = default;
+            Optional<BinaryData> parametersSchema = default;
             Optional<string> templatePath = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -55,17 +56,21 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    List<EnvironmentDefinitionParameterModel> array = new List<EnvironmentDefinitionParameterModel>();
+                    List<EnvironmentDefinitionParameter> array = new List<EnvironmentDefinitionParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EnvironmentDefinitionParameterModel.DeserializeEnvironmentDefinitionParameterModel(item));
+                        array.Add(EnvironmentDefinitionParameter.DeserializeEnvironmentDefinitionParameter(item));
                     }
                     parameters = array;
                     continue;
                 }
                 if (property.NameEquals("parametersSchema"u8))
                 {
-                    parametersSchema = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parametersSchema = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (property.NameEquals("templatePath"u8))
@@ -74,15 +79,15 @@ namespace Azure.Developer.DevCenter.Models
                     continue;
                 }
             }
-            return new EnvironmentDefinitionModel(id, name, catalogName, description.Value, Optional.ToList(parameters), parametersSchema.Value, templatePath.Value);
+            return new EnvironmentDefinition(id, name, catalogName, description.Value, Optional.ToList(parameters), parametersSchema.Value, templatePath.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static EnvironmentDefinitionModel FromResponse(Response response)
+        internal static EnvironmentDefinition FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeEnvironmentDefinitionModel(document.RootElement);
+            return DeserializeEnvironmentDefinition(document.RootElement);
         }
     }
 }

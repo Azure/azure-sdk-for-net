@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class OperationStatus
+    public partial class DevCenterOperationDetails
     {
-        internal static OperationStatus DeserializeOperationStatus(JsonElement element)
+        internal static DevCenterOperationDetails DeserializeDevCenterOperationDetails(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -22,13 +22,13 @@ namespace Azure.Developer.DevCenter.Models
             }
             Optional<string> id = default;
             Optional<string> name = default;
-            OperationStatusValue status = default;
+            string status = default;
             Optional<string> resourceId = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<float> percentComplete = default;
             Optional<BinaryData> properties = default;
-            Optional<OperationStatusError> error = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -43,7 +43,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new OperationStatusValue(property.Value.GetString());
+                    status = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceId"u8))
@@ -93,19 +93,19 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    error = OperationStatusError.DeserializeOperationStatusError(property.Value);
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
             }
-            return new OperationStatus(id.Value, name.Value, status, resourceId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), properties.Value, error.Value);
+            return new DevCenterOperationDetails(id.Value, name.Value, status, resourceId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), properties.Value, error.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static OperationStatus FromResponse(Response response)
+        internal static DevCenterOperationDetails FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeOperationStatus(document.RootElement);
+            return DeserializeDevCenterOperationDetails(document.RootElement);
         }
     }
 }
