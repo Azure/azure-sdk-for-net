@@ -22,7 +22,7 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(LocalAdministratorStatus))
             {
                 writer.WritePropertyName("localAdministrator"u8);
-                writer.WriteStringValue(LocalAdministratorStatus);
+                writer.WriteStringValue(LocalAdministratorStatus.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -43,13 +43,13 @@ namespace Azure.Developer.DevCenter.Models
             Optional<Guid> uniqueId = default;
             Optional<ResponseError> error = default;
             Optional<string> location = default;
-            Optional<string> osType = default;
+            Optional<DevBoxOSType> osType = default;
             Optional<Guid> user = default;
             Optional<DevBoxHardwareProfile> hardwareProfile = default;
             Optional<DevBoxStorageProfile> storageProfile = default;
             Optional<DevBoxImageReference> imageReference = default;
             Optional<DateTimeOffset> createdTime = default;
-            Optional<string> localAdministrator = default;
+            Optional<LocalAdministratorStatus> localAdministrator = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -120,7 +120,11 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("osType"u8))
                 {
-                    osType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    osType = new DevBoxOSType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("user"u8))
@@ -170,11 +174,15 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("localAdministrator"u8))
                 {
-                    localAdministrator = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    localAdministrator = new LocalAdministratorStatus(property.Value.GetString());
                     continue;
                 }
             }
-            return new DevBox(name, projectName.Value, poolName, Optional.ToNullable(hibernateSupport), Optional.ToNullable(provisioningState), actionState.Value, powerState, Optional.ToNullable(uniqueId), error.Value, location.Value, osType.Value, Optional.ToNullable(user), hardwareProfile.Value, storageProfile.Value, imageReference.Value, Optional.ToNullable(createdTime), localAdministrator.Value);
+            return new DevBox(name, projectName.Value, poolName, Optional.ToNullable(hibernateSupport), Optional.ToNullable(provisioningState), actionState.Value, powerState, Optional.ToNullable(uniqueId), error.Value, location.Value, Optional.ToNullable(osType), Optional.ToNullable(user), hardwareProfile.Value, storageProfile.Value, imageReference.Value, Optional.ToNullable(createdTime), Optional.ToNullable(localAdministrator));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

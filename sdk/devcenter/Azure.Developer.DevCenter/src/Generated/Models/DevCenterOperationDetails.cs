@@ -7,7 +7,6 @@
 
 using System;
 using Azure;
-using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -16,11 +15,8 @@ namespace Azure.Developer.DevCenter.Models
     {
         /// <summary> Initializes a new instance of <see cref="DevCenterOperationDetails"/>. </summary>
         /// <param name="status"> Provisioning state of the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
-        internal DevCenterOperationDetails(string status)
+        internal DevCenterOperationDetails(DevCenterOperationStatus status)
         {
-            Argument.AssertNotNull(status, nameof(status));
-
             Status = status;
         }
 
@@ -34,7 +30,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="percentComplete"> Percent of the operation that is complete. </param>
         /// <param name="properties"> Custom operation properties, populated only for a successful operation. </param>
         /// <param name="error"> Operation Error message. </param>
-        internal DevCenterOperationDetails(string id, string name, string status, string resourceId, DateTimeOffset? startTime, DateTimeOffset? endTime, float? percentComplete, BinaryData properties, ResponseError error)
+        internal DevCenterOperationDetails(string id, string name, DevCenterOperationStatus status, string resourceId, DateTimeOffset? startTime, DateTimeOffset? endTime, float? percentComplete, BinaryData properties, ResponseError error)
         {
             Id = id;
             Name = name;
@@ -52,7 +48,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> The operation id name. </summary>
         public string Name { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public string Status { get; }
+        public DevCenterOperationStatus Status { get; }
         /// <summary> The id of the resource. </summary>
         public string ResourceId { get; }
         /// <summary> The start time of the operation. </summary>

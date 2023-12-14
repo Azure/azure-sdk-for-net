@@ -45,7 +45,7 @@ namespace Azure.Developer.DevCenter.Models
         /// Overall health status of the Pool. Indicates whether or not the Pool is
         /// available to create Dev Boxes.
         /// </param>
-        internal DevBoxPool(string name, string location, string osType, DevBoxHardwareProfile hardwareProfile, HibernateSupport? hibernateSupport, DevBoxStorageProfile storageProfile, DevBoxImageReference imageReference, string localAdministratorStatus, StopOnDisconnectConfiguration stopOnDisconnect, PoolHealthStatus healthStatus)
+        internal DevBoxPool(string name, string location, DevBoxOSType? osType, DevBoxHardwareProfile hardwareProfile, HibernateSupport? hibernateSupport, DevBoxStorageProfile storageProfile, DevBoxImageReference imageReference, LocalAdministratorStatus? localAdministratorStatus, StopOnDisconnectConfiguration stopOnDisconnect, PoolHealthStatus healthStatus)
         {
             Name = name;
             Location = location;
@@ -64,7 +64,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> Azure region where Dev Boxes in the pool are located. </summary>
         public string Location { get; }
         /// <summary> The operating system type of Dev Boxes in this pool. </summary>
-        public string OSType { get; }
+        public DevBoxOSType? OSType { get; }
         /// <summary> Hardware settings for the Dev Boxes created in this pool. </summary>
         public DevBoxHardwareProfile HardwareProfile { get; }
         /// <summary> Indicates whether hibernate is enabled/disabled or unknown. </summary>
@@ -77,7 +77,7 @@ namespace Azure.Developer.DevCenter.Models
         /// Indicates whether owners of Dev Boxes in this pool are local administrators on
         /// the Dev Boxes.
         /// </summary>
-        public string LocalAdministratorStatus { get; }
+        public LocalAdministratorStatus? LocalAdministratorStatus { get; }
         /// <summary> Stop on disconnect configuration settings for Dev Boxes created in this pool. </summary>
         public StopOnDisconnectConfiguration StopOnDisconnect { get; }
         /// <summary>

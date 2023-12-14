@@ -21,11 +21,10 @@ namespace Azure.Developer.DevCenter.Models
         /// boolean, string)
         /// </param>
         /// <param name="required"> Whether or not this parameter is required. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="parameterType"/> is null. </exception>
-        internal EnvironmentDefinitionParameter(string id, string parameterType, bool required)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        internal EnvironmentDefinitionParameter(string id, EnvironmentDefinitionParameterType parameterType, bool required)
         {
             Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(parameterType, nameof(parameterType));
 
             Id = id;
             ParameterType = parameterType;
@@ -48,7 +47,7 @@ namespace Azure.Developer.DevCenter.Models
         /// </param>
         /// <param name="required"> Whether or not this parameter is required. </param>
         /// <param name="allowed"> An array of allowed values. </param>
-        internal EnvironmentDefinitionParameter(string id, string name, string description, BinaryData defaultValue, string parameterType, bool? readOnly, bool required, IReadOnlyList<string> allowed)
+        internal EnvironmentDefinitionParameter(string id, string name, string description, BinaryData defaultValue, EnvironmentDefinitionParameterType parameterType, bool? readOnly, bool required, IReadOnlyList<string> allowed)
         {
             Id = id;
             Name = name;
@@ -101,7 +100,7 @@ namespace Azure.Developer.DevCenter.Models
         /// A string of one of the basic JSON types (number, integer, array, object,
         /// boolean, string)
         /// </summary>
-        public string ParameterType { get; }
+        public EnvironmentDefinitionParameterType ParameterType { get; }
         /// <summary>
         /// Whether or not this parameter is read-only.  If true, default should have a
         /// value.

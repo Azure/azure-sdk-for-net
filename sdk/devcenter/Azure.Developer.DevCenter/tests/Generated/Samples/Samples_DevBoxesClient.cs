@@ -2003,7 +2003,7 @@ namespace Azure.Developer.DevCenter.Samples
 
             DevBox devBox = new DevBox("<poolName>")
             {
-                LocalAdministratorStatus = "Enabled",
+                LocalAdministratorStatus = LocalAdministratorStatus.Enabled,
             };
             Operation<DevBox> operation = client.CreateDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", devBox);
             DevBox responseData = operation.Value;
@@ -2019,7 +2019,7 @@ namespace Azure.Developer.DevCenter.Samples
 
             DevBox devBox = new DevBox("<poolName>")
             {
-                LocalAdministratorStatus = "Enabled",
+                LocalAdministratorStatus = LocalAdministratorStatus.Enabled,
             };
             Operation<DevBox> operation = await client.CreateDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", devBox);
             DevBox responseData = operation.Value;

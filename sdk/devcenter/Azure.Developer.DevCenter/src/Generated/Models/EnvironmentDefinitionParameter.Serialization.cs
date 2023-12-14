@@ -25,7 +25,7 @@ namespace Azure.Developer.DevCenter.Models
             Optional<string> name = default;
             Optional<string> description = default;
             Optional<BinaryData> @default = default;
-            string type = default;
+            EnvironmentDefinitionParameterType type = default;
             Optional<bool> readOnly = default;
             bool required = default;
             Optional<IReadOnlyList<string>> allowed = default;
@@ -57,7 +57,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new EnvironmentDefinitionParameterType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("readOnly"u8))

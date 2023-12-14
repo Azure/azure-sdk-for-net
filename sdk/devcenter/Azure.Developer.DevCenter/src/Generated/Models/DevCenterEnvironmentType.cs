@@ -21,12 +21,11 @@ namespace Azure.Developer.DevCenter.Models
         /// or management group.
         /// </param>
         /// <param name="status"> Indicates whether this environment type is enabled for use in this project. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="deploymentTargetId"/> or <paramref name="status"/> is null. </exception>
-        internal DevCenterEnvironmentType(string name, string deploymentTargetId, string status)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="deploymentTargetId"/> is null. </exception>
+        internal DevCenterEnvironmentType(string name, string deploymentTargetId, EnvironmentTypeStatus status)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(deploymentTargetId, nameof(deploymentTargetId));
-            Argument.AssertNotNull(status, nameof(status));
 
             Name = name;
             DeploymentTargetId = deploymentTargetId;
@@ -42,6 +41,6 @@ namespace Azure.Developer.DevCenter.Models
         /// </summary>
         public string DeploymentTargetId { get; }
         /// <summary> Indicates whether this environment type is enabled for use in this project. </summary>
-        public string Status { get; }
+        public EnvironmentTypeStatus Status { get; }
     }
 }

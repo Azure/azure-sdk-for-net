@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Stop on disconnect configuration settings for Dev Boxes created in this pool. </summary>
@@ -18,11 +15,8 @@ namespace Azure.Developer.DevCenter.Models
         /// Indicates whether the feature to stop the devbox on disconnect once the grace
         /// period has lapsed is enabled.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
-        internal StopOnDisconnectConfiguration(string status)
+        internal StopOnDisconnectConfiguration(StopOnDisconnectStatus status)
         {
-            Argument.AssertNotNull(status, nameof(status));
-
             Status = status;
         }
 
@@ -35,7 +29,7 @@ namespace Azure.Developer.DevCenter.Models
         /// The specified time in minutes to wait before stopping a Dev Box once disconnect
         /// is detected.
         /// </param>
-        internal StopOnDisconnectConfiguration(string status, int? gracePeriodMinutes)
+        internal StopOnDisconnectConfiguration(StopOnDisconnectStatus status, int? gracePeriodMinutes)
         {
             Status = status;
             GracePeriodMinutes = gracePeriodMinutes;
@@ -45,7 +39,7 @@ namespace Azure.Developer.DevCenter.Models
         /// Indicates whether the feature to stop the devbox on disconnect once the grace
         /// period has lapsed is enabled.
         /// </summary>
-        public string Status { get; }
+        public StopOnDisconnectStatus Status { get; }
         /// <summary>
         /// The specified time in minutes to wait before stopping a Dev Box once disconnect
         /// is detected.

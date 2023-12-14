@@ -18,10 +18,9 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="frequency"> The frequency of this scheduled task. </param>
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
         /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="frequency"/> or <paramref name="timeZone"/> is null. </exception>
-        internal DevBoxSchedule(ScheduledType scheduledType, string frequency, TimeSpan time, string timeZone)
+        /// <exception cref="ArgumentNullException"> <paramref name="timeZone"/> is null. </exception>
+        internal DevBoxSchedule(ScheduledType scheduledType, ScheduleFrequency frequency, TimeSpan time, string timeZone)
         {
-            Argument.AssertNotNull(frequency, nameof(frequency));
             Argument.AssertNotNull(timeZone, nameof(timeZone));
 
             ScheduledType = scheduledType;
@@ -36,7 +35,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="frequency"> The frequency of this scheduled task. </param>
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
         /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
-        internal DevBoxSchedule(string name, ScheduledType scheduledType, string frequency, TimeSpan time, string timeZone)
+        internal DevBoxSchedule(string name, ScheduledType scheduledType, ScheduleFrequency frequency, TimeSpan time, string timeZone)
         {
             Name = name;
             ScheduledType = scheduledType;
@@ -50,7 +49,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> Supported type this scheduled task represents. </summary>
         public ScheduledType ScheduledType { get; }
         /// <summary> The frequency of this scheduled task. </summary>
-        public string Frequency { get; }
+        public ScheduleFrequency Frequency { get; }
         /// <summary> The target time to trigger the action. The format is HH:MM. </summary>
         public TimeSpan Time { get; }
         /// <summary> The IANA timezone id at which the schedule should execute. </summary>

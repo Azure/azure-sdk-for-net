@@ -22,7 +22,7 @@ namespace Azure.Developer.DevCenter.Models
             }
             string name = default;
             ScheduledType type = default;
-            string frequency = default;
+            ScheduleFrequency frequency = default;
             TimeSpan time = default;
             string timeZone = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +39,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("frequency"u8))
                 {
-                    frequency = property.Value.GetString();
+                    frequency = new ScheduleFrequency(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("time"u8))

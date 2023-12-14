@@ -17,11 +17,10 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="DevBoxActionDelayResult"/>. </summary>
         /// <param name="actionName"> The name of the action. </param>
         /// <param name="result"> The result of the delay operation on this action. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="actionName"/> or <paramref name="result"/> is null. </exception>
-        internal DevBoxActionDelayResult(string actionName, string result)
+        /// <exception cref="ArgumentNullException"> <paramref name="actionName"/> is null. </exception>
+        internal DevBoxActionDelayResult(string actionName, DevBoxActionDelayStatus result)
         {
             Argument.AssertNotNull(actionName, nameof(actionName));
-            Argument.AssertNotNull(result, nameof(result));
 
             ActionName = actionName;
             Result = result;
@@ -32,7 +31,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="result"> The result of the delay operation on this action. </param>
         /// <param name="action"> The delayed action. </param>
         /// <param name="error"> Information about the error that occurred. Only populated on error. </param>
-        internal DevBoxActionDelayResult(string actionName, string result, DevBoxAction action, ResponseError error)
+        internal DevBoxActionDelayResult(string actionName, DevBoxActionDelayStatus result, DevBoxAction action, ResponseError error)
         {
             ActionName = actionName;
             Result = result;
@@ -43,7 +42,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> The name of the action. </summary>
         public string ActionName { get; }
         /// <summary> The result of the delay operation on this action. </summary>
-        public string Result { get; }
+        public DevBoxActionDelayStatus Result { get; }
         /// <summary> The delayed action. </summary>
         public DevBoxAction Action { get; }
         /// <summary> Information about the error that occurred. Only populated on error. </summary>

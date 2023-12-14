@@ -22,7 +22,7 @@ namespace Azure.Developer.DevCenter.Models
             }
             Optional<string> id = default;
             Optional<string> name = default;
-            string status = default;
+            DevCenterOperationStatus status = default;
             Optional<string> resourceId = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
@@ -43,7 +43,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString();
+                    status = new DevCenterOperationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceId"u8))

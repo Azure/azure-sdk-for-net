@@ -21,12 +21,12 @@ namespace Azure.Developer.DevCenter.Models
             }
             string name = default;
             string location = default;
-            Optional<string> osType = default;
+            Optional<DevBoxOSType> osType = default;
             Optional<DevBoxHardwareProfile> hardwareProfile = default;
             Optional<HibernateSupport> hibernateSupport = default;
             Optional<DevBoxStorageProfile> storageProfile = default;
             Optional<DevBoxImageReference> imageReference = default;
-            Optional<string> localAdministrator = default;
+            Optional<LocalAdministratorStatus> localAdministrator = default;
             Optional<StopOnDisconnectConfiguration> stopOnDisconnect = default;
             PoolHealthStatus healthStatus = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +43,11 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("osType"u8))
                 {
-                    osType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    osType = new DevBoxOSType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("hardwareProfile"u8))
@@ -84,7 +88,11 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("localAdministrator"u8))
                 {
-                    localAdministrator = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    localAdministrator = new LocalAdministratorStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stopOnDisconnect"u8))
@@ -102,7 +110,7 @@ namespace Azure.Developer.DevCenter.Models
                     continue;
                 }
             }
-            return new DevBoxPool(name, location, osType.Value, hardwareProfile.Value, Optional.ToNullable(hibernateSupport), storageProfile.Value, imageReference.Value, localAdministrator.Value, stopOnDisconnect.Value, healthStatus);
+            return new DevBoxPool(name, location, Optional.ToNullable(osType), hardwareProfile.Value, Optional.ToNullable(hibernateSupport), storageProfile.Value, imageReference.Value, Optional.ToNullable(localAdministrator), stopOnDisconnect.Value, healthStatus);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

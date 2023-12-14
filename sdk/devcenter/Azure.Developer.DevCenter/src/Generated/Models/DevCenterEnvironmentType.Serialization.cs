@@ -20,7 +20,7 @@ namespace Azure.Developer.DevCenter.Models
             }
             string name = default;
             string deploymentTargetId = default;
-            string status = default;
+            EnvironmentTypeStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -35,7 +35,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString();
+                    status = new EnvironmentTypeStatus(property.Value.GetString());
                     continue;
                 }
             }
