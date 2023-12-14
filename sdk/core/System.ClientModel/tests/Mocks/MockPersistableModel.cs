@@ -28,13 +28,11 @@ namespace ClientModel.Tests.Mocks
         }
 
         string IPersistableModel<MockPersistableModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
-        {
-            return "J";
-        }
+            => "J";
 
         BinaryData IPersistableModel<MockPersistableModel>.Write(ModelReaderWriterOptions options)
         {
-            dynamic json = BinaryData.FromString("""{}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            dynamic json = BinaryData.FromString("{}").ToDynamicFromJson(JsonPropertyNames.CamelCase);
             json.IntValue = IntValue;
             json.StringValue = StringValue;
             return BinaryData.FromString(json.ToString());
