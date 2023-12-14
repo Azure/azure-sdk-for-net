@@ -12,18 +12,5 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The AzureOpenAIDialogUpdate. </summary>
     public partial class AzureOpenAIDialogUpdate : DialogUpdateBase
     {
-        /// <summary> Initializes a new instance of <see cref="AzureOpenAIDialogUpdate"/>. </summary>
-        public AzureOpenAIDialogUpdate()
-        {
-            Kind = new DialogInputType("AzureOpenAI");
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzureOpenAIDialogUpdate"/>. </summary>
-        /// <param name="kind"> Determines the type of the dialog. </param>
-        /// <param name="context"> Dialog context. </param>
-        internal AzureOpenAIDialogUpdate(DialogInputType kind, IDictionary<string, object> context) : base(kind, context)
-        {
-            Kind = kind;
-        }
     }
 }

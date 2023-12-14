@@ -1,9 +1,15 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Azure.Communication.CallAutomation
 {
+    /// <summary>
+    /// Update Dialog Options bag
+    /// </summary>
     public class UpdateDialog
     {
         /// <summary>
