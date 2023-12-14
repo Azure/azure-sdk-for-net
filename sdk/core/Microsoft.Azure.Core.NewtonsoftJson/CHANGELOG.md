@@ -2,6 +2,9 @@
 
 ## 1.1.0-beta.1 (Unreleased)
 
+### Added
+
+- Update to Newtonsoft.Json 13.0.1
 
 ## 1.0.0 (2021-01-06)
 
