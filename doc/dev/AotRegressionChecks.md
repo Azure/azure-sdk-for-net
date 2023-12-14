@@ -1,4 +1,5 @@
 # Enable AOT compatibility regression testing in CI pipelines
+
 An increasing number of .NET Azure SDK libraries are committed to making their libraries compatible with native AOT. To help support this work, there is now an opt-in pipeline step called "Check for AOT compatibility regressions in \[Package Name\]". This pipeline creates a small sample app that uses a project reference to collect the set of trimming warnings reported for the specified library. This approach for collecting warnings is described in [this article](https://learn.microsoft.com/dotnet/core/deploying/trimming/prepare-libraries-for-trimming?pivots=dotnet-8-0#show-all-warnings-with-test-app).
 
 ## How to enable the pipeline for your package
