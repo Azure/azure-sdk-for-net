@@ -1,6 +1,7 @@
 # Analyze a document with add-on capabilities
 
-This sample demonstrates how to analyze document with add-on capabilities, using a document as an example. For more information about add-on capabilities, see the [documentation][docint_addon].
+This sample demonstrates how to analyze a document with add-on capabilities. For more information about the supported features, see the [service documentation][docint_addon].
+
 
 To get started you'll need a Cognitive Services resource or a Document Intelligence resource. See [README][README] for prerequisites and instructions.
 
