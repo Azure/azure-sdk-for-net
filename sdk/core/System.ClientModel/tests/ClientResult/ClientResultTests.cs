@@ -11,6 +11,31 @@ public class ClientResultTests
 {
     #region ClientResult
 
+    [Test]
+    public void CannotCreateClientResultFromNullResponse()
+    {
+        Assert.Throws<ArgumentNullException>(() => new MockClientResult(null!));
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ClientResult result = ClientResult.FromResponse(null!);
+        });
+    }
+
+    [Test]
+    public void GetRawResponseReturnsResponse()
+    {
+        PipelineResponse response = new MockPipelineResponse(200, "MockReason");
+        MockClientResult mockResult = new MockClientResult(response);
+        Assert.AreEqual(response, mockResult.GetRawResponse());
+        Assert.AreEqual(response.Status, mockResult.GetRawResponse().Status);
+        Assert.AreEqual(response.ReasonPhrase, mockResult.GetRawResponse().ReasonPhrase);
+
+        ClientResult result = ClientResult.FromResponse(response);
+        Assert.AreEqual(response, result.GetRawResponse());
+        Assert.AreEqual(response.Status, result.GetRawResponse().Status);
+        Assert.AreEqual(response.ReasonPhrase, result.GetRawResponse().ReasonPhrase);
+    }
+
     #endregion
 
     #region OptionalClientResult<T>
@@ -53,19 +78,5 @@ public class ClientResultTests
     #endregion
 
     #region Helpers
-    private class MockErrorResult<T> : OptionalClientResult<T>
-    {
-        private readonly ClientRequestException _exception;
-
-        public MockErrorResult(PipelineResponse response, ClientRequestException exception)
-            : base(default, response)
-        {
-            _exception = exception;
-        }
-
-        public override T? Value { get => throw _exception; }
-
-        public override bool HasValue => false;
-    }
     #endregion
 }
