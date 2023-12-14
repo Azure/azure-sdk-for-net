@@ -8,8 +8,23 @@ parameters:
   TargetDocRepoName: 'not-specified'
   Environment: nuget
 stages:
+  - stage: pre-release-validation
+    dependsOn: []
+    jobs:
+      - job: Validate REST API spec location
+        pool:
+          name: azsdk-pool-mms-win-2022-general
+          vmImage: windows-2022
+        steps:
+          - template: /eng/common/pipelines/templates/steps/verify-restapi-spec-location.yml
+            parameters:
+              PackageName: ${{artifact.name}}
+              ServiceDirectory: ${{parameters.ServiceDirectory}}
+
   - stage: Signing
-    dependsOn: ${{parameters.DependsOn}}
+    dependsOn:
+      - pre-release-validation
+      - ${{parameters.DependsOn}}
     jobs:
       - deployment: SignPackage
         environment: esrp
