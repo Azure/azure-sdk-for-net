@@ -49,6 +49,8 @@ public class OpenAIClient
         if (deploymentId.Length == 0) throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentId));
         if (content is null) throw new ArgumentNullException(nameof(content));
 
+        options ??= new RequestOptions();
+
         using PipelineMessage message = CreateGetCompletionsRequest(deploymentId, content, options);
 
         _pipeline.Send(message);
