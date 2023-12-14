@@ -1,0 +1,47 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using Azure;
+using Azure.Core.Serialization;
+
+namespace ClientModel.Tests.Mocks
+{
+    internal class MockPersistableModel : IPersistableModel<MockPersistableModel>
+    {
+        public int IntValue { get; set; }
+
+        public string StringValue { get; set; }
+
+        public MockPersistableModel(int intValue, string stringValue)
+        {
+            IntValue = intValue;
+            StringValue = stringValue;
+        }
+
+        MockPersistableModel IPersistableModel<MockPersistableModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+
+            //dynamic json = data.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            //return new MockPersistableModel(json.IntValue, json.StringValue);
+        }
+
+        string IPersistableModel<MockPersistableModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        {
+            return "J";
+        }
+
+        BinaryData IPersistableModel<MockPersistableModel>.Write(ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+
+            //dynamic json = BinaryData.FromString("""{}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            //json.IntValue = IntValue;
+            //json.StringValue = StringValue;
+            //return BinaryData.FromString(json.ToString());
+        }
+    }
+}

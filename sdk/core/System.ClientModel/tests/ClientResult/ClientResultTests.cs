@@ -39,6 +39,17 @@ public class ClientResultTests
     #endregion
 
     #region OptionalClientResult<T>
+
+    [Test]
+    public void CannotCreateOptionalClientResultFromNullResponse()
+    {
+        Assert.Throws<ArgumentNullException>(() => new MockOptionalClientResult<object>(null, null!));
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            OptionalClientResult<object> result = ClientResult.FromOptionalValue<object>(null, null!);
+        });
+    }
+
     [Test]
     public void CanCreateOptionalResultFromBool()
     {
@@ -57,6 +68,26 @@ public class ClientResultTests
         Assert.IsFalse(result.Value);
         Assert.IsTrue(result.HasValue);
         Assert.AreEqual(response.Status, result.GetRawResponse().Status);
+    }
+
+    [Test]
+    public void OptionalResultDerivedTypeCanShadowValue()
+    {
+        // This tests simulates creation of the result returned from a HEAD request.
+
+        PipelineResponse response = new MockPipelineResponse(200);
+        MockPersistableModel model = new MockPersistableModel(1, "a");
+        MockOptionalClientResult<MockPersistableModel> result = new MockOptionalClientResult<MockPersistableModel>(model, response);
+
+        Assert.AreEqual(model.IntValue, result.Value!.IntValue);
+        Assert.AreEqual(model.StringValue, result.Value!.StringValue);
+
+        model = new MockPersistableModel(2, "b");
+
+        result.SetValue(model);
+
+        Assert.AreEqual(model.IntValue, result.Value!.IntValue);
+        Assert.AreEqual(model.StringValue, result.Value!.StringValue);
     }
 
     [Test]
