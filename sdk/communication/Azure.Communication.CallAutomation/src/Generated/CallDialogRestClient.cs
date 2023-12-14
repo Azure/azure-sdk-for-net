@@ -212,7 +212,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateUpdateDialogRequest(string callConnectionId, string dialogId, UpdateDialogRequestInternal updateDialogRequest, string operationCallbackUri)
+        internal HttpMessage CreateUpdateDialogRequest(string callConnectionId, string dialogId, UpdateDialogRequestInternal updateDialogRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -223,10 +223,6 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath(callConnectionId, true);
             uri.AppendPath("/dialogs/", false);
             uri.AppendPath(dialogId, true);
-            if (operationCallbackUri != null)
-            {
-                uri.AppendQuery("operationCallbackUri", operationCallbackUri, true);
-            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -241,11 +237,10 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="dialogId"> The dialog id. </param>
         /// <param name="updateDialogRequest"> The update dialog request. </param>
-        /// <param name="operationCallbackUri"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="dialogId"/> or <paramref name="updateDialogRequest"/> is null. </exception>
         /// <remarks> Update a dialog. </remarks>
-        public async Task<Response<DialogStateResponseInternal>> UpdateDialogAsync(string callConnectionId, string dialogId, UpdateDialogRequestInternal updateDialogRequest, string operationCallbackUri = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DialogStateResponseInternal>> UpdateDialogAsync(string callConnectionId, string dialogId, UpdateDialogRequestInternal updateDialogRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -260,7 +255,7 @@ namespace Azure.Communication.CallAutomation
                 throw new ArgumentNullException(nameof(updateDialogRequest));
             }
 
-            using var message = CreateUpdateDialogRequest(callConnectionId, dialogId, updateDialogRequest, operationCallbackUri);
+            using var message = CreateUpdateDialogRequest(callConnectionId, dialogId, updateDialogRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -280,11 +275,10 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="dialogId"> The dialog id. </param>
         /// <param name="updateDialogRequest"> The update dialog request. </param>
-        /// <param name="operationCallbackUri"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="dialogId"/> or <paramref name="updateDialogRequest"/> is null. </exception>
         /// <remarks> Update a dialog. </remarks>
-        public Response<DialogStateResponseInternal> UpdateDialog(string callConnectionId, string dialogId, UpdateDialogRequestInternal updateDialogRequest, string operationCallbackUri = null, CancellationToken cancellationToken = default)
+        public Response<DialogStateResponseInternal> UpdateDialog(string callConnectionId, string dialogId, UpdateDialogRequestInternal updateDialogRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -299,7 +293,7 @@ namespace Azure.Communication.CallAutomation
                 throw new ArgumentNullException(nameof(updateDialogRequest));
             }
 
-            using var message = CreateUpdateDialogRequest(callConnectionId, dialogId, updateDialogRequest, operationCallbackUri);
+            using var message = CreateUpdateDialogRequest(callConnectionId, dialogId, updateDialogRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

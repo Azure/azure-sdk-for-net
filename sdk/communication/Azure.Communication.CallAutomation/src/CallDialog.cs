@@ -132,7 +132,6 @@ namespace Azure.Communication.CallAutomation
                     (CallConnectionId,
                     updateDialogOptions.DialogId,
                     request,
-                    request.OperationCallbackUri,
                     cancellationToken).ConfigureAwait(false);
 
                 var result = new DialogResult(updateDialogOptions.DialogId);
@@ -165,7 +164,6 @@ namespace Azure.Communication.CallAutomation
                     (CallConnectionId,
                     updateDialogOptions.DialogId,
                     request,
-                    request.OperationCallbackUri,
                     cancellationToken);
 
                 var result = new DialogResult(updateDialogOptions.DialogId);
