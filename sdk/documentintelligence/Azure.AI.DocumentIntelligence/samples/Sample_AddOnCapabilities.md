@@ -2,20 +2,9 @@
 
 This sample demonstrates how to analyze a document with add-on capabilities. For more information about the supported features, see the [service documentation][docint_addon].
 
-
 To get started you'll need a Cognitive Services resource or a Document Intelligence resource. See [README][README] for prerequisites and instructions.
 
-Add-on capabilities are available within all models except for the Business card model. This sample uses Layout model ("prebuilt-layout") to demonstrate. When analyzing a document, you can specify a list of optional [analysis features][sdk_docfeature] to enable certain add-on capabilities.
-
-The following capabilities are free:
-- Barcodes
-- Languages
-- KeyValuePairs
-
-The following capabilities will incur additional charges, see [pricing][docint_pricing]:
-- Formulas
-- OcrHighResolution
-- FontStyling
+When analyzing a document, you can specify a list of optional [analysis features][sdk_docfeature] to enable certain add-on capabilities. Some of the capabilities are free, while others incur additional charges, see [pricing][docint_pricing] for more information.
 
 ## Creating a `DocumentIntelligenceClient`
 
@@ -32,84 +21,6 @@ var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCrede
 ## High resolution extraction
 To extract content from a given file at a URI with improved quality through the add-on high resolution capability, use the `AnalyzeDocumentAsync` method and specify `DocumentAnalysisFeature.OcrHighResolution` as the analysis features. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
-```C# Snippet:DocumentIntelligenceSampleHighResolutionExtraction
-Uri uriSource = new Uri("<uriSource>");
-
-var content = new AnalyzeDocumentContent()
-{
-    UrlSource = uriSource
-};
-
-List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>();
-features.Add(DocumentAnalysisFeature.OcrHighResolution);
-
-var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
-AnalyzeResult result = operation.Value;
-
-foreach (DocumentPage page in result.Pages)
-{
-    Console.WriteLine($"Document Page {page.PageNumber} has {page.Lines.Count} line(s), {page.Words.Count} word(s)," +
-        $" and {page.SelectionMarks.Count} selection mark(s).");
-
-    for (int i = 0; i < page.Lines.Count; i++)
-    {
-        DocumentLine line = page.Lines[i];
-
-        Console.WriteLine($"  Line {i}:");
-        Console.WriteLine($"    Content: '{line.Content}'");
-
-        Console.Write("    Bounding polygon, with points ordered clockwise:");
-        for (int j = 0; j < line.Polygon.Count; j += 2)
-        {
-            Console.Write($" ({line.Polygon[j]}, {line.Polygon[j + 1]})");
-        }
-
-        Console.WriteLine();
-    }
-
-    for (int i = 0; i < page.SelectionMarks.Count; i++)
-    {
-        DocumentSelectionMark selectionMark = page.SelectionMarks[i];
-
-        Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
-        Console.WriteLine($"    State: {selectionMark.State}");
-
-        Console.Write("    Bounding polygon, with points ordered clockwise:");
-        for (int j = 0; j < selectionMark.Polygon.Count; j++)
-        {
-            Console.Write($" ({selectionMark.Polygon[j]}, {selectionMark.Polygon[j + 1]})");
-        }
-
-        Console.WriteLine();
-    }
-}
-
-for (int i = 0; i < result.Paragraphs.Count; i++)
-{
-    DocumentParagraph paragraph = result.Paragraphs[i];
-
-    Console.WriteLine($"Paragraph {i}:");
-    Console.WriteLine($"  Content: {paragraph.Content}");
-
-    if (paragraph.Role != null)
-    {
-        Console.WriteLine($"  Role: {paragraph.Role}");
-    }
-}
-
-for (int i = 0; i < result.Tables.Count; i++)
-{
-    DocumentTable table = result.Tables[i];
-
-    Console.WriteLine($"Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
-
-    foreach (DocumentTableCell cell in table.Cells)
-    {
-        Console.WriteLine($"  Cell ({cell.RowIndex}, {cell.ColumnIndex}) is a '{cell.Kind}' with content: {cell.Content}");
-    }
-}
-```
-
 ## Formula extraction
 To extract formulas from a given file at a URI with the add-on formulas capability, use the `AnalyzeDocumentAsync` method and specify `DocumentAnalysisFeature.Formulas` as the analysis features. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
@@ -121,8 +32,10 @@ var content = new AnalyzeDocumentContent()
     UrlSource = uriSource
 };
 
-List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>();
-features.Add(DocumentAnalysisFeature.Formulas);
+List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
+{
+    DocumentAnalysisFeature.Formulas
+};
 
 var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
 AnalyzeResult result = operation.Value;
@@ -158,11 +71,28 @@ var content = new AnalyzeDocumentContent()
     UrlSource = uriSource
 };
 
-List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>();
-features.Add(DocumentAnalysisFeature.StyleFont);
+List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
+{
+    DocumentAnalysisFeature.StyleFont
+};
 
 var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
 AnalyzeResult result = operation.Value;
+
+// Handwritten styles
+var handwrittenSpans = result.Styles
+    .Where(s => s.IsHandwritten != null && s.IsHandwritten.Value)
+    .SelectMany(s => s.Spans).OrderBy(s => s.Offset);
+if (handwrittenSpans.Any())
+{
+    Console.WriteLine("----Handwritten content----");
+    var handwrittenContents = handwrittenSpans.Select(s => result.Content.Substring(s.Offset, s.Length));
+    Console.WriteLine(string.Join(",", handwrittenContents));
+}
+else
+{
+    Console.WriteLine("No handwritten content was detected.");
+}
 
 // DocumentStyle has the following font related attributes:
 var similarFontFamilies = new Dictionary<string, List<DocumentStyle>>(); // e.g., 'Arial, sans-serif
@@ -170,15 +100,6 @@ var fontStyles = new Dictionary<FontStyle, List<DocumentStyle>>(); // e.g, 'ital
 var fontWeights = new Dictionary<FontWeight, List<DocumentStyle>>(); // e.g., 'bold'
 var fontColors = new Dictionary<string, List<DocumentStyle>>(); // in '#rrggbb' hexadecimal format
 var fontBackgroundColors = new Dictionary<string, List<DocumentStyle>>(); // in '#rrggbb' hexadecimal format
-
-if (result.Styles.Any(s => s.IsHandwritten != null && s.IsHandwritten.Value == true))
-{
-    Console.WriteLine("Document contains handwritten content");
-}
-else
-{
-    Console.WriteLine("Document does not contain handwritten content");
-}
 
 Console.WriteLine("\n----Fonts styles detected in the document----");
 
@@ -196,7 +117,7 @@ foreach (var style in result.Styles)
             similarFontFamilies.Add(style.SimilarFontFamily, new List<DocumentStyle>() { style });
         }
     }
-    if (style.FontStyle != null && style.FontStyle.HasValue)
+    if (style.FontStyle != null)
     {
         if (fontStyles.ContainsKey(style.FontStyle.Value))
         {
@@ -207,7 +128,7 @@ foreach (var style in result.Styles)
             fontStyles.Add(style.FontStyle.Value, new List<DocumentStyle>() { style });
         }
     }
-    if (style.FontWeight != null && style.FontWeight.HasValue)
+    if (style.FontWeight != null)
     {
         if (fontWeights.ContainsKey(style.FontWeight.Value))
         {
@@ -304,8 +225,10 @@ var content = new AnalyzeDocumentContent()
     UrlSource = uriSource
 };
 
-List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>();
-features.Add(DocumentAnalysisFeature.Barcodes);
+List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
+{
+    DocumentAnalysisFeature.Barcodes
+};
 
 var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
 AnalyzeResult result = operation.Value;
@@ -343,8 +266,10 @@ var content = new AnalyzeDocumentContent()
     UrlSource = uriSource
 };
 
-List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>();
-features.Add(DocumentAnalysisFeature.Languages);
+List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
+{
+    DocumentAnalysisFeature.Languages
+};
 
 var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
 AnalyzeResult result = operation.Value;
@@ -374,8 +299,10 @@ var content = new AnalyzeDocumentContent()
     UrlSource = uriSource
 };
 
-List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>();
-features.Add(DocumentAnalysisFeature.KeyValuePairs);
+List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
+{
+    DocumentAnalysisFeature.KeyValuePairs
+};
 
 var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
 AnalyzeResult result = operation.Value;

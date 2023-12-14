@@ -13,97 +13,6 @@ namespace Azure.AI.DocumentIntelligence.Samples
     public partial class DocumentIntelligenceSamples
     {
         [RecordedTest]
-        public async Task AnalyzeWithHighResolution()
-        {
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-
-            #region Snippet:DocumentIntelligenceSampleHighResolutionExtraction
-#if SNIPPET
-            Uri uriSource = new Uri("<uriSource>");
-#else
-            Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("Form_1.jpg");
-#endif
-
-            var content = new AnalyzeDocumentContent()
-            {
-                UrlSource = uriSource
-            };
-
-            List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>();
-            features.Add(DocumentAnalysisFeature.OcrHighResolution);
-
-            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
-            AnalyzeResult result = operation.Value;
-
-            foreach (DocumentPage page in result.Pages)
-            {
-                Console.WriteLine($"Document Page {page.PageNumber} has {page.Lines.Count} line(s), {page.Words.Count} word(s)," +
-                    $" and {page.SelectionMarks.Count} selection mark(s).");
-
-                for (int i = 0; i < page.Lines.Count; i++)
-                {
-                    DocumentLine line = page.Lines[i];
-
-                    Console.WriteLine($"  Line {i}:");
-                    Console.WriteLine($"    Content: '{line.Content}'");
-
-                    Console.Write("    Bounding polygon, with points ordered clockwise:");
-                    for (int j = 0; j < line.Polygon.Count; j += 2)
-                    {
-                        Console.Write($" ({line.Polygon[j]}, {line.Polygon[j + 1]})");
-                    }
-
-                    Console.WriteLine();
-                }
-
-                for (int i = 0; i < page.SelectionMarks.Count; i++)
-                {
-                    DocumentSelectionMark selectionMark = page.SelectionMarks[i];
-
-                    Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
-                    Console.WriteLine($"    State: {selectionMark.State}");
-
-                    Console.Write("    Bounding polygon, with points ordered clockwise:");
-                    for (int j = 0; j < selectionMark.Polygon.Count; j++)
-                    {
-                        Console.Write($" ({selectionMark.Polygon[j]}, {selectionMark.Polygon[j + 1]})");
-                    }
-
-                    Console.WriteLine();
-                }
-            }
-
-            for (int i = 0; i < result.Paragraphs.Count; i++)
-            {
-                DocumentParagraph paragraph = result.Paragraphs[i];
-
-                Console.WriteLine($"Paragraph {i}:");
-                Console.WriteLine($"  Content: {paragraph.Content}");
-
-                if (paragraph.Role != null)
-                {
-                    Console.WriteLine($"  Role: {paragraph.Role}");
-                }
-            }
-
-            for (int i = 0; i < result.Tables.Count; i++)
-            {
-                DocumentTable table = result.Tables[i];
-
-                Console.WriteLine($"Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
-
-                foreach (DocumentTableCell cell in table.Cells)
-                {
-                    Console.WriteLine($"  Cell ({cell.RowIndex}, {cell.ColumnIndex}) is a '{cell.Kind}' with content: {cell.Content}");
-                }
-            }
-
-            #endregion
-        }
-
-        [RecordedTest]
         public async Task AnalyzeWithFormulaExtraction()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -122,8 +31,10 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 UrlSource = uriSource
             };
 
-            List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>();
-            features.Add(DocumentAnalysisFeature.Formulas);
+            List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
+            {
+                DocumentAnalysisFeature.Formulas
+            };
 
             var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
             AnalyzeResult result = operation.Value;
@@ -169,11 +80,28 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 UrlSource = uriSource
             };
 
-            List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>();
-            features.Add(DocumentAnalysisFeature.StyleFont);
+            List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
+            {
+                DocumentAnalysisFeature.StyleFont
+            };
 
             var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
             AnalyzeResult result = operation.Value;
+
+            // Handwritten styles
+            var handwrittenSpans = result.Styles
+                .Where(s => s.IsHandwritten != null && s.IsHandwritten.Value)
+                .SelectMany(s => s.Spans).OrderBy(s => s.Offset);
+            if (handwrittenSpans.Any())
+            {
+                Console.WriteLine("----Handwritten content----");
+                var handwrittenContents = handwrittenSpans.Select(s => result.Content.Substring(s.Offset, s.Length));
+                Console.WriteLine(string.Join(",", handwrittenContents));
+            }
+            else
+            {
+                Console.WriteLine("No handwritten content was detected.");
+            }
 
             // DocumentStyle has the following font related attributes:
             var similarFontFamilies = new Dictionary<string, List<DocumentStyle>>(); // e.g., 'Arial, sans-serif
@@ -181,15 +109,6 @@ namespace Azure.AI.DocumentIntelligence.Samples
             var fontWeights = new Dictionary<FontWeight, List<DocumentStyle>>(); // e.g., 'bold'
             var fontColors = new Dictionary<string, List<DocumentStyle>>(); // in '#rrggbb' hexadecimal format
             var fontBackgroundColors = new Dictionary<string, List<DocumentStyle>>(); // in '#rrggbb' hexadecimal format
-
-            if (result.Styles.Any(s => s.IsHandwritten != null && s.IsHandwritten.Value == true))
-            {
-                Console.WriteLine("Document contains handwritten content");
-            }
-            else
-            {
-                Console.WriteLine("Document does not contain handwritten content");
-            }
 
             Console.WriteLine("\n----Fonts styles detected in the document----");
 
@@ -207,7 +126,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
                         similarFontFamilies.Add(style.SimilarFontFamily, new List<DocumentStyle>() { style });
                     }
                 }
-                if (style.FontStyle != null && style.FontStyle.HasValue)
+                if (style.FontStyle != null)
                 {
                     if (fontStyles.ContainsKey(style.FontStyle.Value))
                     {
@@ -218,7 +137,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
                         fontStyles.Add(style.FontStyle.Value, new List<DocumentStyle>() { style });
                     }
                 }
-                if (style.FontWeight != null && style.FontWeight.HasValue)
+                if (style.FontWeight != null)
                 {
                     if (fontWeights.ContainsKey(style.FontWeight.Value))
                     {
@@ -325,8 +244,10 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 UrlSource = uriSource
             };
 
-            List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>();
-            features.Add(DocumentAnalysisFeature.Barcodes);
+            List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
+            {
+                DocumentAnalysisFeature.Barcodes
+            };
 
             var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
             AnalyzeResult result = operation.Value;
@@ -374,8 +295,10 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 UrlSource = uriSource
             };
 
-            List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>();
-            features.Add(DocumentAnalysisFeature.Languages);
+            List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
+            {
+                DocumentAnalysisFeature.Languages
+            };
 
             var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
             AnalyzeResult result = operation.Value;
@@ -415,8 +338,10 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 UrlSource = uriSource
             };
 
-            List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>();
-            features.Add(DocumentAnalysisFeature.KeyValuePairs);
+            List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
+            {
+                DocumentAnalysisFeature.KeyValuePairs
+            };
 
             var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
             AnalyzeResult result = operation.Value;
