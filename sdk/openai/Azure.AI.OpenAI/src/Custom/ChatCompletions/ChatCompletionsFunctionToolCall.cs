@@ -30,6 +30,23 @@ public partial class ChatCompletionsFunctionToolCall : ChatCompletionsToolCall
 
     internal FunctionCall Function { get; set; }
 
+    /// <summary>
+    /// Initializes a new instance of <see cref="ChatCompletionsFunctionToolCall"/>.
+    /// </summary>
+    /// <param name="id"> The ID of the function tool call. </param>
+    /// <param name="name"> The name of the function that is called by the tool. </param>
+    /// <param name="arguments"> The arguments to the function that is called by the tool. </param>
+    /// <remarks>
+    /// This constructor is intended for use with <see cref="ChatRequestAssistantMessage"/> when constructing request
+    /// messages for conversation history from accumulated streaming tool call updates.
+    /// </remarks>
+    public ChatCompletionsFunctionToolCall(string id, string name, string arguments) : base(id)
+    {
+        Argument.AssertNotNull(name, nameof(name));
+        Argument.AssertNotNull(arguments, nameof(arguments));
+        Function = new(name, arguments);
+    }
+
     /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolCall"/>. </summary>
     /// <param name="id"> The ID of the tool call. </param>
     /// <param name="function"> The details of the function invocation requested by the tool call. </param>

@@ -23,6 +23,22 @@ namespace Azure.AI.OpenAI
             writer.WriteEndObject();
         }
 
+        internal static ChatCompletionsToolCall DeserializeChatCompletionsToolCall(JsonElement element)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "function": return ChatCompletionsFunctionToolCall.DeserializeChatCompletionsFunctionToolCall(element);
+                }
+            }
+            return UnknownChatCompletionsToolCall.DeserializeUnknownChatCompletionsToolCall(element);
+        }
+
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ChatCompletionsToolCall FromResponse(Response response)
