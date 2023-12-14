@@ -36,8 +36,12 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
             string discoveryGroupName = "Sample Disco From C#";
             string discoveryGroupDescription = "This is a sample discovery group generated from C#";
             #if SNIPPET
-            List<String> hosts = new List<String> {"<host1>.<org>.com", "<host2>.<org>.com"};
-            List<String> domains = new List<String> {"<domain1>.com", "<domain2>.com"};
+            List<String> hosts = new List<String>();
+            hosts.Add("<host1>.com");
+            hosts.Add("<host2>.com");
+            List<String> domains = new List<String>();
+            domains.Add("<domain1>.com");
+            domains.Add("<domain2>.com");
             #else
             string[] hosts = TestEnvironment.Hosts.Split(',');
             string[] domains = TestEnvironment.Domains.Split(',');
