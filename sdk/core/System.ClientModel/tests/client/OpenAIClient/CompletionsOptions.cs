@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using ClientModel.Tests.Client.Shared;
+using ClientModel.Tests.ClientShared;
 using System;
 using System.Collections.Generic;
 using System.Linq;

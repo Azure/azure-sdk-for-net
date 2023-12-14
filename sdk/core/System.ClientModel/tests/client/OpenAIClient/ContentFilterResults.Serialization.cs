@@ -7,7 +7,7 @@
 
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using ClientModel.Tests.Client.Shared;
+using ClientModel.Tests.ClientShared;
 
 namespace OpenAI;
 

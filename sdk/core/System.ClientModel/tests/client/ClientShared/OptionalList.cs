@@ -8,7 +8,7 @@ using System.Linq;
 
 #nullable enable
 
-namespace ClientModel.Tests.Client.Shared;
+namespace ClientModel.Tests.ClientShared;
 
 internal class OptionalList<T> : IList<T>, IReadOnlyList<T>
 {

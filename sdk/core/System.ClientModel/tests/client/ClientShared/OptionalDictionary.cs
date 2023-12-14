@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 #nullable enable
 
-namespace ClientModel.Tests.Client.Shared;
+namespace ClientModel.Tests.ClientShared;
 
 internal class OptionalDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue> where TKey : notnull
 {

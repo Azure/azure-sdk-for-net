@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;
 
-namespace ClientModel.Tests.Client.Shared;
+namespace ClientModel.Tests.ClientShared;
 
 internal class TypeFormatters
 {

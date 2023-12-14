@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace ClientModel.Tests.Client.Shared;
+namespace ClientModel.Tests.ClientShared;
 
 internal static class OptionalProperty
 {

@@ -5,7 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Runtime.CompilerServices;
 
-namespace ClientModel.Tests.Client.Shared;
+namespace ClientModel.Tests.ClientShared;
 
 internal static class ModelReaderWriterHelper
 {

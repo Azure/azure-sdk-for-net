@@ -6,7 +6,7 @@
 #nullable disable
 
 using ClientModel.Tests.Client.Models.ResourceManager.Resources;
-using ClientModel.Tests.Client.Shared;
+using ClientModel.Tests.ClientShared;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
