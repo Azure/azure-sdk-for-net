@@ -14,7 +14,6 @@ using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
@@ -26,7 +25,6 @@ namespace Azure.ResourceManager.Resources
     /// from an instance of <see cref="ArmClient"/> using the GetResourceGroupResource method.
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetResourceGroup method.
     /// </summary>
-    [DeserializationProxy(typeof(ResourceGroupData))]
     public partial class ResourceGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceGroupResource"/> instance. </summary>

@@ -6,23 +6,26 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     [JsonConverter(typeof(ExtendedLocationConverter))]
-    public partial class ExtendedLocation : IUtf8JsonSerializable, IModelJsonSerializable<ExtendedLocation>
+    public partial class ExtendedLocation : IUtf8JsonSerializable, IJsonModel<ExtendedLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExtendedLocation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<ExtendedLocation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<ExtendedLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ExtendedLocation)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocationType))
@@ -35,24 +38,24 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
-            {
-                foreach (var property in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(property.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
 
-        internal static ExtendedLocation DeserializeExtendedLocation(JsonElement element, ModelSerializerOptions options = default)
+        ExtendedLocation IJsonModel<ExtendedLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ExtendedLocation)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtendedLocation(document.RootElement, options);
+        }
+
+        internal static ExtendedLocation DeserializeExtendedLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.Resources.Models
             }
             Optional<ExtendedLocationType> type = default;
             Optional<string> name = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -77,62 +79,40 @@ namespace Azure.ResourceManager.Resources.Models
                     name = property.Value.GetString();
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
-                {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
-                }
             }
-            return new ExtendedLocation(Optional.ToNullable(type), name.Value, serializedAdditionalRawData);
+            return new ExtendedLocation(Optional.ToNullable(type), name.Value);
         }
 
-        ExtendedLocation IModelJsonSerializable<ExtendedLocation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<ExtendedLocation>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeExtendedLocation(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<ExtendedLocation>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        ExtendedLocation IModelSerializable<ExtendedLocation>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeExtendedLocation(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="ExtendedLocation"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="ExtendedLocation"/> to convert. </param>
-        public static implicit operator RequestContent(ExtendedLocation model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ExtendedLocation)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExtendedLocation"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator ExtendedLocation(Response response)
+        ExtendedLocation IPersistableModel<ExtendedLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeExtendedLocation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExtendedLocation(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ExtendedLocation)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<ExtendedLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class ExtendedLocationConverter : JsonConverter<ExtendedLocation>
         {

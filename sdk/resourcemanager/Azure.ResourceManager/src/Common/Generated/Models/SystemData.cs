@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Models
@@ -28,8 +27,8 @@ namespace Azure.ResourceManager.Models
         /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
         /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
         /// <param name="lastModifiedOn"> The timestamp of resource last modification (UTC). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SystemData(string createdBy, CreatedByType? createdByType, DateTimeOffset? createdOn, string lastModifiedBy, CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedOn, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        [SerializationConstructor]
+        internal SystemData(string createdBy, CreatedByType? createdByType, DateTimeOffset? createdOn, string lastModifiedBy, CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedOn)
         {
             CreatedBy = createdBy;
             CreatedByType = createdByType;
@@ -37,7 +36,6 @@ namespace Azure.ResourceManager.Models
             LastModifiedBy = lastModifiedBy;
             LastModifiedByType = lastModifiedByType;
             LastModifiedOn = lastModifiedOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The identity that created the resource. </summary>

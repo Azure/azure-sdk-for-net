@@ -6,45 +6,58 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(SystemAssignedServiceIdentityConverter))]
-    public partial class SystemAssignedServiceIdentity : IUtf8JsonSerializable, IModelJsonSerializable<SystemAssignedServiceIdentity>
+    public partial class SystemAssignedServiceIdentity : IUtf8JsonSerializable, IJsonModel<SystemAssignedServiceIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SystemAssignedServiceIdentity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SystemAssignedServiceIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<SystemAssignedServiceIdentity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<SystemAssignedServiceIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<SystemAssignedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SystemAssignedServiceIdentity)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(PrincipalId))
+            {
+                writer.WritePropertyName("principalId"u8);
+                writer.WriteStringValue(PrincipalId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(SystemAssignedServiceIdentityType.ToString());
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
-            {
-                foreach (var property in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(property.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
 
-        internal static SystemAssignedServiceIdentity DeserializeSystemAssignedServiceIdentity(JsonElement element, ModelSerializerOptions options = default)
+        SystemAssignedServiceIdentity IJsonModel<SystemAssignedServiceIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<SystemAssignedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SystemAssignedServiceIdentity)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSystemAssignedServiceIdentity(document.RootElement, options);
+        }
+
+        internal static SystemAssignedServiceIdentity DeserializeSystemAssignedServiceIdentity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -53,7 +66,6 @@ namespace Azure.ResourceManager.Models
             Optional<Guid> principalId = default;
             Optional<Guid> tenantId = default;
             SystemAssignedServiceIdentityType type = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -79,62 +91,40 @@ namespace Azure.ResourceManager.Models
                     type = new SystemAssignedServiceIdentityType(property.Value.GetString());
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
-                {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
-                }
             }
-            return new SystemAssignedServiceIdentity(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), type, serializedAdditionalRawData);
+            return new SystemAssignedServiceIdentity(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), type);
         }
 
-        SystemAssignedServiceIdentity IModelJsonSerializable<SystemAssignedServiceIdentity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<SystemAssignedServiceIdentity>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<SystemAssignedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeSystemAssignedServiceIdentity(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<SystemAssignedServiceIdentity>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        SystemAssignedServiceIdentity IModelSerializable<SystemAssignedServiceIdentity>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeSystemAssignedServiceIdentity(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="SystemAssignedServiceIdentity"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="SystemAssignedServiceIdentity"/> to convert. </param>
-        public static implicit operator RequestContent(SystemAssignedServiceIdentity model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SystemAssignedServiceIdentity)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="SystemAssignedServiceIdentity"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator SystemAssignedServiceIdentity(Response response)
+        SystemAssignedServiceIdentity IPersistableModel<SystemAssignedServiceIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<SystemAssignedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeSystemAssignedServiceIdentity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSystemAssignedServiceIdentity(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SystemAssignedServiceIdentity)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<SystemAssignedServiceIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class SystemAssignedServiceIdentityConverter : JsonConverter<SystemAssignedServiceIdentity>
         {

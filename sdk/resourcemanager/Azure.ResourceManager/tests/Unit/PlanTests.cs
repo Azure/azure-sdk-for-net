@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, "${?/>._`", "")]
         public void EqualsToName(bool expected, string name1, string name2)
         {
-            ArmPlan plan1 = new ArmPlan(name1, null, null, null, null, new Dictionary<string, BinaryData>());
-            ArmPlan plan2 = new ArmPlan(name2, null, null, null, null, new Dictionary<string, BinaryData>());
+            ArmPlan plan1 = new ArmPlan(name1, null, null, null, null);
+            ArmPlan plan2 = new ArmPlan(name2, null, null, null, null);
             Assert.AreEqual(expected, plan1.Equals(plan2), "Plans did not match expected equality");
             Assert.AreEqual(expected, plan1.GetHashCode() == plan2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({plan1.GetHashCode()}, {plan2.GetHashCode()})");
         }
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, "${?/>._`", "")]
         public void EqualsToProduct(bool expected, string product1, string product2)
         {
-            ArmPlan plan1 = new ArmPlan(null, null, product1, null, null, new Dictionary<string, BinaryData>());
-            ArmPlan plan2 = new ArmPlan(null, null, product2, null, null, new Dictionary<string, BinaryData>());
+            ArmPlan plan1 = new ArmPlan(null, null, product1, null, null);
+            ArmPlan plan2 = new ArmPlan(null, null, product2, null, null);
             Assert.AreEqual(expected, plan1.Equals(plan2), "Plans did not match expected equality");
             Assert.AreEqual(expected, plan1.GetHashCode() == plan2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({plan1.GetHashCode()}, {plan2.GetHashCode()})");
         }
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, "${?/>._`", "")]
         public void EqualsToPromotionCode(bool expected, string promotionCode1, string promotionCode2)
         {
-            ArmPlan plan1 = new ArmPlan(null, null, null, promotionCode1, null, new Dictionary<string, BinaryData>());
-            ArmPlan plan2 = new ArmPlan(null, null, null, promotionCode2, null, new Dictionary<string, BinaryData>());
+            ArmPlan plan1 = new ArmPlan(null, null, null, promotionCode1, null);
+            ArmPlan plan2 = new ArmPlan(null, null, null, promotionCode2, null);
             Assert.AreEqual(expected, plan1.Equals(plan2), "Plans did not match expected equality");
             Assert.AreEqual(expected, plan1.GetHashCode() == plan2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({plan1.GetHashCode()}, {plan2.GetHashCode()})");
         }
@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, "${?/>._`", "")]
         public void EqualsToPublisher(bool expected, string publisher1, string publisher2)
         {
-            ArmPlan plan1 = new ArmPlan(null, publisher1, null, null, null, new Dictionary<string, BinaryData>());
-            ArmPlan plan2 = new ArmPlan(null, publisher2, null, null, null, new Dictionary<string, BinaryData>());
+            ArmPlan plan1 = new ArmPlan(null, publisher1, null, null, null);
+            ArmPlan plan2 = new ArmPlan(null, publisher2, null, null, null);
             Assert.AreEqual(expected, plan1.Equals(plan2), "Plans did not match expected equality");
             Assert.AreEqual(expected, plan1.GetHashCode() == plan2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({plan1.GetHashCode()}, {plan2.GetHashCode()})");
         }
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, "${?/>._`", "")]
         public void EqualsToVersion(bool expected, string version1, string version2)
         {
-            ArmPlan plan1 = new ArmPlan(null, null, null, null, version1, new Dictionary<string, BinaryData>());
-            ArmPlan plan2 = new ArmPlan(null, null, null, null, version2, new Dictionary<string, BinaryData>());
+            ArmPlan plan1 = new ArmPlan(null, null, null, null, version1);
+            ArmPlan plan2 = new ArmPlan(null, null, null, null, version2);
             Assert.AreEqual(expected, plan1.Equals(plan2), "Plans did not match expected equality");
             Assert.AreEqual(expected, plan1.GetHashCode() == plan2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({plan1.GetHashCode()}, {plan2.GetHashCode()})");
         }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Tests
         [Test]
         public void EqualsToNullPlan()
         {
-            ArmPlan plan1 = new ArmPlan(null, null, null, null, null, new Dictionary<string, BinaryData>());
+            ArmPlan plan1 = new ArmPlan(null, null, null, null, null);
             ArmPlan plan2 = null;
             Assert.IsFalse(plan1.Equals(plan2));
         }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Tests
         [Test]
         public void EqualsToObject()
         {
-            ArmPlan plan1 = new ArmPlan(null, null, null, null, null, new Dictionary<string, BinaryData>());
+            ArmPlan plan1 = new ArmPlan(null, null, null, null, null);
             object stringPlan = "random";
             Assert.IsFalse(plan1.Equals(stringPlan));
 
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Tests
             object samePlan = plan1;
             Assert.IsTrue(plan1.Equals(samePlan));
 
-            object plan2 = new ArmPlan("Plan2", null, null, null, null, new Dictionary<string, BinaryData>());
+            object plan2 = new ArmPlan("Plan2", null, null, null, null);
             Assert.IsFalse(plan1.Equals(plan2));
         }
 
         [Test]
         public void EqualsToSamePlans()
         {
-            ArmPlan plan1 = new ArmPlan(null, null, null, null, null, new Dictionary<string, BinaryData>());
+            ArmPlan plan1 = new ArmPlan(null, null, null, null, null);
             ArmPlan plan2 = plan1;
             Assert.IsTrue(plan1.Equals(plan2));
         }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Tests
         public void SerializationTest()
         {
             string expected = "{\"properties\":{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"}}";
-            ArmPlan plan = new("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan", new Dictionary<string, BinaryData>());
+            ArmPlan plan = new("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan");
             var json = JsonHelper.SerializePropertiesToString(plan);
             Assert.IsTrue(expected.Equals(json));
         }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Tests
         [Test]
         public void InvalidSerializationTest()
         {
-            ArmPlan plan = new(null, null, null, null, null, new Dictionary<string, BinaryData>());
+            ArmPlan plan = new(null, null, null, null, null);
             var json = JsonHelper.SerializePropertiesToString(plan);
             Assert.AreEqual("{\"properties\":{\"name\":null,\"publisher\":null,\"product\":null}}", json);
         }
@@ -172,8 +172,8 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, "${?/>._`", "", "${?/>._`", "")]
         public void EqualsToOperator(bool expected, string name1, string name2, string promo1, string promo2)
         {
-            ArmPlan plan1 = new ArmPlan(name1, null, null, promo1, null, new Dictionary<string, BinaryData>());
-            ArmPlan plan2 = new ArmPlan(name2, null, null, promo2, null, new Dictionary<string, BinaryData>());
+            ArmPlan plan1 = new ArmPlan(name1, null, null, promo1, null);
+            ArmPlan plan2 = new ArmPlan(name2, null, null, promo2, null);
             Assert.AreEqual(expected, plan1 == plan2);
         }
 
@@ -188,15 +188,15 @@ namespace Azure.ResourceManager.Tests
         [TestCase(true, "${?/>._`", "", "${?/>._`", "")]
         public void NotEqualsToOperator(bool expected, string name1, string name2, string promo1, string promo2)
         {
-            ArmPlan plan1 = new ArmPlan(name1, null, null, promo1, null, new Dictionary<string, BinaryData>());
-            ArmPlan plan2 = new ArmPlan(name2, null, null, promo2, null, new Dictionary<string, BinaryData>());
+            ArmPlan plan1 = new ArmPlan(name1, null, null, promo1, null);
+            ArmPlan plan2 = new ArmPlan(name2, null, null, promo2, null);
             Assert.AreEqual(expected, plan1 != plan2);
         }
 
         [Test]
         public void EqualOperatorNull()
         {
-            ArmPlan plan1 = new ArmPlan("PlanName", null, null, "PlanPromo", null, new Dictionary<string, BinaryData>());
+            ArmPlan plan1 = new ArmPlan("PlanName", null, null, "PlanPromo", null);
             Assert.IsFalse(plan1 == null);
             Assert.IsFalse(null == plan1);
         }

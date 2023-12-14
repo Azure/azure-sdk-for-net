@@ -6,12 +6,12 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager
 {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager
                 new Type[] { typeof(ArmClient), typeof(ResourceIdentifier) },
                 null) is not null;
             var obj = Activator.CreateInstance(typeof(T), BindingFlags.NonPublic | BindingFlags.Instance, null, null, null);
-            if (!isResource && obj is not IModelJsonSerializable<object>)
+            if (!isResource && obj is not IJsonModel<object>)
             {
                 throw new InvalidOperationException($"Type {typeof(T)} should be Resource or ReousrceData");
             }

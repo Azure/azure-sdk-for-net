@@ -6,23 +6,37 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    public partial class ManagementGroupCreateOrUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<ManagementGroupCreateOrUpdateContent>
+    public partial class ManagementGroupCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<ManagementGroupCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagementGroupCreateOrUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementGroupCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<ManagementGroupCreateOrUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<ManagementGroupCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ManagementGroupCreateOrUpdateContent)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
+            }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -30,6 +44,11 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
             if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
@@ -45,34 +64,59 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                if (Details is null)
+                writer.WriteObjectValue(Details);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Children))
+            {
+                if (Children != null)
                 {
-                    writer.WriteNullValue();
+                    writer.WritePropertyName("children"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Children)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
                 else
                 {
-                    ((IModelJsonSerializable<CreateManagementGroupDetails>)Details).Serialize(writer, options);
+                    writer.WriteNull("children");
                 }
             }
             writer.WriteEndObject();
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var property in _serializedAdditionalRawData)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static ManagementGroupCreateOrUpdateContent DeserializeManagementGroupCreateOrUpdateContent(JsonElement element, ModelSerializerOptions options = default)
+        ManagementGroupCreateOrUpdateContent IJsonModel<ManagementGroupCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ManagementGroupCreateOrUpdateContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagementGroupCreateOrUpdateContent(document.RootElement, options);
+        }
+
+        internal static ManagementGroupCreateOrUpdateContent DeserializeManagementGroupCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -85,7 +129,8 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             Optional<string> displayName = default;
             Optional<CreateManagementGroupDetails> details = default;
             Optional<IReadOnlyList<ManagementGroupChildOptions>> children = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -162,61 +207,44 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     }
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManagementGroupCreateOrUpdateContent(id.Value, Optional.ToNullable(type), name.Value, Optional.ToNullable(tenantId), displayName.Value, details.Value, Optional.ToList(children), serializedAdditionalRawData);
         }
 
-        ManagementGroupCreateOrUpdateContent IModelJsonSerializable<ManagementGroupCreateOrUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<ManagementGroupCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagementGroupCreateOrUpdateContent(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<ManagementGroupCreateOrUpdateContent>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        ManagementGroupCreateOrUpdateContent IModelSerializable<ManagementGroupCreateOrUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeManagementGroupCreateOrUpdateContent(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="ManagementGroupCreateOrUpdateContent"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="ManagementGroupCreateOrUpdateContent"/> to convert. </param>
-        public static implicit operator RequestContent(ManagementGroupCreateOrUpdateContent model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ManagementGroupCreateOrUpdateContent)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagementGroupCreateOrUpdateContent"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator ManagementGroupCreateOrUpdateContent(Response response)
+        ManagementGroupCreateOrUpdateContent IPersistableModel<ManagementGroupCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeManagementGroupCreateOrUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagementGroupCreateOrUpdateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ManagementGroupCreateOrUpdateContent)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<ManagementGroupCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

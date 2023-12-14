@@ -6,23 +6,26 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(ArmSkuConverter))]
-    public partial class ArmSku : IUtf8JsonSerializable, IModelJsonSerializable<ArmSku>
+    public partial class ArmSku : IUtf8JsonSerializable, IJsonModel<ArmSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ArmSku>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<ArmSku>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<ArmSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<ArmSku>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ArmSku)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -47,24 +50,24 @@ namespace Azure.ResourceManager.Models
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
-            {
-                foreach (var property in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(property.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
 
-        internal static ArmSku DeserializeArmSku(JsonElement element, ModelSerializerOptions options = default)
+        ArmSku IJsonModel<ArmSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmSku>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ArmSku)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeArmSku(document.RootElement, options);
+        }
+
+        internal static ArmSku DeserializeArmSku(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -75,7 +78,6 @@ namespace Azure.ResourceManager.Models
             Optional<string> size = default;
             Optional<string> family = default;
             Optional<int> capacity = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -111,62 +113,40 @@ namespace Azure.ResourceManager.Models
                     capacity = property.Value.GetInt32();
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
-                {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
-                }
             }
-            return new ArmSku(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new ArmSku(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity));
         }
 
-        ArmSku IModelJsonSerializable<ArmSku>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<ArmSku>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<ArmSku>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeArmSku(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<ArmSku>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        ArmSku IModelSerializable<ArmSku>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeArmSku(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="ArmSku"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="ArmSku"/> to convert. </param>
-        public static implicit operator RequestContent(ArmSku model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ArmSku)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="ArmSku"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator ArmSku(Response response)
+        ArmSku IPersistableModel<ArmSku>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<ArmSku>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeArmSku(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeArmSku(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ArmSku)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<ArmSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class ArmSkuConverter : JsonConverter<ArmSku>
         {

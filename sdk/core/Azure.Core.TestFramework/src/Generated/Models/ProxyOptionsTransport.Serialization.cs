@@ -5,23 +5,15 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.Core.TestFramework.Models
 {
-    public partial class ProxyOptionsTransport : IUtf8JsonSerializable, IModelJsonSerializable<ProxyOptionsTransport>
+    public partial class ProxyOptionsTransport : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProxyOptionsTransport>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
-
-        void IModelJsonSerializable<ProxyOptionsTransport>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowAutoRedirect))
             {
@@ -39,129 +31,11 @@ namespace Azure.Core.TestFramework.Models
                 writer.WriteStartArray();
                 foreach (var item in Certificates)
                 {
-                    if (item is null)
-                    {
-                        writer.WriteNullValue();
-                    }
-                    else
-                    {
-                        ((IModelJsonSerializable<ProxyOptionsTransportCertificatesItem>)item).Serialize(writer, options);
-                    }
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
-            {
-                foreach (var property in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(property.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
-#endif
-                }
-            }
             writer.WriteEndObject();
-        }
-
-        internal static ProxyOptionsTransport DeserializeProxyOptionsTransport(JsonElement element, ModelSerializerOptions options = default)
-        {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<bool> allowAutoRedirect = default;
-            Optional<string> tlsValidationCert = default;
-            Optional<IList<ProxyOptionsTransportCertificatesItem>> certificates = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("AllowAutoRedirect"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    allowAutoRedirect = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("TLSValidationCert"u8))
-                {
-                    tlsValidationCert = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("Certificates"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ProxyOptionsTransportCertificatesItem> array = new List<ProxyOptionsTransportCertificatesItem>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ProxyOptionsTransportCertificatesItem.DeserializeProxyOptionsTransportCertificatesItem(item));
-                    }
-                    certificates = array;
-                    continue;
-                }
-                if (options.Format == ModelSerializerFormat.Json)
-                {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
-                }
-            }
-            return new ProxyOptionsTransport(Optional.ToNullable(allowAutoRedirect), tlsValidationCert.Value, Optional.ToList(certificates), serializedAdditionalRawData);
-        }
-
-        ProxyOptionsTransport IModelJsonSerializable<ProxyOptionsTransport>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeProxyOptionsTransport(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<ProxyOptionsTransport>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        ProxyOptionsTransport IModelSerializable<ProxyOptionsTransport>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeProxyOptionsTransport(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="ProxyOptionsTransport"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="ProxyOptionsTransport"/> to convert. </param>
-        public static implicit operator RequestContent(ProxyOptionsTransport model)
-        {
-            if (model is null)
-            {
-                return null;
-            }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
-        }
-
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="ProxyOptionsTransport"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator ProxyOptionsTransport(Response response)
-        {
-            if (response is null)
-            {
-                return null;
-            }
-
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeProxyOptionsTransport(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

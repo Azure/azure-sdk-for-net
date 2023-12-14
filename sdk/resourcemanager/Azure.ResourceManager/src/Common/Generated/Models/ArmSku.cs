@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Models
@@ -32,15 +31,14 @@ namespace Azure.ResourceManager.Models
         /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
         /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
         /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmSku(string name, ArmSkuTier? tier, string size, string family, int? capacity, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        [SerializationConstructor]
+        internal ArmSku(string name, ArmSkuTier? tier, string size, string family, int? capacity)
         {
             Name = name;
             Tier = tier;
             Size = size;
             Family = family;
             Capacity = capacity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Initializes a new instance of <see cref="ArmSku"/> for deserialization. </summary>

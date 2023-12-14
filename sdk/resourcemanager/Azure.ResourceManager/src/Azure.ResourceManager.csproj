@@ -22,7 +22,6 @@
     <Compile Include="$(AzureCoreSharedSources)ReferenceTypeAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)SerializationConstructorAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)TypeReferenceTypeAttribute.cs" LinkBase="Shared\Core" />
-    <Compile Include="$(AzureCoreSharedSources)ModelSerializerHelper.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
   <ItemGroup>

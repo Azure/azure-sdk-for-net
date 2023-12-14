@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.IO;
 using System.Reflection;
 using System.Threading;
@@ -36,11 +37,11 @@ namespace Azure.ResourceManager
             MemoryStream memoryStream = response.ContentStream as MemoryStream;
             if (memoryStream is not null)
             {
-                data = ModelSerializer.Deserialize(BinaryData.FromStream(memoryStream), typeof(T), new ModelSerializerOptions());
+                data = ModelReaderWriter.Read(BinaryData.FromStream(memoryStream), typeof(T));
             }
             else
             {
-                data = ModelSerializer.Deserialize(new BinaryData(memoryStream.GetBuffer().AsMemory(0, (int)response.ContentStream.Length)), typeof(T), new ModelSerializerOptions());
+                data = ModelReaderWriter.Read(new BinaryData(memoryStream.GetBuffer().AsMemory(0, (int)response.ContentStream.Length)), typeof(T));
             }
 
             return _isResource

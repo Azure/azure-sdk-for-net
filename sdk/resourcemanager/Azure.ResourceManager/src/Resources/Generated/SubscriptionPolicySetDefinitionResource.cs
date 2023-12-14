@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
@@ -23,7 +22,6 @@ namespace Azure.ResourceManager.Resources
     /// from an instance of <see cref="ArmClient"/> using the GetSubscriptionPolicySetDefinitionResource method.
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSubscriptionPolicySetDefinition method.
     /// </summary>
-    [DeserializationProxy(typeof(PolicySetDefinitionData))]
     public partial class SubscriptionPolicySetDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionPolicySetDefinitionResource"/> instance. </summary>

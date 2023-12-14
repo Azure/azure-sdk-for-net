@@ -5,23 +5,15 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.Core.TestFramework.Models
 {
-    public partial class Condition : IUtf8JsonSerializable, IModelJsonSerializable<Condition>
+    public partial class Condition : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Condition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
-
-        void IModelJsonSerializable<Condition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
             writer.WriteStartObject();
             if (Optional.IsDefined(UriRegex))
             {
@@ -31,112 +23,9 @@ namespace Azure.Core.TestFramework.Models
             if (Optional.IsDefined(ResponseHeader))
             {
                 writer.WritePropertyName("responseHeader"u8);
-                if (ResponseHeader is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<HeaderCondition>)ResponseHeader).Serialize(writer, options);
-                }
-            }
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
-            {
-                foreach (var property in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(property.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
-#endif
-                }
+                writer.WriteObjectValue(ResponseHeader);
             }
             writer.WriteEndObject();
-        }
-
-        internal static Condition DeserializeCondition(JsonElement element, ModelSerializerOptions options = default)
-        {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<string> uriRegex = default;
-            Optional<HeaderCondition> responseHeader = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("uriRegex"u8))
-                {
-                    uriRegex = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("responseHeader"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    responseHeader = HeaderCondition.DeserializeHeaderCondition(property.Value);
-                    continue;
-                }
-                if (options.Format == ModelSerializerFormat.Json)
-                {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
-                }
-            }
-            return new Condition(uriRegex.Value, responseHeader.Value, serializedAdditionalRawData);
-        }
-
-        Condition IModelJsonSerializable<Condition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeCondition(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<Condition>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        Condition IModelSerializable<Condition>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeCondition(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="Condition"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="Condition"/> to convert. </param>
-        public static implicit operator RequestContent(Condition model)
-        {
-            if (model is null)
-            {
-                return null;
-            }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
-        }
-
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="Condition"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator Condition(Response response)
-        {
-            if (response is null)
-            {
-                return null;
-            }
-
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeCondition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

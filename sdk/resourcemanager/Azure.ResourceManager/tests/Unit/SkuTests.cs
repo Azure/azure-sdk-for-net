@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, "${?/>._`", "")]
         public void EqualsToName(bool expected, string name1, string name2)
         {
-            ArmSku sku1 = new ArmSku(name1, null, null, null, null, new Dictionary<string, System.BinaryData>());
-            ArmSku sku2 = new ArmSku(name2, null, null, null, null, new Dictionary<string, System.BinaryData>());
+            ArmSku sku1 = new ArmSku(name1, null, null, null, null);
+            ArmSku sku2 = new ArmSku(name2, null, null, null, null);
             Assert.AreEqual(expected, sku1.Equals(sku2), "Skus did not match expected equals");
             Assert.AreEqual(expected, sku1.GetHashCode() == sku2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({sku1.GetHashCode()}, {sku2.GetHashCode()})");
         }
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, "${?/>._`", "", "${?/>._`", "")]
         public void EqualsToOperator(bool expected, string name1, string name2, string family1, string family2)
         {
-            ArmSku sku1 = new ArmSku(name1, null, null, family1, null, new Dictionary<string, System.BinaryData>());
-            ArmSku sku2 = new ArmSku(name2, null, null, family2, null, new Dictionary<string, System.BinaryData>());
+            ArmSku sku1 = new ArmSku(name1, null, null, family1, null);
+            ArmSku sku2 = new ArmSku(name2, null, null, family2, null);
             Assert.AreEqual(expected, sku1 == sku2);
         }
 
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Tests
         [TestCase(true, "${?/>._`", "", "${?/>._`", "")]
         public void NotEqualsToOperator(bool expected, string name1, string name2, string family1, string family2)
         {
-            ArmSku sku1 = new ArmSku(name1, null, null, family1, null, new Dictionary<string, System.BinaryData>());
-            ArmSku sku2 = new ArmSku(name2, null, null, family2, null, new Dictionary<string, System.BinaryData>());
+            ArmSku sku1 = new ArmSku(name1, null, null, family1, null);
+            ArmSku sku2 = new ArmSku(name2, null, null, family2, null);
             Assert.AreEqual(expected, sku1 != sku2);
         }
 
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, "${?/>._`", "")]
         public void EqualsToFamily(bool expected, string family1, string family2)
         {
-            ArmSku sku1 = new ArmSku(null, null, null, family1, null, new Dictionary<string, System.BinaryData>());
-            ArmSku sku2 = new ArmSku(null, null, null, family2, null, new Dictionary<string, System.BinaryData>());
+            ArmSku sku1 = new ArmSku(null, null, null, family1, null);
+            ArmSku sku2 = new ArmSku(null, null, null, family2, null);
             Assert.AreEqual(expected, sku1.Equals(sku2), "Skus did not match expected equals");
             Assert.AreEqual(expected, sku1.GetHashCode() == sku2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({sku1.GetHashCode()}, {sku2.GetHashCode()})");
         }
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, "${?/>._`", "")]
         public void EqualsToSize(bool expected, string size1, string size2)
         {
-            ArmSku sku1 = new ArmSku(null, null, size1, null, null, new Dictionary<string, System.BinaryData>());
-            ArmSku sku2 = new ArmSku(null, null, size2, null, null, new Dictionary<string, System.BinaryData>());
+            ArmSku sku1 = new ArmSku(null, null, size1, null, null);
+            ArmSku sku2 = new ArmSku(null, null, size2, null, null);
             Assert.AreEqual(expected, sku1.Equals(sku2), "Skus did not match expected equals");
             Assert.AreEqual(expected, sku1.GetHashCode() == sku2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({sku1.GetHashCode()}, {sku2.GetHashCode()})");
         }
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, null, ArmSkuTier.Basic)]
         public void EqualsToTier(bool expected, ArmSkuTier tier1, ArmSkuTier tier2)
         {
-            ArmSku sku1 = new ArmSku(null, tier1, null, null, null, new Dictionary<string, System.BinaryData>());
-            ArmSku sku2 = new ArmSku(null, tier2, null, null, null, new Dictionary<string, System.BinaryData>());
+            ArmSku sku1 = new ArmSku(null, tier1, null, null, null);
+            ArmSku sku2 = new ArmSku(null, tier2, null, null, null);
             Assert.AreEqual(expected, sku1.Equals(sku2), "Skus did not match expected equals");
             Assert.AreEqual(expected, sku1.GetHashCode() == sku2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({sku1.GetHashCode()}, {sku2.GetHashCode()})");
         }
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.Tests
         [TestCase(false, null, 1)]
         public void EqualsToCapacity(bool expected, int? capacity1, int? capacity2)
         {
-            ArmSku sku1 = capacity1 == null ? new ArmSku(null, null, null, null, null, new Dictionary<string, System.BinaryData>()) : new ArmSku(null, null, null, null, capacity1, new Dictionary<string, System.BinaryData>());
-            ArmSku sku2 = capacity2 == null ? new ArmSku(null, null, null, null, null, new Dictionary<string, System.BinaryData>()) : new ArmSku(null, null, null, null, capacity2, new Dictionary<string, System.BinaryData>());
+            ArmSku sku1 = capacity1 == null ? new ArmSku(null, null, null, null, null) : new ArmSku(null, null, null, null, capacity1);
+            ArmSku sku2 = capacity2 == null ? new ArmSku(null, null, null, null, null) : new ArmSku(null, null, null, null, capacity2);
             Assert.AreEqual(expected, sku1.Equals(sku2), "Skus did not match expected equals");
             Assert.AreEqual(expected, sku1.GetHashCode() == sku2.GetHashCode(), $"Hashcodes comparison was expect {expected} but was {!expected}, ({sku1.GetHashCode()}, {sku2.GetHashCode()})");
         }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Tests
         [Test]
         public void EqualsToNullSku()
         {
-            ArmSku sku1 = new ArmSku(null, null, null, null, null, new Dictionary<string, System.BinaryData>());
+            ArmSku sku1 = new ArmSku(null, null, null, null, null);
             ArmSku sku2 = null;
             Assert.IsFalse(sku1.Equals(sku2));
         }
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.Tests
         [Test]
         public void EqualsToObject()
         {
-            ArmSku sku1 = new ArmSku(null, null, null, null, null, new Dictionary<string, System.BinaryData>());
-            object sku2 = new ArmSku("SkuName", null, null, null, null, new Dictionary<string, System.BinaryData>());
+            ArmSku sku1 = new ArmSku(null, null, null, null, null);
+            object sku2 = new ArmSku("SkuName", null, null, null, null);
             object stringSku = "random";
             Assert.IsFalse(sku1.Equals(stringSku));
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Tests
         [Test]
         public void EqualsToSameSkus()
         {
-            ArmSku sku1 = new ArmSku(null, null, null, null, null, new Dictionary<string, BinaryData>());
+            ArmSku sku1 = new ArmSku(null, null, null, null, null);
             ArmSku sku2 = sku1;
             Assert.IsTrue(sku1.Equals(sku2));
         }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Tests
         public void SerializationTest()
         {
             string expected = "{\"properties\":{\"name\":\"NameForSku\",\"tier\":\"Basic\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":123456789}}";
-            ArmSku sku = new("NameForSku", ArmSkuTier.Basic, "SizeForSku", "FamilyForSku", 123456789, new Dictionary<string, BinaryData>());
+            ArmSku sku = new("NameForSku", ArmSkuTier.Basic, "SizeForSku", "FamilyForSku", 123456789);
             var json = JsonHelper.SerializePropertiesToString(sku);
             Assert.AreEqual(expected, json);
         }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Tests
         [Test]
         public void InvalidSerializationTest()
         {
-            ArmSku sku = new(null, null, null, null, null, new Dictionary<string, BinaryData>());
+            ArmSku sku = new(null, null, null, null, null);
             var json = JsonHelper.SerializePropertiesToString(sku);
             Assert.AreEqual("{\"properties\":{\"name\":null}}", json);
         }

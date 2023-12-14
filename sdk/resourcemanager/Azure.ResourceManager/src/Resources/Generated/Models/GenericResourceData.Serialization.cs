@@ -6,23 +6,27 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class GenericResourceData : IUtf8JsonSerializable, IModelJsonSerializable<GenericResourceData>
+    public partial class GenericResourceData : IUtf8JsonSerializable, IJsonModel<GenericResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GenericResourceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GenericResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<GenericResourceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<GenericResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<GenericResourceData>(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<GenericResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(GenericResourceData)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Plan))
@@ -55,19 +59,27 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                if (Sku is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<ResourcesSku>)Sku).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(Sku);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdTime"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ChangedOn))
+            {
+                writer.WritePropertyName("changedTime"u8);
+                writer.WriteStringValue(ChangedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -87,24 +99,59 @@ namespace Azure.ResourceManager.Resources
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W")
             {
-                foreach (var property in _serializedAdditionalRawData)
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static GenericResourceData DeserializeGenericResourceData(JsonElement element, ModelSerializerOptions options = default)
+        GenericResourceData IJsonModel<GenericResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<GenericResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(GenericResourceData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGenericResourceData(document.RootElement, options);
+        }
+
+        internal static GenericResourceData DeserializeGenericResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -126,7 +173,8 @@ namespace Azure.ResourceManager.Resources
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("plan"u8))
@@ -250,61 +298,44 @@ namespace Azure.ResourceManager.Resources
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new GenericResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, plan, properties.Value, kind.Value, managedBy.Value, sku.Value, identity, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), provisioningState.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GenericResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, serializedAdditionalRawData, plan, properties.Value, kind.Value, managedBy.Value, sku.Value, identity, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), provisioningState.Value);
         }
 
-        GenericResourceData IModelJsonSerializable<GenericResourceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<GenericResourceData>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<GenericResourceData>(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<GenericResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeGenericResourceData(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<GenericResourceData>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat<GenericResourceData>(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        GenericResourceData IModelSerializable<GenericResourceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat<GenericResourceData>(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeGenericResourceData(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="GenericResourceData"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="GenericResourceData"/> to convert. </param>
-        public static implicit operator RequestContent(GenericResourceData model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(GenericResourceData)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="GenericResourceData"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator GenericResourceData(Response response)
+        GenericResourceData IPersistableModel<GenericResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<GenericResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeGenericResourceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGenericResourceData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(GenericResourceData)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<GenericResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

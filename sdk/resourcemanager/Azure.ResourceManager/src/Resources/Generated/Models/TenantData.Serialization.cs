@@ -6,42 +6,116 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class TenantData : IUtf8JsonSerializable, IModelJsonSerializable<TenantData>
+    public partial class TenantData : IUtf8JsonSerializable, IJsonModel<TenantData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TenantData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TenantData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<TenantData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<TenantData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<TenantData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TenantData)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
-                foreach (var property in _serializedAdditionalRawData)
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TenantCategory))
+            {
+                writer.WritePropertyName("tenantCategory"u8);
+                writer.WriteStringValue(TenantCategory.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Country))
+            {
+                writer.WritePropertyName("country"u8);
+                writer.WriteStringValue(Country);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CountryCode))
+            {
+                writer.WritePropertyName("countryCode"u8);
+                writer.WriteStringValue(CountryCode);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Domains))
+            {
+                writer.WritePropertyName("domains"u8);
+                writer.WriteStartArray();
+                foreach (var item in Domains)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(DefaultDomain))
+            {
+                writer.WritePropertyName("defaultDomain"u8);
+                writer.WriteStringValue(DefaultDomain);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TenantType))
+            {
+                writer.WritePropertyName("tenantType"u8);
+                writer.WriteStringValue(TenantType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TenantBrandingLogoUri))
+            {
+                writer.WritePropertyName("tenantBrandingLogoUrl"u8);
+                writer.WriteStringValue(TenantBrandingLogoUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static TenantData DeserializeTenantData(JsonElement element, ModelSerializerOptions options = default)
+        TenantData IJsonModel<TenantData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<TenantData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(TenantData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTenantData(document.RootElement, options);
+        }
+
+        internal static TenantData DeserializeTenantData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -57,7 +131,8 @@ namespace Azure.ResourceManager.Resources
             Optional<string> defaultDomain = default;
             Optional<string> tenantType = default;
             Optional<Uri> tenantBrandingLogoUrl = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -131,61 +206,44 @@ namespace Azure.ResourceManager.Resources
                     tenantBrandingLogoUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new TenantData(id.Value, Optional.ToNullable(tenantId), Optional.ToNullable(tenantCategory), country.Value, countryCode.Value, displayName.Value, Optional.ToList(domains), defaultDomain.Value, tenantType.Value, tenantBrandingLogoUrl.Value, serializedAdditionalRawData);
         }
 
-        TenantData IModelJsonSerializable<TenantData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<TenantData>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<TenantData>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeTenantData(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<TenantData>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        TenantData IModelSerializable<TenantData>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeTenantData(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="TenantData"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="TenantData"/> to convert. </param>
-        public static implicit operator RequestContent(TenantData model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TenantData)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="TenantData"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator TenantData(Response response)
+        TenantData IPersistableModel<TenantData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<TenantData>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeTenantData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTenantData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(TenantData)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<TenantData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

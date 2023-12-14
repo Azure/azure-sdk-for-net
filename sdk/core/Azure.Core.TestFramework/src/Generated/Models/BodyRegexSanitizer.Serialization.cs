@@ -5,23 +5,15 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.Core.TestFramework.Models
 {
-    public partial class BodyRegexSanitizer : IUtf8JsonSerializable, IModelJsonSerializable<BodyRegexSanitizer>
+    public partial class BodyRegexSanitizer : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BodyRegexSanitizer>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
-
-        void IModelJsonSerializable<BodyRegexSanitizer>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
             writer.WriteStartObject();
             writer.WritePropertyName("regex"u8);
             writer.WriteStringValue(Regex);
@@ -35,124 +27,9 @@ namespace Azure.Core.TestFramework.Models
             if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
-                if (Condition is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<Condition>)Condition).Serialize(writer, options);
-                }
-            }
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
-            {
-                foreach (var property in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(property.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
-#endif
-                }
+                writer.WriteObjectValue(Condition);
             }
             writer.WriteEndObject();
-        }
-
-        internal static BodyRegexSanitizer DeserializeBodyRegexSanitizer(JsonElement element, ModelSerializerOptions options = default)
-        {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string regex = default;
-            string value = default;
-            Optional<string> groupForReplace = default;
-            Optional<Condition> condition = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("regex"u8))
-                {
-                    regex = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("value"u8))
-                {
-                    value = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("groupForReplace"u8))
-                {
-                    groupForReplace = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("condition"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    condition = Condition.DeserializeCondition(property.Value);
-                    continue;
-                }
-                if (options.Format == ModelSerializerFormat.Json)
-                {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
-                }
-            }
-            return new BodyRegexSanitizer(regex, value, groupForReplace.Value, condition.Value, serializedAdditionalRawData);
-        }
-
-        BodyRegexSanitizer IModelJsonSerializable<BodyRegexSanitizer>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeBodyRegexSanitizer(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<BodyRegexSanitizer>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        BodyRegexSanitizer IModelSerializable<BodyRegexSanitizer>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeBodyRegexSanitizer(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="BodyRegexSanitizer"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="BodyRegexSanitizer"/> to convert. </param>
-        public static implicit operator RequestContent(BodyRegexSanitizer model)
-        {
-            if (model is null)
-            {
-                return null;
-            }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
-        }
-
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="BodyRegexSanitizer"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator BodyRegexSanitizer(Response response)
-        {
-            if (response is null)
-            {
-                return null;
-            }
-
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeBodyRegexSanitizer(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Tests
     {
         private static ArmPlan GetPlan()
         {
-            return new ArmPlan("name", "publisher", "product", "promo", "version", new Dictionary<string, BinaryData>());
+            return new ArmPlan("name", "publisher", "product", "promo", "version");
         }
 
         private static ResourcesSku GetSku()
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Tests
             string location)
         {
             ResourceIdentifier id = new ResourceIdentifier($"/subscriptions/{Guid.NewGuid()}/resourceGroups/myResourceGroup/providers/Microsoft.Widgets/widgets/myWidget");
-            return new GenericResourceData(id, id.Name, id.ResourceType, null, tags, location, null, plan, null, kind, managedBy, sku, null, null, null, null, new Dictionary<string, BinaryData>());
+            return new GenericResourceData(id, id.Name, id.ResourceType, null, tags, location, null, new Dictionary<string, BinaryData>(), plan, null, kind, managedBy, sku, null, null, null, null);
         }
     }
 }

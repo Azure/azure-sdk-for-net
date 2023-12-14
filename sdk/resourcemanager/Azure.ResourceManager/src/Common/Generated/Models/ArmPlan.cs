@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Models
@@ -38,15 +37,14 @@ namespace Azure.ResourceManager.Models
         /// <param name="product"> The 3rd Party artifact that is being procured. E.g. NewRelic. Product maps to the OfferID specified for the artifact at the time of Data Market onboarding. </param>
         /// <param name="promotionCode"> A publisher provided promotion code as provisioned in Data Market for the said product/artifact. </param>
         /// <param name="version"> The version of the desired product/artifact. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmPlan(string name, string publisher, string product, string promotionCode, string version, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        [SerializationConstructor]
+        internal ArmPlan(string name, string publisher, string product, string promotionCode, string version)
         {
             Name = name;
             Publisher = publisher;
             Product = product;
             PromotionCode = promotionCode;
             Version = version;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Initializes a new instance of <see cref="ArmPlan"/> for deserialization. </summary>

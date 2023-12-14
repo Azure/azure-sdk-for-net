@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -14,26 +13,10 @@ namespace Azure.Core.TestFramework.Models
     /// <summary> The ProxyOptionsTransport. </summary>
     public partial class ProxyOptionsTransport
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="ProxyOptionsTransport"/>. </summary>
+        /// <summary> Initializes a new instance of ProxyOptionsTransport. </summary>
         public ProxyOptionsTransport()
         {
             Certificates = new ChangeTrackingList<ProxyOptionsTransportCertificatesItem>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ProxyOptionsTransport"/>. </summary>
-        /// <param name="allowAutoRedirect"></param>
-        /// <param name="tlsValidationCert"></param>
-        /// <param name="certificates"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProxyOptionsTransport(bool? allowAutoRedirect, string tlsValidationCert, IList<ProxyOptionsTransportCertificatesItem> certificates, Dictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            AllowAutoRedirect = allowAutoRedirect;
-            TLSValidationCert = tlsValidationCert;
-            Certificates = certificates;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the allow auto redirect. </summary>

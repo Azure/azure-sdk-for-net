@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementLockRestClient.CreateListByScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementLockRestClient.CreateListByScopeNextPageRequest(nextLink, Id, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagementLockResource(Client, ManagementLockData.DeserializeManagementLockData(e)), _managementLockClientDiagnostics, Pipeline, "ManagementLockCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagementLockResource(Client, ManagementLockData.DeserializeManagementLockData(e)), _managementLockClientDiagnostics, Pipeline, "ManagementLockCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementLockRestClient.CreateListByScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementLockRestClient.CreateListByScopeNextPageRequest(nextLink, Id, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagementLockResource(Client, ManagementLockData.DeserializeManagementLockData(e)), _managementLockClientDiagnostics, Pipeline, "ManagementLockCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagementLockResource(Client, ManagementLockData.DeserializeManagementLockData(e)), _managementLockClientDiagnostics, Pipeline, "ManagementLockCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

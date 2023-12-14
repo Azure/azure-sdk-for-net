@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Models
@@ -24,12 +22,11 @@ namespace Azure.ResourceManager.Models
         /// <summary> Initializes a new instance of <see cref="KeyVaultProperties"/>. </summary>
         /// <param name="keyIdentifier"> Key vault uri to access the encryption key. </param>
         /// <param name="identity"> The client ID of the identity which will be used to access key vault. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultProperties(string keyIdentifier, string identity, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        [SerializationConstructor]
+        internal KeyVaultProperties(string keyIdentifier, string identity)
         {
             KeyIdentifier = keyIdentifier;
             Identity = identity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Key vault uri to access the encryption key. </summary>

@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Models
@@ -24,12 +22,11 @@ namespace Azure.ResourceManager.Models
         /// <summary> Initializes a new instance of <see cref="EncryptionProperties"/>. </summary>
         /// <param name="status"> Indicates whether or not the encryption is enabled for container registry. </param>
         /// <param name="keyVaultProperties"> Key vault properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionProperties(EncryptionStatus? status, KeyVaultProperties keyVaultProperties, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        [SerializationConstructor]
+        internal EncryptionProperties(EncryptionStatus? status, KeyVaultProperties keyVaultProperties)
         {
             Status = status;
             KeyVaultProperties = keyVaultProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether or not the encryption is enabled for container registry. </summary>

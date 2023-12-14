@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -24,12 +22,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
         /// <param name="extendedLocationType"> The extended location type. </param>
         /// <param name="name"> The extended location name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExtendedLocation(ExtendedLocationType? extendedLocationType, string name, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        [SerializationConstructor]
+        internal ExtendedLocation(ExtendedLocationType? extendedLocationType, string name)
         {
             ExtendedLocationType = extendedLocationType;
             Name = name;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The extended location type. </summary>

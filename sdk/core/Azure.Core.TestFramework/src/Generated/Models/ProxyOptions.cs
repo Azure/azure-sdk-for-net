@@ -5,29 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Core.TestFramework.Models
 {
     /// <summary> The proxy options. </summary>
     public partial class ProxyOptions
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="ProxyOptions"/>. </summary>
+        /// <summary> Initializes a new instance of ProxyOptions. </summary>
         public ProxyOptions()
         {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ProxyOptions"/>. </summary>
-        /// <param name="transport"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProxyOptions(ProxyOptionsTransport transport, Dictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            Transport = transport;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the transport. </summary>

@@ -5,35 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Core.TestFramework.Models
 {
     /// <summary> The CustomDefaultMatcher. </summary>
     public partial class CustomDefaultMatcher
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="CustomDefaultMatcher"/>. </summary>
+        /// <summary> Initializes a new instance of CustomDefaultMatcher. </summary>
         public CustomDefaultMatcher()
         {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CustomDefaultMatcher"/>. </summary>
-        /// <param name="excludedHeaders"></param>
-        /// <param name="compareBodies"></param>
-        /// <param name="ignoredHeaders"></param>
-        /// <param name="ignoredQueryParameters"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomDefaultMatcher(string excludedHeaders, bool? compareBodies, string ignoredHeaders, string ignoredQueryParameters, Dictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            ExcludedHeaders = excludedHeaders;
-            CompareBodies = compareBodies;
-            IgnoredHeaders = ignoredHeaders;
-            IgnoredQueryParameters = ignoredQueryParameters;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the excluded headers. </summary>

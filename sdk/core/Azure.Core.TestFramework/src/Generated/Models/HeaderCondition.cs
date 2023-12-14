@@ -5,31 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Core.TestFramework.Models
 {
     /// <summary> Header condition to apply. </summary>
     public partial class HeaderCondition
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="HeaderCondition"/>. </summary>
+        /// <summary> Initializes a new instance of HeaderCondition. </summary>
         public HeaderCondition()
         {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HeaderCondition"/>. </summary>
-        /// <param name="key"></param>
-        /// <param name="valueRegex"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HeaderCondition(string key, string valueRegex, Dictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            Key = key;
-            ValueRegex = valueRegex;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the key. </summary>

@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
@@ -24,7 +23,6 @@ namespace Azure.ResourceManager.Resources
     /// from an instance of <see cref="ArmClient"/> using the GetTagResource method.
     /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetTagResource method.
     /// </summary>
-    [DeserializationProxy(typeof(TagResourceData))]
     public partial class TagResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TagResource"/> instance. </summary>

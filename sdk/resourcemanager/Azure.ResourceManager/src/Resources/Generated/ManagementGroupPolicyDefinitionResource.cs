@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups;
 
@@ -24,7 +23,6 @@ namespace Azure.ResourceManager.Resources
     /// from an instance of <see cref="ArmClient"/> using the GetManagementGroupPolicyDefinitionResource method.
     /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource"/> using the GetManagementGroupPolicyDefinition method.
     /// </summary>
-    [DeserializationProxy(typeof(PolicyDefinitionData))]
     public partial class ManagementGroupPolicyDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagementGroupPolicyDefinitionResource"/> instance. </summary>

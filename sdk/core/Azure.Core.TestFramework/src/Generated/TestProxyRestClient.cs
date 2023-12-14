@@ -37,23 +37,20 @@ namespace Azure.Core.TestFramework
             _endpoint = endpoint ?? new Uri("");
         }
 
-        internal RequestUriBuilder CreateStartPlaybackRequestUri(StartInformation body)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/playback/start", false);
-            return uri;
-        }
-
         internal HttpMessage CreateStartPlaybackRequest(StartInformation body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            request.Uri = CreateStartPlaybackRequestUri(body);
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/playback/start", false);
+            request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = body;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body);
+            request.Content = content;
             return message;
         }
 
@@ -123,20 +120,15 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        internal RequestUriBuilder CreateStopPlaybackRequestUri(string xRecordingId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/playback/stop", false);
-            return uri;
-        }
-
         internal HttpMessage CreateStopPlaybackRequest(string xRecordingId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            request.Uri = CreateStopPlaybackRequestUri(xRecordingId);
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/playback/stop", false);
+            request.Uri = uri;
             request.Headers.Add("x-recording-id", xRecordingId);
             return message;
         }
@@ -185,22 +177,19 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        internal RequestUriBuilder CreateStartRecordRequestUri(StartInformation body)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/record/start", false);
-            return uri;
-        }
-
         internal HttpMessage CreateStartRecordRequest(StartInformation body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            request.Uri = CreateStartRecordRequestUri(body);
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/record/start", false);
+            request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = body;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body);
+            request.Content = content;
             return message;
         }
 
@@ -250,20 +239,15 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        internal RequestUriBuilder CreateStopRecordRequestUri(string xRecordingId, IDictionary<string, string> variables, string xRecordingSkip)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/record/stop", false);
-            return uri;
-        }
-
         internal HttpMessage CreateStopRecordRequest(string xRecordingId, IDictionary<string, string> variables, string xRecordingSkip)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            request.Uri = CreateStopRecordRequestUri(xRecordingId, variables, xRecordingSkip);
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/record/stop", false);
+            request.Uri = uri;
             request.Headers.Add("x-recording-id", xRecordingId);
             if (xRecordingSkip != null)
             {
@@ -340,23 +324,20 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        internal RequestUriBuilder CreateSetRecordingTransportOptionsRequestUri(string xRecordingId, ProxyOptions proxyOptions)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/admin/setrecordingoptions", false);
-            return uri;
-        }
-
         internal HttpMessage CreateSetRecordingTransportOptionsRequest(string xRecordingId, ProxyOptions proxyOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            request.Uri = CreateSetRecordingTransportOptionsRequestUri(xRecordingId, proxyOptions);
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/admin/setrecordingoptions", false);
+            request.Uri = uri;
             request.Headers.Add("x-recording-id", xRecordingId);
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = proxyOptions;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(proxyOptions);
+            request.Content = content;
             return message;
         }
 
@@ -414,27 +395,24 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        internal RequestUriBuilder CreateAddBodyKeySanitizerRequestUri(BodyKeySanitizer sanitizer, string xRecordingId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/admin/addsanitizer", false);
-            return uri;
-        }
-
         internal HttpMessage CreateAddBodyKeySanitizerRequest(BodyKeySanitizer sanitizer, string xRecordingId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            request.Uri = CreateAddBodyKeySanitizerRequestUri(sanitizer, xRecordingId);
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/admin/addsanitizer", false);
+            request.Uri = uri;
             request.Headers.Add("x-abstraction-identifier", "BodyKeySanitizer");
             if (xRecordingId != null)
             {
                 request.Headers.Add("x-recording-id", xRecordingId);
             }
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = sanitizer;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(sanitizer);
+            request.Content = content;
             return message;
         }
 
@@ -486,27 +464,24 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        internal RequestUriBuilder CreateAddHeaderSanitizerRequestUri(HeaderRegexSanitizer sanitizer, string xRecordingId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/admin/addsanitizer", false);
-            return uri;
-        }
-
         internal HttpMessage CreateAddHeaderSanitizerRequest(HeaderRegexSanitizer sanitizer, string xRecordingId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            request.Uri = CreateAddHeaderSanitizerRequestUri(sanitizer, xRecordingId);
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/admin/addsanitizer", false);
+            request.Uri = uri;
             request.Headers.Add("x-abstraction-identifier", "HeaderRegexSanitizer");
             if (xRecordingId != null)
             {
                 request.Headers.Add("x-recording-id", xRecordingId);
             }
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = sanitizer;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(sanitizer);
+            request.Content = content;
             return message;
         }
 
@@ -558,27 +533,24 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        internal RequestUriBuilder CreateAddUriSanitizerRequestUri(UriRegexSanitizer sanitizer, string xRecordingId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/admin/addsanitizer", false);
-            return uri;
-        }
-
         internal HttpMessage CreateAddUriSanitizerRequest(UriRegexSanitizer sanitizer, string xRecordingId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            request.Uri = CreateAddUriSanitizerRequestUri(sanitizer, xRecordingId);
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/admin/addsanitizer", false);
+            request.Uri = uri;
             request.Headers.Add("x-abstraction-identifier", "UriRegexSanitizer");
             if (xRecordingId != null)
             {
                 request.Headers.Add("x-recording-id", xRecordingId);
             }
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = sanitizer;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(sanitizer);
+            request.Content = content;
             return message;
         }
 
@@ -628,27 +600,24 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        internal RequestUriBuilder CreateAddBodyRegexSanitizerRequestUri(BodyRegexSanitizer sanitizer, string xRecordingId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/admin/addsanitizer", false);
-            return uri;
-        }
-
         internal HttpMessage CreateAddBodyRegexSanitizerRequest(BodyRegexSanitizer sanitizer, string xRecordingId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            request.Uri = CreateAddBodyRegexSanitizerRequestUri(sanitizer, xRecordingId);
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/admin/addsanitizer", false);
+            request.Uri = uri;
             request.Headers.Add("x-abstraction-identifier", "BodyRegexSanitizer");
             if (xRecordingId != null)
             {
                 request.Headers.Add("x-recording-id", xRecordingId);
             }
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = sanitizer;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(sanitizer);
+            request.Content = content;
             return message;
         }
 
@@ -698,20 +667,15 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        internal RequestUriBuilder CreateAddBodilessMatcherRequestUri(string xRecordingId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/admin/setmatcher", false);
-            return uri;
-        }
-
         internal HttpMessage CreateAddBodilessMatcherRequest(string xRecordingId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            request.Uri = CreateAddBodilessMatcherRequestUri(xRecordingId);
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/admin/setmatcher", false);
+            request.Uri = uri;
             request.Headers.Add("x-abstraction-identifier", "BodilessMatcher");
             if (xRecordingId != null)
             {
@@ -752,27 +716,24 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        internal RequestUriBuilder CreateAddCustomMatcherRequestUri(CustomDefaultMatcher matcher, string xRecordingId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/admin/setmatcher", false);
-            return uri;
-        }
-
         internal HttpMessage CreateAddCustomMatcherRequest(CustomDefaultMatcher matcher, string xRecordingId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            request.Uri = CreateAddCustomMatcherRequestUri(matcher, xRecordingId);
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/admin/setmatcher", false);
+            request.Uri = uri;
             request.Headers.Add("x-abstraction-identifier", "CustomDefaultMatcher");
             if (xRecordingId != null)
             {
                 request.Headers.Add("x-recording-id", xRecordingId);
             }
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = matcher;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(matcher);
+            request.Content = content;
             return message;
         }
 
@@ -822,27 +783,24 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        internal RequestUriBuilder CreateAddHeaderTransformRequestUri(HeaderTransform transform, string xRecordingId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/admin/addtransform", false);
-            return uri;
-        }
-
         internal HttpMessage CreateAddHeaderTransformRequest(HeaderTransform transform, string xRecordingId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            request.Uri = CreateAddHeaderTransformRequestUri(transform, xRecordingId);
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/admin/addtransform", false);
+            request.Uri = uri;
             request.Headers.Add("x-abstraction-identifier", "HeaderTransform");
             if (xRecordingId != null)
             {
                 request.Headers.Add("x-recording-id", xRecordingId);
             }
             request.Headers.Add("Content-Type", "application/json");
-            request.Content = transform;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(transform);
+            request.Content = content;
             return message;
         }
 

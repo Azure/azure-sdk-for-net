@@ -5,127 +5,22 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.Core.TestFramework.Models
 {
-    public partial class ProxyOptions : IUtf8JsonSerializable, IModelJsonSerializable<ProxyOptions>
+    public partial class ProxyOptions : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProxyOptions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
-
-        void IModelJsonSerializable<ProxyOptions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
             writer.WriteStartObject();
             if (Optional.IsDefined(Transport))
             {
                 writer.WritePropertyName("Transport"u8);
-                if (Transport is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<ProxyOptionsTransport>)Transport).Serialize(writer, options);
-                }
-            }
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
-            {
-                foreach (var property in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(property.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
-#else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
-#endif
-                }
+                writer.WriteObjectValue(Transport);
             }
             writer.WriteEndObject();
-        }
-
-        internal static ProxyOptions DeserializeProxyOptions(JsonElement element, ModelSerializerOptions options = default)
-        {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<ProxyOptionsTransport> transport = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("Transport"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    transport = ProxyOptionsTransport.DeserializeProxyOptionsTransport(property.Value);
-                    continue;
-                }
-                if (options.Format == ModelSerializerFormat.Json)
-                {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
-                }
-            }
-            return new ProxyOptions(transport.Value, serializedAdditionalRawData);
-        }
-
-        ProxyOptions IModelJsonSerializable<ProxyOptions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeProxyOptions(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<ProxyOptions>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        ProxyOptions IModelSerializable<ProxyOptions>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeProxyOptions(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="ProxyOptions"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="ProxyOptions"/> to convert. </param>
-        public static implicit operator RequestContent(ProxyOptions model)
-        {
-            if (model is null)
-            {
-                return null;
-            }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
-        }
-
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="ProxyOptions"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator ProxyOptions(Response response)
-        {
-            if (response is null)
-            {
-                return null;
-            }
-
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeProxyOptions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

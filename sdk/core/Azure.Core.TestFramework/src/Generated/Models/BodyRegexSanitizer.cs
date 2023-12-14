@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
@@ -14,10 +13,7 @@ namespace Azure.Core.TestFramework.Models
     /// <summary> Sanitizer for a request body. </summary>
     public partial class BodyRegexSanitizer
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="BodyRegexSanitizer"/>. </summary>
+        /// <summary> Initializes a new instance of BodyRegexSanitizer. </summary>
         /// <param name="regex"></param>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="regex"/> or <paramref name="value"/> is null. </exception>
@@ -28,26 +24,6 @@ namespace Azure.Core.TestFramework.Models
 
             Regex = regex;
             Value = value;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BodyRegexSanitizer"/>. </summary>
-        /// <param name="regex"></param>
-        /// <param name="value"></param>
-        /// <param name="groupForReplace"></param>
-        /// <param name="condition"> Condition to apply for the sanitization or transform. If the condition is not met, sanitization/transform is not performed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BodyRegexSanitizer(string regex, string value, string groupForReplace, Condition condition, Dictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            Regex = regex;
-            Value = value;
-            GroupForReplace = groupForReplace;
-            Condition = condition;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BodyRegexSanitizer"/> for deserialization. </summary>
-        internal BodyRegexSanitizer()
-        {
         }
 
         /// <summary> Gets the regex. </summary>

@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Models
         /// <param name="endOn"> The end time of the operation. </param>
         /// <param name="operations"> The operations list. </param>
         /// <param name="error"> If present, details of the operation error. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        protected OperationStatusResult(ResourceIdentifier id, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        [SerializationConstructor]
+        protected OperationStatusResult(ResourceIdentifier id, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error)
         {
             Id = id;
             Name = name;
@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.Models
             EndOn = endOn;
             Operations = operations;
             Error = error;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationStatusResult"/> for deserialization. </summary>

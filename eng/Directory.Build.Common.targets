@@ -254,6 +254,7 @@
   <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
 
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.ClientModel" />
     <PackageReference Include="System.Text.Json" />
 
     <!-- TODO: Review these file references-->
