@@ -114,6 +114,41 @@ namespace Azure.Communication.CallAutomation
             return startDialogRequestInternal;
         }
 
+        public virtual async Task<Response<DialogResult>> UpdateDialogAsync(UpdateDialog updateDialogOptions, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallDialog)}.{nameof(StartDialog)}");
+            scope.Start();
+            try
+            {
+                UpdateDialogRequestInternal request = CreateUpdateDialogRequest(startDialog);
+
+                var response = CallDialogRestClient.UpdateDialogAsync
+                    (CallConnectionId,
+                    updateDialogOptions.DialogId,
+                    request,
+                    cancellationToken);
+
+                var result = new DialogResult(updateDialogOptions.DialogId);
+                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        private static UpdateDialogRequestInternal CreateUpdateDialogRequest(UpdateDialog updateDialog)
+        {
+            UpdateDialogRequestInternal updateDialogRequestInternal = new UpdateDialogRequestInternal(updateDialog.Dialog)
+            {
+                OperationContext = updateDialog.OperationContext == default ? Guid.NewGuid().ToString() : updateDialog.OperationContext
+            };
+            return updateDialogRequestInternal;
+        }
+
         /// <summary>
         /// Stop Dialog.
         /// </summary>
