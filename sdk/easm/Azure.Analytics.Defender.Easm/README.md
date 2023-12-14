@@ -89,10 +89,10 @@ You can call the client's `DiscoGroupCreateOrReplace` method to create or replac
 ```C# Snippet:Sample2_DiscoveryGroups_Create_Discovery_Group
 string discoveryGroupName = "Sample Disco From C#";
 string discoveryGroupDescription = "This is a sample discovery group generated from C#";
-            List<String> hosts = new List<String>();
+            ArrayList hosts = new ArrayList();
 hosts.Add("<host1>.com");
 hosts.Add("<host2>.com");
-List<String> domains = new List<String>();
+ArrayList domains = new ArrayList();
 domains.Add("<domain1>.com");
 domains.Add("<domain2>.com");
                         DiscoGroupData request = new DiscoGroupData();

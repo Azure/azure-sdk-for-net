@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -36,10 +37,10 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
             string discoveryGroupName = "Sample Disco From C#";
             string discoveryGroupDescription = "This is a sample discovery group generated from C#";
             #if SNIPPET
-            List<String> hosts = new List<String>();
+            ArrayList hosts = new ArrayList();
             hosts.Add("<host1>.com");
             hosts.Add("<host2>.com");
-            List<String> domains = new List<String>();
+            ArrayList domains = new ArrayList();
             domains.Add("<domain1>.com");
             domains.Add("<domain2>.com");
             #else
