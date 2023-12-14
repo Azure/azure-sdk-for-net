@@ -25,6 +25,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             FilterableProperty = new ChangeTrackingList<FilterableProperty>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ConfigurationFilters"/>. </summary>
+        /// <param name="hierarchyInformation"> Product hierarchy information. </param>
+        /// <param name="filterableProperty"> Filters specific to product. </param>
+        internal ConfigurationFilters(HierarchyInformation hierarchyInformation, IList<FilterableProperty> filterableProperty)
+        {
+            HierarchyInformation = hierarchyInformation;
+            FilterableProperty = filterableProperty;
+        }
+
         /// <summary> Product hierarchy information. </summary>
         public HierarchyInformation HierarchyInformation { get; }
         /// <summary> Filters specific to product. </summary>

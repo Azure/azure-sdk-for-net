@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly ComputeRestOperations _machineLearningComputeComputeRestClient;
         private readonly MachineLearningComputeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/computes";
+
         /// <summary> Initializes a new instance of the <see cref="MachineLearningComputeResource"/> class for mocking. </summary>
         protected MachineLearningComputeResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.MachineLearning
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/computes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

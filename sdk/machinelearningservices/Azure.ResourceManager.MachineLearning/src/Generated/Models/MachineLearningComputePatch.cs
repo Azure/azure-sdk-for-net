@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputePatch"/>. </summary>
+        /// <param name="properties"> Properties of ClusterUpdate. </param>
+        internal MachineLearningComputePatch(ScaleSettingsInformation properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Properties of ClusterUpdate. </summary>
         internal ScaleSettingsInformation Properties { get; set; }
         /// <summary> scale settings for AML Compute. </summary>

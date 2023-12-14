@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.MachineLearningCompute
         private readonly OperationalizationClustersRestOperations _operationalizationClusterRestClient;
         private readonly OperationalizationClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningCompute/operationalizationClusters";
+
         /// <summary> Initializes a new instance of the <see cref="OperationalizationClusterResource"/> class for mocking. </summary>
         protected OperationalizationClusterResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.MachineLearningCompute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningCompute/operationalizationClusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

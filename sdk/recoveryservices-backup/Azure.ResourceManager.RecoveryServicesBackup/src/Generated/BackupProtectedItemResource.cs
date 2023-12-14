@@ -48,6 +48,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly RecoveryPointsRecommendedForMoveRestOperations _recoveryPointsRecommendedForMoveRestClient;
         private readonly BackupProtectedItemData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems";
+
         /// <summary> Initializes a new instance of the <see cref="BackupProtectedItemResource"/> class for mocking. </summary>
         protected BackupProtectedItemResource()
         {
@@ -78,9 +81,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

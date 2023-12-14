@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Value = new ChangeTrackingList<MachineLearningQuotaProperties>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MachineLearningQuotaUpdateContent"/>. </summary>
+        /// <param name="value"> The list for update quota. </param>
+        /// <param name="location"> Region of workspace quota to be updated. </param>
+        internal MachineLearningQuotaUpdateContent(IList<MachineLearningQuotaProperties> value, AzureLocation? location)
+        {
+            Value = value;
+            Location = location;
+        }
+
         /// <summary> The list for update quota. </summary>
         public IList<MachineLearningQuotaProperties> Value { get; }
         /// <summary> Region of workspace quota to be updated. </summary>

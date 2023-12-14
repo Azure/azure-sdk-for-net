@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Authorization
         private readonly RoleDefinitionsRestOperations _authorizationRoleDefinitionRoleDefinitionsRestClient;
         private readonly AuthorizationRoleDefinitionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleDefinitions";
+
         /// <summary> Initializes a new instance of the <see cref="AuthorizationRoleDefinitionResource"/> class for mocking. </summary>
         protected AuthorizationRoleDefinitionResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Authorization
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleDefinitions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

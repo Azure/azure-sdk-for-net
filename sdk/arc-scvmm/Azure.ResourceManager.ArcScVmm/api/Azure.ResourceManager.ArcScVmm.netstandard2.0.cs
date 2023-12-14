@@ -59,12 +59,9 @@ namespace Azure.ResourceManager.ArcScVmm
     }
     public partial class InventoryItemData : Azure.ResourceManager.Models.ResourceData
     {
-        public InventoryItemData(Azure.ResourceManager.ArcScVmm.Models.InventoryType inventoryType) { }
-        public string InventoryItemName { get { throw null; } }
+        public InventoryItemData(Azure.ResourceManager.ArcScVmm.Models.InventoryItemProperties properties) { }
         public string Kind { get { throw null; } set { } }
-        public string ManagedResourceId { get { throw null; } }
-        public string ProvisioningState { get { throw null; } }
-        public string Uuid { get { throw null; } }
+        public Azure.ResourceManager.ArcScVmm.Models.InventoryItemProperties Properties { get { throw null; } set { } }
     }
     public partial class InventoryItemResource : Azure.ResourceManager.ArmResource
     {
@@ -480,6 +477,9 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     public static partial class ArmArcScVmmModelFactory
     {
         public static Azure.ResourceManager.ArcScVmm.Models.CloudCapacity CloudCapacity(long? cpuCount = default(long?), long? memoryMB = default(long?), long? vmCount = default(long?)) { throw null; }
+        public static Azure.ResourceManager.ArcScVmm.Models.CloudInventoryItem CloudInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, string provisioningState = null) { throw null; }
+        public static Azure.ResourceManager.ArcScVmm.InventoryItemData InventoryItemData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ArcScVmm.Models.InventoryItemProperties properties = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.ArcScVmm.Models.InventoryItemProperties InventoryItemProperties(string inventoryType = "Unknown", string managedResourceId = null, string uuid = null, string inventoryItemName = null, string provisioningState = null) { throw null; }
         public static Azure.ResourceManager.ArcScVmm.Models.NetworkInterfaces NetworkInterfaces(string name = null, string displayName = null, System.Collections.Generic.IEnumerable<string> ipv4Addresses = null, System.Collections.Generic.IEnumerable<string> ipv6Addresses = null, string macAddress = null, string virtualNetworkId = null, string networkName = null, Azure.ResourceManager.ArcScVmm.Models.AllocationMethod? ipv4AddressType = default(Azure.ResourceManager.ArcScVmm.Models.AllocationMethod?), Azure.ResourceManager.ArcScVmm.Models.AllocationMethod? ipv6AddressType = default(Azure.ResourceManager.ArcScVmm.Models.AllocationMethod?), Azure.ResourceManager.ArcScVmm.Models.AllocationMethod? macAddressType = default(Azure.ResourceManager.ArcScVmm.Models.AllocationMethod?), string nicId = null) { throw null; }
         public static Azure.ResourceManager.ArcScVmm.Models.OSProfile OSProfile(string adminPassword = null, string computerName = null, Azure.ResourceManager.ArcScVmm.Models.OSType? osType = default(Azure.ResourceManager.ArcScVmm.Models.OSType?), string osName = null) { throw null; }
         public static Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetData ScVmmAvailabilitySetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, string availabilitySetName = null, string vmmServerId = null, string provisioningState = null) { throw null; }
@@ -490,6 +490,9 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public static Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkData ScVmmVirtualNetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, string inventoryItemId = null, string uuid = null, string vmmServerId = null, string networkName = null, string provisioningState = null) { throw null; }
         public static Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicy StorageQoSPolicy(string name = null, string id = null, long? iopsMaximum = default(long?), long? iopsMinimum = default(long?), long? bandwidthLimit = default(long?), string policyId = null) { throw null; }
         public static Azure.ResourceManager.ArcScVmm.Models.VirtualDisk VirtualDisk(string name = null, string displayName = null, string diskId = null, int? diskSizeGB = default(int?), int? maxDiskSizeGB = default(int?), int? bus = default(int?), int? lun = default(int?), string busType = null, string vhdType = null, string volumeType = null, string vhdFormatType = null, string templateDiskId = null, Azure.ResourceManager.ArcScVmm.Models.StorageQoSPolicyDetails storageQoSPolicy = null, Azure.ResourceManager.ArcScVmm.Models.CreateDiffDisk? createDiffDisk = default(Azure.ResourceManager.ArcScVmm.Models.CreateDiffDisk?)) { throw null; }
+        public static Azure.ResourceManager.ArcScVmm.Models.VirtualMachineInventoryItem VirtualMachineInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, string provisioningState = null, Azure.ResourceManager.ArcScVmm.Models.OSType? osType = default(Azure.ResourceManager.ArcScVmm.Models.OSType?), string osName = null, string powerState = null, System.Collections.Generic.IEnumerable<string> ipAddresses = null, Azure.ResourceManager.ArcScVmm.Models.InventoryItemDetails cloud = null) { throw null; }
+        public static Azure.ResourceManager.ArcScVmm.Models.VirtualMachineTemplateInventoryItem VirtualMachineTemplateInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, string provisioningState = null, int? cpuCount = default(int?), int? memoryMB = default(int?), Azure.ResourceManager.ArcScVmm.Models.OSType? osType = default(Azure.ResourceManager.ArcScVmm.Models.OSType?), string osName = null) { throw null; }
+        public static Azure.ResourceManager.ArcScVmm.Models.VirtualNetworkInventoryItem VirtualNetworkInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, string provisioningState = null) { throw null; }
     }
     public partial class AvailabilitySetListItem
     {
@@ -511,6 +514,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public long? CpuCount { get { throw null; } }
         public long? MemoryMB { get { throw null; } }
         public long? VmCount { get { throw null; } }
+    }
+    public partial class CloudInventoryItem : Azure.ResourceManager.ArcScVmm.Models.InventoryItemProperties
+    {
+        public CloudInventoryItem() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CreateDiffDisk : System.IEquatable<Azure.ResourceManager.ArcScVmm.Models.CreateDiffDisk>
@@ -569,25 +576,19 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public Azure.ResourceManager.ArcScVmm.Models.LimitCpuForMigration? LimitCpuForMigration { get { throw null; } set { } }
         public int? MemoryMB { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct InventoryType : System.IEquatable<Azure.ResourceManager.ArcScVmm.Models.InventoryType>
+    public partial class InventoryItemDetails
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public InventoryType(string value) { throw null; }
-        public static Azure.ResourceManager.ArcScVmm.Models.InventoryType Cloud { get { throw null; } }
-        public static Azure.ResourceManager.ArcScVmm.Models.InventoryType VirtualMachine { get { throw null; } }
-        public static Azure.ResourceManager.ArcScVmm.Models.InventoryType VirtualMachineTemplate { get { throw null; } }
-        public static Azure.ResourceManager.ArcScVmm.Models.InventoryType VirtualNetwork { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ArcScVmm.Models.InventoryType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ArcScVmm.Models.InventoryType left, Azure.ResourceManager.ArcScVmm.Models.InventoryType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ArcScVmm.Models.InventoryType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ArcScVmm.Models.InventoryType left, Azure.ResourceManager.ArcScVmm.Models.InventoryType right) { throw null; }
-        public override string ToString() { throw null; }
+        public InventoryItemDetails() { }
+        public string InventoryItemId { get { throw null; } set { } }
+        public string InventoryItemName { get { throw null; } set { } }
+    }
+    public abstract partial class InventoryItemProperties
+    {
+        protected InventoryItemProperties() { }
+        public string InventoryItemName { get { throw null; } }
+        public string ManagedResourceId { get { throw null; } }
+        public string ProvisioningState { get { throw null; } }
+        public string Uuid { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IsCustomizable : System.IEquatable<Azure.ResourceManager.ArcScVmm.Models.IsCustomizable>
@@ -751,10 +752,27 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public VirtualMachineDeleteCheckpoint() { }
         public string Id { get { throw null; } set { } }
     }
+    public partial class VirtualMachineInventoryItem : Azure.ResourceManager.ArcScVmm.Models.InventoryItemProperties
+    {
+        public VirtualMachineInventoryItem() { }
+        public Azure.ResourceManager.ArcScVmm.Models.InventoryItemDetails Cloud { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> IPAddresses { get { throw null; } }
+        public string OSName { get { throw null; } }
+        public Azure.ResourceManager.ArcScVmm.Models.OSType? OSType { get { throw null; } }
+        public string PowerState { get { throw null; } }
+    }
     public partial class VirtualMachineRestoreCheckpoint
     {
         public VirtualMachineRestoreCheckpoint() { }
         public string Id { get { throw null; } set { } }
+    }
+    public partial class VirtualMachineTemplateInventoryItem : Azure.ResourceManager.ArcScVmm.Models.InventoryItemProperties
+    {
+        public VirtualMachineTemplateInventoryItem() { }
+        public int? CpuCount { get { throw null; } }
+        public int? MemoryMB { get { throw null; } }
+        public string OSName { get { throw null; } }
+        public Azure.ResourceManager.ArcScVmm.Models.OSType? OSType { get { throw null; } }
     }
     public partial class VirtualMachineUpdateProperties
     {
@@ -763,6 +781,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public Azure.ResourceManager.ArcScVmm.Models.HardwareProfileUpdate HardwareProfile { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ArcScVmm.Models.NetworkInterfacesUpdate> NetworkInterfaces { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ArcScVmm.Models.VirtualDiskUpdate> StorageDisks { get { throw null; } }
+    }
+    public partial class VirtualNetworkInventoryItem : Azure.ResourceManager.ArcScVmm.Models.InventoryItemProperties
+    {
+        public VirtualNetworkInventoryItem() { }
     }
     public partial class VmmServerPropertiesCredentials
     {

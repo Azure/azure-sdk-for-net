@@ -5,9 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
@@ -19,50 +19,21 @@ namespace Azure.AI.ContentSafety
             {
                 return null;
             }
-            Optional<ImageAnalyzeSeverityResult> hateResult = default;
-            Optional<ImageAnalyzeSeverityResult> selfHarmResult = default;
-            Optional<ImageAnalyzeSeverityResult> sexualResult = default;
-            Optional<ImageAnalyzeSeverityResult> violenceResult = default;
+            IReadOnlyList<ImageCategoriesAnalysis> categoriesAnalysis = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hateResult"u8))
+                if (property.NameEquals("categoriesAnalysis"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    List<ImageCategoriesAnalysis> array = new List<ImageCategoriesAnalysis>();
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        continue;
+                        array.Add(ImageCategoriesAnalysis.DeserializeImageCategoriesAnalysis(item));
                     }
-                    hateResult = ImageAnalyzeSeverityResult.DeserializeImageAnalyzeSeverityResult(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("selfHarmResult"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    selfHarmResult = ImageAnalyzeSeverityResult.DeserializeImageAnalyzeSeverityResult(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("sexualResult"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sexualResult = ImageAnalyzeSeverityResult.DeserializeImageAnalyzeSeverityResult(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("violenceResult"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    violenceResult = ImageAnalyzeSeverityResult.DeserializeImageAnalyzeSeverityResult(property.Value);
+                    categoriesAnalysis = array;
                     continue;
                 }
             }
-            return new AnalyzeImageResult(hateResult.Value, selfHarmResult.Value, sexualResult.Value, violenceResult.Value);
+            return new AnalyzeImageResult(categoriesAnalysis);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

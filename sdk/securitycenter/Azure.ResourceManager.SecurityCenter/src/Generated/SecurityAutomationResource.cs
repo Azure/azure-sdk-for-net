@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly AutomationsRestOperations _securityAutomationAutomationsRestClient;
         private readonly SecurityAutomationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/automations";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityAutomationResource"/> class for mocking. </summary>
         protected SecurityAutomationResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/automations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

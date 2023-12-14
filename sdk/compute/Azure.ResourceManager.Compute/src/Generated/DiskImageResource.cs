@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Compute
         private readonly ImagesRestOperations _diskImageImagesRestClient;
         private readonly DiskImageData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/images";
+
         /// <summary> Initializes a new instance of the <see cref="DiskImageResource"/> class for mocking. </summary>
         protected DiskImageResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/images";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

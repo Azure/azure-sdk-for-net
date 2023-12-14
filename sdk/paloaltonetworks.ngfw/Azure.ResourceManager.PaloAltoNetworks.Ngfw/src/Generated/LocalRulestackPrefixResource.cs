@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private readonly PrefixListLocalRulestackRestOperations _localRulestackPrefixPrefixListLocalRulestackRestClient;
         private readonly LocalRulestackPrefixData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/localRulestacks/prefixlists";
+
         /// <summary> Initializes a new instance of the <see cref="LocalRulestackPrefixResource"/> class for mocking. </summary>
         protected LocalRulestackPrefixResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/localRulestacks/prefixlists";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

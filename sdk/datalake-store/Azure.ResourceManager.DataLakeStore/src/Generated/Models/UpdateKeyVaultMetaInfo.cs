@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="UpdateKeyVaultMetaInfo"/>. </summary>
+        /// <param name="encryptionKeyVersion"> The version of the user managed encryption key to update through a key rotation. </param>
+        internal UpdateKeyVaultMetaInfo(string encryptionKeyVersion)
+        {
+            EncryptionKeyVersion = encryptionKeyVersion;
+        }
+
         /// <summary> The version of the user managed encryption key to update through a key rotation. </summary>
         public string EncryptionKeyVersion { get; set; }
     }

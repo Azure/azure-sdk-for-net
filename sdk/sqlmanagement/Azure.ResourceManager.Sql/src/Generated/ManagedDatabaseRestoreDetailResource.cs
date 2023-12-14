@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedDatabaseRestoreDetailsRestOperations _managedDatabaseRestoreDetailRestClient;
         private readonly ManagedDatabaseRestoreDetailData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/restoreDetails";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseRestoreDetailResource"/> class for mocking. </summary>
         protected ManagedDatabaseRestoreDetailResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/restoreDetails";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.AppConfiguration
         private readonly ConfigurationStoresRestOperations _deletedAppConfigurationStoreConfigurationStoresRestClient;
         private readonly DeletedAppConfigurationStoreData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppConfiguration/locations/deletedConfigurationStores";
+
         /// <summary> Initializes a new instance of the <see cref="DeletedAppConfigurationStoreResource"/> class for mocking. </summary>
         protected DeletedAppConfigurationStoreResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AppConfiguration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppConfiguration/locations/deletedConfigurationStores";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

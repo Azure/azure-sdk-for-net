@@ -24,6 +24,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMwareCbt";
         }
 
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtUpdateMigrationItemContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="targetVmName"> The target VM name. </param>
+        /// <param name="targetVmSize"> The target VM size. </param>
+        /// <param name="targetResourceGroupId"> The target resource group ARM Id. </param>
+        /// <param name="targetAvailabilitySetId"> The target availability set ARM Id. </param>
+        /// <param name="targetAvailabilityZone"> The target availability zone. </param>
+        /// <param name="targetProximityPlacementGroupId"> The target proximity placement group ARM Id. </param>
+        /// <param name="targetBootDiagnosticsStorageAccountId"> The target boot diagnostics storage account ARM Id. </param>
+        /// <param name="targetNetworkId"> The target network ARM Id. </param>
+        /// <param name="testNetworkId"> The test network ARM Id. </param>
+        /// <param name="vmNics"> The list of NIC details. </param>
+        /// <param name="vmDisks"> The list of disk update properties. </param>
+        /// <param name="licenseType"> The license type. </param>
+        /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="performAutoResync"> A value indicating whether auto resync is to be done. </param>
+        /// <param name="targetVmTags"> The target VM tags. </param>
+        /// <param name="targetDiskTags"> The tags for the target disks. </param>
+        /// <param name="targetNicTags"> The tags for the target NICs. </param>
+        internal VMwareCbtUpdateMigrationItemContent(string instanceType, string targetVmName, string targetVmSize, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, IList<VMwareCbtNicContent> vmNics, IList<VMwareCbtUpdateDiskContent> vmDisks, SiteRecoveryLicenseType? licenseType, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, string performAutoResync, IDictionary<string, string> targetVmTags, IDictionary<string, string> targetDiskTags, IDictionary<string, string> targetNicTags) : base(instanceType)
+        {
+            TargetVmName = targetVmName;
+            TargetVmSize = targetVmSize;
+            TargetResourceGroupId = targetResourceGroupId;
+            TargetAvailabilitySetId = targetAvailabilitySetId;
+            TargetAvailabilityZone = targetAvailabilityZone;
+            TargetProximityPlacementGroupId = targetProximityPlacementGroupId;
+            TargetBootDiagnosticsStorageAccountId = targetBootDiagnosticsStorageAccountId;
+            TargetNetworkId = targetNetworkId;
+            TestNetworkId = testNetworkId;
+            VmNics = vmNics;
+            VmDisks = vmDisks;
+            LicenseType = licenseType;
+            SqlServerLicenseType = sqlServerLicenseType;
+            PerformAutoResync = performAutoResync;
+            TargetVmTags = targetVmTags;
+            TargetDiskTags = targetDiskTags;
+            TargetNicTags = targetNicTags;
+            InstanceType = instanceType ?? "VMwareCbt";
+        }
+
         /// <summary> The target VM name. </summary>
         public string TargetVmName { get; set; }
         /// <summary> The target VM size. </summary>

@@ -26,6 +26,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcmFailback";
         }
 
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackReprotectContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="processServerId"> The process server Id. </param>
+        /// <param name="runAsAccountId"> The run as account Id. </param>
+        /// <param name="policyId"> The Policy Id. </param>
+        internal InMageRcmFailbackReprotectContent(string instanceType, Guid processServerId, string runAsAccountId, ResourceIdentifier policyId) : base(instanceType)
+        {
+            ProcessServerId = processServerId;
+            RunAsAccountId = runAsAccountId;
+            PolicyId = policyId;
+            InstanceType = instanceType ?? "InMageRcmFailback";
+        }
+
         /// <summary> The process server Id. </summary>
         public Guid ProcessServerId { get; }
         /// <summary> The run as account Id. </summary>

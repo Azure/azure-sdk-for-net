@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private readonly FirewallRulesRestOperations _mySqlFlexibleServerFirewallRuleFirewallRulesRestClient;
         private readonly MySqlFlexibleServerFirewallRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/flexibleServers/firewallRules";
+
         /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServerFirewallRuleResource"/> class for mocking. </summary>
         protected MySqlFlexibleServerFirewallRuleResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/flexibleServers/firewallRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

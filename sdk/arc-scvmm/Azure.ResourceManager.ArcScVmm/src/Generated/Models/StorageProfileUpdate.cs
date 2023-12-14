@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             Disks = new ChangeTrackingList<VirtualDiskUpdate>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="StorageProfileUpdate"/>. </summary>
+        /// <param name="disks"> Gets or sets the list of virtual disks associated with the virtual machine. </param>
+        internal StorageProfileUpdate(IList<VirtualDiskUpdate> disks)
+        {
+            Disks = disks;
+        }
+
         /// <summary> Gets or sets the list of virtual disks associated with the virtual machine. </summary>
         public IList<VirtualDiskUpdate> Disks { get; }
     }

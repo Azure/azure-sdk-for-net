@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.Automation
         private readonly NodeReportsRestOperations _nodeReportsRestClient;
         private readonly DscNodeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/nodes";
+
         /// <summary> Initializes a new instance of the <see cref="DscNodeResource"/> class for mocking. </summary>
         protected DscNodeResource()
         {
@@ -71,9 +74,6 @@ namespace Azure.ResourceManager.Automation
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/nodes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

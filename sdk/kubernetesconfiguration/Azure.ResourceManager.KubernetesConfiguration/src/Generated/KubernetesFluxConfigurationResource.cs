@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         private readonly FluxConfigurationsRestOperations _kubernetesFluxConfigurationFluxConfigurationsRestClient;
         private readonly KubernetesFluxConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.KubernetesConfiguration/fluxConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="KubernetesFluxConfigurationResource"/> class for mocking. </summary>
         protected KubernetesFluxConfigurationResource()
         {
@@ -70,9 +73,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.KubernetesConfiguration/fluxConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

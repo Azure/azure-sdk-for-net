@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Peering
         private readonly PeeringServicesRestOperations _peeringServiceRestClient;
         private readonly PeeringServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Peering/peeringServices";
+
         /// <summary> Initializes a new instance of the <see cref="PeeringServiceResource"/> class for mocking. </summary>
         protected PeeringServiceResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Peering
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Peering/peeringServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

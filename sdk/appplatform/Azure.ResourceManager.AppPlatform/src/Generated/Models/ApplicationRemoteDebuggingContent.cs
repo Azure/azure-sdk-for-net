@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ApplicationRemoteDebuggingContent"/>. </summary>
+        /// <param name="port"> Application debugging port. </param>
+        internal ApplicationRemoteDebuggingContent(int? port)
+        {
+            Port = port;
+        }
+
         /// <summary> Application debugging port. </summary>
         public int? Port { get; set; }
     }

@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly SqlPoolRestorePointsRestOperations _synapseRestorePointSqlPoolRestorePointsRestClient;
         private readonly SynapseRestorePointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/restorePoints";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseRestorePointResource"/> class for mocking. </summary>
         protected SynapseRestorePointResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/restorePoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.DataShare
         private readonly InvitationsRestOperations _dataShareInvitationInvitationsRestClient;
         private readonly DataShareInvitationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shares/invitations";
+
         /// <summary> Initializes a new instance of the <see cref="DataShareInvitationResource"/> class for mocking. </summary>
         protected DataShareInvitationResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DataShare
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shares/invitations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
