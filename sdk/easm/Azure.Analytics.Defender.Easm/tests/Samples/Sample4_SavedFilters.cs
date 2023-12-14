@@ -50,7 +50,7 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
             var savedFilterResponse = client.GetSavedFilter(savedFilterName);
             string monitorFilter = savedFilterResponse.Value.Filter;
             #if SNIPPET
-            var savedFilterPageResponse = client.SavedFiltersList(monitorFilter);
+            var savedFilterPageResponse = client.GetSavedFilters(monitorFilter);
             #else
             var savedFilterPageResponse = client.GetSavedFilters();
             #endif

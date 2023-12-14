@@ -42,7 +42,7 @@ The saved filter can now be used in scripts to monitor the assets. First, retrie
 ```C# Snippet:Sample4_SavedFilters_Monitor_Assets
 var savedFilterResponse = client.GetSavedFilter(savedFilterName);
 string monitorFilter = savedFilterResponse.Value.Filter;
-            var savedFilterPageResponse = client.SavedFiltersList(monitorFilter);
+            var savedFilterPageResponse = client.GetSavedFilters(monitorFilter);
                         foreach (SavedFilter savedFilter in savedFilterPageResponse)
 {
     monitor(savedFilter);
