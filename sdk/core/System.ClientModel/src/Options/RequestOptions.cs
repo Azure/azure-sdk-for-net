@@ -2,10 +2,9 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
-using System.ClientModel.Primitives;
 using System.Threading;
 
-namespace System.ClientModel;
+namespace System.ClientModel.Primitives;
 
 /// <summary>
 /// Controls the end-to-end duration of the service method call, including

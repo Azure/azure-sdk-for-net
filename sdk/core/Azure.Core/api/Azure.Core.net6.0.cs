@@ -207,7 +207,7 @@ namespace Azure
         public System.DateTimeOffset? IfModifiedSince { get { throw null; } set { } }
         public System.DateTimeOffset? IfUnmodifiedSince { get { throw null; } set { } }
     }
-    public partial class RequestContext : System.ClientModel.RequestOptions
+    public partial class RequestContext : System.ClientModel.Primitives.RequestOptions
     {
         public RequestContext() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

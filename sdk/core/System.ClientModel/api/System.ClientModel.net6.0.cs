@@ -46,14 +46,6 @@ namespace System.ClientModel
         public virtual bool HasValue { get { throw null; } }
         public virtual T? Value { get { throw null; } }
     }
-    public partial class RequestOptions
-    {
-        public RequestOptions() { }
-        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
-        public System.ClientModel.Primitives.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
-        public void AddHeader(string name, string value) { }
-        public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
-    }
 }
 namespace System.ClientModel.Primitives
 {
@@ -153,7 +145,7 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.PipelineMessageClassifier? MessageClassifier { get { throw null; } protected internal set { } }
         public System.ClientModel.Primitives.PipelineRequest Request { get { throw null; } }
         public System.ClientModel.Primitives.PipelineResponse? Response { get { throw null; } protected internal set { } }
-        public void Apply(System.ClientModel.RequestOptions options, System.ClientModel.Primitives.PipelineMessageClassifier? messageClassifier = null) { }
+        public void Apply(System.ClientModel.Primitives.RequestOptions options, System.ClientModel.Primitives.PipelineMessageClassifier? messageClassifier = null) { }
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public void SetProperty(System.Type type, object value) { }
@@ -226,6 +218,14 @@ namespace System.ClientModel.Primitives
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
         protected abstract void ProcessCore(System.ClientModel.Primitives.PipelineMessage message);
         protected abstract System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.PipelineMessage message);
+    }
+    public partial class RequestOptions
+    {
+        public RequestOptions() { }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public System.ClientModel.Primitives.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
+        public void AddHeader(string name, string value) { }
+        public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
     }
     public partial class RequestRetryPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
