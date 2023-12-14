@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -22,7 +23,7 @@ namespace Azure.Communication.JobRouter
             ETag etag = default;
             string id = default;
             Optional<string> name = default;
-            Optional<double> offerExpiresAfterSeconds = default;
+            Optional<TimeSpan> offerExpiresAfterSeconds = default;
             Optional<DistributionMode> mode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,11 +44,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("offerExpiresAfterSeconds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    offerExpiresAfterSeconds = property.Value.GetDouble();
+                    ReadOfferExpiresAfter(property, ref offerExpiresAfterSeconds);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))

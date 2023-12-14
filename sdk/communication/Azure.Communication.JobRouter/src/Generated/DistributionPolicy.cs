@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure;
 
 namespace Azure.Communication.JobRouter
@@ -21,14 +22,14 @@ namespace Azure.Communication.JobRouter
         /// <param name="eTag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of a distribution policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
-        /// <param name="offerExpiresAfterSeconds"> Number of seconds after which any offers created under this policy will be expired. </param>
+        /// <param name="offerExpiresAfter"> Number of seconds after which any offers created under this policy will be expired. </param>
         /// <param name="mode"> Mode governing the specific distribution method. </param>
-        internal DistributionPolicy(ETag eTag, string id, string name, double? offerExpiresAfterSeconds, DistributionMode mode)
+        internal DistributionPolicy(ETag eTag, string id, string name, TimeSpan? offerExpiresAfter, DistributionMode mode)
         {
             ETag = eTag;
             Id = id;
             Name = name;
-            _offerExpiresAfterSeconds = offerExpiresAfterSeconds;
+            OfferExpiresAfter = offerExpiresAfter;
             Mode = mode;
         }
         /// <summary> Id of a distribution policy. </summary>
