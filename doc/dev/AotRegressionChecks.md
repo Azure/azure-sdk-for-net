@@ -62,6 +62,7 @@ extends:
 ```
 
 ## How to resolve trimming warnings
+
 The following three articles provide comprehensive guidance for how to resolve trimming warnings and make libraries compatible with AOT:
 - ["How to make libraries compatible with native AOT"](https://devblogs.microsoft.com/dotnet/creating-aot-compatible-libraries/) by Eric Erhardt on November 30th, 2023
 - ["Prepare .NET libraries for trimming"](https://learn.microsoft.com/dotnet/core/deploying/trimming/prepare-libraries-for-trimming)
