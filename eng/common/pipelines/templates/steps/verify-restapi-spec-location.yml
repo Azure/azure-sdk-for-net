@@ -1,0 +1,18 @@
+parameters:
+- name: PackageName
+  type: string
+  default: ''
+- name: ServiceDirectory
+  type: string
+  default: ''
+steps:
+  - task: Powershell@2
+    inputs:
+      filePath: $(Build.SourcesDirectory)/eng/common/scripts/Verify-RestApiSpecLocation.ps1
+      arguments: >
+        -ServiceDirectory '${{ coalesce(parameters.ServiceDirectory, parameters.ServiceName) }}'
+        -PackageName '${{ parameters.PackageName }}'
+      pwsh: true
+      workingDirectory: $(Pipeline.Workspace)
+    displayName: Verify REST API spec location for ${{ parameters.PackageName }}
+    continueOnError: false
