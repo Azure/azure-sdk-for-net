@@ -23,8 +23,8 @@ In order to start discovery runs, we must first create a discovery group, which 
 ```C# Snippet:Sample2_DiscoveryGroups_Create_Discovery_Group
 string discoveryGroupName = "Sample Disco From C#";
 string discoveryGroupDescription = "This is a sample discovery group generated from C#";
-            string[] hosts = ["<host1>.<org>.com", "<host2>.<org>.com"];
-string[] domains = ["<domain1>.com", "<domain2>.com"];
+            List<String> hosts = new List<String> {"<host1>.<org>.com", "<host2>.<org>.com"};
+List<String> domains = new List<String> {"<domain1>.com", "<domain2>.com"};
                         DiscoGroupData request = new DiscoGroupData();
 foreach (var host in hosts)
 {
