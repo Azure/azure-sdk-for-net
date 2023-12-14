@@ -11,7 +11,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using Azure.Core.Tests.ModelReaderWriterTests.Models;
-using TestHelpers.Internal;
+using Azure.Core.Tests.Common;
 
 namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 {

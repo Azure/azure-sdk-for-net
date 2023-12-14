@@ -6,7 +6,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using TestHelpers.Internal;
+using Azure.Core.Tests.Common;
 
 namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 {
