@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Nginx.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NginxFrontendIPConfiguration"/>. </summary>
-        /// <param name="publicIPAddresses"></param>
+        /// <param name="publicIPAddresses"> Gets the public ip addresses. </param>
         /// <param name="privateIPAddresses"></param>
         internal NginxFrontendIPConfiguration(IList<WritableSubResource> publicIPAddresses, IList<NginxPrivateIPAddress> privateIPAddresses)
         {
