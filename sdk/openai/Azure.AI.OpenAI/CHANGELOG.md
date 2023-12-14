@@ -4,12 +4,31 @@
 
 ### Features Added
 
+**Updates for using streaming tool calls:**
+
+- A new .NET-specific `StreamingToolCallUpdate` type has been added to better represent streaming tool call updates
+  when using chat tools.
+  - This new type includes an explicit `ToolCallIndex` property, reflecting `index` in the REST schema, to allow
+    resilient deserialization of parallel function tool calling.
+- A convenience constructor has been added for `ChatRequestAssistantMessage` that can automatically populate from a prior
+  `ChatResponseMessage` when using non-streaming chat completions.
+- A public constructor has been added for `ChatCompletionsFunctionToolCall` to allow more intuitive reconstruction of
+  `ChatCompletionsToolCall` instances for use in `ChatRequestAssistantMessage` instances made from streaming responses.
+
+**Other additions:**
+
 - To facilitate reuse of user message contents, `ChatRequestUserMessage` now provides a public `Content` property (`string`) as well as a public `MultimodalContentItems` property (`IList<ChatMessageContentItem`).
   - `Content` is the conventional plain-text content and will be populated as non-null when the a `ChatRequestUserMessage()` constructor accepting a string is used to instantiate the message.
   - `MultimodalContentItems` is the new compound content type, currently only usable with `gpt-4-vision-preview`, that allows hybrid use of text and image references. It will be populated when an appropriate `ChatRequestUserMessage()` constructor accepting a collection of `ChatMessageContentItem` instances is used.
   - `Role` is also restored to common visibility to `ChatRequestUserMessage`.
 
 ### Breaking Changes
+
+- The type of `ToolCallUpdate` on `StreamingChatCompletionsUpdate` has been changed from the non-streaming
+  `ChatCompletionsToolCall` to the new `StreamingToolCallUpdate` type. The conversion is straightforward:
+  - `ToolCallUpdate.Id` remains unchanged.
+  - Instead of casting `ToolCallUpdate` to `ChatCompletionsFunctionToolCall`, cast it to `StreamingToolCallUpdate`.
+  - Update cast instance use of `functionToolCallUpdate.Arguments` to accumulate `functionToolCallUpdate.ArgumentsUpdate`.
 
 ### Bugs Fixed
 

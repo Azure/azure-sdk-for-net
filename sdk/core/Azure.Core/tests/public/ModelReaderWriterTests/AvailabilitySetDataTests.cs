@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.ClientModel;
 using Azure.Core.Tests.Common;
 using Azure.Core.Tests.Models.ResourceManager.Compute;
 using NUnit.Framework;
