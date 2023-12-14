@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the basic gallery artifact publishing profile. </summary>
     public partial class GalleryArtifactPublishingProfileBase
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="GalleryArtifactPublishingProfileBase"/>. </summary>
         public GalleryArtifactPublishingProfileBase()
         {

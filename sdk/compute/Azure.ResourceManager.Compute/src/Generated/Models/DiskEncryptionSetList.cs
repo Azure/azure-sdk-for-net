@@ -16,9 +16,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List disk encryption set operation response. </summary>
     internal partial class DiskEncryptionSetList
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DiskEncryptionSetList"/>. </summary>
         /// <param name="value"> A list of disk encryption sets. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>

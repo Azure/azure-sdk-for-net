@@ -13,6 +13,9 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/066eb8c81e14e0f3b22b
 tag: package-2016-11
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -68,7 +71,7 @@ prepend-rp-prefix:
   - StorageAccountInformation
   - StorageAccountInformationListResult
   - FirewallState
-  - FirewallAllowAzureIPsState
+  - FirewallAllowAzureIpsState
   - CapabilityInformation
   - HiveMetastore
   - SasTokenInformation

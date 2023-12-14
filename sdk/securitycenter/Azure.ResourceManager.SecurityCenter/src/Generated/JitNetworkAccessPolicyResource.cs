@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a JitNetworkAccessPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="JitNetworkAccessPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetJitNetworkAccessPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetJitNetworkAccessPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="JitNetworkAccessPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetJitNetworkAccessPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetJitNetworkAccessPolicy method.
     /// </summary>
     public partial class JitNetworkAccessPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="JitNetworkAccessPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="ascLocation"> The ascLocation. </param>
+        /// <param name="jitNetworkAccessPolicyName"> The jitNetworkAccessPolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string jitNetworkAccessPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/jitNetworkAccessPolicies/{jitNetworkAccessPolicyName}";
@@ -37,12 +41,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly JitNetworkAccessPoliciesRestOperations _jitNetworkAccessPolicyRestClient;
         private readonly JitNetworkAccessPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/locations/jitNetworkAccessPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="JitNetworkAccessPolicyResource"/> class for mocking. </summary>
         protected JitNetworkAccessPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "JitNetworkAccessPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="JitNetworkAccessPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal JitNetworkAccessPolicyResource(ArmClient client, JitNetworkAccessPolicyData data) : this(client, data.Id)
@@ -63,9 +70,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/locations/jitNetworkAccessPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -234,7 +238,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The JitNetworkAccessPolicy to use. </param>
+        /// <param name="data"> The <see cref="JitNetworkAccessPolicyData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<JitNetworkAccessPolicyResource>> UpdateAsync(WaitUntil waitUntil, JitNetworkAccessPolicyData data, CancellationToken cancellationToken = default)
@@ -272,7 +276,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The JitNetworkAccessPolicy to use. </param>
+        /// <param name="data"> The <see cref="JitNetworkAccessPolicyData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<JitNetworkAccessPolicyResource> Update(WaitUntil waitUntil, JitNetworkAccessPolicyData data, CancellationToken cancellationToken = default)
@@ -309,7 +313,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The JitNetworkAccessPolicyInitiateContent to use. </param>
+        /// <param name="content"> The <see cref="JitNetworkAccessPolicyInitiateContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<JitNetworkAccessRequestInfo>> InitiateAsync(JitNetworkAccessPolicyInitiateContent content, CancellationToken cancellationToken = default)
@@ -343,7 +347,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The JitNetworkAccessPolicyInitiateContent to use. </param>
+        /// <param name="content"> The <see cref="JitNetworkAccessPolicyInitiateContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<JitNetworkAccessRequestInfo> Initiate(JitNetworkAccessPolicyInitiateContent content, CancellationToken cancellationToken = default)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Represents the publisher information of a process/rule. </summary>
     public partial class SecurityCenterPublisherInfo
     {
-        /// <summary> Initializes a new instance of SecurityCenterPublisherInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterPublisherInfo"/>. </summary>
         public SecurityCenterPublisherInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityCenterPublisherInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterPublisherInfo"/>. </summary>
         /// <param name="publisherName"> The Subject field of the x.509 certificate used to sign the code, using the following fields -  O = Organization, L = Locality, S = State or Province, and C = Country. </param>
         /// <param name="productName"> The product name taken from the file's version resource. </param>
         /// <param name="binaryName"> The "OriginalName" field taken from the file's version resource. </param>

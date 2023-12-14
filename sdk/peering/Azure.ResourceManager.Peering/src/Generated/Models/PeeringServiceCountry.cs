@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The peering service country. </summary>
     public partial class PeeringServiceCountry : ResourceData
     {
-        /// <summary> Initializes a new instance of PeeringServiceCountry. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringServiceCountry"/>. </summary>
         public PeeringServiceCountry()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringServiceCountry. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringServiceCountry"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public abstract partial class CustomSetupBase
     {
-        /// <summary> Initializes a new instance of CustomSetupBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomSetupBase"/>. </summary>
         protected CustomSetupBase()
         {
         }
 
-        /// <summary> Initializes a new instance of CustomSetupBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomSetupBase"/>. </summary>
         /// <param name="customSetupBaseType"> The type of custom setup. </param>
         internal CustomSetupBase(string customSetupBaseType)
         {

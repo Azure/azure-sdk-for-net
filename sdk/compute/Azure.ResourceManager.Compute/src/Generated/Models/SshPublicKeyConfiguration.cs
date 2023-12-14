@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Contains information about SSH certificate public key and the path on the Linux VM where the public key is placed. </summary>
     public partial class SshPublicKeyConfiguration
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="SshPublicKeyConfiguration"/>. </summary>
         public SshPublicKeyConfiguration()
         {

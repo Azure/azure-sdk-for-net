@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> This is the safety profile of the Gallery Artifact Version. </summary>
     public partial class GalleryArtifactSafetyProfileBase
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="GalleryArtifactSafetyProfileBase"/>. </summary>
         public GalleryArtifactSafetyProfileBase()
         {

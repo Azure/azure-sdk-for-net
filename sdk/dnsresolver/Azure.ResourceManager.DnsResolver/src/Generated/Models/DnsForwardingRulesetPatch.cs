@@ -14,11 +14,20 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> Describes a DNS forwarding ruleset PATCH operation. </summary>
     public partial class DnsForwardingRulesetPatch
     {
-        /// <summary> Initializes a new instance of DnsForwardingRulesetPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetPatch"/>. </summary>
         public DnsForwardingRulesetPatch()
         {
             DnsResolverOutboundEndpoints = new ChangeTrackingList<WritableSubResource>();
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetPatch"/>. </summary>
+        /// <param name="dnsResolverOutboundEndpoints"> The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers. </param>
+        /// <param name="tags"> Tags for DNS Resolver. </param>
+        internal DnsForwardingRulesetPatch(IList<WritableSubResource> dnsResolverOutboundEndpoints, IDictionary<string, string> tags)
+        {
+            DnsResolverOutboundEndpoints = dnsResolverOutboundEndpoints;
+            Tags = tags;
         }
 
         /// <summary> The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers. </summary>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The IdentityManagementProperties. </summary>
     public partial class IdentityManagementProperties
     {
-        /// <summary> Initializes a new instance of IdentityManagementProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityManagementProperties"/>. </summary>
         public IdentityManagementProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of IdentityManagementProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityManagementProperties"/>. </summary>
         /// <param name="managementType"></param>
         /// <param name="applicationId"></param>
         internal IdentityManagementProperties(IdentityManagementType? managementType, string applicationId)

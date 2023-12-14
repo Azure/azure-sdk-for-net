@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Recommended action for the service health event. </summary>
     public partial class ResourceHealthEventRecommendedActionsItem
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventRecommendedActionsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventRecommendedActionsItem"/>. </summary>
         internal ResourceHealthEventRecommendedActionsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventRecommendedActionsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventRecommendedActionsItem"/>. </summary>
         /// <param name="groupId"> Recommended action group Id for the service health event. </param>
         /// <param name="actionText"> Recommended action text. </param>
         internal ResourceHealthEventRecommendedActionsItem(int? groupId, string actionText)

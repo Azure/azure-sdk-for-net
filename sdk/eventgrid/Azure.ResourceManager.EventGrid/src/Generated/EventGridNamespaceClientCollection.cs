@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EventGridNamespaceClientResource" /> and their operations.
-    /// Each <see cref="EventGridNamespaceClientResource" /> in the collection will belong to the same instance of <see cref="EventGridNamespaceResource" />.
-    /// To get an <see cref="EventGridNamespaceClientCollection" /> instance call the GetEventGridNamespaceClients method from an instance of <see cref="EventGridNamespaceResource" />.
+    /// A class representing a collection of <see cref="EventGridNamespaceClientResource"/> and their operations.
+    /// Each <see cref="EventGridNamespaceClientResource"/> in the collection will belong to the same instance of <see cref="EventGridNamespaceResource"/>.
+    /// To get an <see cref="EventGridNamespaceClientCollection"/> instance call the GetEventGridNamespaceClients method from an instance of <see cref="EventGridNamespaceResource"/>.
     /// </summary>
     public partial class EventGridNamespaceClientCollection : ArmCollection, IEnumerable<EventGridNamespaceClientResource>, IAsyncEnumerable<EventGridNamespaceClientResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventGridNamespaceClientResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EventGridNamespaceClientResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventGridNamespaceClientResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventGridNamespaceClientClientsRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventGridNamespaceClientResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EventGridNamespaceClientResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventGridNamespaceClientResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventGridNamespaceClientClientsRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
@@ -319,6 +319,80 @@ namespace Azure.ResourceManager.EventGrid
             {
                 var response = _eventGridNamespaceClientClientsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}/clients/{clientName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clients_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clientName"> Name of the client. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clientName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientName"/> is null. </exception>
+        public virtual async Task<NullableResponse<EventGridNamespaceClientResource>> GetIfExistsAsync(string clientName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clientName, nameof(clientName));
+
+            using var scope = _eventGridNamespaceClientClientsClientDiagnostics.CreateScope("EventGridNamespaceClientCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _eventGridNamespaceClientClientsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<EventGridNamespaceClientResource>(response.GetRawResponse());
+                return Response.FromValue(new EventGridNamespaceClientResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}/clients/{clientName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clients_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clientName"> Name of the client. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clientName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientName"/> is null. </exception>
+        public virtual NullableResponse<EventGridNamespaceClientResource> GetIfExists(string clientName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clientName, nameof(clientName));
+
+            using var scope = _eventGridNamespaceClientClientsClientDiagnostics.CreateScope("EventGridNamespaceClientCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _eventGridNamespaceClientClientsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<EventGridNamespaceClientResource>(response.GetRawResponse());
+                return Response.FromValue(new EventGridNamespaceClientResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementEmailTemplate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementEmailTemplateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementEmailTemplateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementEmailTemplate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementEmailTemplateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementEmailTemplateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementEmailTemplate method.
     /// </summary>
     public partial class ApiManagementEmailTemplateResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementEmailTemplateResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="templateName"> The templateName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, TemplateName templateName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/templates/{templateName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly EmailTemplateRestOperations _apiManagementEmailTemplateEmailTemplateRestClient;
         private readonly ApiManagementEmailTemplateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/templates";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementEmailTemplateResource"/> class for mocking. </summary>
         protected ApiManagementEmailTemplateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementEmailTemplateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementEmailTemplateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementEmailTemplateResource(ArmClient client, ApiManagementEmailTemplateData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/templates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

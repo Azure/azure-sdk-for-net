@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> The SavingsPlanUpdateValidateContent. </summary>
     public partial class SavingsPlanUpdateValidateContent
     {
-        /// <summary> Initializes a new instance of SavingsPlanUpdateValidateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanUpdateValidateContent"/>. </summary>
         public SavingsPlanUpdateValidateContent()
         {
             Benefits = new ChangeTrackingList<BillingBenefitsSavingsPlanPatchProperties>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanUpdateValidateContent"/>. </summary>
+        /// <param name="benefits"></param>
+        internal SavingsPlanUpdateValidateContent(IList<BillingBenefitsSavingsPlanPatchProperties> benefits)
+        {
+            Benefits = benefits;
         }
 
         /// <summary> Gets the benefits. </summary>

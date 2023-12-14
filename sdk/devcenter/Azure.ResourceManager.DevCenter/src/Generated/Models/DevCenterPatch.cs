@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter.Models
@@ -12,9 +14,18 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> The devcenter resource for partial updates. Properties not provided in the update request will not be changed. </summary>
     public partial class DevCenterPatch : DevCenterTrackedResourceUpdate
     {
-        /// <summary> Initializes a new instance of DevCenterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterPatch"/>. </summary>
         public DevCenterPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Managed identity properties. </param>
+        internal DevCenterPatch(IDictionary<string, string> tags, AzureLocation? location, ManagedServiceIdentity identity) : base(tags, location)
+        {
+            Identity = identity;
         }
 
         /// <summary> Managed identity properties. </summary>

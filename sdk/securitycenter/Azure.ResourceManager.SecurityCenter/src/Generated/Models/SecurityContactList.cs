@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of security contacts response. </summary>
     internal partial class SecurityContactList
     {
-        /// <summary> Initializes a new instance of SecurityContactList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityContactList"/>. </summary>
         internal SecurityContactList()
         {
             Value = new ChangeTrackingList<SecurityContactData>();
         }
 
-        /// <summary> Initializes a new instance of SecurityContactList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityContactList"/>. </summary>
         /// <param name="value"> List of security contacts. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal SecurityContactList(IReadOnlyList<SecurityContactData> value, string nextLink)

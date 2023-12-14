@@ -16,9 +16,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Shared Gallery Images operation response. </summary>
     internal partial class SharedGalleryImageList
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="SharedGalleryImageList"/>. </summary>
         /// <param name="value"> A list of shared gallery images. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>

@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
     public partial class BootDiagnostics
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="BootDiagnostics"/>. </summary>
         public BootDiagnostics()
         {

@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the storage profile. </summary>
     public partial class RestorePointSourceVmStorageProfile
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="RestorePointSourceVmStorageProfile"/>. </summary>
         public RestorePointSourceVmStorageProfile()
         {

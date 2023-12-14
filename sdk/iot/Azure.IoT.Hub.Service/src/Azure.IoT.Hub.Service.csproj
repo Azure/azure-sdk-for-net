@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Azure IoT Hub Service Client SDK</AssemblyTitle>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -9,6 +9,7 @@
   <!-- Nuget properties -->
   <PropertyGroup>
     <PackageTags>IoT;PnP;$(PackageCommonTags)</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <Description>SDK for the Azure IoT Hub service</Description>
     <Version>1.0.0-preview.1</Version>
   </PropertyGroup>

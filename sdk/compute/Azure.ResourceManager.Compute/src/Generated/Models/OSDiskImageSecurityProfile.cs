@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Contains security profile for an OS disk image. </summary>
     public partial class OSDiskImageSecurityProfile
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="OSDiskImageSecurityProfile"/>. </summary>
         public OSDiskImageSecurityProfile()
         {

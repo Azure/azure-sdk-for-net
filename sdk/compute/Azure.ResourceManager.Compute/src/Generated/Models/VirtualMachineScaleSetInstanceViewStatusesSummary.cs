@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Instance view statuses summary for virtual machines of a virtual machine scale set. </summary>
     internal partial class VirtualMachineScaleSetInstanceViewStatusesSummary
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetInstanceViewStatusesSummary"/>. </summary>
         internal VirtualMachineScaleSetInstanceViewStatusesSummary()
         {

@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a reference to Key Vault Key. </summary>
     public partial class KeyVaultKeyReference
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="KeyVaultKeyReference"/>. </summary>
         /// <param name="keyUri"> The URL referencing a key encryption key in Key Vault. </param>
         /// <param name="sourceVault"> The relative URL of the Key Vault containing the key. </param>

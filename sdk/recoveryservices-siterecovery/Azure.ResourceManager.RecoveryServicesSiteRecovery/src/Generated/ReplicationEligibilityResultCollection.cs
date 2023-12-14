@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ReplicationEligibilityResultResource" /> and their operations.
-    /// Each <see cref="ReplicationEligibilityResultResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ReplicationEligibilityResultCollection" /> instance call the GetReplicationEligibilityResults method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ReplicationEligibilityResultResource"/> and their operations.
+    /// Each <see cref="ReplicationEligibilityResultResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ReplicationEligibilityResultCollection"/> instance call the GetReplicationEligibilityResults method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ReplicationEligibilityResultCollection : ArmCollection, IEnumerable<ReplicationEligibilityResultResource>, IAsyncEnumerable<ReplicationEligibilityResultResource>
     {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReplicationEligibilityResultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ReplicationEligibilityResultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReplicationEligibilityResultResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationEligibilityResultRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _virtualMachineName);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReplicationEligibilityResultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ReplicationEligibilityResultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReplicationEligibilityResultResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationEligibilityResultRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _virtualMachineName);
@@ -217,6 +217,70 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 var response = _replicationEligibilityResultRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _virtualMachineName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/providers/Microsoft.RecoveryServices/replicationEligibilityResults/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationEligibilityResults_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<ReplicationEligibilityResultResource>> GetIfExistsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _replicationEligibilityResultClientDiagnostics.CreateScope("ReplicationEligibilityResultCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _replicationEligibilityResultRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _virtualMachineName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ReplicationEligibilityResultResource>(response.GetRawResponse());
+                return Response.FromValue(new ReplicationEligibilityResultResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/providers/Microsoft.RecoveryServices/replicationEligibilityResults/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationEligibilityResults_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<ReplicationEligibilityResultResource> GetIfExists(CancellationToken cancellationToken = default)
+        {
+            using var scope = _replicationEligibilityResultClientDiagnostics.CreateScope("ReplicationEligibilityResultCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _replicationEligibilityResultRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _virtualMachineName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ReplicationEligibilityResultResource>(response.GetRawResponse());
+                return Response.FromValue(new ReplicationEligibilityResultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

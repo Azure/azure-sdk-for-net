@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Usages operation response. </summary>
     internal partial class ListUsagesResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ListUsagesResult"/>. </summary>
         /// <param name="value"> The list of compute resource usages. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>

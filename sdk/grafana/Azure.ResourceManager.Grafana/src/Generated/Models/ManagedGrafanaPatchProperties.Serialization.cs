@@ -40,6 +40,32 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WritePropertyName("grafanaIntegrations"u8);
                 writer.WriteObjectValue(GrafanaIntegrations);
             }
+            if (Optional.IsDefined(EnterpriseConfigurations))
+            {
+                writer.WritePropertyName("enterpriseConfigurations"u8);
+                writer.WriteObjectValue(EnterpriseConfigurations);
+            }
+            if (Optional.IsDefined(GrafanaConfigurations))
+            {
+                writer.WritePropertyName("grafanaConfigurations"u8);
+                writer.WriteObjectValue(GrafanaConfigurations);
+            }
+            if (Optional.IsCollectionDefined(GrafanaPlugins))
+            {
+                writer.WritePropertyName("grafanaPlugins"u8);
+                writer.WriteStartObject();
+                foreach (var item in GrafanaPlugins)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(GrafanaMajorVersion))
+            {
+                writer.WritePropertyName("grafanaMajorVersion"u8);
+                writer.WriteStringValue(GrafanaMajorVersion);
+            }
             writer.WriteEndObject();
         }
     }

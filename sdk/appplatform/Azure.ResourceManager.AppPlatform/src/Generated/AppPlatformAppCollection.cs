@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppPlatformAppResource" /> and their operations.
-    /// Each <see cref="AppPlatformAppResource" /> in the collection will belong to the same instance of <see cref="AppPlatformServiceResource" />.
-    /// To get an <see cref="AppPlatformAppCollection" /> instance call the GetAppPlatformApps method from an instance of <see cref="AppPlatformServiceResource" />.
+    /// A class representing a collection of <see cref="AppPlatformAppResource"/> and their operations.
+    /// Each <see cref="AppPlatformAppResource"/> in the collection will belong to the same instance of <see cref="AppPlatformServiceResource"/>.
+    /// To get an <see cref="AppPlatformAppCollection"/> instance call the GetAppPlatformApps method from an instance of <see cref="AppPlatformServiceResource"/>.
     /// </summary>
     public partial class AppPlatformAppCollection : ArmCollection, IEnumerable<AppPlatformAppResource>, IAsyncEnumerable<AppPlatformAppResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppPlatformAppResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppPlatformAppResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformAppResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformAppAppsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppPlatformAppResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppPlatformAppResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformAppResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformAppAppsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -319,6 +319,82 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 var response = _appPlatformAppAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, syncStatus, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="appName"> The name of the App resource. </param>
+        /// <param name="syncStatus"> Indicates whether sync status. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AppPlatformAppResource>> GetIfExistsAsync(string appName, string syncStatus = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
+
+            using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _appPlatformAppAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, syncStatus, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformAppResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformAppResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="appName"> The name of the App resource. </param>
+        /// <param name="syncStatus"> Indicates whether sync status. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
+        public virtual NullableResponse<AppPlatformAppResource> GetIfExists(string appName, string syncStatus = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(appName, nameof(appName));
+
+            using var scope = _appPlatformAppAppsClientDiagnostics.CreateScope("AppPlatformAppCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _appPlatformAppAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, syncStatus, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformAppResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformAppResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -2,32 +2,92 @@
 <doc>
   <members>
     <member name="GetMetadataRolesAsync(RequestContext)">
-<example>
-This sample shows how to call GetMetadataRolesAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetMetadataRolesAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewMetadataRolesClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewMetadataRolesClient client = new PurviewMetadataRolesClient(endpoint, credential);
 
-await foreach (var item in client.GetMetadataRolesAsync(new RequestContext()))
+await foreach (BinaryData item in client.GetMetadataRolesAsync(null))
 {
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
 }
 ]]></code>
-</example>
+This sample shows how to call GetMetadataRolesAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewMetadataRolesClient client = new PurviewMetadataRolesClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetMetadataRolesAsync(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("roleType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("friendlyName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("version").ToString());
+}
+]]></code></example>
     </member>
     <member name="GetMetadataRoles(RequestContext)">
-<example>
-This sample shows how to call GetMetadataRoles with required parameters and parse the result.
+      <example>
+This sample shows how to call GetMetadataRoles and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewMetadataRolesClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewMetadataRolesClient client = new PurviewMetadataRolesClient(endpoint, credential);
 
-foreach (var item in client.GetMetadataRoles(new RequestContext()))
+foreach (BinaryData item in client.GetMetadataRoles(null))
 {
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
 }
 ]]></code>
-</example>
+This sample shows how to call GetMetadataRoles with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+PurviewMetadataRolesClient client = new PurviewMetadataRolesClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetMetadataRoles(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("provisioningState").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("roleType").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("friendlyName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("cnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeName").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludes").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueIncludedIn")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludes").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("dnfCondition")[0][0].GetProperty("attributeValueExcludedIn")[0].ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("version").ToString());
+}
+]]></code></example>
     </member>
   </members>
 </doc>

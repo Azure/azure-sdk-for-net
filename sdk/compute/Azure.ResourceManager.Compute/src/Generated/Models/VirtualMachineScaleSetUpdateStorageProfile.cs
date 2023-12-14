@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machine scale set storage profile. </summary>
     public partial class VirtualMachineScaleSetUpdateStorageProfile
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateStorageProfile"/>. </summary>
         public VirtualMachineScaleSetUpdateStorageProfile()
         {
@@ -28,14 +25,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="osDisk"> The OS disk. </param>
         /// <param name="dataDisks"> The data disks. </param>
         /// <param name="diskControllerType"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetUpdateStorageProfile(ImageReference imageReference, VirtualMachineScaleSetUpdateOSDisk osDisk, IList<VirtualMachineScaleSetDataDisk> dataDisks, string diskControllerType, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineScaleSetUpdateStorageProfile(ImageReference imageReference, VirtualMachineScaleSetUpdateOSDisk osDisk, IList<VirtualMachineScaleSetDataDisk> dataDisks, string diskControllerType)
         {
             ImageReference = imageReference;
             OSDisk = osDisk;
             DataDisks = dataDisks;
             DiskControllerType = diskControllerType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The image reference. </summary>

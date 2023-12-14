@@ -10,12 +10,12 @@ namespace Azure.Communication.CallingServer
     /// <summary> The CallTransferFailedEvent. </summary>
     public partial class CallTransferFailed
     {
-        /// <summary> Initializes a new instance of CallTransferFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallTransferFailed"/>. </summary>
         internal CallTransferFailed()
         {
         }
 
-        /// <summary> Initializes a new instance of CallTransferFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallTransferFailed"/>. </summary>
         /// <param name="eventSource"></param>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"></param>

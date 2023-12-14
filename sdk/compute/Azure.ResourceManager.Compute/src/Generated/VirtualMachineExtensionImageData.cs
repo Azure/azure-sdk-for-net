@@ -18,9 +18,6 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class VirtualMachineExtensionImageData : TrackedResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionImageData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VirtualMachineExtensionImageData(AzureLocation location) : base(location)

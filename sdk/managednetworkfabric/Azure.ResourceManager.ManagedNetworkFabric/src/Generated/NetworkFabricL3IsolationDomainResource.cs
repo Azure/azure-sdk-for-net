@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A Class representing a NetworkFabricL3IsolationDomain along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkFabricL3IsolationDomainResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkFabricL3IsolationDomainResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkFabricL3IsolationDomain method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkFabricL3IsolationDomainResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkFabricL3IsolationDomainResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkFabricL3IsolationDomain method.
     /// </summary>
     public partial class NetworkFabricL3IsolationDomainResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkFabricL3IsolationDomainResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="l3IsolationDomainName"> The l3IsolationDomainName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string l3IsolationDomainName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private readonly L3IsolationDomainsRestOperations _networkFabricL3IsolationDomainL3IsolationDomainsRestClient;
         private readonly NetworkFabricL3IsolationDomainData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/l3IsolationDomains";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkFabricL3IsolationDomainResource"/> class for mocking. </summary>
         protected NetworkFabricL3IsolationDomainResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkFabricL3IsolationDomainResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkFabricL3IsolationDomainResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkFabricL3IsolationDomainResource(ArmClient client, NetworkFabricL3IsolationDomainData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/l3IsolationDomains";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkFabricInternalNetworkResources and their operations over a NetworkFabricInternalNetworkResource. </returns>
         public virtual NetworkFabricInternalNetworkCollection GetNetworkFabricInternalNetworks()
         {
-            return GetCachedClient(Client => new NetworkFabricInternalNetworkCollection(Client, Id));
+            return GetCachedClient(client => new NetworkFabricInternalNetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="internalNetworkName"> Name of the Internal Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="internalNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFabricInternalNetworkResource>> GetNetworkFabricInternalNetworkAsync(string internalNetworkName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="internalNetworkName"> Name of the Internal Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="internalNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkFabricInternalNetworkResource> GetNetworkFabricInternalNetwork(string internalNetworkName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +149,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkFabricExternalNetworkResources and their operations over a NetworkFabricExternalNetworkResource. </returns>
         public virtual NetworkFabricExternalNetworkCollection GetNetworkFabricExternalNetworks()
         {
-            return GetCachedClient(Client => new NetworkFabricExternalNetworkCollection(Client, Id));
+            return GetCachedClient(client => new NetworkFabricExternalNetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +167,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="externalNetworkName"> Name of the External Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="externalNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFabricExternalNetworkResource>> GetNetworkFabricExternalNetworkAsync(string externalNetworkName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +190,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="externalNetworkName"> Name of the External Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="externalNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkFabricExternalNetworkResource> GetNetworkFabricExternalNetwork(string externalNetworkName, CancellationToken cancellationToken = default)
         {

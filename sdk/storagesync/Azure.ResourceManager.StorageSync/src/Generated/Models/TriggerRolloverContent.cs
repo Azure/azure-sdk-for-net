@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Trigger Rollover Request. </summary>
     public partial class TriggerRolloverContent
     {
-        /// <summary> Initializes a new instance of TriggerRolloverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerRolloverContent"/>. </summary>
         public TriggerRolloverContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TriggerRolloverContent"/>. </summary>
+        /// <param name="serverCertificate"> Certificate Data. </param>
+        internal TriggerRolloverContent(BinaryData serverCertificate)
+        {
+            ServerCertificate = serverCertificate;
         }
 
         /// <summary>
@@ -23,7 +30,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

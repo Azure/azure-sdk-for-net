@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The CassandraClusterPublicStatusDataCentersItem. </summary>
     public partial class CassandraClusterPublicStatusDataCentersItem
     {
-        /// <summary> Initializes a new instance of CassandraClusterPublicStatusDataCentersItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterPublicStatusDataCentersItem"/>. </summary>
         internal CassandraClusterPublicStatusDataCentersItem()
         {
             SeedNodes = new ChangeTrackingList<string>();
             Nodes = new ChangeTrackingList<CassandraClusterDataCenterNodeItem>();
         }
 
-        /// <summary> Initializes a new instance of CassandraClusterPublicStatusDataCentersItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterPublicStatusDataCentersItem"/>. </summary>
         /// <param name="name"> The name of this Datacenter. </param>
         /// <param name="seedNodes"> A list of all seed nodes in the cluster, managed and unmanaged. </param>
         /// <param name="nodes"></param>

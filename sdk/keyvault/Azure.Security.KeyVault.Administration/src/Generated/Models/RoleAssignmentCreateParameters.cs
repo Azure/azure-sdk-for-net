@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Administration.Models
     /// <summary> Role assignment create parameters. </summary>
     internal partial class RoleAssignmentCreateParameters
     {
-        /// <summary> Initializes a new instance of RoleAssignmentCreateParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentCreateParameters"/>. </summary>
         /// <param name="properties"> Role assignment properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public RoleAssignmentCreateParameters(KeyVaultRoleAssignmentPropertiesInternal properties)

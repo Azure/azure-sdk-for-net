@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The UnknownProtectionPolicy. </summary>
     internal partial class UnknownProtectionPolicy : BackupGenericProtectionPolicy
     {
-        /// <summary> Initializes a new instance of UnknownProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownProtectionPolicy"/>. </summary>
         /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
         /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>

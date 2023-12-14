@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Container network interface child resource. </summary>
     public partial class ContainerNetworkInterface : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ContainerNetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterface"/>. </summary>
         public ContainerNetworkInterface()
         {
             IPConfigurations = new ChangeTrackingList<ContainerNetworkInterfaceIPConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of ContainerNetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterface"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

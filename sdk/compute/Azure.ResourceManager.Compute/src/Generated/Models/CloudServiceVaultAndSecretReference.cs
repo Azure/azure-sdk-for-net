@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Protected settings for the extension, referenced using KeyVault which are encrypted before sent to the role instance. </summary>
     public partial class CloudServiceVaultAndSecretReference
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="CloudServiceVaultAndSecretReference"/>. </summary>
         public CloudServiceVaultAndSecretReference()
         {

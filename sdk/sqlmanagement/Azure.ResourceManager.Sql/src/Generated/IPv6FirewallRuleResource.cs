@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing an IPv6FirewallRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IPv6FirewallRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIPv6FirewallRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetIPv6FirewallRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IPv6FirewallRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIPv6FirewallRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetIPv6FirewallRule method.
     /// </summary>
     public partial class IPv6FirewallRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="IPv6FirewallRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="firewallRuleName"> The firewallRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/ipv6FirewallRules/{firewallRuleName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Sql
         private readonly IPv6FirewallRulesRestOperations _iPv6FirewallRuleRestClient;
         private readonly IPv6FirewallRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/ipv6FirewallRules";
+
         /// <summary> Initializes a new instance of the <see cref="IPv6FirewallRuleResource"/> class for mocking. </summary>
         protected IPv6FirewallRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IPv6FirewallRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IPv6FirewallRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IPv6FirewallRuleResource(ArmClient client, IPv6FirewallRuleData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/ipv6FirewallRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

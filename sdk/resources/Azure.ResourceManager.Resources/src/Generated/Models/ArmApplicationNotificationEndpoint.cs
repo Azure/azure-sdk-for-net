@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Managed application notification endpoint. </summary>
     public partial class ArmApplicationNotificationEndpoint
     {
-        /// <summary> Initializes a new instance of ArmApplicationNotificationEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationNotificationEndpoint"/>. </summary>
         /// <param name="uri"> The managed application notification endpoint uri. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public ArmApplicationNotificationEndpoint(Uri uri)

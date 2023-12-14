@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The Network To Network Interconnect resource patch definition. </summary>
     public partial class NetworkToNetworkInterconnectPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of NetworkToNetworkInterconnectPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectPatch"/>. </summary>
         public NetworkToNetworkInterconnectPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkToNetworkInterconnectPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

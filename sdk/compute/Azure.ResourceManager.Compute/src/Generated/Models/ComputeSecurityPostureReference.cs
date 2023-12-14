@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies the security posture to be used for all virtual machines in the scale set. Minimum api-version: 2023-03-01. </summary>
     public partial class ComputeSecurityPostureReference
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ComputeSecurityPostureReference"/>. </summary>
         public ComputeSecurityPostureReference()
         {

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> Looking glass output model. </summary>
     public partial class LookingGlassOutput
     {
-        /// <summary> Initializes a new instance of LookingGlassOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="LookingGlassOutput"/>. </summary>
         internal LookingGlassOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of LookingGlassOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="LookingGlassOutput"/>. </summary>
         /// <param name="command"> Invoked command. </param>
         /// <param name="output"> Output of the command. </param>
         internal LookingGlassOutput(LookingGlassCommand? command, string output)

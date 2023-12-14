@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The ResourceTypeAliasPathMetadata. </summary>
     public partial class ResourceTypeAliasPathMetadata
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ResourceTypeAliasPathMetadata"/>. </summary>
         internal ResourceTypeAliasPathMetadata()
         {

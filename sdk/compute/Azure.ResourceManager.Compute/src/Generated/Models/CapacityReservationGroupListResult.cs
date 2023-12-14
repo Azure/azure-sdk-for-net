@@ -16,9 +16,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List capacity reservation group with resource group response. </summary>
     internal partial class CapacityReservationGroupListResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupListResult"/>. </summary>
         /// <param name="value"> The list of capacity reservation groups. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>

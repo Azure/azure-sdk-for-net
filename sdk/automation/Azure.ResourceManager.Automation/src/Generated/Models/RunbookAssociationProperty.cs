@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The runbook property associated with the entity. </summary>
     public partial class RunbookAssociationProperty
     {
-        /// <summary> Initializes a new instance of RunbookAssociationProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunbookAssociationProperty"/>. </summary>
         public RunbookAssociationProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of RunbookAssociationProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunbookAssociationProperty"/>. </summary>
         /// <param name="name"> Gets or sets the name of the runbook. </param>
         internal RunbookAssociationProperty(string name)
         {

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Represents a token restriction. Provided token must match these requirements for successful license or key delivery. </summary>
     public partial class ContentKeyPolicyTokenRestriction : ContentKeyPolicyRestriction
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyTokenRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyTokenRestriction"/>. </summary>
         /// <param name="issuer"> The token issuer. </param>
         /// <param name="audience"> The audience for the token. </param>
         /// <param name="primaryVerificationKey">
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.ContentKeyPolicyTokenRestriction";
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyTokenRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyTokenRestriction"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="issuer"> The token issuer. </param>
         /// <param name="audience"> The audience for the token. </param>

@@ -70,7 +70,8 @@ namespace Azure.Storage.Queues
     }
     public partial class QueueClientOptions : Azure.Core.ClientOptions
     {
-        public QueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2023_08_03) { }
+        public QueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2024_02_04) { }
+        public Azure.Storage.Queues.Models.QueueAudience? Audience { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
         public Azure.Storage.Queues.QueueMessageEncoding MessageEncoding { get { throw null; } set { } }
@@ -97,6 +98,8 @@ namespace Azure.Storage.Queues
             V2023_01_03 = 17,
             V2023_05_03 = 18,
             V2023_08_03 = 19,
+            V2023_11_03 = 20,
+            V2024_02_04 = 21,
         }
     }
     public partial class QueueMessageDecodingFailedEventArgs : Azure.SyncAsyncEventArgs
@@ -183,6 +186,24 @@ namespace Azure.Storage.Queues.Models
         public Azure.Storage.Queues.Models.QueueRetentionPolicy RetentionPolicy { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
         public bool Write { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct QueueAudience : System.IEquatable<Azure.Storage.Queues.Models.QueueAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public QueueAudience(string value) { throw null; }
+        public static Azure.Storage.Queues.Models.QueueAudience PublicAudience { get { throw null; } }
+        public static Azure.Storage.Queues.Models.QueueAudience CreateQueueServiceAccountAudience(string storageAccountName) { throw null; }
+        public bool Equals(Azure.Storage.Queues.Models.QueueAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Storage.Queues.Models.QueueAudience left, Azure.Storage.Queues.Models.QueueAudience right) { throw null; }
+        public static implicit operator Azure.Storage.Queues.Models.QueueAudience (string value) { throw null; }
+        public static bool operator !=(Azure.Storage.Queues.Models.QueueAudience left, Azure.Storage.Queues.Models.QueueAudience right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class QueueCorsRule
     {
@@ -388,7 +409,7 @@ namespace Azure.Storage.Queues.Specialized
     }
     public partial class SpecializedQueueClientOptions : Azure.Storage.Queues.QueueClientOptions
     {
-        public SpecializedQueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2023_08_03) : base (default(Azure.Storage.Queues.QueueClientOptions.ServiceVersion)) { }
+        public SpecializedQueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2024_02_04) : base (default(Azure.Storage.Queues.QueueClientOptions.ServiceVersion)) { }
         public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
     }
     public static partial class SpecializedQueueExtensions

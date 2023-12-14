@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Specifies a configuration for Widevine licenses. </summary>
     public partial class ContentKeyPolicyWidevineConfiguration : ContentKeyPolicyConfiguration
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyWidevineConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyWidevineConfiguration"/>. </summary>
         /// <param name="widevineTemplate"> The Widevine template. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="widevineTemplate"/> is null. </exception>
         public ContentKeyPolicyWidevineConfiguration(string widevineTemplate)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.ContentKeyPolicyWidevineConfiguration";
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyWidevineConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyWidevineConfiguration"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="widevineTemplate"> The Widevine template. </param>
         internal ContentKeyPolicyWidevineConfiguration(string odataType, string widevineTemplate) : base(odataType)

@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkDnsZoneData : ResourceData
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkDnsZoneData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDnsZoneData"/>. </summary>
         public WorkloadNetworkDnsZoneData()
         {
             Domain = new ChangeTrackingList<string>();
             DnsServerIPs = new ChangeTrackingList<IPAddress>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkDnsZoneData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDnsZoneData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

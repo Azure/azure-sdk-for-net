@@ -50,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Config
             _collectorFactory = collectorFactory;
             _httpRequestProcessor = httpRequestProcessor;
             _loggerFactory = loggerFactory;
-            _diagnosticScopeFactory = new DiagnosticScopeFactory(DiagnosticScopeNamespace, ResourceProviderNamespace, true, false);
+            _diagnosticScopeFactory = new DiagnosticScopeFactory(DiagnosticScopeNamespace, ResourceProviderNamespace, true, true, true);
         }
 
         public void Initialize(ExtensionConfigContext context)

@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List restore point collection operation response. </summary>
     internal partial class RestorePointGroupListResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="RestorePointGroupListResult"/>. </summary>
         internal RestorePointGroupListResult()
         {

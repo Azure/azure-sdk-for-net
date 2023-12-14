@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.Storage
 {
     /// <summary>
     /// A Class representing a FileService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FileServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFileServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource" /> using the GetFileService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FileServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFileServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource"/> using the GetFileService method.
     /// </summary>
     public partial class FileServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FileServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default";
@@ -35,12 +38,15 @@ namespace Azure.ResourceManager.Storage
         private readonly FileServicesRestOperations _fileServiceRestClient;
         private readonly FileServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/fileServices";
+
         /// <summary> Initializes a new instance of the <see cref="FileServiceResource"/> class for mocking. </summary>
         protected FileServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FileServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FileServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FileServiceResource(ArmClient client, FileServiceData data) : this(client, data.Id)
@@ -61,9 +67,6 @@ namespace Azure.ResourceManager.Storage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/fileServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +93,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An object representing collection of FileShareResources and their operations over a FileShareResource. </returns>
         public virtual FileShareCollection GetFileShares()
         {
-            return GetCachedClient(Client => new FileShareCollection(Client, Id));
+            return GetCachedClient(client => new FileShareCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +113,8 @@ namespace Azure.ResourceManager.Storage
         /// <param name="expand"> Optional, used to expand the properties within share's properties. Valid values are: stats. Should be passed as a string with delimiter ','. </param>
         /// <param name="xMsSnapshot"> Optional, used to retrieve properties of a snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FileShareResource>> GetFileShareAsync(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {
@@ -135,8 +138,8 @@ namespace Azure.ResourceManager.Storage
         /// <param name="expand"> Optional, used to expand the properties within share's properties. Valid values are: stats. Should be passed as a string with delimiter ','. </param>
         /// <param name="xMsSnapshot"> Optional, used to retrieve properties of a snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FileShareResource> GetFileShare(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
         {

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Orbital
 {
     /// <summary>
-    /// A class representing a collection of <see cref="OrbitalContactProfileResource" /> and their operations.
-    /// Each <see cref="OrbitalContactProfileResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="OrbitalContactProfileCollection" /> instance call the GetOrbitalContactProfiles method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="OrbitalContactProfileResource"/> and their operations.
+    /// Each <see cref="OrbitalContactProfileResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="OrbitalContactProfileCollection"/> instance call the GetOrbitalContactProfiles method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class OrbitalContactProfileCollection : ArmCollection, IEnumerable<OrbitalContactProfileResource>, IAsyncEnumerable<OrbitalContactProfileResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Orbital
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OrbitalContactProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OrbitalContactProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OrbitalContactProfileResource> GetAllAsync(string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _orbitalContactProfileContactProfilesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Orbital
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OrbitalContactProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OrbitalContactProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OrbitalContactProfileResource> GetAll(string skiptoken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _orbitalContactProfileContactProfilesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
@@ -318,6 +318,80 @@ namespace Azure.ResourceManager.Orbital
             {
                 var response = _orbitalContactProfileContactProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, contactProfileName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/contactProfiles/{contactProfileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContactProfiles_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contactProfileName"> Contact Profile name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contactProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contactProfileName"/> is null. </exception>
+        public virtual async Task<NullableResponse<OrbitalContactProfileResource>> GetIfExistsAsync(string contactProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contactProfileName, nameof(contactProfileName));
+
+            using var scope = _orbitalContactProfileContactProfilesClientDiagnostics.CreateScope("OrbitalContactProfileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _orbitalContactProfileContactProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, contactProfileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<OrbitalContactProfileResource>(response.GetRawResponse());
+                return Response.FromValue(new OrbitalContactProfileResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/contactProfiles/{contactProfileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContactProfiles_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="contactProfileName"> Contact Profile name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contactProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contactProfileName"/> is null. </exception>
+        public virtual NullableResponse<OrbitalContactProfileResource> GetIfExists(string contactProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(contactProfileName, nameof(contactProfileName));
+
+            using var scope = _orbitalContactProfileContactProfilesClientDiagnostics.CreateScope("OrbitalContactProfileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _orbitalContactProfileContactProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, contactProfileName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<OrbitalContactProfileResource>(response.GetRawResponse());
+                return Response.FromValue(new OrbitalContactProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

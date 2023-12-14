@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MobileNetworkSliceResource" /> and their operations.
-    /// Each <see cref="MobileNetworkSliceResource" /> in the collection will belong to the same instance of <see cref="MobileNetworkResource" />.
-    /// To get a <see cref="MobileNetworkSliceCollection" /> instance call the GetMobileNetworkSlices method from an instance of <see cref="MobileNetworkResource" />.
+    /// A class representing a collection of <see cref="MobileNetworkSliceResource"/> and their operations.
+    /// Each <see cref="MobileNetworkSliceResource"/> in the collection will belong to the same instance of <see cref="MobileNetworkResource"/>.
+    /// To get a <see cref="MobileNetworkSliceCollection"/> instance call the GetMobileNetworkSlices method from an instance of <see cref="MobileNetworkResource"/>.
     /// </summary>
     public partial class MobileNetworkSliceCollection : ArmCollection, IEnumerable<MobileNetworkSliceResource>, IAsyncEnumerable<MobileNetworkSliceResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MobileNetworkSliceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MobileNetworkSliceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MobileNetworkSliceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSliceSlicesRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MobileNetworkSliceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MobileNetworkSliceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MobileNetworkSliceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSliceSlicesRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 var response = _mobileNetworkSliceSlicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sliceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/slices/{sliceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Slices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sliceName"> The name of the network slice. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sliceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MobileNetworkSliceResource>> GetIfExistsAsync(string sliceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sliceName, nameof(sliceName));
+
+            using var scope = _mobileNetworkSliceSlicesClientDiagnostics.CreateScope("MobileNetworkSliceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mobileNetworkSliceSlicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sliceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MobileNetworkSliceResource>(response.GetRawResponse());
+                return Response.FromValue(new MobileNetworkSliceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/slices/{sliceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Slices_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sliceName"> The name of the network slice. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sliceName"/> is null. </exception>
+        public virtual NullableResponse<MobileNetworkSliceResource> GetIfExists(string sliceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sliceName, nameof(sliceName));
+
+            using var scope = _mobileNetworkSliceSlicesClientDiagnostics.CreateScope("MobileNetworkSliceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mobileNetworkSliceSlicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sliceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MobileNetworkSliceResource>(response.GetRawResponse());
+                return Response.FromValue(new MobileNetworkSliceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

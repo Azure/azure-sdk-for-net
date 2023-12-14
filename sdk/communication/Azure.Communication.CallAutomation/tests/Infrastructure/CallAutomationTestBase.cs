@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                                             "}}" +
                                         "]," +
                                         "\"sourceDisplayName\": \"displayName\"," +
-                                        "\"sourceIdentity\":{{" +
+                                        "\"source\":{{" +
                                                   "\"rawId\":\"sourceId\"," +
                                                   "\"kind\":\"communicationUser\"," +
                                                   "\"communicationUser\":{{\"id\":\"sourceId\"}}" +
@@ -31,7 +31,8 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                                         "\"callConnectionState\": \"connecting\"," +
                                         "\"subject\": \"dummySubject\"," +
                                         "\"callbackUri\": \"https://bot.contoso.com/callback\"," +
-                                        "\"mediaSubscriptionId\": {0}" +
+                                        "\"mediaSubscriptionId\": {0}," +
+                                        "\"dataSubscriptionId\": {1}" +
                                         "}}";
         protected const string SourceId = "sourceId";
         protected const string TargetId = "targetId";
@@ -43,8 +44,10 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         private const string NoneMediaSubscriptionId = "null";
         private const string MediaSubscriptionId = "\"mediaSubscriptionId\"";
-        protected string CreateOrAnswerCallOrGetCallConnectionPayload = string.Format(DummyPayload, NoneMediaSubscriptionId);
-        protected string CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload = string.Format(DummyPayload, MediaSubscriptionId);
+        private const string NoneDataSubscriptionId = "null";
+        private const string DataSubscriptionId = "\"dataSubscriptionId\"";
+        protected string CreateOrAnswerCallOrGetCallConnectionPayload = string.Format(DummyPayload, NoneMediaSubscriptionId, NoneDataSubscriptionId);
+        protected string CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionAndTranscriptionPayload = string.Format(DummyPayload, MediaSubscriptionId, DataSubscriptionId);
 
         internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null)
         {

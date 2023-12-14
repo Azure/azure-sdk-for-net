@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Disk details for E2A provider. </summary>
     public partial class SiteRecoveryVmDiskDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryVmDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVmDiskDetails"/>. </summary>
         internal SiteRecoveryVmDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryVmDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVmDiskDetails"/>. </summary>
         /// <param name="vhdType"> VHD type. </param>
         /// <param name="vhdId"> The VHD id. </param>
         /// <param name="diskId"> The disk resource id. </param>

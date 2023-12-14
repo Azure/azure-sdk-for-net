@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.MySql
     /// </summary>
     public partial class MySqlConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlConfigurationData"/>. </summary>
         public MySqlConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

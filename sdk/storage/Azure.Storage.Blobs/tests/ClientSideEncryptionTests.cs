@@ -37,6 +37,8 @@ namespace Azure.Storage.Blobs.Test
         public ClientSideEncryptionTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
+            // TODO: enable after new KeyValue is released (after Dec 2023)
+            TestDiagnostics = false;
         }
 
         private static IEnumerable<ClientSideEncryptionVersion> GetEncryptionVersions()

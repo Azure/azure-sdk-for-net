@@ -13,7 +13,7 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> A clinical document related to a patient. Document here is in the wide sense - not just a text document (note). </summary>
     public partial class PatientDocument
     {
-        /// <summary> Initializes a new instance of PatientDocument. </summary>
+        /// <summary> Initializes a new instance of <see cref="PatientDocument"/>. </summary>
         /// <param name="type"> The type of the patient document, such as 'note' (text document) or 'fhirBundle' (FHIR JSON document). </param>
         /// <param name="id"> A given identifier for the document. Has to be unique across all documents for a single patient. </param>
         /// <param name="content"> The content of the patient document. </param>
@@ -28,7 +28,7 @@ namespace Azure.Health.Insights.CancerProfiling
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of PatientDocument. </summary>
+        /// <summary> Initializes a new instance of <see cref="PatientDocument"/>. </summary>
         /// <param name="type"> The type of the patient document, such as 'note' (text document) or 'fhirBundle' (FHIR JSON document). </param>
         /// <param name="clinicalType"> The type of the clinical document. </param>
         /// <param name="id"> A given identifier for the document. Has to be unique across all documents for a single patient. </param>

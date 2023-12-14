@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Api input base class for LogAnalytics Api. </summary>
     public partial class LogAnalyticsInputBase
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="LogAnalyticsInputBase"/>. </summary>
         /// <param name="blobContainerSasUri"> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </param>
         /// <param name="fromTime"> From time of the query. </param>
@@ -40,8 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="groupByResourceName"> Group query result by Resource Name. </param>
         /// <param name="groupByClientApplicationId"> Group query result by Client Application ID. </param>
         /// <param name="groupByUserAgent"> Group query result by User Agent. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LogAnalyticsInputBase(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime, bool? groupByThrottlePolicy, bool? groupByOperationName, bool? groupByResourceName, bool? groupByClientApplicationId, bool? groupByUserAgent, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LogAnalyticsInputBase(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime, bool? groupByThrottlePolicy, bool? groupByOperationName, bool? groupByResourceName, bool? groupByClientApplicationId, bool? groupByUserAgent)
         {
             BlobContainerSasUri = blobContainerSasUri;
             FromTime = fromTime;
@@ -51,12 +47,6 @@ namespace Azure.ResourceManager.Compute.Models
             GroupByResourceName = groupByResourceName;
             GroupByClientApplicationId = groupByClientApplicationId;
             GroupByUserAgent = groupByUserAgent;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LogAnalyticsInputBase"/> for deserialization. </summary>
-        internal LogAnalyticsInputBase()
-        {
         }
 
         /// <summary> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </summary>

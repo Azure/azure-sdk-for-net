@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a RegulatoryComplianceStandard along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RegulatoryComplianceStandardResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRegulatoryComplianceStandardResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetRegulatoryComplianceStandard method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RegulatoryComplianceStandardResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRegulatoryComplianceStandardResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetRegulatoryComplianceStandard method.
     /// </summary>
     public partial class RegulatoryComplianceStandardResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RegulatoryComplianceStandardResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="regulatoryComplianceStandardName"> The regulatoryComplianceStandardName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string regulatoryComplianceStandardName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}";
@@ -36,12 +38,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly RegulatoryComplianceStandardsRestOperations _regulatoryComplianceStandardRestClient;
         private readonly RegulatoryComplianceStandardData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/regulatoryComplianceStandards";
+
         /// <summary> Initializes a new instance of the <see cref="RegulatoryComplianceStandardResource"/> class for mocking. </summary>
         protected RegulatoryComplianceStandardResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RegulatoryComplianceStandardResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RegulatoryComplianceStandardResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RegulatoryComplianceStandardResource(ArmClient client, RegulatoryComplianceStandardData data) : this(client, data.Id)
@@ -62,9 +67,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/regulatoryComplianceStandards";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -91,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of RegulatoryComplianceControlResources and their operations over a RegulatoryComplianceControlResource. </returns>
         public virtual RegulatoryComplianceControlCollection GetRegulatoryComplianceControls()
         {
-            return GetCachedClient(Client => new RegulatoryComplianceControlCollection(Client, Id));
+            return GetCachedClient(client => new RegulatoryComplianceControlCollection(client, Id));
         }
 
         /// <summary>
@@ -109,8 +111,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="regulatoryComplianceControlName"> Name of the regulatory compliance control object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RegulatoryComplianceControlResource>> GetRegulatoryComplianceControlAsync(string regulatoryComplianceControlName, CancellationToken cancellationToken = default)
         {
@@ -132,8 +134,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="regulatoryComplianceControlName"> Name of the regulatory compliance control object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RegulatoryComplianceControlResource> GetRegulatoryComplianceControl(string regulatoryComplianceControlName, CancellationToken cancellationToken = default)
         {

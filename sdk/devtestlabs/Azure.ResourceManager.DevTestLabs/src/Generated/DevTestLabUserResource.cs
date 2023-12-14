@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A Class representing a DevTestLabUser along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevTestLabUserResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevTestLabUserResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevTestLabResource" /> using the GetDevTestLabUser method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabUserResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabUserResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabResource"/> using the GetDevTestLabUser method.
     /// </summary>
     public partial class DevTestLabUserResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DevTestLabUserResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="labName"> The labName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{name}";
@@ -37,12 +41,15 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly UsersRestOperations _devTestLabUserUsersRestClient;
         private readonly DevTestLabUserData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/users";
+
         /// <summary> Initializes a new instance of the <see cref="DevTestLabUserResource"/> class for mocking. </summary>
         protected DevTestLabUserResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevTestLabUserResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabUserResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevTestLabUserResource(ArmClient client, DevTestLabUserData data) : this(client, data.Id)
@@ -63,9 +70,6 @@ namespace Azure.ResourceManager.DevTestLabs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/users";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabDiskResources and their operations over a DevTestLabDiskResource. </returns>
         public virtual DevTestLabDiskCollection GetDevTestLabDisks()
         {
-            return GetCachedClient(Client => new DevTestLabDiskCollection(Client, Id));
+            return GetCachedClient(client => new DevTestLabDiskCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +115,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="name"> The name of the disk. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=diskType)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevTestLabDiskResource>> GetDevTestLabDiskAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -135,8 +139,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="name"> The name of the disk. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=diskType)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevTestLabDiskResource> GetDevTestLabDisk(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -147,7 +151,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabEnvironmentResources and their operations over a DevTestLabEnvironmentResource. </returns>
         public virtual DevTestLabEnvironmentCollection GetDevTestLabEnvironments()
         {
-            return GetCachedClient(Client => new DevTestLabEnvironmentCollection(Client, Id));
+            return GetCachedClient(client => new DevTestLabEnvironmentCollection(client, Id));
         }
 
         /// <summary>
@@ -166,8 +170,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="name"> The name of the environment. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=deploymentProperties)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevTestLabEnvironmentResource>> GetDevTestLabEnvironmentAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -190,8 +194,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="name"> The name of the environment. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=deploymentProperties)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevTestLabEnvironmentResource> GetDevTestLabEnvironment(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -202,7 +206,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabSecretResources and their operations over a DevTestLabSecretResource. </returns>
         public virtual DevTestLabSecretCollection GetDevTestLabSecrets()
         {
-            return GetCachedClient(Client => new DevTestLabSecretCollection(Client, Id));
+            return GetCachedClient(client => new DevTestLabSecretCollection(client, Id));
         }
 
         /// <summary>
@@ -221,8 +225,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="name"> The name of the secret. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=value)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevTestLabSecretResource>> GetDevTestLabSecretAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -245,8 +249,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="name"> The name of the secret. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=value)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevTestLabSecretResource> GetDevTestLabSecret(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -257,7 +261,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabServiceFabricResources and their operations over a DevTestLabServiceFabricResource. </returns>
         public virtual DevTestLabServiceFabricCollection GetDevTestLabServiceFabrics()
         {
-            return GetCachedClient(Client => new DevTestLabServiceFabricCollection(Client, Id));
+            return GetCachedClient(client => new DevTestLabServiceFabricCollection(client, Id));
         }
 
         /// <summary>
@@ -276,8 +280,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="name"> The name of the service fabric. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=applicableSchedule)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevTestLabServiceFabricResource>> GetDevTestLabServiceFabricAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -300,8 +304,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="name"> The name of the service fabric. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=applicableSchedule)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevTestLabServiceFabricResource> GetDevTestLabServiceFabric(string name, string expand = null, CancellationToken cancellationToken = default)
         {

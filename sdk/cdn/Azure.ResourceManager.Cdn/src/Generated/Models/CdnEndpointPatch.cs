@@ -13,13 +13,48 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Properties required to create or update an endpoint. </summary>
     public partial class CdnEndpointPatch
     {
-        /// <summary> Initializes a new instance of CdnEndpointPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnEndpointPatch"/>. </summary>
         public CdnEndpointPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             ContentTypesToCompress = new ChangeTrackingList<string>();
             GeoFilters = new ChangeTrackingList<GeoFilter>();
             UriSigningKeys = new ChangeTrackingList<UriSigningKey>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CdnEndpointPatch"/>. </summary>
+        /// <param name="tags"> Endpoint tags. </param>
+        /// <param name="originPath"> A directory path on the origin that CDN can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </param>
+        /// <param name="contentTypesToCompress"> List of content types on which compression applies. The value should be a valid MIME type. </param>
+        /// <param name="originHostHeader"> The host header value sent to the origin with each request. This property at Endpoint is only allowed when endpoint uses single origin and can be overridden by the same property specified at origin.If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. </param>
+        /// <param name="isCompressionEnabled"> Indicates whether content compression is enabled on CDN. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on CDN when requested content is smaller than 1 byte or larger than 1 MB. </param>
+        /// <param name="isHttpAllowed"> Indicates whether HTTP traffic is allowed on the endpoint. Default value is true. At least one protocol (HTTP or HTTPS) must be allowed. </param>
+        /// <param name="isHttpsAllowed"> Indicates whether HTTPS traffic is allowed on the endpoint. Default value is true. At least one protocol (HTTP or HTTPS) must be allowed. </param>
+        /// <param name="queryStringCachingBehavior"> Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL. </param>
+        /// <param name="optimizationType"> Specifies what scenario the customer wants this CDN endpoint to optimize for, e.g. Download, Media services. With this information, CDN can apply scenario driven optimization. </param>
+        /// <param name="probePath"> Path to a file hosted on the origin which helps accelerate delivery of the dynamic content and calculate the most optimal routes for the CDN. This is relative to the origin path. This property is only relevant when using a single origin. </param>
+        /// <param name="geoFilters"> List of rules defining the user's geo access within a CDN endpoint. Each geo filter defines an access rule to a specified path or content, e.g. block APAC for path /pictures/. </param>
+        /// <param name="defaultOriginGroup"> A reference to the origin group. </param>
+        /// <param name="uriSigningKeys"> List of keys used to validate the signed URL hashes. </param>
+        /// <param name="deliveryPolicy"> A policy that specifies the delivery rules to be used for an endpoint. </param>
+        /// <param name="webApplicationFirewallPolicyLink"> Defines the Web Application Firewall policy for the endpoint (if applicable). </param>
+        internal CdnEndpointPatch(IDictionary<string, string> tags, string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, EndpointPropertiesUpdateParametersDefaultOriginGroup defaultOriginGroup, IList<UriSigningKey> uriSigningKeys, EndpointDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink)
+        {
+            Tags = tags;
+            OriginPath = originPath;
+            ContentTypesToCompress = contentTypesToCompress;
+            OriginHostHeader = originHostHeader;
+            IsCompressionEnabled = isCompressionEnabled;
+            IsHttpAllowed = isHttpAllowed;
+            IsHttpsAllowed = isHttpsAllowed;
+            QueryStringCachingBehavior = queryStringCachingBehavior;
+            OptimizationType = optimizationType;
+            ProbePath = probePath;
+            GeoFilters = geoFilters;
+            DefaultOriginGroup = defaultOriginGroup;
+            UriSigningKeys = uriSigningKeys;
+            DeliveryPolicy = deliveryPolicy;
+            WebApplicationFirewallPolicyLink = webApplicationFirewallPolicyLink;
         }
 
         /// <summary> Endpoint tags. </summary>

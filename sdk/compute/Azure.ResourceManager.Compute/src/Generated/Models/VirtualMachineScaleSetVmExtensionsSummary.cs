@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Extensions summary for virtual machines of a virtual machine scale set. </summary>
     public partial class VirtualMachineScaleSetVmExtensionsSummary
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmExtensionsSummary"/>. </summary>
         internal VirtualMachineScaleSetVmExtensionsSummary()
         {

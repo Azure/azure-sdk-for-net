@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes Protocol and thumbprint of Windows Remote Management listener. </summary>
     public partial class WinRMListener
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="WinRMListener"/>. </summary>
         public WinRMListener()
         {

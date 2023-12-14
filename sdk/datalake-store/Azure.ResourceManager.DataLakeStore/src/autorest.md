@@ -74,7 +74,7 @@ prepend-rp-prefix:
   - VirtualNetworkRuleListResult
   - CapabilityInformation
   - FirewallState
-  - FirewallAllowAzureIPsState
+  - FirewallAllowAzureIpsState
   - EncryptionProvisioningState
   - EncryptionState
   - FirewallRuleListResult

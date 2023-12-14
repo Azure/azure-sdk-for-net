@@ -26,5 +26,23 @@ namespace Azure.Storage.DataMovement
         /// Gets the Uri of the Storage Resource.
         /// </summary>
         public abstract Uri Uri { get; }
+
+        /// <summary>
+        /// A string ID for the resource provider that should be used for rehydration.
+        /// NOTE: Must be no more than 5 characters long.
+        /// </summary>
+        public abstract string ProviderId { get; }
+
+        /// <summary>
+        /// Gets the source checkpoint data for this resource that will be written to the checkpointer.
+        /// </summary>
+        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
+        protected internal abstract StorageResourceCheckpointData GetSourceCheckpointData();
+
+        /// <summary>
+        /// Gets the destination checkpoint data for this resource that will be written to the checkpointer.
+        /// </summary>
+        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
+        protected internal abstract StorageResourceCheckpointData GetDestinationCheckpointData();
     }
 }

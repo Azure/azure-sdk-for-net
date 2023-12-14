@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Client or app secret used in IdentityProviders, Aad, OpenID or OAuth. </summary>
     public partial class ClientSecretContract
     {
-        /// <summary> Initializes a new instance of ClientSecretContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientSecretContract"/>. </summary>
         internal ClientSecretContract()
         {
         }
 
-        /// <summary> Initializes a new instance of ClientSecretContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientSecretContract"/>. </summary>
         /// <param name="clientSecret"> Client or app secret used in IdentityProviders, Aad, OpenID or OAuth. </param>
         internal ClientSecretContract(string clientSecret)
         {

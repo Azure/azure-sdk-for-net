@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.StreamAnalytics
 {
     /// <summary>
     /// A Class representing a StreamingJobOutput along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StreamingJobOutputResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStreamingJobOutputResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StreamingJobResource" /> using the GetStreamingJobOutput method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StreamingJobOutputResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStreamingJobOutputResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StreamingJobResource"/> using the GetStreamingJobOutput method.
     /// </summary>
     public partial class StreamingJobOutputResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StreamingJobOutputResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="jobName"> The jobName. </param>
+        /// <param name="outputName"> The outputName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string jobName, string outputName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/outputs/{outputName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.StreamAnalytics
         private readonly OutputsRestOperations _streamingJobOutputOutputsRestClient;
         private readonly StreamingJobOutputData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StreamAnalytics/streamingjobs/outputs";
+
         /// <summary> Initializes a new instance of the <see cref="StreamingJobOutputResource"/> class for mocking. </summary>
         protected StreamingJobOutputResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StreamingJobOutputResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StreamingJobOutputResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StreamingJobOutputResource(ArmClient client, StreamingJobOutputData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.StreamAnalytics
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StreamAnalytics/streamingjobs/outputs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

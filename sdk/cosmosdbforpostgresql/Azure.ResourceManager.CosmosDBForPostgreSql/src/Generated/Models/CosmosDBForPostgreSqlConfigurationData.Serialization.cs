@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             Optional<string> allowedValues = default;
             Optional<bool> requiresRestart = default;
             Optional<IList<CosmosDBForPostgreSqlServerRoleGroupConfiguration>> serverRoleGroupConfigurations = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<CosmosDBForPostgreSqlProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new CosmosDBForPostgreSqlProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

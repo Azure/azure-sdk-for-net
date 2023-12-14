@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ConnectivityConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ConnectivityConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityConfigurationData"/>. </summary>
         public ConnectivityConfigurationData()
         {
             Hubs = new ChangeTrackingList<ConnectivityHub>();
             AppliesToGroups = new ChangeTrackingList<ConnectivityGroupItem>();
         }
 
-        /// <summary> Initializes a new instance of ConnectivityConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

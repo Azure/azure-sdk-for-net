@@ -16,9 +16,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Community Gallery Image versions operation response. </summary>
     internal partial class CommunityGalleryImageVersionList
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageVersionList"/>. </summary>
         /// <param name="value"> A list of community gallery image versions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>

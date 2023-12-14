@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An alert status. </summary>
     public partial class MetricAlertStatus : ResourceData
     {
-        /// <summary> Initializes a new instance of MetricAlertStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAlertStatus"/>. </summary>
         internal MetricAlertStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of MetricAlertStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAlertStatus"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

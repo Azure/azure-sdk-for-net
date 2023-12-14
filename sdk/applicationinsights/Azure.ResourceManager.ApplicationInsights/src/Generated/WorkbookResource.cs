@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.ApplicationInsights
 {
     /// <summary>
     /// A Class representing a Workbook along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkbookResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWorkbookResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetWorkbook method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkbookResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWorkbookResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetWorkbook method.
     /// </summary>
     public partial class WorkbookResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WorkbookResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.ApplicationInsights
         private readonly WorkbooksRestOperations _workbookRestClient;
         private readonly WorkbookData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/workbooks";
+
         /// <summary> Initializes a new instance of the <see cref="WorkbookResource"/> class for mocking. </summary>
         protected WorkbookResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WorkbookResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkbookResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WorkbookResource(ArmClient client, WorkbookData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.ApplicationInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/workbooks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An object representing collection of WorkbookRevisionResources and their operations over a WorkbookRevisionResource. </returns>
         public virtual WorkbookRevisionCollection GetWorkbookRevisions()
         {
-            return GetCachedClient(Client => new WorkbookRevisionCollection(Client, Id));
+            return GetCachedClient(client => new WorkbookRevisionCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </summary>
         /// <param name="revisionId"> The id of the workbook's revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WorkbookRevisionResource>> GetWorkbookRevisionAsync(string revisionId, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </summary>
         /// <param name="revisionId"> The id of the workbook's revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WorkbookRevisionResource> GetWorkbookRevision(string revisionId, CancellationToken cancellationToken = default)
         {

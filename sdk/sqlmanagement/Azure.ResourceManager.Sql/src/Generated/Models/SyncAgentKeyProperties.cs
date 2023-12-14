@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Properties of an Azure SQL Database sync agent key. </summary>
     public partial class SyncAgentKeyProperties
     {
-        /// <summary> Initializes a new instance of SyncAgentKeyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncAgentKeyProperties"/>. </summary>
         internal SyncAgentKeyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SyncAgentKeyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncAgentKeyProperties"/>. </summary>
         /// <param name="syncAgentKey"> Key of sync agent. </param>
         internal SyncAgentKeyProperties(string syncAgentKey)
         {

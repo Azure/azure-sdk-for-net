@@ -14,14 +14,14 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public partial class DataDeletionDetectionPolicy
     {
-        /// <summary> Initializes a new instance of DataDeletionDetectionPolicy. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the data deletion detection policy. </param>
+        /// <summary> Initializes a new instance of <see cref="DataDeletionDetectionPolicy"/>. </summary>
+        /// <param name="oDataType"> A URI fragment specifying the type of data deletion detection policy. </param>
         internal DataDeletionDetectionPolicy(string oDataType)
         {
             ODataType = oDataType;
         }
 
-        /// <summary> Identifies the concrete type of the data deletion detection policy. </summary>
+        /// <summary> A URI fragment specifying the type of data deletion detection policy. </summary>
         internal string ODataType { get; set; }
     }
 }

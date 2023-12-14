@@ -21,9 +21,9 @@ using Azure.ResourceManager.NotificationHubs.Models;
 namespace Azure.ResourceManager.NotificationHubs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NotificationHubResource" /> and their operations.
-    /// Each <see cref="NotificationHubResource" /> in the collection will belong to the same instance of <see cref="NotificationHubNamespaceResource" />.
-    /// To get a <see cref="NotificationHubCollection" /> instance call the GetNotificationHubs method from an instance of <see cref="NotificationHubNamespaceResource" />.
+    /// A class representing a collection of <see cref="NotificationHubResource"/> and their operations.
+    /// Each <see cref="NotificationHubResource"/> in the collection will belong to the same instance of <see cref="NotificationHubNamespaceResource"/>.
+    /// To get a <see cref="NotificationHubCollection"/> instance call the GetNotificationHubs method from an instance of <see cref="NotificationHubNamespaceResource"/>.
     /// </summary>
     public partial class NotificationHubCollection : ArmCollection, IEnumerable<NotificationHubResource>, IAsyncEnumerable<NotificationHubResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NotificationHubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NotificationHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NotificationHubResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NotificationHubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NotificationHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NotificationHubResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -316,6 +316,80 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 var response = _notificationHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NotificationHubs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="notificationHubName"> The notification hub name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="notificationHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationHubName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NotificationHubResource>> GetIfExistsAsync(string notificationHubName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(notificationHubName, nameof(notificationHubName));
+
+            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _notificationHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NotificationHubResource>(response.GetRawResponse());
+                return Response.FromValue(new NotificationHubResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NotificationHubs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="notificationHubName"> The notification hub name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="notificationHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationHubName"/> is null. </exception>
+        public virtual NullableResponse<NotificationHubResource> GetIfExists(string notificationHubName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(notificationHubName, nameof(notificationHubName));
+
+            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _notificationHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationHubName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NotificationHubResource>(response.GetRawResponse());
+                return Response.FromValue(new NotificationHubResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

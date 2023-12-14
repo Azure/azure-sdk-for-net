@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The policy definition group. </summary>
     public partial class PolicyDefinitionGroup
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="PolicyDefinitionGroup"/>. </summary>
         /// <param name="name"> The name of the group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataMigration
     /// </summary>
     public partial class DatabaseMigrationSqlMIData : ResourceData
     {
-        /// <summary> Initializes a new instance of DatabaseMigrationSqlMIData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationSqlMIData"/>. </summary>
         public DatabaseMigrationSqlMIData()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseMigrationSqlMIData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationSqlMIData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

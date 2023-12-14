@@ -20,13 +20,19 @@ namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
     /// A Class representing a NetAppVolumeQuotaRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetAppVolumeQuotaRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetAppVolumeQuotaRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetAppVolumeResource" /> using the GetNetAppVolumeQuotaRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetAppVolumeQuotaRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetAppVolumeQuotaRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetAppVolumeResource"/> using the GetNetAppVolumeQuotaRule method.
     /// </summary>
     public partial class NetAppVolumeQuotaRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetAppVolumeQuotaRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="poolName"> The poolName. </param>
+        /// <param name="volumeName"> The volumeName. </param>
+        /// <param name="volumeQuotaRuleName"> The volumeQuotaRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string volumeQuotaRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/volumeQuotaRules/{volumeQuotaRuleName}";
@@ -37,12 +43,15 @@ namespace Azure.ResourceManager.NetApp
         private readonly VolumeQuotaRulesRestOperations _netAppVolumeQuotaRuleVolumeQuotaRulesRestClient;
         private readonly NetAppVolumeQuotaRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/volumeQuotaRules";
+
         /// <summary> Initializes a new instance of the <see cref="NetAppVolumeQuotaRuleResource"/> class for mocking. </summary>
         protected NetAppVolumeQuotaRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetAppVolumeQuotaRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetAppVolumeQuotaRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetAppVolumeQuotaRuleResource(ArmClient client, NetAppVolumeQuotaRuleData data) : this(client, data.Id)
@@ -63,9 +72,6 @@ namespace Azure.ResourceManager.NetApp
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/volumeQuotaRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

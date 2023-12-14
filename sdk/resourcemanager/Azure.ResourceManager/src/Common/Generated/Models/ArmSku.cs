@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Models
     [PropertyReferenceType]
     public partial class ArmSku
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ArmSku"/>. </summary>
         /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

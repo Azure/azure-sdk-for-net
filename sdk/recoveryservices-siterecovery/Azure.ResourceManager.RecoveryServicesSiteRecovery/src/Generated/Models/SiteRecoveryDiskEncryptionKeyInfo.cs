@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Disk Encryption Key Information (BitLocker Encryption Key (BEK) on Windows). </summary>
     public partial class SiteRecoveryDiskEncryptionKeyInfo
     {
-        /// <summary> Initializes a new instance of SiteRecoveryDiskEncryptionKeyInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryDiskEncryptionKeyInfo"/>. </summary>
         public SiteRecoveryDiskEncryptionKeyInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryDiskEncryptionKeyInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryDiskEncryptionKeyInfo"/>. </summary>
         /// <param name="secretIdentifier"> The secret url / identifier. </param>
         /// <param name="keyVaultResourceArmId"> The KeyVault resource ARM id for secret. </param>
         internal SiteRecoveryDiskEncryptionKeyInfo(string secretIdentifier, ResourceIdentifier keyVaultResourceArmId)

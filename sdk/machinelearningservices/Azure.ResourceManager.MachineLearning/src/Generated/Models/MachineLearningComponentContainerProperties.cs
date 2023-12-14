@@ -15,20 +15,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class MachineLearningComponentContainerProperties : MachineLearningAssetContainer
     {
-        /// <summary> Initializes a new instance of MachineLearningComponentContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComponentContainerProperties"/>. </summary>
         public MachineLearningComponentContainerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComponentContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComponentContainerProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="latestVersion"> The latest version inside this container. </param>
         /// <param name="nextVersion"> The next auto incremental version. </param>
-        internal MachineLearningComponentContainerProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isArchived, string latestVersion, string nextVersion) : base(description, properties, tags, isArchived, latestVersion, nextVersion)
+        /// <param name="provisioningState"> Provisioning state for the component container. </param>
+        internal MachineLearningComponentContainerProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isArchived, string latestVersion, string nextVersion, RegistryAssetProvisioningState? provisioningState) : base(description, properties, tags, isArchived, latestVersion, nextVersion)
         {
+            ProvisioningState = provisioningState;
         }
+
+        /// <summary> Provisioning state for the component container. </summary>
+        public RegistryAssetProvisioningState? ProvisioningState { get; }
     }
 }

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The UnknownBackupEngineBase. </summary>
     internal partial class UnknownBackupEngineBase : BackupGenericEngine
     {
-        /// <summary> Initializes a new instance of UnknownBackupEngineBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownBackupEngineBase"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the backup engine. </param>
         /// <param name="backupManagementType"> Type of backup management for the backup engine. </param>
         /// <param name="registrationStatus"> Registration status of the backup engine with the Recovery Services Vault. </param>

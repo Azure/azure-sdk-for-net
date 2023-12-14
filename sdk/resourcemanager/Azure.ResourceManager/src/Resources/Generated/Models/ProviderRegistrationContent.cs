@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The provider registration definition. </summary>
     public partial class ProviderRegistrationContent
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ProviderRegistrationContent"/>. </summary>
         public ProviderRegistrationContent()
         {
@@ -23,11 +20,9 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of <see cref="ProviderRegistrationContent"/>. </summary>
         /// <param name="thirdPartyProviderConsent"> The provider consent. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderRegistrationContent(ProviderConsentDefinition thirdPartyProviderConsent, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProviderRegistrationContent(ProviderConsentDefinition thirdPartyProviderConsent)
         {
             ThirdPartyProviderConsent = thirdPartyProviderConsent;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provider consent. </summary>

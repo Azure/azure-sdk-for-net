@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Collection of alerts. </summary>
     internal partial class SiteRecoveryAlertListResult
     {
-        /// <summary> Initializes a new instance of SiteRecoveryAlertListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAlertListResult"/>. </summary>
         internal SiteRecoveryAlertListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryAlertData>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryAlertListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAlertListResult"/>. </summary>
         /// <param name="value"> The list of alerts. </param>
         /// <param name="nextLink"> The value of next link. </param>
         internal SiteRecoveryAlertListResult(IReadOnlyList<SiteRecoveryAlertData> value, string nextLink)

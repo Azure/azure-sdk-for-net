@@ -38,6 +38,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<AutoscaleSettingsResourceInfo> autoscaleSettings = default;
             Optional<string> minimumThroughput = default;
             Optional<string> offerReplacePending = default;
+            Optional<string> instantMaximumThroughput = default;
+            Optional<string> softAllowedMaximumThroughput = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("throughput"u8))
@@ -68,8 +70,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     offerReplacePending = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("instantMaximumThroughput"u8))
+                {
+                    instantMaximumThroughput = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("softAllowedMaximumThroughput"u8))
+                {
+                    softAllowedMaximumThroughput = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ThroughputSettingsResourceInfo(Optional.ToNullable(throughput), autoscaleSettings.Value, minimumThroughput.Value, offerReplacePending.Value);
+            return new ThroughputSettingsResourceInfo(Optional.ToNullable(throughput), autoscaleSettings.Value, minimumThroughput.Value, offerReplacePending.Value, instantMaximumThroughput.Value, softAllowedMaximumThroughput.Value);
         }
     }
 }

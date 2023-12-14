@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machines scale sets network configuration's DNS settings. </summary>
     public partial class VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings"/>. </summary>
         /// <param name="domainNameLabel"> The Domain name label.The concatenation of the domain name label and vm index will be the domain name labels of the PublicIPAddress resources that will be created. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainNameLabel"/> is null. </exception>

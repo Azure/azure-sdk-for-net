@@ -10,12 +10,12 @@ namespace Azure.Maps.Routing.Models
     /// <summary> This object is returned from a successful Batch service call. Extend with 'batchItems' property. </summary>
     public partial class BatchResult
     {
-        /// <summary> Initializes a new instance of BatchResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchResult"/>. </summary>
         internal BatchResult()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchResult"/>. </summary>
         /// <param name="batchSummary"> Summary of the results for the batch request. </param>
         internal BatchResult(BatchResultSummary batchSummary)
         {

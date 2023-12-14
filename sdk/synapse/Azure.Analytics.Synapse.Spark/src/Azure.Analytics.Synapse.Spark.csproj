@@ -4,6 +4,7 @@
     <AssemblyTitle>Azure.Analytics.Synapse.Spark</AssemblyTitle>
     <Version>1.0.0-preview.9</Version>
     <PackageTags>Microsoft Azure Synapse Spark;$(PackageCommonTags)</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
     <NoWarn>

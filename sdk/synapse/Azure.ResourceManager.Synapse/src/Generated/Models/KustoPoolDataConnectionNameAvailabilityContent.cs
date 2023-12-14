@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A data connection check name availability request. </summary>
     public partial class KustoPoolDataConnectionNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KustoPoolDataConnectionNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPoolDataConnectionNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Data Connection name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoPoolDataConnectionNameAvailabilityContent(string name)
@@ -22,6 +22,15 @@ namespace Azure.ResourceManager.Synapse.Models
 
             Name = name;
             ResourceType = SynapseDataConnectionType.MicrosoftSynapseWorkspacesKustoPoolsDatabasesDataConnections;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoPoolDataConnectionNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Data Connection name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections. </param>
+        internal KustoPoolDataConnectionNameAvailabilityContent(string name, SynapseDataConnectionType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> Data Connection name. </summary>

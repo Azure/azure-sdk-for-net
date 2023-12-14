@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> A class represent the assessment. </summary>
     public partial class Assessment
     {
-        /// <summary> Initializes a new instance of Assessment. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assessment"/>. </summary>
         internal Assessment()
         {
-            ResourceList = new ChangeTrackingList<AssessmentResource>();
+            ResourceList = new ChangeTrackingList<AssessmentResourceContent>();
         }
 
-        /// <summary> Initializes a new instance of Assessment. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assessment"/>. </summary>
         /// <param name="name"> The name of the assessment. </param>
         /// <param name="severity"> The severity level of this assessment. </param>
         /// <param name="description"> The description of the assessment. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="isPass"> Indicates whether all the resource(s) are compliant. </param>
         /// <param name="policyId"> The policy id mapping to this assessment. </param>
         /// <param name="resourceList"> List of resource assessments. </param>
-        internal Assessment(string name, AssessmentSeverity? severity, string description, string remediation, IsPass? isPass, string policyId, IReadOnlyList<AssessmentResource> resourceList)
+        internal Assessment(string name, AssessmentSeverity? severity, string description, string remediation, IsPass? isPass, string policyId, IReadOnlyList<AssessmentResourceContent> resourceList)
         {
             Name = name;
             Severity = severity;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> The policy id mapping to this assessment. </summary>
         public string PolicyId { get; }
         /// <summary> List of resource assessments. </summary>
-        public IReadOnlyList<AssessmentResource> ResourceList { get; }
+        public IReadOnlyList<AssessmentResourceContent> ResourceList { get; }
     }
 }

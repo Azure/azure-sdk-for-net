@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The relevant User Definition. </summary>
     internal partial class MongoDBUserDefinitionListResult
     {
-        /// <summary> Initializes a new instance of MongoDBUserDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBUserDefinitionListResult"/>. </summary>
         internal MongoDBUserDefinitionListResult()
         {
             Value = new ChangeTrackingList<MongoDBUserDefinitionData>();
         }
 
-        /// <summary> Initializes a new instance of MongoDBUserDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBUserDefinitionListResult"/>. </summary>
         /// <param name="value"> List of User Definition and their properties. </param>
         internal MongoDBUserDefinitionListResult(IReadOnlyList<MongoDBUserDefinitionData> value)
         {

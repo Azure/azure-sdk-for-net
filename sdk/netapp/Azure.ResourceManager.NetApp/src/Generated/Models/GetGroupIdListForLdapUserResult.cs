@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Group Id list for Ldap user. </summary>
     public partial class GetGroupIdListForLdapUserResult
     {
-        /// <summary> Initializes a new instance of GetGroupIdListForLdapUserResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetGroupIdListForLdapUserResult"/>. </summary>
         internal GetGroupIdListForLdapUserResult()
         {
             GroupIdsForLdapUser = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of GetGroupIdListForLdapUserResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetGroupIdListForLdapUserResult"/>. </summary>
         /// <param name="groupIdsForLdapUser"> Group Id list. </param>
         internal GetGroupIdListForLdapUserResult(IReadOnlyList<string> groupIdsForLdapUser)
         {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A pageable list of resources. </summary>
     internal partial class MonitorWorkspaceResourceListResult
     {
-        /// <summary> Initializes a new instance of MonitorWorkspaceResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceResourceListResult"/>. </summary>
         /// <param name="value"> A list of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal MonitorWorkspaceResourceListResult(IEnumerable<MonitorWorkspaceResourceData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of MonitorWorkspaceResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceResourceListResult"/>. </summary>
         /// <param name="value"> A list of resources. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal MonitorWorkspaceResourceListResult(IReadOnlyList<MonitorWorkspaceResourceData> value, string nextLink)

@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Models
     [PropertyReferenceType]
     public partial class SystemData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="SystemData"/>. </summary>
         [InitializationConstructor]
         public SystemData()

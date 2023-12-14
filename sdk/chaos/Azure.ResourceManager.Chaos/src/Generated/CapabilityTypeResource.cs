@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
     /// A Class representing a CapabilityType along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CapabilityTypeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCapabilityTypeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TargetTypeResource" /> using the GetCapabilityType method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CapabilityTypeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCapabilityTypeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TargetTypeResource"/> using the GetCapabilityType method.
     /// </summary>
     public partial class CapabilityTypeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CapabilityTypeResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="locationName"> The locationName. </param>
+        /// <param name="targetTypeName"> The targetTypeName. </param>
+        /// <param name="capabilityTypeName"> The capabilityTypeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string locationName, string targetTypeName, string capabilityTypeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}/capabilityTypes/{capabilityTypeName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Chaos
         private readonly CapabilityTypesRestOperations _capabilityTypeRestClient;
         private readonly CapabilityTypeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Chaos/locations/targetTypes/capabilityTypes";
+
         /// <summary> Initializes a new instance of the <see cref="CapabilityTypeResource"/> class for mocking. </summary>
         protected CapabilityTypeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CapabilityTypeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CapabilityTypeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CapabilityTypeResource(ArmClient client, CapabilityTypeData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Chaos
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Chaos/locations/targetTypes/capabilityTypes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

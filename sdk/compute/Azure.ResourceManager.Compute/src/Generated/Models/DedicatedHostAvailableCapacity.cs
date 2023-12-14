@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Dedicated host unutilized capacity. </summary>
     internal partial class DedicatedHostAvailableCapacity
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DedicatedHostAvailableCapacity"/>. </summary>
         internal DedicatedHostAvailableCapacity()
         {

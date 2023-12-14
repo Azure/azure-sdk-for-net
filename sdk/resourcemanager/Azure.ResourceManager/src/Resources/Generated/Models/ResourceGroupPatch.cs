@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Resource group information. </summary>
     public partial class ResourceGroupPatch
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ResourceGroupPatch"/>. </summary>
         public ResourceGroupPatch()
         {
@@ -28,14 +25,12 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="properties"> The resource group properties. </param>
         /// <param name="managedBy"> The ID of the resource that manages this resource group. </param>
         /// <param name="tags"> The tags attached to the resource group. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceGroupPatch(string name, ResourceGroupProperties properties, string managedBy, IDictionary<string, string> tags, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceGroupPatch(string name, ResourceGroupProperties properties, string managedBy, IDictionary<string, string> tags)
         {
             Name = name;
             Properties = properties;
             ManagedBy = managedBy;
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the resource group. </summary>

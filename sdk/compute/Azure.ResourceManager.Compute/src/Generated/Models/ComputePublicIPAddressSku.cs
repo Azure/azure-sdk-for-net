@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </summary>
     public partial class ComputePublicIPAddressSku
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ComputePublicIPAddressSku"/>. </summary>
         public ComputePublicIPAddressSku()
         {

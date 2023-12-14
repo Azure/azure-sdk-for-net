@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> The SavingsPlanValidateResponse. </summary>
     internal partial class SavingsPlanValidateResponse
     {
-        /// <summary> Initializes a new instance of SavingsPlanValidateResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanValidateResponse"/>. </summary>
         internal SavingsPlanValidateResponse()
         {
             Benefits = new ChangeTrackingList<SavingsPlanValidateResult>();
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanValidateResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanValidateResponse"/>. </summary>
         /// <param name="benefits"></param>
         /// <param name="nextLink"> Url to get the next page. </param>
         internal SavingsPlanValidateResponse(IReadOnlyList<SavingsPlanValidateResult> benefits, string nextLink)

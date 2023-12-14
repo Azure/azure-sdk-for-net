@@ -25,6 +25,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string PythonFeedValue = "PythonFeed";
         private const string ContainerRegistryValue = "ContainerRegistry";
         private const string GitValue = "Git";
+        private const string S3Value = "S3";
+        private const string SnowflakeValue = "Snowflake";
+        private const string AzureSqlDBValue = "AzureSqlDb";
+        private const string AzureSynapseAnalyticsValue = "AzureSynapseAnalytics";
+        private const string AzureMySqlDBValue = "AzureMySqlDb";
+        private const string AzurePostgresDBValue = "AzurePostgresDb";
+        private const string AdlsGen2Value = "ADLSGen2";
+        private const string RedisValue = "Redis";
+        private const string ApiKeyValue = "ApiKey";
+        private const string AzureOpenAIValue = "AzureOpenAI";
+        private const string CognitiveSearchValue = "CognitiveSearch";
+        private const string CognitiveServiceValue = "CognitiveService";
+        private const string CustomKeysValue = "CustomKeys";
 
         /// <summary> PythonFeed. </summary>
         public static MachineLearningConnectionCategory PythonFeed { get; } = new MachineLearningConnectionCategory(PythonFeedValue);
@@ -32,6 +45,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningConnectionCategory ContainerRegistry { get; } = new MachineLearningConnectionCategory(ContainerRegistryValue);
         /// <summary> Git. </summary>
         public static MachineLearningConnectionCategory Git { get; } = new MachineLearningConnectionCategory(GitValue);
+        /// <summary> S3. </summary>
+        public static MachineLearningConnectionCategory S3 { get; } = new MachineLearningConnectionCategory(S3Value);
+        /// <summary> Snowflake. </summary>
+        public static MachineLearningConnectionCategory Snowflake { get; } = new MachineLearningConnectionCategory(SnowflakeValue);
+        /// <summary> AzureSqlDb. </summary>
+        public static MachineLearningConnectionCategory AzureSqlDB { get; } = new MachineLearningConnectionCategory(AzureSqlDBValue);
+        /// <summary> AzureSynapseAnalytics. </summary>
+        public static MachineLearningConnectionCategory AzureSynapseAnalytics { get; } = new MachineLearningConnectionCategory(AzureSynapseAnalyticsValue);
+        /// <summary> AzureMySqlDb. </summary>
+        public static MachineLearningConnectionCategory AzureMySqlDB { get; } = new MachineLearningConnectionCategory(AzureMySqlDBValue);
+        /// <summary> AzurePostgresDb. </summary>
+        public static MachineLearningConnectionCategory AzurePostgresDB { get; } = new MachineLearningConnectionCategory(AzurePostgresDBValue);
+        /// <summary> ADLSGen2. </summary>
+        public static MachineLearningConnectionCategory AdlsGen2 { get; } = new MachineLearningConnectionCategory(AdlsGen2Value);
+        /// <summary> Redis. </summary>
+        public static MachineLearningConnectionCategory Redis { get; } = new MachineLearningConnectionCategory(RedisValue);
+        /// <summary> ApiKey. </summary>
+        public static MachineLearningConnectionCategory ApiKey { get; } = new MachineLearningConnectionCategory(ApiKeyValue);
+        /// <summary> AzureOpenAI. </summary>
+        public static MachineLearningConnectionCategory AzureOpenAI { get; } = new MachineLearningConnectionCategory(AzureOpenAIValue);
+        /// <summary> CognitiveSearch. </summary>
+        public static MachineLearningConnectionCategory CognitiveSearch { get; } = new MachineLearningConnectionCategory(CognitiveSearchValue);
+        /// <summary> CognitiveService. </summary>
+        public static MachineLearningConnectionCategory CognitiveService { get; } = new MachineLearningConnectionCategory(CognitiveServiceValue);
+        /// <summary> CustomKeys. </summary>
+        public static MachineLearningConnectionCategory CustomKeys { get; } = new MachineLearningConnectionCategory(CustomKeysValue);
         /// <summary> Determines if two <see cref="MachineLearningConnectionCategory"/> values are the same. </summary>
         public static bool operator ==(MachineLearningConnectionCategory left, MachineLearningConnectionCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningConnectionCategory"/> values are not the same. </summary>

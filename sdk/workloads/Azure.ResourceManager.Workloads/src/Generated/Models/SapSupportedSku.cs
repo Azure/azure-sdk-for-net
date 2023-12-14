@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SAP supported SKU. </summary>
     public partial class SapSupportedSku
     {
-        /// <summary> Initializes a new instance of SapSupportedSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapSupportedSku"/>. </summary>
         internal SapSupportedSku()
         {
         }
 
-        /// <summary> Initializes a new instance of SapSupportedSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapSupportedSku"/>. </summary>
         /// <param name="vmSku"> The VM Sku. </param>
         /// <param name="isAppServerCertified"> True if the Sku is certified for App server in the SAP system. </param>
         /// <param name="isDatabaseCertified"> True if the Sku is certified for Database server in the SAP system. </param>

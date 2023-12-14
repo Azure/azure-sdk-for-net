@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Contains the os disk image information. </summary>
     internal partial class OSDiskImage
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="OSDiskImage"/>. </summary>
         /// <param name="operatingSystem"> The operating system of the osDiskImage. </param>
         public OSDiskImage(SupportedOperatingSystemType operatingSystem)

@@ -1,21 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{E27BCECA-CDE9-4080-BEB2-27656FC3E93F}") = "Azure.ResourceManager.OperationalInsights", "src\Azure.ResourceManager.OperationalInsights.csproj", "{9EDA5235-BF40-4AE8-91D6-088B84432F7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.OperationalInsights", "src\Azure.ResourceManager.OperationalInsights.csproj", "{9EDA5235-BF40-4AE8-91D6-088B84432F7D}"
 EndProject
-Project("{E27BCECA-CDE9-4080-BEB2-27656FC3E93F}") = "Azure.ResourceManager.OperationalInsights.Tests", "tests\Azure.ResourceManager.OperationalInsights.Tests.csproj", "{0AD9B005-1722-4858-827C-A35CCD589E8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.OperationalInsights.Tests", "tests\Azure.ResourceManager.OperationalInsights.Tests.csproj", "{0AD9B005-1722-4858-827C-A35CCD589E8C}"
 EndProject
-Project("{E27BCECA-CDE9-4080-BEB2-27656FC3E93F}") = "Azure.ResourceManager.OperationalInsights.Samples", "samples\Azure.ResourceManager.OperationalInsights.Samples.csproj", "{B7B7D769-CC80-418D-9B0A-3C96BFDA8C4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.OperationalInsights.Samples", "samples\Azure.ResourceManager.OperationalInsights.Samples.csproj", "{B7B7D769-CC80-418D-9B0A-3C96BFDA8C4C}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {8E77B375-E5E0-4A70-9CEB-0AA95E4E4FD3}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -49,5 +43,23 @@ Global
 		{0AD9B005-1722-4858-827C-A35CCD589E8C}.Release|x64.Build.0 = Release|Any CPU
 		{0AD9B005-1722-4858-827C-A35CCD589E8C}.Release|x86.ActiveCfg = Release|Any CPU
 		{0AD9B005-1722-4858-827C-A35CCD589E8C}.Release|x86.Build.0 = Release|Any CPU
+		{B7B7D769-CC80-418D-9B0A-3C96BFDA8C4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7B7D769-CC80-418D-9B0A-3C96BFDA8C4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7B7D769-CC80-418D-9B0A-3C96BFDA8C4C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B7B7D769-CC80-418D-9B0A-3C96BFDA8C4C}.Debug|x64.Build.0 = Debug|Any CPU
+		{B7B7D769-CC80-418D-9B0A-3C96BFDA8C4C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B7B7D769-CC80-418D-9B0A-3C96BFDA8C4C}.Debug|x86.Build.0 = Debug|Any CPU
+		{B7B7D769-CC80-418D-9B0A-3C96BFDA8C4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7B7D769-CC80-418D-9B0A-3C96BFDA8C4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7B7D769-CC80-418D-9B0A-3C96BFDA8C4C}.Release|x64.ActiveCfg = Release|Any CPU
+		{B7B7D769-CC80-418D-9B0A-3C96BFDA8C4C}.Release|x64.Build.0 = Release|Any CPU
+		{B7B7D769-CC80-418D-9B0A-3C96BFDA8C4C}.Release|x86.ActiveCfg = Release|Any CPU
+		{B7B7D769-CC80-418D-9B0A-3C96BFDA8C4C}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8E77B375-E5E0-4A70-9CEB-0AA95E4E4FD3}
 	EndGlobalSection
 EndGlobal

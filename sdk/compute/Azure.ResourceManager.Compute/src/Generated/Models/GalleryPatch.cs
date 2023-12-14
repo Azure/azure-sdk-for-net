@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies information about the Shared Image Gallery that you want to update. </summary>
     public partial class GalleryPatch : ResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="GalleryPatch"/>. </summary>
         public GalleryPatch()
         {
@@ -36,8 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="softDeletePolicy"> Contains information about the soft deletion policy of the gallery. </param>
         /// <param name="sharingStatus"> Sharing status of current gallery. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, GalleryIdentifier identifier, GalleryProvisioningState? provisioningState, SharingProfile sharingProfile, SoftDeletePolicy softDeletePolicy, SharingStatus sharingStatus, IDictionary<string, string> tags, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal GalleryPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, GalleryIdentifier identifier, GalleryProvisioningState? provisioningState, SharingProfile sharingProfile, SoftDeletePolicy softDeletePolicy, SharingStatus sharingStatus, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Description = description;
             Identifier = identifier;
@@ -46,7 +42,6 @@ namespace Azure.ResourceManager.Compute.Models
             SoftDeletePolicy = softDeletePolicy;
             SharingStatus = sharingStatus;
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The description of this Shared Image Gallery resource. This property is updatable. </summary>

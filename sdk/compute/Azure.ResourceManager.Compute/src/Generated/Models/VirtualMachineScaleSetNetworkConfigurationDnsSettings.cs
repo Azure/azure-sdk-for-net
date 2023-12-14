@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machines scale sets network configuration's DNS settings. </summary>
     internal partial class VirtualMachineScaleSetNetworkConfigurationDnsSettings
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetNetworkConfigurationDnsSettings"/>. </summary>
         public VirtualMachineScaleSetNetworkConfigurationDnsSettings()
         {

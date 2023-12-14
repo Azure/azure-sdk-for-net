@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A list of scoped resources in a private link scope. </summary>
     internal partial class ScopedResourceListResult
     {
-        /// <summary> Initializes a new instance of ScopedResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopedResourceListResult"/>. </summary>
         internal ScopedResourceListResult()
         {
             Value = new ChangeTrackingList<MonitorPrivateLinkScopedResourceData>();
         }
 
-        /// <summary> Initializes a new instance of ScopedResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopedResourceListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal ScopedResourceListResult(IReadOnlyList<MonitorPrivateLinkScopedResourceData> value, string nextLink)

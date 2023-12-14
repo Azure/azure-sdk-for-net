@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
     /// A Class representing a ScheduledAction along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScheduledActionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetScheduledActionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetScheduledAction method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScheduledActionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScheduledActionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetScheduledAction method.
     /// </summary>
     public partial class ScheduledActionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ScheduledActionResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string name)
         {
             var resourceId = $"{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.CostManagement
         private readonly ScheduledActionsRestOperations _scheduledActionRestClient;
         private readonly ScheduledActionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CostManagement/scheduledActions";
+
         /// <summary> Initializes a new instance of the <see cref="ScheduledActionResource"/> class for mocking. </summary>
         protected ScheduledActionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ScheduledActionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScheduledActionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScheduledActionResource(ArmClient client, ScheduledActionData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.CostManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CostManagement/scheduledActions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

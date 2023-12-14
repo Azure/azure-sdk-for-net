@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Represents a Template Spec artifact containing an embedded Azure Resource Manager template for use as a linked template. </summary>
     public partial class LinkedTemplateArtifact
     {
-        /// <summary> Initializes a new instance of LinkedTemplateArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedTemplateArtifact"/>. </summary>
         /// <param name="path"> A filesystem safe relative path of the artifact. </param>
         /// <param name="template"> The Azure Resource Manager template. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> or <paramref name="template"/> is null. </exception>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

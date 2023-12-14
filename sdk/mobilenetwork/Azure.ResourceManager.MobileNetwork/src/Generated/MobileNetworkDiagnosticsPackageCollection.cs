@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MobileNetworkDiagnosticsPackageResource" /> and their operations.
-    /// Each <see cref="MobileNetworkDiagnosticsPackageResource" /> in the collection will belong to the same instance of <see cref="PacketCoreControlPlaneResource" />.
-    /// To get a <see cref="MobileNetworkDiagnosticsPackageCollection" /> instance call the GetMobileNetworkDiagnosticsPackages method from an instance of <see cref="PacketCoreControlPlaneResource" />.
+    /// A class representing a collection of <see cref="MobileNetworkDiagnosticsPackageResource"/> and their operations.
+    /// Each <see cref="MobileNetworkDiagnosticsPackageResource"/> in the collection will belong to the same instance of <see cref="PacketCoreControlPlaneResource"/>.
+    /// To get a <see cref="MobileNetworkDiagnosticsPackageCollection"/> instance call the GetMobileNetworkDiagnosticsPackages method from an instance of <see cref="PacketCoreControlPlaneResource"/>.
     /// </summary>
     public partial class MobileNetworkDiagnosticsPackageCollection : ArmCollection, IEnumerable<MobileNetworkDiagnosticsPackageResource>, IAsyncEnumerable<MobileNetworkDiagnosticsPackageResource>
     {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MobileNetworkDiagnosticsPackageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MobileNetworkDiagnosticsPackageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MobileNetworkDiagnosticsPackageResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateListByPacketCoreControlPlaneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MobileNetworkDiagnosticsPackageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MobileNetworkDiagnosticsPackageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MobileNetworkDiagnosticsPackageResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateListByPacketCoreControlPlaneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -311,6 +311,80 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 var response = _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticsPackageName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/diagnosticsPackages/{diagnosticsPackageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiagnosticsPackages_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diagnosticsPackageName"> The name of the diagnostics package. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsPackageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsPackageName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MobileNetworkDiagnosticsPackageResource>> GetIfExistsAsync(string diagnosticsPackageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diagnosticsPackageName, nameof(diagnosticsPackageName));
+
+            using var scope = _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics.CreateScope("MobileNetworkDiagnosticsPackageCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticsPackageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MobileNetworkDiagnosticsPackageResource>(response.GetRawResponse());
+                return Response.FromValue(new MobileNetworkDiagnosticsPackageResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/diagnosticsPackages/{diagnosticsPackageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiagnosticsPackages_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diagnosticsPackageName"> The name of the diagnostics package. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsPackageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsPackageName"/> is null. </exception>
+        public virtual NullableResponse<MobileNetworkDiagnosticsPackageResource> GetIfExists(string diagnosticsPackageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diagnosticsPackageName, nameof(diagnosticsPackageName));
+
+            using var scope = _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics.CreateScope("MobileNetworkDiagnosticsPackageCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticsPackageName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MobileNetworkDiagnosticsPackageResource>(response.GetRawResponse());
+                return Response.FromValue(new MobileNetworkDiagnosticsPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

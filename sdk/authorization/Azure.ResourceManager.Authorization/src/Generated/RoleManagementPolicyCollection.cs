@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RoleManagementPolicyResource" /> and their operations.
-    /// Each <see cref="RoleManagementPolicyResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="RoleManagementPolicyCollection" /> instance call the GetRoleManagementPolicies method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="RoleManagementPolicyResource"/> and their operations.
+    /// Each <see cref="RoleManagementPolicyResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="RoleManagementPolicyCollection"/> instance call the GetRoleManagementPolicies method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class RoleManagementPolicyCollection : ArmCollection, IEnumerable<RoleManagementPolicyResource>, IAsyncEnumerable<RoleManagementPolicyResource>
     {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Authorization
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RoleManagementPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RoleManagementPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoleManagementPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleManagementPolicyRestClient.CreateListForScopeRequest(Id);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Authorization
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RoleManagementPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RoleManagementPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoleManagementPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleManagementPolicyRestClient.CreateListForScopeRequest(Id);
@@ -223,6 +223,80 @@ namespace Azure.ResourceManager.Authorization
             {
                 var response = _roleManagementPolicyRestClient.Get(Id, roleManagementPolicyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleManagementPolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyName"/> is null. </exception>
+        public virtual async Task<NullableResponse<RoleManagementPolicyResource>> GetIfExistsAsync(string roleManagementPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleManagementPolicyName, nameof(roleManagementPolicyName));
+
+            using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _roleManagementPolicyRestClient.GetAsync(Id, roleManagementPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RoleManagementPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new RoleManagementPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleManagementPolicies_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyName"/> is null. </exception>
+        public virtual NullableResponse<RoleManagementPolicyResource> GetIfExists(string roleManagementPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleManagementPolicyName, nameof(roleManagementPolicyName));
+
+            using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _roleManagementPolicyRestClient.Get(Id, roleManagementPolicyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RoleManagementPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new RoleManagementPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

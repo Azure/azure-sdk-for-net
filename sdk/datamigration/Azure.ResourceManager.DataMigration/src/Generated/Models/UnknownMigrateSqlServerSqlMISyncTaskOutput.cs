@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The UnknownMigrateSqlServerSqlMISyncTaskOutput. </summary>
     internal partial class UnknownMigrateSqlServerSqlMISyncTaskOutput : MigrateSqlServerSqlMISyncTaskOutput
     {
-        /// <summary> Initializes a new instance of UnknownMigrateSqlServerSqlMISyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMigrateSqlServerSqlMISyncTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         internal UnknownMigrateSqlServerSqlMISyncTaskOutput(string id, string resultType) : base(id, resultType)

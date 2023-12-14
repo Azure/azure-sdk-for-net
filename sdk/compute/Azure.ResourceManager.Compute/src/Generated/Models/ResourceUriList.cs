@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List resources which are encrypted with the disk encryption set. </summary>
     internal partial class ResourceUriList
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ResourceUriList"/>. </summary>
         /// <param name="value"> A list of IDs or Owner IDs of resources which are encrypted with the disk encryption set. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>

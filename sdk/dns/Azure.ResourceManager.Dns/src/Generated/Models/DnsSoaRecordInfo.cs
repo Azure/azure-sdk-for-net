@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> An SOA record. </summary>
     public partial class DnsSoaRecordInfo
     {
-        /// <summary> Initializes a new instance of DnsSoaRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsSoaRecordInfo"/>. </summary>
         public DnsSoaRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DnsSoaRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsSoaRecordInfo"/>. </summary>
         /// <param name="host"> The domain name of the authoritative name server for this SOA record. </param>
         /// <param name="email"> The email contact for this SOA record. </param>
         /// <param name="serialNumber"> The serial number for this SOA record. </param>

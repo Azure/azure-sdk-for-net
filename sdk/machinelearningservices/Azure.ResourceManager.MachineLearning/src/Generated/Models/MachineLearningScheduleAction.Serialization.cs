@@ -31,6 +31,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 switch (discriminator.GetString())
                 {
                     case "CreateJob": return MachineLearningJobScheduleAction.DeserializeMachineLearningJobScheduleAction(element);
+                    case "CreateMonitor": return CreateMonitorAction.DeserializeCreateMonitorAction(element);
+                    case "ImportData": return ImportDataAction.DeserializeImportDataAction(element);
                     case "InvokeBatchEndpoint": return MachineLearningEndpointScheduleAction.DeserializeMachineLearningEndpointScheduleAction(element);
                 }
             }

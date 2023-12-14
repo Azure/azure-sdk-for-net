@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Represents a server to be created. </summary>
     public partial class MySqlServerCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of MySqlServerCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerCreateOrUpdateContent"/>. </summary>
         /// <param name="properties">
         /// Properties of the server.
         /// Please note <see cref="MySqlServerPropertiesForCreate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -30,6 +30,25 @@ namespace Azure.ResourceManager.MySql.Models
             Properties = properties;
             Location = location;
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlServerCreateOrUpdateContent"/>. </summary>
+        /// <param name="identity"> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </param>
+        /// <param name="sku"> The SKU (pricing tier) of the server. </param>
+        /// <param name="properties">
+        /// Properties of the server.
+        /// Please note <see cref="MySqlServerPropertiesForCreate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MySqlServerPropertiesForDefaultCreate"/>, <see cref="MySqlServerPropertiesForGeoRestore"/>, <see cref="MySqlServerPropertiesForRestore"/> and <see cref="MySqlServerPropertiesForReplica"/>.
+        /// </param>
+        /// <param name="location"> The location the resource resides in. </param>
+        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
+        internal MySqlServerCreateOrUpdateContent(ManagedServiceIdentity identity, MySqlSku sku, MySqlServerPropertiesForCreate properties, AzureLocation location, IDictionary<string, string> tags)
+        {
+            Identity = identity;
+            Sku = sku;
+            Properties = properties;
+            Location = location;
+            Tags = tags;
         }
 
         /// <summary> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </summary>

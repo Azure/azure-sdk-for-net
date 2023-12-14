@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Parameters to be applied to the cluster-autoscaler when enabled. </summary>
     public partial class ManagedClusterAutoScalerProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterAutoScalerProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAutoScalerProfile"/>. </summary>
         public ManagedClusterAutoScalerProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterAutoScalerProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAutoScalerProfile"/>. </summary>
         /// <param name="balanceSimilarNodeGroups"> Valid values are 'true' and 'false'. </param>
         /// <param name="expander"> If not specified, the default is 'random'. See [expanders](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#what-are-expanders) for more information. </param>
         /// <param name="maxEmptyBulkDelete"> The default is 10. </param>

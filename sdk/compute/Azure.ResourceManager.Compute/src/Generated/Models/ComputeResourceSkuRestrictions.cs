@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes scaling information of a SKU. </summary>
     public partial class ComputeResourceSkuRestrictions
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuRestrictions"/>. </summary>
         internal ComputeResourceSkuRestrictions()
         {

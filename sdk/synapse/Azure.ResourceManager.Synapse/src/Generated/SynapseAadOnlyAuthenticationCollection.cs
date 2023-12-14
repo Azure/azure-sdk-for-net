@@ -21,9 +21,9 @@ using Azure.ResourceManager.Synapse.Models;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseAadOnlyAuthenticationResource" /> and their operations.
-    /// Each <see cref="SynapseAadOnlyAuthenticationResource" /> in the collection will belong to the same instance of <see cref="SynapseWorkspaceResource" />.
-    /// To get a <see cref="SynapseAadOnlyAuthenticationCollection" /> instance call the GetSynapseAadOnlyAuthentications method from an instance of <see cref="SynapseWorkspaceResource" />.
+    /// A class representing a collection of <see cref="SynapseAadOnlyAuthenticationResource"/> and their operations.
+    /// Each <see cref="SynapseAadOnlyAuthenticationResource"/> in the collection will belong to the same instance of <see cref="SynapseWorkspaceResource"/>.
+    /// To get a <see cref="SynapseAadOnlyAuthenticationCollection"/> instance call the GetSynapseAadOnlyAuthentications method from an instance of <see cref="SynapseWorkspaceResource"/>.
     /// </summary>
     public partial class SynapseAadOnlyAuthenticationCollection : ArmCollection, IEnumerable<SynapseAadOnlyAuthenticationResource>, IAsyncEnumerable<SynapseAadOnlyAuthenticationResource>
     {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseAadOnlyAuthenticationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseAadOnlyAuthenticationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseAadOnlyAuthenticationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseAadOnlyAuthenticationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseAadOnlyAuthenticationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseAadOnlyAuthenticationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -296,6 +296,72 @@ namespace Azure.ResourceManager.Synapse
             {
                 var response = _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureADOnlyAuthenticationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications/{azureADOnlyAuthenticationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureADOnlyAuthentications_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="azureADOnlyAuthenticationName"> name of the property. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<SynapseAadOnlyAuthenticationResource>> GetIfExistsAsync(SynapseAadOnlyAuthenticationName azureADOnlyAuthenticationName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SynapseAadOnlyAuthenticationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureADOnlyAuthenticationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseAadOnlyAuthenticationResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseAadOnlyAuthenticationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications/{azureADOnlyAuthenticationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureADOnlyAuthentications_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="azureADOnlyAuthenticationName"> name of the property. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<SynapseAadOnlyAuthenticationResource> GetIfExists(SynapseAadOnlyAuthenticationName azureADOnlyAuthenticationName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SynapseAadOnlyAuthenticationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureADOnlyAuthenticationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseAadOnlyAuthenticationResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseAadOnlyAuthenticationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

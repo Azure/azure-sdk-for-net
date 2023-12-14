@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The instance view of a disk restore point. </summary>
     public partial class DiskRestorePointInstanceView
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DiskRestorePointInstanceView"/>. </summary>
         internal DiskRestorePointInstanceView()
         {

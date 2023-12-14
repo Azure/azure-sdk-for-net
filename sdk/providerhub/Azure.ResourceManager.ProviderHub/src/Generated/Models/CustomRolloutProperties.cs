@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The CustomRolloutProperties. </summary>
     public partial class CustomRolloutProperties
     {
-        /// <summary> Initializes a new instance of CustomRolloutProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomRolloutProperties"/>. </summary>
         /// <param name="specification"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="specification"/> is null. </exception>
         public CustomRolloutProperties(CustomRolloutSpecification specification)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Specification = specification;
         }
 
-        /// <summary> Initializes a new instance of CustomRolloutProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomRolloutProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="specification"></param>
         /// <param name="status"></param>

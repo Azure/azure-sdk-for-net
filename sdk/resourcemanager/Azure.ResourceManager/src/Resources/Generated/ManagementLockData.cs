@@ -19,9 +19,6 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class ManagementLockData : ResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ManagementLockData"/>. </summary>
         /// <param name="level"> The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can't modify or delete it. </param>
         public ManagementLockData(ManagementLockLevel level)

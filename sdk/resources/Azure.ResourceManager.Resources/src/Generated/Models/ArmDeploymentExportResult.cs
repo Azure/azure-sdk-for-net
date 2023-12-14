@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The deployment export result. </summary>
     public partial class ArmDeploymentExportResult
     {
-        /// <summary> Initializes a new instance of ArmDeploymentExportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExportResult"/>. </summary>
         internal ArmDeploymentExportResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentExportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExportResult"/>. </summary>
         /// <param name="template"> The template content. </param>
         internal ArmDeploymentExportResult(BinaryData template)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

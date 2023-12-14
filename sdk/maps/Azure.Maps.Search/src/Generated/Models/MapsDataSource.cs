@@ -10,12 +10,12 @@ namespace Azure.Maps.Search.Models
     /// <summary> Optional section. Reference ids for use with the [Get Search Polygon](https://docs.microsoft.com/rest/api/maps/search/getsearchpolygon) API. </summary>
     public partial class MapsDataSource
     {
-        /// <summary> Initializes a new instance of MapsDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsDataSource"/>. </summary>
         internal MapsDataSource()
         {
         }
 
-        /// <summary> Initializes a new instance of MapsDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsDataSource"/>. </summary>
         /// <param name="geometry"> Information about the geometric shape of the result. Only present if type == Geography. </param>
         internal MapsDataSource(GeometryIdentifier geometry)
         {

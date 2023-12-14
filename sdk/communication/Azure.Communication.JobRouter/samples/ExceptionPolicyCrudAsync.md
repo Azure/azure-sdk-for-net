@@ -4,7 +4,6 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -28,45 +27,43 @@ string exceptionPolicyId = "my-exception-policy";
 //                                            then reclassifies job adding additional labels on the job
 
 // define exception trigger for queue over flow
-QueueLengthExceptionTrigger queueLengthExceptionTrigger = new QueueLengthExceptionTrigger(10);
+var queueLengthExceptionTrigger = new QueueLengthExceptionTrigger(10);
 
 // define exception actions that needs to be executed when trigger condition is satisfied
-ReclassifyExceptionAction escalateJobOnQueueOverFlow = new ReclassifyExceptionAction(
-    classificationPolicyId: "escalation-on-q-over-flow",
-    labelsToUpsert: new Dictionary<string, LabelValue>()
+ReclassifyExceptionAction escalateJobOnQueueOverFlow = new ReclassifyExceptionAction
+{
+    ClassificationPolicyId = "escalation-on-q-over-flow",
+    LabelsToUpsert =
     {
-        ["EscalateJob"] = new LabelValue(true),
-        ["EscalationReasonCode"] = new LabelValue("QueueOverFlow")
-    });
+        ["EscalateJob"] = new RouterValue(true),
+        ["EscalationReasonCode"] = new RouterValue("QueueOverFlow")
+    }
+};
 
 // define second exception trigger for wait time
 WaitTimeExceptionTrigger waitTimeExceptionTrigger = new WaitTimeExceptionTrigger(TimeSpan.FromMinutes(10));
 
 // define exception actions that needs to be executed when trigger condition is satisfied
 
-ReclassifyExceptionAction escalateJobOnWaitTimeExceeded = new ReclassifyExceptionAction(
-    classificationPolicyId: "escalation-on-wait-time-exceeded",
-    labelsToUpsert: new Dictionary<string, LabelValue>()
+var escalateJobOnWaitTimeExceeded = new ReclassifyExceptionAction
+{
+    ClassificationPolicyId = "escalation-on-wait-time-exceeded",
+    LabelsToUpsert =
     {
-        ["EscalateJob"] = new LabelValue(true),
-        ["EscalationReasonCode"] = new LabelValue("WaitTimeExceeded")
-    });
+        ["EscalateJob"] = new RouterValue(true),
+        ["EscalationReasonCode"] = new RouterValue("WaitTimeExceeded")
+    }
+};
 
 // define exception rule
-Dictionary<string, ExceptionRule> exceptionRule = new Dictionary<string, ExceptionRule>()
+List<ExceptionRule> exceptionRule = new()
 {
-    ["EscalateJobOnQueueOverFlowTrigger"] = new ExceptionRule(
+    new ExceptionRule(id: "EscalateJobOnQueueOverFlowTrigger",
         trigger: queueLengthExceptionTrigger,
-        actions: new Dictionary<string, ExceptionAction?>()
-        {
-            ["EscalationJobActionOnQueueOverFlow"] = escalateJobOnQueueOverFlow
-        }),
-    ["EscalateJobOnWaitTimeExceededTrigger"] = new ExceptionRule(
+        actions: new List<ExceptionAction> { escalateJobOnQueueOverFlow }),
+    new ExceptionRule(id: "EscalateJobOnWaitTimeExceededTrigger",
         trigger: waitTimeExceptionTrigger,
-        actions: new Dictionary<string, ExceptionAction?>()
-        {
-            ["EscalationJobActionOnWaitTimeExceed"] = escalateJobOnWaitTimeExceeded
-        })
+        actions: new List<ExceptionAction> { escalateJobOnWaitTimeExceeded })
 };
 
 Response<ExceptionPolicy> exceptionPolicy = await routerClient.CreateExceptionPolicyAsync(
@@ -100,70 +97,52 @@ Console.WriteLine($"Successfully fetched exception policy with id: {queriedExcep
 
 // let's define the new rule to be added
 // define exception trigger
-WaitTimeExceptionTrigger escalateJobOnWaitTimeExceed2 = new WaitTimeExceptionTrigger(TimeSpan.FromMinutes(2));
+var escalateJobOnWaitTimeExceed2 = new WaitTimeExceptionTrigger(TimeSpan.FromMinutes(2));
 
 // define exception action
-ReclassifyExceptionAction escalateJobOnWaitTimeExceeded2 = new ReclassifyExceptionAction(
-    classificationPolicyId: "escalation-on-wait-time-exceeded",
-    labelsToUpsert: new Dictionary<string, LabelValue>()
+var escalateJobOnWaitTimeExceeded2 = new ReclassifyExceptionAction
+{
+    ClassificationPolicyId = "escalation-on-wait-time-exceeded",
+    LabelsToUpsert =
     {
-        ["EscalateJob"] = new LabelValue(true),
-        ["EscalationReasonCode"] = new LabelValue("WaitTimeExceeded2Min")
-    });
+        ["EscalateJob"] = new RouterValue(true),
+        ["EscalationReasonCode"] = new RouterValue("WaitTimeExceeded2Min")
+    }
+};
 
 Response<ExceptionPolicy> updateExceptionPolicy = await routerClient.UpdateExceptionPolicyAsync(
-    new UpdateExceptionPolicyOptions(exceptionPolicyId)
+    new ExceptionPolicy(exceptionPolicyId)
     {
         // you can update one or more properties of exception policy - here we are adding one additional exception rule
         Name = "My updated exception policy",
         ExceptionRules =
         {
             // adding new rule
-            ["EscalateJobOnWaitTimeExceededTrigger2Min"] = new ExceptionRule(
+            new ExceptionRule(id: "EscalateJobOnWaitTimeExceededTrigger2Min",
                 trigger: escalateJobOnWaitTimeExceed2,
-                actions: new Dictionary<string, ExceptionAction?>()
-                {
-                    ["EscalationJobActionOnWaitTimeExceed"] = escalateJobOnWaitTimeExceeded2
-                }),
+                actions: new List<ExceptionAction> { escalateJobOnWaitTimeExceeded2 }),
             // modifying existing rule
-            ["EscalateJobOnQueueOverFlowTrigger"] = new ExceptionRule(
+            new ExceptionRule(id: "EscalateJobOnQueueOverFlowTrigger",
                 trigger: new QueueLengthExceptionTrigger(100),
-                actions: new Dictionary<string, ExceptionAction?>()
-                {
-                    ["EscalationJobActionOnQueueOverFlow"] = escalateJobOnQueueOverFlow
-                }),
-            // deleting existing rule
-            ["EscalateJobOnWaitTimeExceededTrigger"] = null
+                actions: new List<ExceptionAction> { escalateJobOnQueueOverFlow })
         }
     });
 
 Console.WriteLine($"Exception policy successfully updated with id: {updateExceptionPolicy.Value.Id}");
 Console.WriteLine($"Exception policy now has 2 exception rules: {updateExceptionPolicy.Value.ExceptionRules.Count}");
-Console.WriteLine($"`EscalateJobOnWaitTimeExceededTrigger` rule has been successfully deleted: {!updateExceptionPolicy.Value.ExceptionRules.ContainsKey("EscalateJobOnWaitTimeExceededTrigger")}");
-Console.WriteLine($"`EscalateJobOnWaitTimeExceededTrigger2Min` rule has been successfully added: {updateExceptionPolicy.Value.ExceptionRules.ContainsKey("EscalateJobOnWaitTimeExceededTrigger2Min")}");
-```
-
-## Remove from exception policy
-
-```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateExceptionPolicyRemoveProp_Async
-// we are going to remove Name
-Response updateExceptionPolicyWithoutName = await routerClient.UpdateExceptionPolicyAsync(exceptionPolicyId,
-    RequestContent.Create(new { Name = (string?)null }));
-
-Response<ExceptionPolicy> queriedExceptionPolicyWithoutName = await routerClient.GetExceptionPolicyAsync(exceptionPolicyId);
-
-Console.WriteLine($"Exception policy successfully updated: 'Name' has been removed. Status: {string.IsNullOrWhiteSpace(queriedExceptionPolicyWithoutName.Value.Name)}");
+Console.WriteLine($"`EscalateJobOnWaitTimeExceededTrigger` rule has been successfully deleted: {updateExceptionPolicy.Value.ExceptionRules.All(r => r.Id == "EscalateJobOnWaitTimeExceededTrigger")}");
+Console.WriteLine($"`EscalateJobOnWaitTimeExceededTrigger2Min` rule has been successfully added: {updateExceptionPolicy.Value.ExceptionRules.Any(r => r.Id == "EscalateJobOnWaitTimeExceededTrigger2Min")}");
 ```
 
 ## List exception policies
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetExceptionPolicies_Async
-AsyncPageable<ExceptionPolicyItem> exceptionPolicies = routerClient.GetExceptionPoliciesAsync();
-await foreach (Page<ExceptionPolicyItem> asPage in exceptionPolicies.AsPages(pageSizeHint: 10))
+AsyncPageable<ExceptionPolicy> exceptionPolicies = routerClient.GetExceptionPoliciesAsync(cancellationToken: default);
+await foreach (Page<ExceptionPolicy> asPage in exceptionPolicies.AsPages(pageSizeHint: 10))
 {
-    foreach (ExceptionPolicyItem? policy in asPage.Values)
+    foreach (ExceptionPolicy? policy in asPage.Values)
     {
-        Console.WriteLine($"Listing exception policy with id: {policy.ExceptionPolicy.Id}");
+        Console.WriteLine($"Listing exception policy with id: {policy.Id}");
     }
 }
 ```

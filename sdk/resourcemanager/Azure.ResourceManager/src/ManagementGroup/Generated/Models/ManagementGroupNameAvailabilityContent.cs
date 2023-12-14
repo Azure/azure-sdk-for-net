@@ -14,18 +14,13 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> Management group name availability check parameters. </summary>
     public partial class ManagementGroupNameAvailabilityContent
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ManagementGroupNameAvailabilityContent"/>. </summary>
         /// <param name="name"> the name to check for availability. </param>
         /// <param name="resourceType"> fully qualified resource type which includes provider namespace. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagementGroupNameAvailabilityContent(string name, ResourceType? resourceType, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagementGroupNameAvailabilityContent(string name, ResourceType? resourceType)
         {
             Name = name;
             ResourceType = resourceType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> the name to check for availability. </summary>

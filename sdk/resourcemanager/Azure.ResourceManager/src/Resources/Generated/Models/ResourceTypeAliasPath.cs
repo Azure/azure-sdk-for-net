@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The type of the paths for alias. </summary>
     public partial class ResourceTypeAliasPath
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ResourceTypeAliasPath"/>. </summary>
         internal ResourceTypeAliasPath()
         {

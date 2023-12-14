@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Compute role. </summary>
     public partial class EdgeIotRole : DataBoxEdgeRoleData
     {
-        /// <summary> Initializes a new instance of EdgeIotRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeIotRole"/>. </summary>
         public EdgeIotRole()
         {
             ShareMappings = new ChangeTrackingList<DataBoxEdgeMountPointMap>();
             Kind = DataBoxEdgeRoleType.IoT;
         }
 
-        /// <summary> Initializes a new instance of EdgeIotRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeIotRole"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> A feature for gallery image. </summary>
     public partial class GalleryImageFeature
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="GalleryImageFeature"/>. </summary>
         public GalleryImageFeature()
         {

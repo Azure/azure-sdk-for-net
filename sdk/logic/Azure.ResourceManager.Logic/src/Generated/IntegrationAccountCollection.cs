@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Logic
 {
     /// <summary>
-    /// A class representing a collection of <see cref="IntegrationAccountResource" /> and their operations.
-    /// Each <see cref="IntegrationAccountResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="IntegrationAccountCollection" /> instance call the GetIntegrationAccounts method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="IntegrationAccountResource"/> and their operations.
+    /// Each <see cref="IntegrationAccountResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="IntegrationAccountCollection"/> instance call the GetIntegrationAccounts method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class IntegrationAccountCollection : ArmCollection, IEnumerable<IntegrationAccountResource>, IAsyncEnumerable<IntegrationAccountResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IntegrationAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IntegrationAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IntegrationAccountResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IntegrationAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IntegrationAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IntegrationAccountResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
@@ -318,6 +318,80 @@ namespace Azure.ResourceManager.Logic
             {
                 var response = _integrationAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, integrationAccountName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationAccounts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="integrationAccountName"> The integration account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="integrationAccountName"/> is null. </exception>
+        public virtual async Task<NullableResponse<IntegrationAccountResource>> GetIfExistsAsync(string integrationAccountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
+
+            using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _integrationAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, integrationAccountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<IntegrationAccountResource>(response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationAccounts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="integrationAccountName"> The integration account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="integrationAccountName"/> is null. </exception>
+        public virtual NullableResponse<IntegrationAccountResource> GetIfExists(string integrationAccountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
+
+            using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _integrationAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, integrationAccountName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<IntegrationAccountResource>(response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

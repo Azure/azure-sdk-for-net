@@ -38,6 +38,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("applicationSharingPolicy"u8);
                 writer.WriteStringValue(ApplicationSharingPolicy.Value.ToString());
             }
+            if (Optional.IsDefined(AutologgerSettings))
+            {
+                if (AutologgerSettings != null)
+                {
+                    writer.WritePropertyName("autologgerSettings"u8);
+                    writer.WriteObjectValue(AutologgerSettings);
+                }
+                else
+                {
+                    writer.WriteNull("autologgerSettings");
+                }
+            }
             if (Optional.IsDefined(SshSettings))
             {
                 if (SshSettings != null)
@@ -48,6 +60,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("sshSettings");
+                }
+            }
+            if (Optional.IsCollectionDefined(CustomServices))
+            {
+                if (CustomServices != null)
+                {
+                    writer.WritePropertyName("customServices"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in CustomServices)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("customServices");
                 }
             }
             if (Optional.IsDefined(ComputeInstanceAuthorizationType))
@@ -86,10 +115,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("setupScripts");
                 }
             }
+            if (Optional.IsDefined(Schedules))
+            {
+                if (Schedules != null)
+                {
+                    writer.WritePropertyName("schedules"u8);
+                    writer.WriteObjectValue(Schedules);
+                }
+                else
+                {
+                    writer.WriteNull("schedules");
+                }
+            }
+            if (Optional.IsDefined(IdleTimeBeforeShutdown))
+            {
+                writer.WritePropertyName("idleTimeBeforeShutdown"u8);
+                writer.WriteStringValue(IdleTimeBeforeShutdown);
+            }
             if (Optional.IsDefined(EnableNodePublicIP))
             {
-                writer.WritePropertyName("enableNodePublicIp"u8);
-                writer.WriteBooleanValue(EnableNodePublicIP.Value);
+                if (EnableNodePublicIP != null)
+                {
+                    writer.WritePropertyName("enableNodePublicIp"u8);
+                    writer.WriteBooleanValue(EnableNodePublicIP.Value);
+                }
+                else
+                {
+                    writer.WriteNull("enableNodePublicIp");
+                }
             }
             writer.WriteEndObject();
         }
@@ -103,7 +156,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> vmSize = default;
             Optional<ResourceId> subnet = default;
             Optional<MachineLearningApplicationSharingPolicy> applicationSharingPolicy = default;
+            Optional<ComputeInstanceAutologgerSettings> autologgerSettings = default;
             Optional<MachineLearningComputeInstanceSshSettings> sshSettings = default;
+            Optional<IList<CustomService>> customServices = default;
+            Optional<ImageMetadata> osImageMetadata = default;
             Optional<MachineLearningComputeInstanceConnectivityEndpoints> connectivityEndpoints = default;
             Optional<IReadOnlyList<MachineLearningComputeInstanceApplication>> applications = default;
             Optional<MachineLearningComputeInstanceCreatedBy> createdBy = default;
@@ -114,7 +170,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<SetupScripts> setupScripts = default;
             Optional<MachineLearningComputeInstanceLastOperation> lastOperation = default;
             Optional<ComputeSchedules> schedules = default;
-            Optional<bool> enableNodePublicIP = default;
+            Optional<string> idleTimeBeforeShutdown = default;
+            Optional<bool?> enableNodePublicIP = default;
             Optional<IReadOnlyList<MachineLearningComputeInstanceContainer>> containers = default;
             Optional<IReadOnlyList<MachineLearningComputeInstanceDataDisk>> dataDisks = default;
             Optional<IReadOnlyList<MachineLearningComputeInstanceDataMount>> dataMounts = default;
@@ -145,6 +202,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     applicationSharingPolicy = new MachineLearningApplicationSharingPolicy(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("autologgerSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        autologgerSettings = null;
+                        continue;
+                    }
+                    autologgerSettings = ComputeInstanceAutologgerSettings.DeserializeComputeInstanceAutologgerSettings(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("sshSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -153,6 +220,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     sshSettings = MachineLearningComputeInstanceSshSettings.DeserializeMachineLearningComputeInstanceSshSettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("customServices"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        customServices = null;
+                        continue;
+                    }
+                    List<CustomService> array = new List<CustomService>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CustomService.DeserializeCustomService(item));
+                    }
+                    customServices = array;
+                    continue;
+                }
+                if (property.NameEquals("osImageMetadata"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    osImageMetadata = ImageMetadata.DeserializeImageMetadata(property.Value);
                     continue;
                 }
                 if (property.NameEquals("connectivityEndpoints"u8))
@@ -260,10 +351,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     schedules = ComputeSchedules.DeserializeComputeSchedules(property.Value);
                     continue;
                 }
+                if (property.NameEquals("idleTimeBeforeShutdown"u8))
+                {
+                    idleTimeBeforeShutdown = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("enableNodePublicIp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        enableNodePublicIP = null;
                         continue;
                     }
                     enableNodePublicIP = property.Value.GetBoolean();
@@ -324,7 +421,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningComputeInstanceProperties(vmSize.Value, subnet.Value, Optional.ToNullable(applicationSharingPolicy), sshSettings.Value, connectivityEndpoints.Value, Optional.ToList(applications), createdBy.Value, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToNullable(computeInstanceAuthorizationType), personalComputeInstanceSettings.Value, setupScripts.Value, lastOperation.Value, schedules.Value, Optional.ToNullable(enableNodePublicIP), Optional.ToList(containers), Optional.ToList(dataDisks), Optional.ToList(dataMounts), versions.Value);
+            return new MachineLearningComputeInstanceProperties(vmSize.Value, subnet.Value, Optional.ToNullable(applicationSharingPolicy), autologgerSettings.Value, sshSettings.Value, Optional.ToList(customServices), osImageMetadata.Value, connectivityEndpoints.Value, Optional.ToList(applications), createdBy.Value, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToNullable(computeInstanceAuthorizationType), personalComputeInstanceSettings.Value, setupScripts.Value, lastOperation.Value, schedules.Value, idleTimeBeforeShutdown.Value, Optional.ToNullable(enableNodePublicIP), Optional.ToList(containers), Optional.ToList(dataDisks), Optional.ToList(dataMounts), versions.Value);
         }
     }
 }

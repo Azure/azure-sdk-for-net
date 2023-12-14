@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> All properties of the provisioned cluster. </summary>
     public partial class ProvisionedClustersAllProperties : ProvisionedClustersPropertiesWithSecrets
     {
-        /// <summary> Initializes a new instance of ProvisionedClustersAllProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersAllProperties"/>. </summary>
         public ProvisionedClustersAllProperties()
         {
             AddonProfiles = new ChangeTrackingDictionary<string, AddonProfiles>();
             AgentPoolProfiles = new ChangeTrackingList<NamedAgentPoolProfile>();
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClustersAllProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersAllProperties"/>. </summary>
         /// <param name="aadProfile"> AAD profile for the provisioned cluster. </param>
         /// <param name="windowsProfile"> WindowsProfile - Profile for Windows VMs in the Provisioned Cluster. </param>
         /// <param name="httpProxyConfig"> HttpProxyConfig - Configurations for provisioning the cluster with HTTP proxy servers. </param>

@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an ExpressRouteCircuitPeering along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExpressRouteCircuitPeeringResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExpressRouteCircuitPeeringResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ExpressRouteCircuitResource" /> using the GetExpressRouteCircuitPeering method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExpressRouteCircuitPeeringResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExpressRouteCircuitPeeringResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ExpressRouteCircuitResource"/> using the GetExpressRouteCircuitPeering method.
     /// </summary>
     public partial class ExpressRouteCircuitPeeringResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ExpressRouteCircuitPeeringResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="circuitName"> The circuitName. </param>
+        /// <param name="peeringName"> The peeringName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string circuitName, string peeringName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}";
@@ -38,12 +42,15 @@ namespace Azure.ResourceManager.Network
         private readonly ExpressRouteCircuitsRestOperations _expressRouteCircuitRestClient;
         private readonly ExpressRouteCircuitPeeringData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/expressRouteCircuits/peerings";
+
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteCircuitPeeringResource"/> class for mocking. </summary>
         protected ExpressRouteCircuitPeeringResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExpressRouteCircuitPeeringResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRouteCircuitPeeringResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExpressRouteCircuitPeeringResource(ArmClient client, ExpressRouteCircuitPeeringData data) : this(client, data.Id)
@@ -67,9 +74,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/expressRouteCircuits/peerings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -96,7 +100,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRouteCircuitConnectionResources and their operations over a ExpressRouteCircuitConnectionResource. </returns>
         public virtual ExpressRouteCircuitConnectionCollection GetExpressRouteCircuitConnections()
         {
-            return GetCachedClient(Client => new ExpressRouteCircuitConnectionCollection(Client, Id));
+            return GetCachedClient(client => new ExpressRouteCircuitConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +118,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="connectionName"> The name of the express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRouteCircuitConnectionResource>> GetExpressRouteCircuitConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +141,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="connectionName"> The name of the express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ExpressRouteCircuitConnectionResource> GetExpressRouteCircuitConnection(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -149,7 +153,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of PeerExpressRouteCircuitConnectionResources and their operations over a PeerExpressRouteCircuitConnectionResource. </returns>
         public virtual PeerExpressRouteCircuitConnectionCollection GetPeerExpressRouteCircuitConnections()
         {
-            return GetCachedClient(Client => new PeerExpressRouteCircuitConnectionCollection(Client, Id));
+            return GetCachedClient(client => new PeerExpressRouteCircuitConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -167,8 +171,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="connectionName"> The name of the peer express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PeerExpressRouteCircuitConnectionResource>> GetPeerExpressRouteCircuitConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -190,8 +194,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="connectionName"> The name of the peer express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PeerExpressRouteCircuitConnectionResource> GetPeerExpressRouteCircuitConnection(string connectionName, CancellationToken cancellationToken = default)
         {

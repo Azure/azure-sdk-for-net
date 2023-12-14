@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies a list of role instances from the cloud service. </summary>
     public partial class RoleInstances
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="RoleInstances"/>. </summary>
         /// <param name="roleInstancesValue"> List of cloud service role instance names. Value of '*' will signify all role instances of the cloud service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstancesValue"/> is null. </exception>
@@ -30,16 +27,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="RoleInstances"/>. </summary>
         /// <param name="roleInstancesValue"> List of cloud service role instance names. Value of '*' will signify all role instances of the cloud service. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RoleInstances(IList<string> roleInstancesValue, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RoleInstances(IList<string> roleInstancesValue)
         {
             RoleInstancesValue = roleInstancesValue;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RoleInstances"/> for deserialization. </summary>
-        internal RoleInstances()
-        {
         }
 
         /// <summary> List of cloud service role instance names. Value of '*' will signify all role instances of the cloud service. </summary>

@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes an upgrade policy - automatic, manual, or rolling. </summary>
     public partial class VirtualMachineScaleSetUpgradePolicy
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpgradePolicy"/>. </summary>
         public VirtualMachineScaleSetUpgradePolicy()
         {

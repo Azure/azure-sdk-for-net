@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Enables or disables a capability on the dedicated host group. Minimum api-version: 2022-03-01. </summary>
     internal partial class DedicatedHostGroupPropertiesAdditionalCapabilities
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DedicatedHostGroupPropertiesAdditionalCapabilities"/>. </summary>
         public DedicatedHostGroupPropertiesAdditionalCapabilities()
         {

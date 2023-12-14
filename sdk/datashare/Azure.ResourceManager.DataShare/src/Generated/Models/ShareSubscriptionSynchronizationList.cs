@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A consumer side list of share subscription synchronizations. </summary>
     internal partial class ShareSubscriptionSynchronizationList
     {
-        /// <summary> Initializes a new instance of ShareSubscriptionSynchronizationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareSubscriptionSynchronizationList"/>. </summary>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ShareSubscriptionSynchronizationList(IEnumerable<ShareSubscriptionSynchronization> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ShareSubscriptionSynchronizationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareSubscriptionSynchronizationList"/>. </summary>
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
         internal ShareSubscriptionSynchronizationList(string nextLink, IReadOnlyList<ShareSubscriptionSynchronization> value)

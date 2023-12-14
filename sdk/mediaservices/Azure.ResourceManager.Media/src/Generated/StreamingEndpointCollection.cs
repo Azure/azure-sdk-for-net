@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Media
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StreamingEndpointResource" /> and their operations.
-    /// Each <see cref="StreamingEndpointResource" /> in the collection will belong to the same instance of <see cref="MediaServicesAccountResource" />.
-    /// To get a <see cref="StreamingEndpointCollection" /> instance call the GetStreamingEndpoints method from an instance of <see cref="MediaServicesAccountResource" />.
+    /// A class representing a collection of <see cref="StreamingEndpointResource"/> and their operations.
+    /// Each <see cref="StreamingEndpointResource"/> in the collection will belong to the same instance of <see cref="MediaServicesAccountResource"/>.
+    /// To get a <see cref="StreamingEndpointCollection"/> instance call the GetStreamingEndpoints method from an instance of <see cref="MediaServicesAccountResource"/>.
     /// </summary>
     public partial class StreamingEndpointCollection : ArmCollection, IEnumerable<StreamingEndpointResource>, IAsyncEnumerable<StreamingEndpointResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StreamingEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StreamingEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamingEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingEndpointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StreamingEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StreamingEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamingEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingEndpointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -317,6 +317,80 @@ namespace Azure.ResourceManager.Media
             {
                 var response = _streamingEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingEndpointName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingEndpoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="streamingEndpointName"> The name of the streaming endpoint, maximum length is 24. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="streamingEndpointName"/> is null. </exception>
+        public virtual async Task<NullableResponse<StreamingEndpointResource>> GetIfExistsAsync(string streamingEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
+
+            using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _streamingEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<StreamingEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new StreamingEndpointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingEndpoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="streamingEndpointName"> The name of the streaming endpoint, maximum length is 24. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="streamingEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="streamingEndpointName"/> is null. </exception>
+        public virtual NullableResponse<StreamingEndpointResource> GetIfExists(string streamingEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(streamingEndpointName, nameof(streamingEndpointName));
+
+            using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _streamingEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingEndpointName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<StreamingEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new StreamingEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

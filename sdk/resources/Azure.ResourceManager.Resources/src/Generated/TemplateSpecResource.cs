@@ -20,13 +20,16 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing a TemplateSpec along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TemplateSpecResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTemplateSpecResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetTemplateSpec method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TemplateSpecResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTemplateSpecResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetTemplateSpec method.
     /// </summary>
     public partial class TemplateSpecResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TemplateSpecResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="templateSpecName"> The templateSpecName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string templateSpecName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}";
@@ -37,12 +40,15 @@ namespace Azure.ResourceManager.Resources
         private readonly TemplateSpecsRestOperations _templateSpecRestClient;
         private readonly TemplateSpecData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/templateSpecs";
+
         /// <summary> Initializes a new instance of the <see cref="TemplateSpecResource"/> class for mocking. </summary>
         protected TemplateSpecResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TemplateSpecResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TemplateSpecResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TemplateSpecResource(ArmClient client, TemplateSpecData data) : this(client, data.Id)
@@ -63,9 +69,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/templateSpecs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -92,7 +95,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of TemplateSpecVersionResources and their operations over a TemplateSpecVersionResource. </returns>
         public virtual TemplateSpecVersionCollection GetTemplateSpecVersions()
         {
-            return GetCachedClient(Client => new TemplateSpecVersionCollection(Client, Id));
+            return GetCachedClient(client => new TemplateSpecVersionCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +113,8 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<TemplateSpecVersionResource>> GetTemplateSpecVersionAsync(string templateSpecVersion, CancellationToken cancellationToken = default)
         {
@@ -133,8 +136,8 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecVersion"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<TemplateSpecVersionResource> GetTemplateSpecVersion(string templateSpecVersion, CancellationToken cancellationToken = default)
         {

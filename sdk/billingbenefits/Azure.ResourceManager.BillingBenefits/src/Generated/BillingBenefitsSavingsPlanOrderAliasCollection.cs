@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.BillingBenefits
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BillingBenefitsSavingsPlanOrderAliasResource" /> and their operations.
-    /// Each <see cref="BillingBenefitsSavingsPlanOrderAliasResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="BillingBenefitsSavingsPlanOrderAliasCollection" /> instance call the GetBillingBenefitsSavingsPlanOrderAliases method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/> and their operations.
+    /// Each <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="BillingBenefitsSavingsPlanOrderAliasCollection"/> instance call the GetBillingBenefitsSavingsPlanOrderAliases method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class BillingBenefitsSavingsPlanOrderAliasCollection : ArmCollection
     {
@@ -269,6 +269,80 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 var response = _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient.Get(savingsPlanOrderAliasName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlanOrderAlias_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderAliasName"/> is null. </exception>
+        public virtual async Task<NullableResponse<BillingBenefitsSavingsPlanOrderAliasResource>> GetIfExistsAsync(string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderAliasName, nameof(savingsPlanOrderAliasName));
+
+            using var scope = _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanOrderAliasCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient.GetAsync(savingsPlanOrderAliasName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<BillingBenefitsSavingsPlanOrderAliasResource>(response.GetRawResponse());
+                return Response.FromValue(new BillingBenefitsSavingsPlanOrderAliasResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlanOrderAlias_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderAliasName"/> is null. </exception>
+        public virtual NullableResponse<BillingBenefitsSavingsPlanOrderAliasResource> GetIfExists(string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderAliasName, nameof(savingsPlanOrderAliasName));
+
+            using var scope = _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanOrderAliasCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient.Get(savingsPlanOrderAliasName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<BillingBenefitsSavingsPlanOrderAliasResource>(response.GetRawResponse());
+                return Response.FromValue(new BillingBenefitsSavingsPlanOrderAliasResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// A class representing the MyWorkbook data model.
     /// An Application Insights private workbook definition.
     /// </summary>
-    public partial class MyWorkbookData : Models.MyWorkbookResource
+    public partial class MyWorkbookData : MyWorkbookResourceContent
     {
-        /// <summary> Initializes a new instance of MyWorkbookData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MyWorkbookData"/>. </summary>
         public MyWorkbookData()
         {
         }
 
-        /// <summary> Initializes a new instance of MyWorkbookData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MyWorkbookData"/>. </summary>
         /// <param name="identity"> Identity used for BYOS. </param>
         /// <param name="id"> Azure resource Id. </param>
         /// <param name="name"> Azure resource name. </param>

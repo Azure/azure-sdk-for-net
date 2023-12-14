@@ -21,9 +21,9 @@ using Azure.ResourceManager.CosmosDB.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CassandraViewGetResultResource" /> and their operations.
-    /// Each <see cref="CassandraViewGetResultResource" /> in the collection will belong to the same instance of <see cref="CassandraKeyspaceResource" />.
-    /// To get a <see cref="CassandraViewGetResultCollection" /> instance call the GetCassandraViewGetResults method from an instance of <see cref="CassandraKeyspaceResource" />.
+    /// A class representing a collection of <see cref="CassandraViewGetResultResource"/> and their operations.
+    /// Each <see cref="CassandraViewGetResultResource"/> in the collection will belong to the same instance of <see cref="CassandraKeyspaceResource"/>.
+    /// To get a <see cref="CassandraViewGetResultCollection"/> instance call the GetCassandraViewGetResults method from an instance of <see cref="CassandraKeyspaceResource"/>.
     /// </summary>
     public partial class CassandraViewGetResultCollection : ArmCollection, IEnumerable<CassandraViewGetResultResource>, IAsyncEnumerable<CassandraViewGetResultResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CassandraViewGetResultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CassandraViewGetResultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CassandraViewGetResultResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraViewGetResultCassandraResourcesRestClient.CreateListCassandraViewsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CassandraViewGetResultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CassandraViewGetResultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CassandraViewGetResultResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraViewGetResultCassandraResourcesRestClient.CreateListCassandraViewsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -314,6 +314,80 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _cassandraViewGetResultCassandraResourcesRestClient.GetCassandraView(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, viewName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/views/{viewName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraResources_GetCassandraView</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="viewName"> Cosmos DB view name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CassandraViewGetResultResource>> GetIfExistsAsync(string viewName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+
+            using var scope = _cassandraViewGetResultCassandraResourcesClientDiagnostics.CreateScope("CassandraViewGetResultCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _cassandraViewGetResultCassandraResourcesRestClient.GetCassandraViewAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, viewName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CassandraViewGetResultResource>(response.GetRawResponse());
+                return Response.FromValue(new CassandraViewGetResultResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/views/{viewName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraResources_GetCassandraView</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="viewName"> Cosmos DB view name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
+        public virtual NullableResponse<CassandraViewGetResultResource> GetIfExists(string viewName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+
+            using var scope = _cassandraViewGetResultCassandraResourcesClientDiagnostics.CreateScope("CassandraViewGetResultCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _cassandraViewGetResultCassandraResourcesRestClient.GetCassandraView(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, viewName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CassandraViewGetResultResource>(response.GetRawResponse());
+                return Response.FromValue(new CassandraViewGetResultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

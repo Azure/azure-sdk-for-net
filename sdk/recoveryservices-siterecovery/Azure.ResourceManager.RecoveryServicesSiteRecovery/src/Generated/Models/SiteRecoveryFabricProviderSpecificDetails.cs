@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Azure Fabric Specific Details. </summary>
     public partial class SiteRecoveryFabricProviderSpecificDetails : FabricSpecificDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryFabricProviderSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricProviderSpecificDetails"/>. </summary>
         internal SiteRecoveryFabricProviderSpecificDetails()
         {
             ContainerIds = new ChangeTrackingList<ResourceIdentifier>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "Azure";
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryFabricProviderSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricProviderSpecificDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="location"> The Location for the Azure fabric. </param>
         /// <param name="containerIds"> The container Ids for the Azure fabric. </param>

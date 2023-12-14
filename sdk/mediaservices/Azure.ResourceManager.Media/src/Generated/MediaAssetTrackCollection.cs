@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Media
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MediaAssetTrackResource" /> and their operations.
-    /// Each <see cref="MediaAssetTrackResource" /> in the collection will belong to the same instance of <see cref="MediaAssetResource" />.
-    /// To get a <see cref="MediaAssetTrackCollection" /> instance call the GetMediaAssetTracks method from an instance of <see cref="MediaAssetResource" />.
+    /// A class representing a collection of <see cref="MediaAssetTrackResource"/> and their operations.
+    /// Each <see cref="MediaAssetTrackResource"/> in the collection will belong to the same instance of <see cref="MediaAssetResource"/>.
+    /// To get a <see cref="MediaAssetTrackCollection"/> instance call the GetMediaAssetTracks method from an instance of <see cref="MediaAssetResource"/>.
     /// </summary>
     public partial class MediaAssetTrackCollection : ArmCollection, IEnumerable<MediaAssetTrackResource>, IAsyncEnumerable<MediaAssetTrackResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MediaAssetTrackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MediaAssetTrackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MediaAssetTrackResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetTrackTracksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MediaAssetTrackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MediaAssetTrackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MediaAssetTrackResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetTrackTracksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -313,6 +313,80 @@ namespace Azure.ResourceManager.Media
             {
                 var response = _mediaAssetTrackTracksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, trackName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tracks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="trackName"> The Asset Track name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="trackName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MediaAssetTrackResource>> GetIfExistsAsync(string trackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(trackName, nameof(trackName));
+
+            using var scope = _mediaAssetTrackTracksClientDiagnostics.CreateScope("MediaAssetTrackCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mediaAssetTrackTracksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, trackName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MediaAssetTrackResource>(response.GetRawResponse());
+                return Response.FromValue(new MediaAssetTrackResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tracks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="trackName"> The Asset Track name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="trackName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> is null. </exception>
+        public virtual NullableResponse<MediaAssetTrackResource> GetIfExists(string trackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(trackName, nameof(trackName));
+
+            using var scope = _mediaAssetTrackTracksClientDiagnostics.CreateScope("MediaAssetTrackCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mediaAssetTrackTracksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, trackName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MediaAssetTrackResource>(response.GetRawResponse());
+                return Response.FromValue(new MediaAssetTrackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

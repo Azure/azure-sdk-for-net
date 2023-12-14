@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Support
     /// </summary>
     public partial class SupportAzureServiceData : ResourceData
     {
-        /// <summary> Initializes a new instance of SupportAzureServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportAzureServiceData"/>. </summary>
         internal SupportAzureServiceData()
         {
             ResourceTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SupportAzureServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportAzureServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

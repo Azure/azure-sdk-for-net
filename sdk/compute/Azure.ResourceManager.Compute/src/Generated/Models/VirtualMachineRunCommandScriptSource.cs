@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the script sources for run command. Use only one of script, scriptUri, commandId. </summary>
     public partial class VirtualMachineRunCommandScriptSource
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="VirtualMachineRunCommandScriptSource"/>. </summary>
         public VirtualMachineRunCommandScriptSource()
         {

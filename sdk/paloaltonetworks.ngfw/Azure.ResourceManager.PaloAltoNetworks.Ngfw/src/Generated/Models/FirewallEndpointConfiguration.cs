@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Endpoint Configuration for frontend and backend. </summary>
     public partial class FirewallEndpointConfiguration
     {
-        /// <summary> Initializes a new instance of FirewallEndpointConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallEndpointConfiguration"/>. </summary>
         /// <param name="port"> port ID. </param>
         /// <param name="address"> Address Space. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="port"/> or <paramref name="address"/> is null. </exception>

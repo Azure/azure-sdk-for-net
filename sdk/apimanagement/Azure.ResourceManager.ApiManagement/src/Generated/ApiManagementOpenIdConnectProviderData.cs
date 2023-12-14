@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementOpenIdConnectProviderData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementOpenIdConnectProviderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementOpenIdConnectProviderData"/>. </summary>
         public ApiManagementOpenIdConnectProviderData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementOpenIdConnectProviderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementOpenIdConnectProviderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

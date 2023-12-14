@@ -20,7 +20,8 @@ namespace Azure.ResourceManager.DataShare
         {
             writer.WriteStartObject();
             writer.WritePropertyName("identity"u8);
-            JsonSerializer.Serialize(writer, Identity); if (Optional.IsCollectionDefined(Tags))
+            JsonSerializer.Serialize(writer, Identity);
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

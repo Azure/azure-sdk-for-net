@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The name of the extended location. </summary>
     public partial class GalleryExtendedLocation
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="GalleryExtendedLocation"/>. </summary>
         public GalleryExtendedLocation()
         {

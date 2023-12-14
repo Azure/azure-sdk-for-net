@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> Restore parameters. </summary>
     public partial class OperationalInsightsTableRestoredLogs
     {
-        /// <summary> Initializes a new instance of OperationalInsightsTableRestoredLogs. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsTableRestoredLogs"/>. </summary>
         public OperationalInsightsTableRestoredLogs()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsTableRestoredLogs. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsTableRestoredLogs"/>. </summary>
         /// <param name="startRestoreOn"> The timestamp to start the restore from (UTC). </param>
         /// <param name="endRestoreOn"> The timestamp to end the restore by (UTC). </param>
         /// <param name="sourceTable"> The table to restore data from. </param>

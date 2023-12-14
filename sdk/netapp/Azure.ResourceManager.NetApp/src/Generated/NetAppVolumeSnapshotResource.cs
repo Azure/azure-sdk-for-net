@@ -19,13 +19,19 @@ namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
     /// A Class representing a NetAppVolumeSnapshot along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetAppVolumeSnapshotResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetAppVolumeSnapshotResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetAppVolumeResource" /> using the GetNetAppVolumeSnapshot method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetAppVolumeSnapshotResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetAppVolumeSnapshotResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetAppVolumeResource"/> using the GetNetAppVolumeSnapshot method.
     /// </summary>
     public partial class NetAppVolumeSnapshotResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetAppVolumeSnapshotResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="poolName"> The poolName. </param>
+        /// <param name="volumeName"> The volumeName. </param>
+        /// <param name="snapshotName"> The snapshotName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/snapshots/{snapshotName}";
@@ -36,12 +42,15 @@ namespace Azure.ResourceManager.NetApp
         private readonly SnapshotsRestOperations _netAppVolumeSnapshotSnapshotsRestClient;
         private readonly NetAppVolumeSnapshotData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots";
+
         /// <summary> Initializes a new instance of the <see cref="NetAppVolumeSnapshotResource"/> class for mocking. </summary>
         protected NetAppVolumeSnapshotResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetAppVolumeSnapshotResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetAppVolumeSnapshotResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetAppVolumeSnapshotResource(ArmClient client, NetAppVolumeSnapshotData data) : this(client, data.Id)
@@ -62,9 +71,6 @@ namespace Azure.ResourceManager.NetApp
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

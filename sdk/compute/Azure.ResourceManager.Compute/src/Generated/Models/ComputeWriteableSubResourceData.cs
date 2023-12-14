@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The ComputeWriteableSubResourceData. </summary>
     public partial class ComputeWriteableSubResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ComputeWriteableSubResourceData"/>. </summary>
         public ComputeWriteableSubResourceData()
         {

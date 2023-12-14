@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudVolumeData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkCloudVolumeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudVolumeData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="sizeInMiB"> The size of the allocation for this volume in Mebibytes. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud
             SizeInMiB = sizeInMiB;
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudVolumeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudVolumeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

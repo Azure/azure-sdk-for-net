@@ -91,6 +91,16 @@ function Test-RequiredDocsJsonMembers($moniker) {
       $script:FoundError = $true
     }
 
+    if ($fileObject.PSObject.Members.Name -contains 'DirectoryPath') {
+      if ($null -eq $fileObject.DirectoryPath) { 
+        Write-Host "$path has a null DirectoryPath member. If the DirectoryPath is unknown please use the value `"`"."
+        $script:FoundError = $true
+      }
+    } else { 
+      Write-Host "$path is missing its DirectoryPath member. If the DirectoryPath is unknown please use the value `"`"."
+      $script:FoundError = $true
+    }
+
     if ($Language -eq "java") {
       if ($fileObject.PSObject.Members.Name -contains "Group")
       {

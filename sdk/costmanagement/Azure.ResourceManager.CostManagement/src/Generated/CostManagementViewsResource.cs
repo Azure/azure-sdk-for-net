@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
     /// A Class representing a CostManagementViews along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CostManagementViewsResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCostManagementViewsResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetCostManagementViews method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CostManagementViewsResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCostManagementViewsResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetCostManagementViews method.
     /// </summary>
     public partial class CostManagementViewsResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CostManagementViewsResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="viewName"> The viewName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string viewName)
         {
             var resourceId = $"{scope}/providers/Microsoft.CostManagement/views/{viewName}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.CostManagement
         private readonly ViewsRestOperations _costManagementViewsViewsRestClient;
         private readonly CostManagementViewData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CostManagement/views";
+
         /// <summary> Initializes a new instance of the <see cref="CostManagementViewsResource"/> class for mocking. </summary>
         protected CostManagementViewsResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CostManagementViewsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CostManagementViewsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CostManagementViewsResource(ArmClient client, CostManagementViewData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.CostManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CostManagement/views";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

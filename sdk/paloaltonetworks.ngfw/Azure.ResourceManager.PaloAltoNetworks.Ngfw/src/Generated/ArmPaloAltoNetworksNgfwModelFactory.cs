@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmPaloAltoNetworksNgfwModelFactory
     {
-        /// <summary> Initializes a new instance of GlobalRulestackData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Ngfw.GlobalRulestackData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new GlobalRulestackData(id, name, resourceType, systemData, location, identity, panETag, panLocation, scope, associatedSubscriptions?.ToList(), description, defaultMode, minAppIdVersion, provisioningState, securityServices);
         }
 
-        /// <summary> Initializes a new instance of GlobalRulestackCertificateObjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Ngfw.GlobalRulestackCertificateObjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new GlobalRulestackCertificateObjectData(id, name, resourceType, systemData, certificateSignerResourceId, certificateSelfSigned, auditComment, description, etag, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of GlobalRulestackFqdnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Ngfw.GlobalRulestackFqdnData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new GlobalRulestackFqdnData(id, name, resourceType, systemData, description, fqdnList?.ToList(), etag, auditComment, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of RulestackChangelog. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RulestackChangelog"/>. </summary>
         /// <param name="changes"> list of changes. </param>
         /// <param name="lastCommittedOn"> lastCommitted timestamp. </param>
         /// <param name="lastModifiedOn"> lastModified timestamp. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new RulestackChangelog(changes?.ToList(), lastCommittedOn, lastModifiedOn);
         }
 
-        /// <summary> Initializes a new instance of AdvancedSecurityObjectListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AdvancedSecurityObjectListResult"/>. </summary>
         /// <param name="value"> response value. </param>
         /// <param name="nextLink"> next link. </param>
         /// <returns> A new <see cref="Models.AdvancedSecurityObjectListResult"/> instance for mocking. </returns>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new AdvancedSecurityObjectListResult(value, nextLink);
         }
 
-        /// <summary> Initializes a new instance of AdvancedSecurityObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AdvancedSecurityObject"/>. </summary>
         /// <param name="advSecurityObjectModelType"> type of object. </param>
         /// <param name="entry"> URL entry. </param>
         /// <returns> A new <see cref="Models.AdvancedSecurityObject"/> instance for mocking. </returns>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new AdvancedSecurityObject(advSecurityObjectModelType, entry?.ToList());
         }
 
-        /// <summary> Initializes a new instance of NameDescriptionObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NameDescriptionObject"/>. </summary>
         /// <param name="name"> name value. </param>
         /// <param name="description"> description value. </param>
         /// <returns> A new <see cref="Models.NameDescriptionObject"/> instance for mocking. </returns>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new NameDescriptionObject(name, description);
         }
 
-        /// <summary> Initializes a new instance of RulestackCountry. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RulestackCountry"/>. </summary>
         /// <param name="code"> country code. </param>
         /// <param name="description"> code description. </param>
         /// <returns> A new <see cref="Models.RulestackCountry"/> instance for mocking. </returns>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new RulestackCountry(code, description);
         }
 
-        /// <summary> Initializes a new instance of PredefinedUrlCategory. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PredefinedUrlCategory"/>. </summary>
         /// <param name="action"></param>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="name"/> is null. </exception>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new PredefinedUrlCategory(action, name);
         }
 
-        /// <summary> Initializes a new instance of RulestackSecurityServiceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RulestackSecurityServiceListResult"/>. </summary>
         /// <param name="value"> response value. </param>
         /// <param name="nextLink"> next link. </param>
         /// <returns> A new <see cref="Models.RulestackSecurityServiceListResult"/> instance for mocking. </returns>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new RulestackSecurityServiceListResult(value, nextLink);
         }
 
-        /// <summary> Initializes a new instance of RulestackSecurityServiceTypeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RulestackSecurityServiceTypeList"/>. </summary>
         /// <param name="securityServicesTypeListType"> security services type. </param>
         /// <param name="entry"> list. </param>
         /// <returns> A new <see cref="Models.RulestackSecurityServiceTypeList"/> instance for mocking. </returns>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new RulestackSecurityServiceTypeList(securityServicesTypeListType, entry?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PostRulestackRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Ngfw.PostRulestackRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new PostRulestackRuleData(id, name, resourceType, systemData, etag, ruleName, priority, description, ruleState, source, negateSource, destination, negateDestination, applications?.ToList(), category, protocol, protocolPortList?.ToList(), inboundInspectionCertificate, auditComment, actionType, enableLogging, decryptionRuleType, tags?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of FirewallRuleCounter. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FirewallRuleCounter"/>. </summary>
         /// <param name="priority"> priority number. </param>
         /// <param name="ruleStackName"> rule Stack Name. </param>
         /// <param name="ruleListName"> rule list name. </param>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new FirewallRuleCounter(priority, ruleStackName, ruleListName, firewallName, ruleName, hitCount, appSeen, responseOn, requestOn, lastUpdatedOn);
         }
 
-        /// <summary> Initializes a new instance of AppSeenInfoList. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppSeenInfoList"/>. </summary>
         /// <param name="count"> number of rows. </param>
         /// <param name="appSeenList"> array of appSeen. </param>
         /// <returns> A new <see cref="Models.AppSeenInfoList"/> instance for mocking. </returns>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new AppSeenInfoList(count, appSeenList?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppSeenInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppSeenInfo"/>. </summary>
         /// <param name="title"> title. </param>
         /// <param name="category"> category. </param>
         /// <param name="subCategory"> subCategory. </param>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new AppSeenInfo(title, category, subCategory, risk, tag, technology, standardPorts);
         }
 
-        /// <summary> Initializes a new instance of FirewallRuleResetConter. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FirewallRuleResetConter"/>. </summary>
         /// <param name="priority"> priority number. </param>
         /// <param name="ruleStackName"> rule Stack Name. </param>
         /// <param name="ruleListName"> rule list name. </param>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new FirewallRuleResetConter(priority, ruleStackName, ruleListName, firewallName, ruleName);
         }
 
-        /// <summary> Initializes a new instance of GlobalRulestackPrefixData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Ngfw.GlobalRulestackPrefixData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new GlobalRulestackPrefixData(id, name, resourceType, systemData, description, prefixList?.ToList(), etag, auditComment, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of PreRulestackRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Ngfw.PreRulestackRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new PreRulestackRuleData(id, name, resourceType, systemData, etag, ruleName, priority, description, ruleState, source, negateSource, destination, negateDestination, applications?.ToList(), category, protocol, protocolPortList?.ToList(), inboundInspectionCertificate, auditComment, actionType, enableLogging, decryptionRuleType, tags?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of PaloAltoNetworksFirewallData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Ngfw.PaloAltoNetworksFirewallData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new PaloAltoNetworksFirewallData(id, name, resourceType, systemData, tags, location, identity, panETag, networkProfile, isPanoramaManaged, panoramaConfig, associatedRulestack, dnsSettings, frontEndSettings?.ToList(), provisioningState, planData, marketplaceDetails);
         }
 
-        /// <summary> Initializes a new instance of FirewallPanoramaConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FirewallPanoramaConfiguration"/>. </summary>
         /// <param name="configString"> Base64 encoded string representing Panorama parameters to be used by Firewall to connect to Panorama. This string is generated via azure plugin in Panorama. </param>
         /// <param name="vmAuthKey"> VM auth key for panorama connectivity. </param>
         /// <param name="panoramaServer"> Primary Panorama Server IP address value in dotted format for IPv4. </param>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new FirewallPanoramaConfiguration(configString, vmAuthKey, panoramaServer, panoramaServer2, dgName, tplName, cgName, hostName);
         }
 
-        /// <summary> Initializes a new instance of FirewallBillingPlanInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FirewallBillingPlanInfo"/>. </summary>
         /// <param name="usageType"> different usage type like PAYG/COMMITTED. </param>
         /// <param name="billingCycle"> different billing cycles like MONTHLY/WEEKLY. </param>
         /// <param name="planId"> plan id as published by Liftr.PAN. </param>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new FirewallBillingPlanInfo(usageType, billingCycle, planId, effectiveOn);
         }
 
-        /// <summary> Initializes a new instance of PanFirewallMarketplaceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PanFirewallMarketplaceDetails"/>. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
         /// <param name="offerId"> Offer Id. </param>
         /// <param name="publisherId"> Publisher Id. </param>
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new PanFirewallMarketplaceDetails(marketplaceSubscriptionId, offerId, publisherId, marketplaceSubscriptionStatus);
         }
 
-        /// <summary> Initializes a new instance of LocalRulestackData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Ngfw.LocalRulestackData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new LocalRulestackData(id, name, resourceType, systemData, tags, location, identity, panETag, panLocation, scope, associatedSubscriptions?.ToList(), description, defaultMode, minAppIdVersion, provisioningState, securityServices);
         }
 
-        /// <summary> Initializes a new instance of GlobalRulestackInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GlobalRulestackInfo"/>. </summary>
         /// <param name="azureId"> rulestack description. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureId"/> is null. </exception>
         /// <returns> A new <see cref="Models.GlobalRulestackInfo"/> instance for mocking. </returns>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new GlobalRulestackInfo(azureId);
         }
 
-        /// <summary> Initializes a new instance of FirewallSupportInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FirewallSupportInfo"/>. </summary>
         /// <param name="productSku"> product SKU associated with given resource. </param>
         /// <param name="productSerial"> product Serial associated with given resource. </param>
         /// <param name="accountRegistered"> account registered in Customer Support Portal. </param>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new FirewallSupportInfo(productSku, productSerial, accountRegistered, accountId, userDomainSupported, userRegistered, freeTrial, freeTrialDaysLeft, freeTrialCreditLeft, helpURL, supportURL, registerURL);
         }
 
-        /// <summary> Initializes a new instance of PaloAltoNetworksFirewallStatusData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Ngfw.PaloAltoNetworksFirewallStatusData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new PaloAltoNetworksFirewallStatusData(id, name, resourceType, systemData, isPanoramaManaged, healthStatus, healthReason, panoramaStatus, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of FirewallPanoramaStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FirewallPanoramaStatus"/>. </summary>
         /// <param name="panoramaServerStatus"> Primary Panorama connection status. </param>
         /// <param name="panoramaServer2Status"> Secondary Panorama connection status. </param>
         /// <returns> A new <see cref="Models.FirewallPanoramaStatus"/> instance for mocking. </returns>
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new FirewallPanoramaStatus(panoramaServerStatus, panoramaServer2Status);
         }
 
-        /// <summary> Initializes a new instance of LocalRulestackCertificateObjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Ngfw.LocalRulestackCertificateObjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new LocalRulestackCertificateObjectData(id, name, resourceType, systemData, certificateSignerResourceId, certificateSelfSigned, auditComment, description, etag, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of LocalRulestackFqdnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Ngfw.LocalRulestackFqdnData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new LocalRulestackFqdnData(id, name, resourceType, systemData, description, fqdnList?.ToList(), etag, auditComment, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of LocalRulestackRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Ngfw.LocalRulestackRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new LocalRulestackRuleData(id, name, resourceType, systemData, etag, ruleName, priority, description, ruleState, source, negateSource, destination, negateDestination, applications?.ToList(), category, protocol, protocolPortList?.ToList(), inboundInspectionCertificate, auditComment, actionType, enableLogging, decryptionRuleType, tags?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of LocalRulestackPrefixData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Ngfw.LocalRulestackPrefixData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

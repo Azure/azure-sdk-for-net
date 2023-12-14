@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
     /// A Class representing a ProjectFile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProjectFileResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetProjectFileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProjectResource" /> using the GetProjectFile method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProjectFileResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetProjectFileResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProjectResource"/> using the GetProjectFile method.
     /// </summary>
     public partial class ProjectFileResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ProjectFileResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="groupName"> The groupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="projectName"> The projectName. </param>
+        /// <param name="fileName"> The fileName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string groupName, string serviceName, string projectName, string fileName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/files/{fileName}";
@@ -36,12 +41,15 @@ namespace Azure.ResourceManager.DataMigration
         private readonly FilesRestOperations _projectFileFilesRestClient;
         private readonly ProjectFileData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly Core.ResourceType ResourceType = "Microsoft.DataMigration/services/projects/files";
+
         /// <summary> Initializes a new instance of the <see cref="ProjectFileResource"/> class for mocking. </summary>
         protected ProjectFileResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ProjectFileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProjectFileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ProjectFileResource(ArmClient client, ProjectFileData data) : this(client, data.Id)
@@ -62,9 +70,6 @@ namespace Azure.ResourceManager.DataMigration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.DataMigration/services/projects/files";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

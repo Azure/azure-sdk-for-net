@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The definition of a parameter that can be passed to a custom action of a Gallery Application Version. </summary>
     public partial class GalleryApplicationCustomActionParameter
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="GalleryApplicationCustomActionParameter"/>. </summary>
         /// <param name="name"> The name of the custom action.  Must be unique within the Gallery Application Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

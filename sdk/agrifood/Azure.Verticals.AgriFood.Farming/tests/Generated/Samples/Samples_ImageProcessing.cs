@@ -6,27 +6,43 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Identity;
+using Azure.Verticals.AgriFood.Farming;
 using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_ImageProcessing
+    public partial class Samples_ImageProcessing
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetRasterizeJob()
+        public void Example_GetRasterizeJob_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
-            Response response = client.GetRasterizeJob("<jobId>", new RequestContext());
+            Response response = client.GetRasterizeJob("<jobId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
+            Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetRasterizeJob_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+
+            Response response = await client.GetRasterizeJobAsync("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -38,10 +54,11 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRasterizeJob_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
-            Response response = client.GetRasterizeJob("<jobId>", new RequestContext());
+            Response response = client.GetRasterizeJob("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -60,32 +77,18 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRasterizeJob_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
-
-            Response response = await client.GetRasterizeJobAsync("<jobId>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
-            Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRasterizeJob_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
-            Response response = await client.GetRasterizeJobAsync("<jobId>", new RequestContext());
+            Response response = await client.GetRasterizeJobAsync("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -104,28 +107,55 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateRasterizeJob()
+        public void Example_CreateRasterizeJob_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 shapefileAttachmentId = "<shapefileAttachmentId>",
-                shapefileColumnNames = new[] {
-        "<String>"
-    },
-            };
-
-            var operation = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+                shapefileColumnNames = new object[]
+            {
+"<shapefileColumnNames>"
+            },
+            });
+            Operation<BinaryData> operation = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", content);
             BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
+            Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateRasterizeJob_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                partyId = "<partyId>",
+                shapefileAttachmentId = "<shapefileAttachmentId>",
+                shapefileColumnNames = new object[]
+            {
+"<shapefileColumnNames>"
+            },
+            });
+            Operation<BinaryData> operation = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", content);
+            BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
             Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
@@ -136,27 +166,28 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateRasterizeJob_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 shapefileAttachmentId = "<shapefileAttachmentId>",
-                shapefileColumnNames = new[] {
-        "<String>"
-    },
+                shapefileColumnNames = new object[]
+            {
+"<shapefileColumnNames>"
+            },
                 name = "<name>",
                 description = "<description>",
                 properties = new
                 {
-                    key = new { },
+                    key = new object(),
                 },
-            };
-
-            var operation = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+            });
+            Operation<BinaryData> operation = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", content);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
             Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
@@ -174,59 +205,35 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateRasterizeJob_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
-
-            var data = new
-            {
-                partyId = "<partyId>",
-                shapefileAttachmentId = "<shapefileAttachmentId>",
-                shapefileColumnNames = new[] {
-        "<String>"
-    },
-            };
-
-            var operation = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
-            BinaryData responseData = operation.Value;
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
-            Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateRasterizeJob_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetImageProcessingClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ImageProcessing client = new FarmBeatsClient(endpoint, credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 shapefileAttachmentId = "<shapefileAttachmentId>",
-                shapefileColumnNames = new[] {
-        "<String>"
-    },
+                shapefileColumnNames = new object[]
+            {
+"<shapefileColumnNames>"
+            },
                 name = "<name>",
                 description = "<description>",
                 properties = new
                 {
-                    key = new { },
+                    key = new object(),
                 },
-            };
-
-            var operation = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+            });
+            Operation<BinaryData> operation = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", content);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
             Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
@@ -244,7 +251,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> This activity executes inner activities until the specified boolean expression results to true or timeout is reached, whichever is earlier. </summary>
     public partial class UntilActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of UntilActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="UntilActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="expression"> An expression that would evaluate to Boolean. The loop will continue until this expression evaluates to true. </param>
         /// <param name="activities">
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Until";
         }
 
-        /// <summary> Initializes a new instance of UntilActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="UntilActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

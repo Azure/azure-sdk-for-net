@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the role properties. </summary>
     public partial class CloudServiceRoleProfileProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="CloudServiceRoleProfileProperties"/>. </summary>
         public CloudServiceRoleProfileProperties()
         {

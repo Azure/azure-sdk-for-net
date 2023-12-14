@@ -294,6 +294,7 @@ namespace Azure.Data.Tables.Tests
                             Int64 = (long)int.MaxValue + n,
                             LongPrimitive = (long)int.MaxValue + n,
                             LongPrimitiveN = (long)int.MaxValue + n,
+                            RenamableStringProperty = string.Format("{0:0000}", n),
                         };
                     })
                 .ToList();
@@ -483,6 +484,9 @@ namespace Azure.Data.Tables.Tests
             public Double DoubleInteger { get; set; } = (Double)1234;
 
             private Guid? guidNull = null;
+
+            [DataMember(Name = "SomeNewName")]
+            public string RenamableStringProperty { get; set; }
 
             public Guid? GuidNull
             {

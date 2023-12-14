@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     internal partial class ProductListResult
     {
-        /// <summary> Initializes a new instance of ProductListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductListResult"/>. </summary>
         /// <param name="value">
         /// The Product items on this page
         /// Serialized Name: ProductListResult.value
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ProductListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductListResult"/>. </summary>
         /// <param name="value">
         /// The Product items on this page
         /// Serialized Name: ProductListResult.value

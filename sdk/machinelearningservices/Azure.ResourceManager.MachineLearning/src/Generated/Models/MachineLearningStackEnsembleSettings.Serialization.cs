@@ -24,7 +24,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(StackMetaLearnerKWargs);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(StackMetaLearnerKWargs.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(StackMetaLearnerKWargs))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 else

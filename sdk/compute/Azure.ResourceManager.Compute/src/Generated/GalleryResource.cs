@@ -22,14 +22,17 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a Gallery along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GalleryResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGalleryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetGallery method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GalleryResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGalleryResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetGallery method.
     /// </summary>
     [DeserializationProxy(typeof(GalleryData))]
     public partial class GalleryResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GalleryResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="galleryName"> The galleryName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}";
@@ -42,12 +45,15 @@ namespace Azure.ResourceManager.Compute
         private readonly GallerySharingProfileRestOperations _gallerySharingProfileRestClient;
         private readonly GalleryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/galleries";
+
         /// <summary> Initializes a new instance of the <see cref="GalleryResource"/> class for mocking. </summary>
         protected GalleryResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GalleryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GalleryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GalleryResource(ArmClient client, GalleryData data) : this(client, data.Id)
@@ -70,9 +76,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/galleries";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -99,7 +102,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of GalleryImageResources and their operations over a GalleryImageResource. </returns>
         public virtual GalleryImageCollection GetGalleryImages()
         {
-            return GetCachedClient(Client => new GalleryImageCollection(Client, Id));
+            return GetCachedClient(client => new GalleryImageCollection(client, Id));
         }
 
         /// <summary>
@@ -117,8 +120,8 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<GalleryImageResource>> GetGalleryImageAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
@@ -140,8 +143,8 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<GalleryImageResource> GetGalleryImage(string galleryImageName, CancellationToken cancellationToken = default)
         {
@@ -152,7 +155,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of GalleryApplicationResources and their operations over a GalleryApplicationResource. </returns>
         public virtual GalleryApplicationCollection GetGalleryApplications()
         {
-            return GetCachedClient(Client => new GalleryApplicationCollection(Client, Id));
+            return GetCachedClient(client => new GalleryApplicationCollection(client, Id));
         }
 
         /// <summary>
@@ -170,8 +173,8 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryApplicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryApplicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<GalleryApplicationResource>> GetGalleryApplicationAsync(string galleryApplicationName, CancellationToken cancellationToken = default)
         {
@@ -193,8 +196,8 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryApplicationName"> The name of the gallery Application Definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryApplicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryApplicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<GalleryApplicationResource> GetGalleryApplication(string galleryApplicationName, CancellationToken cancellationToken = default)
         {

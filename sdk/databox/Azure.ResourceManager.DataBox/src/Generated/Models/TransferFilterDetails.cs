@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Details of the filtering the transfer of data. </summary>
     public partial class TransferFilterDetails
     {
-        /// <summary> Initializes a new instance of TransferFilterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransferFilterDetails"/>. </summary>
         /// <param name="dataAccountType"> Type of the account of data. </param>
         public TransferFilterDetails(DataAccountType dataAccountType)
         {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataBox.Models
             FilterFileDetails = new ChangeTrackingList<FilterFileDetails>();
         }
 
-        /// <summary> Initializes a new instance of TransferFilterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransferFilterDetails"/>. </summary>
         /// <param name="dataAccountType"> Type of the account of data. </param>
         /// <param name="blobFilterDetails"> Filter details to transfer blobs. </param>
         /// <param name="azureFileFilterDetails"> Filter details to transfer Azure files. </param>

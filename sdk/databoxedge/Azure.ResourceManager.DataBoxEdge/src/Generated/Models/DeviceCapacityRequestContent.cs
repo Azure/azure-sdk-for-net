@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Object for Capturing DeviceCapacityRequestInfo. </summary>
     public partial class DeviceCapacityRequestContent
     {
-        /// <summary> Initializes a new instance of DeviceCapacityRequestContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceCapacityRequestContent"/>. </summary>
         /// <param name="vmPlacementQuery"> Array containing the sizes of the VMs for checking if its feasible to create them on the appliance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmPlacementQuery"/> is null. </exception>
         public DeviceCapacityRequestContent(IEnumerable<IList<string>> vmPlacementQuery)
@@ -24,6 +24,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
             VmPlacementQuery = vmPlacementQuery.ToList();
             VmPlacementResults = new ChangeTrackingList<VmPlacementRequestResult>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceCapacityRequestContent"/>. </summary>
+        /// <param name="vmPlacementQuery"> Array containing the sizes of the VMs for checking if its feasible to create them on the appliance. </param>
+        /// <param name="vmPlacementResults"> Array of the VMs of the sizes in VmSizes can be provisioned on the appliance. </param>
+        internal DeviceCapacityRequestContent(IList<IList<string>> vmPlacementQuery, IList<VmPlacementRequestResult> vmPlacementResults)
+        {
+            VmPlacementQuery = vmPlacementQuery;
+            VmPlacementResults = vmPlacementResults;
         }
 
         /// <summary> Array containing the sizes of the VMs for checking if its feasible to create them on the appliance. </summary>

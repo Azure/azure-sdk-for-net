@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> Describes the result of the request to check management group name availability. </summary>
     public partial class ManagementGroupNameAvailabilityResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ManagementGroupNameAvailabilityResult"/>. </summary>
         internal ManagementGroupNameAvailabilityResult()
         {

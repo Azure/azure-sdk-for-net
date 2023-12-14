@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies the boot diagnostic settings state. Minimum api-version: 2015-06-15. </summary>
     internal partial class DiagnosticsProfile
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DiagnosticsProfile"/>. </summary>
         public DiagnosticsProfile()
         {

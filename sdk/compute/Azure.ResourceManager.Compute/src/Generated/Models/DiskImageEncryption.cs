@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> This is the disk image encryption base class. </summary>
     public partial class DiskImageEncryption
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DiskImageEncryption"/>. </summary>
         public DiskImageEncryption()
         {

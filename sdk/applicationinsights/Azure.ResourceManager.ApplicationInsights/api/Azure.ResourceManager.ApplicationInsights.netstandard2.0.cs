@@ -11,13 +11,15 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource>> GetAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> GetIfExists(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource>> GetIfExistsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class ApplicationInsightsComponentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ApplicationInsightsComponentData(Azure.Core.AzureLocation location, string kind) : base (default(Azure.Core.AzureLocation)) { }
+        public ApplicationInsightsComponentData(Azure.Core.AzureLocation location, string kind) { }
         public string AppId { get { throw null; } }
         public string ApplicationId { get { throw null; } }
         public Azure.ResourceManager.ApplicationInsights.Models.ApplicationType? ApplicationType { get { throw null; } set { } }
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public string Kind { get { throw null; } set { } }
         public System.DateTimeOffset? LaMigrationOn { get { throw null; } }
         public string NamePropertiesName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResource> PrivateLinkScopedResources { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResourceContent> PrivateLinkScopedResources { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ApplicationInsights.Models.PublicNetworkAccessType? PublicNetworkAccessForIngestion { get { throw null; } set { } }
         public Azure.ResourceManager.ApplicationInsights.Models.PublicNetworkAccessType? PublicNetworkAccessForQuery { get { throw null; } set { } }
@@ -136,8 +138,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> Update(Azure.ResourceManager.ApplicationInsights.Models.TagsResource componentTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource>> UpdateAsync(Azure.ResourceManager.ApplicationInsights.Models.TagsResource componentTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> Update(Azure.ResourceManager.ApplicationInsights.Models.ComponentTag componentTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource>> UpdateAsync(Azure.ResourceManager.ApplicationInsights.Models.ComponentTag componentTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentBillingFeatures> UpdateComponentCurrentBillingFeature(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentBillingFeatures billingFeaturesProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentBillingFeatures>> UpdateComponentCurrentBillingFeatureAsync(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentBillingFeatures billingFeaturesProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportConfiguration> UpdateExportConfiguration(string exportId, Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportRequest exportProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -193,6 +195,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountResource> Get(Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountResource>> GetAsync(Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountResource> GetIfExists(Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountResource>> GetIfExistsAsync(Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ComponentLinkedStorageAccountData : Azure.ResourceManager.Models.ResourceData
     {
@@ -224,8 +228,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.MyWorkbookResource> GetAll(Azure.ResourceManager.ApplicationInsights.Models.CategoryType category, System.Collections.Generic.IEnumerable<string> tags = null, string sourceId = null, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ApplicationInsights.MyWorkbookResource> GetAllAsync(Azure.ResourceManager.ApplicationInsights.Models.CategoryType category, System.Collections.Generic.IEnumerable<string> tags = null, string sourceId = null, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.MyWorkbookResource>> GetAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.MyWorkbookResource> GetIfExists(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.MyWorkbookResource>> GetIfExistsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MyWorkbookData : Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookResource
+    public partial class MyWorkbookData : Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookResourceContent
     {
         public MyWorkbookData() { }
         public string Category { get { throw null; } set { } }
@@ -270,13 +276,15 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.WebTestResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ApplicationInsights.WebTestResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WebTestResource>> GetAsync(string webTestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.WebTestResource> GetIfExists(string webTestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.WebTestResource>> GetIfExistsAsync(string webTestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ApplicationInsights.WebTestResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApplicationInsights.WebTestResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ApplicationInsights.WebTestResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApplicationInsights.WebTestResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class WebTestData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public WebTestData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public WebTestData(Azure.Core.AzureLocation location) { }
         public string Description { get { throw null; } set { } }
         public int? FrequencyInSeconds { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
@@ -309,8 +317,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WebTestResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.WebTestResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WebTestResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.WebTestResource> Update(Azure.ResourceManager.ApplicationInsights.Models.TagsResource webTestTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WebTestResource>> UpdateAsync(Azure.ResourceManager.ApplicationInsights.Models.TagsResource webTestTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.WebTestResource> Update(Azure.ResourceManager.ApplicationInsights.Models.ComponentTag webTestTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WebTestResource>> UpdateAsync(Azure.ResourceManager.ApplicationInsights.Models.ComponentTag webTestTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class WorkbookCollection : Azure.ResourceManager.ArmCollection
     {
@@ -323,10 +331,12 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.WorkbookResource> GetAll(Azure.ResourceManager.ApplicationInsights.Models.CategoryType category, System.Collections.Generic.IEnumerable<string> tags = null, string sourceId = null, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ApplicationInsights.WorkbookResource> GetAllAsync(Azure.ResourceManager.ApplicationInsights.Models.CategoryType category, System.Collections.Generic.IEnumerable<string> tags = null, string sourceId = null, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WorkbookResource>> GetAsync(string resourceName, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.WorkbookResource> GetIfExists(string resourceName, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.WorkbookResource>> GetIfExistsAsync(string resourceName, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class WorkbookData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public WorkbookData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public WorkbookData(Azure.Core.AzureLocation location) { }
         public string Category { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
@@ -373,6 +383,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.WorkbookRevisionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ApplicationInsights.WorkbookRevisionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WorkbookRevisionResource>> GetAsync(string revisionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.WorkbookRevisionResource> GetIfExists(string revisionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.WorkbookRevisionResource>> GetIfExistsAsync(string revisionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ApplicationInsights.WorkbookRevisionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApplicationInsights.WorkbookRevisionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ApplicationInsights.WorkbookRevisionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApplicationInsights.WorkbookRevisionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -398,13 +410,15 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource>> GetAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource> GetIfExists(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource>> GetIfExistsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class WorkbookTemplateData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public WorkbookTemplateData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public WorkbookTemplateData(Azure.Core.AzureLocation location) { }
         public string Author { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateGallery> Galleries { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateLocalizedGallery>> LocalizedGalleries { get { throw null; } }
@@ -430,6 +444,53 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource> Update(Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplatePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource>> UpdateAsync(Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplatePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.ApplicationInsights.Mocking
+{
+    public partial class MockableApplicationInsightsArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableApplicationInsightsArmClient() { }
+        public virtual Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource GetApplicationInsightsComponentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountResource GetComponentLinkedStorageAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.LiveTokenResponse> GetLiveToken(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.LiveTokenResponse>> GetLiveTokenAsync(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.MyWorkbookResource GetMyWorkbookResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.WebTestResource GetWebTestResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.WorkbookResource GetWorkbookResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.WorkbookRevisionResource GetWorkbookRevisionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource GetWorkbookTemplateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableApplicationInsightsResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableApplicationInsightsResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> GetApplicationInsightsComponent(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource>> GetApplicationInsightsComponentAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentCollection GetApplicationInsightsComponents() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.MyWorkbookResource> GetMyWorkbook(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.MyWorkbookResource>> GetMyWorkbookAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.MyWorkbookCollection GetMyWorkbooks() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.WebTestResource> GetWebTest(string webTestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WebTestResource>> GetWebTestAsync(string webTestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.WebTestCollection GetWebTests() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.WorkbookResource> GetWorkbook(string resourceName, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WorkbookResource>> GetWorkbookAsync(string resourceName, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.WorkbookCollection GetWorkbooks() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource> GetWorkbookTemplate(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource>> GetWorkbookTemplateAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.WorkbookTemplateCollection GetWorkbookTemplates() { throw null; }
+    }
+    public partial class MockableApplicationInsightsSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableApplicationInsightsSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> GetApplicationInsightsComponents(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> GetApplicationInsightsComponentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.MyWorkbookResource> GetMyWorkbooks(Azure.ResourceManager.ApplicationInsights.Models.CategoryType category, System.Collections.Generic.IEnumerable<string> tags = null, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApplicationInsights.MyWorkbookResource> GetMyWorkbooksAsync(Azure.ResourceManager.ApplicationInsights.Models.CategoryType category, System.Collections.Generic.IEnumerable<string> tags = null, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.WebTestResource> GetWebTests(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApplicationInsights.WebTestResource> GetWebTestsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.WorkbookResource> GetWorkbooks(Azure.ResourceManager.ApplicationInsights.Models.CategoryType category, System.Collections.Generic.IEnumerable<string> tags = null, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApplicationInsights.WorkbookResource> GetWorkbooksAsync(Azure.ResourceManager.ApplicationInsights.Models.CategoryType category, System.Collections.Generic.IEnumerable<string> tags = null, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.ApplicationInsights.Models
@@ -665,7 +726,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAnalyticsItem ApplicationInsightsComponentAnalyticsItem(string id = null, string name = null, string content = null, string version = null, Azure.ResourceManager.ApplicationInsights.Models.ItemScope? scope = default(Azure.ResourceManager.ApplicationInsights.Models.ItemScope?), Azure.ResourceManager.ApplicationInsights.Models.ItemType? itemType = default(Azure.ResourceManager.ApplicationInsights.Models.ItemType?), string timeCreated = null, string timeModified = null, string applicationInsightsComponentAnalyticsItemFunctionAlias = null) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAPIKey ApplicationInsightsComponentAPIKey(string id = null, string apiKey = null, string createdDate = null, string name = null, System.Collections.Generic.IEnumerable<string> linkedReadProperties = null, System.Collections.Generic.IEnumerable<string> linkedWriteProperties = null) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAvailableFeatures ApplicationInsightsComponentAvailableFeatures(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeature> result = null) { throw null; }
-        public static Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentData ApplicationInsightsComponentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string kind = null, Azure.ETag? etag = default(Azure.ETag?), string applicationId = null, string appId = null, string namePropertiesName = null, Azure.ResourceManager.ApplicationInsights.Models.ApplicationType? applicationType = default(Azure.ResourceManager.ApplicationInsights.Models.ApplicationType?), Azure.ResourceManager.ApplicationInsights.Models.FlowType? flowType = default(Azure.ResourceManager.ApplicationInsights.Models.FlowType?), Azure.ResourceManager.ApplicationInsights.Models.RequestSource? requestSource = default(Azure.ResourceManager.ApplicationInsights.Models.RequestSource?), string instrumentationKey = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.Guid? tenantId = default(System.Guid?), string hockeyAppId = null, string hockeyAppToken = null, string provisioningState = null, double? samplingPercentage = default(double?), string connectionString = null, int? retentionInDays = default(int?), bool? isDisableIPMasking = default(bool?), bool? isImmediatePurgeDataOn30Days = default(bool?), string workspaceResourceId = null, System.DateTimeOffset? laMigrationOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResource> privateLinkScopedResources = null, Azure.ResourceManager.ApplicationInsights.Models.PublicNetworkAccessType? publicNetworkAccessForIngestion = default(Azure.ResourceManager.ApplicationInsights.Models.PublicNetworkAccessType?), Azure.ResourceManager.ApplicationInsights.Models.PublicNetworkAccessType? publicNetworkAccessForQuery = default(Azure.ResourceManager.ApplicationInsights.Models.PublicNetworkAccessType?), Azure.ResourceManager.ApplicationInsights.Models.IngestionMode? ingestionMode = default(Azure.ResourceManager.ApplicationInsights.Models.IngestionMode?), bool? isDisableLocalAuth = default(bool?), bool? isForceCustomerStorageForProfiler = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentData ApplicationInsightsComponentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string kind = null, Azure.ETag? etag = default(Azure.ETag?), string applicationId = null, string appId = null, string namePropertiesName = null, Azure.ResourceManager.ApplicationInsights.Models.ApplicationType? applicationType = default(Azure.ResourceManager.ApplicationInsights.Models.ApplicationType?), Azure.ResourceManager.ApplicationInsights.Models.FlowType? flowType = default(Azure.ResourceManager.ApplicationInsights.Models.FlowType?), Azure.ResourceManager.ApplicationInsights.Models.RequestSource? requestSource = default(Azure.ResourceManager.ApplicationInsights.Models.RequestSource?), string instrumentationKey = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.Guid? tenantId = default(System.Guid?), string hockeyAppId = null, string hockeyAppToken = null, string provisioningState = null, double? samplingPercentage = default(double?), string connectionString = null, int? retentionInDays = default(int?), bool? isDisableIPMasking = default(bool?), bool? isImmediatePurgeDataOn30Days = default(bool?), string workspaceResourceId = null, System.DateTimeOffset? laMigrationOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResourceContent> privateLinkScopedResources = null, Azure.ResourceManager.ApplicationInsights.Models.PublicNetworkAccessType? publicNetworkAccessForIngestion = default(Azure.ResourceManager.ApplicationInsights.Models.PublicNetworkAccessType?), Azure.ResourceManager.ApplicationInsights.Models.PublicNetworkAccessType? publicNetworkAccessForQuery = default(Azure.ResourceManager.ApplicationInsights.Models.PublicNetworkAccessType?), Azure.ResourceManager.ApplicationInsights.Models.IngestionMode? ingestionMode = default(Azure.ResourceManager.ApplicationInsights.Models.IngestionMode?), bool? isDisableLocalAuth = default(bool?), bool? isForceCustomerStorageForProfiler = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentDataVolumeCap ApplicationInsightsComponentDataVolumeCap(float? cap = default(float?), int? resetTime = default(int?), int? warningThreshold = default(int?), bool? isStopSendNotificationWhenHitThreshold = default(bool?), bool? isStopSendNotificationWhenHitCap = default(bool?), float? maxHistoryCap = default(float?)) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportConfiguration ApplicationInsightsComponentExportConfiguration(string exportId = null, string instrumentationKey = null, string recordTypes = null, string applicationName = null, string subscriptionId = null, string resourceGroup = null, string destinationStorageSubscriptionId = null, string destinationStorageLocationId = null, string destinationAccountId = null, string destinationType = null, string isUserEnabled = null, string lastUserUpdate = null, string notificationQueueEnabled = null, string exportStatus = null, string lastSuccessTime = null, string lastGapTime = null, string permanentErrorReason = null, string storageName = null, string containerName = null) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFavorite ApplicationInsightsComponentFavorite(string name = null, string config = null, string version = null, string favoriteId = null, Azure.ResourceManager.ApplicationInsights.Models.FavoriteType? favoriteType = default(Azure.ResourceManager.ApplicationInsights.Models.FavoriteType?), string sourceType = null, string timeModified = null, System.Collections.Generic.IEnumerable<string> tags = null, string category = null, bool? isGeneratedFromTemplate = default(bool?), string userId = null) { throw null; }
@@ -680,7 +741,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static Azure.ResourceManager.ApplicationInsights.Models.LiveTokenResponse LiveTokenResponse(string liveToken = null) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.MyWorkbookData MyWorkbookData(Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookManagedIdentity identity = null, string id = null, string name = null, string resourceType = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IDictionary<string, string> etag = null, Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsKind? kind = default(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsKind?), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string serializedData = null, string version = null, string timeModified = null, string category = null, string userId = null, string sourceId = null, System.Uri storageUri = null) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookUserAssignedIdentities MyWorkbookUserAssignedIdentities(string principalId = null, System.Guid? tenantId = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResource PrivateLinkScopedResource(string resourceId = null, string scopeId = null) { throw null; }
+        public static Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResourceContent PrivateLinkScopedResourceContent(string resourceId = null, string scopeId = null) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.WebTestData WebTestData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ApplicationInsights.Models.WebTestKind? kind = default(Azure.ResourceManager.ApplicationInsights.Models.WebTestKind?), string syntheticMonitorId = null, string webTestName = null, string description = null, bool? isEnabled = default(bool?), int? frequencyInSeconds = default(int?), int? timeoutInSeconds = default(int?), Azure.ResourceManager.ApplicationInsights.Models.WebTestKind? webTestKind = default(Azure.ResourceManager.ApplicationInsights.Models.WebTestKind?), bool? isRetryEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApplicationInsights.Models.WebTestGeolocation> locations = null, string webTest = null, string provisioningState = null, Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesRequest request = null, Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesValidationRules validationRules = null) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.WorkbookData WorkbookData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string displayName = null, string serializedData = null, string version = null, System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), string category = null, string userId = null, string sourceId = null, System.Uri storageUri = null, string description = null, string revision = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.ApplicationInsights.Models.WorkbookSharedTypeKind? kind = default(Azure.ResourceManager.ApplicationInsights.Models.WorkbookSharedTypeKind?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.WorkbookTemplateData WorkbookTemplateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), int? priority = default(int?), string author = null, System.BinaryData templateData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateGallery> galleries = null, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateLocalizedGallery>> localizedGalleries = null) { throw null; }
@@ -734,6 +795,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     {
         internal ComponentPurgeStatusResponse() { }
         public Azure.ResourceManager.ApplicationInsights.Models.PurgeState Status { get { throw null; } }
+    }
+    public partial class ComponentTag
+    {
+        public ComponentTag() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FavoriteSourceType : System.IEquatable<Azure.ResourceManager.ApplicationInsights.Models.FavoriteSourceType>
@@ -912,9 +978,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static bool operator !=(Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookManagedIdentityType left, Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookManagedIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MyWorkbookResource
+    public partial class MyWorkbookResourceContent
     {
-        public MyWorkbookResource() { }
+        public MyWorkbookResourceContent() { }
         public System.Collections.Generic.IDictionary<string, string> ETag { get { throw null; } }
         public string Id { get { throw null; } set { } }
         public Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookManagedIdentity Identity { get { throw null; } set { } }
@@ -929,9 +995,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public string PrincipalId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
     }
-    public partial class PrivateLinkScopedResource
+    public partial class PrivateLinkScopedResourceContent
     {
-        internal PrivateLinkScopedResource() { }
+        internal PrivateLinkScopedResourceContent() { }
         public string ResourceId { get { throw null; } }
         public string ScopeId { get { throw null; } }
     }
@@ -1004,11 +1070,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static implicit operator Azure.ResourceManager.ApplicationInsights.Models.StorageType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ApplicationInsights.Models.StorageType left, Azure.ResourceManager.ApplicationInsights.Models.StorageType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class TagsResource
-    {
-        public TagsResource() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class WebTestGeolocation
     {

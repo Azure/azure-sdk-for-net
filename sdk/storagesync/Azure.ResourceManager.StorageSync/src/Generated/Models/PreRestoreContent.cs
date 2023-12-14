@@ -14,10 +14,33 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Pre Restore request object. </summary>
     public partial class PreRestoreContent
     {
-        /// <summary> Initializes a new instance of PreRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreRestoreContent"/>. </summary>
         public PreRestoreContent()
         {
             RestoreFileSpec = new ChangeTrackingList<RestoreFileSpec>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PreRestoreContent"/>. </summary>
+        /// <param name="partition"> Pre Restore partition. </param>
+        /// <param name="replicaGroup"> Pre Restore replica group. </param>
+        /// <param name="requestId"> Pre Restore request id. </param>
+        /// <param name="azureFileShareUri"> Pre Restore Azure file share uri. </param>
+        /// <param name="status"> Pre Restore Azure status. </param>
+        /// <param name="sourceAzureFileShareUri"> Pre Restore Azure source azure file share uri. </param>
+        /// <param name="backupMetadataPropertyBag"> Pre Restore backup metadata property bag. </param>
+        /// <param name="restoreFileSpec"> Pre Restore restore file spec array. </param>
+        /// <param name="pauseWaitForSyncDrainTimePeriodInSeconds"> Pre Restore pause wait for sync drain time period in seconds. </param>
+        internal PreRestoreContent(string partition, string replicaGroup, string requestId, Uri azureFileShareUri, string status, Uri sourceAzureFileShareUri, string backupMetadataPropertyBag, IList<RestoreFileSpec> restoreFileSpec, int? pauseWaitForSyncDrainTimePeriodInSeconds)
+        {
+            Partition = partition;
+            ReplicaGroup = replicaGroup;
+            RequestId = requestId;
+            AzureFileShareUri = azureFileShareUri;
+            Status = status;
+            SourceAzureFileShareUri = sourceAzureFileShareUri;
+            BackupMetadataPropertyBag = backupMetadataPropertyBag;
+            RestoreFileSpec = restoreFileSpec;
+            PauseWaitForSyncDrainTimePeriodInSeconds = pauseWaitForSyncDrainTimePeriodInSeconds;
         }
 
         /// <summary> Pre Restore partition. </summary>

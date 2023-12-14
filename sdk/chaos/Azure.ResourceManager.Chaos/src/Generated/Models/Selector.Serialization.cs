@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,20 +16,25 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(SelectorType.ToSerialString());
+            writer.WriteStringValue(SelectorType.ToString());
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            writer.WritePropertyName("targets"u8);
-            writer.WriteStartArray();
-            foreach (var item in Targets)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
         }
@@ -41,43 +45,15 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            SelectorType type = default;
-            string id = default;
-            IList<TargetReference> targets = default;
-            Optional<Filter> filter = default;
-            foreach (var property in element.EnumerateObject())
+            if (element.TryGetProperty("type", out JsonElement discriminator))
             {
-                if (property.NameEquals("type"u8))
+                switch (discriminator.GetString())
                 {
-                    type = property.Value.GetString().ToSelectorType();
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("targets"u8))
-                {
-                    List<TargetReference> array = new List<TargetReference>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(TargetReference.DeserializeTargetReference(item));
-                    }
-                    targets = array;
-                    continue;
-                }
-                if (property.NameEquals("filter"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    filter = Filter.DeserializeFilter(property.Value);
-                    continue;
+                    case "List": return ListSelector.DeserializeListSelector(element);
+                    case "Query": return QuerySelector.DeserializeQuerySelector(element);
                 }
             }
-            return new Selector(type, id, targets, filter.Value);
+            return UnknownSelector.DeserializeUnknownSelector(element);
         }
     }
 }

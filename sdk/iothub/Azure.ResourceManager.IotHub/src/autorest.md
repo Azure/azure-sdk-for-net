@@ -8,9 +8,13 @@ azure-arm: true
 csharp: true
 library-name: IotHub
 namespace: Azure.ResourceManager.IotHub
-require: https://github.com/Azure/azure-rest-api-specs/blob/1df6d6f671dc5059016fbc2c0a624e01f0b2972c/specification/iothub/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/624dbc769880e5676ae8bb20d3c82ebd1783c64a/specification/iothub/resource-manager/readme.md
+#tag: package-2023-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -84,8 +88,8 @@ prepend-rp-prefix:
   - PublicNetworkAccess
   - UserSubscriptionQuota
   - UserSubscriptionQuotaListResult
-  - IPFilterRule
-  - IPFilterActionType
+  - IpFilterRule
+  - IpFilterActionType
   - RoutingSource
   - JobStatus
   - JobType
@@ -96,7 +100,7 @@ prepend-rp-prefix:
   - RegistryStatistics
   - MatchedRoute
   - NetworkRuleSetProperties
-  - NetworkRuleSetIPRule
+  - NetworkRuleSetIpRule
   - NetworkRuleIPAction
   - RoutingProperties
   - StorageEndpointProperties

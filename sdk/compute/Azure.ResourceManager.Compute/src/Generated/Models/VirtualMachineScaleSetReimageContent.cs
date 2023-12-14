@@ -25,8 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="exactVersion"> Specifies in decimal number, the version the OS disk should be reimaged to. If exact version is not provided, the OS disk is reimaged to the existing version of OS Disk. </param>
         /// <param name="osProfile"> Specifies information required for reimaging the non-ephemeral OS disk. </param>
         /// <param name="instanceIds"> The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation being performed on all virtual machines in the virtual machine scale set. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetReimageContent(bool? tempDisk, string exactVersion, OSProfileProvisioningData osProfile, IList<string> instanceIds, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(tempDisk, exactVersion, osProfile, serializedAdditionalRawData)
+        internal VirtualMachineScaleSetReimageContent(bool? tempDisk, string exactVersion, OSProfileProvisioningData osProfile, IList<string> instanceIds) : base(tempDisk, exactVersion, osProfile)
         {
             InstanceIds = instanceIds;
         }

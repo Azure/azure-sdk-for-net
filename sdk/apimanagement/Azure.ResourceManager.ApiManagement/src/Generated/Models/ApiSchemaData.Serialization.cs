@@ -37,7 +37,10 @@ namespace Azure.ResourceManager.ApiManagement
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Definitions);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Definitions.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Definitions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(Components))
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.ApiManagement
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Components);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Components.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Components))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();

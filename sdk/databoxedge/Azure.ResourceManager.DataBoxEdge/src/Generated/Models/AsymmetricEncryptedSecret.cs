@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Represent the secrets intended for encryption with asymmetric key pair. </summary>
     public partial class AsymmetricEncryptedSecret
     {
-        /// <summary> Initializes a new instance of AsymmetricEncryptedSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="AsymmetricEncryptedSecret"/>. </summary>
         /// <param name="value"> The value of the secret. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to encrypt "Value". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             EncryptionAlgorithm = encryptionAlgorithm;
         }
 
-        /// <summary> Initializes a new instance of AsymmetricEncryptedSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="AsymmetricEncryptedSecret"/>. </summary>
         /// <param name="value"> The value of the secret. </param>
         /// <param name="encryptionCertThumbprint"> Thumbprint certificate used to encrypt \"Value\". If the value is unencrypted, it will be null. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to encrypt "Value". </param>

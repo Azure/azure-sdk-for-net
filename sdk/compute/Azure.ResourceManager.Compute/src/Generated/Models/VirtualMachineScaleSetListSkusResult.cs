@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The Virtual Machine Scale Set List Skus operation response. </summary>
     internal partial class VirtualMachineScaleSetListSkusResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetListSkusResult"/>. </summary>
         /// <param name="value"> The list of skus available for the virtual machine scale set. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>

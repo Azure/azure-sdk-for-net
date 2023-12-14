@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// </summary>
     public abstract partial class JobSecrets
     {
-        /// <summary> Initializes a new instance of JobSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobSecrets"/>. </summary>
         protected JobSecrets()
         {
         }
 
-        /// <summary> Initializes a new instance of JobSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobSecrets"/>. </summary>
         /// <param name="jobSecretsType"> Used to indicate what type of job secrets object. </param>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Mapping data flow. </summary>
     public partial class DataFactoryMappingDataFlowProperties : DataFactoryDataFlowProperties
     {
-        /// <summary> Initializes a new instance of DataFactoryMappingDataFlowProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryMappingDataFlowProperties"/>. </summary>
         public DataFactoryMappingDataFlowProperties()
         {
             Sources = new ChangeTrackingList<DataFlowSource>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFlowType = "MappingDataFlow";
         }
 
-        /// <summary> Initializes a new instance of DataFactoryMappingDataFlowProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryMappingDataFlowProperties"/>. </summary>
         /// <param name="dataFlowType"> Type of data flow. </param>
         /// <param name="description"> The description of the data flow. </param>
         /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>

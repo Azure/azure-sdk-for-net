@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Contains information about the soft deletion policy of the gallery. </summary>
     internal partial class SoftDeletePolicy
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="SoftDeletePolicy"/>. </summary>
         public SoftDeletePolicy()
         {

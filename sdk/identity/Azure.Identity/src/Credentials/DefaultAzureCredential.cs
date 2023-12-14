@@ -72,9 +72,9 @@ namespace Azure.Identity
         /// <summary>
         /// Creates an instance of the <see cref="DefaultAzureCredential"/> class.
         /// </summary>
-        /// <param name="options">Options that configure the management of the requests sent to Azure Active Directory services, and determine which credentials are included in the <see cref="DefaultAzureCredential"/> authentication flow.</param>
+        /// <param name="options">Options that configure the management of the requests sent to Microsoft Entra ID, and determine which credentials are included in the <see cref="DefaultAzureCredential"/> authentication flow.</param>
         public DefaultAzureCredential(DefaultAzureCredentialOptions options)
-            // we call ValidateAuthoriyHostOption to validate that we have a valid authority host before constructing the DAC chain
+            // we call ValidateAuthorityHostOption to validate that we have a valid authority host before constructing the DAC chain
             // if we don't validate this up front it will end up throwing an exception out of a static initializer which obscures the error.
             : this(new DefaultAzureCredentialFactory(ValidateAuthorityHostOption(options)))
         {

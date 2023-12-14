@@ -5,45 +5,39 @@
 
 #nullable disable
 
-using Azure.Communication.CallAutomation;
-
-namespace Azure.Communication.CallAutomation.Models.Events
+namespace Azure.Communication.CallAutomation
 {
     /// <summary> The DialogSensitivityUpdate. </summary>
     internal partial class DialogSensitivityUpdateInternal
     {
-        /// <summary> Initializes a new instance of DialogSensitivityUpdateInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogSensitivityUpdateInternal"/>. </summary>
         internal DialogSensitivityUpdateInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of DialogSensitivityUpdateInternal. </summary>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <summary> Initializes a new instance of <see cref="DialogSensitivityUpdateInternal"/>. </summary>
+        /// <param name="sensitiveMask"> SensitiveMask. </param>
         /// <param name="operationContext"> Used by customers when calling answerCall action to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
         /// <param name="dialogInputType"> Determines the type of the dialog. </param>
         /// <param name="dialogId"> Dialog ID. </param>
-        /// <param name="sensitiveMask"> SensitiveMask. </param>
-        internal DialogSensitivityUpdateInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, DialogInputType? dialogInputType, string dialogId, bool? sensitiveMask)
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        internal DialogSensitivityUpdateInternal(bool? sensitiveMask, string operationContext, ResultInformation resultInformation, DialogInputType? dialogInputType, string dialogId, string callConnectionId, string serverCallId, string correlationId)
         {
-            CallConnectionId = callConnectionId;
-            ServerCallId = serverCallId;
-            CorrelationId = correlationId;
+            SensitiveMask = sensitiveMask;
             OperationContext = operationContext;
             ResultInformation = resultInformation;
             DialogInputType = dialogInputType;
             DialogId = dialogId;
-            SensitiveMask = sensitiveMask;
+            CallConnectionId = callConnectionId;
+            ServerCallId = serverCallId;
+            CorrelationId = correlationId;
         }
 
-        /// <summary> Call connection ID. </summary>
-        public string CallConnectionId { get; }
-        /// <summary> Server call ID. </summary>
-        public string ServerCallId { get; }
-        /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
-        public string CorrelationId { get; }
+        /// <summary> SensitiveMask. </summary>
+        public bool? SensitiveMask { get; }
         /// <summary> Used by customers when calling answerCall action to correlate the request to the response event. </summary>
         public string OperationContext { get; }
         /// <summary> Contains the resulting SIP code/sub-code and message from NGC services. </summary>
@@ -52,7 +46,11 @@ namespace Azure.Communication.CallAutomation.Models.Events
         public DialogInputType? DialogInputType { get; }
         /// <summary> Dialog ID. </summary>
         public string DialogId { get; }
-        /// <summary> SensitiveMask. </summary>
-        public bool? SensitiveMask { get; }
+        /// <summary> Call connection ID. </summary>
+        public string CallConnectionId { get; }
+        /// <summary> Server call ID. </summary>
+        public string ServerCallId { get; }
+        /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
+        public string CorrelationId { get; }
     }
 }

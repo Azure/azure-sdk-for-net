@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The HciClusterCertificateContent. </summary>
     public partial class HciClusterCertificateContent
     {
-        /// <summary> Initializes a new instance of HciClusterCertificateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciClusterCertificateContent"/>. </summary>
         public HciClusterCertificateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HciClusterCertificateContent"/>. </summary>
+        /// <param name="properties"></param>
+        internal HciClusterCertificateContent(HciClusterRawCertificate properties)
+        {
+            Properties = properties;
         }
 
         /// <summary> Gets or sets the properties. </summary>

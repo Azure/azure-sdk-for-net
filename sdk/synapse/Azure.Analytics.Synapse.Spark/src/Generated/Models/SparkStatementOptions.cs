@@ -10,9 +10,18 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> The SparkStatementOptions. </summary>
     public partial class SparkStatementOptions
     {
-        /// <summary> Initializes a new instance of SparkStatementOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkStatementOptions"/>. </summary>
         public SparkStatementOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkStatementOptions"/>. </summary>
+        /// <param name="code"></param>
+        /// <param name="kind"></param>
+        internal SparkStatementOptions(string code, SparkStatementLanguageType? kind)
+        {
+            Code = code;
+            Kind = kind;
         }
 
         /// <summary> Gets or sets the code. </summary>

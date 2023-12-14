@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> The descendant. </summary>
     public partial class DescendantData : ResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DescendantData"/>. </summary>
         internal DescendantData()
         {

@@ -23,11 +23,11 @@ namespace Azure.Data.AppConfiguration
         private const string NameValue = "name";
         private const string StatusValue = "status";
         private const string FiltersValue = "filters";
-        private const string CompositionTypeValue = "composition_type";
+        private const string SnapshotCompositionValue = "composition_type";
         private const string CreatedOnValue = "created";
         private const string ExpiresOnValue = "expires";
         private const string RetentionPeriodValue = "retention_period";
-        private const string SizeValue = "size";
+        private const string SizeInBytesValue = "size";
         private const string ItemCountValue = "items_count";
         private const string TagsValue = "tags";
         private const string ETagValue = "etag";
@@ -39,7 +39,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary> filters. </summary>
         public static SnapshotFields Filters { get; } = new SnapshotFields(FiltersValue);
         /// <summary> composition_type. </summary>
-        public static SnapshotFields CompositionType { get; } = new SnapshotFields(CompositionTypeValue);
+        public static SnapshotFields SnapshotComposition { get; } = new SnapshotFields(SnapshotCompositionValue);
         /// <summary> created. </summary>
         public static SnapshotFields CreatedOn { get; } = new SnapshotFields(CreatedOnValue);
         /// <summary> expires. </summary>
@@ -47,7 +47,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary> retention_period. </summary>
         public static SnapshotFields RetentionPeriod { get; } = new SnapshotFields(RetentionPeriodValue);
         /// <summary> size. </summary>
-        public static SnapshotFields Size { get; } = new SnapshotFields(SizeValue);
+        public static SnapshotFields SizeInBytes { get; } = new SnapshotFields(SizeInBytesValue);
         /// <summary> items_count. </summary>
         public static SnapshotFields ItemCount { get; } = new SnapshotFields(ItemCountValue);
         /// <summary> tags. </summary>

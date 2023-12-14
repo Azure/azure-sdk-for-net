@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Elastic
 {
     /// <summary>
     /// A Class representing a MonitoringTagRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MonitoringTagRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMonitoringTagRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ElasticMonitorResource" /> using the GetMonitoringTagRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MonitoringTagRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMonitoringTagRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ElasticMonitorResource"/> using the GetMonitoringTagRule method.
     /// </summary>
     public partial class MonitoringTagRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MonitoringTagRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="monitorName"> The monitorName. </param>
+        /// <param name="ruleSetName"> The ruleSetName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName, string ruleSetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Elastic
         private readonly TagRulesRestOperations _monitoringTagRuleTagRulesRestClient;
         private readonly MonitoringTagRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Elastic/monitors/tagRules";
+
         /// <summary> Initializes a new instance of the <see cref="MonitoringTagRuleResource"/> class for mocking. </summary>
         protected MonitoringTagRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MonitoringTagRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MonitoringTagRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MonitoringTagRuleResource(ArmClient client, MonitoringTagRuleData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Elastic
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Elastic/monitors/tagRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

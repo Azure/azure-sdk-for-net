@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownTriggerBase. </summary>
     internal partial class UnknownTriggerBase : MachineLearningTriggerBase
     {
-        /// <summary> Initializes a new instance of UnknownTriggerBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownTriggerBase"/>. </summary>
         /// <param name="endTime">
         /// Specifies end time of schedule in ISO 8601, but without a UTC offset. Refer https://en.wikipedia.org/wiki/ISO_8601.
         /// Recommented format would be "2022-06-01T00:00:01"

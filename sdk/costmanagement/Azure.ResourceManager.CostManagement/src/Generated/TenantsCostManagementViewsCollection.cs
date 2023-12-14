@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TenantsCostManagementViewsResource" /> and their operations.
-    /// Each <see cref="TenantsCostManagementViewsResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="TenantsCostManagementViewsCollection" /> instance call the GetTenantsCostManagementViews method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="TenantsCostManagementViewsResource"/> and their operations.
+    /// Each <see cref="TenantsCostManagementViewsResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="TenantsCostManagementViewsCollection"/> instance call the GetTenantsCostManagementViews method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class TenantsCostManagementViewsCollection : ArmCollection
     {
@@ -269,6 +269,80 @@ namespace Azure.ResourceManager.CostManagement
             {
                 var response = _tenantsCostManagementViewsViewsRestClient.Get(viewName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/views/{viewName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Views_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="viewName"> View name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
+        public virtual async Task<NullableResponse<TenantsCostManagementViewsResource>> GetIfExistsAsync(string viewName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+
+            using var scope = _tenantsCostManagementViewsViewsClientDiagnostics.CreateScope("TenantsCostManagementViewsCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _tenantsCostManagementViewsViewsRestClient.GetAsync(viewName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<TenantsCostManagementViewsResource>(response.GetRawResponse());
+                return Response.FromValue(new TenantsCostManagementViewsResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/views/{viewName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Views_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="viewName"> View name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
+        public virtual NullableResponse<TenantsCostManagementViewsResource> GetIfExists(string viewName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+
+            using var scope = _tenantsCostManagementViewsViewsClientDiagnostics.CreateScope("TenantsCostManagementViewsCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _tenantsCostManagementViewsViewsRestClient.Get(viewName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<TenantsCostManagementViewsResource>(response.GetRawResponse());
+                return Response.FromValue(new TenantsCostManagementViewsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

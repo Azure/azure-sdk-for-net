@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Training related configuration. </summary>
     public partial class MachineLearningTrainingSettings
     {
-        /// <summary> Initializes a new instance of MachineLearningTrainingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTrainingSettings"/>. </summary>
         public MachineLearningTrainingSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningTrainingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTrainingSettings"/>. </summary>
         /// <param name="isDnnTrainingEnabled"> Enable recommendation of DNN models. </param>
         /// <param name="isModelExplainabilityEnabled"> Flag to turn on explainability on best model. </param>
         /// <param name="isOnnxCompatibleModelsEnabled"> Flag for enabling onnx compatible models. </param>
@@ -28,7 +28,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Configure this parameter with a higher value than 300 secs, if more time is needed.
         /// </param>
         /// <param name="stackEnsembleSettings"> Stack ensemble settings for stack ensemble run. </param>
-        internal MachineLearningTrainingSettings(bool? isDnnTrainingEnabled, bool? isModelExplainabilityEnabled, bool? isOnnxCompatibleModelsEnabled, bool? isStackEnsembleEnabled, bool? isVoteEnsembleEnabled, TimeSpan? ensembleModelDownloadTimeout, MachineLearningStackEnsembleSettings stackEnsembleSettings)
+        /// <param name="trainingMode">
+        /// TrainingMode mode - Setting to 'auto' is same as setting it to 'non-distributed' for now, however in the future may result in mixed mode or heuristics based mode selection. Default is 'auto'.
+        /// If 'Distributed' then only distributed featurization is used and distributed algorithms are chosen.
+        /// If 'NonDistributed' then only non distributed algorithms are chosen.
+        /// </param>
+        internal MachineLearningTrainingSettings(bool? isDnnTrainingEnabled, bool? isModelExplainabilityEnabled, bool? isOnnxCompatibleModelsEnabled, bool? isStackEnsembleEnabled, bool? isVoteEnsembleEnabled, TimeSpan? ensembleModelDownloadTimeout, MachineLearningStackEnsembleSettings stackEnsembleSettings, TrainingMode? trainingMode)
         {
             IsDnnTrainingEnabled = isDnnTrainingEnabled;
             IsModelExplainabilityEnabled = isModelExplainabilityEnabled;
@@ -37,6 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IsVoteEnsembleEnabled = isVoteEnsembleEnabled;
             EnsembleModelDownloadTimeout = ensembleModelDownloadTimeout;
             StackEnsembleSettings = stackEnsembleSettings;
+            TrainingMode = trainingMode;
         }
 
         /// <summary> Enable recommendation of DNN models. </summary>
@@ -56,5 +62,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public TimeSpan? EnsembleModelDownloadTimeout { get; set; }
         /// <summary> Stack ensemble settings for stack ensemble run. </summary>
         public MachineLearningStackEnsembleSettings StackEnsembleSettings { get; set; }
+        /// <summary>
+        /// TrainingMode mode - Setting to 'auto' is same as setting it to 'non-distributed' for now, however in the future may result in mixed mode or heuristics based mode selection. Default is 'auto'.
+        /// If 'Distributed' then only distributed featurization is used and distributed algorithms are chosen.
+        /// If 'NonDistributed' then only non distributed algorithms are chosen.
+        /// </summary>
+        public TrainingMode? TrainingMode { get; set; }
     }
 }

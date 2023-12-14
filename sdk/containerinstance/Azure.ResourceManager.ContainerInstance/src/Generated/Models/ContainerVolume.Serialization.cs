@@ -30,7 +30,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(EmptyDir);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EmptyDir.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(EmptyDir))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsCollectionDefined(Secret))

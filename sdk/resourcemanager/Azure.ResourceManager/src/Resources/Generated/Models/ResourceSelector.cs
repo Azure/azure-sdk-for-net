@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The resource selector to filter policies by resource properties. </summary>
     public partial class ResourceSelector
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ResourceSelector"/>. </summary>
         public ResourceSelector()
         {

@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a set of certificates which are all in the same Key Vault. </summary>
     public partial class VaultSecretGroup
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="VaultSecretGroup"/>. </summary>
         public VaultSecretGroup()
         {

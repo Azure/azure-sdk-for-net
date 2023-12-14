@@ -5,10 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using System.Text.Json;
-using Azure.Core;
-
 namespace Azure.IoT.TimeSeriesInsights
 {
     internal partial class InstancesBatchResponse

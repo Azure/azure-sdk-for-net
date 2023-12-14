@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Describes the settings to be used when encoding the input video into a desired output bitrate layer with the H.264 video codec. </summary>
     public partial class H264Layer : VideoLayer
     {
-        /// <summary> Initializes a new instance of H264Layer. </summary>
+        /// <summary> Initializes a new instance of <see cref="H264Layer"/>. </summary>
         /// <param name="bitrate"> The average bitrate in bits per second at which to encode the input video when generating this layer. This is a required field. </param>
         public H264Layer(int bitrate) : base(bitrate)
         {
         }
 
-        /// <summary> Initializes a new instance of H264Layer. </summary>
+        /// <summary> Initializes a new instance of <see cref="H264Layer"/>. </summary>
         /// <param name="width"> The width of the output video for this layer. The value can be absolute (in pixels) or relative (in percentage). For example 50% means the output video has half as many pixels in width as the input. </param>
         /// <param name="height"> The height of the output video for this layer. The value can be absolute (in pixels) or relative (in percentage). For example 50% means the output video has half as many pixels in height as the input. </param>
         /// <param name="label"> The alphanumeric label for this layer, which can be used in multiplexing different video and audio layers, or in naming the output file. </param>

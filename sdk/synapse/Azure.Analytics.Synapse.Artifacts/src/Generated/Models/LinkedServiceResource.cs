@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Linked service resource type. </summary>
     public partial class LinkedServiceResource : SubResource
     {
-        /// <summary> Initializes a new instance of LinkedServiceResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedServiceResource"/>. </summary>
         /// <param name="properties">
         /// Properties of linked service.
         /// Please note <see cref="LinkedService"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of LinkedServiceResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedServiceResource"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

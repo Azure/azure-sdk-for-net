@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The compute power action. </summary>
+    /// <summary> [Required] The compute power action. </summary>
     public readonly partial struct MachineLearningComputePowerAction : IEquatable<MachineLearningComputePowerAction>
     {
         private readonly string _value;

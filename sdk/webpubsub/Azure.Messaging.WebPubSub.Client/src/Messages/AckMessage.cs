@@ -16,7 +16,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// <summary>
         /// The ack-id
         /// </summary>
-        public ulong AckId { get; }
+        public long AckId { get; }
 
         /// <summary>
         /// Representing whether the operation is success.
@@ -34,7 +34,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// <param name="ackId">The ack-id</param>
         /// <param name="success">Representing whether the operation is success.</param>
         /// <param name="error">The error detail when the operation is not success.</param>
-        public AckMessage(ulong ackId, bool success, AckMessageError error)
+        public AckMessage(long ackId, bool success, AckMessageError error)
         {
             AckId = ackId;
             Success = success;

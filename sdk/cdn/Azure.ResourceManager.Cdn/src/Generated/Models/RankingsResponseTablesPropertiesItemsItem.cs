@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The RankingsResponseTablesPropertiesItemsItem. </summary>
     public partial class RankingsResponseTablesPropertiesItemsItem
     {
-        /// <summary> Initializes a new instance of RankingsResponseTablesPropertiesItemsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="RankingsResponseTablesPropertiesItemsItem"/>. </summary>
         internal RankingsResponseTablesPropertiesItemsItem()
         {
             Metrics = new ChangeTrackingList<RankingsResponseTablesPropertiesItemsMetricsItem>();
         }
 
-        /// <summary> Initializes a new instance of RankingsResponseTablesPropertiesItemsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="RankingsResponseTablesPropertiesItemsItem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="metrics"></param>
         internal RankingsResponseTablesPropertiesItemsItem(string name, IReadOnlyList<RankingsResponseTablesPropertiesItemsMetricsItem> metrics)

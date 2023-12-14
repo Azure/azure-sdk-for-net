@@ -23,14 +23,17 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a DiskAccess along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DiskAccessResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDiskAccessResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDiskAccess method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiskAccessResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDiskAccessResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDiskAccess method.
     /// </summary>
     [DeserializationProxy(typeof(DiskAccessData))]
     public partial class DiskAccessResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DiskAccessResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="diskAccessName"> The diskAccessName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string diskAccessName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}";
@@ -41,12 +44,15 @@ namespace Azure.ResourceManager.Compute
         private readonly DiskAccessesRestOperations _diskAccessRestClient;
         private readonly DiskAccessData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/diskAccesses";
+
         /// <summary> Initializes a new instance of the <see cref="DiskAccessResource"/> class for mocking. </summary>
         protected DiskAccessResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DiskAccessResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DiskAccessResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DiskAccessResource(ArmClient client, DiskAccessData data) : this(client, data.Id)
@@ -67,9 +73,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/diskAccesses";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -96,7 +99,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of ComputePrivateEndpointConnectionResources and their operations over a ComputePrivateEndpointConnectionResource. </returns>
         public virtual ComputePrivateEndpointConnectionCollection GetComputePrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new ComputePrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new ComputePrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +117,8 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ComputePrivateEndpointConnectionResource>> GetComputePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +140,8 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ComputePrivateEndpointConnectionResource> GetComputePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -367,7 +370,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ComputePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ComputePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ComputePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskAccessRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -388,7 +391,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ComputePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ComputePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ComputePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskAccessRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

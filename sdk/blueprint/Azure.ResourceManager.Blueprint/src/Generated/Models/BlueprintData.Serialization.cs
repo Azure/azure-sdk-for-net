@@ -64,7 +64,10 @@ namespace Azure.ResourceManager.Blueprint
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Versions);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Versions.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Versions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();

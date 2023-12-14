@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> This defines the sku conversion status object for asynchronous sku conversions. </summary>
     public partial class StorageAccountSkuConversionStatus
     {
-        /// <summary> Initializes a new instance of StorageAccountSkuConversionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountSkuConversionStatus"/>. </summary>
         public StorageAccountSkuConversionStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountSkuConversionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountSkuConversionStatus"/>. </summary>
         /// <param name="skuConversionStatus"> This property indicates the current sku conversion status. </param>
         /// <param name="targetSkuName"> This property represents the target sku name to which the account sku is being converted asynchronously. </param>
         /// <param name="startOn"> This property represents the sku conversion start time. </param>

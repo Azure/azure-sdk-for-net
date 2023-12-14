@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Granular Copy Log Details for customer disk. </summary>
     public partial class DataBoxDiskGranularCopyLogDetails : GranularCopyLogDetails
     {
-        /// <summary> Initializes a new instance of DataBoxDiskGranularCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxDiskGranularCopyLogDetails"/>. </summary>
         internal DataBoxDiskGranularCopyLogDetails()
         {
             CopyLogDetailsType = DataBoxOrderType.DataBoxCustomerDisk;
         }
 
-        /// <summary> Initializes a new instance of DataBoxDiskGranularCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxDiskGranularCopyLogDetails"/>. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
         /// <param name="serialNumber"> Disk Serial Number. </param>
         /// <param name="accountId"> Account id. </param>

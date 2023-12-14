@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Input for InstallPatches on a Windows VM, as directly received by the API. </summary>
     public partial class WindowsParameters
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="WindowsParameters"/>. </summary>
         public WindowsParameters()
         {
@@ -31,15 +28,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="kbNumbersToExclude"> Kbs to exclude in the patch operation. </param>
         /// <param name="excludeKbsRequiringReboot"> Filters out Kbs that don't have an InstallationRebootBehavior of 'NeverReboots' when this is set to true. </param>
         /// <param name="maxPatchPublishOn"> This is used to install patches that were published on or before this given max published date. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WindowsParameters(IList<VmGuestPatchClassificationForWindows> classificationsToInclude, IList<string> kbNumbersToInclude, IList<string> kbNumbersToExclude, bool? excludeKbsRequiringReboot, DateTimeOffset? maxPatchPublishOn, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WindowsParameters(IList<VmGuestPatchClassificationForWindows> classificationsToInclude, IList<string> kbNumbersToInclude, IList<string> kbNumbersToExclude, bool? excludeKbsRequiringReboot, DateTimeOffset? maxPatchPublishOn)
         {
             ClassificationsToInclude = classificationsToInclude;
             KbNumbersToInclude = kbNumbersToInclude;
             KbNumbersToExclude = kbNumbersToExclude;
             ExcludeKbsRequiringReboot = excludeKbsRequiringReboot;
             MaxPatchPublishOn = maxPatchPublishOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The update classifications to select when installing patches for Windows. </summary>

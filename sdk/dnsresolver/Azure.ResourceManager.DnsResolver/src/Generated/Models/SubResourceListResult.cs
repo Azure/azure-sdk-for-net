@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> The response to an enumeration operation on sub-resources. </summary>
     internal partial class SubResourceListResult
     {
-        /// <summary> Initializes a new instance of SubResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubResourceListResult"/>. </summary>
         internal SubResourceListResult()
         {
             Value = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of SubResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubResourceListResult"/>. </summary>
         /// <param name="value"> Enumeration of the sub-resources. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
         internal SubResourceListResult(IReadOnlyList<WritableSubResource> value, string nextLink)

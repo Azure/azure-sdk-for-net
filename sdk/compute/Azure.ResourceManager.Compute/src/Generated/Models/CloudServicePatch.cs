@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The CloudServicePatch. </summary>
     public partial class CloudServicePatch
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="CloudServicePatch"/>. </summary>
         public CloudServicePatch()
         {
@@ -25,11 +22,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="CloudServicePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudServicePatch(IDictionary<string, string> tags, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudServicePatch(IDictionary<string, string> tags)
         {
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>

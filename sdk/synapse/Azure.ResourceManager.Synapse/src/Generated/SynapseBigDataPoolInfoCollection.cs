@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseBigDataPoolInfoResource" /> and their operations.
-    /// Each <see cref="SynapseBigDataPoolInfoResource" /> in the collection will belong to the same instance of <see cref="SynapseWorkspaceResource" />.
-    /// To get a <see cref="SynapseBigDataPoolInfoCollection" /> instance call the GetSynapseBigDataPoolInfos method from an instance of <see cref="SynapseWorkspaceResource" />.
+    /// A class representing a collection of <see cref="SynapseBigDataPoolInfoResource"/> and their operations.
+    /// Each <see cref="SynapseBigDataPoolInfoResource"/> in the collection will belong to the same instance of <see cref="SynapseWorkspaceResource"/>.
+    /// To get a <see cref="SynapseBigDataPoolInfoCollection"/> instance call the GetSynapseBigDataPoolInfos method from an instance of <see cref="SynapseWorkspaceResource"/>.
     /// </summary>
     public partial class SynapseBigDataPoolInfoCollection : ArmCollection, IEnumerable<SynapseBigDataPoolInfoResource>, IAsyncEnumerable<SynapseBigDataPoolInfoResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseBigDataPoolInfoResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseBigDataPoolInfoResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseBigDataPoolInfoResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseBigDataPoolInfoBigDataPoolsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseBigDataPoolInfoResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseBigDataPoolInfoResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseBigDataPoolInfoResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseBigDataPoolInfoBigDataPoolsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -317,6 +317,80 @@ namespace Azure.ResourceManager.Synapse
             {
                 var response = _synapseBigDataPoolInfoBigDataPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bigDataPoolName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BigDataPools_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="bigDataPoolName"> Big Data pool name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bigDataPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="bigDataPoolName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SynapseBigDataPoolInfoResource>> GetIfExistsAsync(string bigDataPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bigDataPoolName, nameof(bigDataPoolName));
+
+            using var scope = _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics.CreateScope("SynapseBigDataPoolInfoCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _synapseBigDataPoolInfoBigDataPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bigDataPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseBigDataPoolInfoResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseBigDataPoolInfoResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BigDataPools_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="bigDataPoolName"> Big Data pool name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bigDataPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="bigDataPoolName"/> is null. </exception>
+        public virtual NullableResponse<SynapseBigDataPoolInfoResource> GetIfExists(string bigDataPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bigDataPoolName, nameof(bigDataPoolName));
+
+            using var scope = _synapseBigDataPoolInfoBigDataPoolsClientDiagnostics.CreateScope("SynapseBigDataPoolInfoCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _synapseBigDataPoolInfoBigDataPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bigDataPoolName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseBigDataPoolInfoResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseBigDataPoolInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

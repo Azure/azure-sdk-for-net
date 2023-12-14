@@ -24,17 +24,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         private const string AutoMLValue = "AutoML";
         private const string CommandValue = "Command";
+        private const string LabelingValue = "Labeling";
         private const string SweepValue = "Sweep";
         private const string PipelineValue = "Pipeline";
+        private const string SparkValue = "Spark";
 
         /// <summary> AutoML. </summary>
         public static JobType AutoML { get; } = new JobType(AutoMLValue);
         /// <summary> Command. </summary>
         public static JobType Command { get; } = new JobType(CommandValue);
+        /// <summary> Labeling. </summary>
+        public static JobType Labeling { get; } = new JobType(LabelingValue);
         /// <summary> Sweep. </summary>
         public static JobType Sweep { get; } = new JobType(SweepValue);
         /// <summary> Pipeline. </summary>
         public static JobType Pipeline { get; } = new JobType(PipelineValue);
+        /// <summary> Spark. </summary>
+        public static JobType Spark { get; } = new JobType(SparkValue);
         /// <summary> Determines if two <see cref="JobType"/> values are the same. </summary>
         public static bool operator ==(JobType left, JobType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobType"/> values are not the same. </summary>

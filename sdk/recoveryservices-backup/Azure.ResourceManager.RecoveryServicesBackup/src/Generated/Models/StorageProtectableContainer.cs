@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure Storage-specific protectable containers. </summary>
     public partial class StorageProtectableContainer : ProtectableContainer
     {
-        /// <summary> Initializes a new instance of StorageProtectableContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageProtectableContainer"/>. </summary>
         public StorageProtectableContainer()
         {
             ProtectableContainerType = ProtectableContainerType.StorageContainer;
         }
 
-        /// <summary> Initializes a new instance of StorageProtectableContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageProtectableContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="protectableContainerType">

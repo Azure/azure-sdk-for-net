@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of compliance results response. </summary>
     internal partial class ComplianceResultList
     {
-        /// <summary> Initializes a new instance of ComplianceResultList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComplianceResultList"/>. </summary>
         /// <param name="value"> List of compliance results. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ComplianceResultList(IEnumerable<ComplianceResultData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ComplianceResultList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComplianceResultList"/>. </summary>
         /// <param name="value"> List of compliance results. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal ComplianceResultList(IReadOnlyList<ComplianceResultData> value, string nextLink)

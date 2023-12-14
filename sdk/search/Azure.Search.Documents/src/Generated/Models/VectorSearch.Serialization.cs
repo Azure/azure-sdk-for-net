@@ -16,11 +16,21 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AlgorithmConfigurations))
+            if (Optional.IsCollectionDefined(Profiles))
             {
-                writer.WritePropertyName("algorithmConfigurations"u8);
+                writer.WritePropertyName("profiles"u8);
                 writer.WriteStartArray();
-                foreach (var item in AlgorithmConfigurations)
+                foreach (var item in Profiles)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Algorithms))
+            {
+                writer.WritePropertyName("algorithms"u8);
+                writer.WriteStartArray();
+                foreach (var item in Algorithms)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -35,10 +45,25 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IList<VectorSearchAlgorithmConfiguration>> algorithmConfigurations = default;
+            Optional<IList<VectorSearchProfile>> profiles = default;
+            Optional<IList<VectorSearchAlgorithmConfiguration>> algorithms = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("algorithmConfigurations"u8))
+                if (property.NameEquals("profiles"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VectorSearchProfile> array = new List<VectorSearchProfile>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(VectorSearchProfile.DeserializeVectorSearchProfile(item));
+                    }
+                    profiles = array;
+                    continue;
+                }
+                if (property.NameEquals("algorithms"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,11 +74,11 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         array.Add(VectorSearchAlgorithmConfiguration.DeserializeVectorSearchAlgorithmConfiguration(item));
                     }
-                    algorithmConfigurations = array;
+                    algorithms = array;
                     continue;
                 }
             }
-            return new VectorSearch(Optional.ToList(algorithmConfigurations));
+            return new VectorSearch(Optional.ToList(profiles), Optional.ToList(algorithms));
         }
     }
 }

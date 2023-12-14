@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> A list of performance tiers. </summary>
     internal partial class MySqlPerformanceTierListResult
     {
-        /// <summary> Initializes a new instance of MySqlPerformanceTierListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlPerformanceTierListResult"/>. </summary>
         internal MySqlPerformanceTierListResult()
         {
             Value = new ChangeTrackingList<MySqlPerformanceTier>();
         }
 
-        /// <summary> Initializes a new instance of MySqlPerformanceTierListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlPerformanceTierListResult"/>. </summary>
         /// <param name="value"> The list of performance tiers. </param>
         internal MySqlPerformanceTierListResult(IReadOnlyList<MySqlPerformanceTier> value)
         {

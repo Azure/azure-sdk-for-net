@@ -13,7 +13,7 @@ namespace Azure.AI.Translation.Document.Models
     /// <summary> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </summary>
     internal partial class TranslationError
     {
-        /// <summary> Initializes a new instance of TranslationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationError"/>. </summary>
         /// <param name="code"> Enums containing high level error codes. </param>
         /// <param name="message"> Gets high level error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.AI.Translation.Document.Models
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of TranslationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationError"/>. </summary>
         /// <param name="code"> Enums containing high level error codes. </param>
         /// <param name="message"> Gets high level error message. </param>
         /// <param name="target">

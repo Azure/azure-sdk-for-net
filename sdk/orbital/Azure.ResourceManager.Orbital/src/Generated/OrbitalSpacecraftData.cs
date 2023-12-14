@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Orbital
     /// </summary>
     public partial class OrbitalSpacecraftData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of OrbitalSpacecraftData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalSpacecraftData"/>. </summary>
         /// <param name="location"> The location. </param>
         public OrbitalSpacecraftData(AzureLocation location) : base(location)
         {
             Links = new ChangeTrackingList<OrbitalSpacecraftLink>();
         }
 
-        /// <summary> Initializes a new instance of OrbitalSpacecraftData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalSpacecraftData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

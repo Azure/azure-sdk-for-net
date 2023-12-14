@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> This is the replication status of the gallery image version. </summary>
     public partial class ReplicationStatus
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ReplicationStatus"/>. </summary>
         internal ReplicationStatus()
         {

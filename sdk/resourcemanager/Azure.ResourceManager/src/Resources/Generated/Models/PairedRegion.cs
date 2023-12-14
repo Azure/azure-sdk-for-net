@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Information regarding paired region. </summary>
     public partial class PairedRegion
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="PairedRegion"/>. </summary>
         internal PairedRegion()
         {

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerInstance
     /// </summary>
     public partial class ContainerGroupData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="containers"> The containers within the container group. </param>
         /// <param name="osType"> The operating system type required by the containers in the container group. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerInstance
             Extensions = new ChangeTrackingList<DeploymentExtensionSpec>();
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

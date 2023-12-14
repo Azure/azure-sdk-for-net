@@ -10,10 +10,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Item Level kubernetes persistent volume target info for restore operation. </summary>
     public partial class KubernetesPVRestoreCriteria : ItemLevelRestoreCriteria
     {
-        /// <summary> Initializes a new instance of KubernetesPVRestoreCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesPVRestoreCriteria"/>. </summary>
         public KubernetesPVRestoreCriteria()
         {
             ObjectType = "KubernetesPVRestoreCriteria";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesPVRestoreCriteria"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="name"> Selected persistent volume claim name. </param>
+        /// <param name="storageClassName"> Selected storage class name for restore operation. </param>
+        internal KubernetesPVRestoreCriteria(string objectType, string name, string storageClassName) : base(objectType)
+        {
+            Name = name;
+            StorageClassName = storageClassName;
+            ObjectType = objectType ?? "KubernetesPVRestoreCriteria";
         }
 
         /// <summary> Selected persistent volume claim name. </summary>

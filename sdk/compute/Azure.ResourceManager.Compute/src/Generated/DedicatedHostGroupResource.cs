@@ -22,14 +22,17 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a DedicatedHostGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DedicatedHostGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDedicatedHostGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDedicatedHostGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DedicatedHostGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDedicatedHostGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDedicatedHostGroup method.
     /// </summary>
     [DeserializationProxy(typeof(DedicatedHostGroupData))]
     public partial class DedicatedHostGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DedicatedHostGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="hostGroupName"> The hostGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hostGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}";
@@ -40,12 +43,15 @@ namespace Azure.ResourceManager.Compute
         private readonly DedicatedHostGroupsRestOperations _dedicatedHostGroupRestClient;
         private readonly DedicatedHostGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/hostGroups";
+
         /// <summary> Initializes a new instance of the <see cref="DedicatedHostGroupResource"/> class for mocking. </summary>
         protected DedicatedHostGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DedicatedHostGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DedicatedHostGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DedicatedHostGroupResource(ArmClient client, DedicatedHostGroupData data) : this(client, data.Id)
@@ -66,9 +72,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/hostGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -95,7 +98,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of DedicatedHostResources and their operations over a DedicatedHostResource. </returns>
         public virtual DedicatedHostCollection GetDedicatedHosts()
         {
-            return GetCachedClient(Client => new DedicatedHostCollection(Client, Id));
+            return GetCachedClient(client => new DedicatedHostCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +117,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="hostName"> The name of the dedicated host. </param>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the dedicated host. 'UserData' is not supported for dedicated host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DedicatedHostResource>> GetDedicatedHostAsync(string hostName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
@@ -138,8 +141,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="hostName"> The name of the dedicated host. </param>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the dedicated host. 'UserData' is not supported for dedicated host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DedicatedHostResource> GetDedicatedHost(string hostName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {

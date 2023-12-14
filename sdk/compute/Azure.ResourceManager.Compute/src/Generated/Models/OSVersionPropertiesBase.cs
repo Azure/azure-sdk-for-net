@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Configuration view of an OS version. </summary>
     public partial class OSVersionPropertiesBase
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="OSVersionPropertiesBase"/>. </summary>
         internal OSVersionPropertiesBase()
         {

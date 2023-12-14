@@ -17,11 +17,11 @@ namespace Azure.Storage.DataMovement
         ///
         /// Applies only to block blobs.
         /// </summary>
-        public string BlockId { get; internal set; }
+        public string BlockId { get; set; }
 
         /// <summary>
         /// Optional. Specifies the position to write to. Will default to 0 if not specified.
         /// </summary>
-        public long? Position { get; internal set; }
+        public long? Position { get; set; }
     }
 }

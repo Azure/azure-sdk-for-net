@@ -1,6 +1,12 @@
 # Release History
 
-## 1.2.0 (2023-08-03)
+## 1.3.0 (2023-12-05)
+
+### Features Added
+
+- Added `VerifyConnection` property to `ConfidentialLedgerClientOptions` to allow the option to have a client connection without validating the service certificate.
+
+## 1.2.0 (2023-09-12)
 
 ### Bugs Fixed
 

@@ -25,7 +25,8 @@ namespace Azure.ResourceManager.Compute.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("sourceVault"u8);
-            JsonSerializer.Serialize(writer, SourceVault); writer.WritePropertyName("keyUrl"u8);
+            JsonSerializer.Serialize(writer, SourceVault);
+            writer.WritePropertyName("keyUrl"u8);
             writer.WriteStringValue(KeyUri.AbsoluteUri);
             if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
             {

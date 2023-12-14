@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DeviceProvisioningServicesCertificateResource" /> and their operations.
-    /// Each <see cref="DeviceProvisioningServicesCertificateResource" /> in the collection will belong to the same instance of <see cref="DeviceProvisioningServiceResource" />.
-    /// To get a <see cref="DeviceProvisioningServicesCertificateCollection" /> instance call the GetDeviceProvisioningServicesCertificates method from an instance of <see cref="DeviceProvisioningServiceResource" />.
+    /// A class representing a collection of <see cref="DeviceProvisioningServicesCertificateResource"/> and their operations.
+    /// Each <see cref="DeviceProvisioningServicesCertificateResource"/> in the collection will belong to the same instance of <see cref="DeviceProvisioningServiceResource"/>.
+    /// To get a <see cref="DeviceProvisioningServicesCertificateCollection"/> instance call the GetDeviceProvisioningServicesCertificates method from an instance of <see cref="DeviceProvisioningServiceResource"/>.
     /// </summary>
     public partial class DeviceProvisioningServicesCertificateCollection : ArmCollection, IEnumerable<DeviceProvisioningServicesCertificateResource>, IAsyncEnumerable<DeviceProvisioningServicesCertificateResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeviceProvisioningServicesCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DeviceProvisioningServicesCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceProvisioningServicesCertificateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesCertificateDpsCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceProvisioningServicesCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeviceProvisioningServicesCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceProvisioningServicesCertificateResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesCertificateDpsCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -319,6 +319,82 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 var response = _deviceProvisioningServicesCertificateDpsCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, ifMatch, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DpsCertificate_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="certificateName"> Name of the certificate to retrieve. </param>
+        /// <param name="ifMatch"> ETag of the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DeviceProvisioningServicesCertificateResource>> GetIfExistsAsync(string certificateName, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _deviceProvisioningServicesCertificateDpsCertificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, ifMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DeviceProvisioningServicesCertificateResource>(response.GetRawResponse());
+                return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DpsCertificate_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="certificateName"> Name of the certificate to retrieve. </param>
+        /// <param name="ifMatch"> ETag of the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        public virtual NullableResponse<DeviceProvisioningServicesCertificateResource> GetIfExists(string certificateName, string ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _deviceProvisioningServicesCertificateDpsCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, ifMatch, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DeviceProvisioningServicesCertificateResource>(response.GetRawResponse());
+                return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

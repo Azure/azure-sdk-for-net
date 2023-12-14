@@ -12,6 +12,9 @@ namespace: Azure.ResourceManager.ArcScVmm
 require: https://github.com/Azure/azure-rest-api-specs/blob/ba936cf8f3b4720dc025837281241fdc903f7e4d/specification/scvmm/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -46,27 +49,16 @@ acronym-mapping:
   URI: Uri
   Etag: ETag|etag
 
-no-property-type-replacement:
-- VirtualMachineDeleteCheckpoint
-- VirtualMachineRestoreCheckpoint
+rename-mapping:
+  AvailabilitySet: ScVmmAvailabilitySet
+  Cloud: ScVmmCloud
+  VMMServer: ScVmmServer
+  VirtualMachine: ScVmmVirtualMachine
+  VirtualMachineTemplate: ScVmmVirtualMachineTemplate
+  VirtualNetwork: ScVmmVirtualNetwork
 
 directive:
-  - rename-model:
-      from: AvailabilitySet
-      to: ScVmmAvailabilitySet
-  - rename-model:
-      from: Cloud
-      to: ScVmmCloud
-  - rename-model:
-      from: VirtualMachine
-      to: ScVmmVirtualMachine
-  - rename-model:
-      from: VirtualMachineTemplate
-      to: ScVmmVirtualMachineTemplate
-  - rename-model:
-      from: VirtualNetwork
-      to: ScVmmVirtualNetwork
-  - rename-model:
-      from: VMMServer
-      to: ScVmmServer
+  - from: swagger-document
+    where: $.definitions.InventoryItem.properties.properties
+    transform: $["x-ms-client-flatten"] = false;
 ```

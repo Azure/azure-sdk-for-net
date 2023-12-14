@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The Update Resource model definition. </summary>
     public partial class ComputeResourcePatch
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ComputeResourcePatch"/>. </summary>
         public ComputeResourcePatch()
         {
@@ -25,11 +22,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="ComputeResourcePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeResourcePatch(IDictionary<string, string> tags, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeResourcePatch(IDictionary<string, string> tags)
         {
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>

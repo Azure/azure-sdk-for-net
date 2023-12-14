@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Properties of the disk for which update is pending. </summary>
     internal partial class PropertyUpdatesInProgress
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="PropertyUpdatesInProgress"/>. </summary>
         internal PropertyUpdatesInProgress()
         {

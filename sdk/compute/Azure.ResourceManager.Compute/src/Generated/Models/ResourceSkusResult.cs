@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Resource Skus operation response. </summary>
     internal partial class ResourceSkusResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ResourceSkusResult"/>. </summary>
         /// <param name="value"> The list of skus available for the subscription. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>

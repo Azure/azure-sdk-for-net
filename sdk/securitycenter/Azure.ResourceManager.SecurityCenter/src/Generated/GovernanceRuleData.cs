@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class GovernanceRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of GovernanceRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GovernanceRuleData"/>. </summary>
         public GovernanceRuleData()
         {
             ExcludedScopes = new ChangeTrackingList<string>();
             ConditionSets = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of GovernanceRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GovernanceRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

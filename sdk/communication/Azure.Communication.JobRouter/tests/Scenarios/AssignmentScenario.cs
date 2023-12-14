@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
@@ -43,13 +42,13 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
 
             var workerId1 = GenerateUniqueId($"{IdPrefix}-w1");
             var registerWorker = await client.CreateWorkerAsync(
-                new CreateWorkerOptions(workerId: workerId1, totalCapacity: 1)
+                new CreateWorkerOptions(workerId: workerId1, capacity: 1)
                 {
-                    QueueAssignments = { [queueResponse.Value.Id] = new RouterQueueAssignment() },
-                    ChannelConfigurations = { [channelResponse] = new ChannelConfiguration(1) },
+                    Queues = { queueResponse.Value.Id, },
+                    Channels = { new RouterChannel(channelResponse, 1) },
                     AvailableForOffers = true,
                 });
-            AddForCleanup(new Task(async () => await client.UpdateWorkerAsync(new UpdateWorkerOptions(workerId1) { AvailableForOffers = false })));
+            AddForCleanup(new Task(async () => await client.UpdateWorkerAsync(new RouterWorker(workerId1) { AvailableForOffers = false })));
 
             var jobId = GenerateUniqueId($"{IdPrefix}-JobId-{nameof(AssignmentScenario)}");
             var createJob = await client.CreateJobAsync(
@@ -74,8 +73,12 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             Assert.AreEqual(createJob.Value.Id, accept.Value.JobId);
             Assert.AreEqual(worker.Value.Id, accept.Value.WorkerId);
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await client.DeclineJobOfferAsync(
-                    new DeclineJobOfferOptions(worker.Value.Id, offer.OfferId) { RetryOfferAt = DateTimeOffset.MinValue }));
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+                await client.DeclineJobOfferAsync(
+                    new DeclineJobOfferOptions(worker.Value.Id, offer.OfferId)
+                    {
+                        RetryOfferAt = DateTimeOffset.MinValue
+                    }));
 
             var complete = await client.CompleteJobAsync(new CompleteJobOptions(createJob.Value.Id, accept.Value.AssignmentId)
             {
@@ -96,6 +99,14 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].ClosedAt);
             Assert.IsNotEmpty(finalJobState.Value.Notes);
             Assert.IsTrue(finalJobState.Value.Notes.Count == 2);
+
+            // in-test cleanup
+            worker.Value.AvailableForOffers = false;
+            await client.UpdateWorkerAsync(worker);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
         }
     }
 }

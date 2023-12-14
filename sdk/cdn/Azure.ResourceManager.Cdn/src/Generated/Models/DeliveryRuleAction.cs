@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// </summary>
     public abstract partial class DeliveryRuleAction
     {
-        /// <summary> Initializes a new instance of DeliveryRuleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleAction"/>. </summary>
         protected DeliveryRuleAction()
         {
         }
 
-        /// <summary> Initializes a new instance of DeliveryRuleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleAction"/>. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         internal DeliveryRuleAction(DeliveryRuleActionType name)
         {

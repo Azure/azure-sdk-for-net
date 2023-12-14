@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Relay
 {
     /// <summary>
     /// A Class representing a RelayNamespace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RelayNamespaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRelayNamespaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetRelayNamespace method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RelayNamespaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRelayNamespaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetRelayNamespace method.
     /// </summary>
     public partial class RelayNamespaceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RelayNamespaceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.Relay
         private readonly NamespacesRestOperations _relayNamespaceNamespacesRestClient;
         private readonly RelayNamespaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces";
+
         /// <summary> Initializes a new instance of the <see cref="RelayNamespaceResource"/> class for mocking. </summary>
         protected RelayNamespaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RelayNamespaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RelayNamespaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RelayNamespaceResource(ArmClient client, RelayNamespaceData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.Relay
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.Relay
         /// <returns> An object representing collection of RelayNamespaceAuthorizationRuleResources and their operations over a RelayNamespaceAuthorizationRuleResource. </returns>
         public virtual RelayNamespaceAuthorizationRuleCollection GetRelayNamespaceAuthorizationRules()
         {
-            return GetCachedClient(Client => new RelayNamespaceAuthorizationRuleCollection(Client, Id));
+            return GetCachedClient(client => new RelayNamespaceAuthorizationRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.Relay
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RelayNamespaceAuthorizationRuleResource>> GetRelayNamespaceAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.Relay
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RelayNamespaceAuthorizationRuleResource> GetRelayNamespaceAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
@@ -143,7 +146,7 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary> Gets an object representing a RelayNetworkRuleSetResource along with the instance operations that can be performed on it in the RelayNamespace. </summary>
-        /// <returns> Returns a <see cref="RelayNetworkRuleSetResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RelayNetworkRuleSetResource"/> object. </returns>
         public virtual RelayNetworkRuleSetResource GetRelayNetworkRuleSet()
         {
             return new RelayNetworkRuleSetResource(Client, Id.AppendChildResource("networkRuleSets", "default"));
@@ -153,7 +156,7 @@ namespace Azure.ResourceManager.Relay
         /// <returns> An object representing collection of RelayHybridConnectionResources and their operations over a RelayHybridConnectionResource. </returns>
         public virtual RelayHybridConnectionCollection GetRelayHybridConnections()
         {
-            return GetCachedClient(Client => new RelayHybridConnectionCollection(Client, Id));
+            return GetCachedClient(client => new RelayHybridConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -171,8 +174,8 @@ namespace Azure.ResourceManager.Relay
         /// </summary>
         /// <param name="hybridConnectionName"> The hybrid connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hybridConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hybridConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hybridConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RelayHybridConnectionResource>> GetRelayHybridConnectionAsync(string hybridConnectionName, CancellationToken cancellationToken = default)
         {
@@ -194,8 +197,8 @@ namespace Azure.ResourceManager.Relay
         /// </summary>
         /// <param name="hybridConnectionName"> The hybrid connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hybridConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hybridConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hybridConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RelayHybridConnectionResource> GetRelayHybridConnection(string hybridConnectionName, CancellationToken cancellationToken = default)
         {
@@ -206,7 +209,7 @@ namespace Azure.ResourceManager.Relay
         /// <returns> An object representing collection of WcfRelayResources and their operations over a WcfRelayResource. </returns>
         public virtual WcfRelayCollection GetWcfRelays()
         {
-            return GetCachedClient(Client => new WcfRelayCollection(Client, Id));
+            return GetCachedClient(client => new WcfRelayCollection(client, Id));
         }
 
         /// <summary>
@@ -224,8 +227,8 @@ namespace Azure.ResourceManager.Relay
         /// </summary>
         /// <param name="relayName"> The relay name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WcfRelayResource>> GetWcfRelayAsync(string relayName, CancellationToken cancellationToken = default)
         {
@@ -247,8 +250,8 @@ namespace Azure.ResourceManager.Relay
         /// </summary>
         /// <param name="relayName"> The relay name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WcfRelayResource> GetWcfRelay(string relayName, CancellationToken cancellationToken = default)
         {
@@ -259,7 +262,7 @@ namespace Azure.ResourceManager.Relay
         /// <returns> An object representing collection of RelayPrivateEndpointConnectionResources and their operations over a RelayPrivateEndpointConnectionResource. </returns>
         public virtual RelayPrivateEndpointConnectionCollection GetRelayPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new RelayPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new RelayPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -277,8 +280,8 @@ namespace Azure.ResourceManager.Relay
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RelayPrivateEndpointConnectionResource>> GetRelayPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -300,8 +303,8 @@ namespace Azure.ResourceManager.Relay
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RelayPrivateEndpointConnectionResource> GetRelayPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -312,7 +315,7 @@ namespace Azure.ResourceManager.Relay
         /// <returns> An object representing collection of RelayPrivateLinkResources and their operations over a RelayPrivateLinkResource. </returns>
         public virtual RelayPrivateLinkResourceCollection GetRelayPrivateLinkResources()
         {
-            return GetCachedClient(Client => new RelayPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new RelayPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -330,8 +333,8 @@ namespace Azure.ResourceManager.Relay
         /// </summary>
         /// <param name="privateLinkResourceName"> The PrivateLinkResource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RelayPrivateLinkResource>> GetRelayPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
@@ -353,8 +356,8 @@ namespace Azure.ResourceManager.Relay
         /// </summary>
         /// <param name="privateLinkResourceName"> The PrivateLinkResource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RelayPrivateLinkResource> GetRelayPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {

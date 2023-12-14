@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan manual action details. </summary>
     public partial class RecoveryPlanManualActionDetails : RecoveryPlanActionDetails
     {
-        /// <summary> Initializes a new instance of RecoveryPlanManualActionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanManualActionDetails"/>. </summary>
         public RecoveryPlanManualActionDetails()
         {
             InstanceType = "ManualActionDetails";
         }
 
-        /// <summary> Initializes a new instance of RecoveryPlanManualActionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanManualActionDetails"/>. </summary>
         /// <param name="instanceType"> Gets the type of action details (see RecoveryPlanActionDetailsTypes enum for possible values). </param>
         /// <param name="description"> The manual action description. </param>
         internal RecoveryPlanManualActionDetails(string instanceType, string description) : base(instanceType)

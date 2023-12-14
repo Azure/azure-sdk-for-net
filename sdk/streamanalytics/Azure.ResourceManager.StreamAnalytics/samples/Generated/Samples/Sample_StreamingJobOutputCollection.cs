@@ -752,6 +752,49 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Get a DocumentDB output
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetADocumentDBOutput()
+        {
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_DocumentDB.json
+            // this example is just showing the usage of "Outputs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StreamingJobResource created on azure
+            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
+            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string resourceGroupName = "sjrg7983";
+            string jobName = "sj2331";
+            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
+
+            // get the collection of this StreamingJobOutputResource
+            StreamingJobOutputCollection collection = streamingJob.GetStreamingJobOutputs();
+
+            // invoke the operation
+            string outputName = "output3022";
+            NullableResponse<StreamingJobOutputResource> response = await collection.GetIfExistsAsync(outputName);
+            StreamingJobOutputResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StreamingJobOutputData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Get a Power BI output
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -816,6 +859,49 @@ AccountKey = "accountKey==",
             bool result = await collection.ExistsAsync(outputName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get a Power BI output
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetAPowerBIOutput()
+        {
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_PowerBI.json
+            // this example is just showing the usage of "Outputs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StreamingJobResource created on azure
+            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
+            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string resourceGroupName = "sjrg7983";
+            string jobName = "sj2331";
+            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
+
+            // get the collection of this StreamingJobOutputResource
+            StreamingJobOutputCollection collection = streamingJob.GetStreamingJobOutputs();
+
+            // invoke the operation
+            string outputName = "output3022";
+            NullableResponse<StreamingJobOutputResource> response = await collection.GetIfExistsAsync(outputName);
+            StreamingJobOutputResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StreamingJobOutputData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
 
         // Get a Service Bus Queue output with Avro serialization
@@ -884,6 +970,49 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Get a Service Bus Queue output with Avro serialization
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetAServiceBusQueueOutputWithAvroSerialization()
+        {
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_ServiceBusQueue_Avro.json
+            // this example is just showing the usage of "Outputs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StreamingJobResource created on azure
+            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
+            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string resourceGroupName = "sjrg3410";
+            string jobName = "sj5095";
+            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
+
+            // get the collection of this StreamingJobOutputResource
+            StreamingJobOutputCollection collection = streamingJob.GetStreamingJobOutputs();
+
+            // invoke the operation
+            string outputName = "output3456";
+            NullableResponse<StreamingJobOutputResource> response = await collection.GetIfExistsAsync(outputName);
+            StreamingJobOutputResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StreamingJobOutputData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Get a Service Bus Topic output with CSV serialization
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -948,6 +1077,49 @@ AccountKey = "accountKey==",
             bool result = await collection.ExistsAsync(outputName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get a Service Bus Topic output with CSV serialization
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetAServiceBusTopicOutputWithCSVSerialization()
+        {
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_ServiceBusTopic_CSV.json
+            // this example is just showing the usage of "Outputs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StreamingJobResource created on azure
+            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
+            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string resourceGroupName = "sjrg6450";
+            string jobName = "sj7094";
+            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
+
+            // get the collection of this StreamingJobOutputResource
+            StreamingJobOutputCollection collection = streamingJob.GetStreamingJobOutputs();
+
+            // invoke the operation
+            string outputName = "output7886";
+            NullableResponse<StreamingJobOutputResource> response = await collection.GetIfExistsAsync(outputName);
+            StreamingJobOutputResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StreamingJobOutputData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
 
         // Get a blob output with CSV serialization
@@ -1016,6 +1188,49 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Get a blob output with CSV serialization
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetABlobOutputWithCSVSerialization()
+        {
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_Blob_CSV.json
+            // this example is just showing the usage of "Outputs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StreamingJobResource created on azure
+            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
+            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string resourceGroupName = "sjrg5023";
+            string jobName = "sj900";
+            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
+
+            // get the collection of this StreamingJobOutputResource
+            StreamingJobOutputCollection collection = streamingJob.GetStreamingJobOutputs();
+
+            // invoke the operation
+            string outputName = "output1623";
+            NullableResponse<StreamingJobOutputResource> response = await collection.GetIfExistsAsync(outputName);
+            StreamingJobOutputResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StreamingJobOutputData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Get an Azure Data Lake Store output with JSON serialization
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -1080,6 +1295,49 @@ AccountKey = "accountKey==",
             bool result = await collection.ExistsAsync(outputName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get an Azure Data Lake Store output with JSON serialization
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetAnAzureDataLakeStoreOutputWithJSONSerialization()
+        {
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_AzureDataLakeStore_JSON.json
+            // this example is just showing the usage of "Outputs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StreamingJobResource created on azure
+            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
+            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string resourceGroupName = "sjrg6912";
+            string jobName = "sj3310";
+            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
+
+            // get the collection of this StreamingJobOutputResource
+            StreamingJobOutputCollection collection = streamingJob.GetStreamingJobOutputs();
+
+            // invoke the operation
+            string outputName = "output5195";
+            NullableResponse<StreamingJobOutputResource> response = await collection.GetIfExistsAsync(outputName);
+            StreamingJobOutputResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StreamingJobOutputData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
 
         // Get an Azure Data Warehouse output
@@ -1148,6 +1406,49 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Get an Azure Data Warehouse output
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetAnAzureDataWarehouseOutput()
+        {
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_DataWarehouse.json
+            // this example is just showing the usage of "Outputs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StreamingJobResource created on azure
+            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
+            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string resourceGroupName = "sjrg";
+            string jobName = "sjName";
+            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
+
+            // get the collection of this StreamingJobOutputResource
+            StreamingJobOutputCollection collection = streamingJob.GetStreamingJobOutputs();
+
+            // invoke the operation
+            string outputName = "dwOutput";
+            NullableResponse<StreamingJobOutputResource> response = await collection.GetIfExistsAsync(outputName);
+            StreamingJobOutputResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StreamingJobOutputData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Get an Azure Function output
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -1212,6 +1513,49 @@ AccountKey = "accountKey==",
             bool result = await collection.ExistsAsync(outputName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get an Azure Function output
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetAnAzureFunctionOutput()
+        {
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_AzureFunction.json
+            // this example is just showing the usage of "Outputs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StreamingJobResource created on azure
+            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
+            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string resourceGroupName = "sjrg";
+            string jobName = "sjName";
+            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
+
+            // get the collection of this StreamingJobOutputResource
+            StreamingJobOutputCollection collection = streamingJob.GetStreamingJobOutputs();
+
+            // invoke the operation
+            string outputName = "azureFunction1";
+            NullableResponse<StreamingJobOutputResource> response = await collection.GetIfExistsAsync(outputName);
+            StreamingJobOutputResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StreamingJobOutputData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
 
         // Get an Azure SQL database output
@@ -1280,6 +1624,49 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Get an Azure SQL database output
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetAnAzureSQLDatabaseOutput()
+        {
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_AzureSQL.json
+            // this example is just showing the usage of "Outputs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StreamingJobResource created on azure
+            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
+            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string resourceGroupName = "sjrg2157";
+            string jobName = "sj6458";
+            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
+
+            // get the collection of this StreamingJobOutputResource
+            StreamingJobOutputCollection collection = streamingJob.GetStreamingJobOutputs();
+
+            // invoke the operation
+            string outputName = "output1755";
+            NullableResponse<StreamingJobOutputResource> response = await collection.GetIfExistsAsync(outputName);
+            StreamingJobOutputResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StreamingJobOutputData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Get an Azure Table output
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -1346,6 +1733,49 @@ AccountKey = "accountKey==",
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Get an Azure Table output
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetAnAzureTableOutput()
+        {
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_AzureTable.json
+            // this example is just showing the usage of "Outputs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StreamingJobResource created on azure
+            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
+            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string resourceGroupName = "sjrg5176";
+            string jobName = "sj2790";
+            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
+
+            // get the collection of this StreamingJobOutputResource
+            StreamingJobOutputCollection collection = streamingJob.GetStreamingJobOutputs();
+
+            // invoke the operation
+            string outputName = "output958";
+            NullableResponse<StreamingJobOutputResource> response = await collection.GetIfExistsAsync(outputName);
+            StreamingJobOutputResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StreamingJobOutputData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Get an Event Hub output with JSON serialization
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -1410,6 +1840,49 @@ AccountKey = "accountKey==",
             bool result = await collection.ExistsAsync(outputName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get an Event Hub output with JSON serialization
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetAnEventHubOutputWithJSONSerialization()
+        {
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Output_Get_EventHub_JSON.json
+            // this example is just showing the usage of "Outputs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StreamingJobResource created on azure
+            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
+            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string resourceGroupName = "sjrg6912";
+            string jobName = "sj3310";
+            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
+
+            // get the collection of this StreamingJobOutputResource
+            StreamingJobOutputCollection collection = streamingJob.GetStreamingJobOutputs();
+
+            // invoke the operation
+            string outputName = "output5195";
+            NullableResponse<StreamingJobOutputResource> response = await collection.GetIfExistsAsync(outputName);
+            StreamingJobOutputResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StreamingJobOutputData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
 
         // List all outputs in a streaming job

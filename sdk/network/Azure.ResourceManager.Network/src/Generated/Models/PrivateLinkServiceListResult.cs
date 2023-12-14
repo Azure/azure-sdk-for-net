@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for the ListPrivateLinkService API service call. </summary>
     internal partial class PrivateLinkServiceListResult
     {
-        /// <summary> Initializes a new instance of PrivateLinkServiceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceListResult"/>. </summary>
         internal PrivateLinkServiceListResult()
         {
             Value = new ChangeTrackingList<PrivateLinkServiceData>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkServiceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceListResult"/>. </summary>
         /// <param name="value"> A list of PrivateLinkService resources in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal PrivateLinkServiceListResult(IReadOnlyList<PrivateLinkServiceData> value, string nextLink)

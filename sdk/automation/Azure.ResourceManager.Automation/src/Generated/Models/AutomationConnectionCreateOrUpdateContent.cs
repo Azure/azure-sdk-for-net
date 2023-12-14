@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update connection operation. </summary>
     public partial class AutomationConnectionCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationConnectionCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionCreateOrUpdateContent"/>. </summary>
         /// <param name="name"> Gets or sets the name of the connection. </param>
         /// <param name="connectionType"> Gets or sets the connectionType of the connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="connectionType"/> is null. </exception>
@@ -26,6 +26,19 @@ namespace Azure.ResourceManager.Automation.Models
             Name = name;
             ConnectionType = connectionType;
             FieldDefinitionValues = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionCreateOrUpdateContent"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the connection. </param>
+        /// <param name="description"> Gets or sets the description of the connection. </param>
+        /// <param name="connectionType"> Gets or sets the connectionType of the connection. </param>
+        /// <param name="fieldDefinitionValues"> Gets or sets the field definition properties of the connection. </param>
+        internal AutomationConnectionCreateOrUpdateContent(string name, string description, ConnectionTypeAssociationProperty connectionType, IDictionary<string, string> fieldDefinitionValues)
+        {
+            Name = name;
+            Description = description;
+            ConnectionType = connectionType;
+            FieldDefinitionValues = fieldDefinitionValues;
         }
 
         /// <summary> Gets or sets the name of the connection. </summary>

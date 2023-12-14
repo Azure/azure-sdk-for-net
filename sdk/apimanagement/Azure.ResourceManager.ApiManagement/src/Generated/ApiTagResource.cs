@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiTag along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiTagResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiTagResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiResource" /> using the GetApiTag method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiTagResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiTagResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiResource"/> using the GetApiTag method.
     /// </summary>
     public partial class ApiTagResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiTagResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="apiId"> The apiId. </param>
+        /// <param name="tagId"> The tagId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string tagId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tags/{tagId}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly TagRestOperations _apiTagTagRestClient;
         private readonly TagContractData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/tags";
+
         /// <summary> Initializes a new instance of the <see cref="ApiTagResource"/> class for mocking. </summary>
         protected ApiTagResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiTagResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiTagResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiTagResource(ArmClient client, TagContractData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/tags";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a HubRouteTable along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HubRouteTableResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHubRouteTableResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualHubResource" /> using the GetHubRouteTable method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HubRouteTableResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHubRouteTableResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualHubResource"/> using the GetHubRouteTable method.
     /// </summary>
     public partial class HubRouteTableResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HubRouteTableResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualHubName"> The virtualHubName. </param>
+        /// <param name="routeTableName"> The routeTableName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualHubName, string routeTableName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/hubRouteTables/{routeTableName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Network
         private readonly HubRouteTablesRestOperations _hubRouteTableRestClient;
         private readonly HubRouteTableData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs/hubRouteTables";
+
         /// <summary> Initializes a new instance of the <see cref="HubRouteTableResource"/> class for mocking. </summary>
         protected HubRouteTableResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HubRouteTableResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HubRouteTableResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HubRouteTableResource(ArmClient client, HubRouteTableData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs/hubRouteTables";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

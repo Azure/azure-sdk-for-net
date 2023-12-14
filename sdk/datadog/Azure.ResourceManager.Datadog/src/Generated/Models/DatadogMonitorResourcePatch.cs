@@ -13,10 +13,21 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> The parameters for a PATCH request to a monitor resource. </summary>
     public partial class DatadogMonitorResourcePatch
     {
-        /// <summary> Initializes a new instance of DatadogMonitorResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogMonitorResourcePatch"/>. </summary>
         public DatadogMonitorResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatadogMonitorResourcePatch"/>. </summary>
+        /// <param name="properties"> The set of properties that can be update in a PATCH request to a monitor resource. </param>
+        /// <param name="tags"> The new tags of the monitor resource. </param>
+        /// <param name="sku"></param>
+        internal DatadogMonitorResourcePatch(MonitorUpdateProperties properties, IDictionary<string, string> tags, ResourceSku sku)
+        {
+            Properties = properties;
+            Tags = tags;
+            Sku = sku;
         }
 
         /// <summary> The set of properties that can be update in a PATCH request to a monitor resource. </summary>

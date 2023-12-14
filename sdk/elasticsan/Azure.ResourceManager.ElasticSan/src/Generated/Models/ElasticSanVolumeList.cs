@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> List of Volumes. </summary>
     internal partial class ElasticSanVolumeList
     {
-        /// <summary> Initializes a new instance of ElasticSanVolumeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeList"/>. </summary>
         internal ElasticSanVolumeList()
         {
             Value = new ChangeTrackingList<ElasticSanVolumeData>();
         }
 
-        /// <summary> Initializes a new instance of ElasticSanVolumeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeList"/>. </summary>
         /// <param name="value"> An array of Volume objects. </param>
         /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
         internal ElasticSanVolumeList(IReadOnlyList<ElasticSanVolumeData> value, string nextLink)

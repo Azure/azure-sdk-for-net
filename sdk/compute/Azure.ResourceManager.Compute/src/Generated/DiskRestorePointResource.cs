@@ -20,14 +20,19 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a DiskRestorePoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DiskRestorePointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDiskRestorePointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RestorePointResource" /> using the GetDiskRestorePoint method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiskRestorePointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDiskRestorePointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RestorePointResource"/> using the GetDiskRestorePoint method.
     /// </summary>
     [DeserializationProxy(typeof(DiskRestorePointData))]
     public partial class DiskRestorePointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DiskRestorePointResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="restorePointGroupName"> The restorePointGroupName. </param>
+        /// <param name="vmRestorePointName"> The vmRestorePointName. </param>
+        /// <param name="diskRestorePointName"> The diskRestorePointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, string diskRestorePointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointGroupName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}";
@@ -38,12 +43,15 @@ namespace Azure.ResourceManager.Compute
         private readonly DiskRestorePointRestOperations _diskRestorePointRestClient;
         private readonly DiskRestorePointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/restorePointCollections/restorePoints/diskRestorePoints";
+
         /// <summary> Initializes a new instance of the <see cref="DiskRestorePointResource"/> class for mocking. </summary>
         protected DiskRestorePointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DiskRestorePointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DiskRestorePointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DiskRestorePointResource(ArmClient client, DiskRestorePointData data) : this(client, data.Id)
@@ -64,9 +72,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/restorePointCollections/restorePoints/diskRestorePoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

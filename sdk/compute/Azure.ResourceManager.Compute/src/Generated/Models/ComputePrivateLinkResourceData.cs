@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> A private link resource. </summary>
     public partial class ComputePrivateLinkResourceData : ResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ComputePrivateLinkResourceData"/>. </summary>
         internal ComputePrivateLinkResourceData()
         {

@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The source image used for creating the disk. </summary>
     public partial class ImageDiskReference
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ImageDiskReference"/>. </summary>
         public ImageDiskReference()
         {

@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiVersionSet along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiVersionSetResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiVersionSetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiVersionSet method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiVersionSetResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiVersionSetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiVersionSet method.
     /// </summary>
     public partial class ApiVersionSetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiVersionSetResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="versionSetId"> The versionSetId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string versionSetId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apiVersionSets/{versionSetId}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly ApiVersionSetRestOperations _apiVersionSetRestClient;
         private readonly ApiVersionSetData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apiVersionSets";
+
         /// <summary> Initializes a new instance of the <see cref="ApiVersionSetResource"/> class for mocking. </summary>
         protected ApiVersionSetResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiVersionSetResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiVersionSetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiVersionSetResource(ArmClient client, ApiVersionSetData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apiVersionSets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

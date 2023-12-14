@@ -37,7 +37,8 @@ namespace Azure.ResourceManager.DnsResolver
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("subnet"u8);
-            JsonSerializer.Serialize(writer, Subnet); writer.WriteEndObject();
+            JsonSerializer.Serialize(writer, Subnet);
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The ArcConfiguration. </summary>
     public partial class ArcConfiguration
     {
-        /// <summary> Initializes a new instance of ArcConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcConfiguration"/>. </summary>
         public ArcConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ArcConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcConfiguration"/>. </summary>
         /// <param name="artifactsStorageType"></param>
         /// <param name="artifactStorageClassName"></param>
         /// <param name="artifactStorageMountPath"></param>

@@ -1,6 +1,30 @@
 # Release History
 
-## 6.0.0 (2023-09-06)
+## 6.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- Updated the `Azure.Messaging.EventHubs` dependency, which includes optimized defaults of the host platform to be used for AMQP buffers.  This offers non-trivial performance increase on Linux-based platforms and a minor improvement on macOS.  This update also enables support for TLS 1.3.
+
+## 6.0.2 (2023-11-13)
+
+### Other Changes
+
+- Bump dependency on `Microsoft.Extensions.Azure` to prevent transitive dependency on deprecated version of `Azure.Identity`.
+
+## 6.0.1 (2023-10-10)
+
+### Bugs Fixed
+
+- Added support for the legacy checkpoint format when making scaling decisions.
+
+## 6.0.0 (2023-09-12)
 
 ### Breaking Changes
 
@@ -10,13 +34,17 @@
 
   We recommend testing to ensure no breaking changes are introducing to your function app before updating existing applications to version 6.0.0 or newer of the Event Hubs extension, especially if you have code code that was written to expect 10 as the max event batch size.
 
+### Bugs Fixed
+
+- Fixed an issue where checkpoints were not always written when using a minimum batch size with low throughput.
+
 ## 5.5.0 (2023-08-11)
 
 ### Bugs Fixed
 
 - When binding to a `CancellationToken`, the token will no longer be signaled when in Drain Mode.
   To detect if the function app is in Drain Mode, use dependency injection to inject the
-  `IDrainModeManager`, and check the `IsDrainModeEnabled` property. Additionally, checkpointing 
+  `IDrainModeManager`, and check the `IsDrainModeEnabled` property. Additionally, checkpointing
   will now occur when the function app is in Drain Mode.
 
 ## 5.4.0 (2023-06-06)

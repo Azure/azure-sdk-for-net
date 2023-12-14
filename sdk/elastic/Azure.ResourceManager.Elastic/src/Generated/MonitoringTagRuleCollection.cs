@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Elastic
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MonitoringTagRuleResource" /> and their operations.
-    /// Each <see cref="MonitoringTagRuleResource" /> in the collection will belong to the same instance of <see cref="ElasticMonitorResource" />.
-    /// To get a <see cref="MonitoringTagRuleCollection" /> instance call the GetMonitoringTagRules method from an instance of <see cref="ElasticMonitorResource" />.
+    /// A class representing a collection of <see cref="MonitoringTagRuleResource"/> and their operations.
+    /// Each <see cref="MonitoringTagRuleResource"/> in the collection will belong to the same instance of <see cref="ElasticMonitorResource"/>.
+    /// To get a <see cref="MonitoringTagRuleCollection"/> instance call the GetMonitoringTagRules method from an instance of <see cref="ElasticMonitorResource"/>.
     /// </summary>
     public partial class MonitoringTagRuleCollection : ArmCollection, IEnumerable<MonitoringTagRuleResource>, IAsyncEnumerable<MonitoringTagRuleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Elastic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitoringTagRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MonitoringTagRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MonitoringTagRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitoringTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Elastic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitoringTagRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MonitoringTagRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MonitoringTagRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitoringTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.Elastic
             {
                 var response = _monitoringTagRuleTagRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TagRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ruleSetName"> Tag Rule Set resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MonitoringTagRuleResource>> GetIfExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
+
+            using var scope = _monitoringTagRuleTagRulesClientDiagnostics.CreateScope("MonitoringTagRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _monitoringTagRuleTagRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MonitoringTagRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new MonitoringTagRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TagRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ruleSetName"> Tag Rule Set resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        public virtual NullableResponse<MonitoringTagRuleResource> GetIfExists(string ruleSetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
+
+            using var scope = _monitoringTagRuleTagRulesClientDiagnostics.CreateScope("MonitoringTagRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _monitoringTagRuleTagRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MonitoringTagRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new MonitoringTagRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

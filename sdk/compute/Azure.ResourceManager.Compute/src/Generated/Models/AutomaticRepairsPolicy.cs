@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies the configuration parameters for automatic repairs on the virtual machine scale set. </summary>
     public partial class AutomaticRepairsPolicy
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="AutomaticRepairsPolicy"/>. </summary>
         public AutomaticRepairsPolicy()
         {

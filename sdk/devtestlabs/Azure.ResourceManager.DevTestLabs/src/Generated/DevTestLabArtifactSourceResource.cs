@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A Class representing a DevTestLabArtifactSource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevTestLabArtifactSourceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevTestLabArtifactSourceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevTestLabResource" /> using the GetDevTestLabArtifactSource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabArtifactSourceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabArtifactSourceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabResource"/> using the GetDevTestLabArtifactSource method.
     /// </summary>
     public partial class DevTestLabArtifactSourceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DevTestLabArtifactSourceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="labName"> The labName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{name}";
@@ -37,12 +41,15 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly ArtifactSourcesRestOperations _devTestLabArtifactSourceArtifactSourcesRestClient;
         private readonly DevTestLabArtifactSourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/artifactsources";
+
         /// <summary> Initializes a new instance of the <see cref="DevTestLabArtifactSourceResource"/> class for mocking. </summary>
         protected DevTestLabArtifactSourceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevTestLabArtifactSourceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabArtifactSourceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevTestLabArtifactSourceResource(ArmClient client, DevTestLabArtifactSourceData data) : this(client, data.Id)
@@ -63,9 +70,6 @@ namespace Azure.ResourceManager.DevTestLabs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/artifactsources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabArmTemplateResources and their operations over a DevTestLabArmTemplateResource. </returns>
         public virtual DevTestLabArmTemplateCollection GetDevTestLabArmTemplates()
         {
-            return GetCachedClient(Client => new DevTestLabArmTemplateCollection(Client, Id));
+            return GetCachedClient(client => new DevTestLabArmTemplateCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +115,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="name"> The name of the azure resource manager template. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevTestLabArmTemplateResource>> GetDevTestLabArmTemplateAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -135,8 +139,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="name"> The name of the azure resource manager template. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevTestLabArmTemplateResource> GetDevTestLabArmTemplate(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -147,7 +151,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabArtifactResources and their operations over a DevTestLabArtifactResource. </returns>
         public virtual DevTestLabArtifactCollection GetDevTestLabArtifacts()
         {
-            return GetCachedClient(Client => new DevTestLabArtifactCollection(Client, Id));
+            return GetCachedClient(client => new DevTestLabArtifactCollection(client, Id));
         }
 
         /// <summary>
@@ -166,8 +170,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="name"> The name of the artifact. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevTestLabArtifactResource>> GetDevTestLabArtifactAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -190,8 +194,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="name"> The name of the artifact. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevTestLabArtifactResource> GetDevTestLabArtifact(string name, string expand = null, CancellationToken cancellationToken = default)
         {

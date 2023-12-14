@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class LogicWorkflowTriggerData : ResourceData
     {
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerData"/>. </summary>
         internal LogicWorkflowTriggerData()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

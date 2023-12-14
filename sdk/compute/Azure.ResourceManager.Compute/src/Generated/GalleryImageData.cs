@@ -19,9 +19,6 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class GalleryImageData : TrackedResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="GalleryImageData"/>. </summary>
         /// <param name="location"> The location. </param>
         public GalleryImageData(AzureLocation location) : base(location)

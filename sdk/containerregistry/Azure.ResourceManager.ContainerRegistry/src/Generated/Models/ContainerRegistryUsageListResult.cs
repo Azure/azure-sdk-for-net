@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The result of a request to get container registry quota usages. </summary>
     internal partial class ContainerRegistryUsageListResult
     {
-        /// <summary> Initializes a new instance of ContainerRegistryUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryUsageListResult"/>. </summary>
         internal ContainerRegistryUsageListResult()
         {
             Value = new ChangeTrackingList<ContainerRegistryUsage>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryUsageListResult"/>. </summary>
         /// <param name="value"> The list of container registry quota usages. </param>
         internal ContainerRegistryUsageListResult(IReadOnlyList<ContainerRegistryUsage> value)
         {

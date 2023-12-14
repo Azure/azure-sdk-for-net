@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="IotSecurityAggregatedRecommendationResource" /> and their operations.
-    /// Each <see cref="IotSecurityAggregatedRecommendationResource" /> in the collection will belong to the same instance of <see cref="IotSecuritySolutionAnalyticsModelResource" />.
-    /// To get an <see cref="IotSecurityAggregatedRecommendationCollection" /> instance call the GetIotSecurityAggregatedRecommendations method from an instance of <see cref="IotSecuritySolutionAnalyticsModelResource" />.
+    /// A class representing a collection of <see cref="IotSecurityAggregatedRecommendationResource"/> and their operations.
+    /// Each <see cref="IotSecurityAggregatedRecommendationResource"/> in the collection will belong to the same instance of <see cref="IotSecuritySolutionAnalyticsModelResource"/>.
+    /// To get an <see cref="IotSecurityAggregatedRecommendationCollection"/> instance call the GetIotSecurityAggregatedRecommendations method from an instance of <see cref="IotSecuritySolutionAnalyticsModelResource"/>.
     /// </summary>
     public partial class IotSecurityAggregatedRecommendationCollection : ArmCollection, IEnumerable<IotSecurityAggregatedRecommendationResource>, IAsyncEnumerable<IotSecurityAggregatedRecommendationResource>
     {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="top"> Number of results to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotSecurityAggregatedRecommendationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IotSecurityAggregatedRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotSecurityAggregatedRecommendationResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, top);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="top"> Number of results to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotSecurityAggregatedRecommendationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotSecurityAggregatedRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotSecurityAggregatedRecommendationResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, top);
@@ -235,6 +235,80 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 var response = _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, aggregatedRecommendationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedRecommendations/{aggregatedRecommendationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotSecuritySolutionsAnalyticsRecommendation_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="aggregatedRecommendationName"> Name of the recommendation aggregated for this query. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="aggregatedRecommendationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="aggregatedRecommendationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<IotSecurityAggregatedRecommendationResource>> GetIfExistsAsync(string aggregatedRecommendationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(aggregatedRecommendationName, nameof(aggregatedRecommendationName));
+
+            using var scope = _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationClientDiagnostics.CreateScope("IotSecurityAggregatedRecommendationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, aggregatedRecommendationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<IotSecurityAggregatedRecommendationResource>(response.GetRawResponse());
+                return Response.FromValue(new IotSecurityAggregatedRecommendationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedRecommendations/{aggregatedRecommendationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotSecuritySolutionsAnalyticsRecommendation_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="aggregatedRecommendationName"> Name of the recommendation aggregated for this query. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="aggregatedRecommendationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="aggregatedRecommendationName"/> is null. </exception>
+        public virtual NullableResponse<IotSecurityAggregatedRecommendationResource> GetIfExists(string aggregatedRecommendationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(aggregatedRecommendationName, nameof(aggregatedRecommendationName));
+
+            using var scope = _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationClientDiagnostics.CreateScope("IotSecurityAggregatedRecommendationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, aggregatedRecommendationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<IotSecurityAggregatedRecommendationResource>(response.GetRawResponse());
+                return Response.FromValue(new IotSecurityAggregatedRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

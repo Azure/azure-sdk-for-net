@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Cluster profile. </summary>
     public partial class ClusterProfile
     {
-        /// <summary> Initializes a new instance of ClusterProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterProfile"/>. </summary>
         /// <param name="clusterVersion"> Version with 3/4 part. </param>
         /// <param name="ossVersion"> Version with three part. </param>
         /// <param name="identityProfile"> Identity Profile with details of an MSI. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             ScriptActionProfiles = new ChangeTrackingList<ScriptActionProfile>();
         }
 
-        /// <summary> Initializes a new instance of ClusterProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterProfile"/>. </summary>
         /// <param name="clusterVersion"> Version with 3/4 part. </param>
         /// <param name="ossVersion"> Version with three part. </param>
         /// <param name="components"> Component list of this cluster type and version. </param>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

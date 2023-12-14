@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityAutomationResource" /> and their operations.
-    /// Each <see cref="SecurityAutomationResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="SecurityAutomationCollection" /> instance call the GetSecurityAutomations method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="SecurityAutomationResource"/> and their operations.
+    /// Each <see cref="SecurityAutomationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="SecurityAutomationCollection"/> instance call the GetSecurityAutomations method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class SecurityAutomationCollection : ArmCollection, IEnumerable<SecurityAutomationResource>, IAsyncEnumerable<SecurityAutomationResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityAutomationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityAutomationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityAutomationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAutomationAutomationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityAutomationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityAutomationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityAutomationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAutomationAutomationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -316,6 +316,80 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 var response = _securityAutomationAutomationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, automationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Automations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="automationName"> The security automation name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SecurityAutomationResource>> GetIfExistsAsync(string automationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(automationName, nameof(automationName));
+
+            using var scope = _securityAutomationAutomationsClientDiagnostics.CreateScope("SecurityAutomationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _securityAutomationAutomationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, automationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityAutomationResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityAutomationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Automations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="automationName"> The security automation name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="automationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="automationName"/> is null. </exception>
+        public virtual NullableResponse<SecurityAutomationResource> GetIfExists(string automationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(automationName, nameof(automationName));
+
+            using var scope = _securityAutomationAutomationsClientDiagnostics.CreateScope("SecurityAutomationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _securityAutomationAutomationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, automationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityAutomationResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityAutomationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

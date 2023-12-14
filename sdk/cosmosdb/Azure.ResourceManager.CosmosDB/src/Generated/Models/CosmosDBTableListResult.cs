@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the Table and their properties. </summary>
     internal partial class CosmosDBTableListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBTableListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBTableListResult"/>. </summary>
         internal CosmosDBTableListResult()
         {
             Value = new ChangeTrackingList<CosmosDBTableData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBTableListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBTableListResult"/>. </summary>
         /// <param name="value"> List of Table and their properties. </param>
         internal CosmosDBTableListResult(IReadOnlyList<CosmosDBTableData> value)
         {

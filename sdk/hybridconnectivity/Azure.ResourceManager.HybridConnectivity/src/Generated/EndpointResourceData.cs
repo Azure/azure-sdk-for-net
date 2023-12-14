@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.HybridConnectivity
     /// </summary>
     public partial class EndpointResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of EndpointResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointResourceData"/>. </summary>
         public EndpointResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of EndpointResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

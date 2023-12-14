@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry.Resources;
 
@@ -66,7 +67,7 @@ internal static class ResourceExtensions
                     {
                         SdkVersionUtils.IsDistro = true;
                     }
-                    continue;
+                    break;
                 default:
                     if (attribute.Key.StartsWith("k8s"))
                     {
@@ -119,7 +120,20 @@ internal static class ResourceExtensions
             }
         }
 
-        if (metricsData != null)
+        bool shouldReportMetricTelemetry = false;
+        try
+        {
+            var exportResource = Environment.GetEnvironmentVariable(EnvironmentVariableConstants.EXPORT_RESOURCE_METRIC);
+            if (exportResource != null && exportResource.Equals("true", StringComparison.OrdinalIgnoreCase))
+            {
+                shouldReportMetricTelemetry = true;
+            }
+        }
+        catch
+        {
+        }
+
+        if (shouldReportMetricTelemetry && metricsData != null)
         {
             azureMonitorResource.MetricTelemetry = new TelemetryItem(DateTime.UtcNow, azureMonitorResource, instrumentationKey!)
             {

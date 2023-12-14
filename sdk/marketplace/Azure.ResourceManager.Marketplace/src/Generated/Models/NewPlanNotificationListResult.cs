@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> List of all new plans notifications for public offers. </summary>
     public partial class NewPlanNotificationListResult
     {
-        /// <summary> Initializes a new instance of NewPlanNotificationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewPlanNotificationListResult"/>. </summary>
         internal NewPlanNotificationListResult()
         {
             NewPlansNotifications = new ChangeTrackingList<NewPlanNotification>();
         }
 
-        /// <summary> Initializes a new instance of NewPlanNotificationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewPlanNotificationListResult"/>. </summary>
         /// <param name="newPlansNotifications"></param>
         internal NewPlanNotificationListResult(IReadOnlyList<NewPlanNotification> newPlansNotifications)
         {

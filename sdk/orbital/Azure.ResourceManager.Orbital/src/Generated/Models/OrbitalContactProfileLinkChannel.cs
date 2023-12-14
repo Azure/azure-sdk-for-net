@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> Contact Profile Link Channel. </summary>
     public partial class OrbitalContactProfileLinkChannel
     {
-        /// <summary> Initializes a new instance of OrbitalContactProfileLinkChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactProfileLinkChannel"/>. </summary>
         /// <param name="name"> Channel name. </param>
         /// <param name="centerFrequencyMHz"> Center Frequency in MHz. </param>
         /// <param name="bandwidthMHz"> Bandwidth in MHz. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Orbital.Models
             EndPoint = endPoint;
         }
 
-        /// <summary> Initializes a new instance of OrbitalContactProfileLinkChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactProfileLinkChannel"/>. </summary>
         /// <param name="name"> Channel name. </param>
         /// <param name="centerFrequencyMHz"> Center Frequency in MHz. </param>
         /// <param name="bandwidthMHz"> Bandwidth in MHz. </param>

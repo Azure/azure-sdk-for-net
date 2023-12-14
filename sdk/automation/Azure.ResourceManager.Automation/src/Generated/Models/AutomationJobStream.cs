@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the job stream. </summary>
     public partial class AutomationJobStream
     {
-        /// <summary> Initializes a new instance of AutomationJobStream. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationJobStream"/>. </summary>
         internal AutomationJobStream()
         {
             Value = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationJobStream. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationJobStream"/>. </summary>
         /// <param name="id"> Gets or sets the id of the resource. </param>
         /// <param name="jobStreamId"> Gets or sets the id of the job stream. </param>
         /// <param name="time"> Gets or sets the creation time of the job. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

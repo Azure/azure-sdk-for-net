@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Models
     [PropertyReferenceType]
     public partial class ArmPlan
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ArmPlan"/>. </summary>
         /// <param name="name"> A user defined name of the 3rd Party Artifact that is being procured. </param>
         /// <param name="publisher"> The publisher of the 3rd Party Artifact that is being bought. E.g. NewRelic. </param>

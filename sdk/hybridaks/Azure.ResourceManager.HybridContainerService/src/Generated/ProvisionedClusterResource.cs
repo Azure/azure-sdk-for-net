@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.HybridContainerService
 {
     /// <summary>
     /// A Class representing a ProvisionedCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProvisionedClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetProvisionedClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetProvisionedCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProvisionedClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetProvisionedClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetProvisionedCluster method.
     /// </summary>
     public partial class ProvisionedClusterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ProvisionedClusterResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.HybridContainerService
         private readonly ProvisionedClustersRestOperations _provisionedClusterRestClient;
         private readonly ProvisionedClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/provisionedClusters";
+
         /// <summary> Initializes a new instance of the <see cref="ProvisionedClusterResource"/> class for mocking. </summary>
         protected ProvisionedClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ProvisionedClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProvisionedClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ProvisionedClusterResource(ArmClient client, ProvisionedClusterData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.HybridContainerService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/provisionedClusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +93,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary> Gets an object representing a ProvisionedClusterUpgradeProfileResource along with the instance operations that can be performed on it in the ProvisionedCluster. </summary>
-        /// <returns> Returns a <see cref="ProvisionedClusterUpgradeProfileResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ProvisionedClusterUpgradeProfileResource"/> object. </returns>
         public virtual ProvisionedClusterUpgradeProfileResource GetProvisionedClusterUpgradeProfile()
         {
             return new ProvisionedClusterUpgradeProfileResource(Client, Id.AppendChildResource("upgradeProfiles", "default"));
@@ -100,7 +103,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> An object representing collection of HybridIdentityMetadataResources and their operations over a HybridIdentityMetadataResource. </returns>
         public virtual HybridIdentityMetadataCollection GetAllHybridIdentityMetadata()
         {
-            return GetCachedClient(Client => new HybridIdentityMetadataCollection(Client, Id));
+            return GetCachedClient(client => new HybridIdentityMetadataCollection(client, Id));
         }
 
         /// <summary>
@@ -118,8 +121,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </summary>
         /// <param name="hybridIdentityMetadataResourceName"> Parameter for the name of the hybrid identity metadata resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hybridIdentityMetadataResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hybridIdentityMetadataResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hybridIdentityMetadataResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HybridIdentityMetadataResource>> GetHybridIdentityMetadataAsync(string hybridIdentityMetadataResourceName, CancellationToken cancellationToken = default)
         {
@@ -141,8 +144,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </summary>
         /// <param name="hybridIdentityMetadataResourceName"> Parameter for the name of the hybrid identity metadata resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hybridIdentityMetadataResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hybridIdentityMetadataResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hybridIdentityMetadataResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HybridIdentityMetadataResource> GetHybridIdentityMetadata(string hybridIdentityMetadataResourceName, CancellationToken cancellationToken = default)
         {
@@ -153,7 +156,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> An object representing collection of HybridContainerServiceAgentPoolResources and their operations over a HybridContainerServiceAgentPoolResource. </returns>
         public virtual HybridContainerServiceAgentPoolCollection GetHybridContainerServiceAgentPools()
         {
-            return GetCachedClient(Client => new HybridContainerServiceAgentPoolCollection(Client, Id));
+            return GetCachedClient(client => new HybridContainerServiceAgentPoolCollection(client, Id));
         }
 
         /// <summary>
@@ -171,8 +174,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </summary>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HybridContainerServiceAgentPoolResource>> GetHybridContainerServiceAgentPoolAsync(string agentPoolName, CancellationToken cancellationToken = default)
         {
@@ -194,8 +197,8 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </summary>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HybridContainerServiceAgentPoolResource> GetHybridContainerServiceAgentPool(string agentPoolName, CancellationToken cancellationToken = default)
         {
@@ -348,7 +351,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The ProvisionedClusterPatch to use. </param>
+        /// <param name="patch"> The <see cref="ProvisionedClusterPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<ProvisionedClusterResource>> UpdateAsync(WaitUntil waitUntil, ProvisionedClusterPatch patch, CancellationToken cancellationToken = default)
@@ -386,7 +389,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The ProvisionedClusterPatch to use. </param>
+        /// <param name="patch"> The <see cref="ProvisionedClusterPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<ProvisionedClusterResource> Update(WaitUntil waitUntil, ProvisionedClusterPatch patch, CancellationToken cancellationToken = default)

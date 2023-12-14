@@ -4,9 +4,8 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("RouterJobPositionDetails")]
     public partial class RouterJobPositionDetails
     {
         [CodeGenMember("EstimatedWaitTimeMinutes")]

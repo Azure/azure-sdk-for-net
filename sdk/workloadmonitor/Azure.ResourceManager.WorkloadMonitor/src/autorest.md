@@ -12,6 +12,9 @@ namespace: Azure.ResourceManager.WorkloadMonitor
 require: https://github.com/Azure/azure-rest-api-specs/tree/34ba022add0034e30462b76e1548ce5a7e053e33/specification/workloadmonitor/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false

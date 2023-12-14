@@ -13,7 +13,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> A column in a table. </summary>
     public partial class LogsTableColumn
     {
-        /// <summary> Initializes a new instance of LogsTableColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogsTableColumn"/>. </summary>
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

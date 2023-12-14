@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The properties of the source resource that this restore point collection is created from. </summary>
     public partial class RestorePointGroupSource
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="RestorePointGroupSource"/>. </summary>
         public RestorePointGroupSource()
         {

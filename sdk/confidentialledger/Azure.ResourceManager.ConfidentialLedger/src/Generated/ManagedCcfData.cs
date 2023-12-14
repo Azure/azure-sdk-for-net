@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.ConfidentialLedger
     /// </summary>
     public partial class ManagedCcfData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ManagedCcfData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedCcfData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ManagedCcfData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedCcfData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedCcfData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

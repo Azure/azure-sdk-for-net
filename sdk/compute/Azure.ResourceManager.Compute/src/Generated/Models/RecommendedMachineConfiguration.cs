@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The properties describe the recommended machine configuration for this Image Definition. These properties are updatable. </summary>
     public partial class RecommendedMachineConfiguration
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="RecommendedMachineConfiguration"/>. </summary>
         public RecommendedMachineConfiguration()
         {

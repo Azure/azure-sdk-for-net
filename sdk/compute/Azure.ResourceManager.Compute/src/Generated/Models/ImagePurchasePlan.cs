@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the gallery image definition purchase plan. This is used by marketplace images. </summary>
     public partial class ImagePurchasePlan
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ImagePurchasePlan"/>. </summary>
         public ImagePurchasePlan()
         {

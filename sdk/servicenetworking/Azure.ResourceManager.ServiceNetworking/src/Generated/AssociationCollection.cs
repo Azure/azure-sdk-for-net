@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AssociationResource" /> and their operations.
-    /// Each <see cref="AssociationResource" /> in the collection will belong to the same instance of <see cref="TrafficControllerResource" />.
-    /// To get an <see cref="AssociationCollection" /> instance call the GetAssociations method from an instance of <see cref="TrafficControllerResource" />.
+    /// A class representing a collection of <see cref="AssociationResource"/> and their operations.
+    /// Each <see cref="AssociationResource"/> in the collection will belong to the same instance of <see cref="TrafficControllerResource"/>.
+    /// To get an <see cref="AssociationCollection"/> instance call the GetAssociations method from an instance of <see cref="TrafficControllerResource"/>.
     /// </summary>
     public partial class AssociationCollection : ArmCollection, IEnumerable<AssociationResource>, IAsyncEnumerable<AssociationResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AssociationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AssociationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AssociationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _associationAssociationsInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AssociationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AssociationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AssociationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _associationAssociationsInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 var response = _associationAssociationsInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/associations/{associationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssociationsInterface_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="associationName"> Name of Association. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AssociationResource>> GetIfExistsAsync(string associationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+
+            using var scope = _associationAssociationsInterfaceClientDiagnostics.CreateScope("AssociationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _associationAssociationsInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AssociationResource>(response.GetRawResponse());
+                return Response.FromValue(new AssociationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/associations/{associationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssociationsInterface_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="associationName"> Name of Association. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
+        public virtual NullableResponse<AssociationResource> GetIfExists(string associationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(associationName, nameof(associationName));
+
+            using var scope = _associationAssociationsInterfaceClientDiagnostics.CreateScope("AssociationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _associationAssociationsInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AssociationResource>(response.GetRawResponse());
+                return Response.FromValue(new AssociationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

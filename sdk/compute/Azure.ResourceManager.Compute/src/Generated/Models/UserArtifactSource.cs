@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The source image from which the Image Version is going to be created. </summary>
     public partial class UserArtifactSource
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="UserArtifactSource"/>. </summary>
         /// <param name="mediaLink"> Required. The mediaLink of the artifact, must be a readable storage page blob. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaLink"/> is null. </exception>

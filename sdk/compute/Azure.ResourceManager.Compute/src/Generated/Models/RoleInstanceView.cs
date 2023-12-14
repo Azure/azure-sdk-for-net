@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The instance view of the role instance. </summary>
     public partial class RoleInstanceView
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="RoleInstanceView"/>. </summary>
         internal RoleInstanceView()
         {

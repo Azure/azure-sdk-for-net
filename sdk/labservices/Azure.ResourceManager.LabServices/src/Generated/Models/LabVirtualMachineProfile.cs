@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> The base virtual machine configuration for a lab. </summary>
     public partial class LabVirtualMachineProfile
     {
-        /// <summary> Initializes a new instance of LabVirtualMachineProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineProfile"/>. </summary>
         /// <param name="createOption"> Indicates what lab virtual machines are created from. </param>
         /// <param name="imageReference"> The image configuration for lab virtual machines. </param>
         /// <param name="sku"> The SKU for the lab. Defines the type of virtual machines used in the lab. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.LabServices.Models
             AdminUser = adminUser;
         }
 
-        /// <summary> Initializes a new instance of LabVirtualMachineProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineProfile"/>. </summary>
         /// <param name="createOption"> Indicates what lab virtual machines are created from. </param>
         /// <param name="imageReference"> The image configuration for lab virtual machines. </param>
         /// <param name="osType"> The OS type of the image. </param>

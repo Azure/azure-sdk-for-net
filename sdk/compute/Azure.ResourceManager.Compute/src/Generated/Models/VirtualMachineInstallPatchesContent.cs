@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Input for InstallPatches as directly received by the API. </summary>
     public partial class VirtualMachineInstallPatchesContent
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="VirtualMachineInstallPatchesContent"/>. </summary>
         /// <param name="rebootSetting"> Defines when it is acceptable to reboot a VM during a software update operation. </param>
         public VirtualMachineInstallPatchesContent(VmGuestPatchRebootSetting rebootSetting)
@@ -28,19 +25,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="rebootSetting"> Defines when it is acceptable to reboot a VM during a software update operation. </param>
         /// <param name="windowsParameters"> Input for InstallPatches on a Windows VM, as directly received by the API. </param>
         /// <param name="linuxParameters"> Input for InstallPatches on a Linux VM, as directly received by the API. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineInstallPatchesContent(TimeSpan? maximumDuration, VmGuestPatchRebootSetting rebootSetting, WindowsParameters windowsParameters, LinuxParameters linuxParameters, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineInstallPatchesContent(TimeSpan? maximumDuration, VmGuestPatchRebootSetting rebootSetting, WindowsParameters windowsParameters, LinuxParameters linuxParameters)
         {
             MaximumDuration = maximumDuration;
             RebootSetting = rebootSetting;
             WindowsParameters = windowsParameters;
             LinuxParameters = linuxParameters;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineInstallPatchesContent"/> for deserialization. </summary>
-        internal VirtualMachineInstallPatchesContent()
-        {
         }
 
         /// <summary> Specifies the maximum amount of time that the operation will run. It must be an ISO 8601-compliant duration string such as PT4H (4 hours). </summary>

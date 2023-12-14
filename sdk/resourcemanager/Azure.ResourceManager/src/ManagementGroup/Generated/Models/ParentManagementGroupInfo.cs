@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> (Optional) The ID of the parent management group. </summary>
     public partial class ParentManagementGroupInfo
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ParentManagementGroupInfo"/>. </summary>
         internal ParentManagementGroupInfo()
         {

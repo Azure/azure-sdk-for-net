@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The ARM create email sign in url operation response. </summary>
     public partial class BotCreateEmailSignInUriResult
     {
-        /// <summary> Initializes a new instance of BotCreateEmailSignInUriResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotCreateEmailSignInUriResult"/>. </summary>
         internal BotCreateEmailSignInUriResult()
         {
         }
 
-        /// <summary> Initializes a new instance of BotCreateEmailSignInUriResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotCreateEmailSignInUriResult"/>. </summary>
         /// <param name="id"> Specifies the resource ID. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
         /// <param name="properties"> The set of properties specific to sign in url. </param>

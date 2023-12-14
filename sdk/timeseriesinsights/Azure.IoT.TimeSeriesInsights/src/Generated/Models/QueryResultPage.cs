@@ -14,14 +14,14 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> A single page of query results. If query has not finished yet, a page will have continuation token set. In this case, to get the next page of results, send the same request again with continuation token parameter. If query has completed, the continuation token is null. It is also possible to get an empty page with only continuation token set when no query results have been computed yet. If paging has completed (continuation token is null), then timestamps and properties may be empty if there is no data to return. </summary>
     internal partial class QueryResultPage : PagedResponse
     {
-        /// <summary> Initializes a new instance of QueryResultPage. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryResultPage"/>. </summary>
         internal QueryResultPage()
         {
             Timestamps = new ChangeTrackingList<DateTimeOffset>();
             Properties = new ChangeTrackingList<PropertyValues>();
         }
 
-        /// <summary> Initializes a new instance of QueryResultPage. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryResultPage"/>. </summary>
         /// <param name="continuationToken"> If returned, this means that current results represent a partial result. Continuation token allows to get the next page of results. To get the next page of query results, send the same request with continuation token parameter in "x-ms-continuation" HTTP header. </param>
         /// <param name="timestamps"> The timestamps of the values of the time series. If an aggregation over intervals is used, timestamps represent the start of corresponding intervals. If events are retrieved, timestamps are values of timestamp $ts property of events. Can be null if server was unable to fill the page in this request, or can be empty if there are no more objects when continuation token is null. </param>
         /// <param name="properties"> Collection of time series properties and values for each of the timestamps.  Can be null if server was unable to fill the page in this request, or can be empty if there are no more objects when continuation token is null. </param>

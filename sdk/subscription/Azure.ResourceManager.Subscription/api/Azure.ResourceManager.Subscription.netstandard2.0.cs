@@ -7,6 +7,8 @@ namespace Azure.ResourceManager.Subscription
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string billingAccountId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Subscription.BillingAccountPolicyResource> Get(string billingAccountId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Subscription.BillingAccountPolicyResource>> GetAsync(string billingAccountId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Subscription.BillingAccountPolicyResource> GetIfExists(string billingAccountId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Subscription.BillingAccountPolicyResource>> GetIfExistsAsync(string billingAccountId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class BillingAccountPolicyData : Azure.ResourceManager.Models.ResourceData
     {
@@ -34,6 +36,8 @@ namespace Azure.ResourceManager.Subscription
         public virtual Azure.Pageable<Azure.ResourceManager.Subscription.SubscriptionAliasResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Subscription.SubscriptionAliasResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Subscription.SubscriptionAliasResource>> GetAsync(string aliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Subscription.SubscriptionAliasResource> GetIfExists(string aliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Subscription.SubscriptionAliasResource>> GetIfExistsAsync(string aliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Subscription.SubscriptionAliasResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Subscription.SubscriptionAliasResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Subscription.SubscriptionAliasResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Subscription.SubscriptionAliasResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -96,6 +100,41 @@ namespace Azure.ResourceManager.Subscription
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Subscription.TenantPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Subscription.TenantPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.Subscription.Mocking
+{
+    public partial class MockableSubscriptionArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSubscriptionArmClient() { }
+        public virtual Azure.ResourceManager.Subscription.BillingAccountPolicyResource GetBillingAccountPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Subscription.SubscriptionAliasResource GetSubscriptionAliasResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Subscription.TenantPolicyResource GetTenantPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableSubscriptionSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSubscriptionSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Subscription.Models.CanceledSubscriptionId> CancelSubscription(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Subscription.Models.CanceledSubscriptionId>> CancelSubscriptionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Subscription.Models.EnabledSubscriptionId> EnableSubscription(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Subscription.Models.EnabledSubscriptionId>> EnableSubscriptionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Subscription.Models.RenamedSubscriptionId> RenameSubscription(Azure.ResourceManager.Subscription.Models.SubscriptionName body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Subscription.Models.RenamedSubscriptionId>> RenameSubscriptionAsync(Azure.ResourceManager.Subscription.Models.SubscriptionName body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableSubscriptionTenantResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSubscriptionTenantResource() { }
+        public virtual Azure.ResourceManager.ArmOperation AcceptSubscriptionOwnership(Azure.WaitUntil waitUntil, string subscriptionId, Azure.ResourceManager.Subscription.Models.AcceptOwnershipContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> AcceptSubscriptionOwnershipAsync(Azure.WaitUntil waitUntil, string subscriptionId, Azure.ResourceManager.Subscription.Models.AcceptOwnershipContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Subscription.Models.AcceptOwnershipStatus> GetAcceptOwnershipStatus(string subscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Subscription.Models.AcceptOwnershipStatus>> GetAcceptOwnershipStatusAsync(string subscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Subscription.BillingAccountPolicyCollection GetBillingAccountPolicies() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Subscription.BillingAccountPolicyResource> GetBillingAccountPolicy(string billingAccountId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Subscription.BillingAccountPolicyResource>> GetBillingAccountPolicyAsync(string billingAccountId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Subscription.SubscriptionAliasResource> GetSubscriptionAlias(string aliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Subscription.SubscriptionAliasResource>> GetSubscriptionAliasAsync(string aliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Subscription.SubscriptionAliasCollection GetSubscriptionAliases() { throw null; }
+        public virtual Azure.ResourceManager.Subscription.TenantPolicyResource GetTenantPolicy() { throw null; }
     }
 }
 namespace Azure.ResourceManager.Subscription.Models

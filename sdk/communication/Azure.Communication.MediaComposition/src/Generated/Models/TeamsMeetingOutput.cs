@@ -14,7 +14,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> A Teams meeting to be used as an output. </summary>
     public partial class TeamsMeetingOutput : MediaOutput
     {
-        /// <summary> Initializes a new instance of TeamsMeetingOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="TeamsMeetingOutput"/>. </summary>
         /// <param name="teamsJoinUrl"> The url from Teams to join the meeting. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="teamsJoinUrl"/> is null. </exception>
         public TeamsMeetingOutput(string teamsJoinUrl)
@@ -25,7 +25,7 @@ namespace Azure.Communication.MediaComposition
             Kind = MediaOutputType.TeamsMeeting;
         }
 
-        /// <summary> Initializes a new instance of TeamsMeetingOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="TeamsMeetingOutput"/>. </summary>
         /// <param name="kind"> Kind of media output. </param>
         /// <param name="teamsJoinUrl"> The url from Teams to join the meeting. </param>
         internal TeamsMeetingOutput(MediaOutputType kind, string teamsJoinUrl) : base(kind)

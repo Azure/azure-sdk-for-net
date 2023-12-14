@@ -10,17 +10,17 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Information about the deadletter destination with resource identity. </summary>
     public partial class DeadLetterWithResourceIdentity
     {
-        /// <summary> Initializes a new instance of DeadLetterWithResourceIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeadLetterWithResourceIdentity"/>. </summary>
         public DeadLetterWithResourceIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of DeadLetterWithResourceIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeadLetterWithResourceIdentity"/>. </summary>
         /// <param name="identity"> The identity to use when dead-lettering events. </param>
         /// <param name="deadLetterDestination">
         /// Information about the destination where events have to be delivered for the event subscription.
         /// Uses the managed identity setup on the parent resource (namely, topic or domain) to acquire the authentication tokens being used during delivery / dead-lettering.
-        /// Please note <see cref="DeadLetterDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DeadLetterDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="StorageBlobDeadLetterDestination"/>.
         /// </param>
         internal DeadLetterWithResourceIdentity(EventSubscriptionIdentity identity, DeadLetterDestination deadLetterDestination)
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary>
         /// Information about the destination where events have to be delivered for the event subscription.
         /// Uses the managed identity setup on the parent resource (namely, topic or domain) to acquire the authentication tokens being used during delivery / dead-lettering.
-        /// Please note <see cref="DeadLetterDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.DeadLetterDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="StorageBlobDeadLetterDestination"/>.
         /// </summary>
         public DeadLetterDestination DeadLetterDestination { get; set; }

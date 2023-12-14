@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Availability zone mappings for the region. </summary>
     public partial class AvailabilityZoneMappings
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="AvailabilityZoneMappings"/>. </summary>
         internal AvailabilityZoneMappings()
         {

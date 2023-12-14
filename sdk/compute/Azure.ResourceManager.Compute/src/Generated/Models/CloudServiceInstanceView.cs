@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> InstanceView of CloudService as a whole. </summary>
     public partial class CloudServiceInstanceView
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="CloudServiceInstanceView"/>. </summary>
         internal CloudServiceInstanceView()
         {

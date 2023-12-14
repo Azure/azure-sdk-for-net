@@ -12,11 +12,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> List Restore Ranges Request. </summary>
     public partial class BackupFindRestorableTimeRangeContent
     {
-        /// <summary> Initializes a new instance of BackupFindRestorableTimeRangeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupFindRestorableTimeRangeContent"/>. </summary>
         /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
         public BackupFindRestorableTimeRangeContent(RestoreSourceDataStoreType sourceDataStoreType)
         {
             SourceDataStoreType = sourceDataStoreType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupFindRestorableTimeRangeContent"/>. </summary>
+        /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
+        /// <param name="startOn"> Start time for the List Restore Ranges request. ISO 8601 format. </param>
+        /// <param name="endOn"> End time for the List Restore Ranges request. ISO 8601 format. </param>
+        internal BackupFindRestorableTimeRangeContent(RestoreSourceDataStoreType sourceDataStoreType, DateTimeOffset? startOn, DateTimeOffset? endOn)
+        {
+            SourceDataStoreType = sourceDataStoreType;
+            StartOn = startOn;
+            EndOn = endOn;
         }
 
         /// <summary> Gets or sets the type of the source data store. </summary>

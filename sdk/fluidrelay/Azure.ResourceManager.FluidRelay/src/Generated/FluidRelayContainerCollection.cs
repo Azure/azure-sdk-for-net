@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.FluidRelay
 {
     /// <summary>
-    /// A class representing a collection of <see cref="FluidRelayContainerResource" /> and their operations.
-    /// Each <see cref="FluidRelayContainerResource" /> in the collection will belong to the same instance of <see cref="FluidRelayServerResource" />.
-    /// To get a <see cref="FluidRelayContainerCollection" /> instance call the GetFluidRelayContainers method from an instance of <see cref="FluidRelayServerResource" />.
+    /// A class representing a collection of <see cref="FluidRelayContainerResource"/> and their operations.
+    /// Each <see cref="FluidRelayContainerResource"/> in the collection will belong to the same instance of <see cref="FluidRelayServerResource"/>.
+    /// To get a <see cref="FluidRelayContainerCollection"/> instance call the GetFluidRelayContainers method from an instance of <see cref="FluidRelayServerResource"/>.
     /// </summary>
     public partial class FluidRelayContainerCollection : ArmCollection, IEnumerable<FluidRelayContainerResource>, IAsyncEnumerable<FluidRelayContainerResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FluidRelayContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FluidRelayContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FluidRelayContainerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fluidRelayContainerRestClient.CreateListByFluidRelayServersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FluidRelayContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FluidRelayContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FluidRelayContainerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fluidRelayContainerRestClient.CreateListByFluidRelayServersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -233,6 +233,80 @@ namespace Azure.ResourceManager.FluidRelay
             {
                 var response = _fluidRelayContainerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fluidRelayContainerName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/fluidRelayContainers/{fluidRelayContainerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluidRelayContainers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fluidRelayContainerName"> The Fluid Relay container resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayContainerName"/> is null. </exception>
+        public virtual async Task<NullableResponse<FluidRelayContainerResource>> GetIfExistsAsync(string fluidRelayContainerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fluidRelayContainerName, nameof(fluidRelayContainerName));
+
+            using var scope = _fluidRelayContainerClientDiagnostics.CreateScope("FluidRelayContainerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _fluidRelayContainerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fluidRelayContainerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<FluidRelayContainerResource>(response.GetRawResponse());
+                return Response.FromValue(new FluidRelayContainerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}/fluidRelayContainers/{fluidRelayContainerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FluidRelayContainers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fluidRelayContainerName"> The Fluid Relay container resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayContainerName"/> is null. </exception>
+        public virtual NullableResponse<FluidRelayContainerResource> GetIfExists(string fluidRelayContainerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fluidRelayContainerName, nameof(fluidRelayContainerName));
+
+            using var scope = _fluidRelayContainerClientDiagnostics.CreateScope("FluidRelayContainerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _fluidRelayContainerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fluidRelayContainerName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<FluidRelayContainerResource>(response.GetRawResponse());
+                return Response.FromValue(new FluidRelayContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

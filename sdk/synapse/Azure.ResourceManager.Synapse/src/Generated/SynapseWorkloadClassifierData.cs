@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseWorkloadClassifierData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseWorkloadClassifierData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkloadClassifierData"/>. </summary>
         public SynapseWorkloadClassifierData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkloadClassifierData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkloadClassifierData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

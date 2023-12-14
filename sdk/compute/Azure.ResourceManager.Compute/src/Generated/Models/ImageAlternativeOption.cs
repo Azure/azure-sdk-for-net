@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the alternative option specified by the Publisher for this image when this image is deprecated. </summary>
     public partial class ImageAlternativeOption
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ImageAlternativeOption"/>. </summary>
         public ImageAlternativeOption()
         {

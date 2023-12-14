@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The content link. </summary>
     public partial class LogicContentLink
     {
-        /// <summary> Initializes a new instance of LogicContentLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicContentLink"/>. </summary>
         public LogicContentLink()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicContentLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicContentLink"/>. </summary>
         /// <param name="uri"> The content link URI. </param>
         /// <param name="contentVersion"> The content version. </param>
         /// <param name="contentSize"> The content size. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

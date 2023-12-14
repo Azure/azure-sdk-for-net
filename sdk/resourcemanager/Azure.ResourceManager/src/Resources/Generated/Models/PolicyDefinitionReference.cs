@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The policy definition reference. </summary>
     public partial class PolicyDefinitionReference
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="PolicyDefinitionReference"/>. </summary>
         /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionId"/> is null. </exception>

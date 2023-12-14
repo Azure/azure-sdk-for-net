@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Represents the dedicated host unutilized capacity in terms of a specific VM size. </summary>
     public partial class DedicatedHostAllocatableVm
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DedicatedHostAllocatableVm"/>. </summary>
         internal DedicatedHostAllocatableVm()
         {

@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> List of Virtual Machine Scale Set OS Upgrade History operation response. </summary>
     internal partial class VirtualMachineScaleSetListOSUpgradeHistory
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetListOSUpgradeHistory"/>. </summary>
         /// <param name="value"> The list of OS upgrades performed on the virtual machine scale set. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>

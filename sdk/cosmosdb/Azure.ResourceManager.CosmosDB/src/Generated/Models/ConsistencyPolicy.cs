@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The consistency policy for the Cosmos DB database account. </summary>
     public partial class ConsistencyPolicy
     {
-        /// <summary> Initializes a new instance of ConsistencyPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsistencyPolicy"/>. </summary>
         /// <param name="defaultConsistencyLevel"> The default consistency level and configuration settings of the Cosmos DB account. </param>
         public ConsistencyPolicy(DefaultConsistencyLevel defaultConsistencyLevel)
         {
             DefaultConsistencyLevel = defaultConsistencyLevel;
         }
 
-        /// <summary> Initializes a new instance of ConsistencyPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsistencyPolicy"/>. </summary>
         /// <param name="defaultConsistencyLevel"> The default consistency level and configuration settings of the Cosmos DB account. </param>
         /// <param name="maxStalenessPrefix"> When used with the Bounded Staleness consistency level, this value represents the number of stale requests tolerated. Accepted range for this value is 1 – 2,147,483,647. Required when defaultConsistencyPolicy is set to 'BoundedStaleness'. </param>
         /// <param name="maxIntervalInSeconds"> When used with the Bounded Staleness consistency level, this value represents the time amount of staleness (in seconds) tolerated. Accepted range for this value is 5 - 86400. Required when defaultConsistencyPolicy is set to 'BoundedStaleness'. </param>

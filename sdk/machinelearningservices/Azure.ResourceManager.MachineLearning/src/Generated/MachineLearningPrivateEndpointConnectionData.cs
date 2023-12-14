@@ -18,24 +18,24 @@ namespace Azure.ResourceManager.MachineLearning
     /// </summary>
     public partial class MachineLearningPrivateEndpointConnectionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MachineLearningPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateEndpointConnectionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MachineLearningPrivateEndpointConnectionData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="sku"> The sku of the workspace. </param>
-        /// <param name="privateEndpoint"> The resource of private end point. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="sku"> Optional. This field is required to be implemented by the RP because AML is supporting more than one tier. </param>
+        /// <param name="privateEndpoint"> The Private Endpoint resource. </param>
+        /// <param name="connectionState"> The connection state. </param>
+        /// <param name="provisioningState"> The current provisioning state. </param>
         internal MachineLearningPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MachineLearningSku sku, MachineLearningPrivateEndpoint privateEndpoint, MachineLearningPrivateLinkServiceConnectionState connectionState, MachineLearningPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.MachineLearning
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The identity of the resource. </summary>
+        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The sku of the workspace. </summary>
+        /// <summary> Optional. This field is required to be implemented by the RP because AML is supporting more than one tier. </summary>
         public MachineLearningSku Sku { get; set; }
-        /// <summary> The resource of private end point. </summary>
+        /// <summary> The Private Endpoint resource. </summary>
         public MachineLearningPrivateEndpoint PrivateEndpoint { get; set; }
-        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        /// <summary> The connection state. </summary>
         public MachineLearningPrivateLinkServiceConnectionState ConnectionState { get; set; }
-        /// <summary> The provisioning state of the private endpoint connection resource. </summary>
+        /// <summary> The current provisioning state. </summary>
         public MachineLearningPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }
 }

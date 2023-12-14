@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters for a task run request. </summary>
     public partial class ContainerRegistryTaskRunContent : ContainerRegistryRunContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTaskRunContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskRunContent"/>. </summary>
         /// <param name="taskId"> The resource ID of task against which run has to be queued. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
         public ContainerRegistryTaskRunContent(ResourceIdentifier taskId)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             RunRequestType = "TaskRunRequest";
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTaskRunContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskRunContent"/>. </summary>
         /// <param name="runRequestType"> The type of the run request. </param>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled for the run or not. </param>
         /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>

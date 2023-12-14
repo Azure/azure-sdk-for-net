@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
     /// A Class representing a NetworkCloudRack along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkCloudRackResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkCloudRackResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkCloudRack method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudRackResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkCloudRackResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkCloudRack method.
     /// </summary>
     public partial class NetworkCloudRackResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkCloudRackResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="rackName"> The rackName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string rackName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/racks/{rackName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.NetworkCloud
         private readonly RacksRestOperations _networkCloudRackRacksRestClient;
         private readonly NetworkCloudRackData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/racks";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkCloudRackResource"/> class for mocking. </summary>
         protected NetworkCloudRackResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkCloudRackResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudRackResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkCloudRackResource(ArmClient client, NetworkCloudRackData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.NetworkCloud
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/racks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

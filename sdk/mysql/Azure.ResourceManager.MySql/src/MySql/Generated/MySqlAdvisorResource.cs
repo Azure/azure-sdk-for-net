@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.MySql
 {
     /// <summary>
     /// A Class representing a MySqlAdvisor along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MySqlAdvisorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMySqlAdvisorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MySqlServerResource" /> using the GetMySqlAdvisor method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlAdvisorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMySqlAdvisorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MySqlServerResource"/> using the GetMySqlAdvisor method.
     /// </summary>
     public partial class MySqlAdvisorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MySqlAdvisorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="advisorName"> The advisorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string advisorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/advisors/{advisorName}";
@@ -37,12 +41,15 @@ namespace Azure.ResourceManager.MySql
         private readonly MySQLManagementRestOperations _defaultRestClient;
         private readonly MySqlAdvisorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers/advisors";
+
         /// <summary> Initializes a new instance of the <see cref="MySqlAdvisorResource"/> class for mocking. </summary>
         protected MySqlAdvisorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MySqlAdvisorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlAdvisorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MySqlAdvisorResource(ArmClient client, MySqlAdvisorData data) : this(client, data.Id)
@@ -65,9 +72,6 @@ namespace Azure.ResourceManager.MySql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers/advisors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -94,7 +98,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlRecommendationActionResources and their operations over a MySqlRecommendationActionResource. </returns>
         public virtual MySqlRecommendationActionCollection GetMySqlRecommendationActions()
         {
-            return GetCachedClient(Client => new MySqlRecommendationActionCollection(Client, Id));
+            return GetCachedClient(client => new MySqlRecommendationActionCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +116,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="recommendedActionName"> The recommended action name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlRecommendationActionResource>> GetMySqlRecommendationActionAsync(string recommendedActionName, CancellationToken cancellationToken = default)
         {
@@ -135,8 +139,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="recommendedActionName"> The recommended action name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlRecommendationActionResource> GetMySqlRecommendationAction(string recommendedActionName, CancellationToken cancellationToken = default)
         {

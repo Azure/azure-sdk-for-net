@@ -14,20 +14,20 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Azure blob write settings. </summary>
     public partial class AzureBlobStorageWriteSettings : StoreWriteSettings
     {
-        /// <summary> Initializes a new instance of AzureBlobStorageWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobStorageWriteSettings"/>. </summary>
         public AzureBlobStorageWriteSettings()
         {
             StoreWriteSettingsType = "AzureBlobStorageWriteSettings";
         }
 
-        /// <summary> Initializes a new instance of AzureBlobStorageWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobStorageWriteSettings"/>. </summary>
         /// <param name="storeWriteSettingsType"> The write setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="blockSizeInMB"> Indicates the block size(MB) when writing data to blob. Type: integer (or Expression with resultType integer). </param>
-        internal AzureBlobStorageWriteSettings(string storeWriteSettingsType, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, BinaryData copyBehavior, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<int> blockSizeInMB) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties)
+        internal AzureBlobStorageWriteSettings(string storeWriteSettingsType, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, DataFactoryElement<string> copyBehavior, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<int> blockSizeInMB) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties)
         {
             BlockSizeInMB = blockSizeInMB;
             StoreWriteSettingsType = storeWriteSettingsType ?? "AzureBlobStorageWriteSettings";

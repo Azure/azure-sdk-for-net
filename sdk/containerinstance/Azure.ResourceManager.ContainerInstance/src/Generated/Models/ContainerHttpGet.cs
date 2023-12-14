@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The container Http Get settings, for liveness or readiness probe. </summary>
     public partial class ContainerHttpGet
     {
-        /// <summary> Initializes a new instance of ContainerHttpGet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerHttpGet"/>. </summary>
         /// <param name="port"> The port number to probe. </param>
         public ContainerHttpGet(int port)
         {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             HttpHeaders = new ChangeTrackingList<ContainerHttpHeader>();
         }
 
-        /// <summary> Initializes a new instance of ContainerHttpGet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerHttpGet"/>. </summary>
         /// <param name="path"> The path to probe. </param>
         /// <param name="port"> The port number to probe. </param>
         /// <param name="scheme"> The scheme. </param>

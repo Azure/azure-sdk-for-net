@@ -22,7 +22,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Duration);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Duration.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Duration))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();

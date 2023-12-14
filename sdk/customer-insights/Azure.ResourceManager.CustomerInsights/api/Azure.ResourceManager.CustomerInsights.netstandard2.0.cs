@@ -11,6 +11,8 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual Azure.Pageable<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatResource>> GetAsync(string authorizationPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatResource> GetIfExists(string authorizationPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatResource>> GetIfExistsAsync(string authorizationPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -50,6 +52,8 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual Azure.Pageable<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatResource>> GetAsync(string mappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatResource> GetIfExists(string mappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatResource>> GetIfExistsAsync(string mappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -98,6 +102,8 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual Azure.Pageable<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatResource>> GetAsync(string connectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatResource> GetIfExists(string connectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatResource>> GetIfExistsAsync(string connectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -167,13 +173,15 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual Azure.Pageable<Azure.ResourceManager.CustomerInsights.HubResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CustomerInsights.HubResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.HubResource>> GetAsync(string hubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.HubResource> GetIfExists(string hubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.HubResource>> GetIfExistsAsync(string hubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CustomerInsights.HubResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CustomerInsights.HubResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CustomerInsights.HubResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CustomerInsights.HubResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class HubData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public HubData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public HubData(Azure.Core.AzureLocation location) { }
         public string ApiEndpoint { get { throw null; } }
         public Azure.ResourceManager.CustomerInsights.Models.HubBillingInfoFormat HubBillingInfo { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -253,6 +261,8 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual Azure.Pageable<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatResource> GetAll(string localeCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatResource> GetAllAsync(string localeCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatResource>> GetAsync(string interactionName, string localeCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatResource> GetIfExists(string interactionName, string localeCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatResource>> GetIfExistsAsync(string interactionName, string localeCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CustomerInsights.InteractionResourceFormatResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -313,6 +323,8 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual Azure.Pageable<Azure.ResourceManager.CustomerInsights.KpiResourceFormatResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CustomerInsights.KpiResourceFormatResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.KpiResourceFormatResource>> GetAsync(string kpiName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.KpiResourceFormatResource> GetIfExists(string kpiName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.KpiResourceFormatResource>> GetIfExistsAsync(string kpiName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CustomerInsights.KpiResourceFormatResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CustomerInsights.KpiResourceFormatResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CustomerInsights.KpiResourceFormatResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CustomerInsights.KpiResourceFormatResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -367,6 +379,8 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual Azure.Pageable<Azure.ResourceManager.CustomerInsights.LinkResourceFormatResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CustomerInsights.LinkResourceFormatResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.LinkResourceFormatResource>> GetAsync(string linkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.LinkResourceFormatResource> GetIfExists(string linkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.LinkResourceFormatResource>> GetIfExistsAsync(string linkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CustomerInsights.LinkResourceFormatResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CustomerInsights.LinkResourceFormatResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CustomerInsights.LinkResourceFormatResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CustomerInsights.LinkResourceFormatResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -413,6 +427,8 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual Azure.Pageable<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatResource>> GetAsync(string predictionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatResource> GetIfExists(string predictionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatResource>> GetIfExistsAsync(string predictionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CustomerInsights.PredictionResourceFormatResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -469,6 +485,8 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual Azure.Pageable<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatResource> GetAll(string localeCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatResource> GetAllAsync(string localeCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatResource>> GetAsync(string profileName, string localeCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatResource> GetIfExists(string profileName, string localeCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatResource>> GetIfExistsAsync(string profileName, string localeCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CustomerInsights.ProfileResourceFormatResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -522,6 +540,8 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual Azure.Pageable<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatResource>> GetAsync(string relationshipLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatResource> GetIfExists(string relationshipLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatResource>> GetIfExistsAsync(string relationshipLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -566,6 +586,8 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual Azure.Pageable<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatResource>> GetAsync(string relationshipName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatResource> GetIfExists(string relationshipName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatResource>> GetIfExistsAsync(string relationshipName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -611,6 +633,8 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual Azure.Pageable<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatResource>> GetAsync(string assignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatResource> GetIfExists(string assignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatResource>> GetIfExistsAsync(string assignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -664,6 +688,8 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual Azure.Pageable<Azure.ResourceManager.CustomerInsights.ViewResourceFormatResource> GetAll(string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CustomerInsights.ViewResourceFormatResource> GetAllAsync(string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.ViewResourceFormatResource>> GetAsync(string viewName, string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.ViewResourceFormatResource> GetIfExists(string viewName, string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.ViewResourceFormatResource>> GetIfExistsAsync(string viewName, string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ViewResourceFormatData : Azure.ResourceManager.Models.ResourceData
     {
@@ -699,6 +725,8 @@ namespace Azure.ResourceManager.CustomerInsights
         public virtual Azure.Pageable<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatResource>> GetAsync(string widgetTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatResource> GetIfExists(string widgetTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatResource>> GetIfExistsAsync(string widgetTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -725,6 +753,40 @@ namespace Azure.ResourceManager.CustomerInsights
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hubName, string widgetTypeName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.CustomerInsights.Mocking
+{
+    public partial class MockableCustomerInsightsArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableCustomerInsightsArmClient() { }
+        public virtual Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatResource GetAuthorizationPolicyResourceFormatResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatResource GetConnectorMappingResourceFormatResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatResource GetConnectorResourceFormatResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CustomerInsights.HubResource GetHubResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CustomerInsights.InteractionResourceFormatResource GetInteractionResourceFormatResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CustomerInsights.KpiResourceFormatResource GetKpiResourceFormatResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CustomerInsights.LinkResourceFormatResource GetLinkResourceFormatResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CustomerInsights.PredictionResourceFormatResource GetPredictionResourceFormatResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CustomerInsights.ProfileResourceFormatResource GetProfileResourceFormatResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CustomerInsights.RelationshipLinkResourceFormatResource GetRelationshipLinkResourceFormatResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CustomerInsights.RelationshipResourceFormatResource GetRelationshipResourceFormatResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CustomerInsights.RoleAssignmentResourceFormatResource GetRoleAssignmentResourceFormatResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CustomerInsights.ViewResourceFormatResource GetViewResourceFormatResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatResource GetWidgetTypeResourceFormatResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableCustomerInsightsResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableCustomerInsightsResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.CustomerInsights.HubResource> GetHub(string hubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.HubResource>> GetHubAsync(string hubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CustomerInsights.HubCollection GetHubs() { throw null; }
+    }
+    public partial class MockableCustomerInsightsSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableCustomerInsightsSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.CustomerInsights.HubResource> GetHubs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CustomerInsights.HubResource> GetHubsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.CustomerInsights.Models

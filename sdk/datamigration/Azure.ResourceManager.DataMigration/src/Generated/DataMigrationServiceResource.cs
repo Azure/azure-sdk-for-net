@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
     /// A Class representing a DataMigrationService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataMigrationServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataMigrationServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDataMigrationService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataMigrationServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataMigrationServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataMigrationService method.
     /// </summary>
     public partial class DataMigrationServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataMigrationServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="groupName"> The groupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string groupName, string serviceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}";
@@ -39,12 +42,15 @@ namespace Azure.ResourceManager.DataMigration
         private readonly ServicesRestOperations _dataMigrationServiceServicesRestClient;
         private readonly DataMigrationServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly Core.ResourceType ResourceType = "Microsoft.DataMigration/services";
+
         /// <summary> Initializes a new instance of the <see cref="DataMigrationServiceResource"/> class for mocking. </summary>
         protected DataMigrationServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataMigrationServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataMigrationServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataMigrationServiceResource(ArmClient client, DataMigrationServiceData data) : this(client, data.Id)
@@ -65,9 +71,6 @@ namespace Azure.ResourceManager.DataMigration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.DataMigration/services";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -94,7 +97,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An object representing collection of ServiceServiceTaskResources and their operations over a ServiceServiceTaskResource. </returns>
         public virtual ServiceServiceTaskCollection GetServiceServiceTasks()
         {
-            return GetCachedClient(Client => new ServiceServiceTaskCollection(Client, Id));
+            return GetCachedClient(client => new ServiceServiceTaskCollection(client, Id));
         }
 
         /// <summary>
@@ -113,8 +116,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="taskName"> Name of the Task. </param>
         /// <param name="expand"> Expand the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ServiceServiceTaskResource>> GetServiceServiceTaskAsync(string taskName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -137,8 +140,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="taskName"> Name of the Task. </param>
         /// <param name="expand"> Expand the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ServiceServiceTaskResource> GetServiceServiceTask(string taskName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -149,7 +152,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An object representing collection of ProjectResources and their operations over a ProjectResource. </returns>
         public virtual ProjectCollection GetProjects()
         {
-            return GetCachedClient(Client => new ProjectCollection(Client, Id));
+            return GetCachedClient(client => new ProjectCollection(client, Id));
         }
 
         /// <summary>
@@ -167,8 +170,8 @@ namespace Azure.ResourceManager.DataMigration
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ProjectResource>> GetProjectAsync(string projectName, CancellationToken cancellationToken = default)
         {
@@ -190,8 +193,8 @@ namespace Azure.ResourceManager.DataMigration
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ProjectResource> GetProject(string projectName, CancellationToken cancellationToken = default)
         {
@@ -618,7 +621,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailableServiceSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AvailableServiceSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailableServiceSku> GetSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMigrationServiceServicesRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -640,7 +643,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableServiceSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AvailableServiceSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailableServiceSku> GetSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMigrationServiceServicesRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Resource stage details. </summary>
     public partial class EdgeOrderStageDetails
     {
-        /// <summary> Initializes a new instance of EdgeOrderStageDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderStageDetails"/>. </summary>
         internal EdgeOrderStageDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderStageDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderStageDetails"/>. </summary>
         /// <param name="stageStatus"> Stage status. </param>
         /// <param name="stageName"> Stage name. </param>
         /// <param name="displayName"> Display name of the resource stage. </param>

@@ -277,6 +277,7 @@ namespace Azure.Messaging.ServiceBus
         {
             // assign default options since some of the properties reach into the options
             Options = new ServiceBusProcessorOptions();
+            _sessionIds = Array.Empty<string>();
         }
 
         /// <summary>

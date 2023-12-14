@@ -13,11 +13,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The InternalNetwork patch resource definition. </summary>
     public partial class NetworkFabricInternalNetworkPatch
     {
-        /// <summary> Initializes a new instance of NetworkFabricInternalNetworkPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricInternalNetworkPatch"/>. </summary>
         public NetworkFabricInternalNetworkPatch()
         {
             ConnectedIPv4Subnets = new ChangeTrackingList<ConnectedSubnet>();
             ConnectedIPv6Subnets = new ChangeTrackingList<ConnectedSubnet>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricInternalNetworkPatch"/>. </summary>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
+        /// <param name="connectedIPv4Subnets"> List of Connected IPv4 Subnets. </param>
+        /// <param name="connectedIPv6Subnets"> List of connected IPv6 Subnets. </param>
+        /// <param name="importRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
+        /// <param name="exportRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
+        /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
+        /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
+        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="isMonitoringEnabled"> To check whether monitoring of internal network is enabled or not. </param>
+        /// <param name="bgpConfiguration"> BGP configuration properties. </param>
+        /// <param name="staticRouteConfiguration"> Static Route Configuration properties. </param>
+        internal NetworkFabricInternalNetworkPatch(string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, BgpConfiguration bgpConfiguration, StaticRouteConfiguration staticRouteConfiguration)
+        {
+            Annotation = annotation;
+            Mtu = mtu;
+            ConnectedIPv4Subnets = connectedIPv4Subnets;
+            ConnectedIPv6Subnets = connectedIPv6Subnets;
+            ImportRoutePolicyId = importRoutePolicyId;
+            ExportRoutePolicyId = exportRoutePolicyId;
+            ImportRoutePolicy = importRoutePolicy;
+            ExportRoutePolicy = exportRoutePolicy;
+            IngressAclId = ingressAclId;
+            EgressAclId = egressAclId;
+            IsMonitoringEnabled = isMonitoringEnabled;
+            BgpConfiguration = bgpConfiguration;
+            StaticRouteConfiguration = staticRouteConfiguration;
         }
 
         /// <summary> Switch configuration description. </summary>

@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
     /// <summary> The collection of Connectivity related groups and policies within the Managed Network. </summary>
     public partial class ConnectivityCollection
     {
-        /// <summary> Initializes a new instance of ConnectivityCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityCollection"/>. </summary>
         internal ConnectivityCollection()
         {
             Groups = new ChangeTrackingList<ManagedNetworkGroupData>();
             Peerings = new ChangeTrackingList<ManagedNetworkPeeringPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of ConnectivityCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityCollection"/>. </summary>
         /// <param name="groups"> The collection of connectivity related Managed Network Groups within the Managed Network. </param>
         /// <param name="peerings"> The collection of Managed Network Peering Policies within the Managed Network. </param>
         internal ConnectivityCollection(IReadOnlyList<ManagedNetworkGroupData> groups, IReadOnlyList<ManagedNetworkPeeringPolicyData> peerings)

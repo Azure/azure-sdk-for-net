@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the RequestUri condition for the delivery rule. </summary>
     public partial class DeliveryRuleRequestUriCondition : DeliveryRuleCondition
     {
-        /// <summary> Initializes a new instance of DeliveryRuleRequestUriCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleRequestUriCondition"/>. </summary>
         /// <param name="properties"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DeliveryRuleRequestUriCondition(RequestUriMatchCondition properties)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Name = MatchVariable.RequestUri;
         }
 
-        /// <summary> Initializes a new instance of DeliveryRuleRequestUriCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleRequestUriCondition"/>. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="properties"> Defines the parameters for the condition. </param>
         internal DeliveryRuleRequestUriCondition(MatchVariable name, RequestUriMatchCondition properties) : base(name)

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// </summary>
     public partial class GlobalRulestackFqdnData : ResourceData
     {
-        /// <summary> Initializes a new instance of GlobalRulestackFqdnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackFqdnData"/>. </summary>
         /// <param name="fqdnList"> fqdn list. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fqdnList"/> is null. </exception>
         public GlobalRulestackFqdnData(IEnumerable<string> fqdnList)
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             FqdnList = fqdnList.ToList();
         }
 
-        /// <summary> Initializes a new instance of GlobalRulestackFqdnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackFqdnData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

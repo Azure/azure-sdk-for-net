@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The storage account linked service. </summary>
     public partial class AzureStorageLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of AzureStorageLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureStorageLinkedService"/>. </summary>
         public AzureStorageLinkedService()
         {
             LinkedServiceType = "AzureStorage";
         }
 
-        /// <summary> Initializes a new instance of AzureStorageLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureStorageLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

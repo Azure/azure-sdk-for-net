@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network security rules evaluation result. </summary>
     public partial class NetworkSecurityRulesEvaluationResult
     {
-        /// <summary> Initializes a new instance of NetworkSecurityRulesEvaluationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityRulesEvaluationResult"/>. </summary>
         internal NetworkSecurityRulesEvaluationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkSecurityRulesEvaluationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityRulesEvaluationResult"/>. </summary>
         /// <param name="name"> Name of the network security rule. </param>
         /// <param name="protocolMatched"> Value indicating whether protocol is matched. </param>
         /// <param name="sourceMatched"> Value indicating whether source is matched. </param>

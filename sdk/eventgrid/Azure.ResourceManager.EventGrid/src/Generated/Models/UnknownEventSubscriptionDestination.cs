@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> The UnknownEventSubscriptionDestination. </summary>
     internal partial class UnknownEventSubscriptionDestination : EventSubscriptionDestination
     {
-        /// <summary> Initializes a new instance of UnknownEventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
         internal UnknownEventSubscriptionDestination(EndpointType endpointType) : base(endpointType)
         {

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CommitmentPlanResource" /> and their operations.
-    /// Each <see cref="CommitmentPlanResource" /> in the collection will belong to the same instance of <see cref="CognitiveServicesAccountResource" />.
-    /// To get a <see cref="CommitmentPlanCollection" /> instance call the GetCommitmentPlans method from an instance of <see cref="CognitiveServicesAccountResource" />.
+    /// A class representing a collection of <see cref="CommitmentPlanResource"/> and their operations.
+    /// Each <see cref="CommitmentPlanResource"/> in the collection will belong to the same instance of <see cref="CognitiveServicesAccountResource"/>.
+    /// To get a <see cref="CommitmentPlanCollection"/> instance call the GetCommitmentPlans method from an instance of <see cref="CognitiveServicesAccountResource"/>.
     /// </summary>
     public partial class CommitmentPlanCollection : ArmCollection, IEnumerable<CommitmentPlanResource>, IAsyncEnumerable<CommitmentPlanResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CommitmentPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CommitmentPlanResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _commitmentPlanRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CommitmentPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CommitmentPlanResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _commitmentPlanRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 var response = _commitmentPlanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/commitmentPlans/{commitmentPlanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommitmentPlans_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="commitmentPlanName"> The name of the commitmentPlan associated with the Cognitive Services Account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CommitmentPlanResource>> GetIfExistsAsync(string commitmentPlanName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
+
+            using var scope = _commitmentPlanClientDiagnostics.CreateScope("CommitmentPlanCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _commitmentPlanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CommitmentPlanResource>(response.GetRawResponse());
+                return Response.FromValue(new CommitmentPlanResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/commitmentPlans/{commitmentPlanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommitmentPlans_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="commitmentPlanName"> The name of the commitmentPlan associated with the Cognitive Services Account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanName"/> is null. </exception>
+        public virtual NullableResponse<CommitmentPlanResource> GetIfExists(string commitmentPlanName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(commitmentPlanName, nameof(commitmentPlanName));
+
+            using var scope = _commitmentPlanClientDiagnostics.CreateScope("CommitmentPlanCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _commitmentPlanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CommitmentPlanResource>(response.GetRawResponse());
+                return Response.FromValue(new CommitmentPlanResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

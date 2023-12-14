@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Managed identity credential. </summary>
     public partial class DataFactoryManagedIdentityCredentialProperties : DataFactoryCredential
     {
-        /// <summary> Initializes a new instance of DataFactoryManagedIdentityCredentialProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedIdentityCredentialProperties"/>. </summary>
         public DataFactoryManagedIdentityCredentialProperties()
         {
             CredentialType = "ManagedIdentity";
         }
 
-        /// <summary> Initializes a new instance of DataFactoryManagedIdentityCredentialProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedIdentityCredentialProperties"/>. </summary>
         /// <param name="credentialType"> Type of credential. </param>
         /// <param name="description"> Credential description. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Credential. </param>

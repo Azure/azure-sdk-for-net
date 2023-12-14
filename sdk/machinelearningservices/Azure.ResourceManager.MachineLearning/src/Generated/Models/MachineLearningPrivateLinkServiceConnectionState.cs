@@ -10,27 +10,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
     public partial class MachineLearningPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of MachineLearningPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateLinkServiceConnectionState"/>. </summary>
         public MachineLearningPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningPrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        internal MachineLearningPrivateLinkServiceConnectionState(MachineLearningPrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired)
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateLinkServiceConnectionState"/>. </summary>
+        /// <param name="actionsRequired"> Some RP chose "None". Other RPs use this for region expansion. </param>
+        /// <param name="description"> User-defined message that, per NRP doc, may be used for approval-related message. </param>
+        /// <param name="status"> Connection status of the service consumer with the service provider. </param>
+        internal MachineLearningPrivateLinkServiceConnectionState(string actionsRequired, string description, MachineLearningPrivateEndpointServiceConnectionStatus? status)
         {
-            Status = status;
-            Description = description;
             ActionsRequired = actionsRequired;
+            Description = description;
+            Status = status;
         }
 
-        /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>
-        public MachineLearningPrivateEndpointServiceConnectionStatus? Status { get; set; }
-        /// <summary> The reason for approval/rejection of the connection. </summary>
-        public string Description { get; set; }
-        /// <summary> A message indicating if changes on the service provider require any updates on the consumer. </summary>
+        /// <summary> Some RP chose "None". Other RPs use this for region expansion. </summary>
         public string ActionsRequired { get; set; }
+        /// <summary> User-defined message that, per NRP doc, may be used for approval-related message. </summary>
+        public string Description { get; set; }
+        /// <summary> Connection status of the service consumer with the service provider. </summary>
+        public MachineLearningPrivateEndpointServiceConnectionStatus? Status { get; set; }
     }
 }

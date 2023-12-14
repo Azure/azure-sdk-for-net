@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
     /// A Class representing a HealthcareApisIotFhirDestination along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HealthcareApisIotFhirDestinationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHealthcareApisIotFhirDestinationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HealthcareApisIotConnectorResource" /> using the GetHealthcareApisIotFhirDestination method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HealthcareApisIotFhirDestinationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHealthcareApisIotFhirDestinationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HealthcareApisIotConnectorResource"/> using the GetHealthcareApisIotFhirDestination method.
     /// </summary>
     public partial class HealthcareApisIotFhirDestinationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HealthcareApisIotFhirDestinationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="iotConnectorName"> The iotConnectorName. </param>
+        /// <param name="fhirDestinationName"> The fhirDestinationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName, string fhirDestinationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}/fhirdestinations/{fhirDestinationName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.HealthcareApis
         private readonly IotConnectorFhirDestinationRestOperations _healthcareApisIotFhirDestinationIotConnectorFhirDestinationRestClient;
         private readonly HealthcareApisIotFhirDestinationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/workspaces/iotconnectors/fhirdestinations";
+
         /// <summary> Initializes a new instance of the <see cref="HealthcareApisIotFhirDestinationResource"/> class for mocking. </summary>
         protected HealthcareApisIotFhirDestinationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HealthcareApisIotFhirDestinationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HealthcareApisIotFhirDestinationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HealthcareApisIotFhirDestinationResource(ArmClient client, HealthcareApisIotFhirDestinationData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.HealthcareApis
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/workspaces/iotconnectors/fhirdestinations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsAccountBasic : ResourceData
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountBasic. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountBasic"/>. </summary>
         internal DataLakeAnalyticsAccountBasic()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountBasic. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountBasic"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

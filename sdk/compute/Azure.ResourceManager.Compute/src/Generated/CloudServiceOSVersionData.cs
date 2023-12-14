@@ -18,9 +18,6 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class CloudServiceOSVersionData : ResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="CloudServiceOSVersionData"/>. </summary>
         internal CloudServiceOSVersionData()
         {

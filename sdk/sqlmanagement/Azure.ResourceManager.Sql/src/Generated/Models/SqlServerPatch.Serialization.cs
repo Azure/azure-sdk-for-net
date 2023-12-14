@@ -85,6 +85,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("restrictOutboundNetworkAccess"u8);
                 writer.WriteStringValue(RestrictOutboundNetworkAccess.Value.ToString());
             }
+            if (Optional.IsDefined(IsIPv6Enabled))
+            {
+                writer.WritePropertyName("isIPv6Enabled"u8);
+                writer.WriteStringValue(IsIPv6Enabled.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

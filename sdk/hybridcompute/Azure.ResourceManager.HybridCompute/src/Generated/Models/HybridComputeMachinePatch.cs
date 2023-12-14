@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -12,14 +14,50 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Describes a hybrid machine Update. </summary>
     public partial class HybridComputeMachinePatch : HybridComputeResourceUpdate
     {
-        /// <summary> Initializes a new instance of HybridComputeMachinePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeMachinePatch"/>. </summary>
         public HybridComputeMachinePatch()
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="HybridComputeMachinePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="locationData"> Metadata pertaining to the geographic location of the resource. </param>
+        /// <param name="osProfile"> Specifies the operating system settings for the hybrid machine. </param>
+        /// <param name="cloudMetadata"> The metadata of the cloud environment (Azure/GCP/AWS/OCI...). </param>
+        /// <param name="agentUpgrade"> The info of the machine w.r.t Agent Upgrade. </param>
+        /// <param name="parentClusterResourceId"> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </param>
+        /// <param name="privateLinkScopeResourceId"> The resource id of the private link scope this machine is assigned to, if any. </param>
+        internal HybridComputeMachinePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, LocationData locationData, OSProfile osProfile, CloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, ResourceIdentifier parentClusterResourceId, ResourceIdentifier privateLinkScopeResourceId) : base(tags)
+        {
+            Identity = identity;
+            LocationData = locationData;
+            OSProfile = osProfile;
+            CloudMetadata = cloudMetadata;
+            AgentUpgrade = agentUpgrade;
+            ParentClusterResourceId = parentClusterResourceId;
+            PrivateLinkScopeResourceId = privateLinkScopeResourceId;
+        }
+
         /// <summary> Identity for the resource. Current supported identity types: SystemAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Hybrid Compute Machine properties. </summary>
-        public MachineUpdateProperties Properties { get; set; }
+        /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
+        public LocationData LocationData { get; set; }
+        /// <summary> Specifies the operating system settings for the hybrid machine. </summary>
+        public OSProfile OSProfile { get; set; }
+        /// <summary> The metadata of the cloud environment (Azure/GCP/AWS/OCI...). </summary>
+        internal CloudMetadata CloudMetadata { get; set; }
+        /// <summary> Specifies the cloud provider (Azure/AWS/GCP...). </summary>
+        public string CloudMetadataProvider
+        {
+            get => CloudMetadata is null ? default : CloudMetadata.Provider;
+        }
+
+        /// <summary> The info of the machine w.r.t Agent Upgrade. </summary>
+        public AgentUpgrade AgentUpgrade { get; set; }
+        /// <summary> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </summary>
+        public ResourceIdentifier ParentClusterResourceId { get; set; }
+        /// <summary> The resource id of the private link scope this machine is assigned to, if any. </summary>
+        public ResourceIdentifier PrivateLinkScopeResourceId { get; set; }
     }
 }

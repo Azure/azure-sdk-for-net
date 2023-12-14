@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         [SetUp]
         protected async Task SetUp()
         {
-            await BaseSetUp(database: true);
+            await BaseSetUp();
         }
 
         [TestCase]

@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies settings related to VM Guest Patching on Windows. </summary>
     public partial class PatchSettings
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="PatchSettings"/>. </summary>
         public PatchSettings()
         {

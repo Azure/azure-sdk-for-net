@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The VirtualMachineScaleSetConvertToSinglePlacementGroupContent. </summary>
     public partial class VirtualMachineScaleSetConvertToSinglePlacementGroupContent
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetConvertToSinglePlacementGroupContent"/>. </summary>
         public VirtualMachineScaleSetConvertToSinglePlacementGroupContent()
         {
@@ -23,11 +20,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetConvertToSinglePlacementGroupContent"/>. </summary>
         /// <param name="activePlacementGroupId"> Id of the placement group in which you want future virtual machine instances to be placed. To query placement group Id, please use Virtual Machine Scale Set VMs - Get API. If not provided, the platform will choose one with maximum number of virtual machine instances. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetConvertToSinglePlacementGroupContent(string activePlacementGroupId, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineScaleSetConvertToSinglePlacementGroupContent(string activePlacementGroupId)
         {
             ActivePlacementGroupId = activePlacementGroupId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Id of the placement group in which you want future virtual machine instances to be placed. To query placement group Id, please use Virtual Machine Scale Set VMs - Get API. If not provided, the platform will choose one with maximum number of virtual machine instances. </summary>

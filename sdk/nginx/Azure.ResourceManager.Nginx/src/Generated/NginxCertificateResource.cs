@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Nginx
 {
     /// <summary>
     /// A Class representing a NginxCertificate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NginxCertificateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNginxCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NginxDeploymentResource" /> using the GetNginxCertificate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NginxCertificateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNginxCertificateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NginxDeploymentResource"/> using the GetNginxCertificate method.
     /// </summary>
     public partial class NginxCertificateResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NginxCertificateResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="deploymentName"> The deploymentName. </param>
+        /// <param name="certificateName"> The certificateName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deploymentName, string certificateName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/certificates/{certificateName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.Nginx
         private readonly CertificatesRestOperations _nginxCertificateCertificatesRestClient;
         private readonly NginxCertificateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Nginx.NginxPlus/nginxDeployments/certificates";
+
         /// <summary> Initializes a new instance of the <see cref="NginxCertificateResource"/> class for mocking. </summary>
         protected NginxCertificateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NginxCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NginxCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NginxCertificateResource(ArmClient client, NginxCertificateData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.Nginx
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Nginx.NginxPlus/nginxDeployments/certificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

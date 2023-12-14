@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     /// </summary>
     public partial class CosmosDBForPostgreSqlRoleData : ResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlRoleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlRoleData"/>. </summary>
         /// <param name="password"> The password of the cluster role. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="password"/> is null. </exception>
         public CosmosDBForPostgreSqlRoleData(string password)
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             Password = password;
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlRoleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlRoleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="password"> The password of the cluster role. </param>
         /// <param name="provisioningState"> Provisioning state of the role. </param>
-        internal CosmosDBForPostgreSqlRoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string password, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal CosmosDBForPostgreSqlRoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string password, CosmosDBForPostgreSqlProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Password = password;
             ProvisioningState = provisioningState;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <summary> The password of the cluster role. </summary>
         public string Password { get; set; }
         /// <summary> Provisioning state of the role. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public CosmosDBForPostgreSqlProvisioningState? ProvisioningState { get; }
     }
 }

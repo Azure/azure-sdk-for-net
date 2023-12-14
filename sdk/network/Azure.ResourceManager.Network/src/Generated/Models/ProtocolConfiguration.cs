@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Configuration of the protocol. </summary>
     internal partial class ProtocolConfiguration
     {
-        /// <summary> Initializes a new instance of ProtocolConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtocolConfiguration"/>. </summary>
         public ProtocolConfiguration()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProtocolConfiguration"/>. </summary>
+        /// <param name="httpProtocolConfiguration"> HTTP configuration of the connectivity check. </param>
+        internal ProtocolConfiguration(NetworkHttpConfiguration httpProtocolConfiguration)
+        {
+            HttpProtocolConfiguration = httpProtocolConfiguration;
         }
 
         /// <summary> HTTP configuration of the connectivity check. </summary>

@@ -13,7 +13,7 @@ namespace Azure.AI.Translation.Text
     /// <summary> Properties of the target dictionary language. </summary>
     public partial class TargetDictionaryLanguage
     {
-        /// <summary> Initializes a new instance of TargetDictionaryLanguage. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetDictionaryLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>

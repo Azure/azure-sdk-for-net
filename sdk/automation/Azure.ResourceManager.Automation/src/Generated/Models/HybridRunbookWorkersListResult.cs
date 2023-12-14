@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list hybrid runbook workers. </summary>
     internal partial class HybridRunbookWorkersListResult
     {
-        /// <summary> Initializes a new instance of HybridRunbookWorkersListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkersListResult"/>. </summary>
         internal HybridRunbookWorkersListResult()
         {
             Value = new ChangeTrackingList<HybridRunbookWorkerData>();
         }
 
-        /// <summary> Initializes a new instance of HybridRunbookWorkersListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkersListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of hybrid runbook workers. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
         internal HybridRunbookWorkersListResult(IReadOnlyList<HybridRunbookWorkerData> value, string nextLink)

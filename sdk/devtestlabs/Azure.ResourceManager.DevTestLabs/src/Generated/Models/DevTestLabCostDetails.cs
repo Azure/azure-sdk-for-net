@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> The properties of a lab cost item. </summary>
     public partial class DevTestLabCostDetails
     {
-        /// <summary> Initializes a new instance of DevTestLabCostDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCostDetails"/>. </summary>
         internal DevTestLabCostDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabCostDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCostDetails"/>. </summary>
         /// <param name="on"> The date of the cost item. </param>
         /// <param name="cost"> The cost component of the cost item. </param>
         /// <param name="costType"> The type of the cost. </param>

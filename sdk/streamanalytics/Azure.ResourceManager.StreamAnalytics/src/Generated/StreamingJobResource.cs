@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.StreamAnalytics
 {
     /// <summary>
     /// A Class representing a StreamingJob along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StreamingJobResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStreamingJobResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetStreamingJob method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StreamingJobResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStreamingJobResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetStreamingJob method.
     /// </summary>
     public partial class StreamingJobResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StreamingJobResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="jobName"> The jobName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string jobName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.StreamAnalytics
         private readonly StreamingJobsRestOperations _streamingJobRestClient;
         private readonly StreamingJobData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StreamAnalytics/streamingjobs";
+
         /// <summary> Initializes a new instance of the <see cref="StreamingJobResource"/> class for mocking. </summary>
         protected StreamingJobResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StreamingJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StreamingJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StreamingJobResource(ArmClient client, StreamingJobData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.StreamAnalytics
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StreamAnalytics/streamingjobs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An object representing collection of StreamingJobFunctionResources and their operations over a StreamingJobFunctionResource. </returns>
         public virtual StreamingJobFunctionCollection GetStreamingJobFunctions()
         {
-            return GetCachedClient(Client => new StreamingJobFunctionCollection(Client, Id));
+            return GetCachedClient(client => new StreamingJobFunctionCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </summary>
         /// <param name="functionName"> The name of the function. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StreamingJobFunctionResource>> GetStreamingJobFunctionAsync(string functionName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </summary>
         /// <param name="functionName"> The name of the function. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StreamingJobFunctionResource> GetStreamingJobFunction(string functionName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +149,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An object representing collection of StreamingJobInputResources and their operations over a StreamingJobInputResource. </returns>
         public virtual StreamingJobInputCollection GetStreamingJobInputs()
         {
-            return GetCachedClient(Client => new StreamingJobInputCollection(Client, Id));
+            return GetCachedClient(client => new StreamingJobInputCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +167,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </summary>
         /// <param name="inputName"> The name of the input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inputName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StreamingJobInputResource>> GetStreamingJobInputAsync(string inputName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +190,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </summary>
         /// <param name="inputName"> The name of the input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inputName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inputName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StreamingJobInputResource> GetStreamingJobInput(string inputName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +202,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An object representing collection of StreamingJobOutputResources and their operations over a StreamingJobOutputResource. </returns>
         public virtual StreamingJobOutputCollection GetStreamingJobOutputs()
         {
-            return GetCachedClient(Client => new StreamingJobOutputCollection(Client, Id));
+            return GetCachedClient(client => new StreamingJobOutputCollection(client, Id));
         }
 
         /// <summary>
@@ -217,8 +220,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </summary>
         /// <param name="outputName"> The name of the output. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outputName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outputName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outputName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StreamingJobOutputResource>> GetStreamingJobOutputAsync(string outputName, CancellationToken cancellationToken = default)
         {
@@ -240,8 +243,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </summary>
         /// <param name="outputName"> The name of the output. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outputName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outputName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outputName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StreamingJobOutputResource> GetStreamingJobOutput(string outputName, CancellationToken cancellationToken = default)
         {
@@ -252,7 +255,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An object representing collection of StreamingJobTransformationResources and their operations over a StreamingJobTransformationResource. </returns>
         public virtual StreamingJobTransformationCollection GetStreamingJobTransformations()
         {
-            return GetCachedClient(Client => new StreamingJobTransformationCollection(Client, Id));
+            return GetCachedClient(client => new StreamingJobTransformationCollection(client, Id));
         }
 
         /// <summary>
@@ -270,8 +273,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </summary>
         /// <param name="transformationName"> The name of the transformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="transformationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="transformationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transformationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StreamingJobTransformationResource>> GetStreamingJobTransformationAsync(string transformationName, CancellationToken cancellationToken = default)
         {
@@ -293,8 +296,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </summary>
         /// <param name="transformationName"> The name of the transformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="transformationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="transformationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transformationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StreamingJobTransformationResource> GetStreamingJobTransformation(string transformationName, CancellationToken cancellationToken = default)
         {

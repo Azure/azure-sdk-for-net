@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The UnknownSerialization. </summary>
     internal partial class UnknownSerialization : StreamAnalyticsDataSerialization
     {
-        /// <summary> Initializes a new instance of UnknownSerialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSerialization"/>. </summary>
         /// <param name="eventSerializationType"> Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests. </param>
         internal UnknownSerialization(EventSerializationType eventSerializationType) : base(eventSerializationType)
         {

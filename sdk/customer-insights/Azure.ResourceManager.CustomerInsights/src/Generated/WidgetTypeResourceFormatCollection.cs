@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WidgetTypeResourceFormatResource" /> and their operations.
-    /// Each <see cref="WidgetTypeResourceFormatResource" /> in the collection will belong to the same instance of <see cref="HubResource" />.
-    /// To get a <see cref="WidgetTypeResourceFormatCollection" /> instance call the GetWidgetTypeResourceFormats method from an instance of <see cref="HubResource" />.
+    /// A class representing a collection of <see cref="WidgetTypeResourceFormatResource"/> and their operations.
+    /// Each <see cref="WidgetTypeResourceFormatResource"/> in the collection will belong to the same instance of <see cref="HubResource"/>.
+    /// To get a <see cref="WidgetTypeResourceFormatCollection"/> instance call the GetWidgetTypeResourceFormats method from an instance of <see cref="HubResource"/>.
     /// </summary>
     public partial class WidgetTypeResourceFormatCollection : ArmCollection, IEnumerable<WidgetTypeResourceFormatResource>, IAsyncEnumerable<WidgetTypeResourceFormatResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WidgetTypeResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WidgetTypeResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WidgetTypeResourceFormatResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _widgetTypeResourceFormatWidgetTypesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WidgetTypeResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WidgetTypeResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WidgetTypeResourceFormatResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _widgetTypeResourceFormatWidgetTypesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -233,6 +233,80 @@ namespace Azure.ResourceManager.CustomerInsights
             {
                 var response = _widgetTypeResourceFormatWidgetTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, widgetTypeName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/widgetTypes/{widgetTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WidgetTypes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="widgetTypeName"> The name of the widget type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="widgetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="widgetTypeName"/> is null. </exception>
+        public virtual async Task<NullableResponse<WidgetTypeResourceFormatResource>> GetIfExistsAsync(string widgetTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(widgetTypeName, nameof(widgetTypeName));
+
+            using var scope = _widgetTypeResourceFormatWidgetTypesClientDiagnostics.CreateScope("WidgetTypeResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _widgetTypeResourceFormatWidgetTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, widgetTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<WidgetTypeResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new WidgetTypeResourceFormatResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/widgetTypes/{widgetTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WidgetTypes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="widgetTypeName"> The name of the widget type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="widgetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="widgetTypeName"/> is null. </exception>
+        public virtual NullableResponse<WidgetTypeResourceFormatResource> GetIfExists(string widgetTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(widgetTypeName, nameof(widgetTypeName));
+
+            using var scope = _widgetTypeResourceFormatWidgetTypesClientDiagnostics.CreateScope("WidgetTypeResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _widgetTypeResourceFormatWidgetTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, widgetTypeName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<WidgetTypeResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new WidgetTypeResourceFormatResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

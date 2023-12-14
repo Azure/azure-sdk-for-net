@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a single certificate reference in a Key Vault, and where the certificate should reside on the VM. </summary>
     public partial class VaultCertificate
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="VaultCertificate"/>. </summary>
         public VaultCertificate()
         {

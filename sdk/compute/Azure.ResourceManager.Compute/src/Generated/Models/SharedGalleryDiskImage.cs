@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> This is the disk image base class. </summary>
     public partial class SharedGalleryDiskImage
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="SharedGalleryDiskImage"/>. </summary>
         internal SharedGalleryDiskImage()
         {

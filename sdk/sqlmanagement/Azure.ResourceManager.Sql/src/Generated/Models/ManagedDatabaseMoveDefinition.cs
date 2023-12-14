@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains the information necessary to perform a managed database move. </summary>
     public partial class ManagedDatabaseMoveDefinition
     {
-        /// <summary> Initializes a new instance of ManagedDatabaseMoveDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseMoveDefinition"/>. </summary>
         /// <param name="destinationManagedDatabaseId"> The destination managed database ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="destinationManagedDatabaseId"/> is null. </exception>
         public ManagedDatabaseMoveDefinition(ResourceIdentifier destinationManagedDatabaseId)

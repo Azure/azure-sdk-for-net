@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The provider consent. </summary>
     internal partial class ProviderConsentDefinition
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ProviderConsentDefinition"/>. </summary>
         public ProviderConsentDefinition()
         {
@@ -23,11 +20,9 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of <see cref="ProviderConsentDefinition"/>. </summary>
         /// <param name="consentToAuthorization"> A value indicating whether authorization is consented or not. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderConsentDefinition(bool? consentToAuthorization, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProviderConsentDefinition(bool? consentToAuthorization)
         {
             ConsentToAuthorization = consentToAuthorization;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A value indicating whether authorization is consented or not. </summary>

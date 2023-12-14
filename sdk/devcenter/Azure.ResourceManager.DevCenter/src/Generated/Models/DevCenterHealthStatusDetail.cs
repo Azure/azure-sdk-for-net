@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Pool health status detail. </summary>
     public partial class DevCenterHealthStatusDetail
     {
-        /// <summary> Initializes a new instance of DevCenterHealthStatusDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterHealthStatusDetail"/>. </summary>
         internal DevCenterHealthStatusDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterHealthStatusDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterHealthStatusDetail"/>. </summary>
         /// <param name="code"> An identifier for the issue. </param>
         /// <param name="message"> A message describing the issue, intended to be suitable for display in a user interface. </param>
         internal DevCenterHealthStatusDetail(string code, string message)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Represents a resource ID. For example, for a subnet, it is the resource URL for the subnet. </summary>
     internal partial class ResourceId
     {
-        /// <summary> Initializes a new instance of ResourceId. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceId"/>. </summary>
         /// <param name="id"> The ID of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public ResourceId(ResourceIdentifier id)

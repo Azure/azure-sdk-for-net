@@ -21,13 +21,17 @@ namespace Azure.ResourceManager.Media
 {
     /// <summary>
     /// A Class representing a StreamingEndpoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StreamingEndpointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStreamingEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MediaServicesAccountResource" /> using the GetStreamingEndpoint method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StreamingEndpointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStreamingEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MediaServicesAccountResource"/> using the GetStreamingEndpoint method.
     /// </summary>
     public partial class StreamingEndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StreamingEndpointResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="streamingEndpointName"> The streamingEndpointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string streamingEndpointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}";
@@ -38,12 +42,15 @@ namespace Azure.ResourceManager.Media
         private readonly StreamingEndpointsRestOperations _streamingEndpointRestClient;
         private readonly StreamingEndpointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaservices/streamingEndpoints";
+
         /// <summary> Initializes a new instance of the <see cref="StreamingEndpointResource"/> class for mocking. </summary>
         protected StreamingEndpointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StreamingEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StreamingEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StreamingEndpointResource(ArmClient client, StreamingEndpointData data) : this(client, data.Id)
@@ -64,9 +71,6 @@ namespace Azure.ResourceManager.Media
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaservices/streamingEndpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -311,7 +315,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StreamingEndpointSkuInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StreamingEndpointSkuInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamingEndpointSkuInfo> GetSupportedSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingEndpointRestClient.CreateSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -332,7 +336,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StreamingEndpointSkuInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StreamingEndpointSkuInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamingEndpointSkuInfo> GetSupportedSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingEndpointRestClient.CreateSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

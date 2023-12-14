@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of data policy manifests. </summary>
     internal partial class DataPolicyManifestListResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DataPolicyManifestListResult"/>. </summary>
         internal DataPolicyManifestListResult()
         {

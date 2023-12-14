@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> ScalingPlanPooledSchedule properties that can be patched. </summary>
     public partial class ScalingPlanPooledSchedulePatch : ResourceData
     {
-        /// <summary> Initializes a new instance of ScalingPlanPooledSchedulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalingPlanPooledSchedulePatch"/>. </summary>
         public ScalingPlanPooledSchedulePatch()
         {
             DaysOfWeek = new ChangeTrackingList<DesktopVirtualizationDayOfWeek>();
         }
 
-        /// <summary> Initializes a new instance of ScalingPlanPooledSchedulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalingPlanPooledSchedulePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

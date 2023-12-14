@@ -114,6 +114,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteObjectValue(MaintenanceWindow);
             }
+            if (Optional.IsDefined(ImportSourceProperties))
+            {
+                writer.WritePropertyName("importSourceProperties"u8);
+                writer.WriteObjectValue(ImportSourceProperties);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -148,7 +153,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             Optional<MySqlFlexibleServerBackupProperties> backup = default;
             Optional<MySqlFlexibleServerHighAvailability> highAvailability = default;
             Optional<MySqlFlexibleServerNetwork> network = default;
+            Optional<IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnection>> privateEndpointConnections = default;
             Optional<MySqlFlexibleServerMaintenanceWindow> maintenanceWindow = default;
+            Optional<ImportSourceProperties> importSourceProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -349,6 +356,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             network = MySqlFlexibleServerNetwork.DeserializeMySqlFlexibleServerNetwork(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("privateEndpointConnections"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<MySqlFlexibleServersPrivateEndpointConnection> array = new List<MySqlFlexibleServersPrivateEndpointConnection>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(MySqlFlexibleServersPrivateEndpointConnection.DeserializeMySqlFlexibleServersPrivateEndpointConnection(item));
+                            }
+                            privateEndpointConnections = array;
+                            continue;
+                        }
                         if (property0.NameEquals("maintenanceWindow"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -358,11 +379,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             maintenanceWindow = MySqlFlexibleServerMaintenanceWindow.DeserializeMySqlFlexibleServerMaintenanceWindow(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("importSourceProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            importSourceProperties = ImportSourceProperties.DeserializeImportSourceProperties(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new MySqlFlexibleServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, administratorLogin.Value, administratorLoginPassword.Value, Optional.ToNullable(version), availabilityZone.Value, Optional.ToNullable(createMode), sourceServerResourceId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(replicationRole), Optional.ToNullable(replicaCapacity), dataEncryption.Value, Optional.ToNullable(state), fullyQualifiedDomainName.Value, storage.Value, backup.Value, highAvailability.Value, network.Value, maintenanceWindow.Value);
+            return new MySqlFlexibleServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, administratorLogin.Value, administratorLoginPassword.Value, Optional.ToNullable(version), availabilityZone.Value, Optional.ToNullable(createMode), sourceServerResourceId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(replicationRole), Optional.ToNullable(replicaCapacity), dataEncryption.Value, Optional.ToNullable(state), fullyQualifiedDomainName.Value, storage.Value, backup.Value, highAvailability.Value, network.Value, Optional.ToList(privateEndpointConnections), maintenanceWindow.Value, importSourceProperties.Value);
         }
     }
 }

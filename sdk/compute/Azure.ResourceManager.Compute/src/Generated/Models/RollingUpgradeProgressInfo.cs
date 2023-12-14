@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Information about the number of virtual machine instances in each upgrade state. </summary>
     public partial class RollingUpgradeProgressInfo
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="RollingUpgradeProgressInfo"/>. </summary>
         internal RollingUpgradeProgressInfo()
         {

@@ -22,8 +22,16 @@ namespace Azure
         /// <param name="value"></param>
         public Variant(object? value)
         {
-            _object = value;
-            _union = default;
+            if (value is Variant variant)
+            {
+                _object = variant._object;
+                _union = variant._union;
+            }
+            else
+            {
+                _object = value;
+                _union = default;
+            }
         }
 
         /// <summary>
@@ -69,7 +77,17 @@ namespace Azure
         }
 
         [DoesNotReturn]
-        private static void ThrowInvalidCast() => throw new InvalidCastException();
+        private static void ThrowInvalidCast(Type? source, Type target)
+        {
+            if (source is null)
+            {
+                throw new InvalidCastException($"Unable to cast null Variant to type '{target}'.");
+            }
+            else
+            {
+                throw new InvalidCastException($"Unable to cast Variant of type '{source}' to type '{target}'.");
+            }
+        }
 
         [DoesNotReturn]
         private static void ThrowArgumentNull(string paramName) => throw new ArgumentNullException(paramName);
@@ -1288,11 +1306,12 @@ namespace Azure
         {
             // Single return has a significant performance benefit.
 
-            bool result = false;
+            bool result;
 
             if (_object is null)
             {
                 value = default!;
+                result = true;
             }
             else if (typeof(T) == typeof(char[]))
             {
@@ -1372,9 +1391,9 @@ namespace Azure
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly T As<T>()
         {
-            if (!TryGetValue<T>(out T value))
+            if (!TryGetValue(out T value))
             {
-                ThrowInvalidCast();
+                ThrowInvalidCast(Type, typeof(T));
             }
 
             return value;

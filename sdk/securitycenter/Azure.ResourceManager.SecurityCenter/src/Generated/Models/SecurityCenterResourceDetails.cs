@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// </summary>
     public abstract partial class SecurityCenterResourceDetails
     {
-        /// <summary> Initializes a new instance of SecurityCenterResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterResourceDetails"/>. </summary>
         protected SecurityCenterResourceDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityCenterResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterResourceDetails"/>. </summary>
         /// <param name="source"> The platform where the assessed resource resides. </param>
         internal SecurityCenterResourceDetails(Source source)
         {

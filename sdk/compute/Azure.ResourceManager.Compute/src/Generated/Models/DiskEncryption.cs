@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Encryption at rest settings for disk or snapshot. </summary>
     public partial class DiskEncryption
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DiskEncryption"/>. </summary>
         public DiskEncryption()
         {

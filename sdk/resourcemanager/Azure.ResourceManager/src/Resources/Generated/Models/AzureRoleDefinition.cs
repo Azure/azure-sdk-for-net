@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Role definition properties. </summary>
     public partial class AzureRoleDefinition
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="AzureRoleDefinition"/>. </summary>
         internal AzureRoleDefinition()
         {

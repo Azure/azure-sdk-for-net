@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> Management group creation parameters. </summary>
     public partial class ManagementGroupCreateOrUpdateContent
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ManagementGroupCreateOrUpdateContent"/>. </summary>
         public ManagementGroupCreateOrUpdateContent()
         {
@@ -31,8 +28,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         /// <param name="displayName"> The friendly name of the management group. If no value is passed then this  field will be set to the groupId. </param>
         /// <param name="details"> The details of a management group used during creation. </param>
         /// <param name="children"> The list of children. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagementGroupCreateOrUpdateContent(string id, ResourceType? resourceType, string name, Guid? tenantId, string displayName, CreateManagementGroupDetails details, IReadOnlyList<ManagementGroupChildOptions> children, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagementGroupCreateOrUpdateContent(string id, ResourceType? resourceType, string name, Guid? tenantId, string displayName, CreateManagementGroupDetails details, IReadOnlyList<ManagementGroupChildOptions> children)
         {
             Id = id;
             ResourceType = resourceType;
@@ -41,7 +37,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             DisplayName = displayName;
             Details = details;
             Children = children;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The fully qualified ID for the management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>

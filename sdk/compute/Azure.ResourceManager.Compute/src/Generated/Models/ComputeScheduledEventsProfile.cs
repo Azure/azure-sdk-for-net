@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The ComputeScheduledEventsProfile. </summary>
     public partial class ComputeScheduledEventsProfile
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ComputeScheduledEventsProfile"/>. </summary>
         public ComputeScheduledEventsProfile()
         {

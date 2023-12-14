@@ -101,34 +101,36 @@ if ($allPackageProperties)
     }
     foreach($pkg in $allPackageProperties)
     {
-        Write-Host "Package Name: $($pkg.Name)"
-        Write-Host "Package Version: $($pkg.Version)"
-        Write-Host "Package SDK Type: $($pkg.SdkType)"
-        Write-Host "Artifact Name: $($pkg.ArtifactName)"
-        Write-Host "Release date: $($pkg.ReleaseStatus)"
-        $configFilePrefix = $pkg.Name
-        if ($pkg.ArtifactName)
-        {
-          $configFilePrefix = $pkg.ArtifactName
-        }
-        $outputPath = Join-Path -Path $outDirectory "$configFilePrefix.json"
-        Write-Host "Output path of json file: $outputPath"
-        $outDir = Split-Path $outputPath -parent
-        if (-not (Test-Path -path $outDir))
-        {
-          Write-Host "Creating directory $($outDir) for json property file"
-          New-Item -ItemType Directory -Path $outDir
-        }
+        if ($pkg.Name) {
+          Write-Host "Package Name: $($pkg.Name)"
+          Write-Host "Package Version: $($pkg.Version)"
+          Write-Host "Package SDK Type: $($pkg.SdkType)"
+          Write-Host "Artifact Name: $($pkg.ArtifactName)"
+          Write-Host "Release date: $($pkg.ReleaseStatus)"
+          $configFilePrefix = $pkg.Name
+          if ($pkg.ArtifactName)
+          {
+            $configFilePrefix = $pkg.ArtifactName
+          }
+          $outputPath = Join-Path -Path $outDirectory "$configFilePrefix.json"
+          Write-Host "Output path of json file: $outputPath"
+          $outDir = Split-Path $outputPath -parent
+          if (-not (Test-Path -path $outDir))
+          {
+            Write-Host "Creating directory $($outDir) for json property file"
+            New-Item -ItemType Directory -Path $outDir
+          }
 
-        # If package properties for a track 2 (IsNewSdk = true) package has
-        # already been written, skip writing to that same path.
-        if ($exportedPaths.ContainsKey($outputPath) -and $exportedPaths[$outputPath].IsNewSdk -eq $true) {
-          Write-Host "Track 2 package info with file name $($outputPath) already exported. Skipping export."
-          continue
-        }
-        $exportedPaths[$outputPath] = $pkg
+          # If package properties for a track 2 (IsNewSdk = true) package has
+          # already been written, skip writing to that same path.
+          if ($exportedPaths.ContainsKey($outputPath) -and $exportedPaths[$outputPath].IsNewSdk -eq $true) {
+            Write-Host "Track 2 package info with file name $($outputPath) already exported. Skipping export."
+            continue
+          }
+          $exportedPaths[$outputPath] = $pkg
 
-        SetOutput $outputPath $pkg
+          SetOutput $outputPath $pkg
+        }
     }
 
     Get-ChildItem -Path $outDirectory

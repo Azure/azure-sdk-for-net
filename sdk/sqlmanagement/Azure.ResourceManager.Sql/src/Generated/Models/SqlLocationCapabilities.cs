@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The location capability. </summary>
     public partial class SqlLocationCapabilities
     {
-        /// <summary> Initializes a new instance of SqlLocationCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlLocationCapabilities"/>. </summary>
         internal SqlLocationCapabilities()
         {
             SupportedServerVersions = new ChangeTrackingList<SqlServerVersionCapability>();
             SupportedManagedInstanceVersions = new ChangeTrackingList<ManagedInstanceVersionCapability>();
         }
 
-        /// <summary> Initializes a new instance of SqlLocationCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlLocationCapabilities"/>. </summary>
         /// <param name="name"> The location name. </param>
         /// <param name="supportedServerVersions"> The list of supported server versions. </param>
         /// <param name="supportedManagedInstanceVersions"> The list of supported managed instance versions. </param>

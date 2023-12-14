@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppPlatformGatewayRouteConfigResource" /> and their operations.
-    /// Each <see cref="AppPlatformGatewayRouteConfigResource" /> in the collection will belong to the same instance of <see cref="AppPlatformGatewayResource" />.
-    /// To get an <see cref="AppPlatformGatewayRouteConfigCollection" /> instance call the GetAppPlatformGatewayRouteConfigs method from an instance of <see cref="AppPlatformGatewayResource" />.
+    /// A class representing a collection of <see cref="AppPlatformGatewayRouteConfigResource"/> and their operations.
+    /// Each <see cref="AppPlatformGatewayRouteConfigResource"/> in the collection will belong to the same instance of <see cref="AppPlatformGatewayResource"/>.
+    /// To get an <see cref="AppPlatformGatewayRouteConfigCollection"/> instance call the GetAppPlatformGatewayRouteConfigs method from an instance of <see cref="AppPlatformGatewayResource"/>.
     /// </summary>
     public partial class AppPlatformGatewayRouteConfigCollection : ArmCollection, IEnumerable<AppPlatformGatewayRouteConfigResource>, IAsyncEnumerable<AppPlatformGatewayRouteConfigResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppPlatformGatewayRouteConfigResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppPlatformGatewayRouteConfigResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformGatewayRouteConfigResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformGatewayRouteConfigGatewayRouteConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppPlatformGatewayRouteConfigResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppPlatformGatewayRouteConfigResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformGatewayRouteConfigResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformGatewayRouteConfigGatewayRouteConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 var response = _appPlatformGatewayRouteConfigGatewayRouteConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeConfigName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/gateways/{gatewayName}/routeConfigs/{routeConfigName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GatewayRouteConfigs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="routeConfigName"> The name of the Spring Cloud Gateway route config. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeConfigName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeConfigName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AppPlatformGatewayRouteConfigResource>> GetIfExistsAsync(string routeConfigName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(routeConfigName, nameof(routeConfigName));
+
+            using var scope = _appPlatformGatewayRouteConfigGatewayRouteConfigsClientDiagnostics.CreateScope("AppPlatformGatewayRouteConfigCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _appPlatformGatewayRouteConfigGatewayRouteConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeConfigName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformGatewayRouteConfigResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformGatewayRouteConfigResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/gateways/{gatewayName}/routeConfigs/{routeConfigName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GatewayRouteConfigs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="routeConfigName"> The name of the Spring Cloud Gateway route config. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routeConfigName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeConfigName"/> is null. </exception>
+        public virtual NullableResponse<AppPlatformGatewayRouteConfigResource> GetIfExists(string routeConfigName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(routeConfigName, nameof(routeConfigName));
+
+            using var scope = _appPlatformGatewayRouteConfigGatewayRouteConfigsClientDiagnostics.CreateScope("AppPlatformGatewayRouteConfigCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _appPlatformGatewayRouteConfigGatewayRouteConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, routeConfigName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformGatewayRouteConfigResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformGatewayRouteConfigResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

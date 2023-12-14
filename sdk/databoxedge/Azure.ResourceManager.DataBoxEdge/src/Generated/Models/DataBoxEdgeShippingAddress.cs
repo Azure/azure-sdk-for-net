@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The shipping address of the customer. </summary>
     public partial class DataBoxEdgeShippingAddress
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeShippingAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeShippingAddress"/>. </summary>
         /// <param name="country"> The country name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="country"/> is null. </exception>
         public DataBoxEdgeShippingAddress(string country)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Country = country;
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeShippingAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeShippingAddress"/>. </summary>
         /// <param name="addressLine1"> The address line1. </param>
         /// <param name="addressLine2"> The address line2. </param>
         /// <param name="addressLine3"> The address line3. </param>

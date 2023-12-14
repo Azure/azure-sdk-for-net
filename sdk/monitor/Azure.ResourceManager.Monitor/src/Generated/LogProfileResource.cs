@@ -21,13 +21,15 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A Class representing a LogProfile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LogProfileResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLogProfileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetLogProfile method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogProfileResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLogProfileResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetLogProfile method.
     /// </summary>
     public partial class LogProfileResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LogProfileResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="logProfileName"> The logProfileName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string logProfileName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}";
@@ -38,12 +40,15 @@ namespace Azure.ResourceManager.Monitor
         private readonly LogProfilesRestOperations _logProfileRestClient;
         private readonly LogProfileData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/logprofiles";
+
         /// <summary> Initializes a new instance of the <see cref="LogProfileResource"/> class for mocking. </summary>
         protected LogProfileResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LogProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LogProfileResource(ArmClient client, LogProfileData data) : this(client, data.Id)
@@ -64,9 +69,6 @@ namespace Azure.ResourceManager.Monitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/logprofiles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

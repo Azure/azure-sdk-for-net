@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Request parameter to copy an existing custom model from the source resource to a target resource referenced by the resource ID. </summary>
     internal partial class CopyRequest
     {
-        /// <summary> Initializes a new instance of CopyRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyRequest"/>. </summary>
         /// <param name="targetResourceId"> Azure Resource Id of the target Form Recognizer resource where the model is copied to. </param>
         /// <param name="targetResourceRegion"> Location of the target Azure resource. A valid Azure region name supported by Cognitive Services. </param>
         /// <param name="copyAuthorization"> Entity that encodes claims to authorize the copy request. </param>

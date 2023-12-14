@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Used for updating a disk access resource. </summary>
     public partial class DiskAccessPatch
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DiskAccessPatch"/>. </summary>
         public DiskAccessPatch()
         {
@@ -25,11 +22,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="DiskAccessPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskAccessPatch(IDictionary<string, string> tags, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiskAccessPatch(IDictionary<string, string> tags)
         {
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>

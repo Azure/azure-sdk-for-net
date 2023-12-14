@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list runbook operation. </summary>
     internal partial class AutomationRunbookListResult
     {
-        /// <summary> Initializes a new instance of AutomationRunbookListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRunbookListResult"/>. </summary>
         internal AutomationRunbookListResult()
         {
             Value = new ChangeTrackingList<AutomationRunbookData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationRunbookListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRunbookListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of runbooks. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
         internal AutomationRunbookListResult(IReadOnlyList<AutomationRunbookData> value, string nextLink)

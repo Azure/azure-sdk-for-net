@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List VmImages in EdgeZone operation response. </summary>
     internal partial class VmImagesInEdgeZoneListResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="VmImagesInEdgeZoneListResult"/>. </summary>
         internal VmImagesInEdgeZoneListResult()
         {

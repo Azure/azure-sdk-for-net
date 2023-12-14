@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Defines a managed rule to use for exclusion. </summary>
     public partial class ExclusionManagedRule
     {
-        /// <summary> Initializes a new instance of ExclusionManagedRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExclusionManagedRule"/>. </summary>
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public ExclusionManagedRule(string ruleId)

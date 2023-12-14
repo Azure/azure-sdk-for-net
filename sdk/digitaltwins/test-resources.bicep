@@ -34,7 +34,7 @@ resource digitaltwinRoleAssignment 'Microsoft.Authorization/roleAssignments@2020
     scope: digitaltwin
 }
 
-resource eventHubNamespace 'Microsoft.EventHub/namespaces@2018-01-01-preview' = {
+resource eventHubNamespace 'Microsoft.EventHub/namespaces@2022-01-01-preview' = {
     name: baseName
     location: location
     sku: {
@@ -47,6 +47,7 @@ resource eventHubNamespace 'Microsoft.EventHub/namespaces@2018-01-01-preview' = 
         isAutoInflateEnabled: false
         maximumThroughputUnits: 0
         kafkaEnabled: false
+        minimumTlsVersion: 'TLS1_2'
     }
 }
 
@@ -69,7 +70,7 @@ resource eventHubNamespaceAuthRules 'Microsoft.EventHub/namespaces/Authorization
         ]
     }
 }
- 
+
 resource eventHubNamespaceEventHubAuthRules 'Microsoft.EventHub/namespaces/eventhubs/authorizationRules@2017-04-01' = {
     name: '${eventHubNamespaceEventHub.name}/owner'
     properties: {
@@ -103,6 +104,9 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
         name: 'Standard_LRS'
     }
     kind: 'StorageV2'
+    properties: {
+        minimumTlsVersion: 'TLS1_2'
+    }
 
     resource blobService 'blobServices' = {
         name: 'default'

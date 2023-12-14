@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies the user intent of the proximity placement group. </summary>
     internal partial class ProximityPlacementGroupPropertiesIntent
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ProximityPlacementGroupPropertiesIntent"/>. </summary>
         public ProximityPlacementGroupPropertiesIntent()
         {

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes the client certificate details using common name. </summary>
     public partial class ClusterClientCertificateCommonName
     {
-        /// <summary> Initializes a new instance of ClusterClientCertificateCommonName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterClientCertificateCommonName"/>. </summary>
         /// <param name="isAdmin"> Indicates if the client certificate has admin access to the cluster. Non admin clients can perform only read only operations on the cluster. </param>
         /// <param name="certificateCommonName"> The common name of the client certificate. </param>
         /// <param name="certificateIssuerThumbprint"> The issuer thumbprint of the client certificate. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

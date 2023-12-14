@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Tagging criteria. </summary>
     public partial class DataProtectionBackupTaggingCriteria
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupTaggingCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupTaggingCriteria"/>. </summary>
         /// <param name="isDefault"> Specifies if tag is default. </param>
         /// <param name="taggingPriority"> Retention Tag priority. </param>
         /// <param name="tagInfo"> Retention tag information. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             TagInfo = tagInfo;
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupTaggingCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupTaggingCriteria"/>. </summary>
         /// <param name="criteria">
         /// Criteria which decides whether the tag can be applied to a triggered backup.
         /// Please note <see cref="DataProtectionBackupCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

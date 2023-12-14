@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
     public partial class VirtualMachineStorageProfile
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="VirtualMachineStorageProfile"/>. </summary>
         public VirtualMachineStorageProfile()
         {

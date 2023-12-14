@@ -11,13 +11,15 @@ namespace Azure.ResourceManager.DataShare
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.DataShareAccountResource> GetAll(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.DataShareAccountResource> GetAllAsync(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.DataShareAccountResource>> GetAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.DataShare.DataShareAccountResource> GetIfExists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DataShare.DataShareAccountResource>> GetIfExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataShare.DataShareAccountResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataShare.DataShareAccountResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.DataShareAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.DataShareAccountResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class DataShareAccountData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DataShareAccountData(Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity) : base (default(Azure.Core.AzureLocation)) { }
+        public DataShareAccountData(Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.DataShare.Models.DataShareProvisioningState? ProvisioningState { get { throw null; } }
@@ -61,6 +63,8 @@ namespace Azure.ResourceManager.DataShare
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.DataShareResource> GetAll(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.DataShareResource> GetAllAsync(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.DataShareResource>> GetAsync(string shareName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.DataShare.DataShareResource> GetIfExists(string shareName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DataShare.DataShareResource>> GetIfExistsAsync(string shareName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataShare.DataShareResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataShare.DataShareResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.DataShareResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.DataShareResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -74,6 +78,8 @@ namespace Azure.ResourceManager.DataShare
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource> GetAll(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource> GetAllAsync(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource>> GetAsync(Azure.Core.AzureLocation location, System.Guid invitationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource> GetIfExists(Azure.Core.AzureLocation location, System.Guid invitationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource>> GetIfExistsAsync(Azure.Core.AzureLocation location, System.Guid invitationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -156,6 +162,8 @@ namespace Azure.ResourceManager.DataShare
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.DataShareInvitationResource> GetAll(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.DataShareInvitationResource> GetAllAsync(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.DataShareInvitationResource>> GetAsync(string invitationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.DataShare.DataShareInvitationResource> GetIfExists(string invitationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DataShare.DataShareInvitationResource>> GetIfExistsAsync(string invitationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataShare.DataShareInvitationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataShare.DataShareInvitationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.DataShareInvitationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.DataShareInvitationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -229,6 +237,8 @@ namespace Azure.ResourceManager.DataShare
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingResource> GetAll(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingResource> GetAllAsync(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingResource>> GetAsync(string synchronizationSettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingResource> GetIfExists(string synchronizationSettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingResource>> GetIfExistsAsync(string synchronizationSettingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -262,6 +272,8 @@ namespace Azure.ResourceManager.DataShare
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.DataShareTriggerResource> GetAll(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.DataShareTriggerResource> GetAllAsync(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.DataShareTriggerResource>> GetAsync(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.DataShare.DataShareTriggerResource> GetIfExists(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DataShare.DataShareTriggerResource>> GetIfExistsAsync(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataShare.DataShareTriggerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataShare.DataShareTriggerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.DataShareTriggerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.DataShareTriggerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -293,6 +305,8 @@ namespace Azure.ResourceManager.DataShare
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.ProviderShareSubscriptionResource> GetAll(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.ProviderShareSubscriptionResource> GetAllAsync(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.ProviderShareSubscriptionResource>> GetAsync(string providerShareSubscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.DataShare.ProviderShareSubscriptionResource> GetIfExists(string providerShareSubscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DataShare.ProviderShareSubscriptionResource>> GetIfExistsAsync(string providerShareSubscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataShare.ProviderShareSubscriptionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataShare.ProviderShareSubscriptionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.ProviderShareSubscriptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.ProviderShareSubscriptionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -338,6 +352,8 @@ namespace Azure.ResourceManager.DataShare
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.ShareDataSetResource> GetAll(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.ShareDataSetResource> GetAllAsync(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.ShareDataSetResource>> GetAsync(string dataSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.DataShare.ShareDataSetResource> GetIfExists(string dataSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DataShare.ShareDataSetResource>> GetIfExistsAsync(string dataSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataShare.ShareDataSetResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataShare.ShareDataSetResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.ShareDataSetResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.ShareDataSetResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -357,6 +373,8 @@ namespace Azure.ResourceManager.DataShare
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.ShareDataSetMappingResource> GetAll(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.ShareDataSetMappingResource> GetAllAsync(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.ShareDataSetMappingResource>> GetAsync(string dataSetMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.DataShare.ShareDataSetMappingResource> GetIfExists(string dataSetMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DataShare.ShareDataSetMappingResource>> GetIfExistsAsync(string dataSetMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataShare.ShareDataSetMappingResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataShare.ShareDataSetMappingResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.ShareDataSetMappingResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.ShareDataSetMappingResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -404,6 +422,8 @@ namespace Azure.ResourceManager.DataShare
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.ShareSubscriptionResource> GetAll(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.ShareSubscriptionResource> GetAllAsync(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.ShareSubscriptionResource>> GetAsync(string shareSubscriptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.DataShare.ShareSubscriptionResource> GetIfExists(string shareSubscriptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DataShare.ShareSubscriptionResource>> GetIfExistsAsync(string shareSubscriptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataShare.ShareSubscriptionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataShare.ShareSubscriptionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.ShareSubscriptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.ShareSubscriptionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -458,6 +478,49 @@ namespace Azure.ResourceManager.DataShare
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization>> SynchronizeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.Models.DataShareSynchronizeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.ShareSubscriptionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.ShareSubscriptionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.ShareSubscriptionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.ShareSubscriptionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.DataShare.Mocking
+{
+    public partial class MockableDataShareArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDataShareArmClient() { }
+        public virtual Azure.ResourceManager.DataShare.DataShareAccountResource GetDataShareAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource GetDataShareConsumerInvitationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DataShare.DataShareInvitationResource GetDataShareInvitationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DataShare.DataShareResource GetDataShareResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DataShare.DataShareSynchronizationSettingResource GetDataShareSynchronizationSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DataShare.DataShareTriggerResource GetDataShareTriggerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DataShare.ProviderShareSubscriptionResource GetProviderShareSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DataShare.ShareDataSetMappingResource GetShareDataSetMappingResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DataShare.ShareDataSetResource GetShareDataSetResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DataShare.ShareSubscriptionResource GetShareSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableDataShareResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDataShareResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.DataShare.DataShareAccountResource> GetDataShareAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.DataShareAccountResource>> GetDataShareAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DataShare.DataShareAccountCollection GetDataShareAccounts() { throw null; }
+    }
+    public partial class MockableDataShareSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDataShareSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataShare.DataShareAccountResource> GetDataShareAccounts(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.DataShareAccountResource> GetDataShareAccountsAsync(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableDataShareTenantResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDataShareTenantResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration> ActivateEmail(Azure.Core.AzureLocation location, Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration emailRegistration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration>> ActivateEmailAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration emailRegistration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource> GetDataShareConsumerInvitation(Azure.Core.AzureLocation location, System.Guid invitationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource>> GetDataShareConsumerInvitationAsync(Azure.Core.AzureLocation location, System.Guid invitationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DataShare.DataShareConsumerInvitationCollection GetDataShareConsumerInvitations() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration> RegisterEmail(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration>> RegisterEmailAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource> RejectConsumerInvitation(Azure.Core.AzureLocation location, Azure.ResourceManager.DataShare.DataShareConsumerInvitationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource>> RejectConsumerInvitationAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.DataShare.DataShareConsumerInvitationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.DataShare.Models

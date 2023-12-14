@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Models
     [PropertyReferenceType]
     public partial class EncryptionProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="EncryptionProperties"/>. </summary>
         [InitializationConstructor]
         public EncryptionProperties()

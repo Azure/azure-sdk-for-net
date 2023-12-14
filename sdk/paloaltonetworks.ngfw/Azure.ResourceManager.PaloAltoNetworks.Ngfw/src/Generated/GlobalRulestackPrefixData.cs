@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// </summary>
     public partial class GlobalRulestackPrefixData : ResourceData
     {
-        /// <summary> Initializes a new instance of GlobalRulestackPrefixData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackPrefixData"/>. </summary>
         /// <param name="prefixList"> prefix list. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prefixList"/> is null. </exception>
         public GlobalRulestackPrefixData(IEnumerable<string> prefixList)
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             PrefixList = prefixList.ToList();
         }
 
-        /// <summary> Initializes a new instance of GlobalRulestackPrefixData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackPrefixData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

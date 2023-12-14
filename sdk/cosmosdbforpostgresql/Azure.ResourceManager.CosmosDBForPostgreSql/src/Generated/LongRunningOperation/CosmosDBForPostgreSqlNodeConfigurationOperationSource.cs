@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         CosmosDBForPostgreSqlNodeConfigurationResource IOperationSource<CosmosDBForPostgreSqlNodeConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ServerConfigurationData.DeserializeServerConfigurationData(document.RootElement);
+            var data = CosmosDBForPostgreSqlServerConfigurationData.DeserializeCosmosDBForPostgreSqlServerConfigurationData(document.RootElement);
             return new CosmosDBForPostgreSqlNodeConfigurationResource(_client, data);
         }
 
         async ValueTask<CosmosDBForPostgreSqlNodeConfigurationResource> IOperationSource<CosmosDBForPostgreSqlNodeConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ServerConfigurationData.DeserializeServerConfigurationData(document.RootElement);
+            var data = CosmosDBForPostgreSqlServerConfigurationData.DeserializeCosmosDBForPostgreSqlServerConfigurationData(document.RootElement);
             return new CosmosDBForPostgreSqlNodeConfigurationResource(_client, data);
         }
     }

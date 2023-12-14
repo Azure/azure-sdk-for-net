@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Database specific information for MySQL to Azure Database for MySQL migration task inputs. </summary>
     public partial class MigrateMySqlAzureDBForMySqlSyncDatabaseInput
     {
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncDatabaseInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlSyncDatabaseInput"/>. </summary>
         public MigrateMySqlAzureDBForMySqlSyncDatabaseInput()
         {
             MigrationSetting = new ChangeTrackingDictionary<string, string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             TableMap = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncDatabaseInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlSyncDatabaseInput"/>. </summary>
         /// <param name="name"> Name of the database. </param>
         /// <param name="targetDatabaseName"> Name of target database. Note: Target database will be truncated before starting migration. </param>
         /// <param name="migrationSetting"> Migration settings which tune the migration behavior. </param>

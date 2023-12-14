@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Product Family. </summary>
     public partial class ProductFamily
     {
-        /// <summary> Initializes a new instance of ProductFamily. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductFamily"/>. </summary>
         internal ProductFamily()
         {
             ImageInformation = new ChangeTrackingList<EdgeOrderProductImageInformation>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             ResourceProviderDetails = new ChangeTrackingList<ResourceProviderDetails>();
         }
 
-        /// <summary> Initializes a new instance of ProductFamily. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductFamily"/>. </summary>
         /// <param name="displayName"> Display Name for the product system. </param>
         /// <param name="description"> Description related to the product system. </param>
         /// <param name="imageInformation"> Image information for the product system. </param>

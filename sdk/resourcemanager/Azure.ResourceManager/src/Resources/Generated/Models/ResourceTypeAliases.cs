@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The resource type aliases definition. </summary>
     public partial class ResourceTypeAliases
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ResourceTypeAliases"/>. </summary>
         internal ResourceTypeAliases()
         {

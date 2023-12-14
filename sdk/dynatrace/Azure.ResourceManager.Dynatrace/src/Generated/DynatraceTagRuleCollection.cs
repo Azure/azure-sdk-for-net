@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Dynatrace
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DynatraceTagRuleResource" /> and their operations.
-    /// Each <see cref="DynatraceTagRuleResource" /> in the collection will belong to the same instance of <see cref="DynatraceMonitorResource" />.
-    /// To get a <see cref="DynatraceTagRuleCollection" /> instance call the GetDynatraceTagRules method from an instance of <see cref="DynatraceMonitorResource" />.
+    /// A class representing a collection of <see cref="DynatraceTagRuleResource"/> and their operations.
+    /// Each <see cref="DynatraceTagRuleResource"/> in the collection will belong to the same instance of <see cref="DynatraceMonitorResource"/>.
+    /// To get a <see cref="DynatraceTagRuleCollection"/> instance call the GetDynatraceTagRules method from an instance of <see cref="DynatraceMonitorResource"/>.
     /// </summary>
     public partial class DynatraceTagRuleCollection : ArmCollection, IEnumerable<DynatraceTagRuleResource>, IAsyncEnumerable<DynatraceTagRuleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DynatraceTagRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DynatraceTagRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DynatraceTagRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DynatraceTagRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DynatraceTagRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DynatraceTagRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 var response = _dynatraceTagRuleTagRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/tagRules/{ruleSetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TagRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ruleSetName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DynatraceTagRuleResource>> GetIfExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
+
+            using var scope = _dynatraceTagRuleTagRulesClientDiagnostics.CreateScope("DynatraceTagRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dynatraceTagRuleTagRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DynatraceTagRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new DynatraceTagRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/tagRules/{ruleSetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TagRules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ruleSetName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        public virtual NullableResponse<DynatraceTagRuleResource> GetIfExists(string ruleSetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
+
+            using var scope = _dynatraceTagRuleTagRulesClientDiagnostics.CreateScope("DynatraceTagRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dynatraceTagRuleTagRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DynatraceTagRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new DynatraceTagRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

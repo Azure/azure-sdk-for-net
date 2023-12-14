@@ -12,6 +12,9 @@ namespace: Azure.ResourceManager.Quota
 require: https://github.com/Azure/azure-rest-api-specs/blob/57e0f495d521002e883f5357db0dfdfdaaff0208/specification/quota/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false

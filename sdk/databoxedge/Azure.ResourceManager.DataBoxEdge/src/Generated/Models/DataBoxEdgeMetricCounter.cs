@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The metric counter. </summary>
     public partial class DataBoxEdgeMetricCounter
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeMetricCounter. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeMetricCounter"/>. </summary>
         /// <param name="name"> The counter name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DataBoxEdgeMetricCounter(string name)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             AdditionalDimensions = new ChangeTrackingList<DataBoxEdgeMetricDimension>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeMetricCounter. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeMetricCounter"/>. </summary>
         /// <param name="name"> The counter name. </param>
         /// <param name="instance"> The instance from which counter should be collected. </param>
         /// <param name="dimensionFilter"> The dimension filter. </param>

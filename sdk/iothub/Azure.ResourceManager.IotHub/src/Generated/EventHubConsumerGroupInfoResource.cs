@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.IotHub
 {
     /// <summary>
     /// A Class representing an EventHubConsumerGroupInfo along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventHubConsumerGroupInfoResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventHubConsumerGroupInfoResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IotHubDescriptionResource" /> using the GetEventHubConsumerGroupInfo method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventHubConsumerGroupInfoResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventHubConsumerGroupInfoResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IotHubDescriptionResource"/> using the GetEventHubConsumerGroupInfo method.
     /// </summary>
     public partial class EventHubConsumerGroupInfoResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EventHubConsumerGroupInfoResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="eventHubEndpointName"> The eventHubEndpointName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}";
@@ -36,12 +41,15 @@ namespace Azure.ResourceManager.IotHub
         private readonly IotHubResourceRestOperations _eventHubConsumerGroupInfoIotHubResourceRestClient;
         private readonly EventHubConsumerGroupInfoData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGroups";
+
         /// <summary> Initializes a new instance of the <see cref="EventHubConsumerGroupInfoResource"/> class for mocking. </summary>
         protected EventHubConsumerGroupInfoResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventHubConsumerGroupInfoResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventHubConsumerGroupInfoResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventHubConsumerGroupInfoResource(ArmClient client, EventHubConsumerGroupInfoData data) : this(client, data.Id)
@@ -62,9 +70,6 @@ namespace Azure.ResourceManager.IotHub
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

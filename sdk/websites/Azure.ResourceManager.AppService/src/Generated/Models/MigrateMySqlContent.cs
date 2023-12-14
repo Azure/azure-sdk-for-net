@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> MySQL migration request. </summary>
     public partial class MigrateMySqlContent : ResourceData
     {
-        /// <summary> Initializes a new instance of MigrateMySqlContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlContent"/>. </summary>
         public MigrateMySqlContent()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

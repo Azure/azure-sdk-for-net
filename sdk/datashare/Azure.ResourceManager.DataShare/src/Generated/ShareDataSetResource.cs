@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
     /// A Class representing a ShareDataSet along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ShareDataSetResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetShareDataSetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataShareResource" /> using the GetShareDataSet method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ShareDataSetResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetShareDataSetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataShareResource"/> using the GetShareDataSet method.
     /// </summary>
     public partial class ShareDataSetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ShareDataSetResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="shareName"> The shareName. </param>
+        /// <param name="dataSetName"> The dataSetName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string shareName, string dataSetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/dataSets/{dataSetName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.DataShare
         private readonly DataSetsRestOperations _shareDataSetDataSetsRestClient;
         private readonly ShareDataSetData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shares/dataSets";
+
         /// <summary> Initializes a new instance of the <see cref="ShareDataSetResource"/> class for mocking. </summary>
         protected ShareDataSetResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ShareDataSetResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ShareDataSetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ShareDataSetResource(ArmClient client, ShareDataSetData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.DataShare
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shares/dataSets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

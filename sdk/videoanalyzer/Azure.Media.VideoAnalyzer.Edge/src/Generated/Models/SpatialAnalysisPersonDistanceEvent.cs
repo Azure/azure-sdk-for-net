@@ -10,12 +10,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Defines a Spatial Analysis person distance operation eventing configuration. </summary>
     public partial class SpatialAnalysisPersonDistanceEvent : SpatialAnalysisOperationEventBase
     {
-        /// <summary> Initializes a new instance of SpatialAnalysisPersonDistanceEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonDistanceEvent"/>. </summary>
         public SpatialAnalysisPersonDistanceEvent()
         {
         }
 
-        /// <summary> Initializes a new instance of SpatialAnalysisPersonDistanceEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonDistanceEvent"/>. </summary>
         /// <param name="threshold"> The event threshold. </param>
         /// <param name="focus"> The operation focus type. </param>
         /// <param name="trigger"> The event trigger type. </param>

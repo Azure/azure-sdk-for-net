@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> A path element of a management group ancestors. </summary>
     public partial class ManagementGroupPathElement
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ManagementGroupPathElement"/>. </summary>
         internal ManagementGroupPathElement()
         {

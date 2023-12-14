@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Preview for the Static Site Workflow to be generated. </summary>
     public partial class StaticSitesWorkflowPreview : ResourceData
     {
-        /// <summary> Initializes a new instance of StaticSitesWorkflowPreview. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSitesWorkflowPreview"/>. </summary>
         public StaticSitesWorkflowPreview()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSitesWorkflowPreview. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSitesWorkflowPreview"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

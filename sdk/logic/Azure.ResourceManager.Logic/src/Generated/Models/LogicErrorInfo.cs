@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The error info. </summary>
     public partial class LogicErrorInfo
     {
-        /// <summary> Initializes a new instance of LogicErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
         internal LogicErrorInfo(string code)

@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of resource providers. </summary>
     internal partial class ResourceProviderListResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ResourceProviderListResult"/>. </summary>
         internal ResourceProviderListResult()
         {

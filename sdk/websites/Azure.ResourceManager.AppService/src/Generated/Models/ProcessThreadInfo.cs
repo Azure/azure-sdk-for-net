@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Process Thread Information. </summary>
     public partial class ProcessThreadInfo : ResourceData
     {
-        /// <summary> Initializes a new instance of ProcessThreadInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProcessThreadInfo"/>. </summary>
         public ProcessThreadInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ProcessThreadInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProcessThreadInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Check SKU availability parameter. </summary>
     public partial class CognitiveServicesSkuAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CognitiveServicesSkuAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuAvailabilityContent"/>. </summary>
         /// <param name="skus"> The SKU of the resource. </param>
         /// <param name="kind"> The Kind of the resource. </param>
         /// <param name="resourceType"> The Type of the resource. </param>
@@ -26,6 +26,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Argument.AssertNotNull(kind, nameof(kind));
 
             Skus = skus.ToList();
+            Kind = kind;
+            ResourceType = resourceType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuAvailabilityContent"/>. </summary>
+        /// <param name="skus"> The SKU of the resource. </param>
+        /// <param name="kind"> The Kind of the resource. </param>
+        /// <param name="resourceType"> The Type of the resource. </param>
+        internal CognitiveServicesSkuAvailabilityContent(IList<string> skus, string kind, ResourceType resourceType)
+        {
+            Skus = skus;
             Kind = kind;
             ResourceType = resourceType;
         }

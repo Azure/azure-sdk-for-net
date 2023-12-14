@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Properties of provisioned clusters that contain secrets. </summary>
     public partial class ProvisionedClustersPropertiesWithSecrets
     {
-        /// <summary> Initializes a new instance of ProvisionedClustersPropertiesWithSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersPropertiesWithSecrets"/>. </summary>
         public ProvisionedClustersPropertiesWithSecrets()
         {
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClustersPropertiesWithSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersPropertiesWithSecrets"/>. </summary>
         /// <param name="aadProfile"> AAD profile for the provisioned cluster. </param>
         /// <param name="windowsProfile"> WindowsProfile - Profile for Windows VMs in the Provisioned Cluster. </param>
         /// <param name="httpProxyConfig"> HttpProxyConfig - Configurations for provisioning the cluster with HTTP proxy servers. </param>

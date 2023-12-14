@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> The child information of a management group used during creation. </summary>
     public partial class ManagementGroupChildOptions
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ManagementGroupChildOptions"/>. </summary>
         internal ManagementGroupChildOptions()
         {
@@ -29,15 +26,13 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         /// <param name="name"> The name of the child entity. </param>
         /// <param name="displayName"> The friendly name of the child resource. </param>
         /// <param name="children"> The list of children. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagementGroupChildOptions(ManagementGroupChildType? childType, string id, string name, string displayName, IReadOnlyList<ManagementGroupChildOptions> children, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagementGroupChildOptions(ManagementGroupChildType? childType, string id, string name, string displayName, IReadOnlyList<ManagementGroupChildOptions> children)
         {
             ChildType = childType;
             Id = id;
             Name = name;
             DisplayName = displayName;
             Children = children;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The fully qualified resource type which includes provider namespace (e.g. Microsoft.Management/managementGroups). </summary>

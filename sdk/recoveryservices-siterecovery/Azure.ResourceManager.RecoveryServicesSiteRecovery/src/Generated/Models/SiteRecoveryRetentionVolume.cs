@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The retention details of the MT. </summary>
     public partial class SiteRecoveryRetentionVolume
     {
-        /// <summary> Initializes a new instance of SiteRecoveryRetentionVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryRetentionVolume"/>. </summary>
         internal SiteRecoveryRetentionVolume()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryRetentionVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryRetentionVolume"/>. </summary>
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="capacityInBytes"> The volume capacity. </param>
         /// <param name="freeSpaceInBytes"> The free space available in this volume. </param>

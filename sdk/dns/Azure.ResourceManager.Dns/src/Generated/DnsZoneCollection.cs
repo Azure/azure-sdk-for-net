@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DnsZoneResource" /> and their operations.
-    /// Each <see cref="DnsZoneResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DnsZoneCollection" /> instance call the GetDnsZones method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DnsZoneResource"/> and their operations.
+    /// Each <see cref="DnsZoneResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DnsZoneCollection"/> instance call the GetDnsZones method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DnsZoneCollection : ArmCollection, IEnumerable<DnsZoneResource>, IAsyncEnumerable<DnsZoneResource>
     {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Dns
         /// </summary>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DnsZoneResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DnsZoneResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsZoneZonesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Dns
         /// </summary>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DnsZoneResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DnsZoneResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsZoneZonesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
@@ -322,6 +322,80 @@ namespace Azure.ResourceManager.Dns
             {
                 var response = _dnsZoneZonesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, zoneName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Zones_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DnsZoneResource>> GetIfExistsAsync(string zoneName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
+
+            using var scope = _dnsZoneZonesClientDiagnostics.CreateScope("DnsZoneCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dnsZoneZonesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, zoneName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DnsZoneResource>(response.GetRawResponse());
+                return Response.FromValue(new DnsZoneResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Zones_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> is null. </exception>
+        public virtual NullableResponse<DnsZoneResource> GetIfExists(string zoneName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
+
+            using var scope = _dnsZoneZonesClientDiagnostics.CreateScope("DnsZoneCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dnsZoneZonesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, zoneName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DnsZoneResource>(response.GetRawResponse());
+                return Response.FromValue(new DnsZoneResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

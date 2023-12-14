@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Result of the List Domain Topics operation. </summary>
     internal partial class DomainTopicsListResult
     {
-        /// <summary> Initializes a new instance of DomainTopicsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainTopicsListResult"/>. </summary>
         internal DomainTopicsListResult()
         {
             Value = new ChangeTrackingList<DomainTopicData>();
         }
 
-        /// <summary> Initializes a new instance of DomainTopicsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainTopicsListResult"/>. </summary>
         /// <param name="value"> A collection of Domain Topics. </param>
         /// <param name="nextLink"> A link for the next page of domain topics. </param>
         internal DomainTopicsListResult(IReadOnlyList<DomainTopicData> value, string nextLink)

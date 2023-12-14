@@ -21,14 +21,18 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a VirtualMachineExtension along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VirtualMachineExtensionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVirtualMachineExtensionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualMachineResource" /> using the GetVirtualMachineExtension method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualMachineExtensionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVirtualMachineExtensionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualMachineResource"/> using the GetVirtualMachineExtension method.
     /// </summary>
     [DeserializationProxy(typeof(VirtualMachineExtensionData))]
     public partial class VirtualMachineExtensionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualMachineExtensionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vmName"> The vmName. </param>
+        /// <param name="vmExtensionName"> The vmExtensionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmName, string vmExtensionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}";
@@ -39,12 +43,15 @@ namespace Azure.ResourceManager.Compute
         private readonly VirtualMachineExtensionsRestOperations _virtualMachineExtensionRestClient;
         private readonly VirtualMachineExtensionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/virtualMachines/extensions";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualMachineExtensionResource"/> class for mocking. </summary>
         protected VirtualMachineExtensionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VirtualMachineExtensionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualMachineExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VirtualMachineExtensionResource(ArmClient client, VirtualMachineExtensionData data) : this(client, data.Id)
@@ -65,9 +72,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/virtualMachines/extensions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

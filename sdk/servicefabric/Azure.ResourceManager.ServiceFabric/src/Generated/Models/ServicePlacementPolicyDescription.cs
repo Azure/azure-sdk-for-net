@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes the policy to be used for placement of a Service Fabric service. </summary>
     public abstract partial class ServicePlacementPolicyDescription
     {
-        /// <summary> Initializes a new instance of ServicePlacementPolicyDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePlacementPolicyDescription"/>. </summary>
         protected ServicePlacementPolicyDescription()
         {
         }
 
-        /// <summary> Initializes a new instance of ServicePlacementPolicyDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePlacementPolicyDescription"/>. </summary>
         /// <param name="policyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
         internal ServicePlacementPolicyDescription(ServicePlacementPolicyType policyType)
         {

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> A Sequence contains an ordered list of Clips where each clip is a JobInput.  The Sequence will be treated as a single input. </summary>
     public partial class MediaJobInputSequence : MediaJobInputBasicProperties
     {
-        /// <summary> Initializes a new instance of MediaJobInputSequence. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputSequence"/>. </summary>
         public MediaJobInputSequence()
         {
             Inputs = new ChangeTrackingList<MediaJobInputClip>();
             OdataType = "#Microsoft.Media.JobInputSequence";
         }
 
-        /// <summary> Initializes a new instance of MediaJobInputSequence. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputSequence"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="inputs">
         /// JobInputs that make up the timeline.

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes the status of the test operation along with error information, if applicable. </summary>
     public partial class StreamAnalyticsResourceTestStatus
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsResourceTestStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsResourceTestStatus"/>. </summary>
         internal StreamAnalyticsResourceTestStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsResourceTestStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsResourceTestStatus"/>. </summary>
         /// <param name="status"> The status of the test operation. </param>
         /// <param name="code"> Error code associated with the error that occurred. </param>
         /// <param name="message"> Describes the error in detail. </param>

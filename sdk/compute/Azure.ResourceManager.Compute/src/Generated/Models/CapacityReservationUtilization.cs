@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Represents the capacity reservation utilization in terms of resources allocated. </summary>
     public partial class CapacityReservationUtilization
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="CapacityReservationUtilization"/>. </summary>
         internal CapacityReservationUtilization()
         {

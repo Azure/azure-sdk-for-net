@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ConnectorMappingResourceFormatResource" /> and their operations.
-    /// Each <see cref="ConnectorMappingResourceFormatResource" /> in the collection will belong to the same instance of <see cref="ConnectorResourceFormatResource" />.
-    /// To get a <see cref="ConnectorMappingResourceFormatCollection" /> instance call the GetConnectorMappingResourceFormats method from an instance of <see cref="ConnectorResourceFormatResource" />.
+    /// A class representing a collection of <see cref="ConnectorMappingResourceFormatResource"/> and their operations.
+    /// Each <see cref="ConnectorMappingResourceFormatResource"/> in the collection will belong to the same instance of <see cref="ConnectorResourceFormatResource"/>.
+    /// To get a <see cref="ConnectorMappingResourceFormatCollection"/> instance call the GetConnectorMappingResourceFormats method from an instance of <see cref="ConnectorResourceFormatResource"/>.
     /// </summary>
     public partial class ConnectorMappingResourceFormatCollection : ArmCollection, IEnumerable<ConnectorMappingResourceFormatResource>, IAsyncEnumerable<ConnectorMappingResourceFormatResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConnectorMappingResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConnectorMappingResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConnectorMappingResourceFormatResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectorMappingResourceFormatConnectorMappingsRestClient.CreateListByConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConnectorMappingResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConnectorMappingResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConnectorMappingResourceFormatResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectorMappingResourceFormatConnectorMappingsRestClient.CreateListByConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -315,6 +315,80 @@ namespace Azure.ResourceManager.CustomerInsights
             {
                 var response = _connectorMappingResourceFormatConnectorMappingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, mappingName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/connectors/{connectorName}/mappings/{mappingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectorMappings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="mappingName"> The name of the connector mapping. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ConnectorMappingResourceFormatResource>> GetIfExistsAsync(string mappingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
+
+            using var scope = _connectorMappingResourceFormatConnectorMappingsClientDiagnostics.CreateScope("ConnectorMappingResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _connectorMappingResourceFormatConnectorMappingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, mappingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ConnectorMappingResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new ConnectorMappingResourceFormatResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/connectors/{connectorName}/mappings/{mappingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectorMappings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="mappingName"> The name of the connector mapping. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
+        public virtual NullableResponse<ConnectorMappingResourceFormatResource> GetIfExists(string mappingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
+
+            using var scope = _connectorMappingResourceFormatConnectorMappingsClientDiagnostics.CreateScope("ConnectorMappingResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _connectorMappingResourceFormatConnectorMappingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, mappingName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ConnectorMappingResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new ConnectorMappingResourceFormatResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

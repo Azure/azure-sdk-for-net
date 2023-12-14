@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CostManagementExportResource" /> and their operations.
-    /// Each <see cref="CostManagementExportResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="CostManagementExportCollection" /> instance call the GetCostManagementExports method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="CostManagementExportResource"/> and their operations.
+    /// Each <see cref="CostManagementExportResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="CostManagementExportCollection"/> instance call the GetCostManagementExports method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class CostManagementExportCollection : ArmCollection, IEnumerable<CostManagementExportResource>, IAsyncEnumerable<CostManagementExportResource>
     {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last run of each export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CostManagementExportResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CostManagementExportResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CostManagementExportResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementExportExportsRestClient.CreateListRequest(Id, expand);
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last run of each export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CostManagementExportResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CostManagementExportResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CostManagementExportResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementExportExportsRestClient.CreateListRequest(Id, expand);
@@ -309,6 +309,82 @@ namespace Azure.ResourceManager.CostManagement
             {
                 var response = _costManagementExportExportsRestClient.Get(Id, exportName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/exports/{exportName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Exports_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="exportName"> Export Name. </param>
+        /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last 10 runs of the export. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CostManagementExportResource>> GetIfExistsAsync(string exportName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
+
+            using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _costManagementExportExportsRestClient.GetAsync(Id, exportName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CostManagementExportResource>(response.GetRawResponse());
+                return Response.FromValue(new CostManagementExportResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/exports/{exportName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Exports_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="exportName"> Export Name. </param>
+        /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last 10 runs of the export. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
+        public virtual NullableResponse<CostManagementExportResource> GetIfExists(string exportName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
+
+            using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _costManagementExportExportsRestClient.Get(Id, exportName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CostManagementExportResource>(response.GetRawResponse());
+                return Response.FromValue(new CostManagementExportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

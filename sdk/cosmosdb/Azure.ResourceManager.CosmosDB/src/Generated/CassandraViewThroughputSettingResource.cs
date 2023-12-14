@@ -20,13 +20,18 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a CassandraViewThroughputSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CassandraViewThroughputSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCassandraViewThroughputSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CassandraViewGetResultResource" /> using the GetCassandraViewThroughputSetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CassandraViewThroughputSettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCassandraViewThroughputSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CassandraViewGetResultResource"/> using the GetCassandraViewThroughputSetting method.
     /// </summary>
     public partial class CassandraViewThroughputSettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CassandraViewThroughputSettingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="keyspaceName"> The keyspaceName. </param>
+        /// <param name="viewName"> The viewName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string viewName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/views/{viewName}/throughputSettings/default";
@@ -37,12 +42,15 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly CassandraResourcesRestOperations _cassandraViewThroughputSettingCassandraResourcesRestClient;
         private readonly ThroughputSettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/views/throughputSettings";
+
         /// <summary> Initializes a new instance of the <see cref="CassandraViewThroughputSettingResource"/> class for mocking. </summary>
         protected CassandraViewThroughputSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CassandraViewThroughputSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CassandraViewThroughputSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CassandraViewThroughputSettingResource(ArmClient client, ThroughputSettingData data) : this(client, data.Id)
@@ -63,9 +71,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/views/throughputSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

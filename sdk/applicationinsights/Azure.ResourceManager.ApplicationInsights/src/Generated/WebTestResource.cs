@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.ApplicationInsights
 {
     /// <summary>
     /// A Class representing a WebTest along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebTestResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebTestResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetWebTest method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebTestResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWebTestResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetWebTest method.
     /// </summary>
     public partial class WebTestResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebTestResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="webTestName"> The webTestName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string webTestName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.ApplicationInsights
         private readonly WebTestsRestOperations _webTestRestClient;
         private readonly WebTestData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/webtests";
+
         /// <summary> Initializes a new instance of the <see cref="WebTestResource"/> class for mocking. </summary>
         protected WebTestResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebTestResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebTestResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebTestResource(ArmClient client, WebTestData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.ApplicationInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/webtests";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -237,7 +240,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="webTestTags"> Updated tag information to associate with the web test resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="webTestTags"/> is null. </exception>
-        public virtual async Task<Response<WebTestResource>> UpdateAsync(TagsResource webTestTags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebTestResource>> UpdateAsync(ComponentTag webTestTags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(webTestTags, nameof(webTestTags));
 
@@ -271,7 +274,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="webTestTags"> Updated tag information to associate with the web test resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="webTestTags"/> is null. </exception>
-        public virtual Response<WebTestResource> Update(TagsResource webTestTags, CancellationToken cancellationToken = default)
+        public virtual Response<WebTestResource> Update(ComponentTag webTestTags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(webTestTags, nameof(webTestTags));
 
@@ -326,7 +329,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsResource();
+                    var patch = new ComponentTag();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -380,7 +383,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsResource();
+                    var patch = new ComponentTag();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -433,7 +436,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsResource();
+                    var patch = new ComponentTag();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -482,7 +485,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsResource();
+                    var patch = new ComponentTag();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -530,7 +533,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsResource();
+                    var patch = new ComponentTag();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -582,7 +585,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsResource();
+                    var patch = new ComponentTag();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

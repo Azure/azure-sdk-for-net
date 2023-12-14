@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the OS profile for the cloud service. </summary>
     internal partial class CloudServiceOSProfile
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="CloudServiceOSProfile"/>. </summary>
         public CloudServiceOSProfile()
         {

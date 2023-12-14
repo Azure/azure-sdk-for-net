@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Blueprint
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BlueprintResource" /> and their operations.
-    /// Each <see cref="BlueprintResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="BlueprintCollection" /> instance call the GetBlueprints method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="BlueprintResource"/> and their operations.
+    /// Each <see cref="BlueprintResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="BlueprintCollection"/> instance call the GetBlueprints method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class BlueprintCollection : ArmCollection, IEnumerable<BlueprintResource>, IAsyncEnumerable<BlueprintResource>
     {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Blueprint
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BlueprintResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BlueprintResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BlueprintResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintRestClient.CreateListRequest(Id);
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Blueprint
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BlueprintResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BlueprintResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BlueprintResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintRestClient.CreateListRequest(Id);
@@ -305,6 +305,80 @@ namespace Azure.ResourceManager.Blueprint
             {
                 var response = _blueprintRestClient.Get(Id, blueprintName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Blueprints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="blueprintName"> Name of the blueprint definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="blueprintName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="blueprintName"/> is null. </exception>
+        public virtual async Task<NullableResponse<BlueprintResource>> GetIfExistsAsync(string blueprintName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(blueprintName, nameof(blueprintName));
+
+            using var scope = _blueprintClientDiagnostics.CreateScope("BlueprintCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _blueprintRestClient.GetAsync(Id, blueprintName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<BlueprintResource>(response.GetRawResponse());
+                return Response.FromValue(new BlueprintResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Blueprints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="blueprintName"> Name of the blueprint definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="blueprintName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="blueprintName"/> is null. </exception>
+        public virtual NullableResponse<BlueprintResource> GetIfExists(string blueprintName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(blueprintName, nameof(blueprintName));
+
+            using var scope = _blueprintClientDiagnostics.CreateScope("BlueprintCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _blueprintRestClient.Get(Id, blueprintName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<BlueprintResource>(response.GetRawResponse());
+                return Response.FromValue(new BlueprintResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

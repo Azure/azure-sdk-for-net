@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
     /// A Class representing a NetworkCloudAgentPool along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkCloudAgentPoolResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkCloudAgentPoolResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkCloudKubernetesClusterResource" /> using the GetNetworkCloudAgentPool method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudAgentPoolResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkCloudAgentPoolResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkCloudKubernetesClusterResource"/> using the GetNetworkCloudAgentPool method.
     /// </summary>
     public partial class NetworkCloudAgentPoolResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkCloudAgentPoolResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="kubernetesClusterName"> The kubernetesClusterName. </param>
+        /// <param name="agentPoolName"> The agentPoolName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesClusters/{kubernetesClusterName}/agentPools/{agentPoolName}";
@@ -37,12 +41,15 @@ namespace Azure.ResourceManager.NetworkCloud
         private readonly AgentPoolsRestOperations _networkCloudAgentPoolAgentPoolsRestClient;
         private readonly NetworkCloudAgentPoolData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/kubernetesClusters/agentPools";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkCloudAgentPoolResource"/> class for mocking. </summary>
         protected NetworkCloudAgentPoolResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkCloudAgentPoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudAgentPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkCloudAgentPoolResource(ArmClient client, NetworkCloudAgentPoolData data) : this(client, data.Id)
@@ -63,9 +70,6 @@ namespace Azure.ResourceManager.NetworkCloud
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/kubernetesClusters/agentPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

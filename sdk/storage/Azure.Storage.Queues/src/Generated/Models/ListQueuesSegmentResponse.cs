@@ -14,7 +14,7 @@ namespace Azure.Storage.Queues.Models
     /// <summary> The object returned when calling List Queues on a Queue Service. </summary>
     internal partial class ListQueuesSegmentResponse
     {
-        /// <summary> Initializes a new instance of ListQueuesSegmentResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListQueuesSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="prefix"></param>
         /// <param name="maxResults"></param>
@@ -33,7 +33,7 @@ namespace Azure.Storage.Queues.Models
             NextMarker = nextMarker;
         }
 
-        /// <summary> Initializes a new instance of ListQueuesSegmentResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListQueuesSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="prefix"></param>
         /// <param name="marker"></param>

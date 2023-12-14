@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the source control sync job stream by id. </summary>
     public partial class SourceControlSyncJobStreamResult
     {
-        /// <summary> Initializes a new instance of SourceControlSyncJobStreamResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceControlSyncJobStreamResult"/>. </summary>
         internal SourceControlSyncJobStreamResult()
         {
             Value = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SourceControlSyncJobStreamResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceControlSyncJobStreamResult"/>. </summary>
         /// <param name="id"> Resource id. </param>
         /// <param name="sourceControlSyncJobStreamId"> The sync job stream id. </param>
         /// <param name="summary"> The summary of the sync job stream. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

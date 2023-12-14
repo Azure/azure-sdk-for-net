@@ -6,27 +6,43 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Identity;
+using Azure.Verticals.AgriFood.Farming;
 using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_FarmOperationsDataIngestion
+    public partial class Samples_FarmOperationsDataIngestion
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetJobDetails()
+        public void Example_GetJobDetails_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            FarmOperationsDataIngestion client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
-            Response response = client.GetJobDetails("<jobId>", new RequestContext());
+            Response response = client.GetJobDetails("<jobId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("authProviderId").ToString());
+            Console.WriteLine(result.GetProperty("startYear").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetJobDetails_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            FarmOperationsDataIngestion client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
+
+            Response response = await client.GetJobDetailsAsync("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -38,10 +54,11 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetJobDetails_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            FarmOperationsDataIngestion client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
-            Response response = client.GetJobDetails("<jobId>", new RequestContext());
+            Response response = client.GetJobDetails("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -62,32 +79,18 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetJobDetails_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
-
-            Response response = await client.GetJobDetailsAsync("<jobId>", new RequestContext());
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("authProviderId").ToString());
-            Console.WriteLine(result.GetProperty("startYear").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetJobDetails_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            FarmOperationsDataIngestion client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
-            Response response = await client.GetJobDetailsAsync("<jobId>", new RequestContext());
+            Response response = await client.GetJobDetailsAsync("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -108,26 +111,49 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateJob()
+        public void Example_CreateJob_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            FarmOperationsDataIngestion client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 authProviderId = "<authProviderId>",
                 startYear = 1234,
-            };
-
-            var operation = client.CreateJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+            });
+            Operation<BinaryData> operation = client.CreateJob(WaitUntil.Completed, "<jobId>", content);
             BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("authProviderId").ToString());
+            Console.WriteLine(result.GetProperty("startYear").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateJob_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            FarmOperationsDataIngestion client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                partyId = "<partyId>",
+                authProviderId = "<authProviderId>",
+                startYear = 1234,
+            });
+            Operation<BinaryData> operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobId>", content);
+            BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
             Console.WriteLine(result.GetProperty("authProviderId").ToString());
@@ -138,29 +164,30 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateJob_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            FarmOperationsDataIngestion client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 authProviderId = "<authProviderId>",
-                operations = new[] {
-        "<String>"
-    },
+                operations = new object[]
+            {
+"<operations>"
+            },
                 startYear = 1234,
                 isIncremental = true,
                 name = "<name>",
                 description = "<description>",
                 properties = new
                 {
-                    key = new { },
+                    key = new object(),
                 },
-            };
-
-            var operation = client.CreateJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+            });
+            Operation<BinaryData> operation = client.CreateJob(WaitUntil.Completed, "<jobId>", content);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
             Console.WriteLine(result.GetProperty("authProviderId").ToString());
@@ -180,59 +207,37 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateJob_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
-
-            var data = new
-            {
-                partyId = "<partyId>",
-                authProviderId = "<authProviderId>",
-                startYear = 1234,
-            };
-
-            var operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
-            BinaryData responseData = operation.Value;
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("authProviderId").ToString());
-            Console.WriteLine(result.GetProperty("startYear").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateJob_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            FarmOperationsDataIngestion client = new FarmBeatsClient(endpoint, credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 authProviderId = "<authProviderId>",
-                operations = new[] {
-        "<String>"
-    },
+                operations = new object[]
+            {
+"<operations>"
+            },
                 startYear = 1234,
                 isIncremental = true,
                 name = "<name>",
                 description = "<description>",
                 properties = new
                 {
-                    key = new { },
+                    key = new object(),
                 },
-            };
-
-            var operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+            });
+            Operation<BinaryData> operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobId>", content);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
             Console.WriteLine(result.GetProperty("authProviderId").ToString());
@@ -252,7 +257,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
     }
 }

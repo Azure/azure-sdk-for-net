@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> List of Endpoints. </summary>
     internal partial class EndpointList
     {
-        /// <summary> Initializes a new instance of EndpointList. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointList"/>. </summary>
         internal EndpointList()
         {
             Value = new ChangeTrackingList<StorageMoverEndpointData>();
         }
 
-        /// <summary> Initializes a new instance of EndpointList. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> Request URL that can be used to query next page of containers. Returned when total number of requested containers exceed maximum page size. </param>
         internal EndpointList(IReadOnlyList<StorageMoverEndpointData> value, string nextLink)

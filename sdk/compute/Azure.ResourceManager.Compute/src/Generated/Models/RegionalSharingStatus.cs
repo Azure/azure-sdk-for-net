@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Gallery regional sharing status. </summary>
     public partial class RegionalSharingStatus
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="RegionalSharingStatus"/>. </summary>
         internal RegionalSharingStatus()
         {

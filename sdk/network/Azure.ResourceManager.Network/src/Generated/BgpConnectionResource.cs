@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a BgpConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BgpConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBgpConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualHubResource" /> using the GetBgpConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BgpConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBgpConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualHubResource"/> using the GetBgpConnection method.
     /// </summary>
     public partial class BgpConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BgpConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualHubName"> The virtualHubName. </param>
+        /// <param name="connectionName"> The connectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualHubName, string connectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/bgpConnections/{connectionName}";
@@ -39,12 +43,15 @@ namespace Azure.ResourceManager.Network
         private readonly VirtualHubBgpConnectionsRestOperations _bgpConnectionVirtualHubBgpConnectionsRestClient;
         private readonly BgpConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs/bgpConnections";
+
         /// <summary> Initializes a new instance of the <see cref="BgpConnectionResource"/> class for mocking. </summary>
         protected BgpConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BgpConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BgpConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BgpConnectionResource(ArmClient client, BgpConnectionData data) : this(client, data.Id)
@@ -68,9 +75,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs/bgpConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

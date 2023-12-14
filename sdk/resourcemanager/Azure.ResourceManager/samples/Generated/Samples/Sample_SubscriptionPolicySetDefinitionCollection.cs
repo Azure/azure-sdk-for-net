@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Resources.Samples
 ["namePrefix"] = new ArmPolicyParameter()
 {
 ParameterType = ArmPolicyParameterType.String,
-DefaultValue = BinaryData.FromString("myPrefix"),
+DefaultValue = BinaryData.FromString("\"myPrefix\""),
 Metadata = new ParameterDefinitionsValueMetadata()
 {
 DisplayName = "Prefix to enforce on resource names",
@@ -81,11 +81,11 @@ Parameters =
 {
 ["prefix"] = new ArmPolicyParameterValue()
 {
-Value = BinaryData.FromString("[parameters('namePrefix')]"),
+Value = BinaryData.FromString("\"[parameters('namePrefix')]\""),
 },
 ["suffix"] = new ArmPolicyParameterValue()
 {
-Value = BinaryData.FromString("-LC"),
+Value = BinaryData.FromString("\"-LC\""),
 },
 },
 PolicyDefinitionReferenceId = "Resource_Naming",
@@ -156,11 +156,11 @@ Parameters =
 {
 ["prefix"] = new ArmPolicyParameterValue()
 {
-Value = BinaryData.FromString("DeptA"),
+Value = BinaryData.FromString("\"DeptA\""),
 },
 ["suffix"] = new ArmPolicyParameterValue()
 {
-Value = BinaryData.FromString("-LC"),
+Value = BinaryData.FromString("\"-LC\""),
 },
 },
 PolicyDefinitionReferenceId = "Resource_Naming",
@@ -253,6 +253,47 @@ Description = "Policies that help enforce resource organization standards within
             bool result = await collection.ExistsAsync(policySetDefinitionName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Retrieve a policy set definition
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_RetrieveAPolicySetDefinition()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getPolicySetDefinition.json
+            // this example is just showing the usage of "PolicySetDefinitions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SubscriptionPolicySetDefinitionResource
+            SubscriptionPolicySetDefinitionCollection collection = subscription.GetSubscriptionPolicySetDefinitions();
+
+            // invoke the operation
+            string policySetDefinitionName = "CostManagement";
+            NullableResponse<SubscriptionPolicySetDefinitionResource> response = await collection.GetIfExistsAsync(policySetDefinitionName);
+            SubscriptionPolicySetDefinitionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                PolicySetDefinitionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
 
         // List policy set definitions

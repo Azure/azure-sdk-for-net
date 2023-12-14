@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The UnknownActiveBaseSecurityAdminRule. </summary>
     internal partial class UnknownActiveBaseSecurityAdminRule : ActiveBaseSecurityAdminRule
     {
-        /// <summary> Initializes a new instance of UnknownActiveBaseSecurityAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownActiveBaseSecurityAdminRule"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="commitOn"> Deployment time string. </param>
         /// <param name="region"> Deployment region. </param>

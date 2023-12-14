@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> disk encryption set update resource. </summary>
     public partial class DiskEncryptionSetPatch
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DiskEncryptionSetPatch"/>. </summary>
         public DiskEncryptionSetPatch()
         {
@@ -31,8 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="activeKey"> Key Vault Key Url to be used for server side encryption of Managed Disks and Snapshots. </param>
         /// <param name="rotationToLatestKeyVersionEnabled"> Set this flag to true to enable auto-updating of this disk encryption set to the latest key version. </param>
         /// <param name="federatedClientId"> Multi-tenant application client id to access key vault in a different tenant. Setting the value to 'None' will clear the property. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskEncryptionSetPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, DiskEncryptionSetType? encryptionType, KeyForDiskEncryptionSet activeKey, bool? rotationToLatestKeyVersionEnabled, string federatedClientId, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiskEncryptionSetPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, DiskEncryptionSetType? encryptionType, KeyForDiskEncryptionSet activeKey, bool? rotationToLatestKeyVersionEnabled, string federatedClientId)
         {
             Tags = tags;
             Identity = identity;
@@ -40,7 +36,6 @@ namespace Azure.ResourceManager.Compute.Models
             ActiveKey = activeKey;
             RotationToLatestKeyVersionEnabled = rotationToLatestKeyVersionEnabled;
             FederatedClientId = federatedClientId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>

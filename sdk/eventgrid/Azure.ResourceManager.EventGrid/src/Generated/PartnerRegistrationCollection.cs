@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PartnerRegistrationResource" /> and their operations.
-    /// Each <see cref="PartnerRegistrationResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="PartnerRegistrationCollection" /> instance call the GetPartnerRegistrations method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="PartnerRegistrationResource"/> and their operations.
+    /// Each <see cref="PartnerRegistrationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="PartnerRegistrationCollection"/> instance call the GetPartnerRegistrations method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class PartnerRegistrationCollection : ArmCollection, IEnumerable<PartnerRegistrationResource>, IAsyncEnumerable<PartnerRegistrationResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PartnerRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PartnerRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PartnerRegistrationResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerRegistrationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PartnerRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PartnerRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PartnerRegistrationResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerRegistrationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
@@ -320,6 +320,80 @@ namespace Azure.ResourceManager.EventGrid
             {
                 var response = _partnerRegistrationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerRegistrations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<PartnerRegistrationResource>> GetIfExistsAsync(string partnerRegistrationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
+
+            using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _partnerRegistrationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PartnerRegistrationResource>(response.GetRawResponse());
+                return Response.FromValue(new PartnerRegistrationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PartnerRegistrations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
+        public virtual NullableResponse<PartnerRegistrationResource> GetIfExists(string partnerRegistrationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
+
+            using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _partnerRegistrationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PartnerRegistrationResource>(response.GetRawResponse());
+                return Response.FromValue(new PartnerRegistrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

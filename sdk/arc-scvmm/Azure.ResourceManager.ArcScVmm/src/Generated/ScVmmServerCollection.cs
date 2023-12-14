@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ArcScVmm
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ScVmmServerResource" /> and their operations.
-    /// Each <see cref="ScVmmServerResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ScVmmServerCollection" /> instance call the GetScVmmServers method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ScVmmServerResource"/> and their operations.
+    /// Each <see cref="ScVmmServerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ScVmmServerCollection"/> instance call the GetScVmmServers method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ScVmmServerCollection : ArmCollection, IEnumerable<ScVmmServerResource>, IAsyncEnumerable<ScVmmServerResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScVmmServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ScVmmServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScVmmServerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmServerVmmServersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScVmmServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScVmmServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScVmmServerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmServerVmmServersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -316,6 +316,80 @@ namespace Azure.ResourceManager.ArcScVmm
             {
                 var response = _scVmmServerVmmServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vmmServerName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VmmServers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vmmServerName"> Name of the VMMServer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vmmServerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ScVmmServerResource>> GetIfExistsAsync(string vmmServerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
+
+            using var scope = _scVmmServerVmmServersClientDiagnostics.CreateScope("ScVmmServerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _scVmmServerVmmServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vmmServerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ScVmmServerResource>(response.GetRawResponse());
+                return Response.FromValue(new ScVmmServerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VmmServers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vmmServerName"> Name of the VMMServer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vmmServerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmmServerName"/> is null. </exception>
+        public virtual NullableResponse<ScVmmServerResource> GetIfExists(string vmmServerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
+
+            using var scope = _scVmmServerVmmServersClientDiagnostics.CreateScope("ScVmmServerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _scVmmServerVmmServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vmmServerName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ScVmmServerResource>(response.GetRawResponse());
+                return Response.FromValue(new ScVmmServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

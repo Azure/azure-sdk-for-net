@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan creation properties. </summary>
     public partial class SiteRecoveryCreateRecoveryPlanProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryCreateRecoveryPlanProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryCreateRecoveryPlanProperties"/>. </summary>
         /// <param name="primaryFabricId"> The primary fabric Id. </param>
         /// <param name="recoveryFabricId"> The recovery fabric Id. </param>
         /// <param name="groups"> The recovery plan groups. </param>
@@ -30,6 +30,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryFabricId = recoveryFabricId;
             Groups = groups.ToList();
             ProviderSpecificContent = new ChangeTrackingList<RecoveryPlanProviderSpecificContent>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryCreateRecoveryPlanProperties"/>. </summary>
+        /// <param name="primaryFabricId"> The primary fabric Id. </param>
+        /// <param name="recoveryFabricId"> The recovery fabric Id. </param>
+        /// <param name="failoverDeploymentModel"> The failover deployment model. </param>
+        /// <param name="groups"> The recovery plan groups. </param>
+        /// <param name="providerSpecificContent">
+        /// The provider specific input.
+        /// Please note <see cref="RecoveryPlanProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RecoveryPlanA2AContent"/>.
+        /// </param>
+        internal SiteRecoveryCreateRecoveryPlanProperties(ResourceIdentifier primaryFabricId, ResourceIdentifier recoveryFabricId, FailoverDeploymentModel? failoverDeploymentModel, IList<SiteRecoveryPlanGroup> groups, IList<RecoveryPlanProviderSpecificContent> providerSpecificContent)
+        {
+            PrimaryFabricId = primaryFabricId;
+            RecoveryFabricId = recoveryFabricId;
+            FailoverDeploymentModel = failoverDeploymentModel;
+            Groups = groups;
+            ProviderSpecificContent = providerSpecificContent;
         }
 
         /// <summary> The primary fabric Id. </summary>

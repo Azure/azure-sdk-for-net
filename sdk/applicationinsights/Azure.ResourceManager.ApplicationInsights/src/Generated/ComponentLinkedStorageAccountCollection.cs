@@ -18,9 +18,9 @@ using Azure.ResourceManager.ApplicationInsights.Models;
 namespace Azure.ResourceManager.ApplicationInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ComponentLinkedStorageAccountResource" /> and their operations.
-    /// Each <see cref="ComponentLinkedStorageAccountResource" /> in the collection will belong to the same instance of <see cref="ApplicationInsightsComponentResource" />.
-    /// To get a <see cref="ComponentLinkedStorageAccountCollection" /> instance call the GetComponentLinkedStorageAccounts method from an instance of <see cref="ApplicationInsightsComponentResource" />.
+    /// A class representing a collection of <see cref="ComponentLinkedStorageAccountResource"/> and their operations.
+    /// Each <see cref="ComponentLinkedStorageAccountResource"/> in the collection will belong to the same instance of <see cref="ApplicationInsightsComponentResource"/>.
+    /// To get a <see cref="ComponentLinkedStorageAccountCollection"/> instance call the GetComponentLinkedStorageAccounts method from an instance of <see cref="ApplicationInsightsComponentResource"/>.
     /// </summary>
     public partial class ComponentLinkedStorageAccountCollection : ArmCollection
     {
@@ -249,6 +249,72 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 var response = _componentLinkedStorageAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageType, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/components/{resourceName}/linkedStorageAccounts/{storageType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComponentLinkedStorageAccounts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<ComponentLinkedStorageAccountResource>> GetIfExistsAsync(StorageType storageType, CancellationToken cancellationToken = default)
+        {
+            using var scope = _componentLinkedStorageAccountClientDiagnostics.CreateScope("ComponentLinkedStorageAccountCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _componentLinkedStorageAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ComponentLinkedStorageAccountResource>(response.GetRawResponse());
+                return Response.FromValue(new ComponentLinkedStorageAccountResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/components/{resourceName}/linkedStorageAccounts/{storageType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComponentLinkedStorageAccounts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<ComponentLinkedStorageAccountResource> GetIfExists(StorageType storageType, CancellationToken cancellationToken = default)
+        {
+            using var scope = _componentLinkedStorageAccountClientDiagnostics.CreateScope("ComponentLinkedStorageAccountCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _componentLinkedStorageAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageType, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ComponentLinkedStorageAccountResource>(response.GetRawResponse());
+                return Response.FromValue(new ComponentLinkedStorageAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

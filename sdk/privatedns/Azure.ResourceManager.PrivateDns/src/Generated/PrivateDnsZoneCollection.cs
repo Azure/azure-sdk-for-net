@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.PrivateDns
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PrivateDnsZoneResource" /> and their operations.
-    /// Each <see cref="PrivateDnsZoneResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="PrivateDnsZoneCollection" /> instance call the GetPrivateDnsZones method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="PrivateDnsZoneResource"/> and their operations.
+    /// Each <see cref="PrivateDnsZoneResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="PrivateDnsZoneCollection"/> instance call the GetPrivateDnsZones method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class PrivateDnsZoneCollection : ArmCollection, IEnumerable<PrivateDnsZoneResource>, IAsyncEnumerable<PrivateDnsZoneResource>
     {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </summary>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateDnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PrivateDnsZoneResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateDnsZoneResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateDnsZonePrivateZonesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// </summary>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateDnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PrivateDnsZoneResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateDnsZoneResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateDnsZonePrivateZonesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
@@ -322,6 +322,80 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 var response = _privateDnsZonePrivateZonesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateZones_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateZoneName"/> is null. </exception>
+        public virtual async Task<NullableResponse<PrivateDnsZoneResource>> GetIfExistsAsync(string privateZoneName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
+
+            using var scope = _privateDnsZonePrivateZonesClientDiagnostics.CreateScope("PrivateDnsZoneCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _privateDnsZonePrivateZonesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PrivateDnsZoneResource>(response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsZoneResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateZones_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateZoneName"/> is null. </exception>
+        public virtual NullableResponse<PrivateDnsZoneResource> GetIfExists(string privateZoneName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
+
+            using var scope = _privateDnsZonePrivateZonesClientDiagnostics.CreateScope("PrivateDnsZoneCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _privateDnsZonePrivateZonesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, privateZoneName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PrivateDnsZoneResource>(response.GetRawResponse());
+                return Response.FromValue(new PrivateDnsZoneResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

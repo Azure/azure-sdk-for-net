@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Media
     /// </summary>
     public partial class ContentKeyPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyData"/>. </summary>
         public ContentKeyPolicyData()
         {
             Options = new ChangeTrackingList<ContentKeyPolicyOption>();
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

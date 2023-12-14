@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
     /// A Class representing a ServiceBusDisasterRecoveryAuthorizationRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceBusDisasterRecoveryAuthorizationRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceBusDisasterRecoveryResource" /> using the GetServiceBusDisasterRecoveryAuthorizationRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceBusDisasterRecoveryAuthorizationRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceBusDisasterRecoveryResource"/> using the GetServiceBusDisasterRecoveryAuthorizationRule method.
     /// </summary>
     public partial class ServiceBusDisasterRecoveryAuthorizationRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="alias"> The alias. </param>
+        /// <param name="authorizationRuleName"> The authorizationRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{@alias}/authorizationRules/{authorizationRuleName}";
@@ -36,12 +41,15 @@ namespace Azure.ResourceManager.ServiceBus
         private readonly DisasterRecoveryAuthorizationRulesRestOperations _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesRestClient;
         private readonly ServiceBusAuthorizationRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs/authorizationRules";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> class for mocking. </summary>
         protected ServiceBusDisasterRecoveryAuthorizationRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceBusDisasterRecoveryAuthorizationRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceBusDisasterRecoveryAuthorizationRuleResource(ArmClient client, ServiceBusAuthorizationRuleData data) : this(client, data.Id)
@@ -62,9 +70,6 @@ namespace Azure.ResourceManager.ServiceBus
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs/authorizationRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

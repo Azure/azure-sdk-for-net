@@ -20,13 +20,18 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A Class representing a DevTestLabDisk along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevTestLabDiskResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevTestLabDiskResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevTestLabUserResource" /> using the GetDevTestLabDisk method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabDiskResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabDiskResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabUserResource"/> using the GetDevTestLabDisk method.
     /// </summary>
     public partial class DevTestLabDiskResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DevTestLabDiskResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="labName"> The labName. </param>
+        /// <param name="userName"> The userName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string userName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/disks/{name}";
@@ -37,12 +42,15 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly DisksRestOperations _devTestLabDiskDisksRestClient;
         private readonly DevTestLabDiskData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/users/disks";
+
         /// <summary> Initializes a new instance of the <see cref="DevTestLabDiskResource"/> class for mocking. </summary>
         protected DevTestLabDiskResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevTestLabDiskResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabDiskResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevTestLabDiskResource(ArmClient client, DevTestLabDiskData data) : this(client, data.Id)
@@ -63,9 +71,6 @@ namespace Azure.ResourceManager.DevTestLabs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/users/disks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

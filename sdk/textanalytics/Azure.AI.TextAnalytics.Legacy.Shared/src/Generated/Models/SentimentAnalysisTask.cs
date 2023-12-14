@@ -12,9 +12,18 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The SentimentAnalysisTask. </summary>
     internal partial class SentimentAnalysisTask
     {
-        /// <summary> Initializes a new instance of SentimentAnalysisTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisTask"/>. </summary>
         public SentimentAnalysisTask()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisTask"/>. </summary>
+        /// <param name="parameters"></param>
+        /// <param name="taskName"></param>
+        internal SentimentAnalysisTask(SentimentAnalysisTaskParameters parameters, string taskName)
+        {
+            Parameters = parameters;
+            TaskName = taskName;
         }
 
         /// <summary> Gets or sets the parameters. </summary>

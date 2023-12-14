@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of snapshots which can be used to revert an app to a previous time. </summary>
     internal partial class AppSnapshotListResult
     {
-        /// <summary> Initializes a new instance of AppSnapshotListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppSnapshotListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AppSnapshotListResult(IEnumerable<AppSnapshot> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AppSnapshotListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppSnapshotListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal AppSnapshotListResult(IReadOnlyList<AppSnapshot> value, string nextLink)

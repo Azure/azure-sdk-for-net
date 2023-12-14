@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Describes resource usage. </summary>
     public partial class FrontDoorUsage
     {
-        /// <summary> Initializes a new instance of FrontDoorUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorUsage"/>. </summary>
         /// <param name="unit"> An enum describing the unit of measurement. </param>
         /// <param name="currentValue"> The current value of the usage. </param>
         /// <param name="limit"> The limit of usage. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of FrontDoorUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorUsage"/>. </summary>
         /// <param name="id"> Resource identifier. </param>
         /// <param name="unit"> An enum describing the unit of measurement. </param>
         /// <param name="currentValue"> The current value of the usage. </param>

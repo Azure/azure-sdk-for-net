@@ -10,19 +10,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningWorkspaceGetStorageAccountKeysResult. </summary>
     public partial class MachineLearningWorkspaceGetStorageAccountKeysResult
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetStorageAccountKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceGetStorageAccountKeysResult"/>. </summary>
         internal MachineLearningWorkspaceGetStorageAccountKeysResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetStorageAccountKeysResult. </summary>
-        /// <param name="userStorageKey"></param>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceGetStorageAccountKeysResult"/>. </summary>
+        /// <param name="userStorageKey"> The access key of the storage. </param>
         internal MachineLearningWorkspaceGetStorageAccountKeysResult(string userStorageKey)
         {
             UserStorageKey = userStorageKey;
         }
 
-        /// <summary> Gets the user storage key. </summary>
+        /// <summary> The access key of the storage. </summary>
         public string UserStorageKey { get; }
     }
 }

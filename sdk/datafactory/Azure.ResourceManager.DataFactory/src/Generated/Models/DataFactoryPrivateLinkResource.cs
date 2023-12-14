@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A private link resource. </summary>
     public partial class DataFactoryPrivateLinkResource : ResourceData
     {
-        /// <summary> Initializes a new instance of DataFactoryPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateLinkResource"/>. </summary>
         public DataFactoryPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

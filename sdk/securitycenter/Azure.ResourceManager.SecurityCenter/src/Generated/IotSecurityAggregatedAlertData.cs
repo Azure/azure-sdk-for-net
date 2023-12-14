@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class IotSecurityAggregatedAlertData : ResourceData
     {
-        /// <summary> Initializes a new instance of IotSecurityAggregatedAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedAlertData"/>. </summary>
         public IotSecurityAggregatedAlertData()
         {
             TopDevicesList = new ChangeTrackingList<IotSecurityAggregatedAlertTopDevice>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of IotSecurityAggregatedAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedAlertData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

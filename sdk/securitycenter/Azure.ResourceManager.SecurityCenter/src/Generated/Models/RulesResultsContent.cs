@@ -13,10 +13,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Rules results input. </summary>
     public partial class RulesResultsContent
     {
-        /// <summary> Initializes a new instance of RulesResultsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulesResultsContent"/>. </summary>
         public RulesResultsContent()
         {
             Results = new ChangeTrackingDictionary<string, IList<IList<string>>>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RulesResultsContent"/>. </summary>
+        /// <param name="latestScan"> Take results from latest scan. </param>
+        /// <param name="results">
+        /// Expected results to be inserted into the baseline.
+        /// Leave this field empty it LatestScan == true.
+        /// </param>
+        internal RulesResultsContent(bool? latestScan, IDictionary<string, IList<IList<string>>> results)
+        {
+            LatestScan = latestScan;
+            Results = results;
         }
 
         /// <summary> Take results from latest scan. </summary>

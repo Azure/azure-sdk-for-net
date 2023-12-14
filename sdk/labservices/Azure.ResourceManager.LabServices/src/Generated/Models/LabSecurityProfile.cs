@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> The lab security profile. </summary>
     public partial class LabSecurityProfile
     {
-        /// <summary> Initializes a new instance of LabSecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabSecurityProfile"/>. </summary>
         public LabSecurityProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of LabSecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabSecurityProfile"/>. </summary>
         /// <param name="registrationCode"> The registration code for the lab. </param>
         /// <param name="openAccess"> Whether any user or only specified users can register to a lab. </param>
         internal LabSecurityProfile(string registrationCode, LabServicesEnableState? openAccess)

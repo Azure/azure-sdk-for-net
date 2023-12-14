@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Encryption settings for one disk volume. </summary>
     public partial class EncryptionSettingsElement
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="EncryptionSettingsElement"/>. </summary>
         public EncryptionSettingsElement()
         {

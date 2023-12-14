@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Contains the list of gallery applications that should be made available to the VM/VMSS. </summary>
     internal partial class ApplicationProfile
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ApplicationProfile"/>. </summary>
         public ApplicationProfile()
         {

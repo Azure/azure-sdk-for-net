@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ServiceAssociationLinks_List operation. </summary>
     internal partial class ServiceAssociationLinksListResult
     {
-        /// <summary> Initializes a new instance of ServiceAssociationLinksListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAssociationLinksListResult"/>. </summary>
         internal ServiceAssociationLinksListResult()
         {
             Value = new ChangeTrackingList<ServiceAssociationLink>();
         }
 
-        /// <summary> Initializes a new instance of ServiceAssociationLinksListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAssociationLinksListResult"/>. </summary>
         /// <param name="value"> The service association links in a subnet. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal ServiceAssociationLinksListResult(IReadOnlyList<ServiceAssociationLink> value, string nextLink)

@@ -14,10 +14,25 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The NginxDeploymentPatch. </summary>
     public partial class NginxDeploymentPatch
     {
-        /// <summary> Initializes a new instance of NginxDeploymentPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentPatch"/>. </summary>
         public NginxDeploymentPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentPatch"/>. </summary>
+        /// <param name="identity"> Gets or sets the identity. </param>
+        /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="sku"></param>
+        /// <param name="location"></param>
+        /// <param name="properties"></param>
+        internal NginxDeploymentPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, ResourceSku sku, AzureLocation? location, NginxDeploymentUpdateProperties properties)
+        {
+            Identity = identity;
+            Tags = tags;
+            Sku = sku;
+            Location = location;
+            Properties = properties;
         }
 
         /// <summary> Gets or sets the identity. </summary>

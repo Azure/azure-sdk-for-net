@@ -21,9 +21,9 @@ using Azure.ResourceManager.BotService.Models;
 namespace Azure.ResourceManager.BotService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BotChannelResource" /> and their operations.
-    /// Each <see cref="BotChannelResource" /> in the collection will belong to the same instance of <see cref="BotResource" />.
-    /// To get a <see cref="BotChannelCollection" /> instance call the GetBotChannels method from an instance of <see cref="BotResource" />.
+    /// A class representing a collection of <see cref="BotChannelResource"/> and their operations.
+    /// Each <see cref="BotChannelResource"/> in the collection will belong to the same instance of <see cref="BotResource"/>.
+    /// To get a <see cref="BotChannelCollection"/> instance call the GetBotChannels method from an instance of <see cref="BotResource"/>.
     /// </summary>
     public partial class BotChannelCollection : ArmCollection, IEnumerable<BotChannelResource>, IAsyncEnumerable<BotChannelResource>
     {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.BotService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BotChannelResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BotChannelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BotChannelResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _botChannelChannelsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.BotService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BotChannelResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BotChannelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BotChannelResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _botChannelChannelsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -296,6 +296,72 @@ namespace Azure.ResourceManager.BotService
             {
                 var response = _botChannelChannelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Channels_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="channelName"> The name of the Channel resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<BotChannelResource>> GetIfExistsAsync(BotChannelName channelName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _botChannelChannelsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<BotChannelResource>(response.GetRawResponse());
+                return Response.FromValue(new BotChannelResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Channels_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="channelName"> The name of the Channel resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<BotChannelResource> GetIfExists(BotChannelName channelName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _botChannelChannelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<BotChannelResource>(response.GetRawResponse());
+                return Response.FromValue(new BotChannelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

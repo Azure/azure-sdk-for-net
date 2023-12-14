@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseDataMaskingPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseDataMaskingPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseDataMaskingPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource" /> using the GetSynapseDataMaskingPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseDataMaskingPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseDataMaskingPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolResource"/> using the GetSynapseDataMaskingPolicy method.
     /// </summary>
     public partial class SynapseDataMaskingPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseDataMaskingPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="sqlPoolName"> The sqlPoolName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/dataMaskingPolicies/Default";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Synapse
         private readonly DataMaskingPoliciesRestOperations _synapseDataMaskingPolicyDataMaskingPoliciesRestClient;
         private readonly SynapseDataMaskingPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/dataMaskingPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseDataMaskingPolicyResource"/> class for mocking. </summary>
         protected SynapseDataMaskingPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseDataMaskingPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseDataMaskingPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseDataMaskingPolicyResource(ArmClient client, SynapseDataMaskingPolicyData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/dataMaskingPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseDataMaskingRuleResources and their operations over a SynapseDataMaskingRuleResource. </returns>
         public virtual SynapseDataMaskingRuleCollection GetSynapseDataMaskingRules()
         {
-            return GetCachedClient(Client => new SynapseDataMaskingRuleCollection(Client, Id));
+            return GetCachedClient(client => new SynapseDataMaskingRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +112,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="dataMaskingRuleName"> The name of the data masking rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataMaskingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataMaskingRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataMaskingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SynapseDataMaskingRuleResource>> GetSynapseDataMaskingRuleAsync(string dataMaskingRuleName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +135,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="dataMaskingRuleName"> The name of the data masking rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataMaskingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataMaskingRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataMaskingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SynapseDataMaskingRuleResource> GetSynapseDataMaskingRule(string dataMaskingRuleName, CancellationToken cancellationToken = default)
         {

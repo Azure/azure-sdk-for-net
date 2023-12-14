@@ -17,6 +17,12 @@ parameters:
 - name: BuildSnippets
   type: boolean
   default: true
+- name: CheckAOTCompat
+  type: boolean
+  default: false
+- name: AOTTestInputs
+  type: object
+  default: []
 - name: TestSetupSteps
   type: stepList
   default: []
@@ -87,6 +93,7 @@ jobs:
           LogFilePath: $(Build.ArtifactStagingDirectory)/pack.binlog
       - script: >-
           dotnet pack eng/service.proj -warnaserror
+          /p:ValidateRunApiCompat=true
           /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:IncludeTests=false
@@ -139,6 +146,12 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
         parameters:
           Artifacts: ${{ parameters.Artifacts }}
+      
+      - ${{ if eq(parameters.CheckAOTCompat, 'true') }}:
+        - template: /eng/pipelines/templates/steps/aot-compatibility.yml
+          parameters:
+            ServiceDirectory: ${{ parameters.ServiceDirectory }}
+            AOTTestInputs: ${{ parameters.AOTTestInputs }}
 
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: "Component Detection"

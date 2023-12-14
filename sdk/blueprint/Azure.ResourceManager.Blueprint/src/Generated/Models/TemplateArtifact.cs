@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Blueprint artifact that deploys a Resource Manager template. </summary>
     public partial class TemplateArtifact : ArtifactData
     {
-        /// <summary> Initializes a new instance of TemplateArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateArtifact"/>. </summary>
         /// <param name="template"> The Resource Manager template blueprint artifact body. </param>
         /// <param name="parameters"> Resource Manager template blueprint artifact parameter values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="template"/> or <paramref name="parameters"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             Kind = ArtifactKind.Template;
         }
 
-        /// <summary> Initializes a new instance of TemplateArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateArtifact"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

@@ -16,9 +16,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List disk access operation response. </summary>
     internal partial class DiskAccessList
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DiskAccessList"/>. </summary>
         /// <param name="value"> A list of disk access resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>

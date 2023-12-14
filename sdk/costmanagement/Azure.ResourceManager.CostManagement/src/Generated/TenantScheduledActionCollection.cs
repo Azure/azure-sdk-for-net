@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TenantScheduledActionResource" /> and their operations.
-    /// Each <see cref="TenantScheduledActionResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="TenantScheduledActionCollection" /> instance call the GetTenantScheduledActions method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="TenantScheduledActionResource"/> and their operations.
+    /// Each <see cref="TenantScheduledActionResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="TenantScheduledActionCollection"/> instance call the GetTenantScheduledActions method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class TenantScheduledActionCollection : ArmCollection
     {
@@ -271,6 +271,80 @@ namespace Azure.ResourceManager.CostManagement
             {
                 var response = _tenantScheduledActionScheduledActionsRestClient.Get(name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Scheduled action name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<NullableResponse<TenantScheduledActionResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _tenantScheduledActionScheduledActionsClientDiagnostics.CreateScope("TenantScheduledActionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _tenantScheduledActionScheduledActionsRestClient.GetAsync(name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<TenantScheduledActionResource>(response.GetRawResponse());
+                return Response.FromValue(new TenantScheduledActionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CostManagement/scheduledActions/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Scheduled action name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual NullableResponse<TenantScheduledActionResource> GetIfExists(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _tenantScheduledActionScheduledActionsClientDiagnostics.CreateScope("TenantScheduledActionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _tenantScheduledActionScheduledActionsRestClient.Get(name, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<TenantScheduledActionResource>(response.GetRawResponse());
+                return Response.FromValue(new TenantScheduledActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

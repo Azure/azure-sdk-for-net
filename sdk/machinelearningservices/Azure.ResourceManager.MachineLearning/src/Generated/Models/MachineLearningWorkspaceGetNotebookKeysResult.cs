@@ -10,23 +10,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningWorkspaceGetNotebookKeysResult. </summary>
     public partial class MachineLearningWorkspaceGetNotebookKeysResult
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetNotebookKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceGetNotebookKeysResult"/>. </summary>
         internal MachineLearningWorkspaceGetNotebookKeysResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetNotebookKeysResult. </summary>
-        /// <param name="primaryAccessKey"></param>
-        /// <param name="secondaryAccessKey"></param>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceGetNotebookKeysResult"/>. </summary>
+        /// <param name="primaryAccessKey"> The primary access key of the Notebook. </param>
+        /// <param name="secondaryAccessKey"> The secondary access key of the Notebook. </param>
         internal MachineLearningWorkspaceGetNotebookKeysResult(string primaryAccessKey, string secondaryAccessKey)
         {
             PrimaryAccessKey = primaryAccessKey;
             SecondaryAccessKey = secondaryAccessKey;
         }
 
-        /// <summary> Gets the primary access key. </summary>
+        /// <summary> The primary access key of the Notebook. </summary>
         public string PrimaryAccessKey { get; }
-        /// <summary> Gets the secondary access key. </summary>
+        /// <summary> The secondary access key of the Notebook. </summary>
         public string SecondaryAccessKey { get; }
     }
 }

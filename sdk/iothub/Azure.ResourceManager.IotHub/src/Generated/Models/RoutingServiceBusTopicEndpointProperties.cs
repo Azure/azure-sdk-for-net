@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties related to service bus topic endpoint types. </summary>
     public partial class RoutingServiceBusTopicEndpointProperties
     {
-        /// <summary> Initializes a new instance of RoutingServiceBusTopicEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingServiceBusTopicEndpointProperties"/>. </summary>
         /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types.  The name need not be the same as the actual topic name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public RoutingServiceBusTopicEndpointProperties(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of RoutingServiceBusTopicEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingServiceBusTopicEndpointProperties"/>. </summary>
         /// <param name="id"> Id of the service bus topic endpoint. </param>
         /// <param name="connectionString"> The connection string of the service bus topic endpoint. </param>
         /// <param name="endpoint"> The url of the service bus topic endpoint. It must include the protocol sb://. </param>

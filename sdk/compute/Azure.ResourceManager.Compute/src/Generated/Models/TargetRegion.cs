@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the target region information. </summary>
     public partial class TargetRegion
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="TargetRegion"/>. </summary>
         /// <param name="name"> The name of the region. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

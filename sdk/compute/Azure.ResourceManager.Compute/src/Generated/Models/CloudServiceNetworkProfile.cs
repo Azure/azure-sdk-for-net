@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Network Profile for the cloud service. </summary>
     public partial class CloudServiceNetworkProfile
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="CloudServiceNetworkProfile"/>. </summary>
         public CloudServiceNetworkProfile()
         {

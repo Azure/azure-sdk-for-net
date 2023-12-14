@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"u8))
+                if (property.NameEquals("@nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

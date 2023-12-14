@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> RouteTable route. </summary>
     public partial class HubRoute
     {
-        /// <summary> Initializes a new instance of HubRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubRoute"/>. </summary>
         /// <param name="name"> The name of the Route that is unique within a RouteTable. This name can be used to access this route. </param>
         /// <param name="destinationType"> The type of destinations (eg: CIDR, ResourceId, Service). </param>
         /// <param name="destinations"> List of all destinations. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             NextHop = nextHop;
         }
 
-        /// <summary> Initializes a new instance of HubRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubRoute"/>. </summary>
         /// <param name="name"> The name of the Route that is unique within a RouteTable. This name can be used to access this route. </param>
         /// <param name="destinationType"> The type of destinations (eg: CIDR, ResourceId, Service). </param>
         /// <param name="destinations"> List of all destinations. </param>

@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The instance view of a dedicated host. </summary>
     public partial class DedicatedHostInstanceView
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        protected internal Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DedicatedHostInstanceView"/>. </summary>
         internal DedicatedHostInstanceView()
         {

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for task that migrates SQL Server databases to Azure SQL Database Managed Instance online scenario. </summary>
     public partial class MigrateSqlServerSqlMISyncTaskInput : SqlServerSqlMISyncTaskInput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskInput"/>. </summary>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <param name="storageResourceId"> Fully qualified resourceId of storage. </param>
         /// <param name="sourceConnectionInfo"> Connection information for source SQL Server. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Argument.AssertNotNull(azureApp, nameof(azureApp));
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskInput"/>. </summary>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <param name="backupFileShare"> Backup file share information for all selected databases. </param>
         /// <param name="storageResourceId"> Fully qualified resourceId of storage. </param>

@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a MongoCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MongoClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMongoClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetMongoCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MongoClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMongoClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetMongoCluster method.
     /// </summary>
     public partial class MongoClusterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MongoClusterResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="mongoClusterName"> The mongoClusterName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string mongoClusterName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly MongoClustersRestOperations _mongoClusterRestClient;
         private readonly MongoClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/mongoClusters";
+
         /// <summary> Initializes a new instance of the <see cref="MongoClusterResource"/> class for mocking. </summary>
         protected MongoClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MongoClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MongoClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MongoClusterResource(ArmClient client, MongoClusterData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/mongoClusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of CosmosDBFirewallRuleResources and their operations over a CosmosDBFirewallRuleResource. </returns>
         public virtual CosmosDBFirewallRuleCollection GetCosmosDBFirewallRules()
         {
-            return GetCachedClient(Client => new CosmosDBFirewallRuleCollection(Client, Id));
+            return GetCachedClient(client => new CosmosDBFirewallRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="firewallRuleName"> The name of the mongo cluster firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CosmosDBFirewallRuleResource>> GetCosmosDBFirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="firewallRuleName"> The name of the mongo cluster firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CosmosDBFirewallRuleResource> GetCosmosDBFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
         {

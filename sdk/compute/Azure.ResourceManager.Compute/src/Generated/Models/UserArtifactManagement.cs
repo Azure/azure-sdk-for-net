@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The UserArtifactManagement. </summary>
     public partial class UserArtifactManagement
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="UserArtifactManagement"/>. </summary>
         /// <param name="install"> Required. The path and arguments to install the gallery application. This is limited to 4096 characters. </param>
         /// <param name="remove"> Required. The path and arguments to remove the gallery application. This is limited to 4096 characters. </param>

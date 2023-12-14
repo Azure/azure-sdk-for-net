@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The properties that are associated with an aggregate function. </summary>
     public partial class AggregateFunctionProperties : StreamingJobFunctionProperties
     {
-        /// <summary> Initializes a new instance of AggregateFunctionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AggregateFunctionProperties"/>. </summary>
         public AggregateFunctionProperties()
         {
             FunctionPropertiesType = "Aggregate";
         }
 
-        /// <summary> Initializes a new instance of AggregateFunctionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AggregateFunctionProperties"/>. </summary>
         /// <param name="functionPropertiesType"> Indicates the type of function. </param>
         /// <param name="etag"> The current entity tag for the function. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </param>
         /// <param name="inputs"></param>

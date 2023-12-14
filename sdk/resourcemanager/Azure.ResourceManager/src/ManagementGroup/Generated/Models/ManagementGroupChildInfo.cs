@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> The child information of a management group. </summary>
     public partial class ManagementGroupChildInfo
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ManagementGroupChildInfo"/>. </summary>
         internal ManagementGroupChildInfo()
         {

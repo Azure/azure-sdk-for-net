@@ -21,9 +21,9 @@ using Azure.ResourceManager.SecurityInsights.Models;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityInsightsAlertRuleActionResource" /> and their operations.
-    /// Each <see cref="SecurityInsightsAlertRuleActionResource" /> in the collection will belong to the same instance of <see cref="SecurityInsightsAlertRuleResource" />.
-    /// To get a <see cref="SecurityInsightsAlertRuleActionCollection" /> instance call the GetSecurityInsightsAlertRuleActions method from an instance of <see cref="SecurityInsightsAlertRuleResource" />.
+    /// A class representing a collection of <see cref="SecurityInsightsAlertRuleActionResource"/> and their operations.
+    /// Each <see cref="SecurityInsightsAlertRuleActionResource"/> in the collection will belong to the same instance of <see cref="SecurityInsightsAlertRuleResource"/>.
+    /// To get a <see cref="SecurityInsightsAlertRuleActionCollection"/> instance call the GetSecurityInsightsAlertRuleActions method from an instance of <see cref="SecurityInsightsAlertRuleResource"/>.
     /// </summary>
     public partial class SecurityInsightsAlertRuleActionCollection : ArmCollection, IEnumerable<SecurityInsightsAlertRuleActionResource>, IAsyncEnumerable<SecurityInsightsAlertRuleActionResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityInsightsAlertRuleActionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityInsightsAlertRuleActionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityInsightsAlertRuleActionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsAlertRuleActionActionsRestClient.CreateListByAlertRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityInsightsAlertRuleActionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityInsightsAlertRuleActionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityInsightsAlertRuleActionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsAlertRuleActionActionsRestClient.CreateListByAlertRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -316,6 +316,80 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 var response = _securityInsightsAlertRuleActionActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, actionId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Actions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="actionId"> Action ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="actionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="actionId"/> is null. </exception>
+        public virtual async Task<NullableResponse<SecurityInsightsAlertRuleActionResource>> GetIfExistsAsync(string actionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(actionId, nameof(actionId));
+
+            using var scope = _securityInsightsAlertRuleActionActionsClientDiagnostics.CreateScope("SecurityInsightsAlertRuleActionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _securityInsightsAlertRuleActionActionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, actionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityInsightsAlertRuleActionResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsAlertRuleActionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Actions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="actionId"> Action ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="actionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="actionId"/> is null. </exception>
+        public virtual NullableResponse<SecurityInsightsAlertRuleActionResource> GetIfExists(string actionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(actionId, nameof(actionId));
+
+            using var scope = _securityInsightsAlertRuleActionActionsClientDiagnostics.CreateScope("SecurityInsightsAlertRuleActionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _securityInsightsAlertRuleActionActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, actionId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityInsightsAlertRuleActionResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsAlertRuleActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

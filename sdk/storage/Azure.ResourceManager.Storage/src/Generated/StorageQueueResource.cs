@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Storage
 {
     /// <summary>
     /// A Class representing a StorageQueue along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageQueueResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStorageQueueResource method.
-    /// Otherwise you can get one from its parent resource <see cref="QueueServiceResource" /> using the GetStorageQueue method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageQueueResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStorageQueueResource method.
+    /// Otherwise you can get one from its parent resource <see cref="QueueServiceResource"/> using the GetStorageQueue method.
     /// </summary>
     public partial class StorageQueueResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StorageQueueResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="queueName"> The queueName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string queueName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Storage
         private readonly QueueRestOperations _storageQueueQueueRestClient;
         private readonly StorageQueueData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/queueServices/queues";
+
         /// <summary> Initializes a new instance of the <see cref="StorageQueueResource"/> class for mocking. </summary>
         protected StorageQueueResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StorageQueueResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageQueueResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StorageQueueResource(ArmClient client, StorageQueueData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Storage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/queueServices/queues";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

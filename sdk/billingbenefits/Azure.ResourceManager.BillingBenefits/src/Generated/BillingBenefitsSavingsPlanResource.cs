@@ -20,13 +20,15 @@ namespace Azure.ResourceManager.BillingBenefits
 {
     /// <summary>
     /// A Class representing a BillingBenefitsSavingsPlan along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BillingBenefitsSavingsPlanResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBillingBenefitsSavingsPlanResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BillingBenefitsSavingsPlanOrderResource" /> using the GetBillingBenefitsSavingsPlan method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingBenefitsSavingsPlanResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBillingBenefitsSavingsPlanResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BillingBenefitsSavingsPlanOrderResource"/> using the GetBillingBenefitsSavingsPlan method.
     /// </summary>
     public partial class BillingBenefitsSavingsPlanResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BillingBenefitsSavingsPlanResource"/> instance. </summary>
+        /// <param name="savingsPlanOrderId"> The savingsPlanOrderId. </param>
+        /// <param name="savingsPlanId"> The savingsPlanId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string savingsPlanOrderId, string savingsPlanId)
         {
             var resourceId = $"/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}";
@@ -37,12 +39,15 @@ namespace Azure.ResourceManager.BillingBenefits
         private readonly SavingsPlanRestOperations _billingBenefitsSavingsPlanSavingsPlanRestClient;
         private readonly BillingBenefitsSavingsPlanData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.BillingBenefits/savingsPlanOrders/savingsPlans";
+
         /// <summary> Initializes a new instance of the <see cref="BillingBenefitsSavingsPlanResource"/> class for mocking. </summary>
         protected BillingBenefitsSavingsPlanResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BillingBenefitsSavingsPlanResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BillingBenefitsSavingsPlanResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingBenefitsSavingsPlanResource(ArmClient client, BillingBenefitsSavingsPlanData data) : this(client, data.Id)
@@ -63,9 +68,6 @@ namespace Azure.ResourceManager.BillingBenefits
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.BillingBenefits/savingsPlanOrders/savingsPlans";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -238,7 +240,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="content"> Request body for validating a savings plan patch request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SavingsPlanValidateResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SavingsPlanValidateResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SavingsPlanValidateResult> ValidateUpdateAsync(SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -264,7 +266,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="content"> Request body for validating a savings plan patch request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="SavingsPlanValidateResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SavingsPlanValidateResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SavingsPlanValidateResult> ValidateUpdate(SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));

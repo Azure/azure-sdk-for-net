@@ -14,11 +14,30 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> An update to a private cloud resource. </summary>
     public partial class AvsPrivateCloudPatch
     {
-        /// <summary> Initializes a new instance of AvsPrivateCloudPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudPatch"/>. </summary>
         public AvsPrivateCloudPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             IdentitySources = new ChangeTrackingList<SingleSignOnIdentitySource>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The identity of the private cloud, if configured. Current supported identity types: SystemAssigned, None. </param>
+        /// <param name="managementCluster"> The default cluster used for management. </param>
+        /// <param name="internet"> Connectivity to internet is enabled or disabled. </param>
+        /// <param name="identitySources"> vCenter Single Sign On Identity Sources. </param>
+        /// <param name="availability"> Properties describing how the cloud is distributed across availability zones. </param>
+        /// <param name="encryption"> Customer managed key encryption, can be enabled or disabled. </param>
+        internal AvsPrivateCloudPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption)
+        {
+            Tags = tags;
+            Identity = identity;
+            ManagementCluster = managementCluster;
+            Internet = internet;
+            IdentitySources = identitySources;
+            Availability = availability;
+            Encryption = encryption;
         }
 
         /// <summary> Resource tags. </summary>

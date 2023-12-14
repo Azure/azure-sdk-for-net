@@ -71,6 +71,7 @@
     "dotnetcli",
     "dtmf",
     "eastus",
+    "entra",
     "epsg",
     "expando",
     "fhir",
@@ -114,6 +115,10 @@
     "unhold",
     "uninstrumented",
     "vcpus",
+    "Vectorizable",
+    "Vectorizer",
+    "Vectorizers",
+    "vhdx",
     "vmss",
     "vnet",
     "westcentralus",
@@ -426,6 +431,12 @@
       ]
     },
     {
+      "filename": "**/sdk/defendereasm/**/*.cs",
+      "words": [
+        "easm"
+      ]
+    },
+    {
       "filename": "**/sdk/desktopvirtualization/**/*.cs",
       "words": [
         "adfs",
@@ -439,6 +450,13 @@
       "filename": "**/sdk/deviceupdate/**/*.cs",
       "words": [
         "Fqdns"
+      ]
+    },
+    {
+      "filename": "**/sdk/documentintelligence/**/*.cs",
+      "words": [
+        "UPCA",
+        "UPCE"
       ]
     },
     {
@@ -628,7 +646,9 @@
         "Ocsp",
         "Afri",
         "Apac",
-        "Latam"
+        "Latam",
+        "Fips",
+        "Diffie"
       ]
     },
     {
@@ -868,6 +888,14 @@
       ]
     },
     {
+      "filename": "**/sdk/recoveryservices-datareplication/**/*.cs",
+      "words": [
+        "dras",
+        "nics",
+        "reprotect"
+      ]
+    },
+    {
       "filename": "**/sdk/recoveryservices-siterecovery/**/*.cs",
       "words": [
         "vcenter",
@@ -881,6 +909,7 @@
         "ahub",
         "payg",
         "vcpus",
+        "esxi",
         "seleted",
         "dras"
       ]
@@ -889,6 +918,14 @@
       "filename": "**/sdk/reservations/**/*.cs",
       "words": [
         "Unprovisioning"
+      ]
+    },
+    {
+      "filename": "**/sdk/resourceconnector/Azure.ResourceManager.ResourceConnector/api/*.cs",
+      "words": [
+        "capi",
+        "kvaio",
+        "scvmm"
       ]
     },
     {
@@ -901,6 +938,12 @@
       "filename": "**/sdk/resourcehealth/**/*.cs",
       "words": [
         "occured"
+      ]
+    },
+    {
+      "filename": "**/sdk/schemaregistry/**/*.cs",
+      "words": [
+        "protobuf"
       ]
     },
     {
@@ -1200,6 +1243,21 @@
         "rpath",
         "runpath",
         "Cves"
+      ]
+    },
+    {
+      "filename": "**/sdk/monitor/**/*.cs",
+      "words": [
+        "resourceid"
+      ]
+    },
+    {
+      "filename": "**/sdk/hybridnetwork/**/*.cs",
+      "words": [
+        "Nfvi",
+        "nfvi",
+        "NFVIs",
+        "nfvis"
       ]
     }
   ],

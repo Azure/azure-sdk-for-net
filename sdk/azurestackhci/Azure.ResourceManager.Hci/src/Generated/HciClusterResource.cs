@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.Hci
 {
     /// <summary>
     /// A Class representing a HciCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HciClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHciClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetHciCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHciClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHciCluster method.
     /// </summary>
     public partial class HciClusterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HciClusterResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}";
@@ -41,12 +44,15 @@ namespace Azure.ResourceManager.Hci
         private readonly OffersRestOperations _offerRestClient;
         private readonly HciClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters";
+
         /// <summary> Initializes a new instance of the <see cref="HciClusterResource"/> class for mocking. </summary>
         protected HciClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HciClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HciClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HciClusterResource(ArmClient client, HciClusterData data) : this(client, data.Id)
@@ -70,9 +76,6 @@ namespace Azure.ResourceManager.Hci
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -99,7 +102,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of ArcSettingResources and their operations over a ArcSettingResource. </returns>
         public virtual ArcSettingCollection GetArcSettings()
         {
-            return GetCachedClient(Client => new ArcSettingCollection(Client, Id));
+            return GetCachedClient(client => new ArcSettingCollection(client, Id));
         }
 
         /// <summary>
@@ -117,8 +120,8 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ArcSettingResource>> GetArcSettingAsync(string arcSettingName, CancellationToken cancellationToken = default)
         {
@@ -140,8 +143,8 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ArcSettingResource> GetArcSetting(string arcSettingName, CancellationToken cancellationToken = default)
         {
@@ -152,7 +155,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of PublisherResources and their operations over a PublisherResource. </returns>
         public virtual PublisherCollection GetPublishers()
         {
-            return GetCachedClient(Client => new PublisherCollection(Client, Id));
+            return GetCachedClient(client => new PublisherCollection(client, Id));
         }
 
         /// <summary>
@@ -170,8 +173,8 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="publisherName"> The name of the publisher available within HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PublisherResource>> GetPublisherAsync(string publisherName, CancellationToken cancellationToken = default)
         {
@@ -193,8 +196,8 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="publisherName"> The name of the publisher available within HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PublisherResource> GetPublisher(string publisherName, CancellationToken cancellationToken = default)
         {
@@ -202,7 +205,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Gets an object representing a UpdateSummaryResource along with the instance operations that can be performed on it in the HciCluster. </summary>
-        /// <returns> Returns a <see cref="UpdateSummaryResource" /> object. </returns>
+        /// <returns> Returns a <see cref="UpdateSummaryResource"/> object. </returns>
         public virtual UpdateSummaryResource GetUpdateSummary()
         {
             return new UpdateSummaryResource(Client, Id.AppendChildResource("updateSummaries", "default"));
@@ -212,7 +215,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of UpdateResources and their operations over a UpdateResource. </returns>
         public virtual UpdateCollection GetUpdates()
         {
-            return GetCachedClient(Client => new UpdateCollection(Client, Id));
+            return GetCachedClient(client => new UpdateCollection(client, Id));
         }
 
         /// <summary>
@@ -230,8 +233,8 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="updateName"> The name of the Update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="updateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="updateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<UpdateResource>> GetUpdateAsync(string updateName, CancellationToken cancellationToken = default)
         {
@@ -253,8 +256,8 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="updateName"> The name of the Update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="updateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="updateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<UpdateResource> GetUpdate(string updateName, CancellationToken cancellationToken = default)
         {
@@ -696,7 +699,7 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OfferResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OfferResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OfferResource> GetOffersAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _offerRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
@@ -719,7 +722,7 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OfferResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OfferResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OfferResource> GetOffers(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _offerRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);

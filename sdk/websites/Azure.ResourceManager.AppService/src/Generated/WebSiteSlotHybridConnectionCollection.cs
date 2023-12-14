@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WebSiteSlotHybridConnectionResource" /> and their operations.
-    /// Each <see cref="WebSiteSlotHybridConnectionResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotResource" />.
-    /// To get a <see cref="WebSiteSlotHybridConnectionCollection" /> instance call the GetWebSiteSlotHybridConnections method from an instance of <see cref="WebSiteSlotResource" />.
+    /// A class representing a collection of <see cref="WebSiteSlotHybridConnectionResource"/> and their operations.
+    /// Each <see cref="WebSiteSlotHybridConnectionResource"/> in the collection will belong to the same instance of <see cref="WebSiteSlotResource"/>.
+    /// To get a <see cref="WebSiteSlotHybridConnectionCollection"/> instance call the GetWebSiteSlotHybridConnections method from an instance of <see cref="WebSiteSlotResource"/>.
     /// </summary>
     public partial class WebSiteSlotHybridConnectionCollection : ArmCollection
     {
@@ -268,6 +268,80 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteSlotHybridConnectionWebAppsRestClient.GetRelayServiceConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetRelayServiceConnectionSlot</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="entityName"> Name of the hybrid connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
+        public virtual async Task<NullableResponse<WebSiteSlotHybridConnectionResource>> GetIfExistsAsync(string entityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
+
+            using var scope = _webSiteSlotHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteSlotHybridConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteSlotHybridConnectionWebAppsRestClient.GetRelayServiceConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<WebSiteSlotHybridConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotHybridConnectionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetRelayServiceConnectionSlot</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="entityName"> Name of the hybrid connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
+        public virtual NullableResponse<WebSiteSlotHybridConnectionResource> GetIfExists(string entityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
+
+            using var scope = _webSiteSlotHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteSlotHybridConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _webSiteSlotHybridConnectionWebAppsRestClient.GetRelayServiceConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<WebSiteSlotHybridConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotHybridConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

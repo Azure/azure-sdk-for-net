@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="ApproveAsync(Guid,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call ApproveAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ApprovalClient client = new ApprovalClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.ApproveAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call ApproveAsync with all parameters and request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ApprovalClient client = new ApprovalClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    comment = "<comment>",
+});
+Response response = await client.ApproveAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="Approve(Guid,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Approve.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ApprovalClient client = new ApprovalClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.Approve(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call Approve with all parameters and request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ApprovalClient client = new ApprovalClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    comment = "<comment>",
+});
+Response response = client.Approve(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="RejectAsync(Guid,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call RejectAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ApprovalClient client = new ApprovalClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.RejectAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call RejectAsync with all parameters and request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ApprovalClient client = new ApprovalClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    comment = "<comment>",
+});
+Response response = await client.RejectAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="Reject(Guid,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Reject.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ApprovalClient client = new ApprovalClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.Reject(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call Reject with all parameters and request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ApprovalClient client = new ApprovalClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    comment = "<comment>",
+});
+Response response = client.Reject(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+  </members>
+</doc>

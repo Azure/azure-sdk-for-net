@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class DataProtectionBackupPolicyPropertiesBase
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupPolicyPropertiesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupPolicyPropertiesBase"/>. </summary>
         /// <param name="dataSourceTypes"> Type of datasource for the backup management. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceTypes"/> is null. </exception>
         protected DataProtectionBackupPolicyPropertiesBase(IEnumerable<string> dataSourceTypes)
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             DataSourceTypes = dataSourceTypes.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupPolicyPropertiesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupPolicyPropertiesBase"/>. </summary>
         /// <param name="dataSourceTypes"> Type of datasource for the backup management. </param>
         /// <param name="objectType"></param>
         internal DataProtectionBackupPolicyPropertiesBase(IList<string> dataSourceTypes, string objectType)

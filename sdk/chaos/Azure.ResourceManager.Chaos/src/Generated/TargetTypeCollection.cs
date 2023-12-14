@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TargetTypeResource" /> and their operations.
-    /// Each <see cref="TargetTypeResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="TargetTypeCollection" /> instance call the GetTargetTypes method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="TargetTypeResource"/> and their operations.
+    /// Each <see cref="TargetTypeResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="TargetTypeCollection"/> instance call the GetTargetTypes method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class TargetTypeCollection : ArmCollection, IEnumerable<TargetTypeResource>, IAsyncEnumerable<TargetTypeResource>
     {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TargetTypeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TargetTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TargetTypeResource> GetAllAsync(string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _targetTypeRestClient.CreateListRequest(Id.SubscriptionId, _locationName, continuationToken);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TargetTypeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TargetTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TargetTypeResource> GetAll(string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _targetTypeRestClient.CreateListRequest(Id.SubscriptionId, _locationName, continuationToken);
@@ -241,6 +241,80 @@ namespace Azure.ResourceManager.Chaos
             {
                 var response = _targetTypeRestClient.Get(Id.SubscriptionId, _locationName, targetTypeName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
+        public virtual async Task<NullableResponse<TargetTypeResource>> GetIfExistsAsync(string targetTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
+
+            using var scope = _targetTypeClientDiagnostics.CreateScope("TargetTypeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _targetTypeRestClient.GetAsync(Id.SubscriptionId, _locationName, targetTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<TargetTypeResource>(response.GetRawResponse());
+                return Response.FromValue(new TargetTypeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
+        public virtual NullableResponse<TargetTypeResource> GetIfExists(string targetTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
+
+            using var scope = _targetTypeClientDiagnostics.CreateScope("TargetTypeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _targetTypeRestClient.Get(Id.SubscriptionId, _locationName, targetTypeName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<TargetTypeResource>(response.GetRawResponse());
+                return Response.FromValue(new TargetTypeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

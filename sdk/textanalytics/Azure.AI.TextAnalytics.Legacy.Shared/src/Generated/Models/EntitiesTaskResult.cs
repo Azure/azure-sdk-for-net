@@ -10,12 +10,12 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The EntitiesTaskResult. </summary>
     internal partial class EntitiesTaskResult
     {
-        /// <summary> Initializes a new instance of EntitiesTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntitiesTaskResult"/>. </summary>
         internal EntitiesTaskResult()
         {
         }
 
-        /// <summary> Initializes a new instance of EntitiesTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntitiesTaskResult"/>. </summary>
         /// <param name="results"></param>
         internal EntitiesTaskResult(EntitiesResult results)
         {

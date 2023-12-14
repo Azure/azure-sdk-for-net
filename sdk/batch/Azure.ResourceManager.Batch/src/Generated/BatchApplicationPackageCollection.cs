@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Batch
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BatchApplicationPackageResource" /> and their operations.
-    /// Each <see cref="BatchApplicationPackageResource" /> in the collection will belong to the same instance of <see cref="BatchApplicationResource" />.
-    /// To get a <see cref="BatchApplicationPackageCollection" /> instance call the GetBatchApplicationPackages method from an instance of <see cref="BatchApplicationResource" />.
+    /// A class representing a collection of <see cref="BatchApplicationPackageResource"/> and their operations.
+    /// Each <see cref="BatchApplicationPackageResource"/> in the collection will belong to the same instance of <see cref="BatchApplicationResource"/>.
+    /// To get a <see cref="BatchApplicationPackageCollection"/> instance call the GetBatchApplicationPackages method from an instance of <see cref="BatchApplicationResource"/>.
     /// </summary>
     public partial class BatchApplicationPackageCollection : ArmCollection, IEnumerable<BatchApplicationPackageResource>, IAsyncEnumerable<BatchApplicationPackageResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BatchApplicationPackageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BatchApplicationPackageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BatchApplicationPackageResource> GetAllAsync(int? maxresults = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchApplicationPackageApplicationPackageRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, maxresults);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Batch
         /// </summary>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchApplicationPackageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BatchApplicationPackageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BatchApplicationPackageResource> GetAll(int? maxresults = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchApplicationPackageApplicationPackageRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, maxresults);
@@ -317,6 +317,80 @@ namespace Azure.ResourceManager.Batch
             {
                 var response = _batchApplicationPackageApplicationPackageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}/versions/{versionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationPackage_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="versionName"> The version of the application. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<BatchApplicationPackageResource>> GetIfExistsAsync(string versionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+
+            using var scope = _batchApplicationPackageApplicationPackageClientDiagnostics.CreateScope("BatchApplicationPackageCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _batchApplicationPackageApplicationPackageRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<BatchApplicationPackageResource>(response.GetRawResponse());
+                return Response.FromValue(new BatchApplicationPackageResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}/versions/{versionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationPackage_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="versionName"> The version of the application. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        public virtual NullableResponse<BatchApplicationPackageResource> GetIfExists(string versionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+
+            using var scope = _batchApplicationPackageApplicationPackageClientDiagnostics.CreateScope("BatchApplicationPackageCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _batchApplicationPackageApplicationPackageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<BatchApplicationPackageResource>(response.GetRawResponse());
+                return Response.FromValue(new BatchApplicationPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

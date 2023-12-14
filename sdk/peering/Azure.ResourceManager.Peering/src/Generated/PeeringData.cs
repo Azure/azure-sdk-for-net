@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Peering
     /// </summary>
     public partial class PeeringData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PeeringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU that defines the tier and kind of the peering. </param>
         /// <param name="kind"> The kind of the peering. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Peering
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of PeeringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -200,6 +200,18 @@ namespace Azure.Core.TestFramework
         public string RecordingId { get; private set; }
 
         /// <summary>
+        /// Determines if the ClientRequestId that is sent as part of a request while in Record mode
+        /// should use the default Guid format. The default Guid format contains hyphens.
+        /// </summary>
+        public bool UseDefaultGuidFormatForClientRequestId
+        {
+            get
+            {
+               return _recordedTestBase.UseDefaultGuidFormatForClientRequestId;
+            }
+        }
+
+        /// <summary>
         /// Gets the moment in time that this test is being run.  This is useful
         /// for any test recordings that capture the current time.
         /// </summary>

@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> Describes the result of the request to view descendants. </summary>
     internal partial class DescendantListResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DescendantListResult"/>. </summary>
         internal DescendantListResult()
         {

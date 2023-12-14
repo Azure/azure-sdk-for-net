@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Information about rollback on failed VM instances after a OS Upgrade operation. </summary>
     public partial class RollbackStatusInfo
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="RollbackStatusInfo"/>. </summary>
         internal RollbackStatusInfo()
         {

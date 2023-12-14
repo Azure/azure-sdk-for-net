@@ -74,6 +74,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featurizationSettings");
                 }
             }
+            if (Optional.IsDefined(FixedParameters))
+            {
+                if (FixedParameters != null)
+                {
+                    writer.WritePropertyName("fixedParameters"u8);
+                    writer.WriteObjectValue(FixedParameters);
+                }
+                else
+                {
+                    writer.WriteNull("fixedParameters");
+                }
+            }
             if (Optional.IsDefined(LimitSettings))
             {
                 if (LimitSettings != null)
@@ -96,6 +108,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("nCrossValidations");
+                }
+            }
+            if (Optional.IsCollectionDefined(SearchSpace))
+            {
+                if (SearchSpace != null)
+                {
+                    writer.WritePropertyName("searchSpace"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in SearchSpace)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("searchSpace");
+                }
+            }
+            if (Optional.IsDefined(SweepSettings))
+            {
+                if (SweepSettings != null)
+                {
+                    writer.WritePropertyName("sweepSettings"u8);
+                    writer.WriteObjectValue(SweepSettings);
+                }
+                else
+                {
+                    writer.WriteNull("sweepSettings");
                 }
             }
             if (Optional.IsDefined(TestData))
@@ -193,8 +234,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<ForecastingTrainingSettings> trainingSettings = default;
             Optional<IList<string>> cvSplitColumnNames = default;
             Optional<TableVerticalFeaturizationSettings> featurizationSettings = default;
+            Optional<TableFixedParameters> fixedParameters = default;
             Optional<TableVerticalLimitSettings> limitSettings = default;
             Optional<NCrossValidations> nCrossValidations = default;
+            Optional<IList<TableParameterSubspace>> searchSpace = default;
+            Optional<TableSweepSettings> sweepSettings = default;
             Optional<MachineLearningTableJobInput> testData = default;
             Optional<double?> testDataSize = default;
             Optional<MachineLearningTableJobInput> validationData = default;
@@ -260,6 +304,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     featurizationSettings = TableVerticalFeaturizationSettings.DeserializeTableVerticalFeaturizationSettings(property.Value);
                     continue;
                 }
+                if (property.NameEquals("fixedParameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        fixedParameters = null;
+                        continue;
+                    }
+                    fixedParameters = TableFixedParameters.DeserializeTableFixedParameters(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("limitSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -278,6 +332,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     nCrossValidations = NCrossValidations.DeserializeNCrossValidations(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("searchSpace"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        searchSpace = null;
+                        continue;
+                    }
+                    List<TableParameterSubspace> array = new List<TableParameterSubspace>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TableParameterSubspace.DeserializeTableParameterSubspace(item));
+                    }
+                    searchSpace = array;
+                    continue;
+                }
+                if (property.NameEquals("sweepSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        sweepSettings = null;
+                        continue;
+                    }
+                    sweepSettings = TableSweepSettings.DeserializeTableSweepSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("testData"u8))
@@ -360,7 +439,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningForecasting(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, forecastingSettings.Value, Optional.ToNullable(primaryMetric), trainingSettings.Value, Optional.ToList(cvSplitColumnNames), featurizationSettings.Value, limitSettings.Value, nCrossValidations.Value, testData.Value, Optional.ToNullable(testDataSize), validationData.Value, Optional.ToNullable(validationDataSize), weightColumnName.Value);
+            return new MachineLearningForecasting(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, forecastingSettings.Value, Optional.ToNullable(primaryMetric), trainingSettings.Value, Optional.ToList(cvSplitColumnNames), featurizationSettings.Value, fixedParameters.Value, limitSettings.Value, nCrossValidations.Value, Optional.ToList(searchSpace), sweepSettings.Value, testData.Value, Optional.ToNullable(testDataSize), validationData.Value, Optional.ToNullable(validationDataSize), weightColumnName.Value);
         }
     }
 }

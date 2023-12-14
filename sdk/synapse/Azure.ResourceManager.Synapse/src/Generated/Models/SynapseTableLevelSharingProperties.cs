@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Tables that will be included and excluded in the follower database. </summary>
     public partial class SynapseTableLevelSharingProperties
     {
-        /// <summary> Initializes a new instance of SynapseTableLevelSharingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseTableLevelSharingProperties"/>. </summary>
         public SynapseTableLevelSharingProperties()
         {
             TablesToInclude = new ChangeTrackingList<string>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Synapse.Models
             MaterializedViewsToExclude = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SynapseTableLevelSharingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseTableLevelSharingProperties"/>. </summary>
         /// <param name="tablesToInclude"> List of tables to include in the follower database. </param>
         /// <param name="tablesToExclude"> List of tables to exclude from the follower database. </param>
         /// <param name="externalTablesToInclude"> List of external tables to include in the follower database. </param>

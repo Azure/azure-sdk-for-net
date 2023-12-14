@@ -12,6 +12,6 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> The desired status of the snapshot. </summary>
-        public SnapshotStatus? Status { get; set; }
+        public ConfigurationSnapshotStatus? Status { get; set; }
     }
 }

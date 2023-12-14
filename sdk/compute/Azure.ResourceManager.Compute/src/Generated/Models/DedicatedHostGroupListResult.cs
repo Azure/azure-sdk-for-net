@@ -16,9 +16,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Dedicated Host Group with resource group response. </summary>
     internal partial class DedicatedHostGroupListResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DedicatedHostGroupListResult"/>. </summary>
         /// <param name="value"> The list of dedicated host groups. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>

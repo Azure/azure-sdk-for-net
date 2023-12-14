@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The API resource policies. </summary>
     public partial class LogicApiResourcePolicies
     {
-        /// <summary> Initializes a new instance of LogicApiResourcePolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiResourcePolicies"/>. </summary>
         internal LogicApiResourcePolicies()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicApiResourcePolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiResourcePolicies"/>. </summary>
         /// <param name="content"> The API level only policies XML as embedded content. </param>
         /// <param name="contentLink"> The content link to the policies. </param>
         internal LogicApiResourcePolicies(BinaryData content, string contentLink)
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

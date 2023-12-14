@@ -22,14 +22,17 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a RestorePointGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RestorePointGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRestorePointGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetRestorePointGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RestorePointGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRestorePointGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetRestorePointGroup method.
     /// </summary>
     [DeserializationProxy(typeof(RestorePointGroupData))]
     public partial class RestorePointGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RestorePointGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="restorePointGroupName"> The restorePointGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string restorePointGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointGroupName}";
@@ -40,12 +43,15 @@ namespace Azure.ResourceManager.Compute
         private readonly RestorePointCollectionsRestOperations _restorePointGroupRestorePointCollectionsRestClient;
         private readonly RestorePointGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/restorePointCollections";
+
         /// <summary> Initializes a new instance of the <see cref="RestorePointGroupResource"/> class for mocking. </summary>
         protected RestorePointGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RestorePointGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RestorePointGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RestorePointGroupResource(ArmClient client, RestorePointGroupData data) : this(client, data.Id)
@@ -66,9 +72,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/restorePointCollections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -95,7 +98,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of RestorePointResources and their operations over a RestorePointResource. </returns>
         public virtual RestorePointCollection GetRestorePoints()
         {
-            return GetCachedClient(Client => new RestorePointCollection(Client, Id));
+            return GetCachedClient(client => new RestorePointCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +117,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves information about the run-time state of a restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RestorePointResource>> GetRestorePointAsync(string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
         {
@@ -138,8 +141,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves information about the run-time state of a restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RestorePointResource> GetRestorePoint(string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
         {

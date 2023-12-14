@@ -9,41 +9,47 @@
                 "OSVmImage": "MMSUbuntu20.04",
                 "Pool": "azsdk-pool-mms-ubuntu-2004-general",
                 "TestTargetFramework": "net7.0",
-                "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE"
+                "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE",
+                "SKIP_SIPROUTING_LIVE_TESTS": "TRUE"
             },
             "Ubuntu-20.04_NET6.0": {
                 "OSVmImage": "MMSUbuntu20.04",
                 "Pool": "azsdk-pool-mms-ubuntu-2004-general",
                 "TestTargetFramework": "net6.0",
                 "AZURE_TEST_AGENT": "UBUNTU_2004_NET60",
-                "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "FALSE"
+                "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "FALSE",
+                "SKIP_SIPROUTING_LIVE_TESTS": "TRUE"
             },
 
             "windows2022_NET6.0": {
                 "OSVmImage": "windows-2022",
                 "Pool": "azsdk-pool-mms-win-2022-general",
                 "TestTargetFramework": "net6.0",
-                "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE"
+                "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE",
+                "SKIP_SIPROUTING_LIVE_TESTS": "TRUE"
             },
-            "windows2022_NET461": {
+            "windows2022_NET462": {
                 "OSVmImage": "windows-2022",
                 "Pool": "azsdk-pool-mms-win-2022-general",
-                "TestTargetFramework": "net461",
-                "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE"
+                "TestTargetFramework": "net462",
+                "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE",
+                "SKIP_SIPROUTING_LIVE_TESTS": "TRUE"
             },
 
             "macos-11_NET7.0": {
                 "OSVmImage": "macos-11",
                 "Pool": "Azure Pipelines",
                 "TestTargetFramework": "net7.0",
-                "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE"
+                "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE",
+                "SKIP_SIPROUTING_LIVE_TESTS": "TRUE"
             },
             "macos-11_NET6.0": {
                 "OSVmImage": "macos-11",
                 "Pool": "Azure Pipelines",
                 "TestTargetFramework": "net6.0",
                 "AZURE_TEST_AGENT": "MACOS_1015_NET60",
-                "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "FALSE"
+                "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "FALSE",
+                "SKIP_SIPROUTING_LIVE_TESTS": "TRUE"
             }
         },
         "AdditionalTestArguments": [
@@ -68,6 +74,7 @@
                 }
             },
             "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "FALSE",
+            "SKIP_SIPROUTING_LIVE_TESTS": "FALSE",
             "AZURE_TEST_AGENT": "WINDOWS_2019_NETCORE31"
         }
     ]

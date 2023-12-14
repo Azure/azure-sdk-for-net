@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class IntegrationAccountBatchConfigurationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of IntegrationAccountBatchConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountBatchConfigurationData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The batch configuration properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Logic
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountBatchConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountBatchConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

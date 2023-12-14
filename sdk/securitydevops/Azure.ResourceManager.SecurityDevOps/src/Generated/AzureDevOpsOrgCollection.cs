@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityDevOps
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AzureDevOpsOrgResource" /> and their operations.
-    /// Each <see cref="AzureDevOpsOrgResource" /> in the collection will belong to the same instance of <see cref="AzureDevOpsConnectorResource" />.
-    /// To get an <see cref="AzureDevOpsOrgCollection" /> instance call the GetAzureDevOpsOrgs method from an instance of <see cref="AzureDevOpsConnectorResource" />.
+    /// A class representing a collection of <see cref="AzureDevOpsOrgResource"/> and their operations.
+    /// Each <see cref="AzureDevOpsOrgResource"/> in the collection will belong to the same instance of <see cref="AzureDevOpsConnectorResource"/>.
+    /// To get an <see cref="AzureDevOpsOrgCollection"/> instance call the GetAzureDevOpsOrgs method from an instance of <see cref="AzureDevOpsConnectorResource"/>.
     /// </summary>
     public partial class AzureDevOpsOrgCollection : ArmCollection, IEnumerable<AzureDevOpsOrgResource>, IAsyncEnumerable<AzureDevOpsOrgResource>
     {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureDevOpsOrgResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AzureDevOpsOrgResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureDevOpsOrgResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsOrgRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureDevOpsOrgResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AzureDevOpsOrgResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureDevOpsOrgResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsOrgRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -313,6 +313,80 @@ namespace Azure.ResourceManager.SecurityDevOps
             {
                 var response = _azureDevOpsOrgRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureDevOpsOrgName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/{azureDevOpsConnectorName}/orgs/{azureDevOpsOrgName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureDevOpsOrg_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="azureDevOpsOrgName"> Name of the AzureDevOps Org. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsOrgName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsOrgName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AzureDevOpsOrgResource>> GetIfExistsAsync(string azureDevOpsOrgName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(azureDevOpsOrgName, nameof(azureDevOpsOrgName));
+
+            using var scope = _azureDevOpsOrgClientDiagnostics.CreateScope("AzureDevOpsOrgCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _azureDevOpsOrgRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureDevOpsOrgName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AzureDevOpsOrgResource>(response.GetRawResponse());
+                return Response.FromValue(new AzureDevOpsOrgResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/{azureDevOpsConnectorName}/orgs/{azureDevOpsOrgName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureDevOpsOrg_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="azureDevOpsOrgName"> Name of the AzureDevOps Org. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="azureDevOpsOrgName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsOrgName"/> is null. </exception>
+        public virtual NullableResponse<AzureDevOpsOrgResource> GetIfExists(string azureDevOpsOrgName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(azureDevOpsOrgName, nameof(azureDevOpsOrgName));
+
+            using var scope = _azureDevOpsOrgClientDiagnostics.CreateScope("AzureDevOpsOrgCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _azureDevOpsOrgRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureDevOpsOrgName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AzureDevOpsOrgResource>(response.GetRawResponse());
+                return Response.FromValue(new AzureDevOpsOrgResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

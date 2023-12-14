@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> BGP settings details for a link. </summary>
     public partial class VpnLinkBgpSettings
     {
-        /// <summary> Initializes a new instance of VpnLinkBgpSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnLinkBgpSettings"/>. </summary>
         public VpnLinkBgpSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnLinkBgpSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnLinkBgpSettings"/>. </summary>
         /// <param name="asn"> The BGP speaker's ASN. </param>
         /// <param name="bgpPeeringAddress"> The BGP peering address and BGP identifier of this BGP speaker. </param>
         internal VpnLinkBgpSettings(long? asn, string bgpPeeringAddress)

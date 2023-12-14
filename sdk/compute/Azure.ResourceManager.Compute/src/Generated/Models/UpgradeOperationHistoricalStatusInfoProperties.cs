@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes each OS upgrade on the Virtual Machine Scale Set. </summary>
     public partial class UpgradeOperationHistoricalStatusInfoProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="UpgradeOperationHistoricalStatusInfoProperties"/>. </summary>
         internal UpgradeOperationHistoricalStatusInfoProperties()
         {

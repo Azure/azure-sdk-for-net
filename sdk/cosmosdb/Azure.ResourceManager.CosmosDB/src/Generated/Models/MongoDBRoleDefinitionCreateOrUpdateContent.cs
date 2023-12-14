@@ -13,11 +13,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters to create and update an Azure Cosmos DB Mongo Role Definition. </summary>
     public partial class MongoDBRoleDefinitionCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of MongoDBRoleDefinitionCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBRoleDefinitionCreateOrUpdateContent"/>. </summary>
         public MongoDBRoleDefinitionCreateOrUpdateContent()
         {
             Privileges = new ChangeTrackingList<MongoDBPrivilege>();
             Roles = new ChangeTrackingList<MongoDBRole>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBRoleDefinitionCreateOrUpdateContent"/>. </summary>
+        /// <param name="roleName"> A user-friendly name for the Role Definition. Must be unique for the database account. </param>
+        /// <param name="definitionType"> Indicates whether the Role Definition was built-in or user created. </param>
+        /// <param name="databaseName"> The database name for which access is being granted for this Role Definition. </param>
+        /// <param name="privileges"> A set of privileges contained by the Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Scopes higher than Database are not enforceable as privilege. </param>
+        /// <param name="roles"> The set of roles inherited by this Role Definition. </param>
+        internal MongoDBRoleDefinitionCreateOrUpdateContent(string roleName, MongoDBRoleDefinitionType? definitionType, string databaseName, IList<MongoDBPrivilege> privileges, IList<MongoDBRole> roles)
+        {
+            RoleName = roleName;
+            DefinitionType = definitionType;
+            DatabaseName = databaseName;
+            Privileges = privileges;
+            Roles = roles;
         }
 
         /// <summary> A user-friendly name for the Role Definition. Must be unique for the database account. </summary>

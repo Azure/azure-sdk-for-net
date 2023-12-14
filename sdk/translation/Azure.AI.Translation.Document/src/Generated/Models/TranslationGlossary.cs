@@ -13,7 +13,7 @@ namespace Azure.AI.Translation.Document
     /// <summary> Glossary / translation memory for the request. </summary>
     public partial class TranslationGlossary
     {
-        /// <summary> Initializes a new instance of TranslationGlossary. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationGlossary"/>. </summary>
         /// <param name="glossaryUri">
         /// Location of the glossary.
         /// We will use the file extension to extract the formatting if the format parameter is not supplied.
@@ -29,6 +29,24 @@ namespace Azure.AI.Translation.Document
 
             GlossaryUri = glossaryUri;
             Format = format;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TranslationGlossary"/>. </summary>
+        /// <param name="glossaryUri">
+        /// Location of the glossary.
+        /// We will use the file extension to extract the formatting if the format parameter is not supplied.
+        ///
+        /// If the translation language pair is not present in the glossary, it will not be applied
+        /// </param>
+        /// <param name="format"> Format. </param>
+        /// <param name="formatVersion"> Optional Version.  If not specified, default is used. </param>
+        /// <param name="storageSource"> Storage Source. </param>
+        internal TranslationGlossary(Uri glossaryUri, string format, string formatVersion, string storageSource)
+        {
+            GlossaryUri = glossaryUri;
+            Format = format;
+            FormatVersion = formatVersion;
+            StorageSource = storageSource;
         }
     }
 }

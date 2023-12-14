@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes The zonal capabilities of a SKU. </summary>
     public partial class ComputeResourceSkuZoneDetails
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuZoneDetails"/>. </summary>
         internal ComputeResourceSkuZoneDetails()
         {

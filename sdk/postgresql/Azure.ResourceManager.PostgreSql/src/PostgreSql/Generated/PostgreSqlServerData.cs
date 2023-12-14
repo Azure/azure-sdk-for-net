@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.PostgreSql
     /// </summary>
     public partial class PostgreSqlServerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerData"/>. </summary>
         /// <param name="location"> The location. </param>
         public PostgreSqlServerData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<PostgreSqlServerPrivateEndpointConnection>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

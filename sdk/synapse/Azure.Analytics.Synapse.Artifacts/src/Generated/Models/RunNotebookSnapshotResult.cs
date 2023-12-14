@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Run notebook snapshot result. </summary>
     public partial class RunNotebookSnapshotResult
     {
-        /// <summary> Initializes a new instance of RunNotebookSnapshotResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookSnapshotResult"/>. </summary>
         /// <param name="snapshot"> Run notebook snapshot. </param>
         /// <param name="runId"> Run id. </param>
         /// <param name="runStatus"> Status of the run notebook. </param>
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             RunStatus = runStatus;
         }
 
-        /// <summary> Initializes a new instance of RunNotebookSnapshotResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookSnapshotResult"/>. </summary>
         /// <param name="snapshot"> Run notebook snapshot. </param>
         /// <param name="error"> Run notebook error. </param>
         /// <param name="runId"> Run id. </param>
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="lastCheckedOn"> Timestamp of last update. </param>
         /// <param name="sessionId"> Livy session id. </param>
         /// <param name="sparkPool"> SparkPool name. </param>
-        internal RunNotebookSnapshotResult(RunNotebookSnapshot snapshot, RunNotebookError error, string runId, string runStatus, string lastCheckedOn, long? sessionId, string sparkPool)
+        internal RunNotebookSnapshotResult(RunNotebookSnapshot snapshot, RunNotebookError error, string runId, string runStatus, string lastCheckedOn, string sessionId, string sparkPool)
         {
             Snapshot = snapshot;
             Error = error;
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Timestamp of last update. </summary>
         public string LastCheckedOn { get; }
         /// <summary> Livy session id. </summary>
-        public long? SessionId { get; }
+        public string SessionId { get; }
         /// <summary> SparkPool name. </summary>
         public string SparkPool { get; }
     }

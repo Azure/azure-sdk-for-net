@@ -14,9 +14,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies the network interfaces or the networking configuration of the virtual machine. </summary>
     public partial class VirtualMachineNetworkProfile
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkProfile"/>. </summary>
         public VirtualMachineNetworkProfile()
         {

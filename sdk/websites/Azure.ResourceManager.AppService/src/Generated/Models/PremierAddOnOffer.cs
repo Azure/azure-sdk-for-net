@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Premier add-on offer. </summary>
     public partial class PremierAddOnOffer : ResourceData
     {
-        /// <summary> Initializes a new instance of PremierAddOnOffer. </summary>
+        /// <summary> Initializes a new instance of <see cref="PremierAddOnOffer"/>. </summary>
         public PremierAddOnOffer()
         {
         }
 
-        /// <summary> Initializes a new instance of PremierAddOnOffer. </summary>
+        /// <summary> Initializes a new instance of <see cref="PremierAddOnOffer"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

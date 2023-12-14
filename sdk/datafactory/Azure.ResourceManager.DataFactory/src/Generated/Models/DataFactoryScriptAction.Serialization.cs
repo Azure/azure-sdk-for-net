@@ -24,7 +24,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Roles);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Roles.ToString()).RootElement);
+            using (JsonDocument document = JsonDocument.Parse(Roles))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
 #endif
             if (Optional.IsDefined(Parameters))
             {

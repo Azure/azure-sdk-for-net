@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies VM Size Property settings on the virtual machine. </summary>
     public partial class VirtualMachineSizeProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="VirtualMachineSizeProperties"/>. </summary>
         public VirtualMachineSizeProperties()
         {

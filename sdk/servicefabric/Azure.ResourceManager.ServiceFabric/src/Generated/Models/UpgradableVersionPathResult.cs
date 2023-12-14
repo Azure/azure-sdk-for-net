@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> The list of intermediate cluster code versions for an upgrade or downgrade. Or minimum and maximum upgradable version if no target was given. </summary>
     public partial class UpgradableVersionPathResult
     {
-        /// <summary> Initializes a new instance of UpgradableVersionPathResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpgradableVersionPathResult"/>. </summary>
         internal UpgradableVersionPathResult()
         {
             SupportedPath = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of UpgradableVersionPathResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpgradableVersionPathResult"/>. </summary>
         /// <param name="supportedPath"></param>
         internal UpgradableVersionPathResult(IReadOnlyList<string> supportedPath)
         {

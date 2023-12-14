@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.SecurityDevOps
     /// <summary> A class representing the AzureDevOpsConnector data model. </summary>
     public partial class AzureDevOpsConnectorData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsConnectorData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AzureDevOpsConnectorData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsConnectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

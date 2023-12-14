@@ -13,9 +13,6 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Wrapper resource for tags patch API request only. </summary>
     public partial class TagResourcePatch
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="TagResourcePatch"/>. </summary>
         public TagResourcePatch()
         {
@@ -24,12 +21,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of <see cref="TagResourcePatch"/>. </summary>
         /// <param name="patchMode"> The operation type for the patch API. </param>
         /// <param name="properties"> The set of tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TagResourcePatch(TagPatchMode? patchMode, Tag properties, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TagResourcePatch(TagPatchMode? patchMode, Tag properties)
         {
             PatchMode = patchMode;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The operation type for the patch API. </summary>

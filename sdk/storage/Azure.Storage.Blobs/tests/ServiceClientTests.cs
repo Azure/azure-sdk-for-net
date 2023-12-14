@@ -176,6 +176,77 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task Ctor_DefaultAudience()
+        {
+            // Act - Create new blob client with the OAuth Credential and Audience
+            BlobClientOptions options = GetOptionsWithAudience(BlobAudience.DefaultAudience);
+
+            BlobServiceClient aadService = InstrumentClient(new BlobServiceClient(
+                new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            Response<BlobServiceProperties> properties = await aadService.GetPropertiesAsync();
+            Assert.IsNotNull(properties);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_CustomAudience()
+        {
+            // Arrange
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint));
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            BlobClientOptions options = GetOptionsWithAudience(new BlobAudience($"https://{uriBuilder.AccountName}.blob.core.windows.net/"));
+
+            BlobServiceClient aadService = InstrumentClient(new BlobServiceClient(
+                new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            Response<BlobServiceProperties> properties = await aadService.GetPropertiesAsync();
+            Assert.IsNotNull(properties);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_StorageAccountAudience()
+        {
+            // Arrange
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint));
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            BlobClientOptions options = GetOptionsWithAudience(BlobAudience.CreateBlobServiceAccountAudience(uriBuilder.AccountName));
+
+            BlobServiceClient aadService = InstrumentClient(new BlobServiceClient(
+                new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            Response<BlobServiceProperties> properties = await aadService.GetPropertiesAsync();
+            Assert.IsNotNull(properties);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_AudienceError()
+        {
+            // Act - Create new blob client with the OAuth Credential and Audience
+            BlobClientOptions options = GetOptionsWithAudience(new BlobAudience("https://badaudience.blob.core.windows.net"));
+
+            BlobServiceClient aadContainer = InstrumentClient(new BlobServiceClient(
+                new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
+                new MockCredential(),
+                options));
+
+            // Assert
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                aadContainer.GetPropertiesAsync(),
+                e => Assert.AreEqual(BlobErrorCode.InvalidAuthenticationInfo.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
         public async Task ListContainersSegmentAsync()
         {
             // Arrange

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -14,22 +13,19 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the load balancer resource settings. </summary>
     public partial class LoadBalancerResourceSettings : MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of LoadBalancerResourceSettings. </summary>
-        /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
-        public LoadBalancerResourceSettings(string targetResourceName) : base(targetResourceName)
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerResourceSettings"/>. </summary>
+        public LoadBalancerResourceSettings()
         {
-            Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
-
             Tags = new ChangeTrackingDictionary<string, string>();
             FrontendIPConfigurations = new ChangeTrackingList<LoadBalancerFrontendIPConfigurationResourceSettings>();
             BackendAddressPools = new ChangeTrackingList<LoadBalancerBackendAddressPoolResourceSettings>();
             ResourceType = "Microsoft.Network/loadBalancers";
         }
 
-        /// <summary> Initializes a new instance of LoadBalancerResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
+        /// <param name="targetResourceGroupName"> Gets or sets the target resource group name. </param>
         /// <param name="tags"> Gets or sets the Resource tags. </param>
         /// <param name="sku"> Gets or sets load balancer sku (Basic/Standard). </param>
         /// <param name="frontendIPConfigurations"> Gets or sets the frontend IP configurations of the load balancer. </param>
@@ -38,7 +34,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// Gets or sets the csv list of zones common for all frontend IP configurations. Note this is given
         ///  precedence only if frontend IP configurations settings are not present.
         /// </param>
-        internal LoadBalancerResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, string sku, IList<LoadBalancerFrontendIPConfigurationResourceSettings> frontendIPConfigurations, IList<LoadBalancerBackendAddressPoolResourceSettings> backendAddressPools, string zones) : base(resourceType, targetResourceName)
+        internal LoadBalancerResourceSettings(string resourceType, string targetResourceName, string targetResourceGroupName, IDictionary<string, string> tags, string sku, IList<LoadBalancerFrontendIPConfigurationResourceSettings> frontendIPConfigurations, IList<LoadBalancerBackendAddressPoolResourceSettings> backendAddressPools, string zones) : base(resourceType, targetResourceName, targetResourceGroupName)
         {
             Tags = tags;
             Sku = sku;

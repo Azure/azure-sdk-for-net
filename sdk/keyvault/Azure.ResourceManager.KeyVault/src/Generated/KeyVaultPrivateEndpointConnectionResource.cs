@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.KeyVault
 {
     /// <summary>
     /// A Class representing a KeyVaultPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="KeyVaultPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetKeyVaultPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="KeyVaultResource" /> using the GetKeyVaultPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="KeyVaultPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetKeyVaultPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="KeyVaultResource"/> using the GetKeyVaultPrivateEndpointConnection method.
     /// </summary>
     public partial class KeyVaultPrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="KeyVaultPrivateEndpointConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string privateEndpointConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.KeyVault
         private readonly PrivateEndpointConnectionsRestOperations _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly KeyVaultPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.KeyVault/vaults/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="KeyVaultPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected KeyVaultPrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "KeyVaultPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="KeyVaultPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal KeyVaultPrivateEndpointConnectionResource(ArmClient client, KeyVaultPrivateEndpointConnectionData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.KeyVault
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.KeyVault/vaults/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> Describes the result of the request to list management groups. </summary>
     internal partial class ManagementGroupListResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ManagementGroupListResult"/>. </summary>
         internal ManagementGroupListResult()
         {

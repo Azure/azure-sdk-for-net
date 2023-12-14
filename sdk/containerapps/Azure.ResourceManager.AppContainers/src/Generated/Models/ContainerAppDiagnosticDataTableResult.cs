@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Diagnostics data table. </summary>
     public partial class ContainerAppDiagnosticDataTableResult
     {
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticDataTableResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataTableResult"/>. </summary>
         public ContainerAppDiagnosticDataTableResult()
         {
             Columns = new ChangeTrackingList<ContainerAppDiagnosticDataColumn>();
             Rows = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticDataTableResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataTableResult"/>. </summary>
         /// <param name="tableName"> Table name. </param>
         /// <param name="columns"> Columns in the table. </param>
         /// <param name="rows"> Rows in the table. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
