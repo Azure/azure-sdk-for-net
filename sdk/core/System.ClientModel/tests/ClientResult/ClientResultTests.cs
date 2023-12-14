@@ -13,7 +13,7 @@ public class ClientResultTests
     [Test]
     public void CanCreateOptionalResultFromBool()
     {
-        PipelineResponse response = new PipelineResponse();
+        PipelineResponse response = new MockPipelineRequest();
 
     }
 
