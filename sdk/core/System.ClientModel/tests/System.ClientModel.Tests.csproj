@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp"/>
     <PackageReference Include="Moq" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
@@ -26,10 +27,6 @@
     <Compile Remove="internal/**" />
     <Compile Remove="internal.perf/**" />
     <None Remove="internal.perf/**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="TestHelpers\" />
   </ItemGroup>
 
 </Project>

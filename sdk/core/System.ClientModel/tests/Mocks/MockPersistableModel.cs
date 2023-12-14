@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure;
+using Azure.Core.Serialization;
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using Azure;
-using Azure.Core.Serialization;
 
 namespace ClientModel.Tests.Mocks
 {
@@ -23,10 +23,8 @@ namespace ClientModel.Tests.Mocks
 
         MockPersistableModel IPersistableModel<MockPersistableModel>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            throw new NotImplementedException();
-
-            //dynamic json = data.ToDynamicFromJson(JsonPropertyNames.CamelCase);
-            //return new MockPersistableModel(json.IntValue, json.StringValue);
+            dynamic json = data.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            return new MockPersistableModel(json.IntValue, json.StringValue);
         }
 
         string IPersistableModel<MockPersistableModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
@@ -36,12 +34,10 @@ namespace ClientModel.Tests.Mocks
 
         BinaryData IPersistableModel<MockPersistableModel>.Write(ModelReaderWriterOptions options)
         {
-            throw new NotImplementedException();
-
-            //dynamic json = BinaryData.FromString("""{}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
-            //json.IntValue = IntValue;
-            //json.StringValue = StringValue;
-            //return BinaryData.FromString(json.ToString());
+            dynamic json = BinaryData.FromString("""{}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            json.IntValue = IntValue;
+            json.StringValue = StringValue;
+            return BinaryData.FromString(json.ToString());
         }
     }
 }
