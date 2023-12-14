@@ -207,7 +207,7 @@ namespace Azure.Core.Tests
             activity.Stop();
 
             string headerName = Activity.DefaultIdFormat == ActivityIdFormat.W3C ? "traceparent" : "Request-Id";
-            Assert.True(transport.SingleRequest.TryGetHeader(headerName, out string requestId));
+            Assert.True(transport.SingleRequest.TryGetHeaderInternal(headerName, out string requestId));
             Assert.AreEqual(activity.Id, requestId);
         }
 

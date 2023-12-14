@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
+using System.ClientModel.Primitives;
 using System.Reflection;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests

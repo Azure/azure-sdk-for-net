@@ -8,11 +8,18 @@
     <NoWarn>$(NoWarn);AZC0001</NoWarn>
     <PackageIcon>DotNetPackageIcon.png</PackageIcon>
     <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>
+    <NoWarn>$(NoWarn);AZC0001;AZC0012;AZC0014;CS1591;NETSDK1138</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Memory.Data" />
     <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.Text.Encodings.Web" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\AppContextSwitchHelper.cs" LinkBase="Shared" />
+  </ItemGroup>
+  
 </Project>
