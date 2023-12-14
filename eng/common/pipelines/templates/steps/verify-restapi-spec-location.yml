@@ -1,10 +1,11 @@
 parameters:
-- name: PackageName
-  type: string
-  default: ''
 - name: ServiceDirectory
   type: string
   default: ''
+- name: PackageName
+  type: string
+  default: ''
+
 steps:
   - task: Powershell@2
     inputs:
