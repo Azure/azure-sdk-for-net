@@ -44,33 +44,4 @@ internal static class PipelineProtocolExtensions
 
         throw new ClientRequestException(message.Response);
     }
-
-    public static async ValueTask<OptionalClientResult<bool>> ProcessHeadAsBoolMessageAsync(this ClientPipeline pipeline, PipelineMessage message, RequestOptions requestContext)
-    {
-        PipelineResponse response = await pipeline.ProcessMessageAsync(message, requestContext).ConfigureAwait(false);
-        switch (response.Status)
-        {
-            case >= 200 and < 300:
-                return ClientResult.FromOptionalValue(true, response);
-            case >= 400 and < 500:
-                return ClientResult.FromOptionalValue(false, response);
-            default:
-                return new ErrorOutputMessage<bool>(response, new ClientRequestException(response));
-        }
-    }
-
-    public static OptionalClientResult<bool> ProcessHeadAsBoolMessage(this ClientPipeline pipeline, PipelineMessage message, RequestOptions requestContext)
-    {
-        PipelineResponse response = pipeline.ProcessMessage(message, requestContext);
-        switch (response.Status)
-        {
-            case >= 200 and < 300:
-                return ClientResult.FromOptionalValue(true, response);
-            case >= 400 and < 500:
-                return ClientResult.FromOptionalValue(false, response);
-            default:
-                return new ErrorOutputMessage<bool>(response, new ClientRequestException(response));
-        }
-    }
-
 }

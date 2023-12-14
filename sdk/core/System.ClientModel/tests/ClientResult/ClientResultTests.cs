@@ -3,7 +3,6 @@
 
 using NUnit.Framework;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using TestHelpers.Internal;
 
 namespace System.ClientModel.Tests;
@@ -13,16 +12,42 @@ public class ClientResultTests
     [Test]
     public void CanCreateOptionalResultFromBool()
     {
-        PipelineResponse response = new MockPipelineRequest();
+        // This tests simulates creation of the result returned from a HEAD request.
 
+        PipelineResponse response = new MockPipelineResponse(200);
+        OptionalClientResult<bool> result = ClientResult.FromOptionalValue(true, response);
+
+        Assert.IsTrue(result.Value);
+        Assert.IsTrue(result.HasValue);
+        Assert.AreEqual(response.Status, result.GetRawResponse().Status);
+
+        response = new MockPipelineResponse(400);
+        result = ClientResult.FromOptionalValue(false, response);
+
+        Assert.IsFalse(result.Value);
+        Assert.IsTrue(result.HasValue);
+        Assert.AreEqual(response.Status, result.GetRawResponse().Status);
+    }
+
+    [Test]
+    public void CanCreateDerivedOptionalResult()
+    {
+        // This tests simulates creation of the result returned from a HEAD request.
+
+        PipelineResponse response = new MockPipelineResponse(500);
+        OptionalClientResult<bool> result = new MockErrorResult<bool>(response, new ClientRequestException(response));
+
+        Assert.Throws<ClientRequestException>(() => { bool b = result.Value; });
+        Assert.IsFalse(result.HasValue);
+        Assert.AreEqual(response.Status, result.GetRawResponse().Status);
     }
 
     #region Helpers
-    private class ErrorOutputMessage<T> : OptionalClientResult<T>
+    private class MockErrorResult<T> : OptionalClientResult<T>
     {
         private readonly ClientRequestException _exception;
 
-        public ErrorOutputMessage(PipelineResponse response, ClientRequestException exception)
+        public MockErrorResult(PipelineResponse response, ClientRequestException exception)
             : base(default, response)
         {
             _exception = exception;

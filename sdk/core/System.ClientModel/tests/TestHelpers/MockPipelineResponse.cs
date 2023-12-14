@@ -17,10 +17,10 @@ internal class MockPipelineResponse : PipelineResponse
 
     private bool _disposed;
 
-    public MockPipelineResponse()
+    public MockPipelineResponse(int status = 0, string reasonPhrase = "")
     {
-        _status = 0;
-        _reasonPhrase = string.Empty;
+        _status = status;
+        _reasonPhrase = reasonPhrase;
         _headers = new MockMessageHeaders();
     }
 
