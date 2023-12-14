@@ -41,7 +41,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="endpoint"> The DevCenter-specific URI to operate on. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DeploymentEnvironmentsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureDeveloperDevCenterClientOptions())
+        public DeploymentEnvironmentsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DevCenterClientOptions())
         {
         }
 
@@ -50,11 +50,11 @@ namespace Azure.Developer.DevCenter
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DeploymentEnvironmentsClient(Uri endpoint, TokenCredential credential, AzureDeveloperDevCenterClientOptions options)
+        public DeploymentEnvironmentsClient(Uri endpoint, TokenCredential credential, DevCenterClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzureDeveloperDevCenterClientOptions();
+            options ??= new DevCenterClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;

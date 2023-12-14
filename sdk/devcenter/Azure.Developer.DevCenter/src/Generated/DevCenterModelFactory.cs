@@ -13,7 +13,7 @@ using Azure;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class DeveloperDevCenterModelFactory
+    public static partial class DevCenterModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.DevCenterProject"/>. </summary>
         /// <param name="name"> Name of the project. </param>
