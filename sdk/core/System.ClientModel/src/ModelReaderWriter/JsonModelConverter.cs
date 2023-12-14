@@ -12,7 +12,7 @@ namespace System.ClientModel.Primitives
     /// </summary>
     [RequiresUnreferencedCode("The constructors of the type being deserialized are dynamically accessed and may be trimmed.")]
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-    public class JsonModelConverter : JsonConverter<IJsonModel<object>>
+    internal class JsonModelConverter : JsonConverter<IJsonModel<object>>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         /// <summary>

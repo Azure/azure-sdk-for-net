@@ -201,24 +201,5 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
             return _fromResponse(response);
         }
     }
-
-    public class ModelJsonConverterStrategy<T> : RoundTripStrategy<T> where T : IJsonModel<T>
-    {
-        public override bool IsExplicitJsonWrite => true;
-        public override bool IsExplicitJsonRead => true;
-
-        public override BinaryData Write(T model, ModelReaderWriterOptions options)
-        {
-            JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions();
-            jsonSerializerOptions.Converters.Add(new JsonModelConverter(options));
-            return BinaryData.FromString(JsonSerializer.Serialize(model, jsonSerializerOptions));
-        }
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
-        {
-            JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions();
-            jsonSerializerOptions.Converters.Add(new JsonModelConverter(options));
-            return JsonSerializer.Deserialize<T>(payload, jsonSerializerOptions);
-        }
-    }
 }
 #pragma warning restore SA1402 // File may only contain a single type
