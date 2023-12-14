@@ -28,6 +28,7 @@ namespace Azure.Core.Tests
             // Use contract resolvers that sort the serialized properties case-insensitively for deterministic assertions.
             _resolver = camelCase ? (DefaultContractResolver)new SortedCamelCasePropertyNamesContractResolver() : new SortedDefaultContractResolver();
 
+#pragma warning disable CS0618 // Type or member is obsolete
             _jsonObjectSerializer = new NewtonsoftJsonObjectSerializer(new JsonSerializerSettings
             {
                 ContractResolver = _resolver,
@@ -36,6 +37,7 @@ namespace Azure.Core.Tests
                     new StringEnumConverter(true),
                 },
             });
+#pragma warning restore CS0618 // Type or member is obsolete
 
             IsCamelCase = camelCase;
         }

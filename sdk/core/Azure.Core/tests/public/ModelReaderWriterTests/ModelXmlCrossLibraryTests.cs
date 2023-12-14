@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -10,7 +10,6 @@ using System.Xml;
 using Azure.Core.Tests.Common;
 using Azure.Core.Tests.Public.ModelReaderWriterTests.Models;
 using NUnit.Framework;
-using TestHelpers.Internal;
 
 namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 {

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +9,7 @@ using System.Text.Json;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using TestHelpers.Internal;
+using Azure.Core.Tests.Common;
 
 namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 {
