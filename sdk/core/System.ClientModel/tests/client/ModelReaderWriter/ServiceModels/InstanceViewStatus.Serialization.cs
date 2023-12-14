@@ -5,12 +5,13 @@
 
 #nullable disable
 
-using System.Globalization;
+using ClientModel.Tests.Client.Shared;
+using System;
 using System.ClientModel.Primitives;
+using System.Globalization;
 using System.Text.Json;
-using TestHelpers.Internal;
 
-namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
+namespace ClientModel.Tests.Client.Models.ResourceManager.Compute
 {
     public partial class InstanceViewStatus : IJsonModel<InstanceViewStatus>
     {

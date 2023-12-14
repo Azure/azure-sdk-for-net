@@ -1,12 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using NUnit.Framework;
+using System;
 using System.ClientModel.Primitives;
-using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.Text;
 
-namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
+namespace ClientModel.Tests.ModelReaderWriterTests.Models
 {
     internal class ModelXDeserializationProxyTests
     {

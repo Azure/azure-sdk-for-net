@@ -3,10 +3,10 @@
 
 using NUnit.Framework;
 using System.IO;
-using System.ClientModel.Tests.Client;
-using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
+using ClientModel.Tests.Client.Data;
+using ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 
-namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
+namespace ClientModel.Tests.ModelReaderWriterTests.Models
 {
     internal class ModelXTests : ModelJsonTests<ModelX>
     {

@@ -1,12 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace TestHelpers.Internal;
+namespace ClientModel.Tests.Client.Shared;
 
 internal static class OptionalProperty
 {

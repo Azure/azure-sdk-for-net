@@ -5,13 +5,14 @@
 
 #nullable disable
 
-using System.Globalization;
+using ClientModel.Tests.Client.Shared;
+using System;
 using System.ClientModel.Primitives;
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using TestHelpers.Internal;
 
-namespace System.ClientModel.Tests.Client.Models.ResourceManager
+namespace ClientModel.Tests.Client.Models.ResourceManager
 {
     [JsonConverter(typeof(SystemDataConverter))]
     public partial class SystemData : IJsonModel<SystemData>

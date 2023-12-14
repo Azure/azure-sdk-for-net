@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
+namespace ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     /// <summary> The type of the alias. </summary>
     public enum ResourceTypeAliasType

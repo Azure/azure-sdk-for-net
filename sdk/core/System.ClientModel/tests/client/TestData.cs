@@ -4,7 +4,7 @@
 using System.IO;
 using System.Text;
 
-namespace System.ClientModel.Tests.Client
+namespace ClientModel.Tests.Client.Data
 {
     public static class TestData
     {

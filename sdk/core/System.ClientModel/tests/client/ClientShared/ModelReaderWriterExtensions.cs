@@ -3,15 +3,15 @@
 
 #nullable enable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.ClientModel.Primitives;
 using System.Text.Json;
-using System;
 
-namespace TestHelpers.Internal;
+namespace ClientModel.Tests.Client.Shared;
 
 internal static class ModelReaderWriterExtensions
 {

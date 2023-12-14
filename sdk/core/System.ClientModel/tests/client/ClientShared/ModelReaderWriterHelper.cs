@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Runtime.CompilerServices;
 
-namespace TestHelpers.Internal;
+namespace ClientModel.Tests.Client.Shared;
 
 internal static class ModelReaderWriterHelper
 {

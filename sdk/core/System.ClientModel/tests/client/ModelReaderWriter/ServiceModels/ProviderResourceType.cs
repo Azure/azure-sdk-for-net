@@ -6,9 +6,9 @@
 #nullable disable
 
 using System.Collections.Generic;
-using TestHelpers.Internal;
+using ClientModel.Tests.Client.Shared;
 
-namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
+namespace ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     /// <summary> Resource type managed by the resource provider. </summary>
     public partial class ProviderResourceType

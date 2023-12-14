@@ -1,14 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using ClientModel.Tests.Client.Shared;
+using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using TestHelpers.Internal;
 
-namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
+namespace ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
     public class ModelWithPersistableOnly : IPersistableModel<ModelWithPersistableOnly>
     {

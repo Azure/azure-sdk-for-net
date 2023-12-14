@@ -3,9 +3,10 @@
 
 using NUnit.Framework;
 using System.Linq;
-using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
+using ClientModel.Tests.Client.ModelReaderWriterTests.Models;
+using System;
 
-namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
+namespace ClientModel.Tests.ModelReaderWriterTests.Models
 {
     internal class BaseModelTests : ModelJsonTests<BaseModel>
     {

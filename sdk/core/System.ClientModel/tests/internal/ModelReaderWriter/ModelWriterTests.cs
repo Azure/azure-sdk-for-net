@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using ClientModel.Tests.Client.Data;
+using ClientModel.Tests.Client.ModelReaderWriterTests.Models;
+using ClientModel.Tests.Client.Models.ResourceManager.Resources;
 using NUnit.Framework;
-using System.IO;
+using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
-using System.ClientModel.Tests.Client;
-using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
-using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
+using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using System.ClientModel.Internal;
 
 namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 {

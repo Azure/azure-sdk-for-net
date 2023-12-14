@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
-using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
+using ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 
-namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
+namespace ClientModel.Tests.ModelReaderWriterTests.Models
 {
     internal class ModelAsStructTests : ModelJsonTests<ModelAsStruct>
     {

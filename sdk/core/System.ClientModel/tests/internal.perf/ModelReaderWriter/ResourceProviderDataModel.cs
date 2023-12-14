@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using BenchmarkDotNet.Attributes;
-using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
+using ClientModel.Tests.Client.Models.ResourceManager.Resources;
 using System.Text.Json;
 
-namespace System.ClientModel.Tests.Internal.Perf
+namespace ClientModel.Tests.Internal.Perf
 {
     [Config(typeof(BenchmarkConfig))]
     public class ResourceProviderDataModel : JsonModelBenchmark<ResourceProviderData>

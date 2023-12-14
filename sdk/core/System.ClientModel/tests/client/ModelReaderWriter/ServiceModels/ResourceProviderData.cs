@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using ClientModel.Tests.Client.Shared;
+using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Text.Json;
-using TestHelpers.Internal;
 
-namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
+namespace ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     /// <summary>
     /// A class representing the ResourceProvider data model.

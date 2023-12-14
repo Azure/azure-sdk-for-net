@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using ClientModel.Tests.Client.Data;
+using ClientModel.Tests.Client.Models.ResourceManager.Resources;
 using NUnit.Framework;
 using System.IO;
-using System.ClientModel.Tests.Client;
-using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
 
-namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
+namespace ClientModel.Tests.ModelReaderWriterTests.Models
 {
     internal class ResourceProviderDataTests : ModelJsonTests<ResourceProviderData>
     {

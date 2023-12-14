@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
-using System.ClientModel.Primitives;
 using System.Reflection;
 using System.Text.Json;
 
-namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
+namespace ClientModel.Tests.ModelReaderWriterTests.Models
 {
     public abstract class ModelTests<T> where T : IPersistableModel<T>
     {

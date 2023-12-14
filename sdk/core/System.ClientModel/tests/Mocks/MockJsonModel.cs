@@ -2,37 +2,35 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace ClientModel.Tests.Mocks
+namespace ClientModel.Tests.Mocks;
+
+internal class MockJsonModel : IJsonModel<MockJsonModel>
 {
-    internal class MockJsonModel : IJsonModel<MockJsonModel>
+    MockJsonModel IJsonModel<MockJsonModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
     {
-        MockJsonModel IJsonModel<MockJsonModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
+    }
 
-        MockJsonModel IPersistableModel<MockJsonModel>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
+    MockJsonModel IPersistableModel<MockJsonModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+    {
+        throw new NotImplementedException();
+    }
 
-        string IPersistableModel<MockJsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
+    string IPersistableModel<MockJsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
+    {
+        throw new NotImplementedException();
+    }
 
-        void IJsonModel<MockJsonModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
+    void IJsonModel<MockJsonModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+    {
+        throw new NotImplementedException();
+    }
 
-        BinaryData IPersistableModel<MockJsonModel>.Write(ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
+    BinaryData IPersistableModel<MockJsonModel>.Write(ModelReaderWriterOptions options)
+    {
+        throw new NotImplementedException();
     }
 }

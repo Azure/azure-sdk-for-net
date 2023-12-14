@@ -5,7 +5,9 @@
 
 #nullable disable
 
-namespace System.ClientModel.Tests.Client.Models.ResourceManager
+using System;
+
+namespace ClientModel.Tests.Client.Models.ResourceManager
 {
     /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
     public partial class SystemData

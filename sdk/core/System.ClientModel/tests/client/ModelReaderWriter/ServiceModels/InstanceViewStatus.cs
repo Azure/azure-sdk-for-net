@@ -5,7 +5,9 @@
 
 #nullable disable
 
-namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
+using System;
+
+namespace ClientModel.Tests.Client.Models.ResourceManager.Compute
 {
     /// <summary> Instance view status. </summary>
     public partial class InstanceViewStatus
