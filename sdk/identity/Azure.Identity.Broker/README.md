@@ -1,7 +1,8 @@
 # Azure Identity Brokered Authentication client library for .NET
- The library extends the Azure.Identity library to provide authentication broker support. It includes the necessary dependencies, and provides the `InteractiveBrowserCredentialBrokerOptions` class. This options class can be used to create an `InteractiveBrowserCredential` capable of using the system authentication broker in lieu of the system browser when available.
 
-  [Source code][source] | [Package (nuget)][package] | [API reference documentation][identity_api_docs] | [Microsoft Entra ID documentation][aad_doc]
+The library extends the Azure.Identity library to provide authentication broker support. It includes the necessary dependencies and provides the `InteractiveBrowserCredentialBrokerOptions` class. This options class can be used to create an `InteractiveBrowserCredential` capable of using the system authentication broker in lieu of an embedded web view or the system browser.
+
+[Source code][source] | [Package (NuGet)][package] | [API reference documentation][identity_api_docs] | [Microsoft Entra ID documentation][aad_doc]
 
 ## Getting started
 

@@ -103,6 +103,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="operationTimeout">The amount of time to allow for an AMQP operation using the link to complete before attempting to cancel it.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the client.</param>
+        /// <param name="useTls"><c>true</c> if the client should secure the connection using TLS; otherwise, <c>false</c>.</param>
         ///
         /// <remarks>
         ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -117,7 +118,8 @@ namespace Azure.Messaging.EventHubs.Amqp
                           string eventHubName,
                           TimeSpan operationTimeout,
                           EventHubTokenCredential credential,
-                          EventHubConnectionOptions clientOptions) : this(host, eventHubName, operationTimeout, credential, clientOptions, null, null)
+                          EventHubConnectionOptions clientOptions,
+                          bool useTls = true) : this(host, eventHubName, useTls, operationTimeout, credential, clientOptions, null, null)
         {
         }
 
@@ -127,6 +129,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <param name="host">The fully qualified host name for the Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to connect the client to.</param>
+        /// <param name="useTls"><c>true</c> if the client should secure the connection using TLS; otherwise, <c>false</c>.</param>
         /// <param name="operationTimeout">The amount of time to allow for an AMQP operation using the link to complete before attempting to cancel it.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the client.</param>
@@ -144,6 +147,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         protected AmqpClient(string host,
                              string eventHubName,
+                             bool useTls,
                              TimeSpan operationTimeout,
                              EventHubTokenCredential credential,
                              EventHubConnectionOptions clientOptions,
@@ -162,7 +166,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 ServiceEndpoint = new UriBuilder
                 {
-                    Scheme = clientOptions.TransportType.GetUriScheme(),
+                    Scheme = clientOptions.TransportType.GetUriScheme(useTls),
                     Host = host
                 }.Uri;
 
@@ -173,7 +177,8 @@ namespace Azure.Messaging.EventHubs.Amqp
                     _ => new UriBuilder
                         {
                             Scheme = ServiceEndpoint.Scheme,
-                            Host = clientOptions.CustomEndpointAddress.Host
+                            Host = clientOptions.CustomEndpointAddress.Host,
+                            Port = clientOptions.CustomEndpointAddress.IsDefaultPort ? -1 : clientOptions.CustomEndpointAddress.Port
                         }.Uri
                 };
 

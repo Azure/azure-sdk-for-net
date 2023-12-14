@@ -62,16 +62,19 @@ namespace Azure.Identity.Tests
             expectedCode = Guid.NewGuid().ToString();
             var options = new DeviceCodeCredentialOptions
             {
-                Transport = config.Transport,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
                 IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
+            if (config.Transport != null)
+            {
+                options.Transport = config.Transport;
+            }
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new DeviceCodeCredential((code, _) =>
             {
                 return Task.CompletedTask;
-            }, config.TenantId, ClientId, options, pipeline, null));
+            }, config.TenantId, ClientId, options, pipeline, config.MockPublicMsalClient));
         }
 
         [SetUp]
