@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
@@ -23,7 +22,6 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient"/> using the GetCommunityGalleryImageResource method.
     /// Otherwise you can get one from its parent resource <see cref="CommunityGalleryResource"/> using the GetCommunityGalleryImage method.
     /// </summary>
-    [DeserializationProxy(typeof(CommunityGalleryImageData))]
     public partial class CommunityGalleryImageResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CommunityGalleryImageResource"/> instance. </summary>

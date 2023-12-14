@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="osType"> The Operating System type. </param>
         /// <param name="label"> The VM run command label. </param>
         /// <param name="description"> The VM run command description. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="script"> The script to be executed. </param>
         /// <param name="parameters"> The parameters used by the script. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RunCommandDocument(string schema, string id, SupportedOperatingSystemType osType, string label, string description, IReadOnlyList<string> script, IReadOnlyList<RunCommandParameterDefinition> parameters, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(schema, id, osType, label, description, serializedAdditionalRawData)
+        internal RunCommandDocument(string schema, string id, SupportedOperatingSystemType osType, string label, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<string> script, IReadOnlyList<RunCommandParameterDefinition> parameters) : base(schema, id, osType, label, description, serializedAdditionalRawData)
         {
             Script = script;
             Parameters = parameters;

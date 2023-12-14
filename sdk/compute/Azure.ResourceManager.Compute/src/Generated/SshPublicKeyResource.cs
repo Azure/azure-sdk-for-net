@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
@@ -26,7 +25,6 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient"/> using the GetSshPublicKeyResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSshPublicKey method.
     /// </summary>
-    [DeserializationProxy(typeof(SshPublicKeyData))]
     public partial class SshPublicKeyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SshPublicKeyResource"/> instance. </summary>

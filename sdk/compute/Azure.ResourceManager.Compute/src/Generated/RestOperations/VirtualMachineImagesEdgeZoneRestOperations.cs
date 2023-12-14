@@ -65,7 +65,24 @@ namespace Azure.ResourceManager.Compute
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            request.Uri = CreateGetRequestUri(subscriptionId, location, edgeZone, publisherName, offer, skus, version);
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/edgeZones/", false);
+            uri.AppendPath(edgeZone, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifacttypes/vmimage/offers/", false);
+            uri.AppendPath(offer, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(skus, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -181,7 +198,35 @@ namespace Azure.ResourceManager.Compute
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            request.Uri = CreateListRequestUri(subscriptionId, location, edgeZone, publisherName, offer, skus, expand, top, orderby);
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/edgeZones/", false);
+            uri.AppendPath(edgeZone, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifacttypes/vmimage/offers/", false);
+            uri.AppendPath(offer, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(skus, true);
+            uri.AppendPath("/versions", false);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -293,7 +338,19 @@ namespace Azure.ResourceManager.Compute
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            request.Uri = CreateListOffersRequestUri(subscriptionId, location, edgeZone, publisherName);
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/edgeZones/", false);
+            uri.AppendPath(edgeZone, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifacttypes/vmimage/offers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -389,7 +446,17 @@ namespace Azure.ResourceManager.Compute
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            request.Uri = CreateListPublishersRequestUri(subscriptionId, location, edgeZone);
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/edgeZones/", false);
+            uri.AppendPath(edgeZone, true);
+            uri.AppendPath("/publishers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -485,7 +552,21 @@ namespace Azure.ResourceManager.Compute
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            request.Uri = CreateListSkusRequestUri(subscriptionId, location, edgeZone, publisherName, offer);
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/edgeZones/", false);
+            uri.AppendPath(edgeZone, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifacttypes/vmimage/offers/", false);
+            uri.AppendPath(offer, true);
+            uri.AppendPath("/skus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;

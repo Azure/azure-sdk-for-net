@@ -14,6 +14,38 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> InstanceView of CloudService as a whole. </summary>
     public partial class CloudServiceInstanceView
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CloudServiceInstanceView"/>. </summary>
         internal CloudServiceInstanceView()
         {
@@ -27,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="privateIds"> Specifies a list of unique identifiers generated internally for the cloud service. &lt;br /&gt;&lt;br /&gt; NOTE: If you are using Azure Diagnostics extension, this property can be used as 'DeploymentId' for querying details. </param>
         /// <param name="statuses"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudServiceInstanceView(InstanceViewStatusesSummary roleInstance, string sdkVersion, IReadOnlyList<string> privateIds, IReadOnlyList<ResourceInstanceViewStatus> statuses, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudServiceInstanceView(InstanceViewStatusesSummary roleInstance, string sdkVersion, IReadOnlyList<string> privateIds, IReadOnlyList<ResourceInstanceViewStatus> statuses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RoleInstance = roleInstance;
             SdkVersion = sdkVersion;

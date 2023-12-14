@@ -6,35 +6,32 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class DedicatedHostData : IUtf8JsonSerializable, IModelJsonSerializable<DedicatedHostData>
+    public partial class DedicatedHostData : IUtf8JsonSerializable, IJsonModel<DedicatedHostData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DedicatedHostData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DedicatedHostData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<DedicatedHostData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<DedicatedHostData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DedicatedHostData)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            if (Sku is null)
-            {
-                writer.WriteNullValue();
-            }
-            else
-            {
-                ((IModelJsonSerializable<ComputeSku>)Sku).Serialize(writer, options);
-            }
+            writer.WriteObjectValue(Sku);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -48,6 +45,26 @@ namespace Azure.ResourceManager.Compute
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PlatformFaultDomain))
@@ -60,30 +77,80 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("autoReplaceOnFailure"u8);
                 writer.WriteBooleanValue(AutoReplaceOnFailure.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(HostId))
+            {
+                writer.WritePropertyName("hostId"u8);
+                writer.WriteStringValue(HostId);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachines))
+            {
+                writer.WritePropertyName("virtualMachines"u8);
+                writer.WriteStartArray();
+                foreach (var item in VirtualMachines)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToSerialString());
             }
-            writer.WriteEndObject();
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningOn))
             {
-                foreach (var property in _serializedAdditionalRawData)
+                writer.WritePropertyName("provisioningTime"u8);
+                writer.WriteStringValue(ProvisioningOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InstanceView))
+            {
+                writer.WritePropertyName("instanceView"u8);
+                writer.WriteObjectValue(InstanceView);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
+            {
+                writer.WritePropertyName("timeCreated"u8);
+                writer.WriteStringValue(TimeCreated.Value, "O");
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static DedicatedHostData DeserializeDedicatedHostData(JsonElement element, ModelSerializerOptions options = default)
+        DedicatedHostData IJsonModel<DedicatedHostData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DedicatedHostData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDedicatedHostData(document.RootElement, options);
+        }
+
+        internal static DedicatedHostData DeserializeDedicatedHostData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,7 +172,8 @@ namespace Azure.ResourceManager.Compute
             Optional<string> provisioningState = default;
             Optional<DedicatedHostInstanceView> instanceView = default;
             Optional<DateTimeOffset> timeCreated = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -246,61 +314,44 @@ namespace Azure.ResourceManager.Compute
                     }
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DedicatedHostData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(platformFaultDomain), Optional.ToNullable(autoReplaceOnFailure), hostId.Value, Optional.ToList(virtualMachines), Optional.ToNullable(licenseType), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Optional.ToNullable(timeCreated), serializedAdditionalRawData);
         }
 
-        DedicatedHostData IModelJsonSerializable<DedicatedHostData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<DedicatedHostData>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostData>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeDedicatedHostData(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<DedicatedHostData>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        DedicatedHostData IModelSerializable<DedicatedHostData>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeDedicatedHostData(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="DedicatedHostData"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="DedicatedHostData"/> to convert. </param>
-        public static implicit operator RequestContent(DedicatedHostData model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DedicatedHostData)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="DedicatedHostData"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator DedicatedHostData(Response response)
+        DedicatedHostData IPersistableModel<DedicatedHostData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostData>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeDedicatedHostData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDedicatedHostData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DedicatedHostData)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<DedicatedHostData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

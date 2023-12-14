@@ -6,48 +6,38 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetPatch : IUtf8JsonSerializable, IModelJsonSerializable<VirtualMachineScaleSetPatch>
+    public partial class VirtualMachineScaleSetPatch : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualMachineScaleSetPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<VirtualMachineScaleSetPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<VirtualMachineScaleSetPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<VirtualMachineScaleSetPatch>(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(VirtualMachineScaleSetPatch)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                if (Sku is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<ComputeSku>)Sku).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(Sku);
             }
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                if (Plan is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<ComputePlan>)Plan).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(Plan);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -70,38 +60,17 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
-                if (UpgradePolicy is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<VirtualMachineScaleSetUpgradePolicy>)UpgradePolicy).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(UpgradePolicy);
             }
             if (Optional.IsDefined(AutomaticRepairsPolicy))
             {
                 writer.WritePropertyName("automaticRepairsPolicy"u8);
-                if (AutomaticRepairsPolicy is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<AutomaticRepairsPolicy>)AutomaticRepairsPolicy).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(AutomaticRepairsPolicy);
             }
             if (Optional.IsDefined(VirtualMachineProfile))
             {
                 writer.WritePropertyName("virtualMachineProfile"u8);
-                if (VirtualMachineProfile is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<VirtualMachineScaleSetUpdateVmProfile>)VirtualMachineProfile).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(VirtualMachineProfile);
             }
             if (Optional.IsDefined(Overprovision))
             {
@@ -121,26 +90,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
-                if (AdditionalCapabilities is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<AdditionalCapabilities>)AdditionalCapabilities).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(AdditionalCapabilities);
             }
             if (Optional.IsDefined(ScaleInPolicy))
             {
                 writer.WritePropertyName("scaleInPolicy"u8);
-                if (ScaleInPolicy is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<ScaleInPolicy>)ScaleInPolicy).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(ScaleInPolicy);
             }
             if (Optional.IsDefined(ProximityPlacementGroup))
             {
@@ -150,46 +105,47 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PriorityMixPolicy))
             {
                 writer.WritePropertyName("priorityMixPolicy"u8);
-                if (PriorityMixPolicy is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<VirtualMachineScaleSetPriorityMixPolicy>)PriorityMixPolicy).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(PriorityMixPolicy);
             }
             if (Optional.IsDefined(SpotRestorePolicy))
             {
                 writer.WritePropertyName("spotRestorePolicy"u8);
-                if (SpotRestorePolicy is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<SpotRestorePolicy>)SpotRestorePolicy).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(SpotRestorePolicy);
             }
             writer.WriteEndObject();
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var property in _serializedAdditionalRawData)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineScaleSetPatch DeserializeVirtualMachineScaleSetPatch(JsonElement element, ModelSerializerOptions options = default)
+        VirtualMachineScaleSetPatch IJsonModel<VirtualMachineScaleSetPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(VirtualMachineScaleSetPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineScaleSetPatch(document.RootElement, options);
+        }
+
+        internal static VirtualMachineScaleSetPatch DeserializeVirtualMachineScaleSetPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -210,7 +166,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<WritableSubResource> proximityPlacementGroup = default;
             Optional<VirtualMachineScaleSetPriorityMixPolicy> priorityMixPolicy = default;
             Optional<SpotRestorePolicy> spotRestorePolicy = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -365,61 +322,44 @@ namespace Azure.ResourceManager.Compute.Models
                     }
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineScaleSetPatch(Optional.ToDictionary(tags), sku.Value, plan.Value, identity, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVms), Optional.ToNullable(singlePlacementGroup), additionalCapabilities.Value, scaleInPolicy.Value, proximityPlacementGroup, priorityMixPolicy.Value, spotRestorePolicy.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualMachineScaleSetPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, sku.Value, plan.Value, identity, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVms), Optional.ToNullable(singlePlacementGroup), additionalCapabilities.Value, scaleInPolicy.Value, proximityPlacementGroup, priorityMixPolicy.Value, spotRestorePolicy.Value);
         }
 
-        VirtualMachineScaleSetPatch IModelJsonSerializable<VirtualMachineScaleSetPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<VirtualMachineScaleSetPatch>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<VirtualMachineScaleSetPatch>(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetPatch>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeVirtualMachineScaleSetPatch(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<VirtualMachineScaleSetPatch>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat<VirtualMachineScaleSetPatch>(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        VirtualMachineScaleSetPatch IModelSerializable<VirtualMachineScaleSetPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat<VirtualMachineScaleSetPatch>(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeVirtualMachineScaleSetPatch(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="VirtualMachineScaleSetPatch"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="VirtualMachineScaleSetPatch"/> to convert. </param>
-        public static implicit operator RequestContent(VirtualMachineScaleSetPatch model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(VirtualMachineScaleSetPatch)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualMachineScaleSetPatch"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator VirtualMachineScaleSetPatch(Response response)
+        VirtualMachineScaleSetPatch IPersistableModel<VirtualMachineScaleSetPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetPatch>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeVirtualMachineScaleSetPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualMachineScaleSetPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(VirtualMachineScaleSetPatch)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<VirtualMachineScaleSetPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

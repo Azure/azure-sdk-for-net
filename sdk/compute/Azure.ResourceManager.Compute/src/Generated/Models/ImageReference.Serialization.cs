@@ -6,21 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ImageReference : IUtf8JsonSerializable, IModelJsonSerializable<ImageReference>
+    public partial class ImageReference : IUtf8JsonSerializable, IJsonModel<ImageReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ImageReference>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<ImageReference>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<ImageReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<ImageReference>(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<ImageReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ImageReference)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Publisher))
@@ -43,6 +47,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
+            if (options.Format != "W" && Optional.IsDefined(ExactVersion))
+            {
+                writer.WritePropertyName("exactVersion"u8);
+                writer.WriteStringValue(ExactVersion);
+            }
             if (Optional.IsDefined(SharedGalleryImageUniqueId))
             {
                 writer.WritePropertyName("sharedGalleryImageId"u8);
@@ -58,24 +67,39 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var property in _serializedAdditionalRawData)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static ImageReference DeserializeImageReference(JsonElement element, ModelSerializerOptions options = default)
+        ImageReference IJsonModel<ImageReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<ImageReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ImageReference)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeImageReference(document.RootElement, options);
+        }
+
+        internal static ImageReference DeserializeImageReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +113,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> sharedGalleryImageId = default;
             Optional<string> communityGalleryImageId = default;
             Optional<ResourceIdentifier> id = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publisher"u8))
@@ -136,61 +161,44 @@ namespace Azure.ResourceManager.Compute.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ImageReference(id.Value, publisher.Value, offer.Value, sku.Value, version.Value, exactVersion.Value, sharedGalleryImageId.Value, communityGalleryImageId.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ImageReference(id.Value, serializedAdditionalRawData, publisher.Value, offer.Value, sku.Value, version.Value, exactVersion.Value, sharedGalleryImageId.Value, communityGalleryImageId.Value);
         }
 
-        ImageReference IModelJsonSerializable<ImageReference>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<ImageReference>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<ImageReference>(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<ImageReference>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeImageReference(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<ImageReference>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat<ImageReference>(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        ImageReference IModelSerializable<ImageReference>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat<ImageReference>(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeImageReference(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="ImageReference"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="ImageReference"/> to convert. </param>
-        public static implicit operator RequestContent(ImageReference model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ImageReference)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="ImageReference"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator ImageReference(Response response)
+        ImageReference IPersistableModel<ImageReference>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<ImageReference>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeImageReference(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeImageReference(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ImageReference)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<ImageReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

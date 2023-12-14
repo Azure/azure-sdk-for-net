@@ -6,46 +6,85 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ResourceInstanceViewStatus : IUtf8JsonSerializable, IModelJsonSerializable<ResourceInstanceViewStatus>
+    public partial class ResourceInstanceViewStatus : IUtf8JsonSerializable, IJsonModel<ResourceInstanceViewStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceInstanceViewStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceInstanceViewStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<ResourceInstanceViewStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<ResourceInstanceViewStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceInstanceViewStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ResourceInstanceViewStatus)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Code))
+            {
+                writer.WritePropertyName("code"u8);
+                writer.WriteStringValue(Code);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DisplayStatus))
+            {
+                writer.WritePropertyName("displayStatus"u8);
+                writer.WriteStringValue(DisplayStatus);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Time))
+            {
+                writer.WritePropertyName("time"u8);
+                writer.WriteStringValue(Time.Value, "O");
+            }
             if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToSerialString());
             }
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var property in _serializedAdditionalRawData)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static ResourceInstanceViewStatus DeserializeResourceInstanceViewStatus(JsonElement element, ModelSerializerOptions options = default)
+        ResourceInstanceViewStatus IJsonModel<ResourceInstanceViewStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceInstanceViewStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ResourceInstanceViewStatus)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceInstanceViewStatus(document.RootElement, options);
+        }
+
+        internal static ResourceInstanceViewStatus DeserializeResourceInstanceViewStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -56,7 +95,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> message = default;
             Optional<DateTimeOffset> time = default;
             Optional<ComputeStatusLevelType> level = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -92,61 +132,44 @@ namespace Azure.ResourceManager.Compute.Models
                     level = property.Value.GetString().ToComputeStatusLevelType();
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ResourceInstanceViewStatus(code.Value, displayStatus.Value, message.Value, Optional.ToNullable(time), Optional.ToNullable(level), serializedAdditionalRawData);
         }
 
-        ResourceInstanceViewStatus IModelJsonSerializable<ResourceInstanceViewStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<ResourceInstanceViewStatus>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceInstanceViewStatus>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceInstanceViewStatus(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<ResourceInstanceViewStatus>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        ResourceInstanceViewStatus IModelSerializable<ResourceInstanceViewStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeResourceInstanceViewStatus(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="ResourceInstanceViewStatus"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="ResourceInstanceViewStatus"/> to convert. </param>
-        public static implicit operator RequestContent(ResourceInstanceViewStatus model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ResourceInstanceViewStatus)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResourceInstanceViewStatus"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator ResourceInstanceViewStatus(Response response)
+        ResourceInstanceViewStatus IPersistableModel<ResourceInstanceViewStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceInstanceViewStatus>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeResourceInstanceViewStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeResourceInstanceViewStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ResourceInstanceViewStatus)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<ResourceInstanceViewStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

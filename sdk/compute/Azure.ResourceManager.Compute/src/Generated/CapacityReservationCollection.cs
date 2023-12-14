@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityReservationRestClient.CreateListByCapacityReservationGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capacityReservationRestClient.CreateListByCapacityReservationGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new CapacityReservationResource(Client, CapacityReservationData.DeserializeCapacityReservationData(e)), _capacityReservationClientDiagnostics, Pipeline, "CapacityReservationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CapacityReservationResource(Client, CapacityReservationData.DeserializeCapacityReservationData(e)), _capacityReservationClientDiagnostics, Pipeline, "CapacityReservationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityReservationRestClient.CreateListByCapacityReservationGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capacityReservationRestClient.CreateListByCapacityReservationGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new CapacityReservationResource(Client, CapacityReservationData.DeserializeCapacityReservationData(e)), _capacityReservationClientDiagnostics, Pipeline, "CapacityReservationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CapacityReservationResource(Client, CapacityReservationData.DeserializeCapacityReservationData(e)), _capacityReservationClientDiagnostics, Pipeline, "CapacityReservationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -6,21 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DiskCreationData : IUtf8JsonSerializable, IModelJsonSerializable<DiskCreationData>
+    public partial class DiskCreationData : IUtf8JsonSerializable, IJsonModel<DiskCreationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DiskCreationData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskCreationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<DiskCreationData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<DiskCreationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<DiskCreationData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DiskCreationData)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
             writer.WritePropertyName("createOption"u8);
@@ -33,26 +37,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                if (ImageReference is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<ImageDiskReference>)ImageReference).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(ImageReference);
             }
             if (Optional.IsDefined(GalleryImageReference))
             {
                 writer.WritePropertyName("galleryImageReference"u8);
-                if (GalleryImageReference is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<ImageDiskReference>)GalleryImageReference).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(GalleryImageReference);
             }
             if (Optional.IsDefined(SourceUri))
             {
@@ -63,6 +53,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SourceUniqueId))
+            {
+                writer.WritePropertyName("sourceUniqueId"u8);
+                writer.WriteStringValue(SourceUniqueId);
             }
             if (Optional.IsDefined(UploadSizeBytes))
             {
@@ -89,24 +84,39 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("elasticSanResourceId"u8);
                 writer.WriteStringValue(ElasticSanResourceId);
             }
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var property in _serializedAdditionalRawData)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static DiskCreationData DeserializeDiskCreationData(JsonElement element, ModelSerializerOptions options = default)
+        DiskCreationData IJsonModel<DiskCreationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<DiskCreationData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DiskCreationData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiskCreationData(document.RootElement, options);
+        }
+
+        internal static DiskCreationData DeserializeDiskCreationData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -124,7 +134,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<Uri> securityDataUri = default;
             Optional<bool> performancePlus = default;
             Optional<ResourceIdentifier> elasticSanResourceId = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createOption"u8))
@@ -227,61 +238,44 @@ namespace Azure.ResourceManager.Compute.Models
                     elasticSanResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DiskCreationData(createOption, storageAccountId.Value, imageReference.Value, galleryImageReference.Value, sourceUri.Value, sourceResourceId.Value, sourceUniqueId.Value, Optional.ToNullable(uploadSizeBytes), Optional.ToNullable(logicalSectorSize), securityDataUri.Value, Optional.ToNullable(performancePlus), elasticSanResourceId.Value, serializedAdditionalRawData);
         }
 
-        DiskCreationData IModelJsonSerializable<DiskCreationData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<DiskCreationData>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<DiskCreationData>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeDiskCreationData(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<DiskCreationData>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        DiskCreationData IModelSerializable<DiskCreationData>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeDiskCreationData(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="DiskCreationData"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="DiskCreationData"/> to convert. </param>
-        public static implicit operator RequestContent(DiskCreationData model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DiskCreationData)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="DiskCreationData"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator DiskCreationData(Response response)
+        DiskCreationData IPersistableModel<DiskCreationData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<DiskCreationData>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeDiskCreationData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDiskCreationData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DiskCreationData)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<DiskCreationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

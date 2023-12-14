@@ -6,59 +6,76 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DiskRestorePointAttributes : IUtf8JsonSerializable, IModelJsonSerializable<DiskRestorePointAttributes>
+    public partial class DiskRestorePointAttributes : IUtf8JsonSerializable, IJsonModel<DiskRestorePointAttributes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DiskRestorePointAttributes>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskRestorePointAttributes>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<DiskRestorePointAttributes>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<DiskRestorePointAttributes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<DiskRestorePointAttributes>(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointAttributes>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DiskRestorePointAttributes)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                if (Encryption is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<RestorePointEncryption>)Encryption).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(Encryption);
             }
             if (Optional.IsDefined(SourceDiskRestorePoint))
             {
                 writer.WritePropertyName("sourceDiskRestorePoint"u8);
                 JsonSerializer.Serialize(writer, SourceDiskRestorePoint);
             }
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
-                foreach (var property in _serializedAdditionalRawData)
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static DiskRestorePointAttributes DeserializeDiskRestorePointAttributes(JsonElement element, ModelSerializerOptions options = default)
+        DiskRestorePointAttributes IJsonModel<DiskRestorePointAttributes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointAttributes>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DiskRestorePointAttributes)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiskRestorePointAttributes(document.RootElement, options);
+        }
+
+        internal static DiskRestorePointAttributes DeserializeDiskRestorePointAttributes(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -67,7 +84,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<RestorePointEncryption> encryption = default;
             Optional<WritableSubResource> sourceDiskRestorePoint = default;
             Optional<ResourceIdentifier> id = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encryption"u8))
@@ -97,61 +115,44 @@ namespace Azure.ResourceManager.Compute.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new DiskRestorePointAttributes(id.Value, encryption.Value, sourceDiskRestorePoint, serializedAdditionalRawData);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DiskRestorePointAttributes(id.Value, serializedAdditionalRawData, encryption.Value, sourceDiskRestorePoint);
         }
 
-        DiskRestorePointAttributes IModelJsonSerializable<DiskRestorePointAttributes>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<DiskRestorePointAttributes>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<DiskRestorePointAttributes>(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointAttributes>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeDiskRestorePointAttributes(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<DiskRestorePointAttributes>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat<DiskRestorePointAttributes>(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        DiskRestorePointAttributes IModelSerializable<DiskRestorePointAttributes>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat<DiskRestorePointAttributes>(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeDiskRestorePointAttributes(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="DiskRestorePointAttributes"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="DiskRestorePointAttributes"/> to convert. </param>
-        public static implicit operator RequestContent(DiskRestorePointAttributes model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DiskRestorePointAttributes)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="DiskRestorePointAttributes"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator DiskRestorePointAttributes(Response response)
+        DiskRestorePointAttributes IPersistableModel<DiskRestorePointAttributes>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointAttributes>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeDiskRestorePointAttributes(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDiskRestorePointAttributes(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DiskRestorePointAttributes)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<DiskRestorePointAttributes>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

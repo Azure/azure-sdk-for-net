@@ -6,41 +6,85 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RoleInstanceView : IUtf8JsonSerializable, IModelJsonSerializable<RoleInstanceView>
+    public partial class RoleInstanceView : IUtf8JsonSerializable, IJsonModel<RoleInstanceView>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RoleInstanceView>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleInstanceView>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<RoleInstanceView>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<RoleInstanceView>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<RoleInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RoleInstanceView)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && Optional.IsDefined(PlatformUpdateDomain))
             {
-                foreach (var property in _serializedAdditionalRawData)
+                writer.WritePropertyName("platformUpdateDomain"u8);
+                writer.WriteNumberValue(PlatformUpdateDomain.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PlatformFaultDomain))
+            {
+                writer.WritePropertyName("platformFaultDomain"u8);
+                writer.WriteNumberValue(PlatformFaultDomain.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrivateId))
+            {
+                writer.WritePropertyName("privateId"u8);
+                writer.WriteStringValue(PrivateId);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
+            {
+                writer.WritePropertyName("statuses"u8);
+                writer.WriteStartArray();
+                foreach (var item in Statuses)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static RoleInstanceView DeserializeRoleInstanceView(JsonElement element, ModelSerializerOptions options = default)
+        RoleInstanceView IJsonModel<RoleInstanceView>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<RoleInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RoleInstanceView)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoleInstanceView(document.RootElement, options);
+        }
+
+        internal static RoleInstanceView DeserializeRoleInstanceView(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -50,7 +94,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> platformFaultDomain = default;
             Optional<string> privateId = default;
             Optional<IReadOnlyList<ResourceInstanceViewStatus>> statuses = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("platformUpdateDomain"u8))
@@ -90,61 +135,44 @@ namespace Azure.ResourceManager.Compute.Models
                     statuses = array;
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RoleInstanceView(Optional.ToNullable(platformUpdateDomain), Optional.ToNullable(platformFaultDomain), privateId.Value, Optional.ToList(statuses), serializedAdditionalRawData);
         }
 
-        RoleInstanceView IModelJsonSerializable<RoleInstanceView>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<RoleInstanceView>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<RoleInstanceView>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeRoleInstanceView(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<RoleInstanceView>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        RoleInstanceView IModelSerializable<RoleInstanceView>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeRoleInstanceView(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="RoleInstanceView"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="RoleInstanceView"/> to convert. </param>
-        public static implicit operator RequestContent(RoleInstanceView model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RoleInstanceView)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="RoleInstanceView"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator RoleInstanceView(Response response)
+        RoleInstanceView IPersistableModel<RoleInstanceView>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<RoleInstanceView>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeRoleInstanceView(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRoleInstanceView(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RoleInstanceView)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<RoleInstanceView>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

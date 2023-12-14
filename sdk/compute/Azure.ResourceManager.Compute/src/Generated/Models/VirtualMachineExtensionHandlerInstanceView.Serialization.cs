@@ -6,21 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineExtensionHandlerInstanceView : IUtf8JsonSerializable, IModelJsonSerializable<VirtualMachineExtensionHandlerInstanceView>
+    public partial class VirtualMachineExtensionHandlerInstanceView : IUtf8JsonSerializable, IJsonModel<VirtualMachineExtensionHandlerInstanceView>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualMachineExtensionHandlerInstanceView>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineExtensionHandlerInstanceView>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<VirtualMachineExtensionHandlerInstanceView>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<VirtualMachineExtensionHandlerInstanceView>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineExtensionHandlerInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(VirtualMachineExtensionHandlerInstanceView)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualMachineExtensionHandlerInstanceViewType))
@@ -36,33 +40,41 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                if (Status is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<InstanceViewStatus>)Status).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(Status);
             }
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var property in _serializedAdditionalRawData)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineExtensionHandlerInstanceView DeserializeVirtualMachineExtensionHandlerInstanceView(JsonElement element, ModelSerializerOptions options = default)
+        VirtualMachineExtensionHandlerInstanceView IJsonModel<VirtualMachineExtensionHandlerInstanceView>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineExtensionHandlerInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(VirtualMachineExtensionHandlerInstanceView)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineExtensionHandlerInstanceView(document.RootElement, options);
+        }
+
+        internal static VirtualMachineExtensionHandlerInstanceView DeserializeVirtualMachineExtensionHandlerInstanceView(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +83,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> type = default;
             Optional<string> typeHandlerVersion = default;
             Optional<InstanceViewStatus> status = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -93,61 +106,44 @@ namespace Azure.ResourceManager.Compute.Models
                     status = InstanceViewStatus.DeserializeInstanceViewStatus(property.Value);
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualMachineExtensionHandlerInstanceView(type.Value, typeHandlerVersion.Value, status.Value, serializedAdditionalRawData);
         }
 
-        VirtualMachineExtensionHandlerInstanceView IModelJsonSerializable<VirtualMachineExtensionHandlerInstanceView>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<VirtualMachineExtensionHandlerInstanceView>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineExtensionHandlerInstanceView>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeVirtualMachineExtensionHandlerInstanceView(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<VirtualMachineExtensionHandlerInstanceView>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        VirtualMachineExtensionHandlerInstanceView IModelSerializable<VirtualMachineExtensionHandlerInstanceView>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeVirtualMachineExtensionHandlerInstanceView(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="VirtualMachineExtensionHandlerInstanceView"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="VirtualMachineExtensionHandlerInstanceView"/> to convert. </param>
-        public static implicit operator RequestContent(VirtualMachineExtensionHandlerInstanceView model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(VirtualMachineExtensionHandlerInstanceView)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualMachineExtensionHandlerInstanceView"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator VirtualMachineExtensionHandlerInstanceView(Response response)
+        VirtualMachineExtensionHandlerInstanceView IPersistableModel<VirtualMachineExtensionHandlerInstanceView>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineExtensionHandlerInstanceView>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeVirtualMachineExtensionHandlerInstanceView(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualMachineExtensionHandlerInstanceView(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(VirtualMachineExtensionHandlerInstanceView)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<VirtualMachineExtensionHandlerInstanceView>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

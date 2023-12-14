@@ -6,48 +6,72 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SharedGalleryDataDiskImage : IUtf8JsonSerializable, IModelJsonSerializable<SharedGalleryDataDiskImage>
+    public partial class SharedGalleryDataDiskImage : IUtf8JsonSerializable, IJsonModel<SharedGalleryDataDiskImage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SharedGalleryDataDiskImage>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SharedGalleryDataDiskImage>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<SharedGalleryDataDiskImage>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<SharedGalleryDataDiskImage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<SharedGalleryDataDiskImage>(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<SharedGalleryDataDiskImage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SharedGalleryDataDiskImage)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
             writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
+            if (options.Format != "W" && Optional.IsDefined(DiskSizeGB))
+            {
+                writer.WritePropertyName("diskSizeGB"u8);
+                writer.WriteNumberValue(DiskSizeGB.Value);
+            }
             if (Optional.IsDefined(HostCaching))
             {
                 writer.WritePropertyName("hostCaching"u8);
                 writer.WriteStringValue(HostCaching.Value.ToString());
             }
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var property in _serializedAdditionalRawData)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static SharedGalleryDataDiskImage DeserializeSharedGalleryDataDiskImage(JsonElement element, ModelSerializerOptions options = default)
+        SharedGalleryDataDiskImage IJsonModel<SharedGalleryDataDiskImage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<SharedGalleryDataDiskImage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SharedGalleryDataDiskImage)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSharedGalleryDataDiskImage(document.RootElement, options);
+        }
+
+        internal static SharedGalleryDataDiskImage DeserializeSharedGalleryDataDiskImage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -56,7 +80,8 @@ namespace Azure.ResourceManager.Compute.Models
             int lun = default;
             Optional<int> diskSizeGB = default;
             Optional<SharedGalleryHostCaching> hostCaching = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"u8))
@@ -82,61 +107,44 @@ namespace Azure.ResourceManager.Compute.Models
                     hostCaching = new SharedGalleryHostCaching(property.Value.GetString());
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new SharedGalleryDataDiskImage(Optional.ToNullable(diskSizeGB), Optional.ToNullable(hostCaching), lun, serializedAdditionalRawData);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SharedGalleryDataDiskImage(Optional.ToNullable(diskSizeGB), Optional.ToNullable(hostCaching), serializedAdditionalRawData, lun);
         }
 
-        SharedGalleryDataDiskImage IModelJsonSerializable<SharedGalleryDataDiskImage>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<SharedGalleryDataDiskImage>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<SharedGalleryDataDiskImage>(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<SharedGalleryDataDiskImage>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeSharedGalleryDataDiskImage(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<SharedGalleryDataDiskImage>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat<SharedGalleryDataDiskImage>(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        SharedGalleryDataDiskImage IModelSerializable<SharedGalleryDataDiskImage>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat<SharedGalleryDataDiskImage>(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeSharedGalleryDataDiskImage(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="SharedGalleryDataDiskImage"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="SharedGalleryDataDiskImage"/> to convert. </param>
-        public static implicit operator RequestContent(SharedGalleryDataDiskImage model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SharedGalleryDataDiskImage)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="SharedGalleryDataDiskImage"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator SharedGalleryDataDiskImage(Response response)
+        SharedGalleryDataDiskImage IPersistableModel<SharedGalleryDataDiskImage>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<SharedGalleryDataDiskImage>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeSharedGalleryDataDiskImage(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSharedGalleryDataDiskImage(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SharedGalleryDataDiskImage)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<SharedGalleryDataDiskImage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,41 +6,70 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class OrchestrationServiceSummary : IUtf8JsonSerializable, IModelJsonSerializable<OrchestrationServiceSummary>
+    public partial class OrchestrationServiceSummary : IUtf8JsonSerializable, IJsonModel<OrchestrationServiceSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OrchestrationServiceSummary>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrchestrationServiceSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<OrchestrationServiceSummary>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<OrchestrationServiceSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<OrchestrationServiceSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(OrchestrationServiceSummary)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && Optional.IsDefined(ServiceName))
             {
-                foreach (var property in _serializedAdditionalRawData)
+                writer.WritePropertyName("serviceName"u8);
+                writer.WriteStringValue(ServiceName.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServiceState))
+            {
+                writer.WritePropertyName("serviceState"u8);
+                writer.WriteStringValue(ServiceState.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static OrchestrationServiceSummary DeserializeOrchestrationServiceSummary(JsonElement element, ModelSerializerOptions options = default)
+        OrchestrationServiceSummary IJsonModel<OrchestrationServiceSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<OrchestrationServiceSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(OrchestrationServiceSummary)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOrchestrationServiceSummary(document.RootElement, options);
+        }
+
+        internal static OrchestrationServiceSummary DeserializeOrchestrationServiceSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -48,7 +77,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
             Optional<OrchestrationServiceName> serviceName = default;
             Optional<OrchestrationServiceState> serviceState = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceName"u8))
@@ -69,61 +99,44 @@ namespace Azure.ResourceManager.Compute.Models
                     serviceState = new OrchestrationServiceState(property.Value.GetString());
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new OrchestrationServiceSummary(Optional.ToNullable(serviceName), Optional.ToNullable(serviceState), serializedAdditionalRawData);
         }
 
-        OrchestrationServiceSummary IModelJsonSerializable<OrchestrationServiceSummary>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<OrchestrationServiceSummary>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<OrchestrationServiceSummary>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeOrchestrationServiceSummary(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<OrchestrationServiceSummary>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        OrchestrationServiceSummary IModelSerializable<OrchestrationServiceSummary>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeOrchestrationServiceSummary(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="OrchestrationServiceSummary"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="OrchestrationServiceSummary"/> to convert. </param>
-        public static implicit operator RequestContent(OrchestrationServiceSummary model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(OrchestrationServiceSummary)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="OrchestrationServiceSummary"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator OrchestrationServiceSummary(Response response)
+        OrchestrationServiceSummary IPersistableModel<OrchestrationServiceSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<OrchestrationServiceSummary>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeOrchestrationServiceSummary(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOrchestrationServiceSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(OrchestrationServiceSummary)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<OrchestrationServiceSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

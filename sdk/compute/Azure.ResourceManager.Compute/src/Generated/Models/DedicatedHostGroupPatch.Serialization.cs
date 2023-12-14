@@ -6,22 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DedicatedHostGroupPatch : IUtf8JsonSerializable, IModelJsonSerializable<DedicatedHostGroupPatch>
+    public partial class DedicatedHostGroupPatch : IUtf8JsonSerializable, IJsonModel<DedicatedHostGroupPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DedicatedHostGroupPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DedicatedHostGroupPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<DedicatedHostGroupPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<DedicatedHostGroupPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<DedicatedHostGroupPatch>(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DedicatedHostGroupPatch)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Zones))
@@ -52,6 +56,21 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("platformFaultDomainCount"u8);
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Hosts))
+            {
+                writer.WritePropertyName("hosts"u8);
+                writer.WriteStartArray();
+                foreach (var item in Hosts)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(InstanceView))
+            {
+                writer.WritePropertyName("instanceView"u8);
+                writer.WriteObjectValue(InstanceView);
+            }
             if (Optional.IsDefined(SupportAutomaticPlacement))
             {
                 writer.WritePropertyName("supportAutomaticPlacement"u8);
@@ -60,34 +79,42 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
-                if (AdditionalCapabilities is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<DedicatedHostGroupPropertiesAdditionalCapabilities>)AdditionalCapabilities).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(AdditionalCapabilities);
             }
             writer.WriteEndObject();
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var property in _serializedAdditionalRawData)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static DedicatedHostGroupPatch DeserializeDedicatedHostGroupPatch(JsonElement element, ModelSerializerOptions options = default)
+        DedicatedHostGroupPatch IJsonModel<DedicatedHostGroupPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DedicatedHostGroupPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDedicatedHostGroupPatch(document.RootElement, options);
+        }
+
+        internal static DedicatedHostGroupPatch DeserializeDedicatedHostGroupPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,7 +127,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<DedicatedHostGroupInstanceView> instanceView = default;
             Optional<bool> supportAutomaticPlacement = default;
             Optional<DedicatedHostGroupPropertiesAdditionalCapabilities> additionalCapabilities = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"u8))
@@ -193,61 +221,44 @@ namespace Azure.ResourceManager.Compute.Models
                     }
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new DedicatedHostGroupPatch(Optional.ToDictionary(tags), Optional.ToList(zones), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(hosts), instanceView.Value, Optional.ToNullable(supportAutomaticPlacement), additionalCapabilities.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DedicatedHostGroupPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToList(zones), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(hosts), instanceView.Value, Optional.ToNullable(supportAutomaticPlacement), additionalCapabilities.Value);
         }
 
-        DedicatedHostGroupPatch IModelJsonSerializable<DedicatedHostGroupPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<DedicatedHostGroupPatch>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<DedicatedHostGroupPatch>(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeDedicatedHostGroupPatch(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<DedicatedHostGroupPatch>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat<DedicatedHostGroupPatch>(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        DedicatedHostGroupPatch IModelSerializable<DedicatedHostGroupPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat<DedicatedHostGroupPatch>(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeDedicatedHostGroupPatch(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="DedicatedHostGroupPatch"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="DedicatedHostGroupPatch"/> to convert. </param>
-        public static implicit operator RequestContent(DedicatedHostGroupPatch model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DedicatedHostGroupPatch)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="DedicatedHostGroupPatch"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator DedicatedHostGroupPatch(Response response)
+        DedicatedHostGroupPatch IPersistableModel<DedicatedHostGroupPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeDedicatedHostGroupPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDedicatedHostGroupPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DedicatedHostGroupPatch)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<DedicatedHostGroupPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

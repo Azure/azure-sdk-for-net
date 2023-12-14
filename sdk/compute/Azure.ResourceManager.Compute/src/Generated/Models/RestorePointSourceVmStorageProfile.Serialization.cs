@@ -6,34 +6,31 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RestorePointSourceVmStorageProfile : IUtf8JsonSerializable, IModelJsonSerializable<RestorePointSourceVmStorageProfile>
+    public partial class RestorePointSourceVmStorageProfile : IUtf8JsonSerializable, IJsonModel<RestorePointSourceVmStorageProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RestorePointSourceVmStorageProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestorePointSourceVmStorageProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<RestorePointSourceVmStorageProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<RestorePointSourceVmStorageProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVmStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RestorePointSourceVmStorageProfile)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                if (OSDisk is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<RestorePointSourceVmOSDisk>)OSDisk).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(OSDisk);
             }
             if (Optional.IsCollectionDefined(DataDiskList))
             {
@@ -41,35 +38,43 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDiskList)
                 {
-                    if (item is null)
-                    {
-                        writer.WriteNullValue();
-                    }
-                    else
-                    {
-                        ((IModelJsonSerializable<RestorePointSourceVmDataDisk>)item).Serialize(writer, options);
-                    }
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var property in _serializedAdditionalRawData)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static RestorePointSourceVmStorageProfile DeserializeRestorePointSourceVmStorageProfile(JsonElement element, ModelSerializerOptions options = default)
+        RestorePointSourceVmStorageProfile IJsonModel<RestorePointSourceVmStorageProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVmStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(RestorePointSourceVmStorageProfile)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRestorePointSourceVmStorageProfile(document.RootElement, options);
+        }
+
+        internal static RestorePointSourceVmStorageProfile DeserializeRestorePointSourceVmStorageProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +82,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
             Optional<RestorePointSourceVmOSDisk> osDisk = default;
             Optional<IList<RestorePointSourceVmDataDisk>> dataDisks = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osDisk"u8))
@@ -103,61 +109,44 @@ namespace Azure.ResourceManager.Compute.Models
                     dataDisks = array;
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RestorePointSourceVmStorageProfile(osDisk.Value, Optional.ToList(dataDisks), serializedAdditionalRawData);
         }
 
-        RestorePointSourceVmStorageProfile IModelJsonSerializable<RestorePointSourceVmStorageProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<RestorePointSourceVmStorageProfile>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVmStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeRestorePointSourceVmStorageProfile(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<RestorePointSourceVmStorageProfile>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        RestorePointSourceVmStorageProfile IModelSerializable<RestorePointSourceVmStorageProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeRestorePointSourceVmStorageProfile(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="RestorePointSourceVmStorageProfile"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="RestorePointSourceVmStorageProfile"/> to convert. </param>
-        public static implicit operator RequestContent(RestorePointSourceVmStorageProfile model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RestorePointSourceVmStorageProfile)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="RestorePointSourceVmStorageProfile"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator RestorePointSourceVmStorageProfile(Response response)
+        RestorePointSourceVmStorageProfile IPersistableModel<RestorePointSourceVmStorageProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVmStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeRestorePointSourceVmStorageProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRestorePointSourceVmStorageProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(RestorePointSourceVmStorageProfile)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<RestorePointSourceVmStorageProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

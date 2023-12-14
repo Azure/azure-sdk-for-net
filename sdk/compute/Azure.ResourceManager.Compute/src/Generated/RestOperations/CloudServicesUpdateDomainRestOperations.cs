@@ -58,12 +58,25 @@ namespace Azure.ResourceManager.Compute
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
-            request.Uri = CreateWalkUpdateDomainRequestUri(subscriptionId, resourceGroupName, cloudServiceName, updateDomain, updateDomainIdentifier);
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/cloudServices/", false);
+            uri.AppendPath(cloudServiceName, true);
+            uri.AppendPath("/updateDomains/", false);
+            uri.AppendPath(updateDomain, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (updateDomainIdentifier != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                request.Content = updateDomainIdentifier;
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(updateDomainIdentifier);
+                request.Content = content;
             }
             _userAgent.Apply(message);
             return message;
@@ -144,7 +157,18 @@ namespace Azure.ResourceManager.Compute
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            request.Uri = CreateGetUpdateDomainRequestUri(subscriptionId, resourceGroupName, cloudServiceName, updateDomain);
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/cloudServices/", false);
+            uri.AppendPath(cloudServiceName, true);
+            uri.AppendPath("/updateDomains/", false);
+            uri.AppendPath(updateDomain, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -230,7 +254,17 @@ namespace Azure.ResourceManager.Compute
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            request.Uri = CreateListUpdateDomainsRequestUri(subscriptionId, resourceGroupName, cloudServiceName);
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/cloudServices/", false);
+            uri.AppendPath(cloudServiceName, true);
+            uri.AppendPath("/updateDomains", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -307,7 +341,10 @@ namespace Azure.ResourceManager.Compute
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
-            request.Uri = CreateListUpdateDomainsNextPageRequestUri(nextLink, subscriptionId, resourceGroupName, cloudServiceName);
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;

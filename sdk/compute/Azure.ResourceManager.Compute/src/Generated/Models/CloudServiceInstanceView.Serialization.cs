@@ -6,53 +6,90 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class CloudServiceInstanceView : IUtf8JsonSerializable, IModelJsonSerializable<CloudServiceInstanceView>
+    public partial class CloudServiceInstanceView : IUtf8JsonSerializable, IJsonModel<CloudServiceInstanceView>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CloudServiceInstanceView>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudServiceInstanceView>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<CloudServiceInstanceView>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<CloudServiceInstanceView>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<CloudServiceInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CloudServiceInstanceView)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(RoleInstance))
             {
                 writer.WritePropertyName("roleInstance"u8);
-                if (RoleInstance is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<InstanceViewStatusesSummary>)RoleInstance).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(RoleInstance);
             }
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && Optional.IsDefined(SdkVersion))
             {
-                foreach (var property in _serializedAdditionalRawData)
+                writer.WritePropertyName("sdkVersion"u8);
+                writer.WriteStringValue(SdkVersion);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateIds))
+            {
+                writer.WritePropertyName("privateIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateIds)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
+            {
+                writer.WritePropertyName("statuses"u8);
+                writer.WriteStartArray();
+                foreach (var item in Statuses)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static CloudServiceInstanceView DeserializeCloudServiceInstanceView(JsonElement element, ModelSerializerOptions options = default)
+        CloudServiceInstanceView IJsonModel<CloudServiceInstanceView>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<CloudServiceInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CloudServiceInstanceView)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudServiceInstanceView(document.RootElement, options);
+        }
+
+        internal static CloudServiceInstanceView DeserializeCloudServiceInstanceView(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -62,7 +99,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> sdkVersion = default;
             Optional<IReadOnlyList<string>> privateIds = default;
             Optional<IReadOnlyList<ResourceInstanceViewStatus>> statuses = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("roleInstance"u8))
@@ -107,61 +145,44 @@ namespace Azure.ResourceManager.Compute.Models
                     statuses = array;
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CloudServiceInstanceView(roleInstance.Value, sdkVersion.Value, Optional.ToList(privateIds), Optional.ToList(statuses), serializedAdditionalRawData);
         }
 
-        CloudServiceInstanceView IModelJsonSerializable<CloudServiceInstanceView>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<CloudServiceInstanceView>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<CloudServiceInstanceView>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeCloudServiceInstanceView(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<CloudServiceInstanceView>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        CloudServiceInstanceView IModelSerializable<CloudServiceInstanceView>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeCloudServiceInstanceView(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="CloudServiceInstanceView"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="CloudServiceInstanceView"/> to convert. </param>
-        public static implicit operator RequestContent(CloudServiceInstanceView model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CloudServiceInstanceView)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="CloudServiceInstanceView"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator CloudServiceInstanceView(Response response)
+        CloudServiceInstanceView IPersistableModel<CloudServiceInstanceView>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<CloudServiceInstanceView>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeCloudServiceInstanceView(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCloudServiceInstanceView(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CloudServiceInstanceView)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<CloudServiceInstanceView>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

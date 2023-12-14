@@ -6,41 +6,70 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class UpdateDomainIdentifier : IUtf8JsonSerializable, IModelJsonSerializable<UpdateDomainIdentifier>
+    public partial class UpdateDomainIdentifier : IUtf8JsonSerializable, IJsonModel<UpdateDomainIdentifier>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UpdateDomainIdentifier>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateDomainIdentifier>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<UpdateDomainIdentifier>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<UpdateDomainIdentifier>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<UpdateDomainIdentifier>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(UpdateDomainIdentifier)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
-                foreach (var property in _serializedAdditionalRawData)
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static UpdateDomainIdentifier DeserializeUpdateDomainIdentifier(JsonElement element, ModelSerializerOptions options = default)
+        UpdateDomainIdentifier IJsonModel<UpdateDomainIdentifier>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<UpdateDomainIdentifier>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(UpdateDomainIdentifier)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpdateDomainIdentifier(document.RootElement, options);
+        }
+
+        internal static UpdateDomainIdentifier DeserializeUpdateDomainIdentifier(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -48,7 +77,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -65,61 +95,44 @@ namespace Azure.ResourceManager.Compute.Models
                     name = property.Value.GetString();
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new UpdateDomainIdentifier(id.Value, name.Value, serializedAdditionalRawData);
         }
 
-        UpdateDomainIdentifier IModelJsonSerializable<UpdateDomainIdentifier>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<UpdateDomainIdentifier>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<UpdateDomainIdentifier>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeUpdateDomainIdentifier(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<UpdateDomainIdentifier>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        UpdateDomainIdentifier IModelSerializable<UpdateDomainIdentifier>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeUpdateDomainIdentifier(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="UpdateDomainIdentifier"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="UpdateDomainIdentifier"/> to convert. </param>
-        public static implicit operator RequestContent(UpdateDomainIdentifier model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(UpdateDomainIdentifier)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="UpdateDomainIdentifier"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator UpdateDomainIdentifier(Response response)
+        UpdateDomainIdentifier IPersistableModel<UpdateDomainIdentifier>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<UpdateDomainIdentifier>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeUpdateDomainIdentifier(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUpdateDomainIdentifier(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(UpdateDomainIdentifier)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<UpdateDomainIdentifier>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

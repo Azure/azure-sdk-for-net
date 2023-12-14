@@ -6,22 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineNetworkInterfaceIPConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<VirtualMachineNetworkInterfaceIPConfiguration>
+    public partial class VirtualMachineNetworkInterfaceIPConfiguration : IUtf8JsonSerializable, IJsonModel<VirtualMachineNetworkInterfaceIPConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualMachineNetworkInterfaceIPConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineNetworkInterfaceIPConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<VirtualMachineNetworkInterfaceIPConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<VirtualMachineNetworkInterfaceIPConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineNetworkInterfaceIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(VirtualMachineNetworkInterfaceIPConfiguration)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -41,14 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("publicIPAddressConfiguration"u8);
-                if (PublicIPAddressConfiguration is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<VirtualMachinePublicIPAddressConfiguration>)PublicIPAddressConfiguration).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(PublicIPAddressConfiguration);
             }
             if (Optional.IsDefined(PrivateIPAddressVersion))
             {
@@ -86,24 +83,39 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var property in _serializedAdditionalRawData)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineNetworkInterfaceIPConfiguration DeserializeVirtualMachineNetworkInterfaceIPConfiguration(JsonElement element, ModelSerializerOptions options = default)
+        VirtualMachineNetworkInterfaceIPConfiguration IJsonModel<VirtualMachineNetworkInterfaceIPConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineNetworkInterfaceIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(VirtualMachineNetworkInterfaceIPConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineNetworkInterfaceIPConfiguration(document.RootElement, options);
+        }
+
+        internal static VirtualMachineNetworkInterfaceIPConfiguration DeserializeVirtualMachineNetworkInterfaceIPConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -117,7 +129,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IList<WritableSubResource>> applicationSecurityGroups = default;
             Optional<IList<WritableSubResource>> applicationGatewayBackendAddressPools = default;
             Optional<IList<WritableSubResource>> loadBalancerBackendAddressPools = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -215,61 +228,44 @@ namespace Azure.ResourceManager.Compute.Models
                     }
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualMachineNetworkInterfaceIPConfiguration(name, subnet, Optional.ToNullable(primary), publicIPAddressConfiguration.Value, Optional.ToNullable(privateIPAddressVersion), Optional.ToList(applicationSecurityGroups), Optional.ToList(applicationGatewayBackendAddressPools), Optional.ToList(loadBalancerBackendAddressPools), serializedAdditionalRawData);
         }
 
-        VirtualMachineNetworkInterfaceIPConfiguration IModelJsonSerializable<VirtualMachineNetworkInterfaceIPConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<VirtualMachineNetworkInterfaceIPConfiguration>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineNetworkInterfaceIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeVirtualMachineNetworkInterfaceIPConfiguration(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<VirtualMachineNetworkInterfaceIPConfiguration>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        VirtualMachineNetworkInterfaceIPConfiguration IModelSerializable<VirtualMachineNetworkInterfaceIPConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeVirtualMachineNetworkInterfaceIPConfiguration(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="VirtualMachineNetworkInterfaceIPConfiguration"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="VirtualMachineNetworkInterfaceIPConfiguration"/> to convert. </param>
-        public static implicit operator RequestContent(VirtualMachineNetworkInterfaceIPConfiguration model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(VirtualMachineNetworkInterfaceIPConfiguration)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualMachineNetworkInterfaceIPConfiguration"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator VirtualMachineNetworkInterfaceIPConfiguration(Response response)
+        VirtualMachineNetworkInterfaceIPConfiguration IPersistableModel<VirtualMachineNetworkInterfaceIPConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineNetworkInterfaceIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeVirtualMachineNetworkInterfaceIPConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualMachineNetworkInterfaceIPConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(VirtualMachineNetworkInterfaceIPConfiguration)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<VirtualMachineNetworkInterfaceIPConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

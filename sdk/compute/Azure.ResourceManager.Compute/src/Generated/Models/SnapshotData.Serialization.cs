@@ -6,37 +6,39 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class SnapshotData : IUtf8JsonSerializable, IModelJsonSerializable<SnapshotData>
+    public partial class SnapshotData : IUtf8JsonSerializable, IJsonModel<SnapshotData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SnapshotData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnapshotData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<SnapshotData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<SnapshotData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<SnapshotData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SnapshotData)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ManagedBy))
+            {
+                writer.WritePropertyName("managedBy"u8);
+                writer.WriteStringValue(ManagedBy);
+            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                if (Sku is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<SnapshotSku>)Sku).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(Sku);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -56,8 +58,33 @@ namespace Azure.ResourceManager.Compute
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
+            {
+                writer.WritePropertyName("timeCreated"u8);
+                writer.WriteStringValue(TimeCreated.Value, "O");
+            }
             if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
@@ -71,72 +98,62 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                if (PurchasePlan is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<DiskPurchasePlan>)PurchasePlan).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(PurchasePlan);
             }
             if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
-                if (SupportedCapabilities is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<SupportedCapabilities>)SupportedCapabilities).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(SupportedCapabilities);
             }
             if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
-                if (CreationData is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<DiskCreationData>)CreationData).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(CreationData);
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(DiskSizeBytes))
+            {
+                writer.WritePropertyName("diskSizeBytes"u8);
+                writer.WriteNumberValue(DiskSizeBytes.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DiskState))
+            {
+                writer.WritePropertyName("diskState"u8);
+                writer.WriteStringValue(DiskState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(UniqueId))
+            {
+                writer.WritePropertyName("uniqueId"u8);
+                writer.WriteStringValue(UniqueId);
+            }
             if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
-                if (EncryptionSettingsGroup is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<EncryptionSettingsGroup>)EncryptionSettingsGroup).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(EncryptionSettingsGroup);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
             }
             if (Optional.IsDefined(Incremental))
             {
                 writer.WritePropertyName("incremental"u8);
                 writer.WriteBooleanValue(Incremental.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(IncrementalSnapshotFamilyId))
+            {
+                writer.WritePropertyName("incrementalSnapshotFamilyId"u8);
+                writer.WriteStringValue(IncrementalSnapshotFamilyId);
+            }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                if (Encryption is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<DiskEncryption>)Encryption).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(Encryption);
             }
             if (Optional.IsDefined(NetworkAccessPolicy))
             {
@@ -151,14 +168,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                if (SecurityProfile is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<DiskSecurityProfile>)SecurityProfile).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(SecurityProfile);
             }
             if (Optional.IsDefined(SupportsHibernation))
             {
@@ -178,14 +188,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(CopyCompletionError))
             {
                 writer.WritePropertyName("copyCompletionError"u8);
-                if (CopyCompletionError is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<CopyCompletionError>)CopyCompletionError).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(CopyCompletionError);
             }
             if (Optional.IsDefined(DataAccessAuthMode))
             {
@@ -193,24 +196,39 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStringValue(DataAccessAuthMode.Value.ToString());
             }
             writer.WriteEndObject();
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var property in _serializedAdditionalRawData)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static SnapshotData DeserializeSnapshotData(JsonElement element, ModelSerializerOptions options = default)
+        SnapshotData IJsonModel<SnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<SnapshotData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SnapshotData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSnapshotData(document.RootElement, options);
+        }
+
+        internal static SnapshotData DeserializeSnapshotData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -248,7 +266,8 @@ namespace Azure.ResourceManager.Compute
             Optional<float> completionPercent = default;
             Optional<CopyCompletionError> copyCompletionError = default;
             Optional<DataAccessAuthMode> dataAccessAuthMode = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -524,61 +543,44 @@ namespace Azure.ResourceManager.Compute
                     }
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SnapshotData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, extendedLocation, Optional.ToNullable(timeCreated), Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, creationData.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(diskSizeBytes), Optional.ToNullable(diskState), uniqueId.Value, encryptionSettingsGroup.Value, provisioningState.Value, Optional.ToNullable(incremental), incrementalSnapshotFamilyId.Value, encryption.Value, Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, securityProfile.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(completionPercent), copyCompletionError.Value, Optional.ToNullable(dataAccessAuthMode), serializedAdditionalRawData);
         }
 
-        SnapshotData IModelJsonSerializable<SnapshotData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<SnapshotData>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<SnapshotData>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeSnapshotData(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<SnapshotData>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        SnapshotData IModelSerializable<SnapshotData>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeSnapshotData(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="SnapshotData"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="SnapshotData"/> to convert. </param>
-        public static implicit operator RequestContent(SnapshotData model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SnapshotData)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="SnapshotData"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator SnapshotData(Response response)
+        SnapshotData IPersistableModel<SnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<SnapshotData>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeSnapshotData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSnapshotData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SnapshotData)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<SnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,21 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class DedicatedHostGroupPropertiesAdditionalCapabilities : IUtf8JsonSerializable, IModelJsonSerializable<DedicatedHostGroupPropertiesAdditionalCapabilities>
+    internal partial class DedicatedHostGroupPropertiesAdditionalCapabilities : IUtf8JsonSerializable, IJsonModel<DedicatedHostGroupPropertiesAdditionalCapabilities>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DedicatedHostGroupPropertiesAdditionalCapabilities>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DedicatedHostGroupPropertiesAdditionalCapabilities>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<DedicatedHostGroupPropertiesAdditionalCapabilities>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<DedicatedHostGroupPropertiesAdditionalCapabilities>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostGroupPropertiesAdditionalCapabilities>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DedicatedHostGroupPropertiesAdditionalCapabilities)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(UltraSsdEnabled))
@@ -28,31 +32,47 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("ultraSSDEnabled"u8);
                 writer.WriteBooleanValue(UltraSsdEnabled.Value);
             }
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var property in _serializedAdditionalRawData)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static DedicatedHostGroupPropertiesAdditionalCapabilities DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(JsonElement element, ModelSerializerOptions options = default)
+        DedicatedHostGroupPropertiesAdditionalCapabilities IJsonModel<DedicatedHostGroupPropertiesAdditionalCapabilities>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostGroupPropertiesAdditionalCapabilities>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(DedicatedHostGroupPropertiesAdditionalCapabilities)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(document.RootElement, options);
+        }
+
+        internal static DedicatedHostGroupPropertiesAdditionalCapabilities DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> ultraSsdEnabled = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ultraSSDEnabled"u8))
@@ -64,61 +84,44 @@ namespace Azure.ResourceManager.Compute.Models
                     ultraSsdEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DedicatedHostGroupPropertiesAdditionalCapabilities(Optional.ToNullable(ultraSsdEnabled), serializedAdditionalRawData);
         }
 
-        DedicatedHostGroupPropertiesAdditionalCapabilities IModelJsonSerializable<DedicatedHostGroupPropertiesAdditionalCapabilities>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<DedicatedHostGroupPropertiesAdditionalCapabilities>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostGroupPropertiesAdditionalCapabilities>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<DedicatedHostGroupPropertiesAdditionalCapabilities>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        DedicatedHostGroupPropertiesAdditionalCapabilities IModelSerializable<DedicatedHostGroupPropertiesAdditionalCapabilities>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="DedicatedHostGroupPropertiesAdditionalCapabilities"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="DedicatedHostGroupPropertiesAdditionalCapabilities"/> to convert. </param>
-        public static implicit operator RequestContent(DedicatedHostGroupPropertiesAdditionalCapabilities model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DedicatedHostGroupPropertiesAdditionalCapabilities)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="DedicatedHostGroupPropertiesAdditionalCapabilities"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator DedicatedHostGroupPropertiesAdditionalCapabilities(Response response)
+        DedicatedHostGroupPropertiesAdditionalCapabilities IPersistableModel<DedicatedHostGroupPropertiesAdditionalCapabilities>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostGroupPropertiesAdditionalCapabilities>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(DedicatedHostGroupPropertiesAdditionalCapabilities)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<DedicatedHostGroupPropertiesAdditionalCapabilities>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

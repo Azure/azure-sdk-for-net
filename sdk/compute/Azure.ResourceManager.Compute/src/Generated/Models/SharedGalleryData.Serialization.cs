@@ -6,23 +6,37 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class SharedGalleryData : IUtf8JsonSerializable, IModelJsonSerializable<SharedGalleryData>
+    public partial class SharedGalleryData : IUtf8JsonSerializable, IJsonModel<SharedGalleryData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SharedGalleryData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SharedGalleryData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<SharedGalleryData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<SharedGalleryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<SharedGalleryData>(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<SharedGalleryData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SharedGalleryData)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
             writer.WritePropertyName("identifier"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(UniqueId))
@@ -31,24 +45,39 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStringValue(UniqueId);
             }
             writer.WriteEndObject();
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var property in _serializedAdditionalRawData)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static SharedGalleryData DeserializeSharedGalleryData(JsonElement element, ModelSerializerOptions options = default)
+        SharedGalleryData IJsonModel<SharedGalleryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<SharedGalleryData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SharedGalleryData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSharedGalleryData(document.RootElement, options);
+        }
+
+        internal static SharedGalleryData DeserializeSharedGalleryData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -57,7 +86,8 @@ namespace Azure.ResourceManager.Compute
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
             Optional<string> uniqueId = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -91,61 +121,44 @@ namespace Azure.ResourceManager.Compute
                     }
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new SharedGalleryData(name.Value, Optional.ToNullable(location), uniqueId.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SharedGalleryData(name.Value, Optional.ToNullable(location), serializedAdditionalRawData, uniqueId.Value);
         }
 
-        SharedGalleryData IModelJsonSerializable<SharedGalleryData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<SharedGalleryData>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<SharedGalleryData>(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<SharedGalleryData>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeSharedGalleryData(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<SharedGalleryData>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat<SharedGalleryData>(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        SharedGalleryData IModelSerializable<SharedGalleryData>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat<SharedGalleryData>(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeSharedGalleryData(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="SharedGalleryData"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="SharedGalleryData"/> to convert. </param>
-        public static implicit operator RequestContent(SharedGalleryData model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SharedGalleryData)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="SharedGalleryData"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator SharedGalleryData(Response response)
+        SharedGalleryData IPersistableModel<SharedGalleryData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<SharedGalleryData>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeSharedGalleryData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSharedGalleryData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SharedGalleryData)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<SharedGalleryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

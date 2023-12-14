@@ -6,21 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SshPublicKeyGenerateKeyPairResult : IUtf8JsonSerializable, IModelJsonSerializable<SshPublicKeyGenerateKeyPairResult>
+    public partial class SshPublicKeyGenerateKeyPairResult : IUtf8JsonSerializable, IJsonModel<SshPublicKeyGenerateKeyPairResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SshPublicKeyGenerateKeyPairResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SshPublicKeyGenerateKeyPairResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<SshPublicKeyGenerateKeyPairResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<SshPublicKeyGenerateKeyPairResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyGenerateKeyPairResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SshPublicKeyGenerateKeyPairResult)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
             writer.WritePropertyName("privateKey"u8);
@@ -29,24 +33,39 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(PublicKey);
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var property in _serializedAdditionalRawData)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static SshPublicKeyGenerateKeyPairResult DeserializeSshPublicKeyGenerateKeyPairResult(JsonElement element, ModelSerializerOptions options = default)
+        SshPublicKeyGenerateKeyPairResult IJsonModel<SshPublicKeyGenerateKeyPairResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyGenerateKeyPairResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(SshPublicKeyGenerateKeyPairResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSshPublicKeyGenerateKeyPairResult(document.RootElement, options);
+        }
+
+        internal static SshPublicKeyGenerateKeyPairResult DeserializeSshPublicKeyGenerateKeyPairResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -55,7 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             string privateKey = default;
             string publicKey = default;
             ResourceIdentifier id = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateKey"u8))
@@ -73,61 +93,44 @@ namespace Azure.ResourceManager.Compute.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SshPublicKeyGenerateKeyPairResult(privateKey, publicKey, id, serializedAdditionalRawData);
         }
 
-        SshPublicKeyGenerateKeyPairResult IModelJsonSerializable<SshPublicKeyGenerateKeyPairResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<SshPublicKeyGenerateKeyPairResult>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyGenerateKeyPairResult>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeSshPublicKeyGenerateKeyPairResult(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<SshPublicKeyGenerateKeyPairResult>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        SshPublicKeyGenerateKeyPairResult IModelSerializable<SshPublicKeyGenerateKeyPairResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeSshPublicKeyGenerateKeyPairResult(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="SshPublicKeyGenerateKeyPairResult"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="SshPublicKeyGenerateKeyPairResult"/> to convert. </param>
-        public static implicit operator RequestContent(SshPublicKeyGenerateKeyPairResult model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SshPublicKeyGenerateKeyPairResult)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="SshPublicKeyGenerateKeyPairResult"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator SshPublicKeyGenerateKeyPairResult(Response response)
+        SshPublicKeyGenerateKeyPairResult IPersistableModel<SshPublicKeyGenerateKeyPairResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<SshPublicKeyGenerateKeyPairResult>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeSshPublicKeyGenerateKeyPairResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSshPublicKeyGenerateKeyPairResult(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(SshPublicKeyGenerateKeyPairResult)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<SshPublicKeyGenerateKeyPairResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

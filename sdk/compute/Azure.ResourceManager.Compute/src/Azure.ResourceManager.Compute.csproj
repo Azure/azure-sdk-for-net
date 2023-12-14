@@ -9,9 +9,4 @@
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <NoWarn>$(NoWarn);CS1591;</NoWarn>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)ModelSerializerHelper.cs" LinkBase="Shared/Core" />
-  </ItemGroup>
-  
 </Project>

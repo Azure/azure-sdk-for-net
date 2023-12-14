@@ -6,48 +6,73 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class LogAnalyticsOutput : IUtf8JsonSerializable, IModelJsonSerializable<LogAnalyticsOutput>
+    internal partial class LogAnalyticsOutput : IUtf8JsonSerializable, IJsonModel<LogAnalyticsOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogAnalyticsOutput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<LogAnalyticsOutput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<LogAnalyticsOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LogAnalyticsOutput)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && Optional.IsDefined(Output))
             {
-                foreach (var property in _serializedAdditionalRawData)
+                writer.WritePropertyName("output"u8);
+                writer.WriteStringValue(Output);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static LogAnalyticsOutput DeserializeLogAnalyticsOutput(JsonElement element, ModelSerializerOptions options = default)
+        LogAnalyticsOutput IJsonModel<LogAnalyticsOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(LogAnalyticsOutput)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogAnalyticsOutput(document.RootElement, options);
+        }
+
+        internal static LogAnalyticsOutput DeserializeLogAnalyticsOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> output = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("output"u8))
@@ -55,61 +80,44 @@ namespace Azure.ResourceManager.Compute.Models
                     output = property.Value.GetString();
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LogAnalyticsOutput(output.Value, serializedAdditionalRawData);
         }
 
-        LogAnalyticsOutput IModelJsonSerializable<LogAnalyticsOutput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<LogAnalyticsOutput>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsOutput>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeLogAnalyticsOutput(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<LogAnalyticsOutput>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        LogAnalyticsOutput IModelSerializable<LogAnalyticsOutput>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeLogAnalyticsOutput(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="LogAnalyticsOutput"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="LogAnalyticsOutput"/> to convert. </param>
-        public static implicit operator RequestContent(LogAnalyticsOutput model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LogAnalyticsOutput)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="LogAnalyticsOutput"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator LogAnalyticsOutput(Response response)
+        LogAnalyticsOutput IPersistableModel<LogAnalyticsOutput>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsOutput>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeLogAnalyticsOutput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLogAnalyticsOutput(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(LogAnalyticsOutput)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<LogAnalyticsOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

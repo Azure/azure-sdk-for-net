@@ -6,21 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class VmImagesInEdgeZoneListResult : IUtf8JsonSerializable, IModelJsonSerializable<VmImagesInEdgeZoneListResult>
+    internal partial class VmImagesInEdgeZoneListResult : IUtf8JsonSerializable, IJsonModel<VmImagesInEdgeZoneListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VmImagesInEdgeZoneListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmImagesInEdgeZoneListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<VmImagesInEdgeZoneListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<VmImagesInEdgeZoneListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<VmImagesInEdgeZoneListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(VmImagesInEdgeZoneListResult)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Value))
@@ -29,14 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    if (item is null)
-                    {
-                        writer.WriteNullValue();
-                    }
-                    else
-                    {
-                        ((IModelJsonSerializable<VirtualMachineImageBase>)item).Serialize(writer, options);
-                    }
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -45,24 +42,39 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var property in _serializedAdditionalRawData)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static VmImagesInEdgeZoneListResult DeserializeVmImagesInEdgeZoneListResult(JsonElement element, ModelSerializerOptions options = default)
+        VmImagesInEdgeZoneListResult IJsonModel<VmImagesInEdgeZoneListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<VmImagesInEdgeZoneListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(VmImagesInEdgeZoneListResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmImagesInEdgeZoneListResult(document.RootElement, options);
+        }
+
+        internal static VmImagesInEdgeZoneListResult DeserializeVmImagesInEdgeZoneListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -70,7 +82,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
             Optional<IReadOnlyList<VirtualMachineImageBase>> value = default;
             Optional<string> nextLink = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -92,61 +105,44 @@ namespace Azure.ResourceManager.Compute.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VmImagesInEdgeZoneListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
         }
 
-        VmImagesInEdgeZoneListResult IModelJsonSerializable<VmImagesInEdgeZoneListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<VmImagesInEdgeZoneListResult>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<VmImagesInEdgeZoneListResult>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeVmImagesInEdgeZoneListResult(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<VmImagesInEdgeZoneListResult>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        VmImagesInEdgeZoneListResult IModelSerializable<VmImagesInEdgeZoneListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeVmImagesInEdgeZoneListResult(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="VmImagesInEdgeZoneListResult"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="VmImagesInEdgeZoneListResult"/> to convert. </param>
-        public static implicit operator RequestContent(VmImagesInEdgeZoneListResult model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(VmImagesInEdgeZoneListResult)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="VmImagesInEdgeZoneListResult"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator VmImagesInEdgeZoneListResult(Response response)
+        VmImagesInEdgeZoneListResult IPersistableModel<VmImagesInEdgeZoneListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<VmImagesInEdgeZoneListResult>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeVmImagesInEdgeZoneListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVmImagesInEdgeZoneListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(VmImagesInEdgeZoneListResult)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<VmImagesInEdgeZoneListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

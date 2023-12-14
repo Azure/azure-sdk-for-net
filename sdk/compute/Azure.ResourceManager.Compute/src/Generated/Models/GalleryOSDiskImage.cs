@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="hostCaching"> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </param>
         /// <param name="gallerySource"> The source for the disk image. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryOSDiskImage(int? sizeInGB, HostCaching? hostCaching, GalleryDiskImageSource gallerySource, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(sizeInGB, hostCaching, gallerySource, serializedAdditionalRawData)
+        internal GalleryOSDiskImage(int? sizeInGB, HostCaching? hostCaching, GalleryDiskImageSource gallerySource, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(sizeInGB, hostCaching, gallerySource, serializedAdditionalRawData)
         {
         }
     }

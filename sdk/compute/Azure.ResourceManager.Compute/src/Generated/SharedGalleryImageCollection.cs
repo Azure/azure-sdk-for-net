@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedGalleryImageRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, sharedTo);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sharedGalleryImageRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, sharedTo);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SharedGalleryImageResource(Client, SharedGalleryImageData.DeserializeSharedGalleryImageData(e)), _sharedGalleryImageClientDiagnostics, Pipeline, "SharedGalleryImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SharedGalleryImageResource(Client, SharedGalleryImageData.DeserializeSharedGalleryImageData(e)), _sharedGalleryImageClientDiagnostics, Pipeline, "SharedGalleryImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedGalleryImageRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, sharedTo);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sharedGalleryImageRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, sharedTo);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SharedGalleryImageResource(Client, SharedGalleryImageData.DeserializeSharedGalleryImageData(e)), _sharedGalleryImageClientDiagnostics, Pipeline, "SharedGalleryImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SharedGalleryImageResource(Client, SharedGalleryImageData.DeserializeSharedGalleryImageData(e)), _sharedGalleryImageClientDiagnostics, Pipeline, "SharedGalleryImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

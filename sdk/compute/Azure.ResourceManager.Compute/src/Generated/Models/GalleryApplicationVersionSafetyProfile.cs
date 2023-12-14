@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionSafetyProfile"/>. </summary>
         /// <param name="allowDeletionOfReplicatedLocations"> Indicates whether or not removing this Gallery Image Version from replicated regions is allowed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryApplicationVersionSafetyProfile(bool? allowDeletionOfReplicatedLocations, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(allowDeletionOfReplicatedLocations, serializedAdditionalRawData)
+        internal GalleryApplicationVersionSafetyProfile(bool? allowDeletionOfReplicatedLocations, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(allowDeletionOfReplicatedLocations, serializedAdditionalRawData)
         {
         }
     }

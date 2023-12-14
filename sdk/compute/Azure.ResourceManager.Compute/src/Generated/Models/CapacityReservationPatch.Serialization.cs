@@ -6,35 +6,32 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class CapacityReservationPatch : IUtf8JsonSerializable, IModelJsonSerializable<CapacityReservationPatch>
+    public partial class CapacityReservationPatch : IUtf8JsonSerializable, IJsonModel<CapacityReservationPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CapacityReservationPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapacityReservationPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<CapacityReservationPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<CapacityReservationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<CapacityReservationPatch>(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CapacityReservationPatch)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                if (Sku is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<ComputeSku>)Sku).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(Sku);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -49,25 +46,80 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WriteEndObject();
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && Optional.IsDefined(ReservationId))
             {
-                foreach (var property in _serializedAdditionalRawData)
+                writer.WritePropertyName("reservationId"u8);
+                writer.WriteStringValue(ReservationId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PlatformFaultDomainCount))
+            {
+                writer.WritePropertyName("platformFaultDomainCount"u8);
+                writer.WriteNumberValue(PlatformFaultDomainCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAssociated))
+            {
+                writer.WritePropertyName("virtualMachinesAssociated"u8);
+                writer.WriteStartArray();
+                foreach (var item in VirtualMachinesAssociated)
                 {
-                    writer.WritePropertyName(property.Key);
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningOn))
+            {
+                writer.WritePropertyName("provisioningTime"u8);
+                writer.WriteStringValue(ProvisioningOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InstanceView))
+            {
+                writer.WritePropertyName("instanceView"u8);
+                writer.WriteObjectValue(InstanceView);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
+            {
+                writer.WritePropertyName("timeCreated"u8);
+                writer.WriteStringValue(TimeCreated.Value, "O");
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static CapacityReservationPatch DeserializeCapacityReservationPatch(JsonElement element, ModelSerializerOptions options = default)
+        CapacityReservationPatch IJsonModel<CapacityReservationPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CapacityReservationPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCapacityReservationPatch(document.RootElement, options);
+        }
+
+        internal static CapacityReservationPatch DeserializeCapacityReservationPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -82,7 +134,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> provisioningState = default;
             Optional<CapacityReservationInstanceView> instanceView = default;
             Optional<DateTimeOffset> timeCreated = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -180,61 +233,44 @@ namespace Azure.ResourceManager.Compute.Models
                     }
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new CapacityReservationPatch(Optional.ToDictionary(tags), sku.Value, reservationId.Value, Optional.ToNullable(platformFaultDomainCount), Optional.ToList(virtualMachinesAssociated), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Optional.ToNullable(timeCreated), serializedAdditionalRawData);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CapacityReservationPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, sku.Value, reservationId.Value, Optional.ToNullable(platformFaultDomainCount), Optional.ToList(virtualMachinesAssociated), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Optional.ToNullable(timeCreated));
         }
 
-        CapacityReservationPatch IModelJsonSerializable<CapacityReservationPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<CapacityReservationPatch>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<CapacityReservationPatch>(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationPatch>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeCapacityReservationPatch(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<CapacityReservationPatch>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat<CapacityReservationPatch>(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        CapacityReservationPatch IModelSerializable<CapacityReservationPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat<CapacityReservationPatch>(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeCapacityReservationPatch(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="CapacityReservationPatch"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="CapacityReservationPatch"/> to convert. </param>
-        public static implicit operator RequestContent(CapacityReservationPatch model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CapacityReservationPatch)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="CapacityReservationPatch"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator CapacityReservationPatch(Response response)
+        CapacityReservationPatch IPersistableModel<CapacityReservationPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationPatch>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeCapacityReservationPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCapacityReservationPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CapacityReservationPatch)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<CapacityReservationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,21 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryTargetExtendedLocation : IUtf8JsonSerializable, IModelJsonSerializable<GalleryTargetExtendedLocation>
+    public partial class GalleryTargetExtendedLocation : IUtf8JsonSerializable, IJsonModel<GalleryTargetExtendedLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GalleryTargetExtendedLocation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryTargetExtendedLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<GalleryTargetExtendedLocation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<GalleryTargetExtendedLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryTargetExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(GalleryTargetExtendedLocation)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
@@ -31,14 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                if (ExtendedLocation is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<GalleryExtendedLocation>)ExtendedLocation).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(ExtendedLocation);
             }
             if (Optional.IsDefined(ExtendedLocationReplicaCount))
             {
@@ -53,33 +50,41 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                if (Encryption is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<EncryptionImages>)Encryption).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(Encryption);
             }
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var property in _serializedAdditionalRawData)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static GalleryTargetExtendedLocation DeserializeGalleryTargetExtendedLocation(JsonElement element, ModelSerializerOptions options = default)
+        GalleryTargetExtendedLocation IJsonModel<GalleryTargetExtendedLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryTargetExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(GalleryTargetExtendedLocation)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGalleryTargetExtendedLocation(document.RootElement, options);
+        }
+
+        internal static GalleryTargetExtendedLocation DeserializeGalleryTargetExtendedLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -90,7 +95,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> extendedLocationReplicaCount = default;
             Optional<EdgeZoneStorageAccountType> storageAccountType = default;
             Optional<EncryptionImages> encryption = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -134,61 +140,44 @@ namespace Azure.ResourceManager.Compute.Models
                     encryption = EncryptionImages.DeserializeEncryptionImages(property.Value);
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new GalleryTargetExtendedLocation(name.Value, extendedLocation.Value, Optional.ToNullable(extendedLocationReplicaCount), Optional.ToNullable(storageAccountType), encryption.Value, serializedAdditionalRawData);
         }
 
-        GalleryTargetExtendedLocation IModelJsonSerializable<GalleryTargetExtendedLocation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<GalleryTargetExtendedLocation>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryTargetExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeGalleryTargetExtendedLocation(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<GalleryTargetExtendedLocation>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        GalleryTargetExtendedLocation IModelSerializable<GalleryTargetExtendedLocation>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeGalleryTargetExtendedLocation(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="GalleryTargetExtendedLocation"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="GalleryTargetExtendedLocation"/> to convert. </param>
-        public static implicit operator RequestContent(GalleryTargetExtendedLocation model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(GalleryTargetExtendedLocation)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="GalleryTargetExtendedLocation"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator GalleryTargetExtendedLocation(Response response)
+        GalleryTargetExtendedLocation IPersistableModel<GalleryTargetExtendedLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryTargetExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeGalleryTargetExtendedLocation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGalleryTargetExtendedLocation(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(GalleryTargetExtendedLocation)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<GalleryTargetExtendedLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

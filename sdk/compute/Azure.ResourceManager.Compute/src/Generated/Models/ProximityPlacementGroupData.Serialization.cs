@@ -6,23 +6,27 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class ProximityPlacementGroupData : IUtf8JsonSerializable, IModelJsonSerializable<ProximityPlacementGroupData>
+    public partial class ProximityPlacementGroupData : IUtf8JsonSerializable, IJsonModel<ProximityPlacementGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProximityPlacementGroupData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProximityPlacementGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<ProximityPlacementGroupData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<ProximityPlacementGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<ProximityPlacementGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ProximityPlacementGroupData)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Zones))
@@ -48,6 +52,26 @@ namespace Azure.ResourceManager.Compute
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ProximityPlacementGroupType))
@@ -55,49 +79,80 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("proximityPlacementGroupType"u8);
                 writer.WriteStringValue(ProximityPlacementGroupType.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachines))
+            {
+                writer.WritePropertyName("virtualMachines"u8);
+                writer.WriteStartArray();
+                foreach (var item in VirtualMachines)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachineScaleSets))
+            {
+                writer.WritePropertyName("virtualMachineScaleSets"u8);
+                writer.WriteStartArray();
+                foreach (var item in VirtualMachineScaleSets)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(AvailabilitySets))
+            {
+                writer.WritePropertyName("availabilitySets"u8);
+                writer.WriteStartArray();
+                foreach (var item in AvailabilitySets)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(ColocationStatus))
             {
                 writer.WritePropertyName("colocationStatus"u8);
-                if (ColocationStatus is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<InstanceViewStatus>)ColocationStatus).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(ColocationStatus);
             }
             if (Optional.IsDefined(Intent))
             {
                 writer.WritePropertyName("intent"u8);
-                if (Intent is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<ProximityPlacementGroupPropertiesIntent>)Intent).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(Intent);
             }
             writer.WriteEndObject();
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var property in _serializedAdditionalRawData)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static ProximityPlacementGroupData DeserializeProximityPlacementGroupData(JsonElement element, ModelSerializerOptions options = default)
+        ProximityPlacementGroupData IJsonModel<ProximityPlacementGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<ProximityPlacementGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ProximityPlacementGroupData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProximityPlacementGroupData(document.RootElement, options);
+        }
+
+        internal static ProximityPlacementGroupData DeserializeProximityPlacementGroupData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,7 +171,8 @@ namespace Azure.ResourceManager.Compute
             Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> availabilitySets = default;
             Optional<InstanceViewStatus> colocationStatus = default;
             Optional<ProximityPlacementGroupPropertiesIntent> intent = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"u8))
@@ -257,61 +313,44 @@ namespace Azure.ResourceManager.Compute
                     }
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ProximityPlacementGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToNullable(proximityPlacementGroupType), Optional.ToList(virtualMachines), Optional.ToList(virtualMachineScaleSets), Optional.ToList(availabilitySets), colocationStatus.Value, intent.Value, serializedAdditionalRawData);
         }
 
-        ProximityPlacementGroupData IModelJsonSerializable<ProximityPlacementGroupData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<ProximityPlacementGroupData>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<ProximityPlacementGroupData>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeProximityPlacementGroupData(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<ProximityPlacementGroupData>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        ProximityPlacementGroupData IModelSerializable<ProximityPlacementGroupData>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeProximityPlacementGroupData(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="ProximityPlacementGroupData"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="ProximityPlacementGroupData"/> to convert. </param>
-        public static implicit operator RequestContent(ProximityPlacementGroupData model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ProximityPlacementGroupData)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="ProximityPlacementGroupData"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator ProximityPlacementGroupData(Response response)
+        ProximityPlacementGroupData IPersistableModel<ProximityPlacementGroupData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<ProximityPlacementGroupData>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeProximityPlacementGroupData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeProximityPlacementGroupData(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ProximityPlacementGroupData)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<ProximityPlacementGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

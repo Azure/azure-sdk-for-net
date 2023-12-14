@@ -14,7 +14,6 @@ using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
@@ -27,7 +26,6 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient"/> using the GetCloudServiceResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetCloudService method.
     /// </summary>
-    [DeserializationProxy(typeof(CloudServiceData))]
     public partial class CloudServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CloudServiceResource"/> instance. </summary>
@@ -1044,7 +1042,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServicesUpdateDomainRestClient.CreateListUpdateDomainsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudServicesUpdateDomainRestClient.CreateListUpdateDomainsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, UpdateDomainIdentifier.DeserializeUpdateDomainIdentifier, _cloudServicesUpdateDomainClientDiagnostics, Pipeline, "CloudServiceResource.GetUpdateDomains", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => UpdateDomainIdentifier.DeserializeUpdateDomainIdentifier(e), _cloudServicesUpdateDomainClientDiagnostics, Pipeline, "CloudServiceResource.GetUpdateDomains", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1066,7 +1064,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServicesUpdateDomainRestClient.CreateListUpdateDomainsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudServicesUpdateDomainRestClient.CreateListUpdateDomainsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, UpdateDomainIdentifier.DeserializeUpdateDomainIdentifier, _cloudServicesUpdateDomainClientDiagnostics, Pipeline, "CloudServiceResource.GetUpdateDomains", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => UpdateDomainIdentifier.DeserializeUpdateDomainIdentifier(e), _cloudServicesUpdateDomainClientDiagnostics, Pipeline, "CloudServiceResource.GetUpdateDomains", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

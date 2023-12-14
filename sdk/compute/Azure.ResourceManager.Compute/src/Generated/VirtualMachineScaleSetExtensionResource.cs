@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 
@@ -24,7 +23,6 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient"/> using the GetVirtualMachineScaleSetExtensionResource method.
     /// Otherwise you can get one from its parent resource <see cref="VirtualMachineScaleSetResource"/> using the GetVirtualMachineScaleSetExtension method.
     /// </summary>
-    [DeserializationProxy(typeof(VirtualMachineScaleSetExtensionData))]
     public partial class VirtualMachineScaleSetExtensionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualMachineScaleSetExtensionResource"/> instance. </summary>

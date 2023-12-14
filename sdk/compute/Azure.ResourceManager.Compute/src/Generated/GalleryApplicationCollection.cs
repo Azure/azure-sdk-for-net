@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryApplicationRestClient.CreateListByGalleryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryApplicationRestClient.CreateListByGalleryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new GalleryApplicationResource(Client, GalleryApplicationData.DeserializeGalleryApplicationData(e)), _galleryApplicationClientDiagnostics, Pipeline, "GalleryApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GalleryApplicationResource(Client, GalleryApplicationData.DeserializeGalleryApplicationData(e)), _galleryApplicationClientDiagnostics, Pipeline, "GalleryApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryApplicationRestClient.CreateListByGalleryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryApplicationRestClient.CreateListByGalleryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new GalleryApplicationResource(Client, GalleryApplicationData.DeserializeGalleryApplicationData(e)), _galleryApplicationClientDiagnostics, Pipeline, "GalleryApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GalleryApplicationResource(Client, GalleryApplicationData.DeserializeGalleryApplicationData(e)), _galleryApplicationClientDiagnostics, Pipeline, "GalleryApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

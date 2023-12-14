@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute
         public virtual AsyncPageable<VirtualMachineExtensionImageResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineExtensionImageRestClient.CreateListTypesRequest(Id.SubscriptionId, new AzureLocation(_location), _publisherName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new VirtualMachineExtensionImageResource(Client, VirtualMachineExtensionImageData.DeserializeVirtualMachineExtensionImageData(e)), _virtualMachineExtensionImageClientDiagnostics, Pipeline, "VirtualMachineExtensionImageCollection.GetAll", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new VirtualMachineExtensionImageResource(Client, VirtualMachineExtensionImageData.DeserializeVirtualMachineExtensionImageData(e)), _virtualMachineExtensionImageClientDiagnostics, Pipeline, "VirtualMachineExtensionImageCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Compute
         public virtual Pageable<VirtualMachineExtensionImageResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineExtensionImageRestClient.CreateListTypesRequest(Id.SubscriptionId, new AzureLocation(_location), _publisherName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new VirtualMachineExtensionImageResource(Client, VirtualMachineExtensionImageData.DeserializeVirtualMachineExtensionImageData(e)), _virtualMachineExtensionImageClientDiagnostics, Pipeline, "VirtualMachineExtensionImageCollection.GetAll", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new VirtualMachineExtensionImageResource(Client, VirtualMachineExtensionImageData.DeserializeVirtualMachineExtensionImageData(e)), _virtualMachineExtensionImageClientDiagnostics, Pipeline, "VirtualMachineExtensionImageCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNullOrEmpty(type, nameof(type));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineExtensionImageRestClient.CreateListVersionsRequest(Id.SubscriptionId, new AzureLocation(_location), _publisherName, type, filter, top, orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new VirtualMachineExtensionImageResource(Client, VirtualMachineExtensionImageData.DeserializeVirtualMachineExtensionImageData(e)), _virtualMachineExtensionImageClientDiagnostics, Pipeline, "VirtualMachineExtensionImageCollection.GetAll", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new VirtualMachineExtensionImageResource(Client, VirtualMachineExtensionImageData.DeserializeVirtualMachineExtensionImageData(e)), _virtualMachineExtensionImageClientDiagnostics, Pipeline, "VirtualMachineExtensionImageCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNullOrEmpty(type, nameof(type));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineExtensionImageRestClient.CreateListVersionsRequest(Id.SubscriptionId, new AzureLocation(_location), _publisherName, type, filter, top, orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new VirtualMachineExtensionImageResource(Client, VirtualMachineExtensionImageData.DeserializeVirtualMachineExtensionImageData(e)), _virtualMachineExtensionImageClientDiagnostics, Pipeline, "VirtualMachineExtensionImageCollection.GetAll", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new VirtualMachineExtensionImageResource(Client, VirtualMachineExtensionImageData.DeserializeVirtualMachineExtensionImageData(e)), _virtualMachineExtensionImageClientDiagnostics, Pipeline, "VirtualMachineExtensionImageCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>

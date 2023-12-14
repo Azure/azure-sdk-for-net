@@ -6,34 +6,36 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class CapacityReservationInstanceViewWithName : IUtf8JsonSerializable, IModelJsonSerializable<CapacityReservationInstanceViewWithName>
+    public partial class CapacityReservationInstanceViewWithName : IUtf8JsonSerializable, IJsonModel<CapacityReservationInstanceViewWithName>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CapacityReservationInstanceViewWithName>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapacityReservationInstanceViewWithName>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<CapacityReservationInstanceViewWithName>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<CapacityReservationInstanceViewWithName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<CapacityReservationInstanceViewWithName>(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationInstanceViewWithName>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CapacityReservationInstanceViewWithName)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
             if (Optional.IsDefined(UtilizationInfo))
             {
                 writer.WritePropertyName("utilizationInfo"u8);
-                if (UtilizationInfo is null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    ((IModelJsonSerializable<CapacityReservationUtilization>)UtilizationInfo).Serialize(writer, options);
-                }
+                writer.WriteObjectValue(UtilizationInfo);
             }
             if (Optional.IsCollectionDefined(Statuses))
             {
@@ -41,35 +43,43 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    if (item is null)
-                    {
-                        writer.WriteNullValue();
-                    }
-                    else
-                    {
-                        ((IModelJsonSerializable<InstanceViewStatus>)item).Serialize(writer, options);
-                    }
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var property in _serializedAdditionalRawData)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static CapacityReservationInstanceViewWithName DeserializeCapacityReservationInstanceViewWithName(JsonElement element, ModelSerializerOptions options = default)
+        CapacityReservationInstanceViewWithName IJsonModel<CapacityReservationInstanceViewWithName>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationInstanceViewWithName>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(CapacityReservationInstanceViewWithName)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCapacityReservationInstanceViewWithName(document.RootElement, options);
+        }
+
+        internal static CapacityReservationInstanceViewWithName DeserializeCapacityReservationInstanceViewWithName(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -78,7 +88,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> name = default;
             Optional<CapacityReservationUtilization> utilizationInfo = default;
             Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -109,61 +120,44 @@ namespace Azure.ResourceManager.Compute.Models
                     statuses = array;
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new CapacityReservationInstanceViewWithName(utilizationInfo.Value, Optional.ToList(statuses), name.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CapacityReservationInstanceViewWithName(utilizationInfo.Value, Optional.ToList(statuses), serializedAdditionalRawData, name.Value);
         }
 
-        CapacityReservationInstanceViewWithName IModelJsonSerializable<CapacityReservationInstanceViewWithName>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<CapacityReservationInstanceViewWithName>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<CapacityReservationInstanceViewWithName>(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationInstanceViewWithName>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeCapacityReservationInstanceViewWithName(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<CapacityReservationInstanceViewWithName>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat<CapacityReservationInstanceViewWithName>(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        CapacityReservationInstanceViewWithName IModelSerializable<CapacityReservationInstanceViewWithName>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat<CapacityReservationInstanceViewWithName>(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeCapacityReservationInstanceViewWithName(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="CapacityReservationInstanceViewWithName"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="CapacityReservationInstanceViewWithName"/> to convert. </param>
-        public static implicit operator RequestContent(CapacityReservationInstanceViewWithName model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CapacityReservationInstanceViewWithName)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="CapacityReservationInstanceViewWithName"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator CapacityReservationInstanceViewWithName(Response response)
+        CapacityReservationInstanceViewWithName IPersistableModel<CapacityReservationInstanceViewWithName>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationInstanceViewWithName>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeCapacityReservationInstanceViewWithName(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCapacityReservationInstanceViewWithName(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(CapacityReservationInstanceViewWithName)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<CapacityReservationInstanceViewWithName>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

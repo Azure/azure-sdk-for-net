@@ -6,41 +6,125 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineInstallPatchesResult : IUtf8JsonSerializable, IModelJsonSerializable<VirtualMachineInstallPatchesResult>
+    public partial class VirtualMachineInstallPatchesResult : IUtf8JsonSerializable, IJsonModel<VirtualMachineInstallPatchesResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualMachineInstallPatchesResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineInstallPatchesResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<VirtualMachineInstallPatchesResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<VirtualMachineInstallPatchesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
-                foreach (var property in _serializedAdditionalRawData)
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(InstallationActivityId))
+            {
+                writer.WritePropertyName("installationActivityId"u8);
+                writer.WriteStringValue(InstallationActivityId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RebootStatus))
+            {
+                writer.WritePropertyName("rebootStatus"u8);
+                writer.WriteStringValue(RebootStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaintenanceWindowExceeded))
+            {
+                writer.WritePropertyName("maintenanceWindowExceeded"u8);
+                writer.WriteBooleanValue(MaintenanceWindowExceeded.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExcludedPatchCount))
+            {
+                writer.WritePropertyName("excludedPatchCount"u8);
+                writer.WriteNumberValue(ExcludedPatchCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NotSelectedPatchCount))
+            {
+                writer.WritePropertyName("notSelectedPatchCount"u8);
+                writer.WriteNumberValue(NotSelectedPatchCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PendingPatchCount))
+            {
+                writer.WritePropertyName("pendingPatchCount"u8);
+                writer.WriteNumberValue(PendingPatchCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InstalledPatchCount))
+            {
+                writer.WritePropertyName("installedPatchCount"u8);
+                writer.WriteNumberValue(InstalledPatchCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FailedPatchCount))
+            {
+                writer.WritePropertyName("failedPatchCount"u8);
+                writer.WriteNumberValue(FailedPatchCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Patches))
+            {
+                writer.WritePropertyName("patches"u8);
+                writer.WriteStartArray();
+                foreach (var item in Patches)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startDateTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineInstallPatchesResult DeserializeVirtualMachineInstallPatchesResult(JsonElement element, ModelSerializerOptions options = default)
+        VirtualMachineInstallPatchesResult IJsonModel<VirtualMachineInstallPatchesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineInstallPatchesResult(document.RootElement, options);
+        }
+
+        internal static VirtualMachineInstallPatchesResult DeserializeVirtualMachineInstallPatchesResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -58,7 +142,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IReadOnlyList<PatchInstallationDetail>> patches = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<ComputeApiError> error = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -170,61 +255,44 @@ namespace Azure.ResourceManager.Compute.Models
                     error = ComputeApiError.DeserializeComputeApiError(property.Value);
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VirtualMachineInstallPatchesResult(Optional.ToNullable(status), installationActivityId.Value, Optional.ToNullable(rebootStatus), Optional.ToNullable(maintenanceWindowExceeded), Optional.ToNullable(excludedPatchCount), Optional.ToNullable(notSelectedPatchCount), Optional.ToNullable(pendingPatchCount), Optional.ToNullable(installedPatchCount), Optional.ToNullable(failedPatchCount), Optional.ToList(patches), Optional.ToNullable(startDateTime), error.Value, serializedAdditionalRawData);
         }
 
-        VirtualMachineInstallPatchesResult IModelJsonSerializable<VirtualMachineInstallPatchesResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<VirtualMachineInstallPatchesResult>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeVirtualMachineInstallPatchesResult(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<VirtualMachineInstallPatchesResult>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        VirtualMachineInstallPatchesResult IModelSerializable<VirtualMachineInstallPatchesResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeVirtualMachineInstallPatchesResult(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="VirtualMachineInstallPatchesResult"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="VirtualMachineInstallPatchesResult"/> to convert. </param>
-        public static implicit operator RequestContent(VirtualMachineInstallPatchesResult model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualMachineInstallPatchesResult"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator VirtualMachineInstallPatchesResult(Response response)
+        VirtualMachineInstallPatchesResult IPersistableModel<VirtualMachineInstallPatchesResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeVirtualMachineInstallPatchesResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualMachineInstallPatchesResult(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<VirtualMachineInstallPatchesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

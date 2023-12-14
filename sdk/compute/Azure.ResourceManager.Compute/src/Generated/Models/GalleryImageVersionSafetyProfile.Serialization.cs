@@ -6,46 +6,80 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryImageVersionSafetyProfile : IUtf8JsonSerializable, IModelJsonSerializable<GalleryImageVersionSafetyProfile>
+    public partial class GalleryImageVersionSafetyProfile : IUtf8JsonSerializable, IJsonModel<GalleryImageVersionSafetyProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GalleryImageVersionSafetyProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryImageVersionSafetyProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<GalleryImageVersionSafetyProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<GalleryImageVersionSafetyProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<GalleryImageVersionSafetyProfile>(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryImageVersionSafetyProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(GalleryImageVersionSafetyProfile)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(IsReportedForPolicyViolation))
+            {
+                writer.WritePropertyName("reportedForPolicyViolation"u8);
+                writer.WriteBooleanValue(IsReportedForPolicyViolation.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PolicyViolations))
+            {
+                writer.WritePropertyName("policyViolations"u8);
+                writer.WriteStartArray();
+                foreach (var item in PolicyViolations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(AllowDeletionOfReplicatedLocations))
             {
                 writer.WritePropertyName("allowDeletionOfReplicatedLocations"u8);
                 writer.WriteBooleanValue(AllowDeletionOfReplicatedLocations.Value);
             }
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var property in _serializedAdditionalRawData)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static GalleryImageVersionSafetyProfile DeserializeGalleryImageVersionSafetyProfile(JsonElement element, ModelSerializerOptions options = default)
+        GalleryImageVersionSafetyProfile IJsonModel<GalleryImageVersionSafetyProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryImageVersionSafetyProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(GalleryImageVersionSafetyProfile)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGalleryImageVersionSafetyProfile(document.RootElement, options);
+        }
+
+        internal static GalleryImageVersionSafetyProfile DeserializeGalleryImageVersionSafetyProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -54,7 +88,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> reportedForPolicyViolation = default;
             Optional<IReadOnlyList<GalleryImageVersionPolicyViolation>> policyViolations = default;
             Optional<bool> allowDeletionOfReplicatedLocations = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reportedForPolicyViolation"u8))
@@ -89,61 +124,44 @@ namespace Azure.ResourceManager.Compute.Models
                     allowDeletionOfReplicatedLocations = property.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new GalleryImageVersionSafetyProfile(Optional.ToNullable(allowDeletionOfReplicatedLocations), Optional.ToNullable(reportedForPolicyViolation), Optional.ToList(policyViolations), serializedAdditionalRawData);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GalleryImageVersionSafetyProfile(Optional.ToNullable(allowDeletionOfReplicatedLocations), serializedAdditionalRawData, Optional.ToNullable(reportedForPolicyViolation), Optional.ToList(policyViolations));
         }
 
-        GalleryImageVersionSafetyProfile IModelJsonSerializable<GalleryImageVersionSafetyProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<GalleryImageVersionSafetyProfile>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<GalleryImageVersionSafetyProfile>(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryImageVersionSafetyProfile>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeGalleryImageVersionSafetyProfile(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<GalleryImageVersionSafetyProfile>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat<GalleryImageVersionSafetyProfile>(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        GalleryImageVersionSafetyProfile IModelSerializable<GalleryImageVersionSafetyProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat<GalleryImageVersionSafetyProfile>(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeGalleryImageVersionSafetyProfile(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="GalleryImageVersionSafetyProfile"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="GalleryImageVersionSafetyProfile"/> to convert. </param>
-        public static implicit operator RequestContent(GalleryImageVersionSafetyProfile model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(GalleryImageVersionSafetyProfile)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="GalleryImageVersionSafetyProfile"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator GalleryImageVersionSafetyProfile(Response response)
+        GalleryImageVersionSafetyProfile IPersistableModel<GalleryImageVersionSafetyProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryImageVersionSafetyProfile>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeGalleryImageVersionSafetyProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGalleryImageVersionSafetyProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(GalleryImageVersionSafetyProfile)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<GalleryImageVersionSafetyProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

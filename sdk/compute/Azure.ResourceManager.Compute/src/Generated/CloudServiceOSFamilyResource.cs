@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
@@ -24,7 +23,6 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient"/> using the GetCloudServiceOSFamilyResource method.
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetCloudServiceOSFamily method.
     /// </summary>
-    [DeserializationProxy(typeof(CloudServiceOSFamilyData))]
     public partial class CloudServiceOSFamilyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CloudServiceOSFamilyResource"/> instance. </summary>

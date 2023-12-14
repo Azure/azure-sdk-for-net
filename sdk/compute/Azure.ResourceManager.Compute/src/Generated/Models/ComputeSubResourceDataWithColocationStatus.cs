@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="ComputeSubResourceDataWithColocationStatus"/>. </summary>
         /// <param name="id"> Resource Id. </param>
-        /// <param name="colocationStatus"> Describes colocation status of a resource in the Proximity Placement Group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeSubResourceDataWithColocationStatus(ResourceIdentifier id, InstanceViewStatus colocationStatus, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(id, serializedAdditionalRawData)
+        /// <param name="colocationStatus"> Describes colocation status of a resource in the Proximity Placement Group. </param>
+        internal ComputeSubResourceDataWithColocationStatus(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, InstanceViewStatus colocationStatus) : base(id, serializedAdditionalRawData)
         {
             ColocationStatus = colocationStatus;
         }

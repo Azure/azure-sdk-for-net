@@ -14,7 +14,6 @@ using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
@@ -27,7 +26,6 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient"/> using the GetAvailabilitySetResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAvailabilitySet method.
     /// </summary>
-    [DeserializationProxy(typeof(AvailabilitySetData))]
     public partial class AvailabilitySetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AvailabilitySetResource"/> instance. </summary>
@@ -317,7 +315,7 @@ namespace Azure.ResourceManager.Compute
         public virtual AsyncPageable<VirtualMachineSize> GetAvailableSizesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availabilitySetRestClient.CreateListAvailableSizesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineSize.DeserializeVirtualMachineSize, _availabilitySetClientDiagnostics, Pipeline, "AvailabilitySetResource.GetAvailableSizes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineSize.DeserializeVirtualMachineSize(e), _availabilitySetClientDiagnostics, Pipeline, "AvailabilitySetResource.GetAvailableSizes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -338,7 +336,7 @@ namespace Azure.ResourceManager.Compute
         public virtual Pageable<VirtualMachineSize> GetAvailableSizes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availabilitySetRestClient.CreateListAvailableSizesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineSize.DeserializeVirtualMachineSize, _availabilitySetClientDiagnostics, Pipeline, "AvailabilitySetResource.GetAvailableSizes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineSize.DeserializeVirtualMachineSize(e), _availabilitySetClientDiagnostics, Pipeline, "AvailabilitySetResource.GetAvailableSizes", "value", null, cancellationToken);
         }
 
         /// <summary>

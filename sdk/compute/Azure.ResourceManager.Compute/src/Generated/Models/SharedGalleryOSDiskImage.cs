@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskSizeGB"> This property indicates the size of the VHD to be created. </param>
         /// <param name="hostCaching"> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SharedGalleryOSDiskImage(int? diskSizeGB, SharedGalleryHostCaching? hostCaching, Dictionary<string, BinaryData> serializedAdditionalRawData) : base(diskSizeGB, hostCaching, serializedAdditionalRawData)
+        internal SharedGalleryOSDiskImage(int? diskSizeGB, SharedGalleryHostCaching? hostCaching, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(diskSizeGB, hostCaching, serializedAdditionalRawData)
         {
         }
     }

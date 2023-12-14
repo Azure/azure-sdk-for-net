@@ -14,7 +14,6 @@ using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
@@ -27,7 +26,6 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient"/> using the GetDiskAccessResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDiskAccess method.
     /// </summary>
-    [DeserializationProxy(typeof(DiskAccessData))]
     public partial class DiskAccessResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DiskAccessResource"/> instance. </summary>
@@ -374,7 +372,7 @@ namespace Azure.ResourceManager.Compute
         public virtual AsyncPageable<ComputePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskAccessRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ComputePrivateLinkResourceData.DeserializeComputePrivateLinkResourceData, _diskAccessClientDiagnostics, Pipeline, "DiskAccessResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ComputePrivateLinkResourceData.DeserializeComputePrivateLinkResourceData(e), _diskAccessClientDiagnostics, Pipeline, "DiskAccessResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -395,7 +393,7 @@ namespace Azure.ResourceManager.Compute
         public virtual Pageable<ComputePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskAccessRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ComputePrivateLinkResourceData.DeserializeComputePrivateLinkResourceData, _diskAccessClientDiagnostics, Pipeline, "DiskAccessResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ComputePrivateLinkResourceData.DeserializeComputePrivateLinkResourceData(e), _diskAccessClientDiagnostics, Pipeline, "DiskAccessResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>

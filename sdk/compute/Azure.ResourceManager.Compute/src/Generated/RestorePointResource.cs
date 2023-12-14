@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 
@@ -24,7 +23,6 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient"/> using the GetRestorePointResource method.
     /// Otherwise you can get one from its parent resource <see cref="RestorePointGroupResource"/> using the GetRestorePoint method.
     /// </summary>
-    [DeserializationProxy(typeof(RestorePointData))]
     public partial class RestorePointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RestorePointResource"/> instance. </summary>

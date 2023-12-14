@@ -6,41 +6,80 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ComputeResourceSkuCapacity : IUtf8JsonSerializable, IModelJsonSerializable<ComputeResourceSkuCapacity>
+    public partial class ComputeResourceSkuCapacity : IUtf8JsonSerializable, IJsonModel<ComputeResourceSkuCapacity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ComputeResourceSkuCapacity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeResourceSkuCapacity>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<ComputeResourceSkuCapacity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<ComputeResourceSkuCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeResourceSkuCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ComputeResourceSkuCapacity)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && Optional.IsDefined(Minimum))
             {
-                foreach (var property in _serializedAdditionalRawData)
+                writer.WritePropertyName("minimum"u8);
+                writer.WriteNumberValue(Minimum.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Maximum))
+            {
+                writer.WritePropertyName("maximum"u8);
+                writer.WriteNumberValue(Maximum.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Default))
+            {
+                writer.WritePropertyName("default"u8);
+                writer.WriteNumberValue(Default.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ScaleType))
+            {
+                writer.WritePropertyName("scaleType"u8);
+                writer.WriteStringValue(ScaleType.Value.ToSerialString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static ComputeResourceSkuCapacity DeserializeComputeResourceSkuCapacity(JsonElement element, ModelSerializerOptions options = default)
+        ComputeResourceSkuCapacity IJsonModel<ComputeResourceSkuCapacity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeResourceSkuCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(ComputeResourceSkuCapacity)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeComputeResourceSkuCapacity(document.RootElement, options);
+        }
+
+        internal static ComputeResourceSkuCapacity DeserializeComputeResourceSkuCapacity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -50,7 +89,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<long> maximum = default;
             Optional<long> @default = default;
             Optional<ComputeResourceSkuCapacityScaleType> scaleType = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minimum"u8))
@@ -89,61 +129,44 @@ namespace Azure.ResourceManager.Compute.Models
                     scaleType = property.Value.GetString().ToComputeResourceSkuCapacityScaleType();
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ComputeResourceSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType), serializedAdditionalRawData);
         }
 
-        ComputeResourceSkuCapacity IModelJsonSerializable<ComputeResourceSkuCapacity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<ComputeResourceSkuCapacity>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeResourceSkuCapacity>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeComputeResourceSkuCapacity(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<ComputeResourceSkuCapacity>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        ComputeResourceSkuCapacity IModelSerializable<ComputeResourceSkuCapacity>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeComputeResourceSkuCapacity(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="ComputeResourceSkuCapacity"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="ComputeResourceSkuCapacity"/> to convert. </param>
-        public static implicit operator RequestContent(ComputeResourceSkuCapacity model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ComputeResourceSkuCapacity)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="ComputeResourceSkuCapacity"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator ComputeResourceSkuCapacity(Response response)
+        ComputeResourceSkuCapacity IPersistableModel<ComputeResourceSkuCapacity>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeResourceSkuCapacity>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeComputeResourceSkuCapacity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeComputeResourceSkuCapacity(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(ComputeResourceSkuCapacity)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<ComputeResourceSkuCapacity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskRestorePointRestClient.CreateListByRestorePointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskRestorePointRestClient.CreateListByRestorePointNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DiskRestorePointResource(Client, DiskRestorePointData.DeserializeDiskRestorePointData(e)), _diskRestorePointClientDiagnostics, Pipeline, "DiskRestorePointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskRestorePointResource(Client, DiskRestorePointData.DeserializeDiskRestorePointData(e)), _diskRestorePointClientDiagnostics, Pipeline, "DiskRestorePointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskRestorePointRestClient.CreateListByRestorePointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskRestorePointRestClient.CreateListByRestorePointNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DiskRestorePointResource(Client, DiskRestorePointData.DeserializeDiskRestorePointData(e)), _diskRestorePointClientDiagnostics, Pipeline, "DiskRestorePointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskRestorePointResource(Client, DiskRestorePointData.DeserializeDiskRestorePointData(e)), _diskRestorePointClientDiagnostics, Pipeline, "DiskRestorePointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

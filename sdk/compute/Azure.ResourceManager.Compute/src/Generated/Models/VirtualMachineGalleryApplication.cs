@@ -14,6 +14,38 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies the required information to reference a compute gallery application version. </summary>
     public partial class VirtualMachineGalleryApplication
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="VirtualMachineGalleryApplication"/>. </summary>
         /// <param name="packageReferenceId"> Specifies the GalleryApplicationVersion resource id on the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{application}/versions/{version}. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packageReferenceId"/> is null. </exception>
@@ -32,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="treatFailureAsDeploymentFailure"> Optional, If true, any failure for any operation in the VmApplication will fail the deployment. </param>
         /// <param name="enableAutomaticUpgrade"> If set to true, when a new Gallery Application version is available in PIR/SIG, it will be automatically updated for the VM/VMSS. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineGalleryApplication(string tags, int? order, string packageReferenceId, string configurationReference, bool? treatFailureAsDeploymentFailure, bool? enableAutomaticUpgrade, Dictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineGalleryApplication(string tags, int? order, string packageReferenceId, string configurationReference, bool? treatFailureAsDeploymentFailure, bool? enableAutomaticUpgrade, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Order = order;

@@ -6,41 +6,75 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class BootDiagnosticsInstanceView : IUtf8JsonSerializable, IModelJsonSerializable<BootDiagnosticsInstanceView>
+    public partial class BootDiagnosticsInstanceView : IUtf8JsonSerializable, IJsonModel<BootDiagnosticsInstanceView>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BootDiagnosticsInstanceView>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BootDiagnosticsInstanceView>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<BootDiagnosticsInstanceView>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<BootDiagnosticsInstanceView>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<BootDiagnosticsInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(BootDiagnosticsInstanceView)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && Optional.IsDefined(ConsoleScreenshotBlobUri))
             {
-                foreach (var property in _serializedAdditionalRawData)
+                writer.WritePropertyName("consoleScreenshotBlobUri"u8);
+                writer.WriteStringValue(ConsoleScreenshotBlobUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SerialConsoleLogBlobUri))
+            {
+                writer.WritePropertyName("serialConsoleLogBlobUri"u8);
+                writer.WriteStringValue(SerialConsoleLogBlobUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteObjectValue(Status);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static BootDiagnosticsInstanceView DeserializeBootDiagnosticsInstanceView(JsonElement element, ModelSerializerOptions options = default)
+        BootDiagnosticsInstanceView IJsonModel<BootDiagnosticsInstanceView>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<BootDiagnosticsInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(BootDiagnosticsInstanceView)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBootDiagnosticsInstanceView(document.RootElement, options);
+        }
+
+        internal static BootDiagnosticsInstanceView DeserializeBootDiagnosticsInstanceView(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -49,7 +83,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<Uri> consoleScreenshotBlobUri = default;
             Optional<Uri> serialConsoleLogBlobUri = default;
             Optional<InstanceViewStatus> status = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("consoleScreenshotBlobUri"u8))
@@ -79,61 +114,44 @@ namespace Azure.ResourceManager.Compute.Models
                     status = InstanceViewStatus.DeserializeInstanceViewStatus(property.Value);
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BootDiagnosticsInstanceView(consoleScreenshotBlobUri.Value, serialConsoleLogBlobUri.Value, status.Value, serializedAdditionalRawData);
         }
 
-        BootDiagnosticsInstanceView IModelJsonSerializable<BootDiagnosticsInstanceView>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<BootDiagnosticsInstanceView>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<BootDiagnosticsInstanceView>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeBootDiagnosticsInstanceView(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<BootDiagnosticsInstanceView>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        BootDiagnosticsInstanceView IModelSerializable<BootDiagnosticsInstanceView>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeBootDiagnosticsInstanceView(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="BootDiagnosticsInstanceView"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="BootDiagnosticsInstanceView"/> to convert. </param>
-        public static implicit operator RequestContent(BootDiagnosticsInstanceView model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BootDiagnosticsInstanceView)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="BootDiagnosticsInstanceView"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator BootDiagnosticsInstanceView(Response response)
+        BootDiagnosticsInstanceView IPersistableModel<BootDiagnosticsInstanceView>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<BootDiagnosticsInstanceView>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeBootDiagnosticsInstanceView(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBootDiagnosticsInstanceView(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(BootDiagnosticsInstanceView)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<BootDiagnosticsInstanceView>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

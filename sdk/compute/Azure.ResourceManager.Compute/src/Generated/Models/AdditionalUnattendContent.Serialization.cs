@@ -6,21 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class AdditionalUnattendContent : IUtf8JsonSerializable, IModelJsonSerializable<AdditionalUnattendContent>
+    public partial class AdditionalUnattendContent : IUtf8JsonSerializable, IJsonModel<AdditionalUnattendContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AdditionalUnattendContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdditionalUnattendContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IModelJsonSerializable<AdditionalUnattendContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IJsonModel<AdditionalUnattendContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<AdditionalUnattendContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AdditionalUnattendContent)} does not support '{format}' format.");
+            }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(PassName))
@@ -43,24 +47,39 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (_serializedAdditionalRawData is not null && options.Format == ModelSerializerFormat.Json)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var property in _serializedAdditionalRawData)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WritePropertyName(property.Key);
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(property.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
             }
             writer.WriteEndObject();
         }
 
-        internal static AdditionalUnattendContent DeserializeAdditionalUnattendContent(JsonElement element, ModelSerializerOptions options = default)
+        AdditionalUnattendContent IJsonModel<AdditionalUnattendContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
+            var format = options.Format == "W" ? ((IPersistableModel<AdditionalUnattendContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new InvalidOperationException($"The model {nameof(AdditionalUnattendContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAdditionalUnattendContent(document.RootElement, options);
+        }
+
+        internal static AdditionalUnattendContent DeserializeAdditionalUnattendContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -70,7 +89,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<ComponentName> componentName = default;
             Optional<SettingName> settingName = default;
             Optional<string> content = default;
-            Dictionary<string, BinaryData> serializedAdditionalRawData = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("passName"u8))
@@ -105,61 +125,44 @@ namespace Azure.ResourceManager.Compute.Models
                     content = property.Value.GetString();
                     continue;
                 }
-                if (options.Format == ModelSerializerFormat.Json)
+                if (options.Format != "W")
                 {
-                    serializedAdditionalRawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AdditionalUnattendContent(Optional.ToNullable(passName), Optional.ToNullable(componentName), Optional.ToNullable(settingName), content.Value, serializedAdditionalRawData);
         }
 
-        AdditionalUnattendContent IModelJsonSerializable<AdditionalUnattendContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<AdditionalUnattendContent>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            var format = options.Format == "W" ? ((IPersistableModel<AdditionalUnattendContent>)this).GetFormatFromOptions(options) : options.Format;
 
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeAdditionalUnattendContent(doc.RootElement, options);
-        }
-
-        BinaryData IModelSerializable<AdditionalUnattendContent>.Serialize(ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return ModelSerializer.SerializeCore(this, options);
-        }
-
-        AdditionalUnattendContent IModelSerializable<AdditionalUnattendContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            using var doc = JsonDocument.Parse(data);
-            return DeserializeAdditionalUnattendContent(doc.RootElement, options);
-        }
-
-        /// <summary> Converts a <see cref="AdditionalUnattendContent"/> into a <see cref="RequestContent"/>. </summary>
-        /// <param name="model"> The <see cref="AdditionalUnattendContent"/> to convert. </param>
-        public static implicit operator RequestContent(AdditionalUnattendContent model)
-        {
-            if (model is null)
+            switch (format)
             {
-                return null;
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AdditionalUnattendContent)} does not support '{options.Format}' format.");
             }
-
-            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        /// <summary> Converts a <see cref="Response"/> into a <see cref="AdditionalUnattendContent"/>. </summary>
-        /// <param name="response"> The <see cref="Response"/> to convert. </param>
-        public static explicit operator AdditionalUnattendContent(Response response)
+        AdditionalUnattendContent IPersistableModel<AdditionalUnattendContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            var format = options.Format == "W" ? ((IPersistableModel<AdditionalUnattendContent>)this).GetFormatFromOptions(options) : options.Format;
 
-            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeAdditionalUnattendContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAdditionalUnattendContent(document.RootElement, options);
+                    }
+                default:
+                    throw new InvalidOperationException($"The model {nameof(AdditionalUnattendContent)} does not support '{options.Format}' format.");
+            }
         }
+
+        string IPersistableModel<AdditionalUnattendContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
