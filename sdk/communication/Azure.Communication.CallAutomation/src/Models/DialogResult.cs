@@ -33,7 +33,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Wait for <see cref="DialogEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
-        /// <returns>Returns <see cref="DialogEventResult"/> which contains either <see cref="DialogCompleted"/> event, <see cref="DialogConsent"/> event, <see cref="DialogFailed"/> event, <see cref="DialogHangup"/> event, <see cref="DialogStarted"/> event, <see cref="DialogTransfer"/> event.</returns>
+        /// <returns>Returns <see cref="DialogEventResult"/> which contains either <see cref="DialogCompleted"/> event, <see cref="DialogConsent"/> event, <see cref="DialogFailed"/> event, <see cref="DialogHangup"/> event, <see cref="DialogStarted"/> event, <see cref="DialogTransfer"/>, <see cref="DialogSensitivityUpdate"/>, <see cref="DialogLanguageChange"/>, <see cref="DialogUpdated"/> event.</returns>
         public DialogEventResult WaitForEventProcessor(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
@@ -61,7 +61,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Wait for <see cref="DialogEventResult"/> using <see cref="CallAutomationEventProcessor"/>.
         /// </summary>
-        /// <returns>Returns <see cref="DialogEventResult"/> which contains either <see cref="DialogCompleted"/> event, <see cref="DialogConsent"/> event, <see cref="DialogFailed"/> event, <see cref="DialogHangup"/> event, <see cref="DialogStarted"/> event, <see cref="DialogTransfer"/> event.</returns>
+        /// <returns>Returns <see cref="DialogEventResult"/> which contains either <see cref="DialogCompleted"/> event, <see cref="DialogConsent"/> event, <see cref="DialogFailed"/> event, <see cref="DialogHangup"/> event, <see cref="DialogStarted"/> event, <see cref="DialogTransfer"/>, <see cref="DialogSensitivityUpdate"/>, <see cref="DialogLanguageChange"/>, <see cref="DialogUpdated"/> event.</returns>
         public async Task<DialogEventResult> WaitForEventProcessorAsync(CancellationToken cancellationToken = default)
         {
             if (_evHandler is null)
