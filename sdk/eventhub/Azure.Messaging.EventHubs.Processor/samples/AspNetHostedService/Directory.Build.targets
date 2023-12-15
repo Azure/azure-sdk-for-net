@@ -1,0 +1,15 @@
+<Project>
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory)..\..\..\.., Directory.Build.targets))\Directory.Build.targets"
+          Condition="'$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory)..\..\..\.., Directory.Build.targets))' != ''" />
+
+  <!-- Use decentralized package references when building outside https://github.com/Azure/azure-sdk-for-net -->
+  <ItemGroup Condition="'$(IsSamplesProject)' == '' OR '$(IsTestProject)' == ''">
+    <PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.10.0" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+    <PackageReference Update="NUnit" Version="3.13.2" />
+    <PackageReference Update="NUnit3TestAdapter" Version="4.4.2" />
+    <PackageReference Update="Moq" Version="4.18.2" />
+  </ItemGroup>
+</Project>

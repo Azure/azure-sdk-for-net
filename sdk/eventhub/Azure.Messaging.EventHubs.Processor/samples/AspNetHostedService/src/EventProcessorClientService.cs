@@ -3,14 +3,23 @@
 
 using Azure.Messaging.EventHubs.Consumer;
 
-namespace Azure.Messaging.EventHubs.Processor.Samples.HostedService
+namespace Azure.Messaging.EventHubs.Processor.HostedService.Samples
 {
+    /// <summary>
+    /// Implementation of the <see cref="IHostedService"/> interface for processing events.
+    /// </summary>
     public class EventProcessorClientService : IHostedService
     {
         private readonly ILogger<EventProcessorClientService> _logger;
         private readonly EventProcessorClient _processorClient;
         private readonly ISampleApplicationProcessor _appProcessor;
 
+        /// <summary>
+        /// Initializes an instance of the <see cref="EventProcessorClientService"/> class.
+        /// </summary>
+        /// <param name="logger">A named <see cref="ILogger"/> used for logging within the <see cref="EventProcessorClientService"/> class.</param>
+        /// <param name="processorClient"><see cref="EventProcessorClient"/> used for consuming and processing events within the <see cref="EventProcessorClientService"/> class.</param>
+        /// <param name="appProcessor">A named <see cref="ISampleApplicationProcessor"/> used as an example to show how to pass events to a downstream service for further processing.</param>
         public EventProcessorClientService(
             ILogger<EventProcessorClientService> logger,
             EventProcessorClient processorClient,
@@ -21,6 +30,11 @@ namespace Azure.Messaging.EventHubs.Processor.Samples.HostedService
             _appProcessor = appProcessor;
         }
 
+        /// <summary>
+        /// Implementation of the <see cref="IHostedService"/> StartAsync interface method.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             try
@@ -31,7 +45,7 @@ namespace Azure.Messaging.EventHubs.Processor.Samples.HostedService
                 _processorClient.ProcessErrorAsync += ProcessErrorHandler;
 
                 //Start processing events.
-                await _processorClient.StartProcessingAsync(cancellationToken);
+                await _processorClient.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
             }
             catch
             {
@@ -140,12 +154,17 @@ namespace Azure.Messaging.EventHubs.Processor.Samples.HostedService
             return Task.CompletedTask;
         }
 
+        /// <summary>
+        /// Implementation of the <see cref="IHostedService"/> StopAsync interface method.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task StopAsync(CancellationToken cancellationToken)
         {
             try
             {
                 // The hosted service is being stopped, stop processing events
-                await _processorClient.StopProcessingAsync(cancellationToken);
+                await _processorClient.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
             }
             finally
             {

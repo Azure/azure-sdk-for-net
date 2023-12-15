@@ -3,22 +3,22 @@
 
 using Azure.Storage.Blobs;
 
-namespace Azure.Messaging.EventHubs.Processor.Samples.HostedService
+namespace Azure.Messaging.EventHubs.Processor.HostedService.Samples
 {
     /// <summary>
-    /// The <see cref="SampleProgram" /> class.
+    /// The default entry point of the ASP.NET application.
     /// </summary>
     public class SampleProgram
     {
         /// <summary>
-        /// The entry point to the application.
+        /// The default entry point method of the <see cref="SampleProgram" /> class.
         /// </summary>
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Adds an EventProcessorClient for use for the lifetime of the application
+            // Adds an EventProcessorClient for use for the lifetime of the application.
             builder.Services.AddSingleton(GetEventProcessorClient(builder.Configuration));
 
             // Adds a class to process the event body. Substitute this for your own application event processing needs.

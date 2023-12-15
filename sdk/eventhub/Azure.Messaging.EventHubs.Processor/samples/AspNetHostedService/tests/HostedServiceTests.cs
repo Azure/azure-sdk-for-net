@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#if !NET462
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,13 +8,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Primitives;
-using Azure.Messaging.EventHubs.Processor.Samples.HostedService;
 using Azure.Storage.Blobs;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.Tests
+namespace Azure.Messaging.EventHubs.Processor.HostedService.Samples.Tests
 {
     [TestFixture]
     public class HostedServiceTests
@@ -138,4 +136,3 @@ namespace Azure.Messaging.EventHubs.Tests
         }
     }
 }
-#endif

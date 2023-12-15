@@ -10,14 +10,15 @@ description: Using the EventProcessorClient with an ASP.NET hosted service
 ---
 
 # Using the `EventProcessorClient` with an ASP.NET hosted service
-This is an example of how to create and configure the `EventProcessorClient` in an ASP.NET context as an `IHostedService` implementation.
-ASP.NET hosted services can be used to implement background task processing, making them a good choice if your application needs to continually process events from Azure Event Hubs.  For more information, please see the [hosted services documentation](https://learn.microsoft.com/aspnet/core/fundamentals/host/hosted-services).
+
+This is an example of how to create and configure the `EventProcessorClient` in an ASP.NET context as an `IHostedService` implementation.  ASP.NET hosted services can be used to implement background task processing, making them a good choice if your application needs to continually process events from Azure Event Hubs.  For more information, please see the [hosted services documentation](https://learn.microsoft.com/aspnet/core/fundamentals/host/hosted-services).
 
 The [Azure.Messaging.EventHubs.Processor](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/README.md) package provides a stand-alone client for consuming events in a robust, durable, and scalable way that is suitable for the majority of production scenarios.
 
 ## Getting Started
 
 ### Prerequisites
+
 - **Azure Subscription:**  To use Azure services, including Azure Event Hubs, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://azure.microsoft.com/account)).
 
 - **Event Hubs namespace with an Event Hub:** To interact with Azure Event Hubs, you'll also need to have a namespace and Event Hub available.  If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [creating an Event Hub using the Azure portal](https://docs.microsoft.com/azure/event-hubs/event-hubs-create).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create an Event Hub.
@@ -86,7 +87,7 @@ Open the `appsettings.Development.json` file and replace the Storage and EventHu
 2. Observe the event body being processing via the application logs. Example:
 
 ```
-info: Azure.Messaging.EventHubs.Processor.Samples.HostedService.SampleApplicationProcessor[0]
+info: Azure.Messaging.EventHubs.Processor.HostedService.Samples.SampleApplicationProcessor[0]
       Event body has been processed: [
     {
         "key1": "value1",

@@ -81,8 +81,8 @@ For the event processor client to make use of Azure Storage blobs for checkpoint
 - [Mocking Client Types](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample08_MockingClientTypes.md)  
   A demonstration of how to mock the types in the Event Hubs Processor client library, focusing on common application scenarios.
 
-- [Using the `EventProcessorClient` with an ASP.NET hosted service](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/aspnethostedservice/README.md)  
-  An example of how to create and configure the `EventProcessorClient` in an ASP.NET context as an IHostedService implementation.
+<!-- - [Using the `EventProcessorClient` with an ASP.NET hosted service](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/AspNetHostedService/README.md)  
+  An example of how to create and configure the `EventProcessorClient` in an ASP.NET context as an IHostedService implementation. -->
 
 ## Contributing  
 
