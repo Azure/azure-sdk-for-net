@@ -8,7 +8,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Tests.Policies;
+namespace System.ClientModel.Tests.Pipeline;
 
 public class RequestRetryPolicyTests : SyncAsyncTestBase
 {
