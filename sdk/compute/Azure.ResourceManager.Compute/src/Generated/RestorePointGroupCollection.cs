@@ -84,7 +84,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _restorePointGroupRestorePointCollectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, restorePointGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<RestorePointGroupResource>(Response.FromValue(new RestorePointGroupResource(Client, response), response.GetRawResponse()));
+                var uri = _restorePointGroupRestorePointCollectionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, restorePointGroupName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ComputeArmOperation<RestorePointGroupResource>(Response.FromValue(new RestorePointGroupResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,7 +127,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _restorePointGroupRestorePointCollectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, restorePointGroupName, data, cancellationToken);
-                var operation = new ComputeArmOperation<RestorePointGroupResource>(Response.FromValue(new RestorePointGroupResource(Client, response), response.GetRawResponse()));
+                var uri = _restorePointGroupRestorePointCollectionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, restorePointGroupName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ComputeArmOperation<RestorePointGroupResource>(Response.FromValue(new RestorePointGroupResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

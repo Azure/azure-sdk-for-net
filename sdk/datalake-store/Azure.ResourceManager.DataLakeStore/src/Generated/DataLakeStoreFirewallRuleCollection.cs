@@ -83,7 +83,9 @@ namespace Azure.ResourceManager.DataLakeStore
             try
             {
                 var response = await _dataLakeStoreFirewallRuleFirewallRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DataLakeStoreArmOperation<DataLakeStoreFirewallRuleResource>(Response.FromValue(new DataLakeStoreFirewallRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _dataLakeStoreFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, content);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new DataLakeStoreArmOperation<DataLakeStoreFirewallRuleResource>(Response.FromValue(new DataLakeStoreFirewallRuleResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +126,9 @@ namespace Azure.ResourceManager.DataLakeStore
             try
             {
                 var response = _dataLakeStoreFirewallRuleFirewallRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, content, cancellationToken);
-                var operation = new DataLakeStoreArmOperation<DataLakeStoreFirewallRuleResource>(Response.FromValue(new DataLakeStoreFirewallRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _dataLakeStoreFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, content);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new DataLakeStoreArmOperation<DataLakeStoreFirewallRuleResource>(Response.FromValue(new DataLakeStoreFirewallRuleResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

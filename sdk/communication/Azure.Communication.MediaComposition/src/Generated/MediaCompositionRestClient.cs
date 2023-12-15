@@ -40,6 +40,16 @@ namespace Azure.Communication.MediaComposition
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string mediaCompositionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/mediaCompositions/", false);
+            uri.AppendPath(mediaCompositionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string mediaCompositionId)
         {
             var message = _pipeline.CreateMessage();
@@ -107,6 +117,16 @@ namespace Azure.Communication.MediaComposition
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string mediaCompositionId, string id, MediaCompositionLayout layout, IDictionary<string, MediaInput> inputs, IDictionary<string, MediaOutput> outputs, CompositionStreamState streamState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/mediaCompositions/", false);
+            uri.AppendPath(mediaCompositionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string mediaCompositionId, string id, MediaCompositionLayout layout, IDictionary<string, MediaInput> inputs, IDictionary<string, MediaOutput> outputs, CompositionStreamState streamState)
@@ -213,6 +233,16 @@ namespace Azure.Communication.MediaComposition
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string mediaCompositionId, string id, MediaCompositionLayout layout, IDictionary<string, MediaInput> inputs, IDictionary<string, MediaOutput> outputs, CompositionStreamState streamState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/mediaCompositions/", false);
+            uri.AppendPath(mediaCompositionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string mediaCompositionId, string id, MediaCompositionLayout layout, IDictionary<string, MediaInput> inputs, IDictionary<string, MediaOutput> outputs, CompositionStreamState streamState)
         {
             var message = _pipeline.CreateMessage();
@@ -317,6 +347,16 @@ namespace Azure.Communication.MediaComposition
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string mediaCompositionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/mediaCompositions/", false);
+            uri.AppendPath(mediaCompositionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string mediaCompositionId)
         {
             var message = _pipeline.CreateMessage();
@@ -374,6 +414,17 @@ namespace Azure.Communication.MediaComposition
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStartRequestUri(string mediaCompositionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/mediaCompositions/", false);
+            uri.AppendPath(mediaCompositionId, true);
+            uri.AppendPath(":start", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStartRequest(string mediaCompositionId)
@@ -444,6 +495,17 @@ namespace Azure.Communication.MediaComposition
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStopRequestUri(string mediaCompositionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/mediaCompositions/", false);
+            uri.AppendPath(mediaCompositionId, true);
+            uri.AppendPath(":stop", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStopRequest(string mediaCompositionId)

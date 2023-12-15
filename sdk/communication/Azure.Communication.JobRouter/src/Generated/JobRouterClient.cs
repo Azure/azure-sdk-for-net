@@ -1263,6 +1263,16 @@ namespace Azure.Communication.JobRouter
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterClient.GetWorkers", "value", "nextLink", context);
         }
 
+        internal RequestUriBuilder CreateUpsertJobRequestUri(string jobId, RequestContent content, RequestConditions requestConditions, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpsertJobRequest(string jobId, RequestContent content, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
@@ -1284,6 +1294,16 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetJobRequestUri(string jobId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetJobRequest(string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1299,6 +1319,16 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteJobRequestUri(string jobId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteJobRequest(string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -1312,6 +1342,17 @@ namespace Azure.Communication.JobRouter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateReclassifyJobRequestUri(string jobId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendPath(":reclassify", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateReclassifyJobRequest(string jobId, RequestContent content, RequestContext context)
@@ -1332,6 +1373,17 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
+        internal RequestUriBuilder CreateCancelJobRequestUri(string jobId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendPath(":cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCancelJobRequest(string jobId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1348,6 +1400,19 @@ namespace Azure.Communication.JobRouter
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateCompleteJobRequestUri(string jobId, string assignmentId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendPath("/assignments/", false);
+            uri.AppendPath(assignmentId, true);
+            uri.AppendPath(":complete", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCompleteJobRequest(string jobId, string assignmentId, RequestContent content, RequestContext context)
@@ -1370,6 +1435,19 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
+        internal RequestUriBuilder CreateCloseJobRequestUri(string jobId, string assignmentId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendPath("/assignments/", false);
+            uri.AppendPath(assignmentId, true);
+            uri.AppendPath(":close", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCloseJobRequest(string jobId, string assignmentId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1388,6 +1466,43 @@ namespace Azure.Communication.JobRouter
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetJobsRequestUri(int? maxpagesize, string status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/jobs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            if (status != null)
+            {
+                uri.AppendQuery("status", status, true);
+            }
+            if (queueId != null)
+            {
+                uri.AppendQuery("queueId", queueId, true);
+            }
+            if (channelId != null)
+            {
+                uri.AppendQuery("channelId", channelId, true);
+            }
+            if (classificationPolicyId != null)
+            {
+                uri.AppendQuery("classificationPolicyId", classificationPolicyId, true);
+            }
+            if (scheduledBefore != null)
+            {
+                uri.AppendQuery("scheduledBefore", scheduledBefore.Value, "O", true);
+            }
+            if (scheduledAfter != null)
+            {
+                uri.AppendQuery("scheduledAfter", scheduledAfter.Value, "O", true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetJobsRequest(int? maxpagesize, string status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, RequestContext context)
@@ -1432,6 +1547,17 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetQueuePositionRequestUri(string jobId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendPath("/position", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetQueuePositionRequest(string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1446,6 +1572,19 @@ namespace Azure.Communication.JobRouter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateUnassignJobRequestUri(string jobId, string assignmentId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendPath("/assignments/", false);
+            uri.AppendPath(assignmentId, true);
+            uri.AppendPath(":unassign", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUnassignJobRequest(string jobId, string assignmentId, RequestContent content, RequestContext context)
@@ -1468,6 +1607,19 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
+        internal RequestUriBuilder CreateAcceptJobOfferRequestUri(string workerId, string offerId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/workers/", false);
+            uri.AppendPath(workerId, true);
+            uri.AppendPath("/offers/", false);
+            uri.AppendPath(offerId, true);
+            uri.AppendPath(":accept", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateAcceptJobOfferRequest(string workerId, string offerId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1484,6 +1636,19 @@ namespace Azure.Communication.JobRouter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateDeclineJobOfferRequestUri(string workerId, string offerId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/workers/", false);
+            uri.AppendPath(workerId, true);
+            uri.AppendPath("/offers/", false);
+            uri.AppendPath(offerId, true);
+            uri.AppendPath(":decline", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeclineJobOfferRequest(string workerId, string offerId, RequestContent content, RequestContext context)
@@ -1506,6 +1671,17 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetQueueStatisticsRequestUri(string queueId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/queues/", false);
+            uri.AppendPath(queueId, true);
+            uri.AppendPath("/statistics", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetQueueStatisticsRequest(string queueId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1520,6 +1696,16 @@ namespace Azure.Communication.JobRouter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateUpsertWorkerRequestUri(string workerId, RequestContent content, RequestConditions requestConditions, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/workers/", false);
+            uri.AppendPath(workerId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpsertWorkerRequest(string workerId, RequestContent content, RequestConditions requestConditions, RequestContext context)
@@ -1543,6 +1729,16 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetWorkerRequestUri(string workerId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/workers/", false);
+            uri.AppendPath(workerId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetWorkerRequest(string workerId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1558,6 +1754,16 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteWorkerRequestUri(string workerId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/workers/", false);
+            uri.AppendPath(workerId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteWorkerRequest(string workerId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -1571,6 +1777,35 @@ namespace Azure.Communication.JobRouter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetWorkersRequestUri(int? maxpagesize, string state, string channelId, string queueId, bool? hasCapacity, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/workers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            if (state != null)
+            {
+                uri.AppendQuery("state", state, true);
+            }
+            if (channelId != null)
+            {
+                uri.AppendQuery("channelId", channelId, true);
+            }
+            if (queueId != null)
+            {
+                uri.AppendQuery("queueId", queueId, true);
+            }
+            if (hasCapacity != null)
+            {
+                uri.AppendQuery("hasCapacity", hasCapacity.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetWorkersRequest(int? maxpagesize, string state, string channelId, string queueId, bool? hasCapacity, RequestContext context)
@@ -1605,6 +1840,22 @@ namespace Azure.Communication.JobRouter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetJobsNextPageRequestUri(string nextLink, int? maxpagesize, string status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal RequestUriBuilder CreateGetWorkersNextPageRequestUri(string nextLink, int? maxpagesize, string state, string channelId, string queueId, bool? hasCapacity, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         private static RequestContext DefaultRequestContext = new RequestContext();

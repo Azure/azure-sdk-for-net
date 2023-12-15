@@ -82,7 +82,9 @@ namespace Azure.ResourceManager.Communication
             try
             {
                 var response = await _suppressionListAddressResourceSuppressionListAddressesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, addressId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CommunicationArmOperation<SuppressionListAddressResource>(Response.FromValue(new SuppressionListAddressResource(Client, response), response.GetRawResponse()));
+                var uri = _suppressionListAddressResourceSuppressionListAddressesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, addressId, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new CommunicationArmOperation<SuppressionListAddressResource>(Response.FromValue(new SuppressionListAddressResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +125,9 @@ namespace Azure.ResourceManager.Communication
             try
             {
                 var response = _suppressionListAddressResourceSuppressionListAddressesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, addressId, data, cancellationToken);
-                var operation = new CommunicationArmOperation<SuppressionListAddressResource>(Response.FromValue(new SuppressionListAddressResource(Client, response), response.GetRawResponse()));
+                var uri = _suppressionListAddressResourceSuppressionListAddressesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, addressId, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new CommunicationArmOperation<SuppressionListAddressResource>(Response.FromValue(new SuppressionListAddressResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

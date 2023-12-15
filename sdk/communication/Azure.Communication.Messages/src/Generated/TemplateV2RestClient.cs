@@ -38,6 +38,21 @@ namespace Azure.Communication.Messages
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateListRequestUri(Guid channelId, int? maxPageSize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/messages/channels/", false);
+            uri.AppendPath(channelId, true);
+            uri.AppendPath("/templates", false);
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(Guid channelId, int? maxPageSize)
         {
             var message = _pipeline.CreateMessage();
@@ -100,6 +115,14 @@ namespace Azure.Communication.Messages
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, Guid channelId, int? maxPageSize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, Guid channelId, int? maxPageSize)

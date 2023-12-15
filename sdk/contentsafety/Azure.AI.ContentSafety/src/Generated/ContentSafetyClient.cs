@@ -321,6 +321,16 @@ namespace Azure.AI.ContentSafety
             }
         }
 
+        internal RequestUriBuilder CreateAnalyzeTextRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/contentsafety", false);
+            uri.AppendPath("/text:analyze", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateAnalyzeTextRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -336,6 +346,16 @@ namespace Azure.AI.ContentSafety
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateAnalyzeImageRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/contentsafety", false);
+            uri.AppendPath("/image:analyze", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAnalyzeImageRequest(RequestContent content, RequestContext context)

@@ -839,6 +839,15 @@ namespace Azure.Security.ConfidentialLedger
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetLedgerEntries", "entries", "nextLink", context);
         }
 
+        internal RequestUriBuilder CreateGetConstitutionRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_ledgerEndpoint);
+            uri.AppendPath("/app/governance/constitution", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetConstitutionRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -851,6 +860,15 @@ namespace Azure.Security.ConfidentialLedger
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetConsortiumMembersRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_ledgerEndpoint);
+            uri.AppendPath("/app/governance/members", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetConsortiumMembersRequest(RequestContext context)
@@ -867,6 +885,15 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
+        internal RequestUriBuilder CreateGetEnclaveQuotesRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_ledgerEndpoint);
+            uri.AppendPath("/app/enclaveQuotes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetEnclaveQuotesRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -881,6 +908,15 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
+        internal RequestUriBuilder CreateGetCollectionsRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_ledgerEndpoint);
+            uri.AppendPath("/app/collections", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetCollectionsRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -893,6 +929,27 @@ namespace Azure.Security.ConfidentialLedger
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetLedgerEntriesRequestUri(string collectionId, string fromTransactionId, string toTransactionId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_ledgerEndpoint);
+            uri.AppendPath("/app/transactions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (collectionId != null)
+            {
+                uri.AppendQuery("collectionId", collectionId, true);
+            }
+            if (fromTransactionId != null)
+            {
+                uri.AppendQuery("fromTransactionId", fromTransactionId, true);
+            }
+            if (toTransactionId != null)
+            {
+                uri.AppendQuery("toTransactionId", toTransactionId, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetLedgerEntriesRequest(string collectionId, string fromTransactionId, string toTransactionId, RequestContext context)
@@ -921,6 +978,19 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
+        internal RequestUriBuilder CreateCreateLedgerEntryRequestUri(RequestContent content, string collectionId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_ledgerEndpoint);
+            uri.AppendPath("/app/transactions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (collectionId != null)
+            {
+                uri.AppendQuery("collectionId", collectionId, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateCreateLedgerEntryRequest(RequestContent content, string collectionId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -939,6 +1009,20 @@ namespace Azure.Security.ConfidentialLedger
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetLedgerEntryRequestUri(string transactionId, string collectionId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_ledgerEndpoint);
+            uri.AppendPath("/app/transactions/", false);
+            uri.AppendPath(transactionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (collectionId != null)
+            {
+                uri.AppendQuery("collectionId", collectionId, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetLedgerEntryRequest(string transactionId, string collectionId, RequestContext context)
@@ -960,6 +1044,17 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
+        internal RequestUriBuilder CreateGetReceiptRequestUri(string transactionId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_ledgerEndpoint);
+            uri.AppendPath("/app/transactions/", false);
+            uri.AppendPath(transactionId, true);
+            uri.AppendPath("/receipt", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetReceiptRequest(string transactionId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -976,6 +1071,17 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
+        internal RequestUriBuilder CreateGetTransactionStatusRequestUri(string transactionId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_ledgerEndpoint);
+            uri.AppendPath("/app/transactions/", false);
+            uri.AppendPath(transactionId, true);
+            uri.AppendPath("/status", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetTransactionStatusRequest(string transactionId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -990,6 +1096,19 @@ namespace Azure.Security.ConfidentialLedger
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetCurrentLedgerEntryRequestUri(string collectionId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_ledgerEndpoint);
+            uri.AppendPath("/app/transactions/current", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (collectionId != null)
+            {
+                uri.AppendQuery("collectionId", collectionId, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetCurrentLedgerEntryRequest(string collectionId, RequestContext context)
@@ -1010,6 +1129,16 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteUserRequestUri(string userId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_ledgerEndpoint);
+            uri.AppendPath("/app/users/", false);
+            uri.AppendPath(userId, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteUserRequest(string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -1025,6 +1154,16 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
+        internal RequestUriBuilder CreateGetUserRequestUri(string userId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_ledgerEndpoint);
+            uri.AppendPath("/app/users/", false);
+            uri.AppendPath(userId, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetUserRequest(string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1038,6 +1177,16 @@ namespace Azure.Security.ConfidentialLedger
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateUserRequestUri(string userId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_ledgerEndpoint);
+            uri.AppendPath("/app/users/", false);
+            uri.AppendPath(userId, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateUserRequest(string userId, RequestContent content, RequestContext context)
@@ -1057,6 +1206,14 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
+        internal RequestUriBuilder CreateGetConsortiumMembersNextPageRequestUri(string nextLink, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_ledgerEndpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetConsortiumMembersNextPageRequest(string nextLink, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1070,6 +1227,14 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
+        internal RequestUriBuilder CreateGetCollectionsNextPageRequestUri(string nextLink, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_ledgerEndpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetCollectionsNextPageRequest(string nextLink, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1081,6 +1246,14 @@ namespace Azure.Security.ConfidentialLedger
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetLedgerEntriesNextPageRequestUri(string nextLink, string collectionId, string fromTransactionId, string toTransactionId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_ledgerEndpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetLedgerEntriesNextPageRequest(string nextLink, string collectionId, string fromTransactionId, string toTransactionId, RequestContext context)

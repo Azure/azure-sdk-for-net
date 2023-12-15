@@ -82,7 +82,9 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = await _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation<ContainerServiceMaintenanceConfigurationResource>(Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response), response.GetRawResponse()));
+                var uri = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ContainerServiceArmOperation<ContainerServiceMaintenanceConfigurationResource>(Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +125,9 @@ namespace Azure.ResourceManager.ContainerService
             try
             {
                 var response = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, data, cancellationToken);
-                var operation = new ContainerServiceArmOperation<ContainerServiceMaintenanceConfigurationResource>(Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response), response.GetRawResponse()));
+                var uri = _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ContainerServiceArmOperation<ContainerServiceMaintenanceConfigurationResource>(Response.FromValue(new ContainerServiceMaintenanceConfigurationResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -174,7 +174,9 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = await _tenantScheduledActionScheduledActionsRestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation(response);
+                var uri = _tenantScheduledActionScheduledActionsRestClient.CreateDeleteRequestUri(Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new CostManagementArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,7 +210,9 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = _tenantScheduledActionScheduledActionsRestClient.Delete(Id.Name, cancellationToken);
-                var operation = new CostManagementArmOperation(response);
+                var uri = _tenantScheduledActionScheduledActionsRestClient.CreateDeleteRequestUri(Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new CostManagementArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -247,7 +251,9 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = await _tenantScheduledActionScheduledActionsRestClient.CreateOrUpdateAsync(Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<TenantScheduledActionResource>(Response.FromValue(new TenantScheduledActionResource(Client, response), response.GetRawResponse()));
+                var uri = _tenantScheduledActionScheduledActionsRestClient.CreateCreateOrUpdateRequestUri(Id.Name, data, ifMatch);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new CostManagementArmOperation<TenantScheduledActionResource>(Response.FromValue(new TenantScheduledActionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -286,7 +292,9 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = _tenantScheduledActionScheduledActionsRestClient.CreateOrUpdate(Id.Name, data, ifMatch, cancellationToken);
-                var operation = new CostManagementArmOperation<TenantScheduledActionResource>(Response.FromValue(new TenantScheduledActionResource(Client, response), response.GetRawResponse()));
+                var uri = _tenantScheduledActionScheduledActionsRestClient.CreateCreateOrUpdateRequestUri(Id.Name, data, ifMatch);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new CostManagementArmOperation<TenantScheduledActionResource>(Response.FromValue(new TenantScheduledActionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

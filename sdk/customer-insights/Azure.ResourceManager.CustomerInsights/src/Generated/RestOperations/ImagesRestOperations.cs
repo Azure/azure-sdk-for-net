@@ -37,6 +37,21 @@ namespace Azure.ResourceManager.CustomerInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetUploadUrlForEntityTypeRequestUri(string subscriptionId, string resourceGroupName, string hubName, GetImageUploadUrlInput input)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CustomerInsights/hubs/", false);
+            uri.AppendPath(hubName, true);
+            uri.AppendPath("/images/getEntityTypeImageUploadUrl", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetUploadUrlForEntityTypeRequest(string subscriptionId, string resourceGroupName, string hubName, GetImageUploadUrlInput input)
         {
             var message = _pipeline.CreateMessage();
@@ -122,6 +137,21 @@ namespace Azure.ResourceManager.CustomerInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetUploadUrlForDataRequestUri(string subscriptionId, string resourceGroupName, string hubName, GetImageUploadUrlInput input)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CustomerInsights/hubs/", false);
+            uri.AppendPath(hubName, true);
+            uri.AppendPath("/images/getDataImageUploadUrl", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetUploadUrlForDataRequest(string subscriptionId, string resourceGroupName, string hubName, GetImageUploadUrlInput input)
