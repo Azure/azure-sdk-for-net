@@ -7,7 +7,7 @@ namespace ClientModel.Tests;
 
 [TestFixture(true)]
 [TestFixture(false)]
-internal class SyncAsyncTestBase
+public class SyncAsyncTestBase
 {
     public bool IsAsync { get; }
 

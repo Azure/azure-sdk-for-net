@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Mocks;
 
-internal static class ClientPipelineExtensions
+public static class ClientPipelineExtensions
 {
     public static async Task SendSyncOrAsync(this ClientPipeline pipeline, PipelineMessage message, bool isAsync)
     {

@@ -6,7 +6,7 @@ using System.ClientModel.Primitives;
 
 namespace ClientModel.Tests.Mocks;
 
-internal class MockClientResult : ClientResult
+public class MockClientResult : ClientResult
 {
     public MockClientResult(PipelineResponse response) : base(response)
     {

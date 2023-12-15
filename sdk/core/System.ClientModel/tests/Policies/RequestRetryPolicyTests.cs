@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Tests.Policies;
 
-internal class RequestRetryPolicyTests :   SyncAsyncTestBase
+public class RequestRetryPolicyTests : SyncAsyncTestBase
 {
     public RequestRetryPolicyTests(bool isAsync) : base(isAsync)
     {

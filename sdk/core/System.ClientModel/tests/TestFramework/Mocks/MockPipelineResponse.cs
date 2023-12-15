@@ -7,7 +7,7 @@ using System.IO;
 
 namespace ClientModel.Tests.Mocks;
 
-internal class MockPipelineResponse : PipelineResponse
+public class MockPipelineResponse : PipelineResponse
 {
     private int _status;
     private string _reasonPhrase;

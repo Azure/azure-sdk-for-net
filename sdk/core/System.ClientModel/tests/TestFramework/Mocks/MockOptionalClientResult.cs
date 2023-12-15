@@ -6,7 +6,7 @@ using System.ClientModel.Primitives;
 
 namespace ClientModel.Tests.Mocks;
 
-internal class MockOptionalClientResult<T> : OptionalClientResult<T>
+public class MockOptionalClientResult<T> : OptionalClientResult<T>
 {
     private T? _value;
     private bool _hasValue;

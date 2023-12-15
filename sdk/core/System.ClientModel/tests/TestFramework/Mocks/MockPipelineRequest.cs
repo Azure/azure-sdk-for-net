@@ -7,7 +7,7 @@ using System.ClientModel.Primitives;
 
 namespace ClientModel.Tests.Mocks;
 
-internal class MockPipelineRequest : PipelineRequest
+public class MockPipelineRequest : PipelineRequest
 {
     private string _method;
     private Uri? _uri;

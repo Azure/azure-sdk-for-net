@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Mocks;
 
-internal class ObservableTransport : PipelineTransport
+public class ObservableTransport : PipelineTransport
 {
     public string Id { get; }
 

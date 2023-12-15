@@ -6,7 +6,7 @@ using System.ClientModel.Primitives;
 
 namespace ClientModel.Tests.Mocks;
 
-internal class MockErrorResult<T> : OptionalClientResult<T>
+public class MockErrorResult<T> : OptionalClientResult<T>
 {
     private readonly ClientRequestException _exception;
 
