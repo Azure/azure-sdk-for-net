@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace ClientModel.Tests.Mocks;
 
-internal class MockJsonModel : IJsonModel<MockJsonModel>
+public class MockJsonModel : IJsonModel<MockJsonModel>
 {
     MockJsonModel IJsonModel<MockJsonModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
     {

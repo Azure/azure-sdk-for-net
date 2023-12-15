@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Mocks;
 
-internal class ObservablePolicy : PipelinePolicy
+public class ObservablePolicy : PipelinePolicy
 {
     public string Id { get; }
 

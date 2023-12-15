@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Mocks;
 
-internal class RetriableTransport : PipelineTransport
+public class RetriableTransport : PipelineTransport
 {
     private readonly int[] _codes;
     private int _current;

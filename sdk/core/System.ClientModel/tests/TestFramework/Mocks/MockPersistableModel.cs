@@ -8,7 +8,7 @@ using System.ClientModel.Primitives;
 
 namespace ClientModel.Tests.Mocks;
 
-internal class MockPersistableModel : IPersistableModel<MockPersistableModel>
+public class MockPersistableModel : IPersistableModel<MockPersistableModel>
 {
     public int IntValue { get; set; }
 
