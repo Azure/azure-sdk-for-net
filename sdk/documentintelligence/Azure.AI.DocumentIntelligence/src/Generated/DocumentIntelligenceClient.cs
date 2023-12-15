@@ -379,6 +379,42 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
+        internal RequestUriBuilder CreateAnalyzeDocumentRequestUri(string modelId, RequestContent content, string pages, string locale, string stringIndexType, IEnumerable<DocumentAnalysisFeature> features, IEnumerable<string> queryFields, string outputContentFormat, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentModels/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath(":analyze", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (pages != null)
+            {
+                uri.AppendQuery("pages", pages, true);
+            }
+            if (locale != null)
+            {
+                uri.AppendQuery("locale", locale, true);
+            }
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType, true);
+            }
+            if (features != null && Optional.IsCollectionDefined(features))
+            {
+                uri.AppendQueryDelimited("features", features, ",", true);
+            }
+            if (queryFields != null && Optional.IsCollectionDefined(queryFields))
+            {
+                uri.AppendQueryDelimited("queryFields", queryFields, ",", true);
+            }
+            if (outputContentFormat != null)
+            {
+                uri.AppendQuery("outputContentFormat", outputContentFormat, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateAnalyzeDocumentRequest(string modelId, RequestContent content, string pages, string locale, string stringIndexType, IEnumerable<DocumentAnalysisFeature> features, IEnumerable<string> queryFields, string outputContentFormat, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
@@ -420,6 +456,26 @@ namespace Azure.AI.DocumentIntelligence
             request.Headers.Add("content-type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateClassifyDocumentRequestUri(string classifierId, RequestContent content, string stringIndexType, string split, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentClassifiers/", false);
+            uri.AppendPath(classifierId, true);
+            uri.AppendPath(":analyze", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType, true);
+            }
+            if (split != null)
+            {
+                uri.AppendQuery("split", split, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateClassifyDocumentRequest(string classifierId, RequestContent content, string stringIndexType, string split, RequestContext context)

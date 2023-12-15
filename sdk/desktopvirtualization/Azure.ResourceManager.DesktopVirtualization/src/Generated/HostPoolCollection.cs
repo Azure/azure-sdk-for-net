@@ -83,7 +83,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = await _hostPoolRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DesktopVirtualizationArmOperation<HostPoolResource>(Response.FromValue(new HostPoolResource(Client, response), response.GetRawResponse()));
+                var uri = _hostPoolRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new DesktopVirtualizationArmOperation<HostPoolResource>(Response.FromValue(new HostPoolResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +126,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = _hostPoolRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, data, cancellationToken);
-                var operation = new DesktopVirtualizationArmOperation<HostPoolResource>(Response.FromValue(new HostPoolResource(Client, response), response.GetRawResponse()));
+                var uri = _hostPoolRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, hostPoolName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new DesktopVirtualizationArmOperation<HostPoolResource>(Response.FromValue(new HostPoolResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

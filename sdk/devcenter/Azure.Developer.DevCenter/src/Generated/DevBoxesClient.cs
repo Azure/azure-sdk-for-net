@@ -1423,6 +1423,25 @@ namespace Azure.Developer.DevCenter
             }
         }
 
+        internal RequestUriBuilder CreateGetPoolsRequestUri(string projectName, string filter, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/pools", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetPoolsRequest(string projectName, string filter, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1447,6 +1466,18 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetPoolRequestUri(string projectName, string poolName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/pools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetPoolRequest(string projectName, string poolName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1462,6 +1493,27 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetSchedulesRequestUri(string projectName, string poolName, string filter, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/pools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/schedules", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetSchedulesRequest(string projectName, string poolName, string filter, int? maxCount, RequestContext context)
@@ -1490,6 +1542,20 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetScheduleRequestUri(string projectName, string poolName, string scheduleName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/pools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/schedules/", false);
+            uri.AppendPath(scheduleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetScheduleRequest(string projectName, string poolName, string scheduleName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1507,6 +1573,23 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetAllDevBoxesRequestUri(string filter, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/devboxes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetAllDevBoxesRequest(string filter, int? maxCount, RequestContext context)
@@ -1531,6 +1614,25 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetAllDevBoxesByUserRequestUri(string userId, string filter, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/devboxes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetAllDevBoxesByUserRequest(string userId, string filter, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1553,6 +1655,27 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetDevBoxesRequestUri(string projectName, string userId, string filter, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/devboxes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetDevBoxesRequest(string projectName, string userId, string filter, int? maxCount, RequestContext context)
@@ -1581,6 +1704,20 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetDevBoxRequestUri(string projectName, string userId, string devBoxName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/devboxes/", false);
+            uri.AppendPath(devBoxName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDevBoxRequest(string projectName, string userId, string devBoxName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1598,6 +1735,20 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateCreateDevBoxRequestUri(string projectName, string userId, string devBoxName, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/devboxes/", false);
+            uri.AppendPath(devBoxName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateDevBoxRequest(string projectName, string userId, string devBoxName, RequestContent content, RequestContext context)
@@ -1621,6 +1772,20 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteDevBoxRequestUri(string projectName, string userId, string devBoxName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/devboxes/", false);
+            uri.AppendPath(devBoxName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteDevBoxRequest(string projectName, string userId, string devBoxName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202204);
@@ -1638,6 +1803,21 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateStartDevBoxRequestUri(string projectName, string userId, string devBoxName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/devboxes/", false);
+            uri.AppendPath(devBoxName, true);
+            uri.AppendPath(":start", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStartDevBoxRequest(string projectName, string userId, string devBoxName, RequestContext context)
@@ -1658,6 +1838,25 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateStopDevBoxRequestUri(string projectName, string userId, string devBoxName, bool? hibernate, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/devboxes/", false);
+            uri.AppendPath(devBoxName, true);
+            uri.AppendPath(":stop", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (hibernate != null)
+            {
+                uri.AppendQuery("hibernate", hibernate.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateStopDevBoxRequest(string projectName, string userId, string devBoxName, bool? hibernate, RequestContext context)
@@ -1684,6 +1883,21 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
+        internal RequestUriBuilder CreateRestartDevBoxRequestUri(string projectName, string userId, string devBoxName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/devboxes/", false);
+            uri.AppendPath(devBoxName, true);
+            uri.AppendPath(":restart", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRestartDevBoxRequest(string projectName, string userId, string devBoxName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
@@ -1702,6 +1916,21 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetRemoteConnectionRequestUri(string projectName, string userId, string devBoxName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/devboxes/", false);
+            uri.AppendPath(devBoxName, true);
+            uri.AppendPath("/remoteConnection", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRemoteConnectionRequest(string projectName, string userId, string devBoxName, RequestContext context)
@@ -1724,6 +1953,21 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetDevBoxActionsRequestUri(string projectName, string userId, string devBoxName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/devboxes/", false);
+            uri.AppendPath(devBoxName, true);
+            uri.AppendPath("/actions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDevBoxActionsRequest(string projectName, string userId, string devBoxName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1742,6 +1986,22 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetDevBoxActionRequestUri(string projectName, string userId, string devBoxName, string actionName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/devboxes/", false);
+            uri.AppendPath(devBoxName, true);
+            uri.AppendPath("/actions/", false);
+            uri.AppendPath(actionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDevBoxActionRequest(string projectName, string userId, string devBoxName, string actionName, RequestContext context)
@@ -1765,6 +2025,23 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
+        internal RequestUriBuilder CreateSkipActionRequestUri(string projectName, string userId, string devBoxName, string actionName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/devboxes/", false);
+            uri.AppendPath(devBoxName, true);
+            uri.AppendPath("/actions/", false);
+            uri.AppendPath(actionName, true);
+            uri.AppendPath(":skip", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSkipActionRequest(string projectName, string userId, string devBoxName, string actionName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -1785,6 +2062,24 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateDelayActionRequestUri(string projectName, string userId, string devBoxName, string actionName, DateTimeOffset delayUntil, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/devboxes/", false);
+            uri.AppendPath(devBoxName, true);
+            uri.AppendPath("/actions/", false);
+            uri.AppendPath(actionName, true);
+            uri.AppendPath(":delay", false);
+            uri.AppendQuery("until", delayUntil, "O", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDelayActionRequest(string projectName, string userId, string devBoxName, string actionName, DateTimeOffset delayUntil, RequestContext context)
@@ -1810,6 +2105,22 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
+        internal RequestUriBuilder CreateDelayAllActionsRequestUri(string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/devboxes/", false);
+            uri.AppendPath(devBoxName, true);
+            uri.AppendPath("/actions:delay", false);
+            uri.AppendQuery("until", delayUntil, "O", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDelayAllActionsRequest(string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1831,6 +2142,14 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetPoolsNextPageRequestUri(string nextLink, string projectName, string filter, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetPoolsNextPageRequest(string nextLink, string projectName, string filter, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1842,6 +2161,14 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetSchedulesNextPageRequestUri(string nextLink, string projectName, string poolName, string filter, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetSchedulesNextPageRequest(string nextLink, string projectName, string poolName, string filter, int? maxCount, RequestContext context)
@@ -1857,6 +2184,14 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetAllDevBoxesNextPageRequestUri(string nextLink, string filter, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetAllDevBoxesNextPageRequest(string nextLink, string filter, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1868,6 +2203,14 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetAllDevBoxesByUserNextPageRequestUri(string nextLink, string userId, string filter, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetAllDevBoxesByUserNextPageRequest(string nextLink, string userId, string filter, int? maxCount, RequestContext context)
@@ -1883,6 +2226,14 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetDevBoxesNextPageRequestUri(string nextLink, string projectName, string userId, string filter, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDevBoxesNextPageRequest(string nextLink, string projectName, string userId, string filter, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1896,6 +2247,14 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetDevBoxActionsNextPageRequestUri(string nextLink, string projectName, string userId, string devBoxName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDevBoxActionsNextPageRequest(string nextLink, string projectName, string userId, string devBoxName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1907,6 +2266,14 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateDelayAllActionsNextPageRequestUri(string nextLink, string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateDelayAllActionsNextPageRequest(string nextLink, string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, RequestContext context)

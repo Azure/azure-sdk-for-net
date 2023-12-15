@@ -39,6 +39,16 @@ namespace Azure.DigitalTwins.Core
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetByIdRequestUri(string id, GetDigitalTwinOptions digitalTwinsGetByIdOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/digitaltwins/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetByIdRequest(string id, GetDigitalTwinOptions digitalTwinsGetByIdOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -52,6 +62,26 @@ namespace Azure.DigitalTwins.Core
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateAddRequestUri(string id, object twin, CreateOrReplaceDigitalTwinOptions digitalTwinsAddOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/digitaltwins/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string id, DeleteDigitalTwinOptions digitalTwinsDeleteOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/digitaltwins/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string id, DeleteDigitalTwinOptions digitalTwinsDeleteOptions)
@@ -141,6 +171,16 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string id, IEnumerable<object> patchDocument, UpdateDigitalTwinOptions digitalTwinsUpdateOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/digitaltwins/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string id, IEnumerable<object> patchDocument, UpdateDigitalTwinOptions digitalTwinsUpdateOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -174,6 +214,18 @@ namespace Azure.DigitalTwins.Core
             return message;
         }
 
+        internal RequestUriBuilder CreateGetRelationshipByIdRequestUri(string id, string relationshipId, GetRelationshipOptions digitalTwinsGetRelationshipByIdOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/digitaltwins/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/", false);
+            uri.AppendPath(relationshipId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRelationshipByIdRequest(string id, string relationshipId, GetRelationshipOptions digitalTwinsGetRelationshipByIdOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -189,6 +241,18 @@ namespace Azure.DigitalTwins.Core
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateAddRelationshipRequestUri(string id, string relationshipId, object relationship, CreateOrReplaceRelationshipOptions digitalTwinsAddRelationshipOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/digitaltwins/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/", false);
+            uri.AppendPath(relationshipId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAddRelationshipRequest(string id, string relationshipId, object relationship, CreateOrReplaceRelationshipOptions digitalTwinsAddRelationshipOptions)
@@ -214,6 +278,18 @@ namespace Azure.DigitalTwins.Core
             content.JsonWriter.WriteObjectValue(relationship);
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateDeleteRelationshipRequestUri(string id, string relationshipId, DeleteRelationshipOptions digitalTwinsDeleteRelationshipOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/digitaltwins/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/", false);
+            uri.AppendPath(relationshipId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRelationshipRequest(string id, string relationshipId, DeleteRelationshipOptions digitalTwinsDeleteRelationshipOptions)
@@ -315,6 +391,18 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRelationshipRequestUri(string id, string relationshipId, IEnumerable<object> patchDocument, UpdateRelationshipOptions digitalTwinsUpdateRelationshipOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/digitaltwins/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships/", false);
+            uri.AppendPath(relationshipId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRelationshipRequest(string id, string relationshipId, IEnumerable<object> patchDocument, UpdateRelationshipOptions digitalTwinsUpdateRelationshipOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -350,6 +438,21 @@ namespace Azure.DigitalTwins.Core
             return message;
         }
 
+        internal RequestUriBuilder CreateListRelationshipsRequestUri(string id, string relationshipName, GetRelationshipsOptions digitalTwinsListRelationshipsOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/digitaltwins/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/relationships", false);
+            if (relationshipName != null)
+            {
+                uri.AppendQuery("relationshipName", relationshipName, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRelationshipsRequest(string id, string relationshipName, GetRelationshipsOptions digitalTwinsListRelationshipsOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -368,6 +471,17 @@ namespace Azure.DigitalTwins.Core
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateListIncomingRelationshipsRequestUri(string id, GetIncomingRelationshipsOptions digitalTwinsListIncomingRelationshipsOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/digitaltwins/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/incomingrelationships", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListIncomingRelationshipsRequest(string id, GetIncomingRelationshipsOptions digitalTwinsListIncomingRelationshipsOptions)
@@ -458,6 +572,17 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
+        internal RequestUriBuilder CreateSendTelemetryRequestUri(string id, string messageId, object telemetry, string telemetrySourceTime, PublishTelemetryOptions digitalTwinsSendTelemetryOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/digitaltwins/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/telemetry", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSendTelemetryRequest(string id, string messageId, object telemetry, string telemetrySourceTime, PublishTelemetryOptions digitalTwinsSendTelemetryOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -481,6 +606,19 @@ namespace Azure.DigitalTwins.Core
             content.JsonWriter.WriteObjectValue(telemetry);
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateSendComponentTelemetryRequestUri(string id, string componentPath, string messageId, object telemetry, string telemetrySourceTime, PublishComponentTelemetryOptions digitalTwinsSendComponentTelemetryOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/digitaltwins/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/components/", false);
+            uri.AppendPath(componentPath, true);
+            uri.AppendPath("/telemetry", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSendComponentTelemetryRequest(string id, string componentPath, string messageId, object telemetry, string telemetrySourceTime, PublishComponentTelemetryOptions digitalTwinsSendComponentTelemetryOptions)
@@ -510,6 +648,18 @@ namespace Azure.DigitalTwins.Core
             return message;
         }
 
+        internal RequestUriBuilder CreateGetComponentRequestUri(string id, string componentPath, GetComponentOptions digitalTwinsGetComponentOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/digitaltwins/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/components/", false);
+            uri.AppendPath(componentPath, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetComponentRequest(string id, string componentPath, GetComponentOptions digitalTwinsGetComponentOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -525,6 +675,18 @@ namespace Azure.DigitalTwins.Core
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateUpdateComponentRequestUri(string id, string componentPath, IEnumerable<object> patchDocument, UpdateComponentOptions digitalTwinsUpdateComponentOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/digitaltwins/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/components/", false);
+            uri.AppendPath(componentPath, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateComponentRequest(string id, string componentPath, IEnumerable<object> patchDocument, UpdateComponentOptions digitalTwinsUpdateComponentOptions)
@@ -562,6 +724,14 @@ namespace Azure.DigitalTwins.Core
             return message;
         }
 
+        internal RequestUriBuilder CreateListRelationshipsNextPageRequestUri(string nextLink, string id, string relationshipName, GetRelationshipsOptions digitalTwinsListRelationshipsOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListRelationshipsNextPageRequest(string nextLink, string id, string relationshipName, GetRelationshipsOptions digitalTwinsListRelationshipsOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -573,6 +743,14 @@ namespace Azure.DigitalTwins.Core
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateListIncomingRelationshipsNextPageRequestUri(string nextLink, string id, GetIncomingRelationshipsOptions digitalTwinsListIncomingRelationshipsOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListIncomingRelationshipsNextPageRequest(string nextLink, string id, GetIncomingRelationshipsOptions digitalTwinsListIncomingRelationshipsOptions)

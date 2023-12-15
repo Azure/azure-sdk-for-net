@@ -39,6 +39,15 @@ namespace Azure.DigitalTwins.Core
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateListRequestUri(ImportJobsListOptions importJobsListOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jobs/imports", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(ImportJobsListOptions importJobsListOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -105,6 +114,16 @@ namespace Azure.DigitalTwins.Core
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAddRequestUri(string id, ImportJob importJob, ImportJobsAddOptions importJobsAddOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jobs/imports/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAddRequest(string id, ImportJob importJob, ImportJobsAddOptions importJobsAddOptions)
@@ -206,6 +225,16 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
+        internal RequestUriBuilder CreateGetByIdRequestUri(string id, ImportJobsGetByIdOptions importJobsGetByIdOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jobs/imports/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetByIdRequest(string id, ImportJobsGetByIdOptions importJobsGetByIdOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -289,6 +318,16 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string id, ImportJobsDeleteOptions importJobsDeleteOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jobs/imports/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string id, ImportJobsDeleteOptions importJobsDeleteOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -360,6 +399,17 @@ namespace Azure.DigitalTwins.Core
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCancelRequestUri(string id, ImportJobsCancelOptions importJobsCancelOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jobs/imports/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCancelRequest(string id, ImportJobsCancelOptions importJobsCancelOptions)
@@ -444,6 +494,14 @@ namespace Azure.DigitalTwins.Core
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, ImportJobsListOptions importJobsListOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, ImportJobsListOptions importJobsListOptions)

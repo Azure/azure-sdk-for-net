@@ -787,6 +787,21 @@ namespace Azure.Developer.DevCenter
             }
         }
 
+        internal RequestUriBuilder CreateGetAllEnvironmentsRequestUri(string projectName, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/environments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetAllEnvironmentsRequest(string projectName, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -805,6 +820,23 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetEnvironmentsRequestUri(string projectName, string userId, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/environments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetEnvironmentsRequest(string projectName, string userId, int? maxCount, RequestContext context)
@@ -829,6 +861,20 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetEnvironmentRequestUri(string projectName, string userId, string environmentName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetEnvironmentRequest(string projectName, string userId, string environmentName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -846,6 +892,20 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateEnvironmentRequestUri(string projectName, string userId, string environmentName, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateEnvironmentRequest(string projectName, string userId, string environmentName, RequestContent content, RequestContext context)
@@ -869,6 +929,20 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteEnvironmentRequestUri(string projectName, string userId, string environmentName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteEnvironmentRequest(string projectName, string userId, string environmentName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202204);
@@ -886,6 +960,21 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetCatalogsRequestUri(string projectName, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/catalogs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetCatalogsRequest(string projectName, int? maxCount, RequestContext context)
@@ -908,6 +997,18 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetCatalogRequestUri(string projectName, string catalogName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/catalogs/", false);
+            uri.AppendPath(catalogName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetCatalogRequest(string projectName, string catalogName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -923,6 +1024,21 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetEnvironmentDefinitionsRequestUri(string projectName, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/environmentDefinitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetEnvironmentDefinitionsRequest(string projectName, int? maxCount, RequestContext context)
@@ -943,6 +1059,23 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetEnvironmentDefinitionsByCatalogRequestUri(string projectName, string catalogName, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/catalogs/", false);
+            uri.AppendPath(catalogName, true);
+            uri.AppendPath("/environmentDefinitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetEnvironmentDefinitionsByCatalogRequest(string projectName, string catalogName, int? maxCount, RequestContext context)
@@ -967,6 +1100,20 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetEnvironmentDefinitionRequestUri(string projectName, string catalogName, string definitionName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/catalogs/", false);
+            uri.AppendPath(catalogName, true);
+            uri.AppendPath("/environmentDefinitions/", false);
+            uri.AppendPath(definitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetEnvironmentDefinitionRequest(string projectName, string catalogName, string definitionName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -984,6 +1131,21 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetEnvironmentTypesRequestUri(string projectName, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/environmentTypes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetEnvironmentTypesRequest(string projectName, int? maxCount, RequestContext context)
@@ -1006,6 +1168,14 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetAllEnvironmentsNextPageRequestUri(string nextLink, string projectName, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetAllEnvironmentsNextPageRequest(string nextLink, string projectName, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1017,6 +1187,14 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetEnvironmentsNextPageRequestUri(string nextLink, string projectName, string userId, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetEnvironmentsNextPageRequest(string nextLink, string projectName, string userId, int? maxCount, RequestContext context)
@@ -1032,6 +1210,14 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetCatalogsNextPageRequestUri(string nextLink, string projectName, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetCatalogsNextPageRequest(string nextLink, string projectName, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1043,6 +1229,14 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetEnvironmentDefinitionsNextPageRequestUri(string nextLink, string projectName, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetEnvironmentDefinitionsNextPageRequest(string nextLink, string projectName, int? maxCount, RequestContext context)
@@ -1058,6 +1252,14 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetEnvironmentDefinitionsByCatalogNextPageRequestUri(string nextLink, string projectName, string catalogName, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetEnvironmentDefinitionsByCatalogNextPageRequest(string nextLink, string projectName, string catalogName, int? maxCount, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1069,6 +1271,14 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetEnvironmentTypesNextPageRequestUri(string nextLink, string projectName, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetEnvironmentTypesNextPageRequest(string nextLink, string projectName, int? maxCount, RequestContext context)
