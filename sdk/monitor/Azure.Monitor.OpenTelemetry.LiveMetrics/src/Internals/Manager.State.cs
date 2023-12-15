@@ -52,8 +52,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             _shouldCollect = false;
             _callbackAction = OnPing;
             _period = _pingPeriod;
-            _lastSuccessfulPing = DateTimeOffset.UtcNow;
             _evaluateBackoff = () => DateTimeOffset.UtcNow - _lastSuccessfulPing > _maximumPingInterval;
+
+            // Must reset the timestamp here.
+            // This is used in determining if we should Backoff.
+            // If we've been in another state for X amount of time, that may exceed our maximum interval and immediately trigger a Backoff.
+            _lastSuccessfulPing = DateTimeOffset.UtcNow;
         }
 
         private void SetPostState()
@@ -62,8 +66,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             _shouldCollect = true;
             _callbackAction = OnPost;
             _period = _postPeriod;
-            _lastSuccessfulPost = DateTimeOffset.UtcNow;
             _evaluateBackoff = () => DateTimeOffset.UtcNow - _lastSuccessfulPost > _maximumPostInterval;
+
+            // Must reset the timestamp here.
+            // This is used in determining if we should Backoff.
+            // If we've been in another state for X amount of time, that may exceed our maximum interval and immediately trigger a Backoff.
+            _lastSuccessfulPost = DateTimeOffset.UtcNow;
         }
 
         private void SetBackoffState()
@@ -77,10 +85,16 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
         private void BackoffConcluded()
         {
-            // when the backoff period is complete, we switch to Ping.
+            // when the backoff period is concluded, we switch to Ping.
             SetPingState();
         }
 
+        /// <summary>
+        /// This is the main loop that controls the State Machine and will run indefinitely.
+        /// This State Machine uses delegates for the callback action and the backoff evaluation.
+        /// These delegates are updated whenever a state is changed.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
         private void Run(CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
@@ -89,7 +103,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
                 _callbackAction.Invoke();
 
-                // Subtract the time spent in this tick when scheduling the next tick so that the average period is close to the intended.
                 var timeSpentInThisTick = DateTimeOffset.UtcNow - callbackStarted;
 
                 TimeSpan nextTick;
@@ -103,6 +116,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 }
                 else
                 {
+                    // Subtract the time spent in this tick when scheduling the next tick so that the average period is close to the intended.
                     nextTick = _period - timeSpentInThisTick;
                     nextTick = nextTick > TimeSpan.Zero ? nextTick : TimeSpan.Zero;
                 }
