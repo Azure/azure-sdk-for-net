@@ -6,11 +6,15 @@ param (
   [string] $ServiceDirectory,
   [Parameter(Position = 1)]
   [ValidateNotNullOrEmpty()]
-  [string] $PackageName
+  [string] $PackageName,
+  [Parameter(Position = 2)]
+  [ValidateNotNullOrEmpty()]
+  [string]$GitHubPat
 )
 
 . $PSScriptRoot/common.ps1
 . $PSScriptRoot/Helpers/PSModule-Helpers.ps1
+. $PSScriptRoot/Invoke-GitHubAPI.ps1
 Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
 
 # This function is used to verify the 'require' and 'input-file' settings in autorest.md point to the main branch of Azure/azure-rest-api-specs repository
@@ -46,51 +50,20 @@ function Verify-TspLocation([System.Object]$tspLocationObj) {
 
 # This function is used to verify the specific 'commit' belongs to the main branch of Azure/azure-rest-api-specs repository
 function Verify-CommitFromMainBranch([string]$commit) {
-  $mainBranch = "main"
-  $specRepoCloneDir = "./tmp_spec_repo"
-  New-Item $specRepoCloneDir -Type Directory -Force | Out-Null
-  Push-Location $specRepoCloneDir
-
   try {
-    $repoRemoteUrl = Get-GitRemoteValue "Azure/azure-rest-api-specs"
-    git clone -b main $repoRemoteUrl .
-    if ($LASTEXITCODE) { exit $LASTEXITCODE }
-    $result = git branch --contains $commit | Select-String -Pattern $mainBranch
-    if($result) {
-      LogDebug "Commit $commit is from $mainBranch branch."
-    } else {
-      LogError "Commit $commit is not from $mainBranch branch."
+    $searchResult = Search-GitHubCommit -AuthToken $GitHubPat -CommitHash "0f39a2d56070d2bc4251494525cb8af88583a938" -RepoOwner "Azure" -RepoName "azure-rest-api-specs"
+    if ($searchResult.total_count -lt 1) {
+      LogError "Commit $commit doesn't exist in 'main' branch of Azure/azure-rest-api-specs repository."
       exit 1
     }
-  }
-  finally {
-    Pop-Location
-    Remove-Item $specRepoCloneDir -Force -Recurse
-  }
-}
-
-# This function is used to get the git remote value for the specific repo
-function Get-GitRemoteValue([string]$repo) {
-  $result = ""  
-  $gitRemotes = (git remote -v)
-  foreach ($remote in $gitRemotes) {
-    if ($remote.StartsWith("origin") -or $remote.StartsWith("main")) {
-      if ($remote -match 'https://(.*)?github.com/\S+') {
-        $result = "https://github.com/$repo.git"
-        break
-      }
-      elseif ($remote -match "(.*)?git@github.com:\S+") {
-        $result = "git@github.com:$repo.git"
-        break
-      }
-      else {
-        throw "Unknown git remote format found: $remote"
-      }
+    else{
+      LogDebug "Commit $commit exists in 'main' branch of Azure/azure-rest-api-specs repository."
     }
   }
-  
-  LogDebug "Found git remote $result"
-  return $result
+  catch {
+    LogError "Failed to search commit $commit with exception:`n$_"
+    exit 1
+  }
 }
 
 try{
@@ -101,8 +74,6 @@ try{
   # Load tsp-location.yaml if existed
   $tspLocationYamlPath = Join-Path $PackageDirectory "tsp-location.yaml"
   $autorestMdPath = Join-Path $PackageDirectory "src/autorest.md"
-  #$autorestMdPath = ".\autorest1.md"
-  #$Language = "dotnet"
   $tspLocationYaml = @{}
   if (Test-Path -Path $tspLocationYamlPath) {
     # typespec scenario
@@ -136,13 +107,12 @@ try{
       }
     }
     else {
-      LogWarning "autorest.md hasn't been found in $packageDir for language: $Language"
+      LogWarning "autorest.md hasn't been found in $PackageDirectory for language: $Language"
       exit 0
     }
-    Write-Host "creating tsp-location.yaml in $packageDir"
   }
   else {
-    LogWarning "tsp-location.yaml hasn't been found in $packageDir for language: $Language"
+    LogWarning "tsp-location.yaml hasn't been found in $PackageDirectory for language: $Language"
     exit 0
   }
 }
