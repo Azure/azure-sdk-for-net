@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.Models
         /// <returns> A new <see cref="Resources.Models.LocationExpanded"/> instance for mocking. </returns>
         public static LocationExpanded LocationExpanded(string id, string subscriptionId, string name, LocationType? locationType, string displayName, string regionalDisplayName, LocationMetadata metadata)
         {
-            return new LocationExpanded(id, subscriptionId, name, locationType, displayName, regionalDisplayName, metadata, null);
+            return new LocationExpanded(id, subscriptionId, name, locationType, displayName, regionalDisplayName, metadata, null, new Dictionary<string, BinaryData>());
         }
     }
 }

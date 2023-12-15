@@ -16,7 +16,7 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Resources
 {
 #pragma warning disable SA1649 // File name should match first type name
-    internal class ResourcesArmOperation : ArmOperation
+    internal partial class ResourcesArmOperation : ArmOperation
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationInternal _operation;

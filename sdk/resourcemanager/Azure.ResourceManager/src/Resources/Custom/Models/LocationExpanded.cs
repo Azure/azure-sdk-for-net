@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="regionalDisplayName"> The display name of the location and its region. </param>
         /// <param name="metadata"> Metadata of the location, such as lat/long, paired region, and others. </param>
         /// <param name="availabilityZoneMappings"> The availability zone mappings for this region. </param>
-        internal LocationExpanded(string id, string subscriptionId, string name, LocationType? locationType, string displayName, string regionalDisplayName, LocationMetadata metadata, IReadOnlyList<AvailabilityZoneMappings> availabilityZoneMappings)
+        /// <param name="serializedAdditionalRawData">XXX</param>
+        internal LocationExpanded(string id, string subscriptionId, string name, LocationType? locationType, string displayName, string regionalDisplayName, LocationMetadata metadata, IReadOnlyList<AvailabilityZoneMappings> availabilityZoneMappings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ResourceIdentifier subId = new ResourceIdentifier(id);
@@ -41,6 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
             RegionalDisplayName = regionalDisplayName;
             Metadata = metadata;
             AvailabilityZoneMappings = availabilityZoneMappings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }
