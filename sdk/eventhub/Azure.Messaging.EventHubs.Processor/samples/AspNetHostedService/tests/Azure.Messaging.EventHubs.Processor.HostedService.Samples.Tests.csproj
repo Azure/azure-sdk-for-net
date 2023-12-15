@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net462</TargetFrameworks>
   </PropertyGroup>
   
   <ItemGroup>
@@ -9,7 +9,7 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="$(TargetFramework) != 'net462'">
     <ProjectReference Include="..\src\Azure.Messaging.EventHubs.Processor.HostedService.Samples.csproj" />
   </ItemGroup>
 

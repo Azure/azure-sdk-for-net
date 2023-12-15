@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if !NET462
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -136,3 +137,4 @@ namespace Azure.Messaging.EventHubs.Processor.HostedService.Samples.Tests
         }
     }
 }
+#endif
