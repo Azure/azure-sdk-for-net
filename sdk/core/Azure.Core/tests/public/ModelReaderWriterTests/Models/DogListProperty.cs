@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -150,11 +151,8 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             {
                 //pulls the additional properties setting from the ModelJsonConverter if it exists
                 //if it does not exist it uses the default value of true for azure sdk use cases
-                //var modelConverter = options.Converters.FirstOrDefault(c => c.GetType() == typeof(JsonModelConverter)) as JsonModelConverter;
-                //return modelConverter is not null ? modelConverter.Options : ModelReaderWriterHelper.WireOptions;
-
-                //TODO: change the above code once the JsonModelConverter is public
-                return ModelReaderWriterHelper.WireOptions;
+                var modelConverter = options.Converters.FirstOrDefault(c => c.GetType() == typeof(ModelJsonConverter)) as ModelJsonConverter;
+                return modelConverter is not null ? modelConverter.Options : ModelReaderWriterHelper.WireOptions;
             }
         }
         DogListProperty IPersistableModel<DogListProperty>.Create(BinaryData data, ModelReaderWriterOptions options)

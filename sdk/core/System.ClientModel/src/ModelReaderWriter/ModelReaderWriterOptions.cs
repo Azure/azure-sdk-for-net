@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace System.ClientModel.Primitives
+namespace System.ClientModel
 {
     /// <summary>
     /// Provides the client options for reading and writing models.

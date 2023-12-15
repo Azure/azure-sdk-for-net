@@ -63,7 +63,7 @@ namespace Azure.Core.Tests
             };
         }
 
-        public override string Id => "testId";
+        public override string Id => GetOperationId();
 
         public override bool HasCompleted => MockOperationInternal.HasCompleted;
 
@@ -128,6 +128,8 @@ namespace Azure.Core.Tests
 
             return new ValueTask<OperationState<T>>(OnUpdateState(cancellationToken));
         }
+
+        public string GetOperationId() => string.Empty;
 
         internal MockOperationInternal<T> MockOperationInternal { get; }
 

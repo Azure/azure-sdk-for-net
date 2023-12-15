@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.IO;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
 using Azure.Core.TestFramework;
@@ -199,6 +200,25 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
             var response = new MockResponse(200);
             response.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(payload));
             return _fromResponse(response);
+        }
+    }
+
+    public class ModelJsonConverterStrategy<T> : RoundTripStrategy<T> where T : IJsonModel<T>
+    {
+        public override bool IsExplicitJsonWrite => true;
+        public override bool IsExplicitJsonRead => true;
+
+        public override BinaryData Write(T model, ModelReaderWriterOptions options)
+        {
+            JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions();
+            jsonSerializerOptions.Converters.Add(new ModelJsonConverter(options));
+            return BinaryData.FromString(JsonSerializer.Serialize(model, jsonSerializerOptions));
+        }
+        public override object Read(string payload, object model, ModelReaderWriterOptions options)
+        {
+            JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions();
+            jsonSerializerOptions.Converters.Add(new ModelJsonConverter(options));
+            return JsonSerializer.Deserialize<T>(payload, jsonSerializerOptions);
         }
     }
 }

@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 
 namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models

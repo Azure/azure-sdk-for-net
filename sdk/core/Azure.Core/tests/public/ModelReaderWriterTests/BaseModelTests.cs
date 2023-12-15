@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.ClientModel;
 using Azure.Core.Tests.ModelReaderWriterTests.Models;
 using NUnit.Framework;
 

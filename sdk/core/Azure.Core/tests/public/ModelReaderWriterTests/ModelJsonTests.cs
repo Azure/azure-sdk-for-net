@@ -27,5 +27,10 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         [TestCase("W")]
         public void RoundTripWithJsonInterfaceUtf8ReaderNonGeneric(string format)
             => RoundTripTest(format, new JsonInterfaceUtf8ReaderAsObjectStrategy<T>());
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void RoundTripWithModelJsonConverter(string format)
+           => RoundTripTest(format, new ModelJsonConverterStrategy<T>());
     }
 }

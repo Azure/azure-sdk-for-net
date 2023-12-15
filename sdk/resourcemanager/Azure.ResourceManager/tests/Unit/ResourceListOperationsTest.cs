@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Tests
 
         private static ResourcesSku GetSku()
         {
-            return new ResourcesSku("name", ArmSkuTier.Basic.ToString(), "size", "family", "model", 10);
+            return new ResourcesSku("name", ArmSkuTier.Basic.ToString(), "size", "family", "model", 10, new Dictionary<string, BinaryData>());
         }
 
         private static GenericResourceData GetGenericResource()
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Tests
             string location)
         {
             ResourceIdentifier id = new ResourceIdentifier($"/subscriptions/{Guid.NewGuid()}/resourceGroups/myResourceGroup/providers/Microsoft.Widgets/widgets/myWidget");
-            return new GenericResourceData(id, id.Name, id.ResourceType, null, tags, location, null, plan, null, kind, managedBy, sku, null, null, null, null);
+            return new GenericResourceData(id, id.Name, id.ResourceType, null, tags, location, null, new Dictionary<string, BinaryData>(), plan, null, kind, managedBy, sku, null, null, null, null);
         }
     }
 }
