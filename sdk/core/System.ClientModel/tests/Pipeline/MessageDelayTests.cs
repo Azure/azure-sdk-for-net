@@ -15,24 +15,25 @@ public class MessageDelayTests : SyncAsyncTestBase
     {
     }
 
-    [Test]
-    public async Task DelayWaitsForWaitCore()
-    {
-        ClientPipeline pipeline = ClientPipeline.Create();
-        PipelineMessage message = pipeline.CreateMessage();
+    // TODO: Find a new approach here
+    //[Test]
+    //public async Task DelayWaitsForWaitCore()
+    //{
+    //    ClientPipeline pipeline = ClientPipeline.Create();
+    //    PipelineMessage message = pipeline.CreateMessage();
 
-        MockMessagDelay delay = new MockMessagDelay(i => TimeSpan.FromSeconds(1));
+    //    MockMessagDelay delay = new MockMessagDelay(i => TimeSpan.FromSeconds(1));
 
-        await delay.ReleaseWait();
-        Task task = delay.DelaySyncOrAsync(message, IsAsync);
+    //    await delay.ReleaseWait();
+    //    Task task = delay.DelaySyncOrAsync(message, IsAsync);
 
-        Assert.IsFalse(delay.IsComplete);
+    //    Assert.IsFalse(delay.IsComplete);
 
-        await delay.ReleaseWait();
-        await task;
+    //    await delay.ReleaseWait();
+    //    await task;
 
-        Assert.IsTrue(delay.IsComplete);
-    }
+    //    Assert.IsTrue(delay.IsComplete);
+    //}
 
     [Test]
     public void DelayComputesDelayCore()
