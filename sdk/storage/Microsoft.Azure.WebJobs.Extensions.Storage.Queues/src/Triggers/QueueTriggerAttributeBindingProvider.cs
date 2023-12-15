@@ -90,9 +90,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
             QueueServiceClient client = _queueServiceClientProvider.Get(queueTrigger.Connection, _nameResolver);
             var queue = client.GetQueueClient(queueName);
 
-            ITriggerBinding binding = new QueueTriggerBinding(parameter.Name, client, queue, argumentBinding,
-                _queueOptions, _exceptionHandler, _messageEnqueuedWatcherSetter,
-                _loggerFactory, _queueProcessorFactory, _queueCausalityManager, _concurrencyManager);
+            ITriggerBinding binding = new QueueTriggerBinding(
+                parameter.Name,
+                client,
+                queue,
+                argumentBinding,
+                _queueOptions,
+                _exceptionHandler,
+                _messageEnqueuedWatcherSetter,
+                _loggerFactory,
+                _queueProcessorFactory,
+                _queueCausalityManager,
+                _concurrencyManager,
+                _drainModeManager);
             return Task.FromResult(binding);
         }
 
