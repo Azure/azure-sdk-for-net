@@ -4,13 +4,12 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager
 {
