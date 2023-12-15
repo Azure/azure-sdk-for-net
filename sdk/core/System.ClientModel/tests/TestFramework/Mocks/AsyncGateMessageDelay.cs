@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Mocks;
 
-public class AsyncGateMessageDelay : MockMessagDelay
+public class AsyncGateMessageDelay : MockMessageDelay
 {
     private readonly AsyncGate<TimeSpan, object> _asyncGate;
 

@@ -22,7 +22,7 @@ public class MessageDelayTests : SyncAsyncTestBase
     //    ClientPipeline pipeline = ClientPipeline.Create();
     //    PipelineMessage message = pipeline.CreateMessage();
 
-    //    MockMessagDelay delay = new MockMessagDelay(i => TimeSpan.FromSeconds(1));
+    //    MockMessageDelay delay = new MockMessageDelay(i => TimeSpan.FromSeconds(1));
 
     //    await delay.ReleaseWait();
     //    Task task = delay.DelaySyncOrAsync(message, IsAsync);
@@ -38,10 +38,14 @@ public class MessageDelayTests : SyncAsyncTestBase
     [Test]
     public void DelayComputesDelayCore()
     {
-        MockMessagDelay delay = new MockMessagDelay();
-        Assert.AreEqual(TimeSpan.FromSeconds(1), delay.GetDelay(1));
-        Assert.AreEqual(TimeSpan.FromSeconds(2), delay.GetDelay(2));
-        Assert.AreEqual(TimeSpan.FromSeconds(3), delay.GetDelay(3));
+        static TimeSpan delayFactory(int i) => TimeSpan.FromSeconds(i);
+
+        MockMessageDelay delay = new MockMessageDelay(delayFactory);
+
+        for (int i = 0; i < 10; i++)
+        {
+            Assert.AreEqual(delayFactory(i), delay.GetDelay(i));
+        }
     }
 
     [Test]
@@ -50,7 +54,7 @@ public class MessageDelayTests : SyncAsyncTestBase
         ClientPipeline pipeline = ClientPipeline.Create();
         PipelineMessage message = pipeline.CreateMessage();
 
-        MockMessagDelay delay = new MockMessagDelay();
+        MockMessageDelay delay = new MockMessageDelay();
         await delay.DelaySyncOrAsync(message, IsAsync);
 
         Assert.IsTrue(delay.IsComplete);

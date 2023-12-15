@@ -6,6 +6,7 @@ using ClientModel.Tests.Mocks;
 using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Tests.Pipeline;
@@ -69,7 +70,7 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
 
         PipelineOptions options = new()
         {
-            RetryPolicy = new RequestRetryPolicy(maxRetryCount, new MockMessagDelay(i => TimeSpan.FromMilliseconds(10))),
+            RetryPolicy = new RequestRetryPolicy(maxRetryCount, new MockMessageDelay(i => TimeSpan.FromMilliseconds(10))),
             Transport = new RetriableTransport("Transport", i => 500)
         };
         ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -93,7 +94,7 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
     public async Task CanConfigureDelay()
     {
         int maxRetryCount = 3;
-        MockMessagDelay delay = new MockMessagDelay(i => TimeSpan.FromMilliseconds(10));
+        MockMessageDelay delay = new MockMessageDelay(i => TimeSpan.FromMilliseconds(10));
 
         PipelineOptions options = new()
         {
@@ -108,8 +109,100 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
         Assert.AreEqual(maxRetryCount, delay.CompletionCount);
     }
 
-    //[Test]
-    //public async Task OnlyRetriesRetriableCodes()
-    //{
-    //}
+    [Test]
+    public async Task OnlyRetriesRetriableCodes()
+    {
+        // Retriable codes are hard-coded into the ClientModel retry policy today:
+        // 408, 429, 500, 502, 503, and 504.  501 should not be retried.
+
+        PipelineOptions options = new()
+        {
+            RetryPolicy = new RequestRetryPolicy(maxRetries: 10, new MockMessageDelay()),
+            Transport = new RetriableTransport("Transport",
+                new int[] { 408, 429, 500, 502, 503, 504, 501 })
+        };
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+
+        PipelineMessage message = pipeline.CreateMessage();
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        List<string> observations = ObservablePolicy.GetData(message);
+
+        int observationCount = 7;
+        int index = 0;
+
+        // We visited the transport seven times and stopped on the 501 response.
+        Assert.AreEqual(observationCount, observations.Count);
+        for (int i = 0; i < observationCount; i++)
+        {
+            Assert.AreEqual("Transport:Transport", observations[index++]);
+        }
+    }
+
+    [Test]
+    public async Task ShouldRetryIsCalledOnlyForErrors()
+    {
+        Exception retriableException = new IOException();
+
+        MockRetryPolicy retryPolicy = new MockRetryPolicy();
+        RetriableTransport transport = new RetriableTransport("Transport", responseFactory);
+
+        int responseFactory(int i)
+            => i switch
+            {
+                0 => 500,
+                1 => throw retriableException,
+                2 => 200,
+                _ => throw new InvalidOperationException(),
+            };
+
+        PipelineOptions options = new()
+        {
+            RetryPolicy = retryPolicy,
+            Transport = transport,
+        };
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+
+        // Validate the state of the retry policy at the transport.
+        transport.OnSendingRequest = i =>
+        {
+            switch (i)
+            {
+                case 0:
+                    Assert.IsFalse(retryPolicy.ShouldRetryCalled);
+                    Assert.IsNull(retryPolicy.LastException);
+                    break;
+                case 1:
+                    Assert.IsTrue(retryPolicy.ShouldRetryCalled);
+                    Assert.IsNull(retryPolicy.LastException);
+                    retryPolicy.Reset();
+                    break;
+                case 2:
+                    Assert.IsTrue(retryPolicy.ShouldRetryCalled);
+                    Assert.AreSame(retriableException, retryPolicy.LastException);
+                    retryPolicy.Reset();
+                    break;
+                case 3:
+                    Assert.IsTrue(retryPolicy.ShouldRetryCalled);
+                    Assert.IsNull(retryPolicy.LastException);
+                    retryPolicy.Reset();
+                    break;
+                default:
+                    throw new InvalidOperationException();
+            }
+        };
+
+        PipelineMessage message = pipeline.CreateMessage();
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        List<string> observations = ObservablePolicy.GetData(message);
+
+        int index = 0;
+
+        // We visited the transport three times due to retries
+        Assert.AreEqual(3, observations.Count);
+        Assert.AreEqual("Transport:Transport", observations[index++]);
+        Assert.AreEqual("Transport:Transport", observations[index++]);
+        Assert.AreEqual("Transport:Transport", observations[index++]);
+    }
 }

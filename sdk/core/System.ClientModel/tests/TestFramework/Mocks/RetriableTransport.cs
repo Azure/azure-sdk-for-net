@@ -13,9 +13,12 @@ namespace ClientModel.Tests.Mocks;
 public class RetriableTransport : PipelineTransport
 {
     private readonly Func<int, int> _responseFactory;
-    private int _current;
+    private int _retryCount;
 
     public string Id { get; }
+
+    public Action<int>? OnSendingRequest { get; set; }
+    public Action<int>? OnReceivedResponse { get; set; }
 
     public RetriableTransport(string id, params int[] codes)
         : this(id, i => codes[i])
@@ -35,23 +38,45 @@ public class RetriableTransport : PipelineTransport
 
     protected override void ProcessCore(PipelineMessage message)
     {
-        Stamp(message, "Transport");
-
-        if (message is RetriableTransportMessage transportMessage)
+        try
         {
-            int status = _responseFactory(_current++);
-            transportMessage.SetResponse(status);
+            Stamp(message, "Transport");
+
+            OnSendingRequest?.Invoke(_retryCount);
+
+            if (message is RetriableTransportMessage transportMessage)
+            {
+                int status = _responseFactory(_retryCount);
+                transportMessage.SetResponse(status);
+            }
+
+            OnReceivedResponse?.Invoke(_retryCount);
+        }
+        finally
+        {
+            _retryCount++;
         }
     }
 
     protected override ValueTask ProcessCoreAsync(PipelineMessage message)
     {
-        Stamp(message, "Transport");
-
-        if (message is RetriableTransportMessage transportMessage)
+        try
         {
-            int status = _responseFactory(_current++);
-            transportMessage.SetResponse(status);
+            Stamp(message, "Transport");
+
+            OnSendingRequest?.Invoke(_retryCount);
+
+            if (message is RetriableTransportMessage transportMessage)
+            {
+                int status = _responseFactory(_retryCount);
+                transportMessage.SetResponse(status);
+            }
+
+            OnReceivedResponse?.Invoke(_retryCount);
+        }
+        finally
+        {
+            _retryCount++;
         }
 
         return new ValueTask();

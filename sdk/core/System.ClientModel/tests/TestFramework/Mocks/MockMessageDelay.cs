@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Mocks;
 
-public class MockMessagDelay : MessageDelay
+public class MockMessageDelay : MessageDelay
 {
     private int _completionCount;
 
     private static readonly Func<int, TimeSpan> DefaultDelayFactory =
-        count => TimeSpan.FromSeconds(count);
+        count => TimeSpan.FromMilliseconds(count * 10);
 
     private readonly Func<int, TimeSpan> _delayFactory;
 
-    public MockMessagDelay() : this(DefaultDelayFactory) { }
+    public MockMessageDelay() : this(DefaultDelayFactory) { }
 
-    public MockMessagDelay(Func<int, TimeSpan> delayFactory)
+    public MockMessageDelay(Func<int, TimeSpan> delayFactory)
     {
         _delayFactory = delayFactory;
     }
