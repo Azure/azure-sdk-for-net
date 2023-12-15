@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -30,9 +31,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<PublicNetworkAccessType> publicNetworkAccess = default;
+            Optional<HybridComputePublicNetworkAccessType> publicNetworkAccess = default;
             Optional<string> provisioningState = default;
-            Optional<string> privateLinkScopeId = default;
+            Optional<Guid> privateLinkScopeId = default;
             Optional<IReadOnlyList<PrivateEndpointConnectionDataModel>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccessType(property.Value.GetString());
+                    publicNetworkAccess = new HybridComputePublicNetworkAccessType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -52,7 +53,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (property.NameEquals("privateLinkScopeId"u8))
                 {
-                    privateLinkScopeId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateLinkScopeId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("privateEndpointConnections"u8))
@@ -70,7 +75,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     continue;
                 }
             }
-            return new HybridComputePrivateLinkScopeProperties(Optional.ToNullable(publicNetworkAccess), provisioningState.Value, privateLinkScopeId.Value, Optional.ToList(privateEndpointConnections));
+            return new HybridComputePrivateLinkScopeProperties(Optional.ToNullable(publicNetworkAccess), provisioningState.Value, Optional.ToNullable(privateLinkScopeId), Optional.ToList(privateEndpointConnections));
         }
     }
 }

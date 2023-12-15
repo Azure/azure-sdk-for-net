@@ -71,10 +71,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="machineName"> The name of the hybrid machine. </param>
         /// <param name="data"> Parameters supplied to the Create hybrid machine operation. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<HybridComputeMachineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string machineName, HybridComputeMachineData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HybridComputeMachineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string machineName, HybridComputeMachineData data, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
             Argument.AssertNotNull(data, nameof(data));
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.HybridCompute
             scope.Start();
             try
             {
-                var response = await _hybridComputeMachineMachinesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, machineName, data, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridComputeMachineMachinesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, machineName, data, expand, cancellationToken).ConfigureAwait(false);
                 var operation = new HybridComputeArmOperation<HybridComputeMachineResource>(Response.FromValue(new HybridComputeMachineResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -112,10 +113,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="machineName"> The name of the hybrid machine. </param>
         /// <param name="data"> Parameters supplied to the Create hybrid machine operation. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<HybridComputeMachineResource> CreateOrUpdate(WaitUntil waitUntil, string machineName, HybridComputeMachineData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HybridComputeMachineResource> CreateOrUpdate(WaitUntil waitUntil, string machineName, HybridComputeMachineData data, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
             Argument.AssertNotNull(data, nameof(data));
@@ -124,7 +126,7 @@ namespace Azure.ResourceManager.HybridCompute
             scope.Start();
             try
             {
-                var response = _hybridComputeMachineMachinesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, machineName, data, cancellationToken);
+                var response = _hybridComputeMachineMachinesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, machineName, data, expand, cancellationToken);
                 var operation = new HybridComputeArmOperation<HybridComputeMachineResource>(Response.FromValue(new HybridComputeMachineResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -226,12 +228,13 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HybridComputeMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HybridComputeMachineResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<HybridComputeMachineResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputeMachineMachinesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputeMachineMachinesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputeMachineMachinesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputeMachineMachinesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridComputeMachineResource(Client, HybridComputeMachineData.DeserializeHybridComputeMachineData(e)), _hybridComputeMachineMachinesClientDiagnostics, Pipeline, "HybridComputeMachineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -248,12 +251,13 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HybridComputeMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HybridComputeMachineResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<HybridComputeMachineResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputeMachineMachinesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputeMachineMachinesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputeMachineMachinesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputeMachineMachinesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridComputeMachineResource(Client, HybridComputeMachineData.DeserializeHybridComputeMachineData(e)), _hybridComputeMachineMachinesClientDiagnostics, Pipeline, "HybridComputeMachineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 

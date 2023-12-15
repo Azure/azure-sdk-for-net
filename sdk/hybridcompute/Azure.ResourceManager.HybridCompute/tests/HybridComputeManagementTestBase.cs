@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
             HybridComputeMachineData data = new HybridComputeMachineData(new AzureLocation("eastus2euap"))
             {
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
-                LocationData = new LocationData("Redmond"),
+                LocationData = new HybridComputeLocation("Redmond"),
                 VmId = new Guid("b7a098cc-b0b8-46e8-a205-62f301a62a8f"),
                 ClientPublicKey = "string",
             };
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
 
             MachineInstallPatchesContent content = new MachineInstallPatchesContent(XmlConvert.ToTimeSpan("PT4H"), VmGuestPatchRebootSetting.IfRequired)
             {
-                WindowsParameters = new WindowsParameters()
+                WindowsParameters = new HybridComputeWindowsParameters()
                 {
                     ClassificationsToInclude = {
                         VmGuestPatchClassificationWindow.Critical,VmGuestPatchClassificationWindow.Security

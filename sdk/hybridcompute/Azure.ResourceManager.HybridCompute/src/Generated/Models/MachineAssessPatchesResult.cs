@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="patchServiceUsed"> Specifies the patch service used for the operation. </param>
         /// <param name="osType"> The operating system type of the machine. </param>
         /// <param name="errorDetails"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
-        internal MachineAssessPatchesResult(PatchOperationStatus? status, Guid? assessmentActivityId, bool? rebootPending, AvailablePatchCountByClassification availablePatchCountByClassification, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, PatchOperationStartedBy? startedBy, PatchServiceUsed? patchServiceUsed, OSType? osType, ResponseError errorDetails)
+        internal MachineAssessPatchesResult(PatchOperationStatus? status, Guid? assessmentActivityId, bool? rebootPending, AvailablePatchCountByClassification availablePatchCountByClassification, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, PatchOperationStartedBy? startedBy, PatchServiceUsed? patchServiceUsed, HybridComputeOSType? osType, ResponseError errorDetails)
         {
             Status = status;
             AssessmentActivityId = assessmentActivityId;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Specifies the patch service used for the operation. </summary>
         public PatchServiceUsed? PatchServiceUsed { get; }
         /// <summary> The operating system type of the machine. </summary>
-        public OSType? OSType { get; }
+        public HybridComputeOSType? OSType { get; }
         /// <summary> The errors that were encountered during execution of the operation. The details array contains the list of them. </summary>
         public ResponseError ErrorDetails { get; }
     }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="provisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
         /// <param name="privateLinkScopeId"> The Guid id of the private link scope. </param>
         /// <param name="privateEndpointConnections"> The collection of associated Private Endpoint Connections. </param>
-        internal HybridComputePrivateLinkScopeProperties(PublicNetworkAccessType? publicNetworkAccess, string provisioningState, string privateLinkScopeId, IReadOnlyList<PrivateEndpointConnectionDataModel> privateEndpointConnections)
+        internal HybridComputePrivateLinkScopeProperties(HybridComputePublicNetworkAccessType? publicNetworkAccess, string provisioningState, Guid? privateLinkScopeId, IReadOnlyList<PrivateEndpointConnectionDataModel> privateEndpointConnections)
         {
             PublicNetworkAccess = publicNetworkAccess;
             ProvisioningState = provisioningState;
@@ -33,11 +34,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </summary>
-        public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
+        public HybridComputePublicNetworkAccessType? PublicNetworkAccess { get; set; }
         /// <summary> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </summary>
         public string ProvisioningState { get; }
         /// <summary> The Guid id of the private link scope. </summary>
-        public string PrivateLinkScopeId { get; }
+        public Guid? PrivateLinkScopeId { get; }
         /// <summary> The collection of associated Private Endpoint Connections. </summary>
         public IReadOnlyList<PrivateEndpointConnectionDataModel> PrivateEndpointConnections { get; }
     }

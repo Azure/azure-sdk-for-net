@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableHybridComputeSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _hybridComputeLicenseLicensesClientDiagnostics;
+        private LicensesRestOperations _hybridComputeLicenseLicensesRestClient;
         private ClientDiagnostics _hybridComputeMachineMachinesClientDiagnostics;
         private MachinesRestOperations _hybridComputeMachineMachinesRestClient;
         private ClientDiagnostics _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics;
@@ -38,6 +40,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         {
         }
 
+        private ClientDiagnostics HybridComputeLicenseLicensesClientDiagnostics => _hybridComputeLicenseLicensesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeLicenseResource.ResourceType.Namespace, Diagnostics);
+        private LicensesRestOperations HybridComputeLicenseLicensesRestClient => _hybridComputeLicenseLicensesRestClient ??= new LicensesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HybridComputeLicenseResource.ResourceType));
         private ClientDiagnostics HybridComputeMachineMachinesClientDiagnostics => _hybridComputeMachineMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeMachineResource.ResourceType.Namespace, Diagnostics);
         private MachinesRestOperations HybridComputeMachineMachinesRestClient => _hybridComputeMachineMachinesRestClient ??= new MachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HybridComputeMachineResource.ResourceType));
         private ClientDiagnostics HybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics => _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputePrivateLinkScopeResource.ResourceType.Namespace, Diagnostics);
@@ -49,16 +53,16 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ExtensionValueResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of HybridComputeExtensionValueResources in the SubscriptionResource. </summary>
         /// <param name="location"> The location of the Extension being received. </param>
         /// <param name="publisher"> The publisher of the Extension being received. </param>
         /// <param name="extensionType"> The extensionType of the Extension being received. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisher"/> or <paramref name="extensionType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publisher"/> or <paramref name="extensionType"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of ExtensionValueResources and their operations over a ExtensionValueResource. </returns>
-        public virtual ExtensionValueCollection GetExtensionValues(AzureLocation location, string publisher, string extensionType)
+        /// <returns> An object representing collection of HybridComputeExtensionValueResources and their operations over a HybridComputeExtensionValueResource. </returns>
+        public virtual HybridComputeExtensionValueCollection GetHybridComputeExtensionValues(AzureLocation location, string publisher, string extensionType)
         {
-            return new ExtensionValueCollection(Client, Id, location, publisher, extensionType);
+            return new HybridComputeExtensionValueCollection(Client, Id, location, publisher, extensionType);
         }
 
         /// <summary>
@@ -82,9 +86,9 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ExtensionValueResource>> GetExtensionValueAsync(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridComputeExtensionValueResource>> GetHybridComputeExtensionValueAsync(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
-            return await GetExtensionValues(location, publisher, extensionType).GetAsync(version, cancellationToken).ConfigureAwait(false);
+            return await GetHybridComputeExtensionValues(location, publisher, extensionType).GetAsync(version, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -108,9 +112,129 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ExtensionValueResource> GetExtensionValue(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        public virtual Response<HybridComputeExtensionValueResource> GetHybridComputeExtensionValue(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
-            return GetExtensionValues(location, publisher, extensionType).Get(version, cancellationToken);
+            return GetHybridComputeExtensionValues(location, publisher, extensionType).Get(version, cancellationToken);
+        }
+
+        /// <summary>
+        /// The operation to validate a license.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/validateLicense</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Licenses_ValidateLicense</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Parameters supplied to the license validation operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<HybridComputeLicenseResource>> ValidateLicenseLicenseAsync(WaitUntil waitUntil, HybridComputeLicenseData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = HybridComputeLicenseLicensesClientDiagnostics.CreateScope("MockableHybridComputeSubscriptionResource.ValidateLicenseLicense");
+            scope.Start();
+            try
+            {
+                var response = await HybridComputeLicenseLicensesRestClient.ValidateLicenseAsync(Id.SubscriptionId, data, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridComputeArmOperation<HybridComputeLicenseResource>(new HybridComputeLicenseOperationSource(Client), HybridComputeLicenseLicensesClientDiagnostics, Pipeline, HybridComputeLicenseLicensesRestClient.CreateValidateLicenseRequest(Id.SubscriptionId, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to validate a license.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/validateLicense</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Licenses_ValidateLicense</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Parameters supplied to the license validation operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<HybridComputeLicenseResource> ValidateLicenseLicense(WaitUntil waitUntil, HybridComputeLicenseData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = HybridComputeLicenseLicensesClientDiagnostics.CreateScope("MockableHybridComputeSubscriptionResource.ValidateLicenseLicense");
+            scope.Start();
+            try
+            {
+                var response = HybridComputeLicenseLicensesRestClient.ValidateLicense(Id.SubscriptionId, data, cancellationToken);
+                var operation = new HybridComputeArmOperation<HybridComputeLicenseResource>(new HybridComputeLicenseOperationSource(Client), HybridComputeLicenseLicensesClientDiagnostics, Pipeline, HybridComputeLicenseLicensesRestClient.CreateValidateLicenseRequest(Id.SubscriptionId, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to get all licenses of a non-Azure machine
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/licenses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Licenses_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="HybridComputeLicenseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridComputeLicenseResource> GetHybridComputeLicensesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridComputeLicenseLicensesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridComputeLicenseLicensesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridComputeLicenseResource(Client, HybridComputeLicenseData.DeserializeHybridComputeLicenseData(e)), HybridComputeLicenseLicensesClientDiagnostics, Pipeline, "MockableHybridComputeSubscriptionResource.GetHybridComputeLicenses", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// The operation to get all licenses of a non-Azure machine
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/licenses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Licenses_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HybridComputeLicenseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridComputeLicenseResource> GetHybridComputeLicenses(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridComputeLicenseLicensesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridComputeLicenseLicensesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridComputeLicenseResource(Client, HybridComputeLicenseData.DeserializeHybridComputeLicenseData(e)), HybridComputeLicenseLicensesClientDiagnostics, Pipeline, "MockableHybridComputeSubscriptionResource.GetHybridComputeLicenses", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

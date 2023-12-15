@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: HybridCompute
 namespace: Azure.ResourceManager.HybridCompute
-require: https://github.com/Azure/azure-rest-api-specs/blob/a29126ca8200a6c981a4e908e41fe55730df4cad/specification/hybridcompute/resource-manager/readme.md
-tag: package-2022-12
+require: https://github.com/Azure/azure-rest-api-specs/blob/e8bd7afbc95be92f48f1b0763189f6d9118ee29d/specification/hybridcompute/resource-manager/readme.md
+#tag: package-preview-2023-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -18,20 +18,94 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-  # Mitigate the duplication schema named 'ErrorDetail'
-  lenient-model-deduplication: true
+
+#mgmt-debug: 
+#  show-serialized-names: true
 
 prepend-rp-prefix:
-  - Location
+  - AccessMode
+  - AccessRule
+  - AccessRuleDirection
+  - AgentConfiguration
+  - AgentUpgrade
+  - AgentVersion
+  - ConfigurationExtension
+  - ExtensionValue
+  - ExecutionState
+  - IpAddress
+  - KeyDetails
+  - KeyProperties
+  - License
+  - LicenseCoreType
+  - LicenseDetails
+  - LicenseEdition
+  - LicenseProfile
+  - LicenseState
+  - LicenseStatus
+  - LicenseTarget
+  - LicenseType
+  - LinuxParameters
   - Machine
   - MachineExtension
+  - NetworkInterface
+  - NetworkProfile
+  - OSProfile
+  - OsType
+  - ProductFeature
+  - ProductFeatureUpdate
+  - ProvisioningIssue
+  - ProvisioningIssueSeverity
+  - ProvisioningIssueType
+  - ProvisioningState
+  - PublicNetworkAccessType
+  - ResourceAssociation
   - ResourceUpdate
+  - RunCommandInputParameter
+  - RunCommandManagedIdentity
+  - Subnet
+  - WindowsParameters
 
 rename-mapping:
   StatusLevelTypes: HybridComputeStatusLevelType
   StatusTypes: HybridComputeStatusType
   ServiceStatus: HybridComputeServiceStatus
   ServiceStatuses: HybridComputeServiceStatuses
+  MachineInstallPatchesParameters.maximumDuration: -|duration
+  Machine.properties.vmId: -|uuid
+  Machine.properties.vmUuid: -|uuid
+  Machine.properties.privateLinkScopeResourceId: -|arm-id
+  Machine.properties.parentClusterResourceId: -|arm-id
+  AgentUpgrade.correlationId: -|uuid
+  AgentUpgrade.lastAttemptTimestamp: -|date-time
+  MachineUpdate.properties.parentClusterResourceId: -|arm-id
+  MachineUpdate.properties.privateLinkScopeResourceId: -|arm-id
+  MachineAssessPatchesResult.assessmentActivityId: -|uuid
+  ArcKindEnum.AVS: Avs
+  ArcKindEnum.HCI: Hci
+  ArcKindEnum.SCVMM: ScVmm
+  ArcKindEnum.EPS: Eps
+  ArcKindEnum.GCP: Gcp
+  ConnectionDetail: PrivateEndpointConnectionDetail
+  LocationData: HybridComputeLocation
+  NetworkSecurityPerimeter.id: -|arm-id
+  ConnectionDetail.id: -|arm-id
+  PrivateLinkScopeValidationDetails.id: -|arm-id
+  AgentConfiguration.guestConfigurationEnabled: IsGuestConfigurationEnabled
+  KeyDetails.notAfter: NotAfterOn
+  KeyDetails.renewAfter: RenewAfterOn
+  LicenseStatus.OOBGrace: OobGrace
+  LicenseStatus.OOTGrace: OotGrace
+  LicenseType.ESU: Esu
+  HybridComputePrivateLinkScopeProperties.privateLinkScopeId: -|uuid
+  ProvisioningIssue.properties.suggestedResourceIds: -|arm-id
+  RunCommandManagedIdentity.clientId: -|uuid
+  RunCommandManagedIdentity.objectId: -|uuid
+  LicenseProfileStorageModelEsuProperties.assignedLicenseImmutableId: -|uuid
+  NetworkSecurityPerimeter.perimeterGuid: -|uuid
+  PatchServiceUsed.YUM: Yum
+  PatchServiceUsed.APT: Apt
+  Machine.properties.adFqdn: ADFqdn
+  HybridIdentityMetadata.properties.vmId: -|uuid
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -66,45 +140,16 @@ acronym-mapping:
 models-to-treat-empty-string-as-null:
   - AgentConfiguration
 
-directive:  
+directive:
+  # Mitigate the duplication schema named 'ErrorDetail'
   - from: HybridCompute.json
-    where: $.definitions.MachineInstallPatchesParameters.properties.maximumDuration
-    transform: $['format'] = 'duration'
-
+    where: $.paths
+    transform: >
+      $['/providers/Microsoft.HybridCompute/osType/{osType}/agentVersions'].get.responses.default.schema['$ref'] = '../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse';
+      $['/providers/Microsoft.HybridCompute/osType/{osType}/agentVersions/{version}'].get.responses.default.schema['$ref'] = '../../../../../common-types/resource-management/v3/types.json#/definitions/ErrorResponse';
+  # Add the missing flatten attribute
   - from: HybridCompute.json
-    where: $.definitions.MachineUpdateProperties.properties.privateLinkScopeResourceId
-    transform: $['format'] = 'arm-id'
-
-  - from: HybridCompute.json
-    where: $.definitions.MachineProperties.properties.privateLinkScopeResourceId
-    transform: $['format'] = 'arm-id'
-  
-  - from: HybridCompute.json
-    where: $.definitions.AgentUpgrade.properties.correlationId
-    transform: $['format'] = 'uuid'
-  
-  - from: HybridCompute.json
-    where: $.definitions.AgentUpgrade.properties.lastAttemptTimestamp
-    transform: $['format'] = 'date-time'
-
-  - from: HybridCompute.json
-    where: $.definitions.MachineProperties.properties.vmUuid
-    transform: $['format'] = 'uuid'
-
-  - from: HybridCompute.json
-    where: $.definitions.MachineProperties.properties.vmId
-    transform: $['format'] = 'uuid'
-
-  - from: HybridCompute.json
-    where: $.definitions.MachineUpdateProperties.properties.parentClusterResourceId
-    transform: $['format'] = 'arm-id'
-
-  - from: HybridCompute.json
-    where: $.definitions.MachineProperties.properties.parentClusterResourceId
-    transform: $['format'] = 'arm-id'
-
-  - from: HybridCompute.json
-    where: $.definitions.MachineAssessPatchesResult.properties.assessmentActivityId
-    transform: $['format'] = 'uuid'
-  
+    where: $.definitions
+    transform: >
+      $.MachineExtension.properties.properties['x-ms-client-flatten'] = true;
 ```
