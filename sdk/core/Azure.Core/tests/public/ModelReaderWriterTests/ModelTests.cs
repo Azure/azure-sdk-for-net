@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using Azure.Core.Serialization;
 using NUnit.Framework;
