@@ -9,14 +9,10 @@ namespace Azure.Core.TestFramework
     public class AsyncGate<TIn, TOut>
     {
         private readonly object _sync = new object();
-        private TaskCompletionSource<TIn> _signalTaskCompletionSource = new TaskCompletionSource<TIn>(TaskCreationOptions.RunContinuationsAsynchronously);
-        private TaskCompletionSource<TOut> _releaseTaskCompletionSource = new TaskCompletionSource<TOut>(TaskCreationOptions.RunContinuationsAsynchronously);
+        private TaskCompletionSource<TIn> _signal = new TaskCompletionSource<TIn>(TaskCreationOptions.RunContinuationsAsynchronously);
+        private TaskCompletionSource<TOut> _release = new TaskCompletionSource<TOut>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-        public async Task<TIn> WaitForSignal()
-        {
-            return await _signalTaskCompletionSource.Task.TimeoutAfterDefault();
-        }
-
+        // Called by tests
         public async Task<TIn> Cycle(TOut value = default)
         {
             TIn signal = await WaitForSignal();
@@ -24,6 +20,7 @@ namespace Azure.Core.TestFramework
             return signal;
         }
 
+        // Called by tests
         public async Task<TIn> CycleWithException(Exception exception)
         {
             TIn signal = await WaitForSignal();
@@ -31,7 +28,12 @@ namespace Azure.Core.TestFramework
             return signal;
         }
 
-        public void Release(TOut value = default)
+        private async Task<TIn> WaitForSignal()
+        {
+            return await _signal.Task.TimeoutAfterDefault();
+        }
+
+        private void Release(TOut value = default)
         {
             lock (_sync)
             {
@@ -39,7 +41,7 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        public void ReleaseWithException(Exception exception)
+        private void ReleaseWithException(Exception exception)
         {
             lock (_sync)
             {
@@ -51,24 +53,25 @@ namespace Azure.Core.TestFramework
         {
             lock (_sync)
             {
-                if (!_signalTaskCompletionSource.Task.IsCompleted)
+                if (!_signal.Task.IsCompleted)
                 {
                     throw new InvalidOperationException("No await call to release");
                 }
 
-                TaskCompletionSource<TOut> releaseTaskCompletionSource = _releaseTaskCompletionSource;
-                _releaseTaskCompletionSource = new TaskCompletionSource<TOut>(TaskCreationOptions.RunContinuationsAsynchronously);
-                _signalTaskCompletionSource = new TaskCompletionSource<TIn>(TaskCreationOptions.RunContinuationsAsynchronously);
+                TaskCompletionSource<TOut> releaseTaskCompletionSource = _release;
+                _release = new TaskCompletionSource<TOut>(TaskCreationOptions.RunContinuationsAsynchronously);
+                _signal = new TaskCompletionSource<TIn>(TaskCreationOptions.RunContinuationsAsynchronously);
                 return releaseTaskCompletionSource;
             }
         }
 
+        // Called by types
         public Task<TOut> WaitForRelease(TIn value = default)
         {
             lock (_sync)
             {
-                _signalTaskCompletionSource.SetResult(value);
-                return _releaseTaskCompletionSource.Task.TimeoutAfterDefault();
+                _signal.SetResult(value);
+                return _release.Task.TimeoutAfterDefault();
             }
         }
     }
