@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
+            if (Optional.IsDefined(UpdateChannel))
+            {
+                writer.WritePropertyName("updateChannel"u8);
+                writer.WriteStringValue(UpdateChannel.Value.ToString());
+            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);

@@ -131,6 +131,44 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="RedisCacheAccessPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RedisCacheAccessPolicyResource.CreateResourceIdentifier" /> to create a <see cref="RedisCacheAccessPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableRedisArmClient.GetRedisCacheAccessPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RedisCacheAccessPolicyResource"/> object. </returns>
+        public static RedisCacheAccessPolicyResource GetRedisCacheAccessPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableRedisArmClient(client).GetRedisCacheAccessPolicyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RedisCacheAccessPolicyAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RedisCacheAccessPolicyAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="RedisCacheAccessPolicyAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableRedisArmClient.GetRedisCacheAccessPolicyAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RedisCacheAccessPolicyAssignmentResource"/> object. </returns>
+        public static RedisCacheAccessPolicyAssignmentResource GetRedisCacheAccessPolicyAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableRedisArmClient(client).GetRedisCacheAccessPolicyAssignmentResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of RedisResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
