@@ -413,7 +413,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 drainModeManager: null);
 
             mockTriggerExecutor
-                .Setup(m => m.ExecuteAsync(It.IsAny<QueueMessage>(), CancellationToken.None))
+                .Setup(m => m.ExecuteAsync(It.IsAny<QueueMessage>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new FunctionResult(false));
 
             await listener.ProcessMessageAsync(messageFromCloud, TimeSpan.FromMinutes(10), CancellationToken.None);
@@ -432,7 +432,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             QueueProperties poisonQueueProperties = await poisonQueue.GetPropertiesAsync();
             Assert.AreEqual(1, poisonQueueProperties.ApproximateMessagesCount);
 
-            mockTriggerExecutor.Verify(m => m.ExecuteAsync(It.IsAny<QueueMessage>(), CancellationToken.None), Times.Exactly(2));
+            mockTriggerExecutor.Verify(m => m.ExecuteAsync(It.IsAny<QueueMessage>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
         }
 
         [Test]
