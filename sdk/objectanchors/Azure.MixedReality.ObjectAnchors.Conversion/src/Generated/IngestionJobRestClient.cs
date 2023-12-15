@@ -38,6 +38,18 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(Guid accountId, Guid jobId, AssetConversionProperties body, string xMrcCv)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/accounts/", false);
+            uri.AppendPath(accountId, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(Guid accountId, Guid jobId, AssetConversionProperties body, string xMrcCv)
         {
             var message = _pipeline.CreateMessage();
@@ -123,6 +135,18 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(Guid accountId, Guid jobId, string xMrcCv)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/accounts/", false);
+            uri.AppendPath(accountId, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(Guid accountId, Guid jobId, string xMrcCv)

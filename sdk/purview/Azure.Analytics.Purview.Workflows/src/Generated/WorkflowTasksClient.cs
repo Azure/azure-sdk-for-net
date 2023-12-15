@@ -123,6 +123,56 @@ namespace Azure.Analytics.Purview.Workflows
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "WorkflowTasksClient.GetWorkflowTasks", "value", "nextLink", context);
         }
 
+        internal RequestUriBuilder CreateGetWorkflowTasksRequestUri(string viewMode, IEnumerable<string> workflowIds, string timeWindow, int? maxpagesize, string orderby, IEnumerable<string> taskTypes, IEnumerable<string> taskStatuses, IEnumerable<string> requestors, IEnumerable<string> assignees, string workflowNameKeyword, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/workflow", false);
+            uri.AppendPath("/workflowtasks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (viewMode != null)
+            {
+                uri.AppendQuery("viewMode", viewMode, true);
+            }
+            if (workflowIds != null && Optional.IsCollectionDefined(workflowIds))
+            {
+                uri.AppendQueryDelimited("workflowIds", workflowIds, ",", true);
+            }
+            if (timeWindow != null)
+            {
+                uri.AppendQuery("timeWindow", timeWindow, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            if (taskTypes != null && Optional.IsCollectionDefined(taskTypes))
+            {
+                uri.AppendQueryDelimited("taskTypes", taskTypes, ",", true);
+            }
+            if (taskStatuses != null && Optional.IsCollectionDefined(taskStatuses))
+            {
+                uri.AppendQueryDelimited("taskStatuses", taskStatuses, ",", true);
+            }
+            if (requestors != null && Optional.IsCollectionDefined(requestors))
+            {
+                uri.AppendQueryDelimited("requestors", requestors, ",", true);
+            }
+            if (assignees != null && Optional.IsCollectionDefined(assignees))
+            {
+                uri.AppendQueryDelimited("assignees", assignees, ",", true);
+            }
+            if (workflowNameKeyword != null)
+            {
+                uri.AppendQuery("workflowNameKeyword", workflowNameKeyword, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetWorkflowTasksRequest(string viewMode, IEnumerable<string> workflowIds, string timeWindow, int? maxpagesize, string orderby, IEnumerable<string> taskTypes, IEnumerable<string> taskStatuses, IEnumerable<string> requestors, IEnumerable<string> assignees, string workflowNameKeyword, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -176,6 +226,15 @@ namespace Azure.Analytics.Purview.Workflows
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetWorkflowTasksNextPageRequestUri(string nextLink, string viewMode, IEnumerable<string> workflowIds, string timeWindow, int? maxpagesize, string orderby, IEnumerable<string> taskTypes, IEnumerable<string> taskStatuses, IEnumerable<string> requestors, IEnumerable<string> assignees, string workflowNameKeyword, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/workflow", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetWorkflowTasksNextPageRequest(string nextLink, string viewMode, IEnumerable<string> workflowIds, string timeWindow, int? maxpagesize, string orderby, IEnumerable<string> taskTypes, IEnumerable<string> taskStatuses, IEnumerable<string> requestors, IEnumerable<string> assignees, string workflowNameKeyword, RequestContext context)

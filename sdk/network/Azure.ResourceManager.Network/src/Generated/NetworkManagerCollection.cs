@@ -83,7 +83,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkManagerRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkManagerName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<NetworkManagerResource>(Response.FromValue(new NetworkManagerResource(Client, response), response.GetRawResponse()));
+                var uri = _networkManagerRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, networkManagerName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new NetworkArmOperation<NetworkManagerResource>(Response.FromValue(new NetworkManagerResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +126,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkManagerRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkManagerName, data, cancellationToken);
-                var operation = new NetworkArmOperation<NetworkManagerResource>(Response.FromValue(new NetworkManagerResource(Client, response), response.GetRawResponse()));
+                var uri = _networkManagerRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, networkManagerName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new NetworkArmOperation<NetworkManagerResource>(Response.FromValue(new NetworkManagerResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

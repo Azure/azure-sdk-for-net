@@ -423,6 +423,15 @@ namespace Azure.Analytics.Purview.Administration
             return Volatile.Read(ref _cachedPurviewResourceSetRule) ?? Interlocked.CompareExchange(ref _cachedPurviewResourceSetRule, new PurviewResourceSetRule(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint), null) ?? _cachedPurviewResourceSetRule;
         }
 
+        internal RequestUriBuilder CreateGetAccountPropertiesRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetAccountPropertiesRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -435,6 +444,15 @@ namespace Azure.Analytics.Purview.Administration
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateUpdateAccountPropertiesRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateAccountPropertiesRequest(RequestContent content, RequestContext context)
@@ -453,6 +471,15 @@ namespace Azure.Analytics.Purview.Administration
             return message;
         }
 
+        internal RequestUriBuilder CreateGetAccessKeysRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/listkeys", false);
+            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetAccessKeysRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -465,6 +492,15 @@ namespace Azure.Analytics.Purview.Administration
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateRegenerateAccessKeyRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/regeneratekeys", false);
+            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            return uri;
         }
 
         internal HttpMessage CreateRegenerateAccessKeyRequest(RequestContent content, RequestContext context)
@@ -481,6 +517,19 @@ namespace Azure.Analytics.Purview.Administration
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetCollectionsRequestUri(string skipToken, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/collections", false);
+            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetCollectionsRequest(string skipToken, RequestContext context)
@@ -501,6 +550,19 @@ namespace Azure.Analytics.Purview.Administration
             return message;
         }
 
+        internal RequestUriBuilder CreateGetResourceSetRulesRequestUri(string skipToken, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/resourceSetRuleConfigs", false);
+            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetResourceSetRulesRequest(string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -519,6 +581,14 @@ namespace Azure.Analytics.Purview.Administration
             return message;
         }
 
+        internal RequestUriBuilder CreateGetCollectionsNextPageRequestUri(string nextLink, string skipToken, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetCollectionsNextPageRequest(string nextLink, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -530,6 +600,14 @@ namespace Azure.Analytics.Purview.Administration
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetResourceSetRulesNextPageRequestUri(string nextLink, string skipToken, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetResourceSetRulesNextPageRequest(string nextLink, string skipToken, RequestContext context)

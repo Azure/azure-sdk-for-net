@@ -75,6 +75,16 @@ namespace Azure.Analytics.Purview.Administration
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewMetadataRolesClient.GetMetadataRoles", "values", "nextLink", context);
         }
 
+        internal RequestUriBuilder CreateGetMetadataRolesRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/policyStore", false);
+            uri.AppendPath("/metadataRoles", false);
+            uri.AppendQuery("api-version", "2021-07-01-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetMetadataRolesRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -88,6 +98,15 @@ namespace Azure.Analytics.Purview.Administration
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetMetadataRolesNextPageRequestUri(string nextLink, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/policyStore", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetMetadataRolesNextPageRequest(string nextLink, RequestContext context)

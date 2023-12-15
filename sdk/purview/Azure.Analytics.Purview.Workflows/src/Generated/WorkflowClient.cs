@@ -324,6 +324,17 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
+        internal RequestUriBuilder CreateGetWorkflowRequestUri(Guid workflowId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/workflow", false);
+            uri.AppendPath("/workflows/", false);
+            uri.AppendPath(workflowId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetWorkflowRequest(Guid workflowId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -338,6 +349,17 @@ namespace Azure.Analytics.Purview.Workflows
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateCreateOrReplaceRequestUri(Guid workflowId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/workflow", false);
+            uri.AppendPath("/workflows/", false);
+            uri.AppendPath(workflowId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrReplaceRequest(Guid workflowId, RequestContent content, RequestContext context)
@@ -358,6 +380,17 @@ namespace Azure.Analytics.Purview.Workflows
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(Guid workflowId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/workflow", false);
+            uri.AppendPath("/workflows/", false);
+            uri.AppendPath(workflowId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(Guid workflowId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -372,6 +405,18 @@ namespace Azure.Analytics.Purview.Workflows
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateValidateRequestUri(Guid workflowId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/workflow", false);
+            uri.AppendPath("/workflows/", false);
+            uri.AppendPath(workflowId, true);
+            uri.AppendPath("/validate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateValidateRequest(Guid workflowId, RequestContent content, RequestContext context)

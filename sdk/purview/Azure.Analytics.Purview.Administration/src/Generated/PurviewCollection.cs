@@ -342,6 +342,16 @@ namespace Azure.Analytics.Purview.Administration
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewCollection.GetChildCollectionNames", "value", "nextLink", context);
         }
 
+        internal RequestUriBuilder CreateGetCollectionRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/collections/", false);
+            uri.AppendPath(_collectionName, true);
+            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetCollectionRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -355,6 +365,16 @@ namespace Azure.Analytics.Purview.Administration
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateCollectionRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/collections/", false);
+            uri.AppendPath(_collectionName, true);
+            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateCollectionRequest(RequestContent content, RequestContext context)
@@ -374,6 +394,16 @@ namespace Azure.Analytics.Purview.Administration
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteCollectionRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/collections/", false);
+            uri.AppendPath(_collectionName, true);
+            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteCollectionRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -387,6 +417,21 @@ namespace Azure.Analytics.Purview.Administration
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetChildCollectionNamesRequestUri(string skipToken, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/collections/", false);
+            uri.AppendPath(_collectionName, true);
+            uri.AppendPath("/getChildCollectionNames", false);
+            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetChildCollectionNamesRequest(string skipToken, RequestContext context)
@@ -409,6 +454,17 @@ namespace Azure.Analytics.Purview.Administration
             return message;
         }
 
+        internal RequestUriBuilder CreateGetCollectionPathRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/collections/", false);
+            uri.AppendPath(_collectionName, true);
+            uri.AppendPath("/getCollectionPath", false);
+            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetCollectionPathRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -423,6 +479,14 @@ namespace Azure.Analytics.Purview.Administration
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetChildCollectionNamesNextPageRequestUri(string nextLink, string skipToken, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetChildCollectionNamesNextPageRequest(string nextLink, string skipToken, RequestContext context)

@@ -37,6 +37,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             _host = host ?? throw new ArgumentNullException(nameof(host));
         }
 
+        internal RequestUriBuilder CreateTrackRequestUri(IEnumerable<TelemetryItem> body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_host, false);
+            uri.AppendRaw("/v2.1", false);
+            uri.AppendPath("/track", false);
+            return uri;
+        }
+
         /// <summary> Track telemetry events. </summary>
         /// <param name="body"> The list of telemetry events to track. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

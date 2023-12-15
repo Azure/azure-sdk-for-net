@@ -83,7 +83,9 @@ namespace Azure.ResourceManager.MixedReality
             try
             {
                 var response = await _spatialAnchorsAccountRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MixedRealityArmOperation<SpatialAnchorsAccountResource>(Response.FromValue(new SpatialAnchorsAccountResource(Client, response), response.GetRawResponse()));
+                var uri = _spatialAnchorsAccountRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, accountName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new MixedRealityArmOperation<SpatialAnchorsAccountResource>(Response.FromValue(new SpatialAnchorsAccountResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +126,9 @@ namespace Azure.ResourceManager.MixedReality
             try
             {
                 var response = _spatialAnchorsAccountRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken);
-                var operation = new MixedRealityArmOperation<SpatialAnchorsAccountResource>(Response.FromValue(new SpatialAnchorsAccountResource(Client, response), response.GetRawResponse()));
+                var uri = _spatialAnchorsAccountRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, accountName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new MixedRealityArmOperation<SpatialAnchorsAccountResource>(Response.FromValue(new SpatialAnchorsAccountResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

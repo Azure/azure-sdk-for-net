@@ -37,6 +37,50 @@ namespace Azure.Monitor.Query
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
+        internal RequestUriBuilder CreateBatchRequestUri(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList resourceIds, string starttime, string endtime, TimeSpan? interval, string aggregation, int? top, string orderby, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/metrics:getBatch", false);
+            if (starttime != null)
+            {
+                uri.AppendQuery("starttime", starttime, true);
+            }
+            if (endtime != null)
+            {
+                uri.AppendQuery("endtime", endtime, true);
+            }
+            if (interval != null)
+            {
+                uri.AppendQuery("interval", interval.Value, "P", true);
+            }
+            uri.AppendQuery("metricnamespace", metricnamespace, true);
+            if (metricnames != null && Optional.IsCollectionDefined(metricnames))
+            {
+                uri.AppendQueryDelimited("metricnames", metricnames, ",", true);
+            }
+            if (aggregation != null)
+            {
+                uri.AppendQuery("aggregation", aggregation, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            uri.AppendQuery("api-version", "2023-05-01-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateBatchRequest(string subscriptionId, string metricnamespace, IEnumerable<string> metricnames, ResourceIdList resourceIds, string starttime, string endtime, TimeSpan? interval, string aggregation, int? top, string orderby, string filter)
         {
             var message = _pipeline.CreateMessage();

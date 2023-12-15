@@ -305,6 +305,33 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
+        internal RequestUriBuilder CreateGetLineageGraphRequestUri(string guid, string direction, int? depth, int? width, bool? includeParent, bool? getDerivedLineage, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/lineage/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendQuery("direction", direction, true);
+            if (depth != null)
+            {
+                uri.AppendQuery("depth", depth.Value, true);
+            }
+            if (width != null)
+            {
+                uri.AppendQuery("width", width.Value, true);
+            }
+            if (includeParent != null)
+            {
+                uri.AppendQuery("includeParent", includeParent.Value, true);
+            }
+            if (getDerivedLineage != null)
+            {
+                uri.AppendQuery("getDerivedLineage", getDerivedLineage.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetLineageGraphRequest(string guid, string direction, int? depth, int? width, bool? includeParent, bool? getDerivedLineage, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -337,6 +364,31 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateNextPageLineageRequestUri(string guid, string direction, bool? getDerivedLineage, int? offset, int? limit, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/lineage/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/next/", false);
+            uri.AppendQuery("direction", direction, true);
+            if (getDerivedLineage != null)
+            {
+                uri.AppendQuery("getDerivedLineage", getDerivedLineage.Value, true);
+            }
+            if (offset != null)
+            {
+                uri.AppendQuery("offset", offset.Value, true);
+            }
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", limit.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateNextPageLineageRequest(string guid, string direction, bool? getDerivedLineage, int? offset, int? limit, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -365,6 +417,33 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetLineageByUniqueAttributeRequestUri(string typeName, string direction, int? depth, int? width, bool? includeParent, bool? getDerivedLineage, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/lineage/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            uri.AppendQuery("direction", direction, true);
+            if (depth != null)
+            {
+                uri.AppendQuery("depth", depth.Value, true);
+            }
+            if (width != null)
+            {
+                uri.AppendQuery("width", width.Value, true);
+            }
+            if (includeParent != null)
+            {
+                uri.AppendQuery("includeParent", includeParent.Value, true);
+            }
+            if (getDerivedLineage != null)
+            {
+                uri.AppendQuery("getDerivedLineage", getDerivedLineage.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetLineageByUniqueAttributeRequest(string typeName, string direction, int? depth, int? width, bool? includeParent, bool? getDerivedLineage, RequestContext context)
