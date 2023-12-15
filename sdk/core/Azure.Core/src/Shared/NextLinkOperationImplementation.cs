@@ -5,10 +5,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -41,7 +39,7 @@ namespace Azure.Core
             bool skipApiVersionOverride = false,
             string? apiVersionOverrideValue = null)
         {
-            string? apiVersionStr = null;
+            string? apiVersionStr;
             if (apiVersionOverrideValue is not null)
             {
                 apiVersionStr = apiVersionOverrideValue;
