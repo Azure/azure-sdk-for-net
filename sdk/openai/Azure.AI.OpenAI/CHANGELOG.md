@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-beta.13 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-beta.12 (2023-12-15)
 
 Like beta.11, beta.12 is another release that brings further refinements and fixes. It remains based on the `2023-12-01-preview` service API version for Azure OpenAI and does not add any new service capabilities.
