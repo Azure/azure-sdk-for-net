@@ -8,7 +8,7 @@
 using System.Globalization;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using TestHelpers.Internal;
+using ClientModel.Tests.ClientShared;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 {

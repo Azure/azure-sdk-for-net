@@ -3,8 +3,6 @@
 
 using System;
 using System.IO;
-using System.ClientModel;
-using System.ClientModel.Primitives;
 using Azure.Core.Tests.Common;
 using Azure.Core.Tests.Public.ModelReaderWriterTests.Models;
 using NUnit.Framework;
@@ -27,9 +25,6 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
             if (format.Equals("J"))
                 expectedSerializedString += "<ReadOnlyProperty>ReadOnly</ReadOnlyProperty>";
             expectedSerializedString += "<RenamedChildModelXml><ChildValue>ChildRed</ChildValue></RenamedChildModelXml>";
-            //TODO this is broken until we update the IXmlSerializable interface to include ModelSerializerOptions
-            //if (format.Equals(ModelSerializerFormat.Json))
-            //    expectedSerializedString += "<ChildReadOnlyProperty>ChildReadOnly</ChildReadOnlyProperty>";
             expectedSerializedString += "</Tag>";
             return expectedSerializedString;
         }
@@ -51,9 +46,6 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
             if (format.Equals("J"))
                 Assert.AreEqual(model.ReadOnlyProperty, model2.ReadOnlyProperty);
             Assert.AreEqual(model.RenamedChildModelXml.ChildValue, model2.RenamedChildModelXml.ChildValue);
-            //TODO this is broken until we update the IXmlSerializable interface to include ModelSerializerOptions
-            //if (format.Equals(ModelSerializerFormat.Json))
-            //    Assert.AreEqual(model.RenamedChildModelXml.ChildReadOnlyProperty, model2.RenamedChildModelXml.ChildReadOnlyProperty);
         }
     }
 }

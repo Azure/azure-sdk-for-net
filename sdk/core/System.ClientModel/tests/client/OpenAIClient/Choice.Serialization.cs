@@ -6,9 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using System.ClientModel.Tests.Client;
 using System.Text.Json;
-using TestHelpers.Internal;
+using ClientModel.Tests.ClientShared;
 
 namespace OpenAI;
 

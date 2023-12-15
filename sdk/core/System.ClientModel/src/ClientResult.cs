@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Primitives;
 using System.ClientModel.Internal;
+using System.ClientModel.Primitives;
 
 namespace System.ClientModel;
 
@@ -26,7 +26,7 @@ public abstract class ClientResult
     #region Factory methods for OutputMessage and subtypes
 
     public static ClientResult FromResponse(PipelineResponse response)
-        => new ClientModelOutputMessage(response);
+        => new ClientModelClientResult(response);
 
     public static ClientResult<T> FromValue<T>(T value, PipelineResponse response)
     {
@@ -41,30 +41,30 @@ public abstract class ClientResult
             throw new ArgumentNullException(nameof(value), message);
         }
 
-        return new ClientModelOutputMessage<T>(value, response);
+        return new ClientModelClientResult<T>(value, response);
     }
 
     public static OptionalClientResult<T> FromOptionalValue<T>(T? value, PipelineResponse response)
-        => new ClientModelOptionalOutputMessage<T>(value, response);
+        => new ClientModelOptionalClientResult<T>(value, response);
 
     #endregion
 
     #region Private implementation subtypes of abstract OutputMessage types
-    private class ClientModelOutputMessage : ClientResult
+    private class ClientModelClientResult : ClientResult
     {
-        public ClientModelOutputMessage(PipelineResponse response)
+        public ClientModelClientResult(PipelineResponse response)
             : base(response) { }
     }
 
-    private class ClientModelOptionalOutputMessage<T> : OptionalClientResult<T>
+    private class ClientModelOptionalClientResult<T> : OptionalClientResult<T>
     {
-        public ClientModelOptionalOutputMessage(T? value, PipelineResponse response)
+        public ClientModelOptionalClientResult(T? value, PipelineResponse response)
             : base(value, response) { }
     }
 
-    private class ClientModelOutputMessage<T> : ClientResult<T>
+    private class ClientModelClientResult<T> : ClientResult<T>
     {
-        public ClientModelOutputMessage(T value, PipelineResponse response)
+        public ClientModelClientResult(T value, PipelineResponse response)
             : base(value, response) { }
     }
 

@@ -5,12 +5,10 @@
 
 #nullable disable
 
+using ClientModel.Tests.ClientShared;
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.ClientModel.Tests.Client;
 using System.Text.Json;
-using TestHelpers.Internal;
 
 namespace OpenAI;
 
