@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> GrafanaIntegrations is a bundled observability experience (e.g. pre-configured data source, tailored Grafana dashboards, alerting defaults) for common monitoring scenarios. </summary>
     internal partial class GrafanaIntegrations
     {
-        /// <summary> Initializes a new instance of GrafanaIntegrations. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaIntegrations"/>. </summary>
         public GrafanaIntegrations()
         {
             MonitorWorkspaceIntegrations = new ChangeTrackingList<MonitorWorkspaceIntegration>();
         }
 
-        /// <summary> Initializes a new instance of GrafanaIntegrations. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaIntegrations"/>. </summary>
         /// <param name="monitorWorkspaceIntegrations"></param>
         internal GrafanaIntegrations(IList<MonitorWorkspaceIntegration> monitorWorkspaceIntegrations)
         {

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The BackupResourceEncryptionConfigExtendedProperties. </summary>
     public partial class BackupResourceEncryptionConfigExtendedProperties : BackupResourceEncryptionConfig
     {
-        /// <summary> Initializes a new instance of BackupResourceEncryptionConfigExtendedProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupResourceEncryptionConfigExtendedProperties"/>. </summary>
         public BackupResourceEncryptionConfigExtendedProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupResourceEncryptionConfigExtendedProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupResourceEncryptionConfigExtendedProperties"/>. </summary>
         /// <param name="encryptionAtRestType"> Encryption At Rest Type. </param>
         /// <param name="keyUri"> Key Vault Key URI. </param>
         /// <param name="subscriptionId"> Key Vault Subscription Id. </param>

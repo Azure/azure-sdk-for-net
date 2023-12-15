@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list Kusto database principal assignments operation response. </summary>
     internal partial class DatabasePrincipalAssignmentListResult
     {
-        /// <summary> Initializes a new instance of DatabasePrincipalAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabasePrincipalAssignmentListResult"/>. </summary>
         internal DatabasePrincipalAssignmentListResult()
         {
             Value = new ChangeTrackingList<KustoDatabasePrincipalAssignmentData>();
         }
 
-        /// <summary> Initializes a new instance of DatabasePrincipalAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabasePrincipalAssignmentListResult"/>. </summary>
         /// <param name="value"> The list of Kusto database principal assignments. </param>
         internal DatabasePrincipalAssignmentListResult(IReadOnlyList<KustoDatabasePrincipalAssignmentData> value)
         {

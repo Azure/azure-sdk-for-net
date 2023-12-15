@@ -1,0 +1,37 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/servicebus/service.projects
+    - sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus
+    - sdk/servicebus/ci.functions.yml
+
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/servicebus/service.projects
+    - sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus
+    - sdk/servicebus/ci.functions.yml
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    SDKType: functions
+    ServiceDirectory: servicebus
+    BuildSnippets: false
+    ArtifactName: packages
+    Artifacts:
+    - name: Microsoft.Azure.WebJobs.Extensions.ServiceBus
+      safeName: MicrosoftAzureWebJobsExtensionsServiceBus

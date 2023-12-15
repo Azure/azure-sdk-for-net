@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Sphere
         private readonly CatalogsRestOperations _sphereCatalogCatalogsRestClient;
         private readonly SphereCatalogData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs";
+
         /// <summary> Initializes a new instance of the <see cref="SphereCatalogResource"/> class for mocking. </summary>
         protected SphereCatalogResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.Sphere
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

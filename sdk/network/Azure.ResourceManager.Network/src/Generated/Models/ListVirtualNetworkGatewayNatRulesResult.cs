@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Result of the request to list all nat rules to a virtual network gateway. It contains a list of Nat rules and a URL nextLink to get the next set of results. </summary>
     internal partial class ListVirtualNetworkGatewayNatRulesResult
     {
-        /// <summary> Initializes a new instance of ListVirtualNetworkGatewayNatRulesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVirtualNetworkGatewayNatRulesResult"/>. </summary>
         internal ListVirtualNetworkGatewayNatRulesResult()
         {
             Value = new ChangeTrackingList<VirtualNetworkGatewayNatRuleData>();
         }
 
-        /// <summary> Initializes a new instance of ListVirtualNetworkGatewayNatRulesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVirtualNetworkGatewayNatRulesResult"/>. </summary>
         /// <param name="value"> List of Nat Rules. </param>
         /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
         internal ListVirtualNetworkGatewayNatRulesResult(IReadOnlyList<VirtualNetworkGatewayNatRuleData> value, string nextLink)

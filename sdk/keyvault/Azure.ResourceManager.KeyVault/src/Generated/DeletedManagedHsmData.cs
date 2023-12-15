@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.KeyVault
     /// <summary> A class representing the DeletedManagedHsm data model. </summary>
     public partial class DeletedManagedHsmData : ResourceData
     {
-        /// <summary> Initializes a new instance of DeletedManagedHsmData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedManagedHsmData"/>. </summary>
         internal DeletedManagedHsmData()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedManagedHsmData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedManagedHsmData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

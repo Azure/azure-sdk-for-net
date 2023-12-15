@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Monitor.Models
     /// </summary>
     public partial class WindowsEventLogDataSource
     {
-        /// <summary> Initializes a new instance of WindowsEventLogDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsEventLogDataSource"/>. </summary>
         public WindowsEventLogDataSource()
         {
             Streams = new ChangeTrackingList<WindowsEventLogDataSourceStream>();
             XPathQueries = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of WindowsEventLogDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsEventLogDataSource"/>. </summary>
         /// <param name="streams">
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> SSL certificate email. </summary>
     public partial class AppServiceCertificateEmail : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceCertificateEmail. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateEmail"/>. </summary>
         public AppServiceCertificateEmail()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificateEmail. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateEmail"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

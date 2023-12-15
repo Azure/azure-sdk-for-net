@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> Description of the IoT hub. </summary>
     public partial class IotHubDefinitionDescription
     {
-        /// <summary> Initializes a new instance of IotHubDefinitionDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubDefinitionDescription"/>. </summary>
         /// <param name="connectionString"> Connection string of the IoT hub. </param>
         /// <param name="location"> ARM region of the IoT hub. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             Location = location;
         }
 
-        /// <summary> Initializes a new instance of IotHubDefinitionDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubDefinitionDescription"/>. </summary>
         /// <param name="applyAllocationPolicy"> flag for applying allocationPolicy or not for a given iot hub. </param>
         /// <param name="allocationWeight"> weight to apply for a given iot h. </param>
         /// <param name="name"> Host name of the IoT hub. </param>

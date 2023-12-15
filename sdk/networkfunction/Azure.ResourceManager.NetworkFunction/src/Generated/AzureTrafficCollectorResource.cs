@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.NetworkFunction
         private readonly AzureTrafficCollectorsRestOperations _azureTrafficCollectorRestClient;
         private readonly AzureTrafficCollectorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkFunction/azureTrafficCollectors";
+
         /// <summary> Initializes a new instance of the <see cref="AzureTrafficCollectorResource"/> class for mocking. </summary>
         protected AzureTrafficCollectorResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.NetworkFunction
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkFunction/azureTrafficCollectors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the UrlFileExtension condition for the delivery rule. </summary>
     public partial class DeliveryRuleUriFileExtensionCondition : DeliveryRuleCondition
     {
-        /// <summary> Initializes a new instance of DeliveryRuleUriFileExtensionCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleUriFileExtensionCondition"/>. </summary>
         /// <param name="properties"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DeliveryRuleUriFileExtensionCondition(UriFileExtensionMatchCondition properties)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Name = MatchVariable.UriFileExtension;
         }
 
-        /// <summary> Initializes a new instance of DeliveryRuleUriFileExtensionCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleUriFileExtensionCondition"/>. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="properties"> Defines the parameters for the condition. </param>
         internal DeliveryRuleUriFileExtensionCondition(MatchVariable name, UriFileExtensionMatchCondition properties) : base(name)

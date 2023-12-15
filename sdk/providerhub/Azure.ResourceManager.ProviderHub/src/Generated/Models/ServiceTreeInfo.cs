@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ServiceTreeInfo. </summary>
     public partial class ServiceTreeInfo
     {
-        /// <summary> Initializes a new instance of ServiceTreeInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTreeInfo"/>. </summary>
         public ServiceTreeInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceTreeInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTreeInfo"/>. </summary>
         /// <param name="serviceId"></param>
         /// <param name="componentId"></param>
         internal ServiceTreeInfo(string serviceId, string componentId)

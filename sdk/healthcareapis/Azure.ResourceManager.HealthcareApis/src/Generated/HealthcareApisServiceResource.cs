@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.HealthcareApis
         private readonly ServicesRestOperations _healthcareApisServiceServicesRestClient;
         private readonly HealthcareApisServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/services";
+
         /// <summary> Initializes a new instance of the <see cref="HealthcareApisServiceResource"/> class for mocking. </summary>
         protected HealthcareApisServiceResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.HealthcareApis
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/services";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

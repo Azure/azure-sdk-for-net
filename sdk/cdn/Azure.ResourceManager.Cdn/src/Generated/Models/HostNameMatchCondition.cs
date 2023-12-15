@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for HostName match conditions. </summary>
     public partial class HostNameMatchCondition
     {
-        /// <summary> Initializes a new instance of HostNameMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostNameMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="hostNameOperator"> Describes operator to be matched. </param>
         public HostNameMatchCondition(HostNameMatchConditionType conditionType, HostNameOperator hostNameOperator)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
-        /// <summary> Initializes a new instance of HostNameMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostNameMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="hostNameOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>

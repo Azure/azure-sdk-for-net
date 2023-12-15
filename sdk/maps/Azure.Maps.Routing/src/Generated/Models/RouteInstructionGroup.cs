@@ -10,12 +10,12 @@ namespace Azure.Maps.Routing.Models
     /// <summary> Groups a sequence of instruction elements which are related to each other. The sequence range is constrained with firstInstructionIndex and lastInstructionIndex. When human-readable text messages are requested for guidance (instructionType=text or tagged), then the instructionGroup has a summary message returned when available. </summary>
     public partial class RouteInstructionGroup
     {
-        /// <summary> Initializes a new instance of RouteInstructionGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteInstructionGroup"/>. </summary>
         internal RouteInstructionGroup()
         {
         }
 
-        /// <summary> Initializes a new instance of RouteInstructionGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteInstructionGroup"/>. </summary>
         /// <param name="firstInstructionIndex"> Index of the first instruction in the instructions and belonging to this group. </param>
         /// <param name="lastInstructionIndex"> Index of the last instruction in the instructions and belonging to this group. </param>
         /// <param name="groupLengthInMeters"> Length of the group. </param>

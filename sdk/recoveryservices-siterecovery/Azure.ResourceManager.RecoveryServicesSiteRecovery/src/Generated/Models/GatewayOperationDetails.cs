@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Details of the gateway operation. </summary>
     public partial class GatewayOperationDetails
     {
-        /// <summary> Initializes a new instance of GatewayOperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayOperationDetails"/>. </summary>
         internal GatewayOperationDetails()
         {
             DataStores = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of GatewayOperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayOperationDetails"/>. </summary>
         /// <param name="state"> A value indicating the state of gateway operation. </param>
         /// <param name="progressPercentage"> A value indicating the progress percentage of gateway operation. </param>
         /// <param name="timeElapsed"> A value indicating the time elapsed for the operation in milliseconds. </param>

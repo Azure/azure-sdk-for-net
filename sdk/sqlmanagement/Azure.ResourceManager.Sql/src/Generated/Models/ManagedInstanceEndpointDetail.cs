@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A domain name that the managed instance service needs to communicate with, along with additional details. </summary>
     public partial class ManagedInstanceEndpointDetail
     {
-        /// <summary> Initializes a new instance of ManagedInstanceEndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceEndpointDetail"/>. </summary>
         internal ManagedInstanceEndpointDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceEndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceEndpointDetail"/>. </summary>
         /// <param name="port"> The port an endpoint is connected to. </param>
         internal ManagedInstanceEndpointDetail(int? port)
         {

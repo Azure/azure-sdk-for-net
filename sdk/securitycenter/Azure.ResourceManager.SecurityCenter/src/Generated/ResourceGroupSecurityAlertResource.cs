@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly AlertsRestOperations _resourceGroupSecurityAlertAlertsRestClient;
         private readonly SecurityAlertData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/locations/alerts";
+
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupSecurityAlertResource"/> class for mocking. </summary>
         protected ResourceGroupSecurityAlertResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/locations/alerts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

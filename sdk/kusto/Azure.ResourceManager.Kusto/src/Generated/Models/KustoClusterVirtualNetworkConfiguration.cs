@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A class that contains virtual network definition. </summary>
     public partial class KustoClusterVirtualNetworkConfiguration
     {
-        /// <summary> Initializes a new instance of KustoClusterVirtualNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoClusterVirtualNetworkConfiguration"/>. </summary>
         /// <param name="subnetId"> The subnet resource id. </param>
         /// <param name="enginePublicIPId"> Engine service's public IP address resource id. </param>
         /// <param name="dataManagementPublicIPId"> Data management's service public IP address resource id. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Kusto.Models
             DataManagementPublicIPId = dataManagementPublicIPId;
         }
 
-        /// <summary> Initializes a new instance of KustoClusterVirtualNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoClusterVirtualNetworkConfiguration"/>. </summary>
         /// <param name="subnetId"> The subnet resource id. </param>
         /// <param name="enginePublicIPId"> Engine service's public IP address resource id. </param>
         /// <param name="dataManagementPublicIPId"> Data management's service public IP address resource id. </param>

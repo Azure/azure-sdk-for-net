@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> publisher properties. </summary>
     public partial class PublisherPropertiesFormat
     {
-        /// <summary> Initializes a new instance of PublisherPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublisherPropertiesFormat"/>. </summary>
         public PublisherPropertiesFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of PublisherPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublisherPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the publisher resource. </param>
         /// <param name="scope"> The publisher scope. </param>
         internal PublisherPropertiesFormat(ProvisioningState? provisioningState, PublisherScope? scope)

@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Purview
     /// </summary>
     public partial class PurviewAccountData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PurviewAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
         public PurviewAccountData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<PurviewPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of PurviewAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The FeatureStoreSettings. </summary>
     public partial class FeatureStoreSettings
     {
-        /// <summary> Initializes a new instance of FeatureStoreSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureStoreSettings"/>. </summary>
         public FeatureStoreSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of FeatureStoreSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureStoreSettings"/>. </summary>
         /// <param name="computeRuntime"></param>
         /// <param name="offlineStoreConnectionName"></param>
         /// <param name="onlineStoreConnectionName"></param>

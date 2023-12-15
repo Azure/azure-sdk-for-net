@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Publisher configuration group schema update request definition. </summary>
     public partial class ConfigurationGroupSchemaVersionUpdateState
     {
-        /// <summary> Initializes a new instance of ConfigurationGroupSchemaVersionUpdateState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationGroupSchemaVersionUpdateState"/>. </summary>
         public ConfigurationGroupSchemaVersionUpdateState()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfigurationGroupSchemaVersionUpdateState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationGroupSchemaVersionUpdateState"/>. </summary>
         /// <param name="versionState"> The configuration group schema state. </param>
         internal ConfigurationGroupSchemaVersionUpdateState(VersionState? versionState)
         {

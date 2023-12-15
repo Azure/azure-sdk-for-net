@@ -48,6 +48,9 @@ namespace Azure.ResourceManager.ContainerService
         private readonly ResolvePrivateLinkServiceIdRestOperations _resolvePrivateLinkServiceIdRestClient;
         private readonly ContainerServiceManagedClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedClusters";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerServiceManagedClusterResource"/> class for mocking. </summary>
         protected ContainerServiceManagedClusterResource()
         {
@@ -80,9 +83,6 @@ namespace Azure.ResourceManager.ContainerService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedClusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

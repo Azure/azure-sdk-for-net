@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The response from the List SAP monitors operation. </summary>
     internal partial class MonitorListResult
     {
-        /// <summary> Initializes a new instance of MonitorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorListResult"/>. </summary>
         internal MonitorListResult()
         {
             Value = new ChangeTrackingList<SapMonitorData>();
         }
 
-        /// <summary> Initializes a new instance of MonitorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorListResult"/>. </summary>
         /// <param name="value"> The list of SAP monitors. </param>
         /// <param name="nextLink"> The URL to get the next set of SAP monitors. </param>
         internal MonitorListResult(IReadOnlyList<SapMonitorData> value, string nextLink)

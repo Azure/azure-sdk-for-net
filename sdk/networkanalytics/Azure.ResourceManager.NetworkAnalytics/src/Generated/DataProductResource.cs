@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.NetworkAnalytics
         private readonly DataTypesRestOperations _dataTypesRestClient;
         private readonly DataProductData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkAnalytics/dataProducts";
+
         /// <summary> Initializes a new instance of the <see cref="DataProductResource"/> class for mocking. </summary>
         protected DataProductResource()
         {
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.NetworkAnalytics
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkAnalytics/dataProducts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ManagedCertificatesRestOperations _containerAppManagedCertificateManagedCertificatesRestClient;
         private readonly ContainerAppManagedCertificateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/managedCertificates";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedCertificateResource"/> class for mocking. </summary>
         protected ContainerAppManagedCertificateResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/managedCertificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

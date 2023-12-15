@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DataShare
     /// </summary>
     public partial class DataShareInvitationData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataShareInvitationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareInvitationData"/>. </summary>
         public DataShareInvitationData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataShareInvitationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareInvitationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> A streaming job. </summary>
     public partial class StreamAnalyticsClusterJob
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsClusterJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsClusterJob"/>. </summary>
         internal StreamAnalyticsClusterJob()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsClusterJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsClusterJob"/>. </summary>
         /// <param name="id"> Resource ID of the streaming job. </param>
         /// <param name="streamingUnits"> The number of streaming units that are used by the streaming job. </param>
         /// <param name="jobState"> The current execution state of the streaming job. </param>

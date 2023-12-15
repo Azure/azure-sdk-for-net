@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.OperationalInsights
         private readonly QueriesRestOperations _logAnalyticsQueryQueriesRestClient;
         private readonly LogAnalyticsQueryPackData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/queryPacks";
+
         /// <summary> Initializes a new instance of the <see cref="LogAnalyticsQueryPackResource"/> class for mocking. </summary>
         protected LogAnalyticsQueryPackResource()
         {
@@ -73,9 +76,6 @@ namespace Azure.ResourceManager.OperationalInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/queryPacks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

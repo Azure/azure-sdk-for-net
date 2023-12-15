@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The role based access control (RBAC) authorization type integration runtime. </summary>
     public partial class SynapseLinkedIntegrationRuntimeRbacAuthorization : SynapseLinkedIntegrationRuntimeType
     {
-        /// <summary> Initializes a new instance of SynapseLinkedIntegrationRuntimeRbacAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseLinkedIntegrationRuntimeRbacAuthorization"/>. </summary>
         /// <param name="resourceId"> The resource identifier of the integration runtime to be shared. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public SynapseLinkedIntegrationRuntimeRbacAuthorization(ResourceIdentifier resourceId)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Synapse.Models
             AuthorizationType = "RBAC";
         }
 
-        /// <summary> Initializes a new instance of SynapseLinkedIntegrationRuntimeRbacAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseLinkedIntegrationRuntimeRbacAuthorization"/>. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
         /// <param name="resourceId"> The resource identifier of the integration runtime to be shared. </param>
         internal SynapseLinkedIntegrationRuntimeRbacAuthorization(string authorizationType, ResourceIdentifier resourceId) : base(authorizationType)

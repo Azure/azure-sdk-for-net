@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The FeatureAttributionDriftMonitoringSignal. </summary>
     public partial class FeatureAttributionDriftMonitoringSignal : MonitoringSignalBase
     {
-        /// <summary> Initializes a new instance of FeatureAttributionDriftMonitoringSignal. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureAttributionDriftMonitoringSignal"/>. </summary>
         /// <param name="metricThreshold"> [Required] A list of metrics to calculate and their associated thresholds. </param>
         /// <param name="productionData">
         /// [Required] The data which drift will be calculated for.
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SignalType = MonitoringSignalType.FeatureAttributionDrift;
         }
 
-        /// <summary> Initializes a new instance of FeatureAttributionDriftMonitoringSignal. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureAttributionDriftMonitoringSignal"/>. </summary>
         /// <param name="mode"> The current notification mode for this signal. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>

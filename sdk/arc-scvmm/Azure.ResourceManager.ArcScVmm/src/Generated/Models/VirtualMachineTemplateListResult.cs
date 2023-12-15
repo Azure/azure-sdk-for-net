@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> List of VirtualMachineTemplates. </summary>
     internal partial class VirtualMachineTemplateListResult
     {
-        /// <summary> Initializes a new instance of VirtualMachineTemplateListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineTemplateListResult"/>. </summary>
         internal VirtualMachineTemplateListResult()
         {
             Value = new ChangeTrackingList<ScVmmVirtualMachineTemplateData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineTemplateListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineTemplateListResult"/>. </summary>
         /// <param name="value"> List of VirtualMachineTemplates. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal VirtualMachineTemplateListResult(IReadOnlyList<ScVmmVirtualMachineTemplateData> value, string nextLink)

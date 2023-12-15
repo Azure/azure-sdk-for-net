@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.KeyVault
         private readonly MhsmPrivateEndpointConnectionsRestOperations _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient;
         private readonly ManagedHsmPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.KeyVault/managedHSMs/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedHsmPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected ManagedHsmPrivateEndpointConnectionResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.KeyVault
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.KeyVault/managedHSMs/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

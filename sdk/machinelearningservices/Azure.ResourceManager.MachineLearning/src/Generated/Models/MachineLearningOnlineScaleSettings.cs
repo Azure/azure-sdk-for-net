@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningOnlineScaleSettings
     {
-        /// <summary> Initializes a new instance of MachineLearningOnlineScaleSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineScaleSettings"/>. </summary>
         protected MachineLearningOnlineScaleSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningOnlineScaleSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineScaleSettings"/>. </summary>
         /// <param name="scaleType"> [Required] Type of deployment scaling algorithm. </param>
         internal MachineLearningOnlineScaleSettings(ScaleType scaleType)
         {

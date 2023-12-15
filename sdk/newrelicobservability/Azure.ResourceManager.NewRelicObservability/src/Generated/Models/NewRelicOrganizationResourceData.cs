@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> The details of a Organization resource. </summary>
     public partial class NewRelicOrganizationResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of NewRelicOrganizationResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicOrganizationResourceData"/>. </summary>
         public NewRelicOrganizationResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicOrganizationResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicOrganizationResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

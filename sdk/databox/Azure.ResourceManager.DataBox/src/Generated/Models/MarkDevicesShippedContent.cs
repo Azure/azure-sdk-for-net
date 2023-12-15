@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> The request body to provide the delivery package details of job. </summary>
     public partial class MarkDevicesShippedContent
     {
-        /// <summary> Initializes a new instance of MarkDevicesShippedContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarkDevicesShippedContent"/>. </summary>
         /// <param name="deliverToDataCenterPackageDetails"> Delivery package details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deliverToDataCenterPackageDetails"/> is null. </exception>
         public MarkDevicesShippedContent(PackageCarrierInfo deliverToDataCenterPackageDetails)

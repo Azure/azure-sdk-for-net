@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the application server configuration. </summary>
     public partial class ApplicationServerConfiguration
     {
-        /// <summary> Initializes a new instance of ApplicationServerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationServerConfiguration"/>. </summary>
         /// <param name="subnetId"> The subnet id. </param>
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
         /// <param name="instanceCount"> The number of app server instances. </param>

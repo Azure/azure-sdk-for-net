@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         private readonly ConfigurationsRestOperations _postgreSqlFlexibleServerConfigurationConfigurationsRestClient;
         private readonly PostgreSqlFlexibleServerConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/configurations";
+
         /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerConfigurationResource"/> class for mocking. </summary>
         protected PostgreSqlFlexibleServerConfigurationResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/configurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

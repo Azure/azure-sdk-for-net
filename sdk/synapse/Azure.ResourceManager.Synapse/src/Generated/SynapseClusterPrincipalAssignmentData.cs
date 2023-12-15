@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseClusterPrincipalAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseClusterPrincipalAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseClusterPrincipalAssignmentData"/>. </summary>
         public SynapseClusterPrincipalAssignmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseClusterPrincipalAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseClusterPrincipalAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

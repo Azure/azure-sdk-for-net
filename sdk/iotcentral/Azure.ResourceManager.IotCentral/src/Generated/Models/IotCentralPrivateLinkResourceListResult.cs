@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class IotCentralPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of IotCentralPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralPrivateLinkResourceListResult"/>. </summary>
         internal IotCentralPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<IotCentralPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of IotCentralPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         internal IotCentralPrivateLinkResourceListResult(IReadOnlyList<IotCentralPrivateLinkResourceData> value)
         {

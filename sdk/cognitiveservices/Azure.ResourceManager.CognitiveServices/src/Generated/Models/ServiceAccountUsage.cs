@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The usage data for a usage request. </summary>
     public partial class ServiceAccountUsage
     {
-        /// <summary> Initializes a new instance of ServiceAccountUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountUsage"/>. </summary>
         internal ServiceAccountUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountUsage"/>. </summary>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="quotaPeriod"> The quota period used to summarize the usage values. </param>

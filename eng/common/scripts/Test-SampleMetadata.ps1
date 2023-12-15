@@ -104,6 +104,7 @@ begin {
         "azure-active-directory-b2c",
         "azure-active-directory-domain",
         "azure-advisor",
+        "azure-ai-content-safety",
         "azure-analysis-services",
         "azure-anomaly-detector",
         "azure-api-apps",

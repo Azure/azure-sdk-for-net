@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A ShareSubscriptionSynchronization data transfer object. </summary>
     public partial class ShareSubscriptionSynchronization
     {
-        /// <summary> Initializes a new instance of ShareSubscriptionSynchronization. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareSubscriptionSynchronization"/>. </summary>
         /// <param name="synchronizationId"> Synchronization id. </param>
         public ShareSubscriptionSynchronization(Guid synchronizationId)
         {
             SynchronizationId = synchronizationId;
         }
 
-        /// <summary> Initializes a new instance of ShareSubscriptionSynchronization. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareSubscriptionSynchronization"/>. </summary>
         /// <param name="durationInMilliSeconds"> Synchronization duration. </param>
         /// <param name="endOn"> End time of synchronization. </param>
         /// <param name="message"> message of Synchronization. </param>

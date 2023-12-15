@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents Amazon Web Services CloudTrail data connector. </summary>
     public partial class SecurityInsightsAwsCloudTrailDataConnector : SecurityInsightsDataConnectorData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAwsCloudTrailDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>. </summary>
         public SecurityInsightsAwsCloudTrailDataConnector()
         {
             Kind = DataConnectorKind.AmazonWebServicesCloudTrail;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAwsCloudTrailDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

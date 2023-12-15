@@ -13,11 +13,26 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> The Extension Patch Request object. </summary>
     public partial class KubernetesClusterExtensionPatch
     {
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionPatch"/>. </summary>
         public KubernetesClusterExtensionPatch()
         {
             ConfigurationSettings = new ChangeTrackingDictionary<string, string>();
             ConfigurationProtectedSettings = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionPatch"/>. </summary>
+        /// <param name="autoUpgradeMinorVersion"> Flag to note if this extension participates in auto upgrade of minor version, or not. </param>
+        /// <param name="releaseTrain"> ReleaseTrain this extension participates in for auto-upgrade (e.g. Stable, Preview, etc.) - only if autoUpgradeMinorVersion is 'true'. </param>
+        /// <param name="version"> Version of the extension for this extension, if it is 'pinned' to a specific version. autoUpgradeMinorVersion must be 'false'. </param>
+        /// <param name="configurationSettings"> Configuration settings, as name-value pairs for configuring this extension. </param>
+        /// <param name="configurationProtectedSettings"> Configuration settings that are sensitive, as name-value pairs for configuring this extension. </param>
+        internal KubernetesClusterExtensionPatch(bool? autoUpgradeMinorVersion, string releaseTrain, string version, IDictionary<string, string> configurationSettings, IDictionary<string, string> configurationProtectedSettings)
+        {
+            AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
+            ReleaseTrain = releaseTrain;
+            Version = version;
+            ConfigurationSettings = configurationSettings;
+            ConfigurationProtectedSettings = configurationProtectedSettings;
         }
 
         /// <summary> Flag to note if this extension participates in auto upgrade of minor version, or not. </summary>

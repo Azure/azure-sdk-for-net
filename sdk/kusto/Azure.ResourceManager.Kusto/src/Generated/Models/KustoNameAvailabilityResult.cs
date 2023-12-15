@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The result returned from a check name availability request. </summary>
     public partial class KustoNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of KustoNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoNameAvailabilityResult"/>. </summary>
         internal KustoNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of KustoNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Specifies a Boolean value that indicates if the name is available. </param>
         /// <param name="name"> The name that was checked. </param>
         /// <param name="message"> Message indicating an unavailable name due to a conflict, or a description of the naming rules that are violated. </param>

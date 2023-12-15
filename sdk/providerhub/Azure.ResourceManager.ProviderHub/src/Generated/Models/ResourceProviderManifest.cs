@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceProviderManifest. </summary>
     public partial class ResourceProviderManifest
     {
-        /// <summary> Initializes a new instance of ResourceProviderManifest. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderManifest"/>. </summary>
         internal ResourceProviderManifest()
         {
             ProviderAuthorizations = new ChangeTrackingList<ResourceProviderAuthorization>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             GlobalNotificationEndpoints = new ChangeTrackingList<ResourceProviderEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of ResourceProviderManifest. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderManifest"/>. </summary>
         /// <param name="providerAuthentication"></param>
         /// <param name="providerAuthorizations"></param>
         /// <param name="namespace"></param>

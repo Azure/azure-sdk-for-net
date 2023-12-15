@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Parameters to authenticate using Service Principal. </summary>
     public partial class KubernetesServicePrincipal
     {
-        /// <summary> Initializes a new instance of KubernetesServicePrincipal. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesServicePrincipal"/>. </summary>
         public KubernetesServicePrincipal()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesServicePrincipal. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesServicePrincipal"/>. </summary>
         /// <param name="clientId"> The client Id for authenticating a Service Principal. </param>
         /// <param name="tenantId"> The tenant Id for authenticating a Service Principal. </param>
         /// <param name="clientSecret"> The client secret for authenticating a Service Principal. </param>

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a mailbox entity. </summary>
     public partial class SecurityInsightsMailboxEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsMailboxEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsMailboxEntity"/>. </summary>
         public SecurityInsightsMailboxEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.Mailbox;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsMailboxEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsMailboxEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

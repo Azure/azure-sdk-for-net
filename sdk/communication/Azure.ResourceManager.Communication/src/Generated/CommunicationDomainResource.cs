@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Communication
         private readonly DomainsRestOperations _communicationDomainResourceDomainsRestClient;
         private readonly CommunicationDomainResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Communication/emailServices/domains";
+
         /// <summary> Initializes a new instance of the <see cref="CommunicationDomainResource"/> class for mocking. </summary>
         protected CommunicationDomainResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Communication
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Communication/emailServices/domains";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

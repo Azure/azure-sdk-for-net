@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The authentication info when authType is userAssignedIdentity. </summary>
     public partial class UserAssignedIdentityAuthInfo : AuthBaseInfo
     {
-        /// <summary> Initializes a new instance of UserAssignedIdentityAuthInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserAssignedIdentityAuthInfo"/>. </summary>
         public UserAssignedIdentityAuthInfo()
         {
             AuthType = LinkerAuthType.UserAssignedIdentity;
         }
 
-        /// <summary> Initializes a new instance of UserAssignedIdentityAuthInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserAssignedIdentityAuthInfo"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
         /// <param name="clientId"> Client Id for userAssignedIdentity. </param>
         /// <param name="subscriptionId"> Subscription id for userAssignedIdentity. </param>

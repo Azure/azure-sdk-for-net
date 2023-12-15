@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of Vpn-Sites. </summary>
     public partial class GetVpnSitesConfigurationContent
     {
-        /// <summary> Initializes a new instance of GetVpnSitesConfigurationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetVpnSitesConfigurationContent"/>. </summary>
         /// <param name="outputBlobSasUri"> The sas-url to download the configurations for vpn-sites. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="outputBlobSasUri"/> is null. </exception>
         public GetVpnSitesConfigurationContent(Uri outputBlobSasUri)
@@ -22,6 +22,15 @@ namespace Azure.ResourceManager.Network.Models
             Argument.AssertNotNull(outputBlobSasUri, nameof(outputBlobSasUri));
 
             VpnSites = new ChangeTrackingList<string>();
+            OutputBlobSasUri = outputBlobSasUri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GetVpnSitesConfigurationContent"/>. </summary>
+        /// <param name="vpnSites"> List of resource-ids of the vpn-sites for which config is to be downloaded. </param>
+        /// <param name="outputBlobSasUri"> The sas-url to download the configurations for vpn-sites. </param>
+        internal GetVpnSitesConfigurationContent(IList<string> vpnSites, Uri outputBlobSasUri)
+        {
+            VpnSites = vpnSites;
             OutputBlobSasUri = outputBlobSasUri;
         }
 

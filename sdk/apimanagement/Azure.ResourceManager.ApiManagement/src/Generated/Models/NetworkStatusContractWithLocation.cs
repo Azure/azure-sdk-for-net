@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Network Status in the Location. </summary>
     public partial class NetworkStatusContractWithLocation
     {
-        /// <summary> Initializes a new instance of NetworkStatusContractWithLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkStatusContractWithLocation"/>. </summary>
         internal NetworkStatusContractWithLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkStatusContractWithLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkStatusContractWithLocation"/>. </summary>
         /// <param name="location"> Location of service. </param>
         /// <param name="networkStatus"> Network status in Location. </param>
         internal NetworkStatusContractWithLocation(AzureLocation? location, NetworkStatusContract networkStatus)

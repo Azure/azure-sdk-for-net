@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> network service design version properties. </summary>
     public partial class NetworkServiceDesignVersionPropertiesFormat
     {
-        /// <summary> Initializes a new instance of NetworkServiceDesignVersionPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignVersionPropertiesFormat"/>. </summary>
         public NetworkServiceDesignVersionPropertiesFormat()
         {
             ConfigurationGroupSchemaReferences = new ChangeTrackingDictionary<string, WritableSubResource>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             ResourceElementTemplates = new ChangeTrackingList<ResourceElementTemplate>();
         }
 
-        /// <summary> Initializes a new instance of NetworkServiceDesignVersionPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignVersionPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network service design version resource. </param>
         /// <param name="versionState"> The network service design version state. </param>
         /// <param name="description"> The network service design version description. </param>

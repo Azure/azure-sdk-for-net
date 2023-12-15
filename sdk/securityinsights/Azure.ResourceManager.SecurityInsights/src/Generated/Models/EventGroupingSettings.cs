@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Event grouping settings property bag. </summary>
     internal partial class EventGroupingSettings
     {
-        /// <summary> Initializes a new instance of EventGroupingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGroupingSettings"/>. </summary>
         public EventGroupingSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of EventGroupingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGroupingSettings"/>. </summary>
         /// <param name="aggregationKind"> The event grouping aggregation kinds. </param>
         internal EventGroupingSettings(EventGroupingAggregationKind? aggregationKind)
         {

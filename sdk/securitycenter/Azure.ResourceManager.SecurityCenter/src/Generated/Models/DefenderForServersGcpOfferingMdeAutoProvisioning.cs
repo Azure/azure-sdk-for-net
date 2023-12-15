@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The Microsoft Defender for Endpoint autoprovisioning configuration. </summary>
     public partial class DefenderForServersGcpOfferingMdeAutoProvisioning
     {
-        /// <summary> Initializes a new instance of DefenderForServersGcpOfferingMdeAutoProvisioning. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOfferingMdeAutoProvisioning"/>. </summary>
         public DefenderForServersGcpOfferingMdeAutoProvisioning()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForServersGcpOfferingMdeAutoProvisioning. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOfferingMdeAutoProvisioning"/>. </summary>
         /// <param name="isEnabled"> Is Microsoft Defender for Endpoint auto provisioning enabled. </param>
         /// <param name="configuration"> configuration for Microsoft Defender for Endpoint autoprovisioning. </param>
         internal DefenderForServersGcpOfferingMdeAutoProvisioning(bool? isEnabled, BinaryData configuration)

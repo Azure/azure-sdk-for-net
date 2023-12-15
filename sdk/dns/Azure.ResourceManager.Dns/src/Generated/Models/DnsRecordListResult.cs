@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> The response to a record set List operation. </summary>
     internal partial class DnsRecordListResult
     {
-        /// <summary> Initializes a new instance of DnsRecordListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsRecordListResult"/>. </summary>
         internal DnsRecordListResult()
         {
             Value = new ChangeTrackingList<DnsRecordData>();
         }
 
-        /// <summary> Initializes a new instance of DnsRecordListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsRecordListResult"/>. </summary>
         /// <param name="value"> Information about the record sets in the response. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
         internal DnsRecordListResult(IReadOnlyList<DnsRecordData> value, string nextLink)

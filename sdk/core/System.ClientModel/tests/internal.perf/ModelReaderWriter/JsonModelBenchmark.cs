@@ -60,7 +60,7 @@ namespace System.ClientModel.Tests.Internal.Perf
         public string Write_ModelJsonConverter()
         {
             JsonSerializerOptions options = new JsonSerializerOptions();
-            options.Converters.Add(new ModelJsonConverter(_wireOptions));
+            options.Converters.Add(new JsonModelConverter(_wireOptions));
             return JsonSerializer.Serialize(_model, options);
         }
 
@@ -121,7 +121,7 @@ namespace System.ClientModel.Tests.Internal.Perf
         public T Read_ModelJsonConverter()
         {
             JsonSerializerOptions options = new JsonSerializerOptions();
-            options.Converters.Add(new ModelJsonConverter(_wireOptions));
+            options.Converters.Add(new JsonModelConverter(_wireOptions));
             return JsonSerializer.Deserialize<T>(_json, options);
         }
 

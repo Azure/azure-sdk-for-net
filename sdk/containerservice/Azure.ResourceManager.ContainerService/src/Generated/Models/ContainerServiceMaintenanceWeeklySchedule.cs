@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> For schedules like: 'recur every Monday' or 'recur every 3 weeks on Wednesday'. </summary>
     public partial class ContainerServiceMaintenanceWeeklySchedule
     {
-        /// <summary> Initializes a new instance of ContainerServiceMaintenanceWeeklySchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceWeeklySchedule"/>. </summary>
         /// <param name="intervalWeeks"> Specifies the number of weeks between each set of occurrences. </param>
         /// <param name="dayOfWeek"> Specifies on which day of the week the maintenance occurs. </param>
         public ContainerServiceMaintenanceWeeklySchedule(int intervalWeeks, ContainerServiceWeekDay dayOfWeek)

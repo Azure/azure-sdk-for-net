@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Class for operation status errors. </summary>
     public partial class MoverOperationStatusError
     {
-        /// <summary> Initializes a new instance of MoverOperationStatusError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverOperationStatusError"/>. </summary>
         internal MoverOperationStatusError()
         {
             Details = new ChangeTrackingList<MoverOperationStatusError>();
             AdditionalInfo = new ChangeTrackingList<MoverOperationErrorAdditionalInfo>();
         }
 
-        /// <summary> Initializes a new instance of MoverOperationStatusError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverOperationStatusError"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="details"> The error details. </param>

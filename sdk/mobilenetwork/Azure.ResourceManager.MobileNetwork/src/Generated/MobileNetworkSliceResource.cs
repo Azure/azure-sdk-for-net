@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.MobileNetwork
         private readonly SlicesRestOperations _mobileNetworkSliceSlicesRestClient;
         private readonly MobileNetworkSliceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/mobileNetworks/slices";
+
         /// <summary> Initializes a new instance of the <see cref="MobileNetworkSliceResource"/> class for mocking. </summary>
         protected MobileNetworkSliceResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.MobileNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/mobileNetworks/slices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

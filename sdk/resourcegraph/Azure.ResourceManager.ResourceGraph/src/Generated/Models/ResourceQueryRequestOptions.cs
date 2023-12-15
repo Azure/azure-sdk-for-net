@@ -10,9 +10,26 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     /// <summary> The options for query evaluation. </summary>
     public partial class ResourceQueryRequestOptions
     {
-        /// <summary> Initializes a new instance of ResourceQueryRequestOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceQueryRequestOptions"/>. </summary>
         public ResourceQueryRequestOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceQueryRequestOptions"/>. </summary>
+        /// <param name="skipToken"> Continuation token for pagination, capturing the next page size and offset, as well as the context of the query. </param>
+        /// <param name="top"> The maximum number of rows that the query should return. Overrides the page size when ```$skipToken``` property is present. </param>
+        /// <param name="skip"> The number of rows to skip from the beginning of the results. Overrides the next page offset when ```$skipToken``` property is present. </param>
+        /// <param name="resultFormat"> Defines in which format query result returned. </param>
+        /// <param name="allowPartialScopes"> Only applicable for tenant and management group level queries to decide whether to allow partial scopes for result in case the number of subscriptions exceed allowed limits. </param>
+        /// <param name="authorizationScopeFilter"> Defines what level of authorization resources should be returned based on the which subscriptions and management groups are passed as scopes. </param>
+        internal ResourceQueryRequestOptions(string skipToken, int? top, int? skip, ResultFormat? resultFormat, bool? allowPartialScopes, AuthorizationScopeFilter? authorizationScopeFilter)
+        {
+            SkipToken = skipToken;
+            Top = top;
+            Skip = skip;
+            ResultFormat = resultFormat;
+            AllowPartialScopes = allowPartialScopes;
+            AuthorizationScopeFilter = authorizationScopeFilter;
         }
 
         /// <summary> Continuation token for pagination, capturing the next page size and offset, as well as the context of the query. </summary>

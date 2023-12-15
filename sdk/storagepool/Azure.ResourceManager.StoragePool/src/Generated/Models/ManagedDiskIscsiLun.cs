@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> LUN to expose the Azure Managed Disk. </summary>
     public partial class ManagedDiskIscsiLun
     {
-        /// <summary> Initializes a new instance of ManagedDiskIscsiLun. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDiskIscsiLun"/>. </summary>
         /// <param name="name"> User defined name for iSCSI LUN; example: "lun0". </param>
         /// <param name="managedDiskAzureResourceId"> Azure Resource ID of the Managed Disk. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="managedDiskAzureResourceId"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             ManagedDiskAzureResourceId = managedDiskAzureResourceId;
         }
 
-        /// <summary> Initializes a new instance of ManagedDiskIscsiLun. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDiskIscsiLun"/>. </summary>
         /// <param name="name"> User defined name for iSCSI LUN; example: "lun0". </param>
         /// <param name="managedDiskAzureResourceId"> Azure Resource ID of the Managed Disk. </param>
         /// <param name="lun"> Specifies the Logical Unit Number of the iSCSI LUN. </param>

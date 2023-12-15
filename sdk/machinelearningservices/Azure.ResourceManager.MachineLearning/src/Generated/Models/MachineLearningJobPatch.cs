@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Azure Resource Manager resource envelope strictly used in update requests. </summary>
     public partial class MachineLearningJobPatch
     {
-        /// <summary> Initializes a new instance of MachineLearningJobPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobPatch"/>. </summary>
         public MachineLearningJobPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobPatch"/>. </summary>
+        /// <param name="properties"> Additional attributes of the entity. </param>
+        internal MachineLearningJobPatch(PartialJobBase properties)
+        {
+            Properties = properties;
         }
 
         /// <summary> Additional attributes of the entity. </summary>

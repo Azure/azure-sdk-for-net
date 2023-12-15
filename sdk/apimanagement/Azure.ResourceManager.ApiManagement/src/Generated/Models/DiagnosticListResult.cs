@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Diagnostic list representation. </summary>
     internal partial class DiagnosticListResult
     {
-        /// <summary> Initializes a new instance of DiagnosticListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticListResult"/>. </summary>
         internal DiagnosticListResult()
         {
             Value = new ChangeTrackingList<DiagnosticContractData>();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>

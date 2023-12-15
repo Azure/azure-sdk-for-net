@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Lists actions the user can take based on the current availabilityState of the resource. </summary>
     public partial class ResourceHealthRecommendedAction
     {
-        /// <summary> Initializes a new instance of ResourceHealthRecommendedAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthRecommendedAction"/>. </summary>
         internal ResourceHealthRecommendedAction()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthRecommendedAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthRecommendedAction"/>. </summary>
         /// <param name="action"> Recommended action. </param>
         /// <param name="actionUri"> Link to the action. </param>
         /// <param name="actionUriComment"> the comment for the Action. </param>

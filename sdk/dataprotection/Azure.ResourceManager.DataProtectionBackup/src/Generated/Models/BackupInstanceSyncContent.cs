@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Sync BackupInstance Request. </summary>
     public partial class BackupInstanceSyncContent
     {
-        /// <summary> Initializes a new instance of BackupInstanceSyncContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupInstanceSyncContent"/>. </summary>
         public BackupInstanceSyncContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupInstanceSyncContent"/>. </summary>
+        /// <param name="syncType"> Field indicating sync type e.g. to sync only in case of failure or in all cases. </param>
+        internal BackupInstanceSyncContent(BackupInstanceSyncType? syncType)
+        {
+            SyncType = syncType;
         }
 
         /// <summary> Field indicating sync type e.g. to sync only in case of failure or in all cases. </summary>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> The collection of request properties. </summary>
     public partial class WebTestPropertiesRequest
     {
-        /// <summary> Initializes a new instance of WebTestPropertiesRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebTestPropertiesRequest"/>. </summary>
         public WebTestPropertiesRequest()
         {
             Headers = new ChangeTrackingList<HeaderField>();
         }
 
-        /// <summary> Initializes a new instance of WebTestPropertiesRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebTestPropertiesRequest"/>. </summary>
         /// <param name="requestUri"> Url location to test. </param>
         /// <param name="headers"> List of headers and their values to add to the WebTest call. </param>
         /// <param name="httpVerb"> Http verb to use for this web test. </param>

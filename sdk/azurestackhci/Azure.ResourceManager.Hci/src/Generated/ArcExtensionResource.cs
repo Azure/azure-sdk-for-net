@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Hci
         private readonly ExtensionsRestOperations _arcExtensionExtensionsRestClient;
         private readonly ArcExtensionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/arcSettings/extensions";
+
         /// <summary> Initializes a new instance of the <see cref="ArcExtensionResource"/> class for mocking. </summary>
         protected ArcExtensionResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Hci
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/arcSettings/extensions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

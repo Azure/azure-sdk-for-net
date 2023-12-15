@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.EventHubs
     /// </summary>
     public partial class EventHubsClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of EventHubsClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public EventHubsClusterData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

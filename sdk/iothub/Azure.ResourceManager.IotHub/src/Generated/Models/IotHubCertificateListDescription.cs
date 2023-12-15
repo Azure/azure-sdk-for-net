@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The JSON-serialized array of Certificate objects. </summary>
     internal partial class IotHubCertificateListDescription
     {
-        /// <summary> Initializes a new instance of IotHubCertificateListDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificateListDescription"/>. </summary>
         internal IotHubCertificateListDescription()
         {
             Value = new ChangeTrackingList<IotHubCertificateDescriptionData>();
         }
 
-        /// <summary> Initializes a new instance of IotHubCertificateListDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificateListDescription"/>. </summary>
         /// <param name="value"> The array of Certificate objects. </param>
         internal IotHubCertificateListDescription(IReadOnlyList<IotHubCertificateDescriptionData> value)
         {

@@ -194,10 +194,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Samples
             {
                 IotHubs =
 {
-new IotHubSettings("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Devices/IotHubs/blue-contoso-hub")
+new DeviceUpdateIotHubSettings(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Devices/IotHubs/blue-contoso-hub"))
 },
                 EnableDiagnostics = false,
-                DiagnosticStorageProperties = new DiagnosticStorageProperties(AuthenticationType.KeyBased, "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/adu-resource-group/providers/Microsoft.Storage/storageAccounts/testAccount")
+                DiagnosticStorageProperties = new DiagnosticStorageProperties(DiagnosticStorageAuthenticationType.KeyBased, new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/adu-resource-group/providers/Microsoft.Storage/storageAccounts/testAccount"))
                 {
                     ConnectionString = "string",
                 },

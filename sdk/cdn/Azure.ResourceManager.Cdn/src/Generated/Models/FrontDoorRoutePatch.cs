@@ -14,13 +14,42 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The domain JSON object required for domain creation or update. </summary>
     public partial class FrontDoorRoutePatch
     {
-        /// <summary> Initializes a new instance of FrontDoorRoutePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRoutePatch"/>. </summary>
         public FrontDoorRoutePatch()
         {
             CustomDomains = new ChangeTrackingList<FrontDoorActivatedResourceInfo>();
             RuleSets = new ChangeTrackingList<WritableSubResource>();
             SupportedProtocols = new ChangeTrackingList<FrontDoorEndpointProtocol>();
             PatternsToMatch = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRoutePatch"/>. </summary>
+        /// <param name="endpointName"> The name of the endpoint which holds the route. </param>
+        /// <param name="customDomains"> Domains referenced by this endpoint. </param>
+        /// <param name="originGroup"> A reference to the origin group. </param>
+        /// <param name="originPath"> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </param>
+        /// <param name="ruleSets"> rule sets referenced by this endpoint. </param>
+        /// <param name="supportedProtocols"> List of supported protocols for this route. </param>
+        /// <param name="patternsToMatch"> The route patterns of the rule. </param>
+        /// <param name="cacheConfiguration"> The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object. </param>
+        /// <param name="forwardingProtocol"> Protocol this rule will use when forwarding traffic to backends. </param>
+        /// <param name="linkToDefaultDomain"> whether this route will be linked to the default endpoint domain. </param>
+        /// <param name="httpsRedirect"> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </param>
+        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
+        internal FrontDoorRoutePatch(string endpointName, IList<FrontDoorActivatedResourceInfo> customDomains, WritableSubResource originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<FrontDoorEndpointProtocol> supportedProtocols, IList<string> patternsToMatch, FrontDoorRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState)
+        {
+            EndpointName = endpointName;
+            CustomDomains = customDomains;
+            OriginGroup = originGroup;
+            OriginPath = originPath;
+            RuleSets = ruleSets;
+            SupportedProtocols = supportedProtocols;
+            PatternsToMatch = patternsToMatch;
+            CacheConfiguration = cacheConfiguration;
+            ForwardingProtocol = forwardingProtocol;
+            LinkToDefaultDomain = linkToDefaultDomain;
+            HttpsRedirect = httpsRedirect;
+            EnabledState = enabledState;
         }
 
         /// <summary> The name of the endpoint which holds the route. </summary>

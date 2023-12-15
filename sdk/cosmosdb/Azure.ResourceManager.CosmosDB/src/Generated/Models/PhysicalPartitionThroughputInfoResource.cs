@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> PhysicalPartitionThroughputInfo object. </summary>
     public partial class PhysicalPartitionThroughputInfoResource
     {
-        /// <summary> Initializes a new instance of PhysicalPartitionThroughputInfoResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhysicalPartitionThroughputInfoResource"/>. </summary>
         /// <param name="id"> Id of a physical partition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public PhysicalPartitionThroughputInfoResource(string id)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of PhysicalPartitionThroughputInfoResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhysicalPartitionThroughputInfoResource"/>. </summary>
         /// <param name="id"> Id of a physical partition. </param>
         /// <param name="throughput"> Throughput of a physical partition. </param>
         internal PhysicalPartitionThroughputInfoResource(string id, double? throughput)

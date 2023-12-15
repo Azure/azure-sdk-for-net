@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> The restriction details. </summary>
     public partial class AvailableLabServicesSkuRestrictions
     {
-        /// <summary> Initializes a new instance of AvailableLabServicesSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableLabServicesSkuRestrictions"/>. </summary>
         internal AvailableLabServicesSkuRestrictions()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AvailableLabServicesSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableLabServicesSkuRestrictions"/>. </summary>
         /// <param name="labServicesSkuRestrictionType"> The type of restriction. </param>
         /// <param name="values"> The values of the restriction. </param>
         /// <param name="reasonCode"> The reason for the restriction. </param>

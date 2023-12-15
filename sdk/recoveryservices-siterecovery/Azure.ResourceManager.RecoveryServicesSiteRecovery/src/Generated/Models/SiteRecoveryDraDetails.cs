@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> DRA details. </summary>
     public partial class SiteRecoveryDraDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryDraDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryDraDetails"/>. </summary>
         internal SiteRecoveryDraDetails()
         {
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryDraDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryDraDetails"/>. </summary>
         /// <param name="id"> The DRA Id. </param>
         /// <param name="name"> The DRA name. </param>
         /// <param name="biosId"> The DRA Bios Id. </param>

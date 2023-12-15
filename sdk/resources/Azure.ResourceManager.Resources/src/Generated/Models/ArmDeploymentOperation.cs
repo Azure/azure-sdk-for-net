@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Deployment operation information. </summary>
     public partial class ArmDeploymentOperation
     {
-        /// <summary> Initializes a new instance of ArmDeploymentOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentOperation"/>. </summary>
         internal ArmDeploymentOperation()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentOperation"/>. </summary>
         /// <param name="id"> Full deployment operation ID. </param>
         /// <param name="operationId"> Deployment operation ID. </param>
         /// <param name="properties"> Deployment properties. </param>

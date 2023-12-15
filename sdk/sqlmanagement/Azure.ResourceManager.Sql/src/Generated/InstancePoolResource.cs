@@ -46,6 +46,9 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedInstancesRestOperations _managedInstanceRestClient;
         private readonly InstancePoolData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/instancePools";
+
         /// <summary> Initializes a new instance of the <see cref="InstancePoolResource"/> class for mocking. </summary>
         protected InstancePoolResource()
         {
@@ -77,9 +80,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/instancePools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

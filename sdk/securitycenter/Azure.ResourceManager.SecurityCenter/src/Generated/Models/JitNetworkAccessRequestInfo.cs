@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The JitNetworkAccessRequestInfo. </summary>
     public partial class JitNetworkAccessRequestInfo
     {
-        /// <summary> Initializes a new instance of JitNetworkAccessRequestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestInfo"/>. </summary>
         /// <param name="virtualMachines"></param>
         /// <param name="startOn"> The start time of the request in UTC. </param>
         /// <param name="requestor"> The identity of the person who made the request. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Requestor = requestor;
         }
 
-        /// <summary> Initializes a new instance of JitNetworkAccessRequestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestInfo"/>. </summary>
         /// <param name="virtualMachines"></param>
         /// <param name="startOn"> The start time of the request in UTC. </param>
         /// <param name="requestor"> The identity of the person who made the request. </param>

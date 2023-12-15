@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Advisor
     /// </summary>
     public partial class MetadataEntityData : ResourceData
     {
-        /// <summary> Initializes a new instance of MetadataEntityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataEntityData"/>. </summary>
         internal MetadataEntityData()
         {
             DependsOn = new ChangeTrackingList<string>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Advisor
             SupportedValues = new ChangeTrackingList<MetadataSupportedValueDetail>();
         }
 
-        /// <summary> Initializes a new instance of MetadataEntityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataEntityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

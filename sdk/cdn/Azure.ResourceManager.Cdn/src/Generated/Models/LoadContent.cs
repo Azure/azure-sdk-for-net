@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Parameters required for content load. </summary>
     public partial class LoadContent
     {
-        /// <summary> Initializes a new instance of LoadContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadContent"/>. </summary>
         /// <param name="contentPaths"> The path to the content to be loaded. Path should be a relative file URL of the origin. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentPaths"/> is null. </exception>
         public LoadContent(IEnumerable<string> contentPaths)
@@ -23,6 +23,13 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(contentPaths, nameof(contentPaths));
 
             ContentPaths = contentPaths.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LoadContent"/>. </summary>
+        /// <param name="contentPaths"> The path to the content to be loaded. Path should be a relative file URL of the origin. </param>
+        internal LoadContent(IList<string> contentPaths)
+        {
+            ContentPaths = contentPaths;
         }
 
         /// <summary> The path to the content to be loaded. Path should be a relative file URL of the origin. </summary>

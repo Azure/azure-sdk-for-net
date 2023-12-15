@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A copy activity source for MySQL databases. </summary>
     public partial class MySqlSource : TabularSource
     {
-        /// <summary> Initializes a new instance of MySqlSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlSource"/>. </summary>
         public MySqlSource()
         {
             CopySourceType = "MySqlSource";
         }
 
-        /// <summary> Initializes a new instance of MySqlSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlSource"/>. </summary>
         /// <param name="copySourceType"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

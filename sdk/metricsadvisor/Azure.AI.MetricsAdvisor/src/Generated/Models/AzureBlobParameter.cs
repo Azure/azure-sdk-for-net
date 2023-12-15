@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureBlobParameter. </summary>
     internal partial class AzureBlobParameter
     {
-        /// <summary> Initializes a new instance of AzureBlobParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobParameter"/>. </summary>
         /// <param name="container"> The container name in this Azure Blob. </param>
         /// <param name="blobTemplate"> The path template in this container. </param>
         public AzureBlobParameter(string container, string blobTemplate)
@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             BlobTemplate = blobTemplate;
         }
 
-        /// <summary> Initializes a new instance of AzureBlobParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobParameter"/>. </summary>
         /// <param name="connectionString"> The connection string of this Azure Blob. </param>
         /// <param name="container"> The container name in this Azure Blob. </param>
         /// <param name="blobTemplate"> The path template in this container. </param>

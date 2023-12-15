@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The details of the test notification results. </summary>
     public partial class NotificationStatus
     {
-        /// <summary> Initializes a new instance of NotificationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationStatus"/>. </summary>
         /// <param name="state"> The overall state. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="state"/> is null. </exception>
         internal NotificationStatus(string state)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
             ActionDetails = new ChangeTrackingList<NotificationActionDetail>();
         }
 
-        /// <summary> Initializes a new instance of NotificationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationStatus"/>. </summary>
         /// <param name="context"> The context info. </param>
         /// <param name="state"> The overall state. </param>
         /// <param name="completedOn"> The completed time. </param>

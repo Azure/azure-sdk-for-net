@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> The properties of custom domain for API portal. </summary>
     internal partial class ApiPortalCustomDomainProperties
     {
-        /// <summary> Initializes a new instance of ApiPortalCustomDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiPortalCustomDomainProperties"/>. </summary>
         public ApiPortalCustomDomainProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiPortalCustomDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiPortalCustomDomainProperties"/>. </summary>
         /// <param name="thumbprint"> The thumbprint of bound certificate. </param>
         internal ApiPortalCustomDomainProperties(string thumbprint)
         {

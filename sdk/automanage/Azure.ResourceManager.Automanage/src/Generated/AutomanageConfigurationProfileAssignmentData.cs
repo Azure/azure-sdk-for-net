@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Automanage
     /// </summary>
     public partial class AutomanageConfigurationProfileAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomanageConfigurationProfileAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomanageConfigurationProfileAssignmentData"/>. </summary>
         public AutomanageConfigurationProfileAssignmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomanageConfigurationProfileAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomanageConfigurationProfileAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

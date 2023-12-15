@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents a reference to a Target in the selector. </summary>
     public partial class TargetReference
     {
-        /// <summary> Initializes a new instance of TargetReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetReference"/>. </summary>
         /// <param name="referenceType"> Enum of the Target reference type. </param>
         /// <param name="id"> String of the resource ID of a Target resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>

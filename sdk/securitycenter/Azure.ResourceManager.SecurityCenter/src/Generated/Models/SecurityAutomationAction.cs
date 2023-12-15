@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// </summary>
     public abstract partial class SecurityAutomationAction
     {
-        /// <summary> Initializes a new instance of SecurityAutomationAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationAction"/>. </summary>
         protected SecurityAutomationAction()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityAutomationAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationAction"/>. </summary>
         /// <param name="actionType"> The type of the action that will be triggered by the Automation. </param>
         internal SecurityAutomationAction(ActionType actionType)
         {

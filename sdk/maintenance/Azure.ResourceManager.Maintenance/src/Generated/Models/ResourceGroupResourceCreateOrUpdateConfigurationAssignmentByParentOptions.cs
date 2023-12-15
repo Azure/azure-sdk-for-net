@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> The ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions. </summary>
     public partial class ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions
     {
-        /// <summary> Initializes a new instance of ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions"/>. </summary>
         /// <param name="providerName"> Resource provider name. </param>
         /// <param name="resourceParentType"> Resource parent type. </param>
         /// <param name="resourceParentName"> Resource parent identifier. </param>

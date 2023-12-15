@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of the server's security alert policies. </summary>
     internal partial class LogicalServerSecurityAlertPolicyListResult
     {
-        /// <summary> Initializes a new instance of LogicalServerSecurityAlertPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicalServerSecurityAlertPolicyListResult"/>. </summary>
         internal LogicalServerSecurityAlertPolicyListResult()
         {
             Value = new ChangeTrackingList<SqlServerSecurityAlertPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of LogicalServerSecurityAlertPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicalServerSecurityAlertPolicyListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal LogicalServerSecurityAlertPolicyListResult(IReadOnlyList<SqlServerSecurityAlertPolicyData> value, string nextLink)

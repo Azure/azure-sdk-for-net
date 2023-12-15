@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Azure vhd artifact profile properties. </summary>
     public partial class AzureCoreVhdImageArtifactProfile : ArtifactProfile
     {
-        /// <summary> Initializes a new instance of AzureCoreVhdImageArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCoreVhdImageArtifactProfile"/>. </summary>
         public AzureCoreVhdImageArtifactProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureCoreVhdImageArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCoreVhdImageArtifactProfile"/>. </summary>
         /// <param name="artifactStore"> The reference to artifact store. </param>
         /// <param name="vhdArtifactProfile"> Vhd artifact profile. </param>
         internal AzureCoreVhdImageArtifactProfile(WritableSubResource artifactStore, VhdImageArtifactProfile vhdArtifactProfile) : base(artifactStore)

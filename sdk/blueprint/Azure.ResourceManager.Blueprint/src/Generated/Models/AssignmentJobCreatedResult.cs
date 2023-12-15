@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Azure resource created from deployment job. </summary>
     public partial class AssignmentJobCreatedResult : ResourceData
     {
-        /// <summary> Initializes a new instance of AssignmentJobCreatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentJobCreatedResult"/>. </summary>
         public AssignmentJobCreatedResult()
         {
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AssignmentJobCreatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentJobCreatedResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

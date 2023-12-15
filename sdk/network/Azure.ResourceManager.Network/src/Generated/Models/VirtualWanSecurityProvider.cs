@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Collection of SecurityProviders. </summary>
     public partial class VirtualWanSecurityProvider
     {
-        /// <summary> Initializes a new instance of VirtualWanSecurityProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualWanSecurityProvider"/>. </summary>
         internal VirtualWanSecurityProvider()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualWanSecurityProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualWanSecurityProvider"/>. </summary>
         /// <param name="name"> Name of the security provider. </param>
         /// <param name="uri"> Url of the security provider. </param>
         /// <param name="providerType"> Name of the security provider. </param>

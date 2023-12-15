@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB Gremlin database resource object. </summary>
     public partial class GremlinDatabaseResourceInfo
     {
-        /// <summary> Initializes a new instance of GremlinDatabaseResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinDatabaseResourceInfo"/>. </summary>
         /// <param name="databaseName"> Name of the Cosmos DB Gremlin database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public GremlinDatabaseResourceInfo(string databaseName)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             DatabaseName = databaseName;
         }
 
-        /// <summary> Initializes a new instance of GremlinDatabaseResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinDatabaseResourceInfo"/>. </summary>
         /// <param name="databaseName"> Name of the Cosmos DB Gremlin database. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Infra network profile for the NetworkCloud platform. </summary>
     internal partial class VirtualNetworksPropertiesInfraVnetProfileNetworkCloud
     {
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesInfraVnetProfileNetworkCloud. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesInfraVnetProfileNetworkCloud"/>. </summary>
         public VirtualNetworksPropertiesInfraVnetProfileNetworkCloud()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesInfraVnetProfileNetworkCloud. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesInfraVnetProfileNetworkCloud"/>. </summary>
         /// <param name="networkId"> The ARM ID of Network Cloud Network Resource to Associate with this VirtualNetwork. </param>
         internal VirtualNetworksPropertiesInfraVnetProfileNetworkCloud(string networkId)
         {

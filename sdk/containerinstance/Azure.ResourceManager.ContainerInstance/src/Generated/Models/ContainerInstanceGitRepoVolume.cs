@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> Represents a volume that is populated with the contents of a git repository. </summary>
     public partial class ContainerInstanceGitRepoVolume
     {
-        /// <summary> Initializes a new instance of ContainerInstanceGitRepoVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceGitRepoVolume"/>. </summary>
         /// <param name="repository"> Repository URL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="repository"/> is null. </exception>
         public ContainerInstanceGitRepoVolume(string repository)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Repository = repository;
         }
 
-        /// <summary> Initializes a new instance of ContainerInstanceGitRepoVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceGitRepoVolume"/>. </summary>
         /// <param name="directory"> Target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name. </param>
         /// <param name="repository"> Repository URL. </param>
         /// <param name="revision"> Commit hash for the specified revision. </param>

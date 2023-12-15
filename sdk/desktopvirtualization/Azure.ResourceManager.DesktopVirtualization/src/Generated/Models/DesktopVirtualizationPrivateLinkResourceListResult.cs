@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class DesktopVirtualizationPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of DesktopVirtualizationPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationPrivateLinkResourceListResult"/>. </summary>
         internal DesktopVirtualizationPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<DesktopVirtualizationPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of DesktopVirtualizationPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         internal DesktopVirtualizationPrivateLinkResourceListResult(IReadOnlyList<DesktopVirtualizationPrivateLinkResourceData> value, string nextLink)

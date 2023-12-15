@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Class to specify DRM configurations of CommonEncryptionCenc scheme in Streaming Policy. </summary>
     public partial class CencDrmConfiguration
     {
-        /// <summary> Initializes a new instance of CencDrmConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CencDrmConfiguration"/>. </summary>
         public CencDrmConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of CencDrmConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CencDrmConfiguration"/>. </summary>
         /// <param name="playReady"> PlayReady configurations. </param>
         /// <param name="widevine"> Widevine configurations. </param>
         internal CencDrmConfiguration(StreamingPolicyPlayReadyConfiguration playReady, StreamingPolicyWidevineConfiguration widevine)

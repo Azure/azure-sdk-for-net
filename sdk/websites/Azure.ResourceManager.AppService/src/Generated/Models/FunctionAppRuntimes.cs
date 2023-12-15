@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Function App stack runtimes. </summary>
     public partial class FunctionAppRuntimes
     {
-        /// <summary> Initializes a new instance of FunctionAppRuntimes. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppRuntimes"/>. </summary>
         internal FunctionAppRuntimes()
         {
         }
 
-        /// <summary> Initializes a new instance of FunctionAppRuntimes. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppRuntimes"/>. </summary>
         /// <param name="linuxRuntimeSettings"> Linux-specific settings associated with the minor version. </param>
         /// <param name="windowsRuntimeSettings"> Windows-specific settings associated with the minor version. </param>
         internal FunctionAppRuntimes(FunctionAppRuntimeSettings linuxRuntimeSettings, FunctionAppRuntimeSettings windowsRuntimeSettings)

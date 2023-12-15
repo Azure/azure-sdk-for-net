@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A protected managed disk details. </summary>
     public partial class A2AProtectedManagedDiskDetails
     {
-        /// <summary> Initializes a new instance of A2AProtectedManagedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AProtectedManagedDiskDetails"/>. </summary>
         internal A2AProtectedManagedDiskDetails()
         {
             AllowedDiskLevelOperation = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of A2AProtectedManagedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AProtectedManagedDiskDetails"/>. </summary>
         /// <param name="diskId"> The managed disk Arm id. </param>
         /// <param name="recoveryResourceGroupId"> The recovery disk resource group Arm Id. </param>
         /// <param name="recoveryTargetDiskId"> Recovery target disk Arm Id. </param>

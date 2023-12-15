@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The GitHub action code configuration. </summary>
     public partial class GitHubActionCodeConfiguration
     {
-        /// <summary> Initializes a new instance of GitHubActionCodeConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubActionCodeConfiguration"/>. </summary>
         public GitHubActionCodeConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of GitHubActionCodeConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubActionCodeConfiguration"/>. </summary>
         /// <param name="runtimeStack"> Runtime stack is used to determine the workflow file content for code base apps. </param>
         /// <param name="runtimeVersion"> Runtime version is used to determine what build version to set in the workflow file. </param>
         internal GitHubActionCodeConfiguration(string runtimeStack, string runtimeVersion)

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> Accept subscription ownership request properties. </summary>
     public partial class AcceptOwnershipRequestProperties
     {
-        /// <summary> Initializes a new instance of AcceptOwnershipRequestProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcceptOwnershipRequestProperties"/>. </summary>
         /// <param name="displayName"> The friendly name of the subscription. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> is null. </exception>
         public AcceptOwnershipRequestProperties(string displayName)
@@ -23,6 +23,17 @@ namespace Azure.ResourceManager.Subscription.Models
 
             DisplayName = displayName;
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AcceptOwnershipRequestProperties"/>. </summary>
+        /// <param name="displayName"> The friendly name of the subscription. </param>
+        /// <param name="managementGroupId"> Management group Id for the subscription. </param>
+        /// <param name="tags"> Tags for the subscription. </param>
+        internal AcceptOwnershipRequestProperties(string displayName, string managementGroupId, IDictionary<string, string> tags)
+        {
+            DisplayName = displayName;
+            ManagementGroupId = managementGroupId;
+            Tags = tags;
         }
 
         /// <summary> The friendly name of the subscription. </summary>

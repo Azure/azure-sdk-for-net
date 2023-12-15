@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Ldap authentication method properties. This feature is in preview. </summary>
     public partial class AuthenticationMethodLdapProperties
     {
-        /// <summary> Initializes a new instance of AuthenticationMethodLdapProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthenticationMethodLdapProperties"/>. </summary>
         public AuthenticationMethodLdapProperties()
         {
             ServerCertificates = new ChangeTrackingList<CassandraCertificate>();
         }
 
-        /// <summary> Initializes a new instance of AuthenticationMethodLdapProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthenticationMethodLdapProperties"/>. </summary>
         /// <param name="serverHostname"> Hostname of the LDAP server. </param>
         /// <param name="serverPort"> Port of the LDAP server. </param>
         /// <param name="serviceUserDistinguishedName"> Distinguished name of the look up user account, who can look up user details on authentication. </param>

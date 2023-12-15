@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Save Tenant Configuration Contract details. </summary>
     public partial class ConfigurationSaveContent
     {
-        /// <summary> Initializes a new instance of ConfigurationSaveContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationSaveContent"/>. </summary>
         public ConfigurationSaveContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationSaveContent"/>. </summary>
+        /// <param name="branch"> The name of the Git branch in which to commit the current configuration snapshot. </param>
+        /// <param name="forceUpdate"> The value if true, the current configuration database is committed to the Git repository, even if the Git repository has newer changes that would be overwritten. </param>
+        internal ConfigurationSaveContent(string branch, bool? forceUpdate)
+        {
+            Branch = branch;
+            ForceUpdate = forceUpdate;
         }
 
         /// <summary> The name of the Git branch in which to commit the current configuration snapshot. </summary>

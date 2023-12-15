@@ -13,11 +13,28 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The MetricFeedbackFilter. </summary>
     internal partial class MetricFeedbackFilter
     {
-        /// <summary> Initializes a new instance of MetricFeedbackFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricFeedbackFilter"/>. </summary>
         /// <param name="metricId"> filter feedbacks by metric id. </param>
         public MetricFeedbackFilter(Guid metricId)
         {
             MetricId = metricId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricFeedbackFilter"/>. </summary>
+        /// <param name="metricId"> filter feedbacks by metric id. </param>
+        /// <param name="dimensionFilter"></param>
+        /// <param name="feedbackType"> filter feedbacks by type. </param>
+        /// <param name="startTime"> start time filter under chosen time mode. </param>
+        /// <param name="endTime"> end time filter under chosen time mode. </param>
+        /// <param name="timeMode"> time mode to filter feedback. </param>
+        internal MetricFeedbackFilter(Guid metricId, FeedbackFilter dimensionFilter, MetricFeedbackKind? feedbackType, DateTimeOffset? startTime, DateTimeOffset? endTime, FeedbackQueryTimeMode? timeMode)
+        {
+            MetricId = metricId;
+            DimensionFilter = dimensionFilter;
+            FeedbackType = feedbackType;
+            StartTime = startTime;
+            EndTime = endTime;
+            TimeMode = timeMode;
         }
 
         /// <summary> filter feedbacks by metric id. </summary>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> Properties specific to the monitor resource. </summary>
     public partial class MonitorProperties
     {
-        /// <summary> Initializes a new instance of MonitorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorProperties"/>. </summary>
         public MonitorProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="monitoringStatus"> Flag specifying if the resource monitoring is enabled or disabled. </param>
         /// <param name="marketplaceSubscriptionStatus"> Flag specifying the Marketplace Subscription Status of the resource. If payment is not made in time, the resource will go in Suspended state. </param>

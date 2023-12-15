@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The ProxyArtifactOverviewPropertiesValue. </summary>
     public partial class ProxyArtifactOverviewPropertiesValue
     {
-        /// <summary> Initializes a new instance of ProxyArtifactOverviewPropertiesValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProxyArtifactOverviewPropertiesValue"/>. </summary>
         internal ProxyArtifactOverviewPropertiesValue()
         {
         }
 
-        /// <summary> Initializes a new instance of ProxyArtifactOverviewPropertiesValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProxyArtifactOverviewPropertiesValue"/>. </summary>
         /// <param name="artifactType"> The artifact type. </param>
         /// <param name="artifactVersion"> The artifact version. </param>
         /// <param name="artifactState"> The artifact state. </param>

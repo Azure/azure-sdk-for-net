@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Firewall Policy Filter Rule Collection. </summary>
     public partial class FirewallPolicyFilterRuleCollectionInfo : FirewallPolicyRuleCollectionInfo
     {
-        /// <summary> Initializes a new instance of FirewallPolicyFilterRuleCollectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyFilterRuleCollectionInfo"/>. </summary>
         public FirewallPolicyFilterRuleCollectionInfo()
         {
             Rules = new ChangeTrackingList<FirewallPolicyRule>();
             RuleCollectionType = FirewallPolicyRuleCollectionType.FirewallPolicyFilterRuleCollection;
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyFilterRuleCollectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyFilterRuleCollectionInfo"/>. </summary>
         /// <param name="ruleCollectionType"> The type of the rule collection. </param>
         /// <param name="name"> The name of the rule collection. </param>
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection resource. </param>

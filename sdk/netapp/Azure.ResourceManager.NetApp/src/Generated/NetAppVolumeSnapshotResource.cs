@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.NetApp
         private readonly SnapshotsRestOperations _netAppVolumeSnapshotSnapshotsRestClient;
         private readonly NetAppVolumeSnapshotData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots";
+
         /// <summary> Initializes a new instance of the <see cref="NetAppVolumeSnapshotResource"/> class for mocking. </summary>
         protected NetAppVolumeSnapshotResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.NetApp
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DigitalTwins
         private readonly DigitalTwinsRestOperations _digitalTwinsDescriptionDigitalTwinsRestClient;
         private readonly DigitalTwinsDescriptionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DigitalTwins/digitalTwinsInstances";
+
         /// <summary> Initializes a new instance of the <see cref="DigitalTwinsDescriptionResource"/> class for mocking. </summary>
         protected DigitalTwinsDescriptionResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DigitalTwins
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DigitalTwins/digitalTwinsInstances";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

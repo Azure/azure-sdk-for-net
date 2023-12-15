@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the url redirect action for the delivery rule. </summary>
     public partial class UriRedirectAction : DeliveryRuleAction
     {
-        /// <summary> Initializes a new instance of UriRedirectAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriRedirectAction"/>. </summary>
         /// <param name="properties"> Defines the parameters for the action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public UriRedirectAction(UriRedirectActionProperties properties)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Name = DeliveryRuleActionType.UriRedirect;
         }
 
-        /// <summary> Initializes a new instance of UriRedirectAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriRedirectAction"/>. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="properties"> Defines the parameters for the action. </param>
         internal UriRedirectAction(DeliveryRuleActionType name, UriRedirectActionProperties properties) : base(name)

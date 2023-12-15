@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.KeyVault
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
         private readonly KeyVaultData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.KeyVault/vaults";
+
         /// <summary> Initializes a new instance of the <see cref="KeyVaultResource"/> class for mocking. </summary>
         protected KeyVaultResource()
         {
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.KeyVault
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.KeyVault/vaults";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

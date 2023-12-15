@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.NetworkCloud
         private readonly AgentPoolsRestOperations _networkCloudAgentPoolAgentPoolsRestClient;
         private readonly NetworkCloudAgentPoolData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/kubernetesClusters/agentPools";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkCloudAgentPoolResource"/> class for mocking. </summary>
         protected NetworkCloudAgentPoolResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.NetworkCloud
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/kubernetesClusters/agentPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

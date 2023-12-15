@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> A Facebook page for Facebook channel registration. </summary>
     public partial class FacebookPage
     {
-        /// <summary> Initializes a new instance of FacebookPage. </summary>
+        /// <summary> Initializes a new instance of <see cref="FacebookPage"/>. </summary>
         /// <param name="id"> Page id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public FacebookPage(string id)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.BotService.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of FacebookPage. </summary>
+        /// <summary> Initializes a new instance of <see cref="FacebookPage"/>. </summary>
         /// <param name="id"> Page id. </param>
         /// <param name="accessToken"> Facebook application access token. Value only returned through POST to the action Channel List API, otherwise empty. </param>
         internal FacebookPage(string id, string accessToken)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for QueryString match conditions. </summary>
     public partial class QueryStringMatchCondition
     {
-        /// <summary> Initializes a new instance of QueryStringMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryStringMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="queryStringOperator"> Describes operator to be matched. </param>
         public QueryStringMatchCondition(QueryStringMatchConditionType conditionType, QueryStringOperator queryStringOperator)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
-        /// <summary> Initializes a new instance of QueryStringMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryStringMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="queryStringOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>

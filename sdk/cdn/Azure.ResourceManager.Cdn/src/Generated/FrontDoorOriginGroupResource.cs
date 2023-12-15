@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Cdn
         private readonly FrontDoorOriginGroupsRestOperations _frontDoorOriginGroupRestClient;
         private readonly FrontDoorOriginGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/originGroups";
+
         /// <summary> Initializes a new instance of the <see cref="FrontDoorOriginGroupResource"/> class for mocking. </summary>
         protected FrontDoorOriginGroupResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Cdn
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/originGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

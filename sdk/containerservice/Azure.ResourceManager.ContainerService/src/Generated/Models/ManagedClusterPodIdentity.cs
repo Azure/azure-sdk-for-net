@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Details about the pod identity assigned to the Managed Cluster. </summary>
     public partial class ManagedClusterPodIdentity
     {
-        /// <summary> Initializes a new instance of ManagedClusterPodIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentity"/>. </summary>
         /// <param name="name"> The name of the pod identity. </param>
         /// <param name="namespace"> The namespace of the pod identity. </param>
         /// <param name="identity"> The user assigned identity details. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Identity = identity;
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterPodIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentity"/>. </summary>
         /// <param name="name"> The name of the pod identity. </param>
         /// <param name="namespace"> The namespace of the pod identity. </param>
         /// <param name="bindingSelector"> The binding selector to use for the AzureIdentityBinding resource. </param>

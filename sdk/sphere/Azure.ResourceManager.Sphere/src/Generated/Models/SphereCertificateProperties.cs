@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class SphereCertificateProperties
     {
-        /// <summary> Initializes a new instance of SphereCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereCertificateProperties"/>. </summary>
         internal SphereCertificateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SphereCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereCertificateProperties"/>. </summary>
         /// <param name="certificate">
         /// The certificate as a UTF-8 encoded base 64 string.
         /// Serialized Name: CertificateProperties.certificate

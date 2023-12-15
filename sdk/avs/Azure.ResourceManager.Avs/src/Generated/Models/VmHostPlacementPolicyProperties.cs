@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> VM-Host placement policy properties. </summary>
     public partial class VmHostPlacementPolicyProperties : PlacementPolicyProperties
     {
-        /// <summary> Initializes a new instance of VmHostPlacementPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmHostPlacementPolicyProperties"/>. </summary>
         /// <param name="vmMembers"> Virtual machine members list. </param>
         /// <param name="hostMembers"> Host members list. </param>
         /// <param name="affinityType"> placement policy affinity type. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Avs.Models
             PolicyType = PlacementPolicyType.VmHost;
         }
 
-        /// <summary> Initializes a new instance of VmHostPlacementPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmHostPlacementPolicyProperties"/>. </summary>
         /// <param name="policyType"> placement policy type. </param>
         /// <param name="state"> Whether the placement policy is enabled or disabled. </param>
         /// <param name="displayName"> Display name of the placement policy. </param>

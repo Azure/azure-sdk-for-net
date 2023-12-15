@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningRecurrenceSchedule. </summary>
     public partial class MachineLearningRecurrenceSchedule
     {
-        /// <summary> Initializes a new instance of MachineLearningRecurrenceSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRecurrenceSchedule"/>. </summary>
         /// <param name="hours"> [Required] List of hours for the schedule. </param>
         /// <param name="minutes"> [Required] List of minutes for the schedule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hours"/> or <paramref name="minutes"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             WeekDays = new ChangeTrackingList<MachineLearningDayOfWeek>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningRecurrenceSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRecurrenceSchedule"/>. </summary>
         /// <param name="hours"> [Required] List of hours for the schedule. </param>
         /// <param name="minutes"> [Required] List of minutes for the schedule. </param>
         /// <param name="monthDays"> List of month days for the schedule. </param>

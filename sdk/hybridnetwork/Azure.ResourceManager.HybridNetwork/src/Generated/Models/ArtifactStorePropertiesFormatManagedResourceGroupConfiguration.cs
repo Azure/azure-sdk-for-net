@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The ArtifactStorePropertiesFormatManagedResourceGroupConfiguration. </summary>
     public partial class ArtifactStorePropertiesFormatManagedResourceGroupConfiguration
     {
-        /// <summary> Initializes a new instance of ArtifactStorePropertiesFormatManagedResourceGroupConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactStorePropertiesFormatManagedResourceGroupConfiguration"/>. </summary>
         public ArtifactStorePropertiesFormatManagedResourceGroupConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ArtifactStorePropertiesFormatManagedResourceGroupConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactStorePropertiesFormatManagedResourceGroupConfiguration"/>. </summary>
         /// <param name="name"> The managed resource group name. </param>
         /// <param name="location"> The managed resource group location. </param>
         internal ArtifactStorePropertiesFormatManagedResourceGroupConfiguration(string name, AzureLocation? location)

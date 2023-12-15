@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> The ResourceGuardProperties. </summary>
     public partial class ResourceGuardProperties
     {
-        /// <summary> Initializes a new instance of ResourceGuardProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProperties"/>. </summary>
         public ResourceGuardProperties()
         {
             ResourceGuardOperations = new ChangeTrackingList<ResourceGuardOperationDetails>();
             VaultCriticalOperationExclusionList = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceGuardProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the BackupVault resource. </param>
         /// <param name="isAutoApprovalsAllowed"> This flag indicates whether auto approval is allowed or not. </param>
         /// <param name="resourceGuardOperations"> {readonly} List of operation details those are protected by the ResourceGuard resource. </param>

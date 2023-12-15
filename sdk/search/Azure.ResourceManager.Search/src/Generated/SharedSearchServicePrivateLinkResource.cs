@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Search
         private readonly SharedPrivateLinkResourcesRestOperations _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient;
         private readonly SharedSearchServicePrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Search/searchServices/sharedPrivateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="SharedSearchServicePrivateLinkResource"/> class for mocking. </summary>
         protected SharedSearchServicePrivateLinkResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Search
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Search/searchServices/sharedPrivateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

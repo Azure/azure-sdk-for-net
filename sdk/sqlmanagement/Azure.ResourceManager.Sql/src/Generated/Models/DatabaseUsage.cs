@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Usage metric of a database. </summary>
     public partial class DatabaseUsage : ResourceData
     {
-        /// <summary> Initializes a new instance of DatabaseUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseUsage"/>. </summary>
         public DatabaseUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseUsage"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

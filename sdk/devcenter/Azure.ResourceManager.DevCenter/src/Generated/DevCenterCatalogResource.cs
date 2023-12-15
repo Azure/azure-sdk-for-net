@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.DevCenter
         private readonly CatalogsRestOperations _devCenterCatalogCatalogsRestClient;
         private readonly DevCenterCatalogData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters/catalogs";
+
         /// <summary> Initializes a new instance of the <see cref="DevCenterCatalogResource"/> class for mocking. </summary>
         protected DevCenterCatalogResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DevCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters/catalogs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

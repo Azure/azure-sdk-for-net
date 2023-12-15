@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Frontend IP configuration of an application gateway. </summary>
     public partial class ApplicationGatewayFrontendIPConfiguration : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayFrontendIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFrontendIPConfiguration"/>. </summary>
         public ApplicationGatewayFrontendIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayFrontendIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFrontendIPConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

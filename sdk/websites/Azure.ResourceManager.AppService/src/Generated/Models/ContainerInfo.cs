@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The ContainerInfo. </summary>
     public partial class ContainerInfo
     {
-        /// <summary> Initializes a new instance of ContainerInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerInfo"/>. </summary>
         public ContainerInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerInfo"/>. </summary>
         /// <param name="currentTimeStamp"></param>
         /// <param name="previousTimeStamp"></param>
         /// <param name="currentCpuStats"></param>

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class FrontDoorCustomDomainData : ResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorCustomDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainData"/>. </summary>
         public FrontDoorCustomDomainData()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorCustomDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

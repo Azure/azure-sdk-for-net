@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the provider properties. </summary>
     public partial class HanaDBProviderInstanceProperties : ProviderSpecificProperties
     {
-        /// <summary> Initializes a new instance of HanaDBProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HanaDBProviderInstanceProperties"/>. </summary>
         public HanaDBProviderInstanceProperties()
         {
             ProviderType = "SapHana";
         }
 
-        /// <summary> Initializes a new instance of HanaDBProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HanaDBProviderInstanceProperties"/>. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
         /// <param name="hostname"> Gets or sets the target virtual machine size. </param>
         /// <param name="dbName"> Gets or sets the hana database name. </param>

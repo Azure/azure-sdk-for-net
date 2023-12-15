@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties related to the custom endpoints to which your IoT hub routes messages based on the routing rules. A maximum of 10 custom endpoints are allowed across all endpoint types for paid hubs and only 1 custom endpoint is allowed across all endpoint types for free hubs. </summary>
     public partial class RoutingEndpoints
     {
-        /// <summary> Initializes a new instance of RoutingEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingEndpoints"/>. </summary>
         public RoutingEndpoints()
         {
             ServiceBusQueues = new ChangeTrackingList<RoutingServiceBusQueueEndpointProperties>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.IotHub.Models
             CosmosDBSqlContainers = new ChangeTrackingList<RoutingCosmosDBSqlApiProperties>();
         }
 
-        /// <summary> Initializes a new instance of RoutingEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingEndpoints"/>. </summary>
         /// <param name="serviceBusQueues"> The list of Service Bus queue endpoints that IoT hub routes the messages to, based on the routing rules. </param>
         /// <param name="serviceBusTopics"> The list of Service Bus topic endpoints that the IoT hub routes the messages to, based on the routing rules. </param>
         /// <param name="eventHubs"> The list of Event Hubs endpoints that IoT hub routes messages to, based on the routing rules. This list does not include the built-in Event Hubs endpoint. </param>

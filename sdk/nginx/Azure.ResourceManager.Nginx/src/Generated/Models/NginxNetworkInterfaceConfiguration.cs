@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The NginxNetworkInterfaceConfiguration. </summary>
     internal partial class NginxNetworkInterfaceConfiguration
     {
-        /// <summary> Initializes a new instance of NginxNetworkInterfaceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxNetworkInterfaceConfiguration"/>. </summary>
         public NginxNetworkInterfaceConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxNetworkInterfaceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxNetworkInterfaceConfiguration"/>. </summary>
         /// <param name="subnetId"></param>
         internal NginxNetworkInterfaceConfiguration(string subnetId)
         {

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Properties returned with in an insight. </summary>
     public partial class SelfHelpDiagnosticInfo
     {
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticInfo"/>. </summary>
         internal SelfHelpDiagnosticInfo()
         {
             Insights = new ChangeTrackingList<SelfHelpDiagnosticInsight>();
         }
 
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticInfo"/>. </summary>
         /// <param name="solutionId"> Solution Id. </param>
         /// <param name="status"> Denotes the status of the diagnostic resource. </param>
         /// <param name="insights"> The problems (if any) detected by this insight. </param>

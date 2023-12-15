@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> An object representing the detected language for a given text span. </summary>
     public partial class DocumentLanguage
     {
-        /// <summary> Initializes a new instance of DocumentLanguage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentLanguage"/>. </summary>
         /// <param name="locale">
         /// Detected language.  Value may an ISO 639-1 language code (ex. "en", "fr")
         /// or BCP 47 language tag (ex. "zh-Hans").
@@ -36,7 +36,7 @@ namespace Azure.AI.DocumentIntelligence
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of DocumentLanguage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentLanguage"/>. </summary>
         /// <param name="locale">
         /// Detected language.  Value may an ISO 639-1 language code (ex. "en", "fr")
         /// or BCP 47 language tag (ex. "zh-Hans").

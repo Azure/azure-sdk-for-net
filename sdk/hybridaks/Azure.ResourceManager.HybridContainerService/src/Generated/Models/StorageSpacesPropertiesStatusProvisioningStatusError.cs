@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The StorageSpacesPropertiesStatusProvisioningStatusError. </summary>
     public partial class StorageSpacesPropertiesStatusProvisioningStatusError
     {
-        /// <summary> Initializes a new instance of StorageSpacesPropertiesStatusProvisioningStatusError. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesPropertiesStatusProvisioningStatusError"/>. </summary>
         public StorageSpacesPropertiesStatusProvisioningStatusError()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSpacesPropertiesStatusProvisioningStatusError. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesPropertiesStatusProvisioningStatusError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
         internal StorageSpacesPropertiesStatusProvisioningStatusError(string code, string message)

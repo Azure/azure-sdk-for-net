@@ -3,14 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Storage;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataFactory.Tests.Scenario
@@ -18,144 +16,65 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
     [NonParallelizable]
     internal class LinkedServiceResourceTests : DataFactoryManagementTestBase
     {
-        private string _accessKey;
-        private ResourceIdentifier _resourceGroupIdentifier;
-        private ResourceGroupResource _resourceGroup;
         public LinkedServiceResourceTests(bool isAsync) : base(isAsync)
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetup()
+        private string GetStorageAccountAccessKey(ResourceGroupResource resourceGroup)
         {
-            var rgName = SessionRecording.GenerateAssetName("DataFactory-RG-");
-            var storageAccountName = SessionRecording.GenerateAssetName("datafactory");
-            if (Mode == RecordedTestMode.Playback)
-            {
-                _resourceGroupIdentifier = ResourceGroupResource.CreateResourceIdentifier(SessionRecording.GetVariable("SUBSCRIPTION_ID", null), rgName);
-                _accessKey = "Sanitized";
-            }
-            else
-            {
-                var subscription = await GlobalClient.GetDefaultSubscriptionAsync();
-                var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
-                _resourceGroupIdentifier = rgLro.Value.Data.Id;
-                _accessKey = await GetStorageAccountAccessKey(rgLro.Value, storageAccountName);
-            }
-            await StopSessionRecordingAsync();
+            var storageAccountName = Recording.GenerateAssetName("adfstorage");
+            return GetStorageAccountAccessKey(resourceGroup, storageAccountName).Result;
         }
-
-        [TearDown]
-        public async Task GlobalTearDown()
-        {
-            if (Mode == RecordedTestMode.Playback)
-            {
-                return;
-            }
-            try
-            {
-                using (Recording.DisableRecording())
-                {
-                    await foreach (var storageAccount in _resourceGroup.GetStorageAccounts().GetAllAsync())
-                    {
-                        await storageAccount.DeleteAsync(WaitUntil.Completed);
-                    }
-
-                    await foreach (var dataFactory in _resourceGroup.GetDataFactories().GetAllAsync())
-                    {
-                        await dataFactory.DeleteAsync(WaitUntil.Completed);
-                    }
-                }
-            }
-            catch (RequestFailedException ex) when (ex.Status == 404)
-            {
-            }
-        }
-
         [Test]
         [RecordedTest]
-        public async Task CreateOrUpdate()
+        public async Task LinkedService_Create_Exists_Get_List_Delete()
         {
             // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = await CreateLinkedService(dataFactory, linkedServiceName, _accessKey);
+            string rgName = Recording.GenerateAssetName("adf-rg-");
+            var resourceGroup = await CreateResourceGroup(rgName, AzureLocation.WestUS2);
+            // Create a DataFactory
+            string dataFactoryName = Recording.GenerateAssetName("adf-");
+            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
+            //Create Linked Service
+            string accessKey = GetStorageAccountAccessKey(resourceGroup);
+            string linkedServiceName = Recording.GenerateAssetName("adf_linkedservice_");
+            var linkedService = await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
             Assert.IsNotNull(linkedService);
             Assert.AreEqual(linkedServiceName, linkedService.Data.Name);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task Exist()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            await CreateLinkedService(dataFactory, linkedServiceName, _accessKey);
+            //Exist
             bool flag = await dataFactory.GetDataFactoryLinkedServices().ExistsAsync(linkedServiceName);
             Assert.IsTrue(flag);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task Get()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            await CreateLinkedService(dataFactory, linkedServiceName, _accessKey);
-            var linkedService = await dataFactory.GetDataFactoryLinkedServices().GetAsync(linkedServiceName);
-            Assert.IsNotNull(linkedService);
-            Assert.AreEqual(linkedServiceName, linkedService.Value.Data.Name);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task GetAll()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            await CreateLinkedService(dataFactory, linkedServiceName, _accessKey);
+            //Get
+            var linkedServiceGet = await dataFactory.GetDataFactoryLinkedServices().GetAsync(linkedServiceName);
+            Assert.IsNotNull(linkedServiceGet);
+            Assert.AreEqual(linkedServiceName, linkedServiceGet.Value.Data.Name);
+            //Get All
             var list = await dataFactory.GetDataFactoryLinkedServices().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             Assert.AreEqual(1, list.Count);
+            //Delete
+            await linkedService.DeleteAsync(WaitUntil.Completed);
+            flag = await dataFactory.GetDataFactoryDatasets().ExistsAsync(linkedServiceName);
+            Assert.IsFalse(flag);
         }
 
-        [Test]
-        [RecordedTest]
-        public async Task Delete()
+        public async Task LinkedSerivceCreate(string name, Func<DataFactoryResource, string, string, DataFactoryLinkedServiceData> linkedServiceFunc)
         {
             // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = await CreateLinkedService(dataFactory, linkedServiceName, _accessKey);
-            bool flag = await dataFactory.GetDataFactoryLinkedServices().ExistsAsync(linkedServiceName);
-            Assert.IsTrue(flag);
-
-            await linkedService.DeleteAsync(WaitUntil.Completed);
-            flag = await dataFactory.GetDataFactoryLinkedServices().ExistsAsync(linkedServiceName);
-            Assert.IsFalse(flag);
+            string rgName = Recording.GenerateAssetName($"adf-rg-{name}-");
+            var resourceGroup = await CreateResourceGroup(rgName, AzureLocation.WestUS2);
+            // Create a DataFactory
+            string dataFactoryName = Recording.GenerateAssetName($"adf-{name}-");
+            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
+            // Create a IntegrationRuntime
+            string integrationRuntimeName = Recording.GenerateAssetName("adf-integrationRuntime-");
+            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
+            // Create a LinkedService
+            string linkedServiceName = Recording.GenerateAssetName($"adf_linkedservice_{name}_");
+            string linkedServiceAKVName = Recording.GenerateAssetName($"adf_linkedservice_akv_");
+            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceAKVName);
+            var result = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, linkedServiceFunc(dataFactory, linkedServiceAKVName, integrationRuntimeName));
+            Assert.NotNull(result.Value.Id);
         }
 
         private async Task<DataFactoryLinkedServiceResource> CreateDefaultAzureKeyVaultLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
@@ -197,2886 +116,1893 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_AzureBlobFS_ServicePrincipalCredential()
+        public async Task LinkedService_AzureBlobFS_ServicePrincipalCredential_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureBlobFSLinkedService()
+            await LinkedSerivceCreate("blob", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Uri = "https://testblobfs.dfs.core.windows.net",
-                ServicePrincipalId = "9c8b1ab1-a894-4639-8fb9-75f98a36e9ab",
-                ServicePrincipalKey = new DataFactorySecretString("mykey"),
-                Tenant = "72f988bf-86f1-41af-91ab-2d7cd011db47",
-                AzureCloudType = "AzurePublic",
-                ServicePrincipalCredentialType = "ServicePrincipalKey",
-                ServicePrincipalCredential = new DataFactorySecretString("mykey")
-            });
-
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureBlobFS_Credential()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceReference stroe = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName);
-            ServicePrincipalCredential servicePrincipalCredential = new ServicePrincipalCredential()
-            {
-                Tenant = "72f988bf-86f1-41af-91ab-2d7cd011db47",
-                ServicePrincipalId = "9c8b1ab1-a894-4639-8fb9-75f98a36e9ab",
-                ServicePrincipalKey = new DataFactoryKeyVaultSecretReference(stroe, "TestSecret")
-            };
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureBlobFSLinkedService()
-            {
-                Uri = "https://testblobfs.dfs.core.windows.net",
-                ServicePrincipalId = "9c8b1ab1-a894-4639-8fb9-75f98a36e9ab",
-                ServicePrincipalKey = new DataFactoryKeyVaultSecretReference(stroe, "TestSecret"),
-                Tenant = "72f988bf-86f1-41af-91ab-2d7cd011db47",
-                AzureCloudType = DataFactoryElement<string>.FromLiteral("AzurePublic")
-            });
-
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureDatabricksDeltaLake()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureDatabricksDeltaLakeLinkedService("https://westeurope.azuredatabricks.net/")
-            {
-                ClusterId = "0714-063833-cleat653",
-                AccessToken = new DataFactorySecretString("mykey")
-            });
-
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureStorage()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureStorageLinkedService()
-            {
-                ConnectionString = DataFactoryElement<string>.FromSecretString("\"server=10.0.0.122;port=3306;database=db;user=https:\\\\\\\\test.com;sslmode=1;usesystemtruststore=0\"")
-            });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureStorage_SasUrl()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureStorageLinkedService()
-            {
-                SasUri = "fakeSasUri"
-            });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureStorage_SasUrl_AzureKeyVault()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceReference stroe = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName);
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureStorageLinkedService()
-            {
-                SasUri = "fakeSasUri",
-                SasToken = new DataFactoryKeyVaultSecretReference(stroe, "TestSecret")
-            });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureBlobStorage_ServicePrincipal()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureBlobStorageLinkedService()
-            {
-                ConnectionString = DataFactoryElement<string>.FromSecretString("\"server=10.0.0.122;port=3306;database=db;user=https:\\\\\\\\test.com;sslmode=1;usesystemtruststore=0\""),
-                ServiceEndpoint = "fakeserviceEndpoint",
-                AccountKind = "Storage",
-                ServicePrincipalKey = new DataFactorySecretString("fakeservicePrincipalKey")
-            });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureBlobStorage_AzureKeyVault()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureBlobStorageLinkedService()
-            {
-                ConnectionString = DataFactoryElement<string>.FromSecretString("\"server=10.0.0.122;port=3306;database=db;user=https:\\test.com;sslmode=1;usesystemtruststore=0\""),
-                ServiceEndpoint = "fakeserviceEndpoint",
-                AccountKind = "Storage",
-                ServicePrincipalKey = new DataFactorySecretString("fakeservicePrincipalKey")
-            });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_SqlServer()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myServerAddress;Database=myDataBase;"))
-            {
-                UserName = "WindowsAuthUserName",
-                Password = new DataFactorySecretString("fakepassword")
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AmazonRdsForSqlServer_Credential()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myserverinstance.c9pvwz9h1k8r.us-west-2.rds.amazonaws.com;Database=myDataBase;User Id=myUsername;Password=myPassword;"))
-            {
-                AlwaysEncryptedSettings = new SqlAlwaysEncryptedProperties(SqlAlwaysEncryptedAkvAuthType.UserAssignedManagedIdentity)
+                return new DataFactoryLinkedServiceData(new AzureBlobFSLinkedService()
                 {
-                    ServicePrincipalId = "fakeServicePrincipalKey",
-                    ServicePrincipalKey = new DataFactorySecretString("fakeServicePrincipalKey")
-                }
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AmazonRdsForSqlServer()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AmazonRdsForSqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myserverinstance.c9pvwz9h1k8r.us-west-2.rds.amazonaws.com;Database=myDataBase;User Id=myUsername;Password=myPassword;")))
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureSqlDatabase()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService(DataFactoryElement<string>.FromSecretString("Server=tcp:myServerAddress.database.windows.net,1433;Database=myDataBase;User ID=myUsername;Password=myPassword;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
-            {
-                AzureCloudType = "AzurePublic"
+                    Uri = "https://testblobfs.dfs.core.windows.net",
+                    ServicePrincipalId = "9c8b1ab1-a894-4639-8fb9-75f98a36e9ab",
+                    ServicePrincipalKey = new DataFactorySecretString("mykey"),
+                    Tenant = "72f988bf-86f1-41af-91ab-2d7cd011db47",
+                    AzureCloudType = "AzurePublic",
+                    ServicePrincipalCredentialType = "ServicePrincipalKey",
+                    ServicePrincipalCredential = new DataFactorySecretString("mykey")
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_AzureSqlDatabase_AzureCloudType()
+        public async Task LinkedService_AzureBlobFS_Credential_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService(DataFactoryElement<string>.FromSecretString("Server=tcp:myServerAddress.database.windows.net,1433;Database=myDataBase;User ID=myUsername;Password=myPassword;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
+            await LinkedSerivceCreate("blob", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                AzureCloudType = "AzurePublic"
-            });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureSqlDatabase_AzureKeyVault()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService(DataFactoryElement<string>.FromSecretString("fakeConnString"))
-            {
-                Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "TestSecret")
-            });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureSqlMI()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureSqlMILinkedService(DataFactoryElement<string>.FromSecretString("integrated security=False;encrypt=True;connection timeout=30;data source=test-sqlmi.public.123456789012.database.windows.net,3342;initial catalog=TestDB;"))
-            {
-                ServicePrincipalId = "fakeSPID",
-                ServicePrincipalKey = new DataFactorySecretString("fakeSPKey"),
-                Tenant = "fakeTenant",
-                AzureCloudType = "AzurePublic"
-            });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureSqlDW()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureSqlDWLinkedService(DataFactoryElement<string>.FromSecretString("Server=myServerName.database.windows.net;Database=myDatabaseName;User ID=myUsername@myServerName;Password=myPassword;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
-            {
-                AzureCloudType = "AzurePublic"
-            });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureSqlDW_AzureKeyValue()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureSqlDWLinkedService(DataFactoryElement<string>.FromSecretString("fakeConnString"))
-            {
-                Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
-            });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureML()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureMLLinkedService("https://ussouthcentral.services.azureml.net/workspaces/7851b44b5a5e4799997fad223c449acb/services/14d8b9f6b9b64b51a8dcd1117fcdc624/jobs", new DataFactorySecretString("fakeKey")));
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureMLService()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureMLServiceLinkedService("1e42591f-0000-0000-0000-a268f6105ec5", "MyResourceGroupName", "MyMLWorkspaceName")
-            {
-                ServicePrincipalId = "fakeSPID",
-                ServicePrincipalKey = new DataFactorySecretString("fakeSPKey"),
-                Tenant = "fakeTenant"
-            })
-            {
-                Properties =
+                DataFactoryLinkedServiceReference stroe = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName);
+                return new DataFactoryLinkedServiceData(new AzureBlobFSLinkedService()
                 {
-                    ConnectVia =new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureML_updateResourceEndpoint()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureMLLinkedService("https://ussouthcentral.services.azureml.net/workspaces/7851b44b5a5e4799997fad223c449acb/services/14d8b9f6b9b64b51a8dcd1117fcdc624/jobs", new DataFactorySecretString("fakeKey"))
-            {
-                UpdateResourceEndpoint = "https://management.azureml.net/workspaces/7851b44b5a5e4799997fad223c449acb/services/14d8b9f6b9b64b51a8dcd1117fcdc624/endpoints/endpoint2"
+                    Uri = "https://testblobfs.dfs.core.windows.net",
+                    ServicePrincipalId = "9c8b1ab1-a894-4639-8fb9-75f98a36e9ab",
+                    ServicePrincipalKey = new DataFactoryKeyVaultSecretReference(stroe, "TestSecret"),
+                    Tenant = "72f988bf-86f1-41af-91ab-2d7cd011db47",
+                    AzureCloudType = DataFactoryElement<string>.FromLiteral("AzurePublic")
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_AzureML_servicePrincipalId()
+        public async Task LinkedService_AzureDatabricksDeltaLake_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureMLLinkedService("https://ussouthcentral.services.azureml.net/workspaces/7851b44b5a5e4799997fad223c449acb/services/14d8b9f6b9b64b51a8dcd1117fcdc624/jobs", new DataFactorySecretString("fakeKey"))
+            await LinkedSerivceCreate("adls", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                UpdateResourceEndpoint = "https://management.azureml.net/workspaces/7851b44b5a5e4799997fad223c449acb/services/14d8b9f6b9b64b51a8dcd1117fcdc624/endpoints/endpoint2",
-                ServicePrincipalId = "fe273844-c808-40b8-ad85-94a46f737731",
-                ServicePrincipalKey = new DataFactorySecretString("fakeKey"),
-                Tenant = "microsoft.com"
+                return new DataFactoryLinkedServiceData(new AzureDatabricksDeltaLakeLinkedService("https://westeurope.azuredatabricks.net/")
+                {
+                    ClusterId = "0714-063833-cleat653",
+                    AccessToken = new DataFactorySecretString("mykey")
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.IsNotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_AzureDataLakeAnalytics()
+        public async Task LinkedService_AzureStorage_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureDataLakeAnalyticsLinkedService("fake", "fake")
+            await LinkedSerivceCreate("storage", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ServicePrincipalId = "fe273844-c808-40b8-ad85-94a46f737731",
-                ServicePrincipalKey = new DataFactorySecretString("fakeKey"),
-                DataLakeAnalyticsUri = "fake.com",
-                SubscriptionId = "fe273844-c808-40b8-ad85-94a46f737731"
+                return new DataFactoryLinkedServiceData(new AzureStorageLinkedService()
+                {
+                    ConnectionString = DataFactoryElement<string>.FromSecretString("\"server=10.0.0.122;port=3306;database=db;user=https:\\\\\\\\test.com;sslmode=1;usesystemtruststore=0\"")
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_HDInsight()
+        public async Task LinkedService_AzureStorage_SasUrl_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceAzureBlobName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureBlobStorageLinkedService(dataFactory, linkedServiceAzureBlobName);
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new HDInsightLinkedService("https://MyCluster.azurehdinsight.net/")
+            await LinkedSerivceCreate("storage", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                UserName = "MyUserName",
-                Password = new DataFactorySecretString("fakepassword")
+                return new DataFactoryLinkedServiceData(new AzureStorageLinkedService()
+                {
+                    SasUri = "fakeSasUri"
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_HDInsight_hcatalogLinkedServiceName()
+        public async Task LinkedService_AzureStorage_SasUrl_AzureKeyVault_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceLogName1 = Recording.GenerateAssetName("LinkedService");
-            string linkedServiceLogName2 = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            await CreateDefaultAzureBlobStorageLinkedService(dataFactory, linkedServiceLogName1);
-            await CreateDefaultAzureBlobStorageLinkedService(dataFactory, linkedServiceLogName2);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new HDInsightLinkedService("https://MyCluster.azurehdinsight.net/")
+            await LinkedSerivceCreate("storage", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                UserName = "MyUserName",
-                Password = new DataFactorySecretString("fakepassword"),
-                LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceLogName1),
-                HcatalogLinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceLogName2)
+                DataFactoryLinkedServiceReference stroe = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName);
+                return new DataFactoryLinkedServiceData(new AzureStorageLinkedService()
+                {
+                    SasUri = "fakeSasUri",
+                    SasToken = new DataFactoryKeyVaultSecretReference(stroe, "TestSecret")
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_HDInsightOnDemand()
+        public async Task LinkedService_AzureBlobStorage_ServicePrincipal_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceHDInsightName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            DataFactoryLinkedServiceData lkHDInsight = new DataFactoryLinkedServiceData(new HDInsightLinkedService("https://test.azurehdinsight.net"));
-            await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceHDInsightName, lkHDInsight);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new HDInsightOnDemandLinkedService("4", "01:30:00", "3.5", new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceHDInsightName), "hostSubscriptionId", "72f988bf-86f1-41af-91ab-2d7cd011db47", "ADF")
+            await LinkedSerivceCreate("blob", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ServicePrincipalId = "servicePrincipalId",
-                ServicePrincipalKey = new DataFactorySecretString("fakeKey"),
-                ClusterNamePrefix = "OnDemandHdiResource",
-                HeadNodeSize = BinaryData.FromString("\"HeadNode\""),
-                DataNodeSize = BinaryData.FromString("\"DataNode\""),
+                return new DataFactoryLinkedServiceData(new AzureBlobStorageLinkedService()
+                {
+                    ConnectionString = DataFactoryElement<string>.FromSecretString("\"server=10.0.0.122;port=3306;database=db;user=https:\\\\\\\\test.com;sslmode=1;usesystemtruststore=0\""),
+                    ServiceEndpoint = "fakeserviceEndpoint",
+                    AccountKind = "Storage",
+                    ServicePrincipalKey = new DataFactorySecretString("fakeservicePrincipalKey")
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_AzureBatch()
+        public async Task LinkedService_AzureBlobStorage_AzureKeyVault_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceAzureBlobName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureBlobStorageLinkedService(dataFactory, linkedServiceAzureBlobName);
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureBatchLinkedService(DataFactoryElement<string>.FromSecretString("parameters"), "myaccount.region.batch.windows.com", "myPoolname", new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceAzureBlobName))
+            await LinkedSerivceCreate("blob", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                AccessKey = new DataFactorySecretString("fakeAccesskey")
+                return new DataFactoryLinkedServiceData(new AzureBlobStorageLinkedService()
+                {
+                    ConnectionString = DataFactoryElement<string>.FromSecretString("\"server=10.0.0.122;port=3306;database=db;user=https:\\test.com;sslmode=1;usesystemtruststore=0\""),
+                    ServiceEndpoint = "fakeserviceEndpoint",
+                    AccountKind = "Storage",
+                    ServicePrincipalKey = new DataFactorySecretString("fakeservicePrincipalKey")
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_SqlServer_encryptedCredential()
+        public async Task LinkedService_SqlServer_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myServerAddress;Database=myDataBase;Uid=myUsername;"))
+            await LinkedSerivceCreate("sqlserver", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Password = new DataFactorySecretString("fakepassword"),
-                EncryptedCredential = "MyEncryptedCredentials"
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_Oracle()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new OracleLinkedService(DataFactoryElement<string>.FromSecretString("Data Source = MyOracleDB; User Id = myUsername; Password = myPassword; Integrated Security = no;"))
-            {
-                EncryptedCredential = "MyEncryptedCredentials"
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_Oracle_AzureKeyValue()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new OracleLinkedService(DataFactoryElement<string>.FromSecretString("fakeConnString"))
-            {
-                Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName"),
-                EncryptedCredential = "MyEncryptedCredentials"
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AmazonRdsForOracle()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AmazonRdsForOracleLinkedService(DataFactoryElement<string>.FromSecretString("Host=10.10.10.10;Port=1234;Sid=fakeSid;User Id=fakeUsername;Password=fakePassword"))
-            {
-                EncryptedCredential = "MyEncryptedCredentials"
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AmazonRdsForOracle_AzureKeyValue()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AmazonRdsForOracleLinkedService(DataFactoryElement<string>.FromSecretString("fakeConnString"))
-            {
-                Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName"),
-                EncryptedCredential = "MyEncryptedCredentials"
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_FileServer()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new FileServerLinkedService(DataFactoryElement<string>.FromSecretString("Myhost"))
-            {
-                UserId = "MyUserId",
-                Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName"),
-                EncryptedCredential = "MyEncryptedCredentials"
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_CosmosDb()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new CosmosDBLinkedService()
-            {
-                ConnectionString = DataFactoryElement<string>.FromSecretString("mongodb://username:password@localhost:27017/?authSource=admin")
+                return new DataFactoryLinkedServiceData(new SqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myServerAddress;Database=myDataBase;"))
+                {
+                    UserName = "WindowsAuthUserName",
+                    Password = new DataFactorySecretString("fakepassword")
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_CosmosDb_accountEndpoint()
+        public async Task LinkedService_AmazonRdsForSqlServer_Credential_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new CosmosDBLinkedService()
+            await LinkedSerivceCreate("amazon", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                AccountEndpoint = "https://fakecosmosdb.documents.azure.com:443/",
-                Database = "testdb",
-                AccountKey = new DataFactorySecretString("fakeconnectstring")
+                return new DataFactoryLinkedServiceData(new SqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myserverinstance.c9pvwz9h1k8r.us-west-2.rds.amazonaws.com;Database=myDataBase;User Id=myUsername;Password=myPassword;"))
+                {
+                    AlwaysEncryptedSettings = new SqlAlwaysEncryptedProperties(SqlAlwaysEncryptedAkvAuthType.UserAssignedManagedIdentity)
+                    {
+                        ServicePrincipalId = "fakeServicePrincipalKey",
+                        ServicePrincipalKey = new DataFactorySecretString("fakeServicePrincipalKey")
+                    }
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_CosmosDb_AzureKeyValue()
+        public async Task LinkedService_AmazonRdsForSqlServer_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new CosmosDBLinkedService()
+            await LinkedSerivceCreate("amazon", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ConnectionString = "fakeConnString",
-                AccountKey = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
+                return new DataFactoryLinkedServiceData(new AmazonRdsForSqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myserverinstance.c9pvwz9h1k8r.us-west-2.rds.amazonaws.com;Database=myDataBase;User Id=myUsername;Password=myPassword;")))
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_CosmosDb_servicePrincipalId()
+        public async Task LinkedService_AzureSqlDatabase_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new CosmosDBLinkedService()
+            await LinkedSerivceCreate("azuresql", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ConnectionString = "mongodb://username:password@localhost:27017/?authSource=admin",
-                ServicePrincipalId = "fakeservicePrincipalId",
-                ServicePrincipalCredentialType = "ServicePrincipalKey",
-                ServicePrincipalCredential = new DataFactorySecretString("fakeservicePrincipalCredential"),
-                Tenant = "faketenant",
-                AzureCloudType = "fakeazurecloudtype",
-                ConnectionMode = new CosmosDBConnectionMode()
+                return new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService(DataFactoryElement<string>.FromSecretString("Server=tcp:myServerAddress.database.windows.net,1433;Database=myDataBase;User ID=myUsername;Password=myPassword;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
+                {
+                    AzureCloudType = "AzurePublic"
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Teradata()
+        public async Task LinkedService_AzureSqlDatabase_AzureCloudType_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new TeradataLinkedService()
+            await LinkedSerivceCreate("azuresql", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Server = "volvo2.teradata.ws",
-                Username = "microsoft",
-                AuthenticationType = TeradataAuthenticationType.Basic,
-                Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_Teradata_connectionString()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new TeradataLinkedService()
-            {
-                ConnectionString = "connectstring",
-                Username = "microsoft",
-                Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_ODBC()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new OdbcLinkedService(DataFactoryElement<string>.FromSecretString("Driver={ODBC Driver 17 for SQL Server};Server=myServerAddress;Database=myDataBase;Uid=myUsername;Pwd=myPassword;"))
-            {
-                UserName = "MyUserName",
-                Password = new DataFactorySecretString("fakepassword"),
-                Credential = new DataFactorySecretString("fakeCredential"),
-                AuthenticationType = "Basic",
-                EncryptedCredential = "MyEncryptedCredentials",
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_Informix()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new InformixLinkedService(DataFactoryElement<string>.FromSecretString("Database=TestDB;Host=192.168.10.10;Server=db_engine_tcp;Service=1492;Protocol=onsoctcp;UID=fakeUsername;Password=fakePassword;"))
-            {
-                UserName = "MyUserName",
-                Password = new DataFactorySecretString("fakepassword"),
-                Credential = new DataFactorySecretString("fakeCredential"),
-                AuthenticationType = "Basic",
-                EncryptedCredential = "MyEncryptedCredentials",
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_MicrosoftAccess()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new MicrosoftAccessLinkedService(DataFactoryElement<string>.FromSecretString("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\myFolder\\myAccessFile.accdb;Persist Security Info=False;\r\n"))
-            {
-                UserName = "MyUserName",
-                Password = new DataFactorySecretString("fakepassword"),
-                Credential = new DataFactorySecretString("fakeCredential"),
-                AuthenticationType = "Basic",
-                EncryptedCredential = "MyEncryptedCredentials",
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_Hdfs()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new HdfsLinkedService("http://myhost:50070/webhdfs/v1")
-            {
-                UserName = "Microsoft",
-                Password = new DataFactorySecretString("fakepassword"),
-                AuthenticationType = "Basic",
-                EncryptedCredential = "MyEncryptedCredentials",
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_Web()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            WebLinkedServiceTypeProperties webLinkedServiceTypeProperties = new UnknownWebLinkedServiceTypeProperties("http://localhost", WebAuthenticationType.ClientCertificate);
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new WebLinkedService(webLinkedServiceTypeProperties)
-            {
-                LinkedServiceType = "Web",
+                return new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService(DataFactoryElement<string>.FromSecretString("Server=tcp:myServerAddress.database.windows.net,1433;Database=myDataBase;User ID=myUsername;Password=myPassword;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
+                {
+                    AzureCloudType = "AzurePublic"
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Web1()
+        public async Task LinkedService_AzureSqlDatabase_AzureKeyVault_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            WebLinkedServiceTypeProperties webLinkedServiceTypeProperties = new UnknownWebLinkedServiceTypeProperties("http://localhost", WebAuthenticationType.ClientCertificate);
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new WebLinkedService(webLinkedServiceTypeProperties)
+            await LinkedSerivceCreate("azuresql", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                LinkedServiceType = "Web",
+                return new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService(DataFactoryElement<string>.FromSecretString("fakeConnString"))
+                {
+                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "TestSecret")
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Cassandra()
+        public async Task LinkedService_AzureSqlMI_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new CassandraLinkedService("http://localhost/webhdfs/v1/")
+            await LinkedSerivceCreate("azuresql", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Description = "test description",
-                AuthenticationType = "Basic",
-                Port = 1234,
-                Username = "admin",
-                Password = new DataFactorySecretString("fakepassword"),
-                EncryptedCredential = "fake credential"
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_Dynamics()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new DynamicsLinkedService("Online", "Office365")
-            {
-                Username = "admin",
-                Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_Dynamics_S2S_Key()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new DynamicsLinkedService("Online", "AadServicePrincipal")
-            {
-                ServicePrincipalCredentialType = "ServicePrincipalKey",
-                ServicePrincipalId = "9bf5d9fd - 5dcd - 46a5 - b99b - 77d69adb2567",
-                ServicePrincipalCredential = new DataFactorySecretString("fakepassword")
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_Dynamics_S2S_Cert()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new DynamicsLinkedService("Online", "AadServicePrincipal")
-            {
-                ServicePrincipalCredentialType = "ServicePrincipalKey",
-                ServicePrincipalId = "9bf5d9fd - 5dcd - 46a5 - b99b - 77d69adb2567",
-                ServicePrincipalCredential = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_Dynamics_organizationName()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new DynamicsLinkedService("Online", "Office365")
-            {
-                HostName = "hostname.com",
-                Port = 1234,
-                OrganizationName = "contoso",
-                Username = "fakeuser@contoso.com",
-                Password = new DataFactorySecretString("fakepassword"),
-                EncryptedCredential = "fake credential"
+                return new DataFactoryLinkedServiceData(new AzureSqlMILinkedService(DataFactoryElement<string>.FromSecretString("integrated security=False;encrypt=True;connection timeout=30;data source=test-sqlmi.public.123456789012.database.windows.net,3342;initial catalog=TestDB;"))
+                {
+                    ServicePrincipalId = "fakeSPID",
+                    ServicePrincipalKey = new DataFactorySecretString("fakeSPKey"),
+                    Tenant = "fakeTenant",
+                    AzureCloudType = "AzurePublic"
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_DynamicsCrm()
+        public async Task LinkedService_AzureSqlDW_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new DynamicsCrmLinkedService("Online", "Office365")
+            await LinkedSerivceCreate("sqldw", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                HostName = "hostname.com",
-                Port = 1234,
-                OrganizationName = "contoso",
-                Username = "fakeuser@contoso.com",
-                Password = new DataFactorySecretString("fakepassword"),
-                EncryptedCredential = "fake credential"
+                return new DataFactoryLinkedServiceData(new AzureSqlDWLinkedService(DataFactoryElement<string>.FromSecretString("Server=myServerName.database.windows.net;Database=myDatabaseName;User ID=myUsername@myServerName;Password=myPassword;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"))
+                {
+                    AzureCloudType = "AzurePublic"
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_DynamicsCrm_S2S_Key()
+        public async Task LinkedService_AzureSqlDW_AzureKeyValue_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new DynamicsCrmLinkedService("Online", "Office365")
+            await LinkedSerivceCreate("sqldw", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ServicePrincipalCredentialType = "ServicePrincipalKey",
-                ServicePrincipalId = "9bf5d9fd - 5dcd - 46a5 - b99b - 77d69adb2567",
-                ServicePrincipalCredential = new DataFactorySecretString("fakepassword")
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_DynamicsCrm_S2S_Cert()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new DynamicsCrmLinkedService("Online", "Office365")
-            {
-                ServicePrincipalCredentialType = "ServicePrincipalKey",
-                ServicePrincipalId = "9bf5d9fd - 5dcd - 46a5 - b99b - 77d69adb2567",
-                ServicePrincipalCredential = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_CommonDataServiceForApps_S2S_Key()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new CommonDataServiceForAppsLinkedService("Online", "AadServicePrincipal")
-            {
-                ServicePrincipalCredentialType = "ServicePrincipalKey",
-                ServicePrincipalId = "9bf5d9fd - 5dcd - 46a5 - b99b - 77d69adb2567",
-                ServicePrincipalCredential = new DataFactorySecretString("fakepassword")
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_CommonDataServiceForApps_S2S_Cert()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new CommonDataServiceForAppsLinkedService("Online", "AadServicePrincipal")
-            {
-                ServicePrincipalCredentialType = "ServicePrincipalKey",
-                ServicePrincipalId = "9bf5d9fd - 5dcd - 46a5 - b99b - 77d69adb2567",
-                ServicePrincipalCredential = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_CommonDataServiceForApps()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new CommonDataServiceForAppsLinkedService("Online", "Office365")
-            {
-                HostName = "hostname.com",
-                Port = 1234,
-                OrganizationName = "contoso",
-                Username = "fakeuser@contoso.com",
-                Password = new DataFactorySecretString("fakepassword"),
-                EncryptedCredential = "fake credential"
+                return new DataFactoryLinkedServiceData(new AzureSqlDWLinkedService(DataFactoryElement<string>.FromSecretString("fakeConnString"))
+                {
+                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Salesforce_Token()
+        public async Task LinkedService_AzureML_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SalesforceLinkedService()
+            await LinkedSerivceCreate("azureml", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                EnvironmentUri = "Uri",
-                Username = "admin",
-                Password = new DataFactorySecretString("fakepassword"),
-                SecurityToken = new DataFactorySecretString("fakeToken"),
-                ApiVersion = "27.0"
-            })
-            { Properties = { Description = "test description" } };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+                return new DataFactoryLinkedServiceData(new AzureMLLinkedService("https://ussouthcentral.services.azureml.net/workspaces/7851b44b5a5e4799997fad223c449acb/services/14d8b9f6b9b64b51a8dcd1117fcdc624/jobs", new DataFactorySecretString("fakeKey")));
+            });
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Salesforce()
+        public async Task LinkedService_AzureMLService_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SalesforceLinkedService()
+            await LinkedSerivceCreate("azureml", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                EnvironmentUri = "Uri",
-                Username = "admin",
-                Password = new DataFactorySecretString("fakepassword"),
-                ApiVersion = "27.0"
-            })
-            { Properties = { Description = "test description" } };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+                return new DataFactoryLinkedServiceData(new AzureMLServiceLinkedService("1e42591f-0000-0000-0000-a268f6105ec5", "MyResourceGroupName", "MyMLWorkspaceName")
+                {
+                    ServicePrincipalId = "fakeSPID",
+                    ServicePrincipalKey = new DataFactorySecretString("fakeSPKey"),
+                    Tenant = "fakeTenant"
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia =new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
+            });
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Salesforce_AzureKeyValue()
+        public async Task LinkedService_AzureML_updateResourceEndpoint_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SalesforceLinkedService()
+            await LinkedSerivceCreate("azureml", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                EnvironmentUri = "Uri",
-                Username = "admin",
-                Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1"),
-                SecurityToken = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName2"),
-                ApiVersion = "27.0"
-            })
-            { Properties = { Description = "test description" } };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+                return new DataFactoryLinkedServiceData(new AzureMLLinkedService("https://ussouthcentral.services.azureml.net/workspaces/7851b44b5a5e4799997fad223c449acb/services/14d8b9f6b9b64b51a8dcd1117fcdc624/jobs", new DataFactorySecretString("fakeKey"))
+                {
+                    UpdateResourceEndpoint = "https://management.azureml.net/workspaces/7851b44b5a5e4799997fad223c449acb/services/14d8b9f6b9b64b51a8dcd1117fcdc624/endpoints/endpoint2"
+                });
+            });
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_SalesforceServiceCloud_Token()
+        public async Task LinkedService_AzureML_servicePrincipalId_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SalesforceServiceCloudLinkedService()
+            await LinkedSerivceCreate("azureml", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                EnvironmentUri = "Uri",
-                Username = "admin",
-                Password = new DataFactorySecretString("fakepassword"),
-                SecurityToken = new DataFactorySecretString("faketoken"),
-                ApiVersion = "27.0"
-            })
-            { Properties = { Description = "test description" } };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+                return new DataFactoryLinkedServiceData(new AzureMLLinkedService("https://ussouthcentral.services.azureml.net/workspaces/7851b44b5a5e4799997fad223c449acb/services/14d8b9f6b9b64b51a8dcd1117fcdc624/jobs", new DataFactorySecretString("fakeKey"))
+                {
+                    UpdateResourceEndpoint = "https://management.azureml.net/workspaces/7851b44b5a5e4799997fad223c449acb/services/14d8b9f6b9b64b51a8dcd1117fcdc624/endpoints/endpoint2",
+                    ServicePrincipalId = "fe273844-c808-40b8-ad85-94a46f737731",
+                    ServicePrincipalKey = new DataFactorySecretString("fakeKey"),
+                    Tenant = "microsoft.com"
+                });
+            });
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_SalesforceServiceCloud()
+        public async Task LinkedService_AzureDataLakeAnalytics_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SalesforceServiceCloudLinkedService()
+            await LinkedSerivceCreate("adls", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                EnvironmentUri = "Uri",
-                Username = "admin",
-                Password = new DataFactorySecretString("fakepassword"),
-                ApiVersion = "27.0"
-            })
-            { Properties = { Description = "test description" } };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+                return new DataFactoryLinkedServiceData(new AzureDataLakeAnalyticsLinkedService("fake", "fake")
+                {
+                    ServicePrincipalId = "fe273844-c808-40b8-ad85-94a46f737731",
+                    ServicePrincipalKey = new DataFactorySecretString("fakeKey"),
+                    DataLakeAnalyticsUri = "fake.com",
+                    SubscriptionId = "fe273844-c808-40b8-ad85-94a46f737731"
+                });
+            });
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_SalesforceMarketingCloud()
+        public async Task LinkedService_HDInsight_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SalesforceMarketingCloudLinkedService()
+            await LinkedSerivceCreate("hdinsight", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ClientId = "clientid",
-                ClientSecret = new DataFactorySecretString("fakepassword")
-            })
-            { Properties = { Description = "test description" } };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+                return new DataFactoryLinkedServiceData(new HDInsightLinkedService("https://MyCluster.azurehdinsight.net/")
+                {
+                    UserName = "MyUserName",
+                    Password = new DataFactorySecretString("fakepassword")
+                });
+            });
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_SalesforceMarketingCloud_connection()
+        public async Task LinkedService_HDInsight_hcatalogLinkedServiceName_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SalesforceMarketingCloudLinkedService()
+            await LinkedSerivceCreate("hdinsight", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ClientId = "fakeClientId",
-                ClientSecret = new DataFactorySecretString("fakeClientSecret")
-            })
-            { Properties = { Description = "test description" } };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+                string linkedServiceLogName1 = Recording.GenerateAssetName("adf_linkedservice_");
+                string linkedServiceLogName2 = Recording.GenerateAssetName("adf_linkedservice_");
+                _ = CreateDefaultAzureBlobStorageLinkedService(dataFactory, linkedServiceLogName1);
+                _ = CreateDefaultAzureBlobStorageLinkedService(dataFactory, linkedServiceLogName2);
+                return new DataFactoryLinkedServiceData(new HDInsightLinkedService("https://MyCluster.azurehdinsight.net/")
+                {
+                    UserName = "MyUserName",
+                    Password = new DataFactorySecretString("fakepassword"),
+                    LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceLogName1),
+                    HcatalogLinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceLogName2)
+                });
+            });
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_MongoDb()
+        public async Task LinkedService_HDInsightOnDemand_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new MongoDBLinkedService("fakeserver.com", "fakedb")
+            await LinkedSerivceCreate("hdinsight", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                AuthenticationType = "Basic",
-                Port = 1234,
-                Username = "fakeuser@contoso.com",
-                Password = new DataFactorySecretString("fakepassword"),
-                AuthSource = "fackadmindb",
-                EncryptedCredential = "fake credential"
-            })
+                string linkedServiceHDInsightName = Recording.GenerateAssetName("adf_linkedservice_");
+                DataFactoryLinkedServiceData lkHDInsight = new DataFactoryLinkedServiceData(new HDInsightLinkedService("https://test.azurehdinsight.net"));
+                _ = dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceHDInsightName, lkHDInsight);
+                return new DataFactoryLinkedServiceData(new HDInsightOnDemandLinkedService("4", "01:30:00", "3.5", new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceHDInsightName), "hostSubscriptionId", "72f988bf-86f1-41af-91ab-2d7cd011db47", "ADF")
+                {
+                    ServicePrincipalId = "servicePrincipalId",
+                    ServicePrincipalKey = new DataFactorySecretString("fakeKey"),
+                    ClusterNamePrefix = "OnDemandHdiResource",
+                    HeadNodeSize = BinaryData.FromString("\"HeadNode\""),
+                    DataNodeSize = BinaryData.FromString("\"DataNode\""),
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_AzureBatch_Create()
+        {
+            await LinkedSerivceCreate("azurebatch", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Properties = {
+                string linkedServiceAzureBlobName = Recording.GenerateAssetName("adf_linkedservice_");
+                var linkedService = dataFactory.GetDataFactoryLinkedServices();
+                _ = CreateDefaultAzureBlobStorageLinkedService(dataFactory, linkedServiceAzureBlobName);
+                return new DataFactoryLinkedServiceData(new AzureBatchLinkedService(DataFactoryElement<string>.FromSecretString("parameters"), "myaccount.region.batch.windows.com", "myPoolname", new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceAzureBlobName))
+                {
+                    AccessKey = new DataFactorySecretString("fakeAccesskey")
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_SqlServer_encryptedCredential_Create()
+        {
+            await LinkedSerivceCreate("sqlserver", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new SqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myServerAddress;Database=myDataBase;Uid=myUsername;"))
+                {
+                    Password = new DataFactorySecretString("fakepassword"),
+                    EncryptedCredential = "MyEncryptedCredentials"
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Oracle_Create()
+        {
+            await LinkedSerivceCreate("oracle", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new OracleLinkedService(DataFactoryElement<string>.FromSecretString("Data Source = MyOracleDB; User Id = myUsername; Password = myPassword; Integrated Security = no;"))
+                {
+                    EncryptedCredential = "MyEncryptedCredentials"
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Oracle_AzureKeyValue_Create()
+        {
+            await LinkedSerivceCreate("oracle", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new OracleLinkedService(DataFactoryElement<string>.FromSecretString("fakeConnString"))
+                {
+                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName"),
+                    EncryptedCredential = "MyEncryptedCredentials"
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_AmazonRdsForOracle_Create()
+        {
+            await LinkedSerivceCreate("amazon", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new AmazonRdsForOracleLinkedService(DataFactoryElement<string>.FromSecretString("Host=10.10.10.10;Port=1234;Sid=fakeSid;User Id=fakeUsername;Password=fakePassword"))
+                {
+                    EncryptedCredential = "MyEncryptedCredentials"
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_AmazonRdsForOracle_AzureKeyValue_Create()
+        {
+            await LinkedSerivceCreate("amazon", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new AmazonRdsForOracleLinkedService(DataFactoryElement<string>.FromSecretString("fakeConnString"))
+                {
+                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName"),
+                    EncryptedCredential = "MyEncryptedCredentials"
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_FileServer_Create()
+        {
+            await LinkedSerivceCreate("fileserver", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new FileServerLinkedService(DataFactoryElement<string>.FromSecretString("Myhost"))
+                {
+                    UserId = "MyUserId",
+                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName"),
+                    EncryptedCredential = "MyEncryptedCredentials"
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_CosmosDb_Create()
+        {
+            await LinkedSerivceCreate("cosmosdb", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new CosmosDBLinkedService()
+                {
+                    ConnectionString = DataFactoryElement<string>.FromSecretString("mongodb://username:password@localhost:27017/?authSource=admin")
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_CosmosDb_accountEndpoint_Create()
+        {
+            await LinkedSerivceCreate("cosmosdb", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new CosmosDBLinkedService()
+                {
+                    AccountEndpoint = "https://fakecosmosdb.documents.azure.com:443/",
+                    Database = "testdb",
+                    AccountKey = new DataFactorySecretString("fakeconnectstring")
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_CosmosDb_AzureKeyValue_Create()
+        {
+            await LinkedSerivceCreate("cosmosdb", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new CosmosDBLinkedService()
+                {
+                    ConnectionString = "fakeConnString",
+                    AccountKey = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_CosmosDb_servicePrincipalId_Create()
+        {
+            await LinkedSerivceCreate("cosmosdb", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new CosmosDBLinkedService()
+                {
+                    ConnectionString = "mongodb://username:password@localhost:27017/?authSource=admin",
+                    ServicePrincipalId = "fakeservicePrincipalId",
+                    ServicePrincipalCredentialType = "ServicePrincipalKey",
+                    ServicePrincipalCredential = new DataFactorySecretString("fakeservicePrincipalCredential"),
+                    Tenant = "faketenant",
+                    AzureCloudType = "fakeazurecloudtype",
+                    ConnectionMode = new CosmosDBConnectionMode()
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Teradata_Create()
+        {
+            await LinkedSerivceCreate("teradata", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new TeradataLinkedService()
+                {
+                    Server = "volvo2.teradata.ws",
+                    Username = "microsoft",
+                    AuthenticationType = TeradataAuthenticationType.Basic,
+                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Teradata_connectionString_Create()
+        {
+            await LinkedSerivceCreate("teradata", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new TeradataLinkedService()
+                {
+                    ConnectionString = "connectstring",
+                    Username = "microsoft",
+                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_ODBC_Create()
+        {
+            await LinkedSerivceCreate("odbc", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new OdbcLinkedService(DataFactoryElement<string>.FromSecretString("Driver={ODBC Driver 17 for SQL Server};Server=myServerAddress;Database=myDataBase;Uid=myUsername;Pwd=myPassword;"))
+                {
+                    UserName = "MyUserName",
+                    Password = new DataFactorySecretString("fakepassword"),
+                    Credential = new DataFactorySecretString("fakeCredential"),
+                    AuthenticationType = "Basic",
+                    EncryptedCredential = "MyEncryptedCredentials",
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Informix_Create()
+        {
+            await LinkedSerivceCreate("informix", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new InformixLinkedService(DataFactoryElement<string>.FromSecretString("Database=TestDB;Host=192.168.10.10;Server=db_engine_tcp;Service=1492;Protocol=onsoctcp;UID=fakeUsername;Password=fakePassword;"))
+                {
+                    UserName = "MyUserName",
+                    Password = new DataFactorySecretString("fakepassword"),
+                    Credential = new DataFactorySecretString("fakeCredential"),
+                    AuthenticationType = "Basic",
+                    EncryptedCredential = "MyEncryptedCredentials",
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_MicrosoftAccess_Create()
+        {
+            await LinkedSerivceCreate("access", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new MicrosoftAccessLinkedService(DataFactoryElement<string>.FromSecretString("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\myFolder\\myAccessFile.accdb;Persist Security Info=False;\r\n"))
+                {
+                    UserName = "MyUserName",
+                    Password = new DataFactorySecretString("fakepassword"),
+                    Credential = new DataFactorySecretString("fakeCredential"),
+                    AuthenticationType = "Basic",
+                    EncryptedCredential = "MyEncryptedCredentials",
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Hdfs_Create()
+        {
+            await LinkedSerivceCreate("hdfs", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new HdfsLinkedService("http://myhost:50070/webhdfs/v1")
+                {
+                    UserName = "Microsoft",
+                    Password = new DataFactorySecretString("fakepassword"),
+                    AuthenticationType = "Basic",
+                    EncryptedCredential = "MyEncryptedCredentials",
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Web_Create()
+        {
+            await LinkedSerivceCreate("web", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                WebLinkedServiceTypeProperties webLinkedServiceTypeProperties = new UnknownWebLinkedServiceTypeProperties("http://localhost", WebAuthenticationType.ClientCertificate);
+                return new DataFactoryLinkedServiceData(new WebLinkedService(webLinkedServiceTypeProperties)
+                {
+                    LinkedServiceType = "Web",
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Web1_Create()
+        {
+            await LinkedSerivceCreate("web", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                WebLinkedServiceTypeProperties webLinkedServiceTypeProperties = new UnknownWebLinkedServiceTypeProperties("http://localhost", WebAuthenticationType.ClientCertificate);
+                return new DataFactoryLinkedServiceData(new WebLinkedService(webLinkedServiceTypeProperties)
+                {
+                    LinkedServiceType = "Web",
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Cassandra_Create()
+        {
+            await LinkedSerivceCreate("cassandra", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new CassandraLinkedService("http://localhost/webhdfs/v1/")
+                {
                     Description = "test description",
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AmazonRedshift()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AmazonRedshiftLinkedService("fakeserver.com", "fakedb")
-            {
-                Port = 1234,
-                Username = "fakeuser@contoso.com",
-                Password = new DataFactorySecretString("fakepassword"),
-            })
-            {
-                Properties = {
-                    Description = "test description"
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AmazonS3()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AmazonS3LinkedService()
-            {
-                AccessKeyId = "fakeaccess",
-                SecretAccessKey = new DataFactorySecretString("fakekey")
-            })
-            {
-                Properties = {
-                    Description = "test description"
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AmazonS3_sessionToken()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AmazonS3LinkedService()
-            {
-                AuthenticationType = "TemporarySecurityCredentials",
-                AccessKeyId = "fakeaccess",
-                SecretAccessKey = new DataFactorySecretString("fakekey"),
-                SessionToken = new DataFactorySecretString("fakesessiontoken")
-            })
-            {
-                Properties = {
-                    Description = "test description"
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AmazonS3Compatible()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AmazonS3CompatibleLinkedService()
-            {
-                AccessKeyId = "fakeaccess",
-                SecretAccessKey = new DataFactorySecretString("fakekey"),
-                ServiceUri = "fakeserviceurl",
-                ForcePathStyle = true
-            })
-            {
-                Properties = {
-                    Description = "test description"
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureDataLakeStore()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureDataLakeStoreLinkedService("fakeUrl")
-            {
-                ServicePrincipalId = "fakeid",
-                ServicePrincipalKey = new DataFactorySecretString("fakeKey"),
-            })
-            {
-                Properties = {
-                    Description = "test description"
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureSearch()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureSearchLinkedService("fakeUrl")
-            {
-                Key = new DataFactorySecretString("fakeKey"),
-            })
-            {
-                Properties = {
-                    Description = "test description"
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_FtpServer()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new FtpServerLinkedService("fakeHost")
-            {
-                AuthenticationType = FtpAuthenticationType.Basic,
-                UserName = "fakeName",
-                Password = new DataFactorySecretString("fakePassword")
-            })
-            {
-                Properties = {
-                    Description = "test description"
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_Sftp()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SftpServerLinkedService("fakeHost")
-            {
-                AuthenticationType = SftpAuthenticationType.Basic,
-                UserName = "fakeName",
-                Password = new DataFactorySecretString("fakePassword"),
-                PrivateKeyPath = "fakeprivateKeyPath",
-                PrivateKeyContent = new DataFactorySecretString("fakeprivateKeyContent")
-            })
-            {
-                Properties = {
-                    Description = "test description"
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_SapBW()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SapBWLinkedService("fakeServer", "fakeNumber", "fakeId")
-            {
-                UserName = "fakeName",
-                Password = new DataFactorySecretString("fakePassword"),
-            })
-            {
-                Properties = {
-                    Description = "test description"
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_SapHana()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SapHanaLinkedService()
-            {
-                Server = "fakeserver",
-                AuthenticationType = SapHanaAuthenticationType.Basic,
-                UserName = "fakeName",
-                Password = new DataFactorySecretString("fakePassword"),
-            })
-            {
-                Properties = {
-                    Description = "test description"
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureMySql()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureMySqlLinkedService(DataFactoryElement<string>.FromSecretString("Server=myServerAddress.mysql.database.azure.com;Port=3306;Database=myDataBase;Uid=myUsername@myServerAddress;Pwd=myPassword;SslMode=Required;")) { });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureMySql_AzureKeyValue()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureMySqlLinkedService(DataFactoryElement<string>.FromSecretString("fakestring"))
-            {
-                Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1"),
+                    AuthenticationType = "Basic",
+                    Port = 1234,
+                    Username = "admin",
+                    Password = new DataFactorySecretString("fakepassword"),
+                    EncryptedCredential = "fake credential"
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_AmazonMWS()
+        public async Task LinkedService_Dynamics_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AmazonMwsLinkedService("mws,amazonservices.com", "A2EUQ1WTGCTBG2", "ACGMZIK6QTD9T", "128393242334")
+            await LinkedSerivceCreate("dynamics", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                MwsAuthToken = new DataFactorySecretString("fakeMwsAuthToken"),
-                SecretKey = new DataFactorySecretString("fakeSecretKey"),
-                UseEncryptedEndpoints = true,
-                UseHostVerification = true,
-                UsePeerVerification = true,
+                return new DataFactoryLinkedServiceData(new DynamicsLinkedService("Online", "Office365")
+                {
+                    Username = "admin",
+                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_AzurePostgreSql()
+        public async Task LinkedService_Dynamics_S2S_Key_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzurePostgreSqlLinkedService()
+            await LinkedSerivceCreate("dynamics", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ConnectionString = DataFactoryElement<string>.FromKeyVaultSecretReference(new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName"))
+                return new DataFactoryLinkedServiceData(new DynamicsLinkedService("Online", "AadServicePrincipal")
+                {
+                    ServicePrincipalCredentialType = "ServicePrincipalKey",
+                    ServicePrincipalId = "9bf5d9fd - 5dcd - 46a5 - b99b - 77d69adb2567",
+                    ServicePrincipalCredential = new DataFactorySecretString("fakepassword")
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_AzurePostgreSql_AzureKeyValue()
+        public async Task LinkedService_Dynamics_S2S_Cert_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzurePostgreSqlLinkedService()
+            await LinkedSerivceCreate("dynamics", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1"),
-                ConnectionString = DataFactoryElement<string>.FromKeyVaultSecretReference(new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName"))
+                return new DataFactoryLinkedServiceData(new DynamicsLinkedService("Online", "AadServicePrincipal")
+                {
+                    ServicePrincipalCredentialType = "ServicePrincipalKey",
+                    ServicePrincipalId = "9bf5d9fd - 5dcd - 46a5 - b99b - 77d69adb2567",
+                    ServicePrincipalCredential = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Concur()
+        public async Task LinkedService_Dynamics_organizationName_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new ConcurLinkedService("f145kn9Pcyq9pr4lvumdapfl4rive", "jsmith")
+            await LinkedSerivceCreate("dynamics", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Password = new DataFactorySecretString("somesecret"),
-                UseEncryptedEndpoints = true,
-                UseHostVerification = true,
-                UsePeerVerification = true,
+                return new DataFactoryLinkedServiceData(new DynamicsLinkedService("Online", "Office365")
+                {
+                    HostName = "hostname.com",
+                    Port = 1234,
+                    OrganizationName = "contoso",
+                    Username = "fakeuser@contoso.com",
+                    Password = new DataFactorySecretString("fakepassword"),
+                    EncryptedCredential = "fake credential"
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Couchbase()
+        public async Task LinkedService_DynamicsCrm_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new CouchbaseLinkedService()
+            await LinkedSerivceCreate("dynamics", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ConnectionString = DataFactoryElement<string>.FromSecretString("some connection string"),
+                return new DataFactoryLinkedServiceData(new DynamicsCrmLinkedService("Online", "Office365")
+                {
+                    HostName = "hostname.com",
+                    Port = 1234,
+                    OrganizationName = "contoso",
+                    Username = "fakeuser@contoso.com",
+                    Password = new DataFactorySecretString("fakepassword"),
+                    EncryptedCredential = "fake credential"
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Couchbase_AzureKeyValue()
+        public async Task LinkedService_DynamicsCrm_S2S_Key_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new CouchbaseLinkedService()
+            await LinkedSerivceCreate("dynamics", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ConnectionString = DataFactoryElement<string>.FromSecretString("some connection string"),
-                CredString = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1"),
+                return new DataFactoryLinkedServiceData(new DynamicsCrmLinkedService("Online", "Office365")
+                {
+                    ServicePrincipalCredentialType = "ServicePrincipalKey",
+                    ServicePrincipalId = "9bf5d9fd - 5dcd - 46a5 - b99b - 77d69adb2567",
+                    ServicePrincipalCredential = new DataFactorySecretString("fakepassword")
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Drill()
+        public async Task LinkedService_DynamicsCrm_S2S_Cert_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new DrillLinkedService()
+            await LinkedSerivceCreate("dynamics", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ConnectionString = DataFactoryElement<string>.FromSecretString("some connection string"),
+                return new DataFactoryLinkedServiceData(new DynamicsCrmLinkedService("Online", "Office365")
+                {
+                    ServicePrincipalCredentialType = "ServicePrincipalKey",
+                    ServicePrincipalId = "9bf5d9fd - 5dcd - 46a5 - b99b - 77d69adb2567",
+                    ServicePrincipalCredential = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Drill_AzureKeyValue()
+        public async Task LinkedService_CommonDataServiceForApps_S2S_Key_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new DrillLinkedService()
+            await LinkedSerivceCreate("commondataserver", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ConnectionString = DataFactoryElement<string>.FromSecretString("some connection string"),
-                Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                return new DataFactoryLinkedServiceData(new CommonDataServiceForAppsLinkedService("Online", "AadServicePrincipal")
+                {
+                    ServicePrincipalCredentialType = "ServicePrincipalKey",
+                    ServicePrincipalId = "9bf5d9fd - 5dcd - 46a5 - b99b - 77d69adb2567",
+                    ServicePrincipalCredential = new DataFactorySecretString("fakepassword")
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Eloqua()
+        public async Task LinkedService_CommonDataServiceForApps_S2S_Cert_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new EloquaLinkedService("eloqua.example.com", "username")
+            await LinkedSerivceCreate("commondataserver", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Password = new DataFactorySecretString("some secret"),
-                UseEncryptedEndpoints = true,
-                UseHostVerification = true,
-                UsePeerVerification = true,
+                return new DataFactoryLinkedServiceData(new CommonDataServiceForAppsLinkedService("Online", "AadServicePrincipal")
+                {
+                    ServicePrincipalCredentialType = "ServicePrincipalKey",
+                    ServicePrincipalId = "9bf5d9fd - 5dcd - 46a5 - b99b - 77d69adb2567",
+                    ServicePrincipalCredential = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName")
+                })
+                {
+                    Properties =
+                    {
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_GoogleAdWords()
+        public async Task LinkedService_CommonDataServiceForApps_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new GoogleAdWordsLinkedService()
+            await LinkedSerivceCreate("commondataserver", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ClientCustomerId = "myclientcustomerID",
-                DeveloperToken = new DataFactorySecretString("some secret"),
-                AuthenticationType = GoogleAdWordsAuthenticationType.ServiceAuthentication,
-                RefreshToken = new DataFactorySecretString("some secret"),
-                ClientId = "MyclientID",
-                ClientSecret = new DataFactorySecretString("some secret"),
-                Email = "someone@microsoft.com",
-                KeyFilePath = "Mykeyfilepath",
-                TrustedCertPath = "mytrustedCetpath",
-                UseSystemTrustStore = true,
+                return new DataFactoryLinkedServiceData(new CommonDataServiceForAppsLinkedService("Online", "Office365")
+                {
+                    HostName = "hostname.com",
+                    Port = 1234,
+                    OrganizationName = "contoso",
+                    Username = "fakeuser@contoso.com",
+                    Password = new DataFactorySecretString("fakepassword"),
+                    EncryptedCredential = "fake credential"
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Greenplum()
+        public async Task LinkedService_Salesforce_Token_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new GreenplumLinkedService()
+            await LinkedSerivceCreate("salesforce", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ConnectionString = "SecureString"
+                return new DataFactoryLinkedServiceData(new SalesforceLinkedService()
+                {
+                    EnvironmentUri = "Uri",
+                    Username = "admin",
+                    Password = new DataFactorySecretString("fakepassword"),
+                    SecurityToken = new DataFactorySecretString("fakeToken"),
+                    ApiVersion = "27.0"
+                })
+                {
+                    Properties =
+                    {
+                        Description = "test description"
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Greenplum_AzureKeyValue()
+        public async Task LinkedService_Salesforce_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new GreenplumLinkedService()
+            await LinkedSerivceCreate("salesforce", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ConnectionString = "SecureString",
-                Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                return new DataFactoryLinkedServiceData(new SalesforceLinkedService()
+                {
+                    EnvironmentUri = "Uri",
+                    Username = "admin",
+                    Password = new DataFactorySecretString("fakepassword"),
+                    ApiVersion = "27.0"
+                })
+                {
+                    Properties =
+                    {
+                        Description = "test description"
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_HBase()
+        public async Task LinkedService_Salesforce_AzureKeyValue_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new HBaseLinkedService("192.168.12.122", HBaseAuthenticationType.Anonymous)
+            await LinkedSerivceCreate("salesforce", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                HttpPath = "/gateway/sandbox/hbase/version",
-                EnableSsl = true,
-                AllowHostNameCNMismatch = true,
-                AllowSelfSignedServerCert = true,
+                return new DataFactoryLinkedServiceData(new SalesforceLinkedService()
+                {
+                    EnvironmentUri = "Uri",
+                    Username = "admin",
+                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1"),
+                    SecurityToken = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName2"),
+                    ApiVersion = "27.0"
+                })
+                {
+                    Properties =
+                    {
+                        Description = "test description"
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Hive()
+        public async Task LinkedService_SalesforceServiceCloud_Token_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new HiveLinkedService("192.168.12.122", HiveAuthenticationType.Anonymous)
+            await LinkedSerivceCreate("salesforce", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Port = 1000,
-                ServerType = "Hiveserver",
-                ThriftTransportProtocol = HiveThriftTransportProtocol.Binary,
-                ServiceDiscoveryMode = true,
-                ZooKeeperNameSpace = "",
-                UseNativeQuery = true,
-                Username = "name",
-                Password = new DataFactorySecretString("some secret"),
-                TrustedCertPath = "",
-                HttpPath = "/gateway/sandbox/hbase/version",
-                EnableSsl = true,
-                UseSystemTrustStore = true,
-                AllowHostNameCNMismatch = true,
-                AllowSelfSignedServerCert = true,
+                return new DataFactoryLinkedServiceData(new SalesforceServiceCloudLinkedService()
+                {
+                    EnvironmentUri = "Uri",
+                    Username = "admin",
+                    Password = new DataFactorySecretString("fakepassword"),
+                    SecurityToken = new DataFactorySecretString("faketoken"),
+                    ApiVersion = "27.0"
+                })
+                {
+                    Properties =
+                    {
+                        Description = "test description"
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Hubspot()
+        public async Task LinkedService_SalesforceServiceCloud_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new HubspotLinkedService("11b5516f1322-11e6-9653-93a39db85acf")
+            await LinkedSerivceCreate("salesforce", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ClientSecret = new DataFactorySecretString("abCD+E1f2Gxhi3J4klmN/OP5QrSTuvwXYzabcdEF"),
-                AccessToken = new DataFactorySecretString("some secret"),
-                RefreshToken = new DataFactorySecretString("some secret"),
-                UseEncryptedEndpoints = true,
-                UseHostVerification = true,
-                UsePeerVerification = true,
+                return new DataFactoryLinkedServiceData(new SalesforceServiceCloudLinkedService()
+                {
+                    EnvironmentUri = "Uri",
+                    Username = "admin",
+                    Password = new DataFactorySecretString("fakepassword"),
+                    ApiVersion = "27.0"
+                })
+                {
+                    Properties =
+                    {
+                        Description = "test description"
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Impala()
+        public async Task LinkedService_SalesforceMarketingCloud_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new ImpalaLinkedService("192.168.12.122", ImpalaAuthenticationType.Anonymous)
+            await LinkedSerivceCreate("salesforce", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Username = "",
-                Password = new DataFactorySecretString("some secret"),
-                EnableSsl = true,
-                TrustedCertPath = "",
-                UseSystemTrustStore = true,
-                AllowHostNameCNMismatch = true,
-                AllowSelfSignedServerCert = true,
+                return new DataFactoryLinkedServiceData(new SalesforceMarketingCloudLinkedService()
+                {
+                    ClientId = "clientid",
+                    ClientSecret = new DataFactorySecretString("fakepassword")
+                })
+                {
+                    Properties =
+                    {
+                        Description = "test description"
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Jira()
+        public async Task LinkedService_SalesforceMarketingCloud_connection_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new JiraLinkedService("192.168.12.122", "skroob")
+            await LinkedSerivceCreate("salesforce", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Port = 1000,
-                Password = new DataFactorySecretString("some secret"),
+                return new DataFactoryLinkedServiceData(new SalesforceMarketingCloudLinkedService()
+                {
+                    ClientId = "fakeClientId",
+                    ClientSecret = new DataFactorySecretString("fakeClientSecret")
+                })
+                {
+                    Properties =
+                    {
+                        Description = "test description"
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Magento()
+        public async Task LinkedService_MongoDb_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new MagentoLinkedService("192.168.12.122")
+            await LinkedSerivceCreate("salesforce", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                AccessToken = new DataFactorySecretString("some secret"),
+                return new DataFactoryLinkedServiceData(new MongoDBLinkedService("fakeserver.com", "fakedb")
+                {
+                    AuthenticationType = "Basic",
+                    Port = 1234,
+                    Username = "fakeuser@contoso.com",
+                    Password = new DataFactorySecretString("fakepassword"),
+                    AuthSource = "fackadmindb",
+                    EncryptedCredential = "fake credential"
+                })
+                {
+                    Properties =
+                    {
+                        Description = "test description",
+                        ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Mariadb()
+        public async Task LinkedService_AmazonRedshift_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new MariaDBLinkedService()
+            await LinkedSerivceCreate("amazon", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ConnectionString = DataFactoryElement<string>.FromSecretString("Server=mydemoserver.mariadb.database.azure.com; Port=3306; Database=wpdb; Uid=WPAdmin@mydemoserver; Pwd=mypassword!2; SslMode=Required;\r\n")
+                return new DataFactoryLinkedServiceData(new AmazonRedshiftLinkedService("fakeserver.com", "fakedb")
+                {
+                    Port = 1234,
+                    Username = "fakeuser@contoso.com",
+                    Password = new DataFactorySecretString("fakepassword"),
+                })
+                {
+                    Properties =
+                    {
+                        Description = "test description"
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_MongoDbAtlas()
+        public async Task LinkedService_AmazonS3_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new MongoDBAtlasLinkedService(DataFactoryElement<string>.FromSecretString("mongodb://username:password@localhost:27017/?authSource=admin"), "database") { });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureMariadb()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureMariaDBLinkedService()
+            await LinkedSerivceCreate("amazon", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ConnectionString = DataFactoryElement<string>.FromSecretString("Server=mydemoserver.mariadb.database.azure.com; Port=3306; Database=wpdb; Uid=fakeUsername; Pwd=fakePassword; SslMode=Required;")
+                return new DataFactoryLinkedServiceData(new AmazonS3LinkedService()
+                {
+                    AccessKeyId = "fakeaccess",
+                    SecretAccessKey = new DataFactorySecretString("fakekey")
+                })
+                {
+                    Properties =
+                    {
+                        Description = "test description"
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Mariadb_AzureKeyValue()
+        public async Task LinkedService_AmazonS3_sessionToken_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new MariaDBLinkedService()
+            await LinkedSerivceCreate("amazon", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ConnectionString = DataFactoryElement<string>.FromSecretString("some connnection secret"),
-                Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                return new DataFactoryLinkedServiceData(new AmazonS3LinkedService()
+                {
+                    AuthenticationType = "TemporarySecurityCredentials",
+                    AccessKeyId = "fakeaccess",
+                    SecretAccessKey = new DataFactorySecretString("fakekey"),
+                    SessionToken = new DataFactorySecretString("fakesessiontoken")
+                })
+                {
+                    Properties =
+                    {
+                        Description = "test description"
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Marketo()
+        public async Task LinkedService_AmazonS3Compatible_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new MarketoLinkedService("123-ABC-321.mktorest.com", "fakeClientId")
+            await LinkedSerivceCreate("amazon", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ClientSecret = new DataFactorySecretString("some secret"),
-                UseEncryptedEndpoints = true,
-                UseHostVerification = true,
-                UsePeerVerification = true,
+                return new DataFactoryLinkedServiceData(new AmazonS3CompatibleLinkedService()
+                {
+                    AccessKeyId = "fakeaccess",
+                    SecretAccessKey = new DataFactorySecretString("fakekey"),
+                    ServiceUri = "fakeserviceurl",
+                    ForcePathStyle = true
+                })
+                {
+                    Properties =
+                    {
+                        Description = "test description"
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Paypal()
+        public async Task LinkedService_AzureDataLakeStore_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new MarketoLinkedService("api.sandbox.paypal.com", "fakeClientId")
+            await LinkedSerivceCreate("adls", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ClientSecret = new DataFactorySecretString("some secret"),
-                UseEncryptedEndpoints = true,
-                UseHostVerification = true,
-                UsePeerVerification = true,
+                return new DataFactoryLinkedServiceData(new AzureDataLakeStoreLinkedService("fakeUrl")
+                {
+                    ServicePrincipalId = "fakeid",
+                    ServicePrincipalKey = new DataFactorySecretString("fakeKey"),
+                })
+                {
+                    Properties =
+                    {
+                        Description = "test description"
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Phoenix()
+        public async Task LinkedService_AzureSearch_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new PhoenixLinkedService("192.168.222.160", PhoenixAuthenticationType.Anonymous)
+            await LinkedSerivceCreate("azuresearch", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Port = 443,
-                HttpPath = "/gateway/sandbox/phoenix/version",
-                EnableSsl = true,
-                UseSystemTrustStore = true,
-                AllowHostNameCNMismatch = true,
-                AllowSelfSignedServerCert = true,
+                return new DataFactoryLinkedServiceData(new AzureSearchLinkedService("fakeUrl")
+                {
+                    Key = new DataFactorySecretString("fakeKey"),
+                })
+                {
+                    Properties =
+                    {
+                        Description = "test description"
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Presto()
+        public async Task LinkedService_FtpServer_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new PrestoLinkedService("192.168.222.160", "0.148-t", "test", PrestoAuthenticationType.Anonymous)
+            await LinkedSerivceCreate("ftp", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Username = "test",
-                Password = new DataFactorySecretString("some secret"),
-                EnableSsl = true,
-                TrustedCertPath = "",
-                UseSystemTrustStore = true,
-                AllowHostNameCNMismatch = true,
-                AllowSelfSignedServerCert = true,
+                return new DataFactoryLinkedServiceData(new FtpServerLinkedService("fakeHost")
+                {
+                    AuthenticationType = FtpAuthenticationType.Basic,
+                    UserName = "fakeName",
+                    Password = new DataFactorySecretString("fakePassword")
+                })
+                {
+                    Properties =
+                    {
+                        Description = "test description"
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_QuickBooks()
+        public async Task LinkedService_Sftp_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new QuickBooksLinkedService()
+            await LinkedSerivceCreate("sftp", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Endpoint = "quickbooks.api.intuit.com",
-                CompanyId = "fakeCompanyId",
-                ConsumerKey = "fakeConsumerKey",
-                ConsumerSecret = new DataFactorySecretString("some secret"),
-                AccessToken = new DataFactorySecretString("some secret"),
-                AccessTokenSecret = new DataFactorySecretString("some secret"),
-                UseEncryptedEndpoints = true,
+                return new DataFactoryLinkedServiceData(new SftpServerLinkedService("fakeHost")
+                {
+                    AuthenticationType = SftpAuthenticationType.Basic,
+                    UserName = "fakeName",
+                    Password = new DataFactorySecretString("fakePassword"),
+                    PrivateKeyPath = "fakeprivateKeyPath",
+                    PrivateKeyContent = new DataFactorySecretString("fakeprivateKeyContent")
+                })
+                {
+                    Properties =
+                    {
+                        Description = "test description"
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_ServiceNow()
+        public async Task LinkedService_SapBW_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new ServiceNowLinkedService("http://instance.service-now.com", ServiceNowAuthenticationType.Basic)
+            await LinkedSerivceCreate("sap", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Username = "admin",
-                Password = new DataFactorySecretString("some secret")
+                return new DataFactoryLinkedServiceData(new SapBWLinkedService("fakeServer", "fakeNumber", "fakeId")
+                {
+                    UserName = "fakeName",
+                    Password = new DataFactorySecretString("fakePassword"),
+                })
+                {
+                    Properties =
+                    {
+                        Description = "test description"
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Shopify()
+        public async Task LinkedService_SapHana_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new ShopifyLinkedService("mystore.myshopify.com")
+            await LinkedSerivceCreate("sap", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                AccessToken = new DataFactorySecretString("some secret"),
-                UseEncryptedEndpoints = true,
-                UseHostVerification = true,
-                UsePeerVerification = true,
+                return new DataFactoryLinkedServiceData(new SapHanaLinkedService()
+                {
+                    Server = "fakeserver",
+                    AuthenticationType = SapHanaAuthenticationType.Basic,
+                    UserName = "fakeName",
+                    Password = new DataFactorySecretString("fakePassword"),
+                })
+                {
+                    Properties =
+                    {
+                        Description = "test description"
+                    }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Spark()
+        public async Task LinkedService_AzureMySql_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SparkLinkedService("myserver", 443, SparkAuthenticationType.WindowsAzureHDInsightService)
+            await LinkedSerivceCreate("azuresql", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ServerType = SparkServerType.SharkServer,
-                ThriftTransportProtocol = SparkThriftTransportProtocol.Binary,
-                Username = "admin",
-                Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "HuF3pmB3tylfer63MAbxTAGeVFyteGa+YIHFKPc2IguJqXwUOtvFUwMOeeX/ARhsUlt3xhS7b6XmNfGx2HVk5A=="),
-                HttpPath = "/",
-                EnableSsl = true,
-                UseSystemTrustStore = true,
-                AllowHostNameCNMismatch = true,
-                AllowSelfSignedServerCert = true
+                return new DataFactoryLinkedServiceData(new AzureMySqlLinkedService(DataFactoryElement<string>.FromSecretString("Server=myServerAddress.mysql.database.azure.com;Port=3306;Database=myDataBase;Uid=myUsername@myServerAddress;Pwd=myPassword;SslMode=Required;")) { });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Square()
+        public async Task LinkedService_AzureMySql_AzureKeyValue_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SquareLinkedService()
+            await LinkedSerivceCreate("azuresql", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Host = "mystore.mysquare.com",
-                ClientId = "clientIdFake",
-                ClientSecret = new DataFactorySecretString("some secret"),
-                RedirectUri = "http://localhost:2500",
-                UseEncryptedEndpoints = true,
-                UseHostVerification = true,
-                UsePeerVerification = true
+                return new DataFactoryLinkedServiceData(new AzureMySqlLinkedService(DataFactoryElement<string>.FromSecretString("fakestring"))
+                {
+                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1"),
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Square_ConnectionProperties()
+        public async Task LinkedService_AmazonMWS_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SquareLinkedService()
+            await LinkedSerivceCreate("amazon", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ConnectionProperties = BinaryData.FromString(@"{
+                return new DataFactoryLinkedServiceData(new AmazonMwsLinkedService("mws,amazonservices.com", "A2EUQ1WTGCTBG2", "ACGMZIK6QTD9T", "128393242334")
+                {
+                    MwsAuthToken = new DataFactorySecretString("fakeMwsAuthToken"),
+                    SecretKey = new DataFactorySecretString("fakeSecretKey"),
+                    UseEncryptedEndpoints = true,
+                    UseHostVerification = true,
+                    UsePeerVerification = true,
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_AzurePostgreSql_Create()
+        {
+            await LinkedSerivceCreate("azurepostgre", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new AzurePostgreSqlLinkedService()
+                {
+                    ConnectionString = DataFactoryElement<string>.FromKeyVaultSecretReference(new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName"))
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_AzurePostgreSql_AzureKeyValue_Create()
+        {
+            await LinkedSerivceCreate("azurepostgre", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new AzurePostgreSqlLinkedService()
+                {
+                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1"),
+                    ConnectionString = DataFactoryElement<string>.FromKeyVaultSecretReference(new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName"))
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Concur_Create()
+        {
+            await LinkedSerivceCreate("concur", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new ConcurLinkedService("f145kn9Pcyq9pr4lvumdapfl4rive", "jsmith")
+                {
+                    Password = new DataFactorySecretString("somesecret"),
+                    UseEncryptedEndpoints = true,
+                    UseHostVerification = true,
+                    UsePeerVerification = true,
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Couchbase_Create()
+        {
+            await LinkedSerivceCreate("couchbase", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new CouchbaseLinkedService()
+                {
+                    ConnectionString = DataFactoryElement<string>.FromSecretString("some connection string"),
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Couchbase_AzureKeyValue_Create()
+        {
+            await LinkedSerivceCreate("azurekeyvalue", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new CouchbaseLinkedService()
+                {
+                    ConnectionString = DataFactoryElement<string>.FromSecretString("some connection string"),
+                    CredString = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1"),
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Drill_Create()
+        {
+            await LinkedSerivceCreate("drill", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new DrillLinkedService()
+                {
+                    ConnectionString = DataFactoryElement<string>.FromSecretString("some connection string"),
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Drill_AzureKeyValue_Create()
+        {
+            await LinkedSerivceCreate("drill", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new DrillLinkedService()
+                {
+                    ConnectionString = DataFactoryElement<string>.FromSecretString("some connection string"),
+                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Eloqua_Create()
+        {
+            await LinkedSerivceCreate("eloqua", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new EloquaLinkedService("eloqua.example.com", "username")
+                {
+                    Password = new DataFactorySecretString("some secret"),
+                    UseEncryptedEndpoints = true,
+                    UseHostVerification = true,
+                    UsePeerVerification = true,
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_GoogleAdWords_Create()
+        {
+            await LinkedSerivceCreate("google", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new GoogleAdWordsLinkedService()
+                {
+                    ClientCustomerId = "myclientcustomerID",
+                    DeveloperToken = new DataFactorySecretString("some secret"),
+                    AuthenticationType = GoogleAdWordsAuthenticationType.ServiceAuthentication,
+                    RefreshToken = new DataFactorySecretString("some secret"),
+                    ClientId = "MyclientID",
+                    ClientSecret = new DataFactorySecretString("some secret"),
+                    Email = "someone@microsoft.com",
+                    KeyFilePath = "Mykeyfilepath",
+                    TrustedCertPath = "mytrustedCetpath",
+                    UseSystemTrustStore = true,
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Greenplum_Create()
+        {
+            await LinkedSerivceCreate("greeplum", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new GreenplumLinkedService()
+                {
+                    ConnectionString = "SecureString"
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Greenplum_AzureKeyValue_Create()
+        {
+            await LinkedSerivceCreate("greeplum", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new GreenplumLinkedService()
+                {
+                    ConnectionString = "SecureString",
+                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_HBase_Create()
+        {
+            await LinkedSerivceCreate("hbase", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new HBaseLinkedService("192.168.12.122", HBaseAuthenticationType.Anonymous)
+                {
+                    HttpPath = "/gateway/sandbox/hbase/version",
+                    EnableSsl = true,
+                    AllowHostNameCNMismatch = true,
+                    AllowSelfSignedServerCert = true,
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Hive_Create()
+        {
+            await LinkedSerivceCreate("hive", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new HiveLinkedService("192.168.12.122", HiveAuthenticationType.Anonymous)
+                {
+                    Port = 1000,
+                    ServerType = "Hiveserver",
+                    ThriftTransportProtocol = HiveThriftTransportProtocol.Binary,
+                    ServiceDiscoveryMode = true,
+                    ZooKeeperNameSpace = "",
+                    UseNativeQuery = true,
+                    Username = "name",
+                    Password = new DataFactorySecretString("some secret"),
+                    TrustedCertPath = "",
+                    HttpPath = "/gateway/sandbox/hbase/version",
+                    EnableSsl = true,
+                    UseSystemTrustStore = true,
+                    AllowHostNameCNMismatch = true,
+                    AllowSelfSignedServerCert = true,
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Hubspot_Create()
+        {
+            await LinkedSerivceCreate("hubspot", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new HubspotLinkedService("11b5516f1322-11e6-9653-93a39db85acf")
+                {
+                    ClientSecret = new DataFactorySecretString("abCD+E1f2Gxhi3J4klmN/OP5QrSTuvwXYzabcdEF"),
+                    AccessToken = new DataFactorySecretString("some secret"),
+                    RefreshToken = new DataFactorySecretString("some secret"),
+                    UseEncryptedEndpoints = true,
+                    UseHostVerification = true,
+                    UsePeerVerification = true,
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Impala_Create()
+        {
+            await LinkedSerivceCreate("impala", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new ImpalaLinkedService("192.168.12.122", ImpalaAuthenticationType.Anonymous)
+                {
+                    Username = "",
+                    Password = new DataFactorySecretString("some secret"),
+                    EnableSsl = true,
+                    TrustedCertPath = "",
+                    UseSystemTrustStore = true,
+                    AllowHostNameCNMismatch = true,
+                    AllowSelfSignedServerCert = true,
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Jira_Create()
+        {
+            await LinkedSerivceCreate("jira", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new JiraLinkedService("192.168.12.122", "skroob")
+                {
+                    Port = 1000,
+                    Password = new DataFactorySecretString("some secret"),
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Magento_Create()
+        {
+            await LinkedSerivceCreate("magento", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new MagentoLinkedService("192.168.12.122")
+                {
+                    AccessToken = new DataFactorySecretString("some secret"),
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Mariadb_Create()
+        {
+            await LinkedSerivceCreate("mariadb", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new MariaDBLinkedService()
+                {
+                    ConnectionString = DataFactoryElement<string>.FromSecretString("Server=mydemoserver.mariadb.database.azure.com; Port=3306; Database=wpdb; Uid=WPAdmin@mydemoserver; Pwd=mypassword!2; SslMode=Required;\r\n")
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_MongoDbAtlas_Create()
+        {
+            await LinkedSerivceCreate("mongodb", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new MongoDBAtlasLinkedService(DataFactoryElement<string>.FromSecretString("mongodb://username:password@localhost:27017/?authSource=admin"), "database") { });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_AzureMariadb_Create()
+        {
+            await LinkedSerivceCreate("azuremariadb", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new AzureMariaDBLinkedService()
+                {
+                    ConnectionString = DataFactoryElement<string>.FromSecretString("Server=mydemoserver.mariadb.database.azure.com; Port=3306; Database=wpdb; Uid=fakeUsername; Pwd=fakePassword; SslMode=Required;")
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Mariadb_AzureKeyValue_Create()
+        {
+            await LinkedSerivceCreate("mongodb", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new MariaDBLinkedService()
+                {
+                    ConnectionString = DataFactoryElement<string>.FromSecretString("some connnection secret"),
+                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Marketo_Create()
+        {
+            await LinkedSerivceCreate("marketo", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new MarketoLinkedService("123-ABC-321.mktorest.com", "fakeClientId")
+                {
+                    ClientSecret = new DataFactorySecretString("some secret"),
+                    UseEncryptedEndpoints = true,
+                    UseHostVerification = true,
+                    UsePeerVerification = true,
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Paypal_Create()
+        {
+            await LinkedSerivceCreate("paypal", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new MarketoLinkedService("api.sandbox.paypal.com", "fakeClientId")
+                {
+                    ClientSecret = new DataFactorySecretString("some secret"),
+                    UseEncryptedEndpoints = true,
+                    UseHostVerification = true,
+                    UsePeerVerification = true,
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Phoenix_Create()
+        {
+            await LinkedSerivceCreate("phoenix", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new PhoenixLinkedService("192.168.222.160", PhoenixAuthenticationType.Anonymous)
+                {
+                    Port = 443,
+                    HttpPath = "/gateway/sandbox/phoenix/version",
+                    EnableSsl = true,
+                    UseSystemTrustStore = true,
+                    AllowHostNameCNMismatch = true,
+                    AllowSelfSignedServerCert = true,
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Presto_Create()
+        {
+            await LinkedSerivceCreate("presto", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new PrestoLinkedService("192.168.222.160", "0.148-t", "test", PrestoAuthenticationType.Anonymous)
+                {
+                    Username = "test",
+                    Password = new DataFactorySecretString("some secret"),
+                    EnableSsl = true,
+                    TrustedCertPath = "",
+                    UseSystemTrustStore = true,
+                    AllowHostNameCNMismatch = true,
+                    AllowSelfSignedServerCert = true,
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_QuickBooks_Create()
+        {
+            await LinkedSerivceCreate("quickbooks", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new QuickBooksLinkedService()
+                {
+                    Endpoint = "quickbooks.api.intuit.com",
+                    CompanyId = "fakeCompanyId",
+                    ConsumerKey = "fakeConsumerKey",
+                    ConsumerSecret = new DataFactorySecretString("some secret"),
+                    AccessToken = new DataFactorySecretString("some secret"),
+                    AccessTokenSecret = new DataFactorySecretString("some secret"),
+                    UseEncryptedEndpoints = true,
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_ServiceNow_Create()
+        {
+            await LinkedSerivceCreate("servicenow", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new ServiceNowLinkedService("http://instance.service-now.com", ServiceNowAuthenticationType.Basic)
+                {
+                    Username = "admin",
+                    Password = new DataFactorySecretString("some secret")
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Shopify_Create()
+        {
+            await LinkedSerivceCreate("shopify", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new ShopifyLinkedService("mystore.myshopify.com")
+                {
+                    AccessToken = new DataFactorySecretString("some secret"),
+                    UseEncryptedEndpoints = true,
+                    UseHostVerification = true,
+                    UsePeerVerification = true,
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Spark_Create()
+        {
+            await LinkedSerivceCreate("spark", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new SparkLinkedService("myserver", 443, SparkAuthenticationType.WindowsAzureHDInsightService)
+                {
+                    ServerType = SparkServerType.SharkServer,
+                    ThriftTransportProtocol = SparkThriftTransportProtocol.Binary,
+                    Username = "admin",
+                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "HuF3pmB3tylfer63MAbxTAGeVFyteGa+YIHFKPc2IguJqXwUOtvFUwMOeeX/ARhsUlt3xhS7b6XmNfGx2HVk5A=="),
+                    HttpPath = "/",
+                    EnableSsl = true,
+                    UseSystemTrustStore = true,
+                    AllowHostNameCNMismatch = true,
+                    AllowSelfSignedServerCert = true
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Square_Create()
+        {
+            await LinkedSerivceCreate("square", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new SquareLinkedService()
+                {
+                    Host = "mystore.mysquare.com",
+                    ClientId = "clientIdFake",
+                    ClientSecret = new DataFactorySecretString("some secret"),
+                    RedirectUri = "http://localhost:2500",
+                    UseEncryptedEndpoints = true,
+                    UseHostVerification = true,
+                    UsePeerVerification = true
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Square_ConnectionProperties_Create()
+        {
+            await LinkedSerivceCreate("square", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new SquareLinkedService()
+                {
+                    ConnectionProperties = BinaryData.FromString(@"{
                     ""host"": ""mystore.mysquare.com"",
                     ""clientId"": ""clientIdFake"",
                     ""clientSecret"": {
@@ -3088,55 +2014,37 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     ""useHostVerification"": true,
                     ""usePeerVerification"": true
                 }")
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Xero()
+        public async Task LinkedService_Xero_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new XeroLinkedService()
+            await LinkedSerivceCreate("xero", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Host = "api.xero.com",
-                ConsumerKey = new DataFactorySecretString("some secret"),
-                PrivateKey = new DataFactorySecretString("some secret"),
-                UseEncryptedEndpoints = true,
-                UseHostVerification = true,
-                UsePeerVerification = true
+                return new DataFactoryLinkedServiceData(new XeroLinkedService()
+                {
+                    Host = "api.xero.com",
+                    ConsumerKey = new DataFactorySecretString("some secret"),
+                    PrivateKey = new DataFactorySecretString("some secret"),
+                    UseEncryptedEndpoints = true,
+                    UseHostVerification = true,
+                    UsePeerVerification = true
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Xero_ConnectionProperties()
+        public async Task LinkedService_Xero_ConnectionProperties_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new XeroLinkedService()
+            await LinkedSerivceCreate("xero", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ConnectionProperties = BinaryData.FromString(@"{
+                return new DataFactoryLinkedServiceData(new XeroLinkedService()
+                {
+                    ConnectionProperties = BinaryData.FromString(@"{
                     ""host"": ""api.xero.com"",
                     ""consumerKey"": {
                         ""type"": ""SecureString"",
@@ -3150,54 +2058,36 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     ""useHostVerification"": true,
                     ""usePeerVerification"": true
                 }")
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Zoho()
+        public async Task LinkedService_Zoho_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new ZohoLinkedService()
+            await LinkedSerivceCreate("zoho", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Endpoint = "crm.zoho.com/crm/private",
-                AccessToken = new DataFactorySecretString("some secret"),
-                UseEncryptedEndpoints = true,
-                UseHostVerification = true,
-                UsePeerVerification = true
+                return new DataFactoryLinkedServiceData(new ZohoLinkedService()
+                {
+                    Endpoint = "crm.zoho.com/crm/private",
+                    AccessToken = new DataFactorySecretString("some secret"),
+                    UseEncryptedEndpoints = true,
+                    UseHostVerification = true,
+                    UsePeerVerification = true
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Zoho_ConnectionProperties()
+        public async Task LinkedService_Zoho_ConnectionProperties_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new ZohoLinkedService()
+            await LinkedSerivceCreate("zoho", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ConnectionProperties = BinaryData.FromString(@"{
+                return new DataFactoryLinkedServiceData(new ZohoLinkedService()
+                {
+                    ConnectionProperties = BinaryData.FromString(@"{
                     ""endpoint"": ""crm.zoho.com/crm/private"",
                     ""accessToken"": {
                         ""type"": ""SecureString"",
@@ -3207,28 +2097,19 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     ""useHostVerification"": true,
                     ""usePeerVerification"": true
                 }")
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_GoogleAdWords_ConnectionProperties()
+        public async Task LinkedService_GoogleAdWords_ConnectionProperties_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new GoogleAdWordsLinkedService()
+            await LinkedSerivceCreate("google", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ConnectionProperties = BinaryData.FromString(@"{
+                return new DataFactoryLinkedServiceData(new GoogleAdWordsLinkedService()
+                {
+                    ConnectionProperties = BinaryData.FromString(@"{
                 ""connectionProperties"": {
                 				""clientCustomerID"": ""fakeClientCustomerID"",
                 				""developerToken"": {
@@ -3237,745 +2118,451 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 				}
                 			}
                 }")
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Netezza()
+        public async Task LinkedService_Netezza_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new NetezzaLinkedService()
+            await LinkedSerivceCreate("netezza", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ConnectionString = DataFactoryElement<string>.FromSecretString("some connection string"),
-                Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
-            });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_Vertica()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new VerticaLinkedService()
-            {
-                ConnectionString = DataFactoryElement<string>.FromSecretString("some connection string"),
-            });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_Vertica_AzureKeyValue()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new VerticaLinkedService()
-            {
-                ConnectionString = DataFactoryElement<string>.FromSecretString("some connection string"),
-                Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
-            });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureDatabricks()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureDatabricksLinkedService("https://westeurope.azuredatabricks.net/")
-            {
-                AccessToken = new DataFactorySecretString("some secret"),
-                ExistingClusterId = "1215-091927-stems91",
-            });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-
-        public async Task LinkedService_AzureDatabricks_Script()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureDatabricksLinkedService("https://westeurope.azuredatabricks.net/")
-            {
-                AccessToken = new DataFactorySecretString("some secret"),
-                NewClusterVersion = "3.4.x-scala2.11",
-                NewClusterNumOfWorker = "1",
-                NewClusterNodeType = "Standard_DS3_v2",
-                NewClusterDriverNodeType = "Standard_DS3_v2",
-                NewClusterLogDestination = "dbfs:/test",
-                NewClusterInitScripts = new List<string>()
+                return new DataFactoryLinkedServiceData(new NetezzaLinkedService()
                 {
+                    ConnectionString = DataFactoryElement<string>.FromSecretString("some connection string"),
+                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Vertica_Create()
+        {
+            await LinkedSerivceCreate("vertica", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new VerticaLinkedService()
+                {
+                    ConnectionString = DataFactoryElement<string>.FromSecretString("some connection string"),
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Vertica_AzureKeyValue_Create()
+        {
+            await LinkedSerivceCreate("vertica", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new VerticaLinkedService()
+                {
+                    ConnectionString = DataFactoryElement<string>.FromSecretString("some connection string"),
+                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_AzureDatabricks_Create()
+        {
+            await LinkedSerivceCreate("adls", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new AzureDatabricksLinkedService("https://westeurope.azuredatabricks.net/")
+                {
+                    AccessToken = new DataFactorySecretString("some secret"),
+                    ExistingClusterId = "1215-091927-stems91",
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+
+        public async Task LinkedService_AzureDatabricks_Script_Create()
+        {
+            await LinkedSerivceCreate("azuredatabricks", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new AzureDatabricksLinkedService("https://westeurope.azuredatabricks.net/")
+                {
+                    AccessToken = new DataFactorySecretString("some secret"),
+                    NewClusterVersion = "3.4.x-scala2.11",
+                    NewClusterNumOfWorker = "1",
+                    NewClusterNodeType = "Standard_DS3_v2",
+                    NewClusterDriverNodeType = "Standard_DS3_v2",
+                    NewClusterLogDestination = "dbfs:/test",
+                    NewClusterInitScripts = new List<string>()
+                            {
                     "fakeScript"
-                },
-                NewClusterEnableElasticDisk = true
+                            },
+                    NewClusterEnableElasticDisk = true
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_AzureDatabricks_workspaceResourceId()
+        public async Task LinkedService_AzureDatabricks_workspaceResourceId_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureDatabricksLinkedService("https://westeurope.azuredatabricks.net/")
+            await LinkedSerivceCreate("azuredatabricks", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Authentication = "MSI",
-                WorkspaceResourceId = "/subscriptions/1e42591f-1f0c-4c5a-b7f2-a268f6105ec5/resourceGroups/keshADF_test/providers/Microsoft.Databricks/workspaces/keshPremDB",
-                NewClusterVersion = "3.4.x-scala2.11",
-                NewClusterNumOfWorker = "1",
-                NewClusterNodeType = "Standard_DS3_v2",
-                NewClusterDriverNodeType = "Standard_DS3_v2",
-                PolicyId = "DS2K4A1WIEIQDX",
+                return new DataFactoryLinkedServiceData(new AzureDatabricksLinkedService("https://westeurope.azuredatabricks.net/")
+                {
+                    Authentication = "MSI",
+                    WorkspaceResourceId = "/subscriptions/1e42591f-1f0c-4c5a-b7f2-a268f6105ec5/resourceGroups/keshADF_test/providers/Microsoft.Databricks/workspaces/keshPremDB",
+                    NewClusterVersion = "3.4.x-scala2.11",
+                    NewClusterNumOfWorker = "1",
+                    NewClusterNodeType = "Standard_DS3_v2",
+                    NewClusterDriverNodeType = "Standard_DS3_v2",
+                    PolicyId = "DS2K4A1WIEIQDX",
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_AzureDatabricks_newClusterSparkEnvVars()
+        public async Task LinkedService_AzureDatabricks_NewClusterSparkEnvVars_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureDatabricksLinkedService("https://westeurope.azuredatabricks.net/")
+            await LinkedSerivceCreate("azuredatabricks", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                AccessToken = new DataFactorySecretString("some secret"),
-                NewClusterVersion = "3.4.x-scala2.11",
-                NewClusterNumOfWorker = "1",
-                NewClusterNodeType = "Standard_DS3_v2"
-                //Error
-                //NewClusterSparkConf = ,
-                //NewClusterSparkEnvVars = ,
+                return new DataFactoryLinkedServiceData(new AzureDatabricksLinkedService("https://westeurope.azuredatabricks.net/")
+                {
+                    AccessToken = new DataFactorySecretString("some secret"),
+                    NewClusterVersion = "3.4.x-scala2.11",
+                    NewClusterNumOfWorker = "1",
+                    NewClusterNodeType = "Standard_DS3_v2"
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Db2_Connection()
+        public async Task LinkedService_Db2_Connection_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string integrationRuntimeName = Recording.GenerateAssetName("integrationRuntime");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultManagedIntegrationRuntime(dataFactory, integrationRuntimeName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new Db2LinkedService()
+            await LinkedSerivceCreate("db2", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ConnectionString = "Server=<server>;Database=<database>;AuthenticationType=Basic;UserName=<username>;PackageCollection=<packageCollection>;CertificateCommonName=<certificateCommonName>",
-            })
-            {
-                Properties = {
-                    ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
-                }
-            };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_SapOpenHub_MessageServerService()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SapOpenHubLinkedService()
-            {
-                MessageServer = "fakeserver",
-                MessageServerService = "00",
-                SystemId = "ecc",
-                LogonGroup = "fakegroup",
-                ClientId = "800",
-                UserName = "user",
-                Password = new DataFactorySecretString("fakepwd"),
+                return new DataFactoryLinkedServiceData(new Db2LinkedService()
+                {
+                    ConnectionString = "Server=<server>;Database=<database>;AuthenticationType=Basic;UserName=<username>;PackageCollection=<packageCollection>;CertificateCommonName=<certificateCommonName>",
+                })
+                {
+                    Properties =
+                 {
+                     ConnectVia = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName)
+                 }
+                };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_RestService()
+        public async Task LinkedService_SapOpenHub_MessageServerService_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new RestServiceLinkedService("https://fakeurl/", RestServiceAuthenticationType.Basic)
+            await LinkedSerivceCreate("sap", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                UserName = "user",
-                Password = new DataFactorySecretString("fakepwd"),
-                AzureCloudType = "azurepublic"
+                return new DataFactoryLinkedServiceData(new SapOpenHubLinkedService()
+                {
+                    MessageServer = "fakeserver",
+                    MessageServerService = "00",
+                    SystemId = "ecc",
+                    LogonGroup = "fakegroup",
+                    ClientId = "800",
+                    UserName = "user",
+                    Password = new DataFactorySecretString("fakepwd"),
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_SapTable()
+        public async Task LinkedService_RestService_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SapTableLinkedService()
+            await LinkedSerivceCreate("restservice", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Server = "fakeserver",
-                SystemNumber = "00",
-                ClientId = "000",
-                UserName = "user",
-                Password = new DataFactorySecretString("fakepwd"),
+                return new DataFactoryLinkedServiceData(new RestServiceLinkedService("https://fakeurl/", RestServiceAuthenticationType.Basic)
+                {
+                    UserName = "user",
+                    Password = new DataFactorySecretString("fakepwd"),
+                    AzureCloudType = "azurepublic"
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_AzureDataExplorer()
+        public async Task LinkedService_SapTable_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureDataExplorerLinkedService("https://fakecluster.eastus2.kusto.windows.net", "MyDatabase")
+            await LinkedSerivceCreate("sap", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ServicePrincipalId = "fakeSPID",
-                ServicePrincipalKey = new DataFactorySecretString("fakepwd"),
-                Tenant = "faketenant"
+                return new DataFactoryLinkedServiceData(new SapTableLinkedService()
+                {
+                    Server = "fakeserver",
+                    SystemNumber = "00",
+                    ClientId = "000",
+                    UserName = "user",
+                    Password = new DataFactorySecretString("fakepwd"),
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_AzureFileStorage()
+        public async Task LinkedService_AzureDataExplorer_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureFileStorageLinkedService()
+            await LinkedSerivceCreate("azuredataexplorer", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Host = "fakehost",
-                UserId = "fakeaccess",
-                Password = new DataFactorySecretString("fakepwd"),
-            })
-            { Properties = { Description = "test description" } };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_AzureFileStorage_ConnectionString()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureFileStorageLinkedService()
-            {
-                ConnectionString = DataFactoryElement<string>.FromSecretString("DefaultEndpointsProtocol=https;AccountName=testaccount;EndpointSuffix=core.windows.net;")
+                return new DataFactoryLinkedServiceData(new AzureDataExplorerLinkedService("https://fakecluster.eastus2.kusto.windows.net", "MyDatabase")
+                {
+                    ServicePrincipalId = "fakeSPID",
+                    ServicePrincipalKey = new DataFactorySecretString("fakepwd"),
+                    Tenant = "faketenant"
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_AzureFileStorage_FileShare()
+        public async Task LinkedService_AzureFileStorage_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureFileStorageLinkedService()
+            await LinkedSerivceCreate("azurefilestorage", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ConnectionString = DataFactoryElement<string>.FromSecretString("\"server=10.0.0.122;port=3306;database=db;user=https:\\\\\\\\test.com;sslmode=1;usesystemtruststore=0\""),
-                FileShare = "myFileshareName",
-                Snapshot = "2020-06-18T02:35.43"
+                return new DataFactoryLinkedServiceData(new AzureFileStorageLinkedService()
+                {
+                    Host = "fakehost",
+                    UserId = "fakeaccess",
+                    Password = new DataFactorySecretString("fakepwd"),
+                })
+                { Properties = { Description = "test description" } };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_AzureFileStorage_AccountKey()
+        public async Task LinkedService_AzureFileStorage_ConnectionString_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureFileStorageLinkedService()
+            await LinkedSerivceCreate("azurefilestorage", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ConnectionString = DataFactoryElement<string>.FromSecretString("fakeconnection"),
-                AccountKey = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                return new DataFactoryLinkedServiceData(new AzureFileStorageLinkedService()
+                {
+                    ConnectionString = DataFactoryElement<string>.FromSecretString("DefaultEndpointsProtocol=https;AccountName=testaccount;EndpointSuffix=core.windows.net;")
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_AzureFileStorage_SasUri()
+        public async Task LinkedService_AzureFileStorage_FileShare_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureFileStorageLinkedService()
+            await LinkedSerivceCreate("azurefilestorage", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                SasUri = DataFactoryElement<string>.FromSecretString("fakeconnection"),
+                return new DataFactoryLinkedServiceData(new AzureFileStorageLinkedService()
+                {
+                    ConnectionString = DataFactoryElement<string>.FromSecretString("\"server=10.0.0.122;port=3306;database=db;user=https:\\\\\\\\test.com;sslmode=1;usesystemtruststore=0\""),
+                    FileShare = "myFileshareName",
+                    Snapshot = "2020-06-18T02:35.43"
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_AzureFileStorage_SasToken()
+        public async Task LinkedService_AzureFileStorage_AccountKey_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureFileStorageLinkedService()
+            await LinkedSerivceCreate("azurefilestorage", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                SasUri = DataFactoryElement<string>.FromSecretString("fakeconnection"),
-                SasToken = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                return new DataFactoryLinkedServiceData(new AzureFileStorageLinkedService()
+                {
+                    ConnectionString = DataFactoryElement<string>.FromSecretString("fakeconnection"),
+                    AccountKey = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_GoogleCloudStorage()
+        public async Task LinkedService_AzureFileStorage_SasUri_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new GoogleCloudStorageLinkedService()
+            await LinkedSerivceCreate("azurefilestorage", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                AccessKeyId = "Fakeaccess",
-                SecretAccessKey = new DataFactorySecretString("fakekey")
-            })
-            { Properties = { Description = "test description" } };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_SharePointOnlineList()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SharePointOnlineListLinkedService("http://localhost/webhdfs/v1/", "tenantId", "servicePrincipalId", new DataFactorySecretString("ServicePrincipalKey")) { }) { Properties = { Description = "test description" } };
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_CosmosDbMongoDbApi()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new CosmosDBMongoDBApiLinkedService(DataFactoryElement<string>.FromSecretString("mongodb+srv://myDatabaseUser:@server.example.com"), "TestDB")
-            {
-                IsServerVersionAbove32 = true,
+                return new DataFactoryLinkedServiceData(new AzureFileStorageLinkedService()
+                {
+                    SasUri = DataFactoryElement<string>.FromSecretString("fakeconnection"),
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_TeamDesk()
+        public async Task LinkedService_AzureFileStorage_SasToken_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new TeamDeskLinkedService(TeamDeskAuthenticationType.Basic, "testUrl")
+            await LinkedSerivceCreate("azurefilestorage", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                UserName = "username",
-                Password = new DataFactorySecretString("fakePassword")
+                return new DataFactoryLinkedServiceData(new AzureFileStorageLinkedService()
+                {
+                    SasUri = DataFactoryElement<string>.FromSecretString("fakeconnection"),
+                    SasToken = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_Quickbase()
+        public async Task LinkedService_GoogleCloudStorage_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new QuickbaseLinkedService("testUrl", new DataFactorySecretString("FakeuerToken")) { });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_Smartsheet()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new SmartsheetLinkedService(new DataFactorySecretString("FakeapiToken")) { });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_Zendesk()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new ZendeskLinkedService(ZendeskAuthenticationType.Token, "testUri")
+            await LinkedSerivceCreate("google", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                ApiToken = new DataFactorySecretString("FakeApiToeken")
+                return new DataFactoryLinkedServiceData(new GoogleCloudStorageLinkedService()
+                {
+                    AccessKeyId = "Fakeaccess",
+                    SecretAccessKey = new DataFactorySecretString("fakekey")
+                })
+                { Properties = { Description = "test description" } };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_Dataworld()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new DataworldLinkedService(new DataFactorySecretString("FakeapiToken")) { });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_RestService_CertificateValidation()
+        public async Task LinkedService_SharePointOnlineList_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new RestServiceLinkedService("testUri", RestServiceAuthenticationType.OAuth2ClientCredential)
+            await LinkedSerivceCreate("sharepoint", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                EnableServerCertificateValidation = true,
-                ClientId = "FakeclientID",
-                ClientSecret = new DataFactorySecretString("somesecret"),
-                TokenEndpoint = "fakeTokenEndpoint",
-                Resource = "fakeResource",
-                Scope = "FakeScope"
+                return new DataFactoryLinkedServiceData(new SharePointOnlineListLinkedService("http://localhost/webhdfs/v1/", "tenantId", "servicePrincipalId", new DataFactorySecretString("ServicePrincipalKey")) { }) { Properties = { Description = "test description" } };
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_GoogleSheets()
+        public async Task LinkedService_CosmosDbMongoDbApi_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new GoogleSheetsLinkedService(new DataFactorySecretString("FakeapiToken")) { });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_MySql()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new MySqlLinkedService(DataFactoryElement<string>.FromSecretString("Fakeconnstring"))
+            await LinkedSerivceCreate("cosmos", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                return new DataFactoryLinkedServiceData(new CosmosDBMongoDBApiLinkedService(DataFactoryElement<string>.FromSecretString("mongodb+srv://myDatabaseUser:@server.example.com"), "TestDB")
+                {
+                    IsServerVersionAbove32 = true,
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
         }
 
         [Test]
         [RecordedTest]
-        public async Task LinkedService_PostgreSql()
+        public async Task LinkedService_TeamDesk_Create()
         {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new PostgreSqlLinkedService(DataFactoryElement<string>.FromSecretString("Server=myServerAddress;Port=5432;Database=myDataBase;User Id=myUsername;Password=myPassword;\r\n")) { });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task LinkedService_PostgreSql_AzureKeyValue()
-        {
-            // Get the resource group
-            _resourceGroup = Client.GetResourceGroupResource(_resourceGroupIdentifier);
-            // Create a data factory
-            string dataFactoryName = Recording.GenerateAssetName($"DataFactory-{MethodBase.GetCurrentMethod().DeclaringType.GUID}-");
-            DataFactoryResource dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
-            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
-
-            string linkedServiceKeyVaultName = Recording.GenerateAssetName("LinkedService");
-            var linkedService = dataFactory.GetDataFactoryLinkedServices();
-            await CreateDefaultAzureKeyVaultLinkedService(dataFactory, linkedServiceKeyVaultName);
-
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new PostgreSqlLinkedService(DataFactoryElement<string>.FromSecretString("Fakeconnstring"))
+            await LinkedSerivceCreate("teamdesk", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                return new DataFactoryLinkedServiceData(new TeamDeskLinkedService(TeamDeskAuthenticationType.Basic, "testUrl")
+                {
+                    UserName = "username",
+                    Password = new DataFactorySecretString("fakePassword")
+                });
             });
-            var result = await linkedService.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
-            Assert.NotNull(result.Value.Id);
-            await GlobalTearDown();
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Quickbase_Create()
+        {
+            await LinkedSerivceCreate("quickbase", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new QuickbaseLinkedService("testUrl", new DataFactorySecretString("FakeuerToken")) { });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Smartsheet_Create()
+        {
+            await LinkedSerivceCreate("smartsheet", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new SmartsheetLinkedService(new DataFactorySecretString("FakeapiToken")) { });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Zendesk_Create()
+        {
+            await LinkedSerivceCreate("zendesk", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new ZendeskLinkedService(ZendeskAuthenticationType.Token, "testUri")
+                {
+                    ApiToken = new DataFactorySecretString("FakeApiToeken")
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_Dataworld_Create()
+        {
+            await LinkedSerivceCreate("dataworld", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new DataworldLinkedService(new DataFactorySecretString("FakeapiToken")) { });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_RestService_CertificateValidation_Create()
+        {
+            await LinkedSerivceCreate("restservice", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new RestServiceLinkedService("testUri", RestServiceAuthenticationType.OAuth2ClientCredential)
+                {
+                    EnableServerCertificateValidation = true,
+                    ClientId = "FakeclientID",
+                    ClientSecret = new DataFactorySecretString("somesecret"),
+                    TokenEndpoint = "fakeTokenEndpoint",
+                    Resource = "fakeResource",
+                    Scope = "FakeScope"
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_GoogleSheets_Create()
+        {
+            await LinkedSerivceCreate("google", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new GoogleSheetsLinkedService(new DataFactorySecretString("FakeapiToken")) { });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_MySql_Create()
+        {
+            await LinkedSerivceCreate("mysql", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new MySqlLinkedService(DataFactoryElement<string>.FromSecretString("Fakeconnstring"))
+                {
+                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_PostgreSql_Create()
+        {
+            await LinkedSerivceCreate("postgresql", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new PostgreSqlLinkedService(DataFactoryElement<string>.FromSecretString("Server=myServerAddress;Port=5432;Database=myDataBase;User Id=myUsername;Password=myPassword;\r\n")) { });
+            });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task LinkedService_PostgreSql_AzureKeyValue_Create()
+        {
+            await LinkedSerivceCreate("postgresql", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
+            {
+                return new DataFactoryLinkedServiceData(new PostgreSqlLinkedService(DataFactoryElement<string>.FromSecretString("Fakeconnstring"))
+                {
+                    Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceKeyVaultName), "fakeSecretName1")
+                });
+            });
         }
     }
 }

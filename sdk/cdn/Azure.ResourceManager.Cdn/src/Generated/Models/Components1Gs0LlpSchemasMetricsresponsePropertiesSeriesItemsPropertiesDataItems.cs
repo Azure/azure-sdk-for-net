@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems. </summary>
     public partial class Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems
     {
-        /// <summary> Initializes a new instance of Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems. </summary>
+        /// <summary> Initializes a new instance of <see cref="Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems"/>. </summary>
         internal Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems()
         {
         }
 
-        /// <summary> Initializes a new instance of Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems. </summary>
+        /// <summary> Initializes a new instance of <see cref="Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems"/>. </summary>
         /// <param name="dateOn"></param>
         /// <param name="value"></param>
         internal Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(DateTimeOffset? dateOn, float? value)

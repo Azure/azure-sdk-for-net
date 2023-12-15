@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt protected disk details. </summary>
     public partial class VMwareCbtProtectedDiskDetails
     {
-        /// <summary> Initializes a new instance of VMwareCbtProtectedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtProtectedDiskDetails"/>. </summary>
         internal VMwareCbtProtectedDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of VMwareCbtProtectedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtProtectedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk id. </param>
         /// <param name="diskName"> The disk name. </param>
         /// <param name="diskType"> The disk type. </param>

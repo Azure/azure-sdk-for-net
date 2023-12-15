@@ -13,7 +13,7 @@ namespace Azure.Maps.Rendering
     /// <summary> Model factory for models. </summary>
     public static partial class MapsRenderingModelFactory
     {
-        /// <summary> Initializes a new instance of CopyrightCaption. </summary>
+        /// <summary> Initializes a new instance of <see cref="Rendering.CopyrightCaption"/>. </summary>
         /// <param name="formatVersion"> Format Version property. </param>
         /// <param name="copyright"> Copyrights Caption property. </param>
         /// <returns> A new <see cref="Rendering.CopyrightCaption"/> instance for mocking. </returns>
@@ -22,7 +22,7 @@ namespace Azure.Maps.Rendering
             return new CopyrightCaption(formatVersion, copyright);
         }
 
-        /// <summary> Initializes a new instance of RenderCopyright. </summary>
+        /// <summary> Initializes a new instance of <see cref="Rendering.RenderCopyright"/>. </summary>
         /// <param name="formatVersion"> Format Version property. </param>
         /// <param name="generalCopyrights"> General Copyrights array. </param>
         /// <param name="regionalCopyrights"> Regions array. </param>
@@ -35,7 +35,7 @@ namespace Azure.Maps.Rendering
             return new RenderCopyright(formatVersion, generalCopyrights?.ToList(), regionalCopyrights?.ToList());
         }
 
-        /// <summary> Initializes a new instance of RegionalCopyright. </summary>
+        /// <summary> Initializes a new instance of <see cref="Rendering.RegionalCopyright"/>. </summary>
         /// <param name="copyrights"> Copyrights array. </param>
         /// <param name="country"> Country property. </param>
         /// <returns> A new <see cref="Rendering.RegionalCopyright"/> instance for mocking. </returns>
@@ -46,7 +46,7 @@ namespace Azure.Maps.Rendering
             return new RegionalCopyright(copyrights?.ToList(), country);
         }
 
-        /// <summary> Initializes a new instance of RegionalCopyrightCountry. </summary>
+        /// <summary> Initializes a new instance of <see cref="Rendering.RegionalCopyrightCountry"/>. </summary>
         /// <param name="iso3"> ISO3 property. </param>
         /// <param name="label"> Label property. </param>
         /// <returns> A new <see cref="Rendering.RegionalCopyrightCountry"/> instance for mocking. </returns>

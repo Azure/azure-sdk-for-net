@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> A list of private endpoint connections. </summary>
     internal partial class CosmosDBPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBPrivateEndpointConnectionListResult"/>. </summary>
         internal CosmosDBPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<CosmosDBPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
         internal CosmosDBPrivateEndpointConnectionListResult(IReadOnlyList<CosmosDBPrivateEndpointConnectionData> value)
         {

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> A list of servers. </summary>
     internal partial class PostgreSqlFlexibleServerListResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerListResult"/>. </summary>
         internal PostgreSqlFlexibleServerListResult()
         {
             Value = new ChangeTrackingList<PostgreSqlFlexibleServerData>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerListResult"/>. </summary>
         /// <param name="value"> The list of flexible servers. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         internal PostgreSqlFlexibleServerListResult(IReadOnlyList<PostgreSqlFlexibleServerData> value, string nextLink)

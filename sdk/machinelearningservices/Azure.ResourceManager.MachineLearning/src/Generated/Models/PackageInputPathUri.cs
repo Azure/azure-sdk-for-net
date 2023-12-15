@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Package input path specified as an url. </summary>
     public partial class PackageInputPathUri : PackageInputPathBase
     {
-        /// <summary> Initializes a new instance of PackageInputPathUri. </summary>
+        /// <summary> Initializes a new instance of <see cref="PackageInputPathUri"/>. </summary>
         public PackageInputPathUri()
         {
             InputPathType = InputPathType.Url;
         }
 
-        /// <summary> Initializes a new instance of PackageInputPathUri. </summary>
+        /// <summary> Initializes a new instance of <see cref="PackageInputPathUri"/>. </summary>
         /// <param name="inputPathType"> [Required] Input path type for package inputs. </param>
         /// <param name="uri"> Input path url. </param>
         internal PackageInputPathUri(InputPathType inputPathType, Uri uri) : base(inputPathType)

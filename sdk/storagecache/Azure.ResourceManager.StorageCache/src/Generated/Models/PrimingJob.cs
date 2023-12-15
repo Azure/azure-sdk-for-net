@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> A priming job instance. </summary>
     public partial class PrimingJob
     {
-        /// <summary> Initializes a new instance of PrimingJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrimingJob"/>. </summary>
         /// <param name="primingJobName"> The priming job name. </param>
         /// <param name="primingManifestUri"> The URL for the priming manifest file to download. This file must be readable from the HPC Cache. When the file is in Azure blob storage the URL should include a Shared Access Signature (SAS) granting read permissions on the blob. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="primingJobName"/> or <paramref name="primingManifestUri"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             PrimingManifestUri = primingManifestUri;
         }
 
-        /// <summary> Initializes a new instance of PrimingJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrimingJob"/>. </summary>
         /// <param name="primingJobName"> The priming job name. </param>
         /// <param name="primingManifestUri"> The URL for the priming manifest file to download. This file must be readable from the HPC Cache. When the file is in Azure blob storage the URL should include a Shared Access Signature (SAS) granting read permissions on the blob. </param>
         /// <param name="primingJobId"> The unique identifier of the priming job. </param>

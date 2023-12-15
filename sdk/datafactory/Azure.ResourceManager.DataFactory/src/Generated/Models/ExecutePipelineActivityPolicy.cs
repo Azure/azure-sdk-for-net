@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Execution policy for an execute pipeline activity. </summary>
     public partial class ExecutePipelineActivityPolicy
     {
-        /// <summary> Initializes a new instance of ExecutePipelineActivityPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecutePipelineActivityPolicy"/>. </summary>
         public ExecutePipelineActivityPolicy()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ExecutePipelineActivityPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecutePipelineActivityPolicy"/>. </summary>
         /// <param name="isSecureInputEnabled"> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ExecutePipelineActivityPolicy(bool? isSecureInputEnabled, IDictionary<string, BinaryData> additionalProperties)

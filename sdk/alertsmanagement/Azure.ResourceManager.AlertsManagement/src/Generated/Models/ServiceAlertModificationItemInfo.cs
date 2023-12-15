@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Alert modification item. </summary>
     public partial class ServiceAlertModificationItemInfo
     {
-        /// <summary> Initializes a new instance of ServiceAlertModificationItemInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertModificationItemInfo"/>. </summary>
         public ServiceAlertModificationItemInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertModificationItemInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertModificationItemInfo"/>. </summary>
         /// <param name="modificationEvent"> Reason for the modification. </param>
         /// <param name="oldValue"> Old value. </param>
         /// <param name="newValue"> New value. </param>

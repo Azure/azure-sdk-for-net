@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Describes parsed pattern entity. </summary>
     public partial class ThreatIntelligenceParsedPattern
     {
-        /// <summary> Initializes a new instance of ThreatIntelligenceParsedPattern. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceParsedPattern"/>. </summary>
         public ThreatIntelligenceParsedPattern()
         {
             PatternTypeValues = new ChangeTrackingList<ThreatIntelligenceParsedPatternTypeValue>();
         }
 
-        /// <summary> Initializes a new instance of ThreatIntelligenceParsedPattern. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceParsedPattern"/>. </summary>
         /// <param name="patternTypeKey"> Pattern type key. </param>
         /// <param name="patternTypeValues"> Pattern type keys. </param>
         internal ThreatIntelligenceParsedPattern(string patternTypeKey, IList<ThreatIntelligenceParsedPatternTypeValue> patternTypeValues)

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> VirtualHubRouteTableV2 route. </summary>
     public partial class VirtualHubRouteV2
     {
-        /// <summary> Initializes a new instance of VirtualHubRouteV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHubRouteV2"/>. </summary>
         public VirtualHubRouteV2()
         {
             Destinations = new ChangeTrackingList<string>();
             NextHops = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VirtualHubRouteV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHubRouteV2"/>. </summary>
         /// <param name="destinationType"> The type of destinations. </param>
         /// <param name="destinations"> List of all destinations. </param>
         /// <param name="nextHopType"> The type of next hops. </param>

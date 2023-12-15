@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes a Service Bus Topic output data source. </summary>
     public partial class ServiceBusTopicOutputDataSource : StreamingJobOutputDataSource
     {
-        /// <summary> Initializes a new instance of ServiceBusTopicOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusTopicOutputDataSource"/>. </summary>
         public ServiceBusTopicOutputDataSource()
         {
             PropertyColumns = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             OutputDataSourceType = "Microsoft.ServiceBus/Topic";
         }
 
-        /// <summary> Initializes a new instance of ServiceBusTopicOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusTopicOutputDataSource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="serviceBusNamespace"> The namespace that is associated with the desired Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="sharedAccessPolicyName"> The shared access policy name for the Event Hub, Service Bus Queue, Service Bus Topic, etc. Required on PUT (CreateOrReplace) requests. </param>

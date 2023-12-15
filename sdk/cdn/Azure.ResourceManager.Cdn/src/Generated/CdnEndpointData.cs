@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class CdnEndpointData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CdnEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnEndpointData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CdnEndpointData(AzureLocation location) : base(location)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn
             CustomDomains = new ChangeTrackingList<CdnCustomDomainData>();
         }
 
-        /// <summary> Initializes a new instance of CdnEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

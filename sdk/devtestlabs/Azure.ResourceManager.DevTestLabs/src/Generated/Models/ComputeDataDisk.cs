@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> A data disks attached to a virtual machine. </summary>
     public partial class ComputeDataDisk
     {
-        /// <summary> Initializes a new instance of ComputeDataDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeDataDisk"/>. </summary>
         internal ComputeDataDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeDataDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeDataDisk"/>. </summary>
         /// <param name="name"> Gets data disk name. </param>
         /// <param name="diskUri"> When backed by a blob, the URI of underlying blob. </param>
         /// <param name="managedDiskId"> When backed by managed disk, this is the ID of the compute disk resource. </param>

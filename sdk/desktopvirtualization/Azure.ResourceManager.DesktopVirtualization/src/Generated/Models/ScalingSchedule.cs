@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> A ScalingPlanPooledSchedule. </summary>
     public partial class ScalingSchedule
     {
-        /// <summary> Initializes a new instance of ScalingSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalingSchedule"/>. </summary>
         public ScalingSchedule()
         {
             DaysOfWeek = new ChangeTrackingList<ScalingScheduleDaysOfWeekItem>();
         }
 
-        /// <summary> Initializes a new instance of ScalingSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalingSchedule"/>. </summary>
         /// <param name="name"> Name of the ScalingPlanPooledSchedule. </param>
         /// <param name="daysOfWeek"> Set of days of the week on which this schedule is active. </param>
         /// <param name="rampUpStartTime"> Starting time for ramp up period. </param>

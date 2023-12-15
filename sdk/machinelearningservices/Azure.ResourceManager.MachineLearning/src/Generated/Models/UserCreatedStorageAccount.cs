@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UserCreatedStorageAccount. </summary>
     internal partial class UserCreatedStorageAccount
     {
-        /// <summary> Initializes a new instance of UserCreatedStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserCreatedStorageAccount"/>. </summary>
         public UserCreatedStorageAccount()
         {
         }
 
-        /// <summary> Initializes a new instance of UserCreatedStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserCreatedStorageAccount"/>. </summary>
         /// <param name="armResourceIdentifier"> ARM ResourceId of a resource. </param>
         internal UserCreatedStorageAccount(ArmResourceId armResourceIdentifier)
         {

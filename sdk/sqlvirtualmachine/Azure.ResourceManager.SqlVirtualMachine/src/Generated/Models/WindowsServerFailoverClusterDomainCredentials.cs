@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Domain credentials for setting up Windows Server Failover Cluster for SQL availability group. </summary>
     public partial class WindowsServerFailoverClusterDomainCredentials
     {
-        /// <summary> Initializes a new instance of WindowsServerFailoverClusterDomainCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsServerFailoverClusterDomainCredentials"/>. </summary>
         public WindowsServerFailoverClusterDomainCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of WindowsServerFailoverClusterDomainCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsServerFailoverClusterDomainCredentials"/>. </summary>
         /// <param name="clusterBootstrapAccountPassword"> Cluster bootstrap account password. </param>
         /// <param name="clusterOperatorAccountPassword"> Cluster operator account password. </param>
         /// <param name="sqlServiceAccountPassword"> SQL service account password. </param>

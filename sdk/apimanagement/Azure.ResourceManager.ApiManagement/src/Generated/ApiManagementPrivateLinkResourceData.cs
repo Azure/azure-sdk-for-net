@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateLinkResourceData"/>. </summary>
         public ApiManagementPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

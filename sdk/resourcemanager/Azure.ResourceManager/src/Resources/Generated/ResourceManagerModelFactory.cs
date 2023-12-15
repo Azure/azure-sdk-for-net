@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ResourceManagerModelFactory
     {
-        /// <summary> Initializes a new instance of PolicyAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.PolicyAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Models
             return new PolicyAssignmentData(id, name, resourceType, systemData, location, managedIdentity, displayName, policyDefinitionId, scope, excludedScopes?.ToList(), parameters, description, metadata, enforcementMode, nonComplianceMessages?.ToList(), resourceSelectors?.ToList(), overrides?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PolicyDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.PolicyDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Models
             return new PolicyDefinitionData(id, name, resourceType, systemData, policyType, mode, displayName, description, policyRule, metadata, parameters);
         }
 
-        /// <summary> Initializes a new instance of PolicySetDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.PolicySetDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Models
             return new PolicySetDefinitionData(id, name, resourceType, systemData, policyType, displayName, description, metadata, parameters, policyDefinitions?.ToList(), policyDefinitionGroups?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataPolicyManifestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.DataPolicyManifestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Models
             return new DataPolicyManifestData(id, name, resourceType, systemData, namespaces?.ToList(), policyMode, isBuiltInOnly, resourceTypeAliases?.ToList(), effects?.ToList(), fieldValues?.ToList(), standard?.ToList(), customDefinitions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeAliases. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceTypeAliases"/>. </summary>
         /// <param name="resourceType"> The resource type name. </param>
         /// <param name="aliases"> The aliases for property names. </param>
         /// <returns> A new <see cref="Resources.Models.ResourceTypeAliases"/> instance for mocking. </returns>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Models
             return new ResourceTypeAliases(resourceType, aliases?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeAlias. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceTypeAlias"/>. </summary>
         /// <param name="name"> The alias name. </param>
         /// <param name="paths"> The paths for an alias. </param>
         /// <param name="aliasType"> The type of the alias. </param>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Models
             return new ResourceTypeAlias(name, paths?.ToList(), aliasType, defaultPath, defaultPattern, defaultMetadata);
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeAliasPath. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceTypeAliasPath"/>. </summary>
         /// <param name="path"> The path of an alias. </param>
         /// <param name="apiVersions"> The API versions. </param>
         /// <param name="pattern"> The pattern for an alias path. </param>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Models
             return new ResourceTypeAliasPath(path, apiVersions?.ToList(), pattern, metadata);
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeAliasPattern. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceTypeAliasPattern"/>. </summary>
         /// <param name="phrase"> The alias pattern phrase. </param>
         /// <param name="variable"> The alias pattern variable. </param>
         /// <param name="patternType"> The type of alias pattern. </param>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Models
             return new ResourceTypeAliasPattern(phrase, variable, patternType);
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeAliasPathMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceTypeAliasPathMetadata"/>. </summary>
         /// <param name="tokenType"> The type of the token that the alias path is referring to. </param>
         /// <param name="attributes"> The attributes of the token that the alias path is referring to. </param>
         /// <returns> A new <see cref="Resources.Models.ResourceTypeAliasPathMetadata"/> instance for mocking. </returns>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Models
             return new ResourceTypeAliasPathMetadata(tokenType, attributes);
         }
 
-        /// <summary> Initializes a new instance of DataPolicyManifestEffect. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.DataPolicyManifestEffect"/>. </summary>
         /// <param name="name"> The data effect name. </param>
         /// <param name="detailsSchema"> The data effect details schema. </param>
         /// <returns> A new <see cref="Resources.Models.DataPolicyManifestEffect"/> instance for mocking. </returns>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Models
             return new DataPolicyManifestEffect(name, detailsSchema);
         }
 
-        /// <summary> Initializes a new instance of DataManifestCustomResourceFunctionDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.DataManifestCustomResourceFunctionDefinition"/>. </summary>
         /// <param name="name"> The function name as it will appear in the policy rule. eg - 'vault'. </param>
         /// <param name="fullyQualifiedResourceType"> The fully qualified control plane resource type that this function represents. eg - 'Microsoft.KeyVault/vaults'. </param>
         /// <param name="defaultProperties"> The top-level properties that can be selected on the function's output. eg - [ "name", "location" ] if vault().name and vault().location are supported. </param>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Models
             return new DataManifestCustomResourceFunctionDefinition(name, fullyQualifiedResourceType, defaultProperties?.ToList(), allowCustomProperties);
         }
 
-        /// <summary> Initializes a new instance of ManagementLockData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.ManagementLockData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Models
             return new ManagementLockData(id, name, resourceType, systemData, level, notes, owners?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ResourceProviderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.ResourceProviderData"/>. </summary>
         /// <param name="id"> The provider ID. </param>
         /// <param name="namespace"> The namespace of the resource provider. </param>
         /// <param name="registrationState"> The registration state of the resource provider. </param>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Models
             return new ResourceProviderData(id, @namespace, registrationState, registrationPolicy, resourceTypes?.ToList(), providerAuthorizationConsentState);
         }
 
-        /// <summary> Initializes a new instance of ProviderResourceType. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ProviderResourceType"/>. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="locations"> The collection of locations where this resource type can be created. </param>
         /// <param name="locationMappings"> The location mappings that are supported by this resource type. </param>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Models
             return new ProviderResourceType(resourceType, locations?.ToList(), locationMappings?.ToList(), aliases?.ToList(), apiVersions?.ToList(), defaultApiVersion, zoneMappings?.ToList(), apiProfiles?.ToList(), capabilities, properties);
         }
 
-        /// <summary> Initializes a new instance of ProviderExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ProviderExtendedLocation"/>. </summary>
         /// <param name="location"> The azure location. </param>
         /// <param name="providerExtendedLocationType"> The extended location type. </param>
         /// <param name="extendedLocations"> The extended locations for the azure location. </param>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Models
             return new ProviderExtendedLocation(location, providerExtendedLocationType, extendedLocations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ZoneMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ZoneMapping"/>. </summary>
         /// <param name="location"> The location of the zone mapping. </param>
         /// <param name="zones"></param>
         /// <returns> A new <see cref="Resources.Models.ZoneMapping"/> instance for mocking. </returns>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Models
             return new ZoneMapping(location, zones?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ApiProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ApiProfile"/>. </summary>
         /// <param name="profileVersion"> The profile version. </param>
         /// <param name="apiVersion"> The API version. </param>
         /// <returns> A new <see cref="Resources.Models.ApiProfile"/> instance for mocking. </returns>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Models
             return new ApiProfile(profileVersion, apiVersion);
         }
 
-        /// <summary> Initializes a new instance of ProviderPermission. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ProviderPermission"/>. </summary>
         /// <param name="applicationId"> The application id. </param>
         /// <param name="roleDefinition"> Role definition properties. </param>
         /// <param name="managedByRoleDefinition"> Role definition properties. </param>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Models
             return new ProviderPermission(applicationId, roleDefinition, managedByRoleDefinition, providerAuthorizationConsentState);
         }
 
-        /// <summary> Initializes a new instance of AzureRoleDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.AzureRoleDefinition"/>. </summary>
         /// <param name="id"> The role definition ID. </param>
         /// <param name="name"> The role definition name. </param>
         /// <param name="isServiceRole"> If this is a service role. </param>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Models
             return new AzureRoleDefinition(id, name, isServiceRole, permissions?.ToList(), scopes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of Permission. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.Permission"/>. </summary>
         /// <param name="allowedActions"> Allowed actions. </param>
         /// <param name="deniedActions"> Denied actions. </param>
         /// <param name="allowedDataActions"> Allowed Data actions. </param>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Models
             return new Permission(allowedActions?.ToList(), deniedActions?.ToList(), allowedDataActions?.ToList(), deniedDataActions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of TenantResourceProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.TenantResourceProvider"/>. </summary>
         /// <param name="namespace"> The namespace of the resource provider. </param>
         /// <param name="resourceTypes"> The collection of provider resource types. </param>
         /// <returns> A new <see cref="Resources.Models.TenantResourceProvider"/> instance for mocking. </returns>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Models
             return new TenantResourceProvider(@namespace, resourceTypes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of GenericResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.GenericResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Models
             return new GenericResourceData(id, name, resourceType, systemData, tags, location, extendedLocation, plan, properties, kind, managedBy, sku, identity, createdOn, changedOn, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of TrackedResourceExtendedData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.TrackedResourceExtendedData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Models
             return new TrackedResourceExtendedData(id, name, resourceType, systemData, tags, location, extendedLocation);
         }
 
-        /// <summary> Initializes a new instance of ResourceGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.ResourceGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Models
             return new ResourceGroupData(id, name, resourceType, systemData, tags, location, resourceGroupProvisioningState != null ? new ResourceGroupProperties(resourceGroupProvisioningState) : null, managedBy);
         }
 
-        /// <summary> Initializes a new instance of ResourceGroupExportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceGroupExportResult"/>. </summary>
         /// <param name="template"> The template content. </param>
         /// <param name="error"> The template export error. </param>
         /// <returns> A new <see cref="Resources.Models.ResourceGroupExportResult"/> instance for mocking. </returns>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Models
             return new ResourceGroupExportResult(template, error);
         }
 
-        /// <summary> Initializes a new instance of PredefinedTagValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.PredefinedTagValue"/>. </summary>
         /// <param name="id"> The tag value ID. </param>
         /// <param name="tagValue"> The tag value. </param>
         /// <param name="count"> The tag value count. </param>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Models
             return new PredefinedTagValue(id, tagValue, count);
         }
 
-        /// <summary> Initializes a new instance of PredefinedTagCount. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.PredefinedTagCount"/>. </summary>
         /// <param name="predefinedTagCountType"> Type of count. </param>
         /// <param name="value"> Value of count. </param>
         /// <returns> A new <see cref="Resources.Models.PredefinedTagCount"/> instance for mocking. </returns>
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Models
             return new PredefinedTagCount(predefinedTagCountType, value);
         }
 
-        /// <summary> Initializes a new instance of PredefinedTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.PredefinedTag"/>. </summary>
         /// <param name="id"> The tag name ID. </param>
         /// <param name="tagName"> The tag name. </param>
         /// <param name="count"> The total number of resources that use the resource tag. When a tag is initially created and has no associated resources, the value is 0. </param>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Models
             return new PredefinedTag(id, tagName, count, values?.ToList());
         }
 
-        /// <summary> Initializes a new instance of TagResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.TagResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Models
             return new TagResourceData(id, name, resourceType, systemData, tagValues != null ? new Tag(tagValues) : null);
         }
 
-        /// <summary> Initializes a new instance of LocationExpanded. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.LocationExpanded"/>. </summary>
         /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="name"> The location name. </param>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Models
             return new LocationExpanded(id, subscriptionId, name, locationType, displayName, regionalDisplayName, metadata, availabilityZoneMappings?.ToList());
         }
 
-        /// <summary> Initializes a new instance of LocationMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.LocationMetadata"/>. </summary>
         /// <param name="regionType"> The type of the region. </param>
         /// <param name="regionCategory"> The category of the region. </param>
         /// <param name="geography"> The geography of the location. </param>
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Models
             return new LocationMetadata(regionType, regionCategory, geography, geographyGroup, longitude, latitude, physicalLocation, pairedRegions?.ToList(), homeLocation);
         }
 
-        /// <summary> Initializes a new instance of PairedRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.PairedRegion"/>. </summary>
         /// <param name="name"> The name of the paired region. </param>
         /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Models
             return new PairedRegion(name, id, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of AvailabilityZoneMappings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.AvailabilityZoneMappings"/>. </summary>
         /// <param name="logicalZone"> The logical zone id for the availability zone. </param>
         /// <param name="physicalZone"> The fully qualified physical zone id of availability zone to which logical zone id is mapped to. </param>
         /// <returns> A new <see cref="Resources.Models.AvailabilityZoneMappings"/> instance for mocking. </returns>
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.Models
             return new AvailabilityZoneMappings(logicalZone, physicalZone);
         }
 
-        /// <summary> Initializes a new instance of SubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.SubscriptionData"/>. </summary>
         /// <param name="id"> The fully qualified ID for the subscription. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="displayName"> The subscription display name. </param>
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.Models
             return new SubscriptionData(id, subscriptionId, displayName, tenantId, state, subscriptionPolicies, authorizationSource, managedByTenants?.ToList(), tags);
         }
 
-        /// <summary> Initializes a new instance of SubscriptionPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.SubscriptionPolicies"/>. </summary>
         /// <param name="locationPlacementId"> The subscription location placement ID. The ID indicates which regions are visible for a subscription. For example, a subscription with a location placement Id of Public_2014-09-01 has access to Azure public regions. </param>
         /// <param name="quotaId"> The subscription quota ID. </param>
         /// <param name="spendingLimit"> The subscription spending limit. </param>
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Models
             return new SubscriptionPolicies(locationPlacementId, quotaId, spendingLimit);
         }
 
-        /// <summary> Initializes a new instance of ManagedByTenant. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ManagedByTenant"/>. </summary>
         /// <param name="tenantId"> The tenant ID of the managing tenant. This is a GUID. </param>
         /// <returns> A new <see cref="Resources.Models.ManagedByTenant"/> instance for mocking. </returns>
         public static ManagedByTenant ManagedByTenant(Guid? tenantId = null)
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.Models
             return new ManagedByTenant(tenantId);
         }
 
-        /// <summary> Initializes a new instance of TenantData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.TenantData"/>. </summary>
         /// <param name="id"> The fully qualified ID of the tenant. For example, /tenants/8d65815f-a5b6-402f-9298-045155da7d74. </param>
         /// <param name="tenantId"> The tenant ID. For example, 8d65815f-a5b6-402f-9298-045155da7d74. </param>
         /// <param name="tenantCategory"> Category of the tenant. </param>
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Models
             return new TenantData(id, tenantId, tenantCategory, country, countryCode, displayName, domains?.ToList(), defaultDomain, tenantType, tenantBrandingLogoUri);
         }
 
-        /// <summary> Initializes a new instance of FeatureData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.FeatureData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

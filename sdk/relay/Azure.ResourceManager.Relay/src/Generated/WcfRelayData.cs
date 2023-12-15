@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Relay
     /// </summary>
     public partial class WcfRelayData : ResourceData
     {
-        /// <summary> Initializes a new instance of WcfRelayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WcfRelayData"/>. </summary>
         public WcfRelayData()
         {
         }
 
-        /// <summary> Initializes a new instance of WcfRelayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WcfRelayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

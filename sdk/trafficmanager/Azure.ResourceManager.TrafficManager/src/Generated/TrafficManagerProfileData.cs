@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.TrafficManager
     /// </summary>
     public partial class TrafficManagerProfileData : TrafficManagerTrackedResourceData
     {
-        /// <summary> Initializes a new instance of TrafficManagerProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerProfileData"/>. </summary>
         public TrafficManagerProfileData()
         {
             Endpoints = new ChangeTrackingList<TrafficManagerEndpointData>();
             AllowedEndpointRecordTypes = new ChangeTrackingList<AllowedEndpointRecordType>();
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerProfileData"/>. </summary>
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>

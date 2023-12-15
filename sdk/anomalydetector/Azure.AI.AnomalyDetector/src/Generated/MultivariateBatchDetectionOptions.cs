@@ -16,7 +16,7 @@ namespace Azure.AI.AnomalyDetector
     /// </summary>
     public partial class MultivariateBatchDetectionOptions
     {
-        /// <summary> Initializes a new instance of MultivariateBatchDetectionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultivariateBatchDetectionOptions"/>. </summary>
         /// <param name="dataSource">
         /// Source link to the input data to indicate an accessible Azure Storage URI.
         /// It either points to an Azure Blob Storage folder or points to a CSV file in
@@ -43,7 +43,7 @@ namespace Azure.AI.AnomalyDetector
             EndTime = endTime;
         }
 
-        /// <summary> Initializes a new instance of MultivariateBatchDetectionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultivariateBatchDetectionOptions"/>. </summary>
         /// <param name="dataSource">
         /// Source link to the input data to indicate an accessible Azure Storage URI.
         /// It either points to an Azure Blob Storage folder or points to a CSV file in

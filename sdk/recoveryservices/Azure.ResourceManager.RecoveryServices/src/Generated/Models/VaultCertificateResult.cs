@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Certificate corresponding to a vault that can be used by clients to register themselves with the vault. </summary>
     public partial class VaultCertificateResult : ResourceData
     {
-        /// <summary> Initializes a new instance of VaultCertificateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultCertificateResult"/>. </summary>
         internal VaultCertificateResult()
         {
         }
 
-        /// <summary> Initializes a new instance of VaultCertificateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultCertificateResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

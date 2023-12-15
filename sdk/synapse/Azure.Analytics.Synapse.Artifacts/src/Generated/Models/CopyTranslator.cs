@@ -17,13 +17,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// </summary>
     public partial class CopyTranslator
     {
-        /// <summary> Initializes a new instance of CopyTranslator. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyTranslator"/>. </summary>
         public CopyTranslator()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of CopyTranslator. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyTranslator"/>. </summary>
         /// <param name="type"> Copy translator type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal CopyTranslator(string type, IDictionary<string, object> additionalProperties)

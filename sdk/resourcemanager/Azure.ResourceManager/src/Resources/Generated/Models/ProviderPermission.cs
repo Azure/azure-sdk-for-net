@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The provider permission. </summary>
     public partial class ProviderPermission
     {
-        /// <summary> Initializes a new instance of ProviderPermission. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderPermission"/>. </summary>
         internal ProviderPermission()
         {
         }
 
-        /// <summary> Initializes a new instance of ProviderPermission. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderPermission"/>. </summary>
         /// <param name="applicationId"> The application id. </param>
         /// <param name="roleDefinition"> Role definition properties. </param>
         /// <param name="managedByRoleDefinition"> Role definition properties. </param>

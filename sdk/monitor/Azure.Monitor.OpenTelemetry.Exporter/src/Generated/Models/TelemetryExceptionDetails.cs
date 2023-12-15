@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     /// <summary> Exception details of the exception in a chain. </summary>
     internal partial class TelemetryExceptionDetails
     {
-        /// <summary> Initializes a new instance of TelemetryExceptionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelemetryExceptionDetails"/>. </summary>
         /// <param name="message"> Exception message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         public TelemetryExceptionDetails(string message)
@@ -23,6 +23,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             Message = message;
             ParsedStack = new ChangeTrackingList<StackFrame>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TelemetryExceptionDetails"/>. </summary>
+        /// <param name="id"> In case exception is nested (outer exception contains inner one), the id and outerId properties are used to represent the nesting. </param>
+        /// <param name="outerId"> The value of outerId is a reference to an element in ExceptionDetails that represents the outer exception. </param>
+        /// <param name="typeName"> Exception type name. </param>
+        /// <param name="message"> Exception message. </param>
+        /// <param name="hasFullStack"> Indicates if full exception stack is provided in the exception. The stack may be trimmed, such as in the case of a StackOverflow exception. </param>
+        /// <param name="stack"> Text describing the stack. Either stack or parsedStack should have a value. </param>
+        /// <param name="parsedStack"> List of stack frames. Either stack or parsedStack should have a value. </param>
+        internal TelemetryExceptionDetails(int? id, int? outerId, string typeName, string message, bool? hasFullStack, string stack, IList<StackFrame> parsedStack)
+        {
+            Id = id;
+            OuterId = outerId;
+            TypeName = typeName;
+            Message = message;
+            HasFullStack = hasFullStack;
+            Stack = stack;
+            ParsedStack = parsedStack;
         }
 
         /// <summary> In case exception is nested (outer exception contains inner one), the id and outerId properties are used to represent the nesting. </summary>

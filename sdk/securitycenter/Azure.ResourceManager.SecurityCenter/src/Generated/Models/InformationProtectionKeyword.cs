@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The information type keyword. </summary>
     public partial class InformationProtectionKeyword
     {
-        /// <summary> Initializes a new instance of InformationProtectionKeyword. </summary>
+        /// <summary> Initializes a new instance of <see cref="InformationProtectionKeyword"/>. </summary>
         public InformationProtectionKeyword()
         {
         }
 
-        /// <summary> Initializes a new instance of InformationProtectionKeyword. </summary>
+        /// <summary> Initializes a new instance of <see cref="InformationProtectionKeyword"/>. </summary>
         /// <param name="pattern"> The keyword pattern. </param>
         /// <param name="custom"> Indicates whether the keyword is custom or not. </param>
         /// <param name="canBeNumeric"> Indicates whether the keyword can be applied on numeric types or not. </param>

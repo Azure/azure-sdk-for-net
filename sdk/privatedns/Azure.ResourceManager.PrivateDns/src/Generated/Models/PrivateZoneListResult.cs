@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.PrivateDns.Models
     /// <summary> The response to a Private DNS zone list operation. </summary>
     internal partial class PrivateZoneListResult
     {
-        /// <summary> Initializes a new instance of PrivateZoneListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateZoneListResult"/>. </summary>
         internal PrivateZoneListResult()
         {
             Value = new ChangeTrackingList<PrivateDnsZoneData>();
         }
 
-        /// <summary> Initializes a new instance of PrivateZoneListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateZoneListResult"/>. </summary>
         /// <param name="value"> Information about the Private DNS zones. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
         internal PrivateZoneListResult(IReadOnlyList<PrivateDnsZoneData> value, string nextLink)

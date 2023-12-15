@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Batch
         private readonly PrivateEndpointConnectionRestOperations _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient;
         private readonly BatchPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Batch/batchAccounts/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="BatchPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected BatchPrivateEndpointConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Batch
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Batch/batchAccounts/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

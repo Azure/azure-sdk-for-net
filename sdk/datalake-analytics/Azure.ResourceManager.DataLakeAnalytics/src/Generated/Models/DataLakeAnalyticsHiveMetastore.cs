@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsHiveMetastore : ResourceData
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsHiveMetastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsHiveMetastore"/>. </summary>
         internal DataLakeAnalyticsHiveMetastore()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsHiveMetastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsHiveMetastore"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

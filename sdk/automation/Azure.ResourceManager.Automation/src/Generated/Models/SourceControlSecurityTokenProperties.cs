@@ -10,9 +10,20 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The SourceControlSecurityTokenProperties. </summary>
     public partial class SourceControlSecurityTokenProperties
     {
-        /// <summary> Initializes a new instance of SourceControlSecurityTokenProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceControlSecurityTokenProperties"/>. </summary>
         public SourceControlSecurityTokenProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SourceControlSecurityTokenProperties"/>. </summary>
+        /// <param name="accessToken"> The access token. </param>
+        /// <param name="refreshToken"> The refresh token. </param>
+        /// <param name="tokenType"> The token type. Must be either PersonalAccessToken or Oauth. </param>
+        internal SourceControlSecurityTokenProperties(string accessToken, string refreshToken, SourceControlTokenType? tokenType)
+        {
+            AccessToken = accessToken;
+            RefreshToken = refreshToken;
+            TokenType = tokenType;
         }
 
         /// <summary> The access token. </summary>

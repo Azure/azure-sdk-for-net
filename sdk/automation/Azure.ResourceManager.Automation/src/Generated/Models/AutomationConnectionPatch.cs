@@ -13,10 +13,21 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the update connection operation. </summary>
     public partial class AutomationConnectionPatch
     {
-        /// <summary> Initializes a new instance of AutomationConnectionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionPatch"/>. </summary>
         public AutomationConnectionPatch()
         {
             FieldDefinitionValues = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionPatch"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the connection. </param>
+        /// <param name="description"> Gets or sets the description of the connection. </param>
+        /// <param name="fieldDefinitionValues"> Gets or sets the field definition values of the connection. </param>
+        internal AutomationConnectionPatch(string name, string description, IDictionary<string, string> fieldDefinitionValues)
+        {
+            Name = name;
+            Description = description;
+            FieldDefinitionValues = fieldDefinitionValues;
         }
 
         /// <summary> Gets or sets the name of the connection. </summary>

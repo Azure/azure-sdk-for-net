@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> List Replications. </summary>
     internal partial class ListReplications
     {
-        /// <summary> Initializes a new instance of ListReplications. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListReplications"/>. </summary>
         internal ListReplications()
         {
             Value = new ChangeTrackingList<NetAppVolumeReplication>();
         }
 
-        /// <summary> Initializes a new instance of ListReplications. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListReplications"/>. </summary>
         /// <param name="value"> A list of replications. </param>
         internal ListReplications(IReadOnlyList<NetAppVolumeReplication> value)
         {

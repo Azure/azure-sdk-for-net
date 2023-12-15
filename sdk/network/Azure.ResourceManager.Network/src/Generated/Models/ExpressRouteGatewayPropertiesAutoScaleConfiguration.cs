@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Configuration for auto scaling. </summary>
     internal partial class ExpressRouteGatewayPropertiesAutoScaleConfiguration
     {
-        /// <summary> Initializes a new instance of ExpressRouteGatewayPropertiesAutoScaleConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayPropertiesAutoScaleConfiguration"/>. </summary>
         public ExpressRouteGatewayPropertiesAutoScaleConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteGatewayPropertiesAutoScaleConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayPropertiesAutoScaleConfiguration"/>. </summary>
         /// <param name="bounds"> Minimum and maximum number of scale units to deploy. </param>
         internal ExpressRouteGatewayPropertiesAutoScaleConfiguration(ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds bounds)
         {

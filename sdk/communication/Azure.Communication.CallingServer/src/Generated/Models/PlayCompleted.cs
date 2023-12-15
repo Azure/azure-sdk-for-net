@@ -10,12 +10,12 @@ namespace Azure.Communication.CallingServer
     /// <summary> The PlayCompleted. </summary>
     public partial class PlayCompleted
     {
-        /// <summary> Initializes a new instance of PlayCompleted. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlayCompleted"/>. </summary>
         internal PlayCompleted()
         {
         }
 
-        /// <summary> Initializes a new instance of PlayCompleted. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlayCompleted"/>. </summary>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"></param>
         /// <param name="version"> Used to determine the version of the event. </param>

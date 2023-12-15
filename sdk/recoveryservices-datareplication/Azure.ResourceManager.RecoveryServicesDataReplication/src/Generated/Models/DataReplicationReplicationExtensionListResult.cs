@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Replication extension model collection. </summary>
     internal partial class DataReplicationReplicationExtensionListResult
     {
-        /// <summary> Initializes a new instance of DataReplicationReplicationExtensionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationReplicationExtensionListResult"/>. </summary>
         internal DataReplicationReplicationExtensionListResult()
         {
             Value = new ChangeTrackingList<DataReplicationReplicationExtensionData>();
         }
 
-        /// <summary> Initializes a new instance of DataReplicationReplicationExtensionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationReplicationExtensionListResult"/>. </summary>
         /// <param name="value"> Gets or sets the list of replication extensions. </param>
         /// <param name="nextLink"> Gets or sets the value of next link. </param>
         internal DataReplicationReplicationExtensionListResult(IReadOnlyList<DataReplicationReplicationExtensionData> value, string nextLink)

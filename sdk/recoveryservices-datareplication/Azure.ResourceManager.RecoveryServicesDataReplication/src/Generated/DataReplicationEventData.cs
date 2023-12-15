@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     /// </summary>
     public partial class DataReplicationEventData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataReplicationEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationEventData"/>. </summary>
         /// <param name="properties"> Event model properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         internal DataReplicationEventData(DataReplicationEventProperties properties)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataReplicationEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationEventData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

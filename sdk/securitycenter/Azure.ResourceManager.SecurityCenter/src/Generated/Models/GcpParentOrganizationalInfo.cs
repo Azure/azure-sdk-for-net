@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The gcpOrganization data for the parent account. </summary>
     public partial class GcpParentOrganizationalInfo : GcpOrganizationalInfo
     {
-        /// <summary> Initializes a new instance of GcpParentOrganizationalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GcpParentOrganizationalInfo"/>. </summary>
         public GcpParentOrganizationalInfo()
         {
             ExcludedProjectNumbers = new ChangeTrackingList<string>();
             OrganizationMembershipType = OrganizationMembershipType.Organization;
         }
 
-        /// <summary> Initializes a new instance of GcpParentOrganizationalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GcpParentOrganizationalInfo"/>. </summary>
         /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
         /// <param name="excludedProjectNumbers"> If the multi cloud account is of membership type organization, list of accounts excluded from offering. </param>
         /// <param name="serviceAccountEmailAddress"> The service account email address which represents the organization level permissions container. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Describes an available sku.". </summary>
     public partial class SignalRSku
     {
-        /// <summary> Initializes a new instance of SignalRSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRSku"/>. </summary>
         internal SignalRSku()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalRSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRSku"/>. </summary>
         /// <param name="resourceType"> The resource type that this object applies to. </param>
         /// <param name="sku"> The billing information of the resource. </param>
         /// <param name="capacity"> Describes scaling information of a sku. </param>

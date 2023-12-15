@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> The UnknownCopyOption. </summary>
     internal partial class UnknownCopyOption : DataProtectionBackupCopySetting
     {
-        /// <summary> Initializes a new instance of UnknownCopyOption. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCopyOption"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         internal UnknownCopyOption(string objectType) : base(objectType)
         {

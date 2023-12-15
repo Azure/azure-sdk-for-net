@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmHybridComputeModelFactory
     {
-        /// <summary> Initializes a new instance of HybridComputeMachineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputeMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeMachineData(id, name, resourceType, systemData, tags, location, resources?.ToList(), identity, locationData, agentConfiguration, serviceStatuses, cloudMetadataProvider != null ? new CloudMetadata(cloudMetadataProvider) : null, agentUpgrade, osProfile, provisioningState, status, lastStatusChange, errorDetails?.ToList(), agentVersion, vmId, displayName, machineFqdn, clientPublicKey, osName, osVersion, osType, vmUuid, extensions?.ToList(), osSku, domainName, adFqdn, dnsFqdn, privateLinkScopeResourceId, parentClusterResourceId, mssqlDiscovered, detectedProperties);
         }
 
-        /// <summary> Initializes a new instance of AgentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AgentConfiguration"/>. </summary>
         /// <param name="proxyUri"> Specifies the URL of the proxy to be used. </param>
         /// <param name="incomingConnectionsPorts"> Specifies the list of ports that the agent will be able to listen on. </param>
         /// <param name="extensionsAllowList"> Array of extensions that are allowed to be installed or updated. </param>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new AgentConfiguration(proxyUri, incomingConnectionsPorts?.ToList(), extensionsAllowList?.ToList(), extensionsBlockList?.ToList(), proxyBypass?.ToList(), extensionsEnabled, guestConfigurationEnabled, configMode);
         }
 
-        /// <summary> Initializes a new instance of ConfigurationExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationExtension"/>. </summary>
         /// <param name="publisher"> Publisher of the extension. </param>
         /// <param name="configurationExtensionType"> Type of the extension. </param>
         /// <returns> A new <see cref="Models.ConfigurationExtension"/> instance for mocking. </returns>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new ConfigurationExtension(publisher, configurationExtensionType);
         }
 
-        /// <summary> Initializes a new instance of AgentUpgrade. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AgentUpgrade"/>. </summary>
         /// <param name="desiredVersion"> Specifies the version info w.r.t AgentUpgrade for the machine. </param>
         /// <param name="correlationId"> The correlation ID passed in from RSM per upgrade. </param>
         /// <param name="enableAutomaticUpgrade"> Specifies if RSM should try to upgrade this machine. </param>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new AgentUpgrade(desiredVersion, correlationId, enableAutomaticUpgrade, lastAttemptTimestamp, lastAttemptStatus, lastAttemptMessage);
         }
 
-        /// <summary> Initializes a new instance of OSProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OSProfile"/>. </summary>
         /// <param name="computerName"> Specifies the host OS name of the hybrid machine. </param>
         /// <param name="windowsConfiguration"> Specifies the windows configuration for update management. </param>
         /// <param name="linuxConfiguration"> Specifies the linux configuration for update management. </param>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new OSProfile(computerName, windowsConfiguration, linuxConfiguration);
         }
 
-        /// <summary> Initializes a new instance of HybridComputeMachineExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputeMachineExtensionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeMachineExtensionData(id, name, resourceType, systemData, tags, location, forceUpdateTag, publisher, typePropertiesType, typeHandlerVersion, enableAutomaticUpgrade, autoUpgradeMinorVersion, settings, protectedSettings, provisioningState, instanceView);
         }
 
-        /// <summary> Initializes a new instance of MachineAssessPatchesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MachineAssessPatchesResult"/>. </summary>
         /// <param name="status"> The overall success or failure status of the operation. It remains "InProgress" until the operation completes. At that point it will become "Unknown", "Failed", "Succeeded", or "CompletedWithWarnings.". </param>
         /// <param name="assessmentActivityId"> The activity ID of the operation that produced this result. </param>
         /// <param name="rebootPending"> The overall reboot status of the VM. It will be true when partially installed patches require a reboot to complete installation but the reboot has not yet occurred. </param>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new MachineAssessPatchesResult(status, assessmentActivityId, rebootPending, availablePatchCountByClassification, startOn, lastModifiedOn, startedBy, patchServiceUsed, osType, errorDetails);
         }
 
-        /// <summary> Initializes a new instance of AvailablePatchCountByClassification. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvailablePatchCountByClassification"/>. </summary>
         /// <param name="security"> Number of security patches available for installation. </param>
         /// <param name="critical"> Number of critical patches available for installation. </param>
         /// <param name="definition"> Number of definition patches available for installation. </param>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new AvailablePatchCountByClassification(security, critical, definition, updateRollup, featurePack, servicePack, tools, updates, other);
         }
 
-        /// <summary> Initializes a new instance of MachineInstallPatchesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MachineInstallPatchesResult"/>. </summary>
         /// <param name="status"> The overall success or failure status of the operation. It remains "InProgress" until the operation completes. At that point it will become "Failed", "Succeeded", "Unknown" or "CompletedWithWarnings.". </param>
         /// <param name="installationActivityId"> The activity ID of the operation that produced this result. </param>
         /// <param name="rebootStatus"> The reboot state of the VM following completion of the operation. </param>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new MachineInstallPatchesResult(status, installationActivityId, rebootStatus, maintenanceWindowExceeded, excludedPatchCount, notSelectedPatchCount, pendingPatchCount, installedPatchCount, failedPatchCount, startOn, lastModifiedOn, startedBy, patchServiceUsed, osType, errorDetails);
         }
 
-        /// <summary> Initializes a new instance of ExtensionValueData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridCompute.ExtensionValueData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new ExtensionValueData(id, name, resourceType, systemData, version, extensionType, publisher);
         }
 
-        /// <summary> Initializes a new instance of NetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkProfile"/>. </summary>
         /// <param name="networkInterfaces"> The list of network interfaces. </param>
         /// <returns> A new <see cref="Models.NetworkProfile"/> instance for mocking. </returns>
         public static NetworkProfile NetworkProfile(IEnumerable<NetworkInterface> networkInterfaces = null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new NetworkProfile(networkInterfaces?.ToList());
         }
 
-        /// <summary> Initializes a new instance of NetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkInterface"/>. </summary>
         /// <param name="ipAddresses"> The list of IP addresses in this interface. </param>
         /// <returns> A new <see cref="Models.NetworkInterface"/> instance for mocking. </returns>
         public static NetworkInterface NetworkInterface(IEnumerable<IPAddress> ipAddresses = null)
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new NetworkInterface(ipAddresses?.ToList());
         }
 
-        /// <summary> Initializes a new instance of IPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IPAddress"/>. </summary>
         /// <param name="address"> Represents the IP Address. </param>
         /// <param name="ipAddressVersion"> Represents the Ip Address Version. </param>
         /// <param name="subnetAddressPrefix"> The subnet to which this IP address belongs. </param>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new IPAddress(address, ipAddressVersion, subnetAddressPrefix != null ? new Subnet(subnetAddressPrefix) : null);
         }
 
-        /// <summary> Initializes a new instance of HybridComputePrivateLinkScopeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputePrivateLinkScopeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputePrivateLinkScopeData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of HybridComputePrivateLinkScopeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputePrivateLinkScopeProperties"/>. </summary>
         /// <param name="publicNetworkAccess"> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </param>
         /// <param name="provisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
         /// <param name="privateLinkScopeId"> The Guid id of the private link scope. </param>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputePrivateLinkScopeProperties(publicNetworkAccess, provisioningState, privateLinkScopeId, privateEndpointConnections?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionDataModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointConnectionDataModel"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new PrivateEndpointConnectionDataModel(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpointId"> Private endpoint which the connection belongs to. </param>
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new PrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState, groupIds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of HybridComputePrivateLinkServiceConnectionStateProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputePrivateLinkServiceConnectionStateProperty"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The actions required for private link service connection. </param>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputePrivateLinkServiceConnectionStateProperty(status, description, actionsRequired);
         }
 
-        /// <summary> Initializes a new instance of HybridComputePrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputePrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputePrivateLinkResourceData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of HybridComputePrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputePrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputePrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
         }
 
-        /// <summary> Initializes a new instance of HybridComputePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputePrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputePrivateEndpointConnectionData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkScopeValidationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PrivateLinkScopeValidationDetails"/>. </summary>
         /// <param name="id"> Azure resource Id. </param>
         /// <param name="publicNetworkAccess"> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </param>
         /// <param name="connectionDetails"> List of Private Endpoint Connection details. </param>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new PrivateLinkScopeValidationDetails(id, publicNetworkAccess, connectionDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConnectionDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectionDetail"/>. </summary>
         /// <param name="id"> Azure resource Id. </param>
         /// <param name="privateIPAddress"> The private endpoint connection private ip address. </param>
         /// <param name="linkIdentifier"> The private endpoint connection link identifier. </param>

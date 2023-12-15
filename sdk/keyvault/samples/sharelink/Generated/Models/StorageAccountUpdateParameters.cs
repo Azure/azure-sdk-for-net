@@ -13,10 +13,25 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> The storage account update parameters. </summary>
     internal partial class StorageAccountUpdateParameters
     {
-        /// <summary> Initializes a new instance of StorageAccountUpdateParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountUpdateParameters"/>. </summary>
         public StorageAccountUpdateParameters()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountUpdateParameters"/>. </summary>
+        /// <param name="activeKeyName"> The current active storage account key name. </param>
+        /// <param name="autoRegenerateKey"> whether keyvault should manage the storage account for the user. </param>
+        /// <param name="regenerationPeriod"> The key regeneration time duration specified in ISO-8601 format. </param>
+        /// <param name="storageAccountAttributes"> The attributes of the storage account. </param>
+        /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
+        internal StorageAccountUpdateParameters(string activeKeyName, bool? autoRegenerateKey, string regenerationPeriod, StorageAccountAttributes storageAccountAttributes, IDictionary<string, string> tags)
+        {
+            ActiveKeyName = activeKeyName;
+            AutoRegenerateKey = autoRegenerateKey;
+            RegenerationPeriod = regenerationPeriod;
+            StorageAccountAttributes = storageAccountAttributes;
+            Tags = tags;
         }
 
         /// <summary> The current active storage account key name. </summary>

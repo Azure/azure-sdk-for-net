@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> The UnknownPolicyModelCustomProperties. </summary>
     internal partial class UnknownPolicyModelCustomProperties : PolicyModelCustomProperties
     {
-        /// <summary> Initializes a new instance of UnknownPolicyModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownPolicyModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         internal UnknownPolicyModelCustomProperties(string instanceType) : base(instanceType)
         {

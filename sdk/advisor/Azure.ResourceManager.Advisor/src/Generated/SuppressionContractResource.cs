@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Advisor
         private readonly SuppressionsRestOperations _suppressionContractSuppressionsRestClient;
         private readonly SuppressionContractData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Advisor/recommendations/suppressions";
+
         /// <summary> Initializes a new instance of the <see cref="SuppressionContractResource"/> class for mocking. </summary>
         protected SuppressionContractResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Advisor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Advisor/recommendations/suppressions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         private readonly MigrationsRestOperations _postgreSqlMigrationMigrationsRestClient;
         private readonly PostgreSqlMigrationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/migrations";
+
         /// <summary> Initializes a new instance of the <see cref="PostgreSqlMigrationResource"/> class for mocking. </summary>
         protected PostgreSqlMigrationResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/migrations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

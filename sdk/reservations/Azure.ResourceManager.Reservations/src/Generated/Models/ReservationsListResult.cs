@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The list of reservations and summary of roll out count of reservations in each state. </summary>
     internal partial class ReservationsListResult
     {
-        /// <summary> Initializes a new instance of ReservationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationsListResult"/>. </summary>
         internal ReservationsListResult()
         {
             Value = new ChangeTrackingList<ReservationDetailData>();
         }
 
-        /// <summary> Initializes a new instance of ReservationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationsListResult"/>. </summary>
         /// <param name="value"> The list of reservations. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         /// <param name="summary"> The roll out count summary of the reservations. </param>

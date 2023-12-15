@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Quotas associated with a Batch region for a particular subscription. </summary>
     public partial class BatchLocationQuota
     {
-        /// <summary> Initializes a new instance of BatchLocationQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchLocationQuota"/>. </summary>
         internal BatchLocationQuota()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchLocationQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchLocationQuota"/>. </summary>
         /// <param name="accountQuota"> The number of Batch accounts that may be created under the subscription in the specified region. </param>
         internal BatchLocationQuota(int? accountQuota)
         {

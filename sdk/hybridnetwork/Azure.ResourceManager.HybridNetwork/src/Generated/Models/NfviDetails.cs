@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The nfvi details. </summary>
     public partial class NfviDetails
     {
-        /// <summary> Initializes a new instance of NfviDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="NfviDetails"/>. </summary>
         public NfviDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of NfviDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="NfviDetails"/>. </summary>
         /// <param name="name"> The nfvi name. </param>
         /// <param name="nfviDetailsType"> The nfvi type. </param>
         internal NfviDetails(string name, string nfviDetailsType)

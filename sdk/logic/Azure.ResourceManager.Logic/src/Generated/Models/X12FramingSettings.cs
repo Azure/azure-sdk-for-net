@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The X12 agreement framing settings. </summary>
     public partial class X12FramingSettings
     {
-        /// <summary> Initializes a new instance of X12FramingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12FramingSettings"/>. </summary>
         /// <param name="dataElementSeparator"> The data element separator. </param>
         /// <param name="componentSeparator"> The component separator. </param>
         /// <param name="replaceSeparatorsInPayload"> The value indicating whether to replace separators in payload. </param>

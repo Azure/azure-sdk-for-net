@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machine scale set VM network profile. </summary>
     internal partial class VirtualMachineScaleSetVmNetworkProfileConfiguration
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmNetworkProfileConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmNetworkProfileConfiguration"/>. </summary>
         public VirtualMachineScaleSetVmNetworkProfileConfiguration()
         {
             NetworkInterfaceConfigurations = new ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmNetworkProfileConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmNetworkProfileConfiguration"/>. </summary>
         /// <param name="networkInterfaceConfigurations"> The list of network configurations. </param>
         internal VirtualMachineScaleSetVmNetworkProfileConfiguration(IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations)
         {

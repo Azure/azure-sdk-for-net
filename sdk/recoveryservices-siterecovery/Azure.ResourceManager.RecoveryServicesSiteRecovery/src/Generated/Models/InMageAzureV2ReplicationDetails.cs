@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageAzureV2 provider specific settings. </summary>
     public partial class InMageAzureV2ReplicationDetails : ReplicationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of InMageAzureV2ReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2ReplicationDetails"/>. </summary>
         internal InMageAzureV2ReplicationDetails()
         {
             ProtectedDisks = new ChangeTrackingList<InMageAzureV2ProtectedDiskDetails>();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageAzureV2";
         }
 
-        /// <summary> Initializes a new instance of InMageAzureV2ReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2ReplicationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
         /// <param name="infrastructureVmId"> The infrastructure VM Id. </param>
         /// <param name="vCenterInfrastructureId"> The vCenter infrastructure Id. </param>

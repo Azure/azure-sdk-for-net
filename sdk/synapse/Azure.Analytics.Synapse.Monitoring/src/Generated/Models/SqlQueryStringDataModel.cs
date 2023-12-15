@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
     /// <summary> The SqlQueryStringDataModel. </summary>
     public partial class SqlQueryStringDataModel
     {
-        /// <summary> Initializes a new instance of SqlQueryStringDataModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlQueryStringDataModel"/>. </summary>
         internal SqlQueryStringDataModel()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlQueryStringDataModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlQueryStringDataModel"/>. </summary>
         /// <param name="query"></param>
         internal SqlQueryStringDataModel(string query)
         {

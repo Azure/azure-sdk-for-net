@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Datadog
         private readonly SingleSignOnConfigurationsRestOperations _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient;
         private readonly DatadogSingleSignOnResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Datadog/monitors/singleSignOnConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="DatadogSingleSignOnResource"/> class for mocking. </summary>
         protected DatadogSingleSignOnResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Datadog
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Datadog/monitors/singleSignOnConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

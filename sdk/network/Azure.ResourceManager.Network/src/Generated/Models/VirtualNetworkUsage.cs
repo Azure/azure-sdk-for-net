@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Usage details for subnet. </summary>
     public partial class VirtualNetworkUsage
     {
-        /// <summary> Initializes a new instance of VirtualNetworkUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkUsage"/>. </summary>
         internal VirtualNetworkUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkUsage"/>. </summary>
         /// <param name="currentValue"> Indicates number of IPs used from the Subnet. </param>
         /// <param name="id"> Subnet identifier. </param>
         /// <param name="limit"> Indicates the size of the subnet. </param>

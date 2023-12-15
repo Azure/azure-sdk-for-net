@@ -75,14 +75,25 @@ namespace Azure.Communication.Chat
             => new ChatMessageReadReceipt(sender, chatMessageId, readOn);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ChatMessageContent"/> class.
+        /// Initializes a new instance of the <see cref="Chat.ChatMessageContent"/> class.
         /// </summary>
         /// <param name="message"> Chat message. </param>
         /// <param name="topic"> Topic of the message content. </param>
         /// <param name="communicationUserIdentifier"> Communication user identifier.</param>
-        /// <param name="participants"> List of chat participants </param>
-        /// <returns>A new <see cref="ChatMessageContent"/> instance for mocking.</returns>
+        /// <param name="participants"> List of chat participants. </param>
+        /// <returns>A new <see cref="Chat.ChatMessageContent"/> instance for mocking.</returns>
         public static ChatMessageContent ChatMessageContent(string message, string topic, CommunicationUserIdentifier communicationUserIdentifier, IEnumerable<ChatParticipant> participants) => new ChatMessageContent(message, topic, communicationUserIdentifier, participants);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Chat.ChatMessageContent"/> class.
+        /// </summary>
+        /// <param name="message"> Chat message. </param>
+        /// <param name="topic"> Topic of the message content. </param>
+        /// <param name="communicationUserIdentifier"> Communication user identifier.</param>
+        /// <param name="participants"> List of chat participants. </param>
+        /// <param name="attachments"> List of chat attachments. </param>
+        /// <returns>A new <see cref="Chat.ChatMessageContent"/> instance for mocking.</returns>
+        public static ChatMessageContent ChatMessageContent(string message, string topic, CommunicationUserIdentifier communicationUserIdentifier, IEnumerable<ChatParticipant> participants, IEnumerable<ChatAttachment> attachments = null) => new ChatMessageContent(message, topic, communicationUserIdentifier, participants, attachments);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChatThreadProperties"/> class.
@@ -102,6 +113,17 @@ namespace Azure.Communication.Chat
         /// <param name="invalidParticipants"> List of invalid participants</param>
         /// <returns>A new <see cref="CreateChatThreadResult"/> instance for mocking.</returns>
         public static CreateChatThreadResult CreateChatThreadResult(ChatThreadProperties chatThread, IEnumerable<ChatError> invalidParticipants) => new CreateChatThreadResult(chatThread, invalidParticipants);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ChatAttachment"/> class.
+        /// </summary>
+        /// <param name="id"> Id of the attachment. </param>
+        /// <param name="attachmentType"> The type of attachment. </param>
+        /// <param name="name"> The name of the attachment content. </param>
+        /// <param name="uri"> The URI where the attachment can be downloaded. </param>
+        /// <param name="previewUri"> The URI where the preview of attachment can be downloaded. </param>
+        /// <returns>A new <see cref="ChatAttachment"/> instance for mocking.</returns>
+        public static ChatAttachment ChatAttachment(string id, ChatAttachmentType attachmentType, string name, Uri uri, Uri previewUri) => new ChatAttachment(id, attachmentType, name, uri, previewUri);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChatParticipant"/> class.

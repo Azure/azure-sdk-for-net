@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListFrontendIPConfiguration API service call. </summary>
     internal partial class LoadBalancerFrontendIPConfigurationListResult
     {
-        /// <summary> Initializes a new instance of LoadBalancerFrontendIPConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerFrontendIPConfigurationListResult"/>. </summary>
         internal LoadBalancerFrontendIPConfigurationListResult()
         {
             Value = new ChangeTrackingList<FrontendIPConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of LoadBalancerFrontendIPConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerFrontendIPConfigurationListResult"/>. </summary>
         /// <param name="value"> A list of frontend IP configurations in a load balancer. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal LoadBalancerFrontendIPConfigurationListResult(IReadOnlyList<FrontendIPConfigurationData> value, string nextLink)

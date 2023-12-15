@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A data flow transformation. </summary>
     public partial class DataFlowTransformation
     {
-        /// <summary> Initializes a new instance of DataFlowTransformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowTransformation"/>. </summary>
         /// <param name="name"> Transformation name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DataFlowTransformation(string name)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of DataFlowTransformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowTransformation"/>. </summary>
         /// <param name="name"> Transformation name. </param>
         /// <param name="description"> Transformation description. </param>
         /// <param name="dataset"> Dataset reference. </param>

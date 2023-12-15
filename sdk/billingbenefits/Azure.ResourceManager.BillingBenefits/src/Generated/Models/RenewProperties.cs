@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> The RenewProperties. </summary>
     internal partial class RenewProperties
     {
-        /// <summary> Initializes a new instance of RenewProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenewProperties"/>. </summary>
         public RenewProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of RenewProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenewProperties"/>. </summary>
         /// <param name="purchaseProperties"></param>
         internal RenewProperties(BillingBenefitsPurchaseContent purchaseProperties)
         {

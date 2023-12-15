@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Represents product details. </summary>
     public partial class ProductDetails
     {
-        /// <summary> Initializes a new instance of ProductDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductDetails"/>. </summary>
         /// <param name="hierarchyInformation"> Hierarchy of the product which uniquely identifies the product. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hierarchyInformation"/> is null. </exception>
         public ProductDetails(HierarchyInformation hierarchyInformation)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             DeviceDetails = new ChangeTrackingList<EdgeOrderProductDeviceDetails>();
         }
 
-        /// <summary> Initializes a new instance of ProductDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductDetails"/>. </summary>
         /// <param name="displayInfo"> Display details of the product. </param>
         /// <param name="hierarchyInformation"> Hierarchy of the product which uniquely identifies the product. </param>
         /// <param name="count"> Quantity of the product. </param>

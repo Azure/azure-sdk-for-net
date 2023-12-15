@@ -18,7 +18,7 @@ namespace Azure.AI.DocumentIntelligence
     /// </summary>
     public partial class DocumentWord
     {
-        /// <summary> Initializes a new instance of DocumentWord. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentWord"/>. </summary>
         /// <param name="content"> Text content of the word. </param>
         /// <param name="span"> Location of the word in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the word. </param>
@@ -34,7 +34,7 @@ namespace Azure.AI.DocumentIntelligence
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of DocumentWord. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentWord"/>. </summary>
         /// <param name="content"> Text content of the word. </param>
         /// <param name="polygon">
         /// Bounding polygon of the word, with coordinates specified relative to the

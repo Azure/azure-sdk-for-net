@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Benefit recommendation details. </summary>
     public partial class AllSavingsBenefitDetails
     {
-        /// <summary> Initializes a new instance of AllSavingsBenefitDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AllSavingsBenefitDetails"/>. </summary>
         public AllSavingsBenefitDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of AllSavingsBenefitDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AllSavingsBenefitDetails"/>. </summary>
         /// <param name="overageCost"> The difference between total cost and benefit cost for the 'totalHours' in the look-back period. </param>
         /// <param name="benefitCost"> The estimated cost with benefit for the 'totalHours' in the look-back period. It's equal to (commitmentAmount * totalHours). </param>
         /// <param name="totalCost"> Total cost, which is sum of benefit cost and overage cost. </param>

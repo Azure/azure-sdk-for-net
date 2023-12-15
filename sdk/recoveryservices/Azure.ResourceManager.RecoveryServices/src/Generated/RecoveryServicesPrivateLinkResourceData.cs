@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.RecoveryServices
     /// </summary>
     public partial class RecoveryServicesPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of RecoveryServicesPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesPrivateLinkResourceData"/>. </summary>
         internal RecoveryServicesPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

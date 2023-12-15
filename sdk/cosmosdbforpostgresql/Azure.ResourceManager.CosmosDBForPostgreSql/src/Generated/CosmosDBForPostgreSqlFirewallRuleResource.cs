@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         private readonly FirewallRulesRestOperations _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient;
         private readonly CosmosDBForPostgreSqlFirewallRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/serverGroupsv2/firewallRules";
+
         /// <summary> Initializes a new instance of the <see cref="CosmosDBForPostgreSqlFirewallRuleResource"/> class for mocking. </summary>
         protected CosmosDBForPostgreSqlFirewallRuleResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/serverGroupsv2/firewallRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

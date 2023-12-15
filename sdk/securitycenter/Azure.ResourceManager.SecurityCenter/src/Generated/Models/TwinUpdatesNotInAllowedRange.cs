@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Number of twin updates is not in allowed range. </summary>
     public partial class TwinUpdatesNotInAllowedRange : TimeWindowCustomAlertRule
     {
-        /// <summary> Initializes a new instance of TwinUpdatesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="TwinUpdatesNotInAllowedRange"/>. </summary>
         /// <param name="isEnabled"> Status of the custom alert. </param>
         /// <param name="minThreshold"> The minimum threshold. </param>
         /// <param name="maxThreshold"> The maximum threshold. </param>
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             RuleType = "TwinUpdatesNotInAllowedRange";
         }
 
-        /// <summary> Initializes a new instance of TwinUpdatesNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="TwinUpdatesNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>

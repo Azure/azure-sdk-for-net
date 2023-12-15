@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Request of a app services get Operation. </summary>
     public partial class NewRelicAppServicesGetContent
     {
-        /// <summary> Initializes a new instance of NewRelicAppServicesGetContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicAppServicesGetContent"/>. </summary>
         /// <param name="userEmail"> User Email. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public NewRelicAppServicesGetContent(string userEmail)
@@ -22,6 +22,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             Argument.AssertNotNull(userEmail, nameof(userEmail));
 
             AzureResourceIds = new ChangeTrackingList<ResourceIdentifier>();
+            UserEmail = userEmail;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicAppServicesGetContent"/>. </summary>
+        /// <param name="azureResourceIds"> Azure resource IDs. </param>
+        /// <param name="userEmail"> User Email. </param>
+        internal NewRelicAppServicesGetContent(IList<ResourceIdentifier> azureResourceIds, string userEmail)
+        {
+            AzureResourceIds = azureResourceIds;
             UserEmail = userEmail;
         }
 

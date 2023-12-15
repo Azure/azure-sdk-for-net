@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The state of a private link service connection. </summary>
     public partial class ContainerServicePrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of ContainerServicePrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateLinkServiceConnectionState"/>. </summary>
         public ContainerServicePrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServicePrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         internal ContainerServicePrivateLinkServiceConnectionState(ContainerServicePrivateLinkServiceConnectionStatus? status, string description)

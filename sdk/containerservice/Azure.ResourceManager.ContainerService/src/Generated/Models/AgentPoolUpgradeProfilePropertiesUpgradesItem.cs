@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The AgentPoolUpgradeProfilePropertiesUpgradesItem. </summary>
     public partial class AgentPoolUpgradeProfilePropertiesUpgradesItem
     {
-        /// <summary> Initializes a new instance of AgentPoolUpgradeProfilePropertiesUpgradesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolUpgradeProfilePropertiesUpgradesItem"/>. </summary>
         internal AgentPoolUpgradeProfilePropertiesUpgradesItem()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentPoolUpgradeProfilePropertiesUpgradesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolUpgradeProfilePropertiesUpgradesItem"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="isPreview"> Whether the Kubernetes version is currently in preview. </param>
         internal AgentPoolUpgradeProfilePropertiesUpgradesItem(string kubernetesVersion, bool? isPreview)

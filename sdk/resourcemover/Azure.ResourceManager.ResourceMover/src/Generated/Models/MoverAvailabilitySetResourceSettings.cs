@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Gets or sets the availability set resource settings. </summary>
     public partial class MoverAvailabilitySetResourceSettings : MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of MoverAvailabilitySetResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverAvailabilitySetResourceSettings"/>. </summary>
         public MoverAvailabilitySetResourceSettings()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             ResourceType = "Microsoft.Compute/availabilitySets";
         }
 
-        /// <summary> Initializes a new instance of MoverAvailabilitySetResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverAvailabilitySetResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
         /// <param name="targetResourceGroupName"> Gets or sets the target resource group name. </param>

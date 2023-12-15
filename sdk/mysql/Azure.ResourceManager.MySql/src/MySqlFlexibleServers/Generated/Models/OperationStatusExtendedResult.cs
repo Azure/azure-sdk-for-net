@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Represents Operation Results API Response. </summary>
     public partial class OperationStatusExtendedResult : OperationStatusResult
     {
-        /// <summary> Initializes a new instance of OperationStatusExtendedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatusExtendedResult"/>. </summary>
         /// <param name="status"> Operation status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         internal OperationStatusExtendedResult(string status) : base(status)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Properties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of OperationStatusExtendedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatusExtendedResult"/>. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="name"> Name of the async operation. </param>

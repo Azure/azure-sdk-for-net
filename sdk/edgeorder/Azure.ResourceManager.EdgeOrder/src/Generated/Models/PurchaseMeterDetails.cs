@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Billing type Purchase meter details. </summary>
     public partial class PurchaseMeterDetails : EdgeOrderProductMeterDetails
     {
-        /// <summary> Initializes a new instance of PurchaseMeterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurchaseMeterDetails"/>. </summary>
         internal PurchaseMeterDetails()
         {
             BillingType = BillingType.Purchase;
         }
 
-        /// <summary> Initializes a new instance of PurchaseMeterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurchaseMeterDetails"/>. </summary>
         /// <param name="billingType"> Represents billing type. </param>
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>

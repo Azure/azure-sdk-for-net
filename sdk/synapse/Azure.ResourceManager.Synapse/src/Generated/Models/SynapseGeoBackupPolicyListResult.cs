@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The response to a list geo backup policies request. </summary>
     internal partial class SynapseGeoBackupPolicyListResult
     {
-        /// <summary> Initializes a new instance of SynapseGeoBackupPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseGeoBackupPolicyListResult"/>. </summary>
         internal SynapseGeoBackupPolicyListResult()
         {
             Value = new ChangeTrackingList<SynapseGeoBackupPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseGeoBackupPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseGeoBackupPolicyListResult"/>. </summary>
         /// <param name="value"> The list of geo backup policies. </param>
         internal SynapseGeoBackupPolicyListResult(IReadOnlyList<SynapseGeoBackupPolicyData> value)
         {

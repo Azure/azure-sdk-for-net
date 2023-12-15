@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Backup Configuration. </summary>
     public partial class BackupConfiguration
     {
-        /// <summary> Initializes a new instance of BackupConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupConfiguration"/>. </summary>
         public BackupConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupConfiguration"/>. </summary>
         /// <param name="sourceLocation"> Source location of backups. </param>
         /// <param name="targetLocation"> Target location for copying backups. </param>
         internal BackupConfiguration(SourceLocation sourceLocation, TargetLocation targetLocation)

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Class to specify properties of all content keys in Streaming Policy. </summary>
     public partial class StreamingPolicyContentKeys
     {
-        /// <summary> Initializes a new instance of StreamingPolicyContentKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingPolicyContentKeys"/>. </summary>
         public StreamingPolicyContentKeys()
         {
             KeyToTrackMappings = new ChangeTrackingList<StreamingPolicyContentKey>();
         }
 
-        /// <summary> Initializes a new instance of StreamingPolicyContentKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingPolicyContentKeys"/>. </summary>
         /// <param name="defaultKey"> Default content key for an encryption scheme. </param>
         /// <param name="keyToTrackMappings"> Representing tracks needs separate content key. </param>
         internal StreamingPolicyContentKeys(EncryptionSchemeDefaultKey defaultKey, IList<StreamingPolicyContentKey> keyToTrackMappings)

@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The SeverityFilterCondition. </summary>
     internal partial class SeverityFilterCondition
     {
-        /// <summary> Initializes a new instance of SeverityFilterCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="SeverityFilterCondition"/>. </summary>
         /// <param name="min"> min severity. </param>
         /// <param name="max"> max severity. </param>
         public SeverityFilterCondition(AnomalySeverity min, AnomalySeverity max)

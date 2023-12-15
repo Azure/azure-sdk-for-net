@@ -14,10 +14,23 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> The parameters for a PATCH request to a grafana resource. </summary>
     public partial class ManagedGrafanaPatch
     {
-        /// <summary> Initializes a new instance of ManagedGrafanaPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaPatch"/>. </summary>
         public ManagedGrafanaPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaPatch"/>. </summary>
+        /// <param name="sku"></param>
+        /// <param name="identity"> The managed identity of the grafana resource. </param>
+        /// <param name="tags"> The new tags of the grafana resource. </param>
+        /// <param name="properties"> Properties specific to the managed grafana resource. </param>
+        internal ManagedGrafanaPatch(ManagedGrafanaSku sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, ManagedGrafanaPatchProperties properties)
+        {
+            Sku = sku;
+            Identity = identity;
+            Tags = tags;
+            Properties = properties;
         }
 
         /// <summary> Gets or sets the sku. </summary>

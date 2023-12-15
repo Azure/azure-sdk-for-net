@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ServiceLinker
         private readonly LinkerRestOperations _linkerResourceLinkerRestClient;
         private readonly LinkerResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceLinker/linkers";
+
         /// <summary> Initializes a new instance of the <see cref="LinkerResource"/> class for mocking. </summary>
         protected LinkerResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.ServiceLinker
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceLinker/linkers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> The properties of the cost summary. </summary>
     internal partial class LabCostSummaryProperties
     {
-        /// <summary> Initializes a new instance of LabCostSummaryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabCostSummaryProperties"/>. </summary>
         internal LabCostSummaryProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of LabCostSummaryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabCostSummaryProperties"/>. </summary>
         /// <param name="estimatedLabCost"> The cost component of the cost item. </param>
         internal LabCostSummaryProperties(double? estimatedLabCost)
         {

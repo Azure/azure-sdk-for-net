@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> ARM Usage Name. </summary>
     public partial class InstancePoolUsageName
     {
-        /// <summary> Initializes a new instance of InstancePoolUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancePoolUsageName"/>. </summary>
         internal InstancePoolUsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of InstancePoolUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancePoolUsageName"/>. </summary>
         /// <param name="value"> Usage name value. </param>
         /// <param name="localizedValue"> Usage name localized value. </param>
         internal InstancePoolUsageName(string value, string localizedValue)

@@ -14,10 +14,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Patch Request content for Microsoft.DataProtection resources. </summary>
     public partial class DataProtectionBackupVaultPatch
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupVaultPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultPatch"/>. </summary>
         public DataProtectionBackupVaultPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultPatch"/>. </summary>
+        /// <param name="identity"> Input Managed Identity Details. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal DataProtectionBackupVaultPatch(ManagedServiceIdentity identity, DataProtectionBackupVaultPatchProperties properties, IDictionary<string, string> tags)
+        {
+            Identity = identity;
+            Properties = properties;
+            Tags = tags;
         }
 
         /// <summary> Input Managed Identity Details. </summary>

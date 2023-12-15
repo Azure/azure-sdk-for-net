@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the linked workspace. </summary>
     public partial class AutomationLinkedWorkspace
     {
-        /// <summary> Initializes a new instance of AutomationLinkedWorkspace. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationLinkedWorkspace"/>. </summary>
         internal AutomationLinkedWorkspace()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationLinkedWorkspace. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationLinkedWorkspace"/>. </summary>
         /// <param name="id"> Gets the id of the linked workspace. </param>
         internal AutomationLinkedWorkspace(string id)
         {

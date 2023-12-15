@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> A metric name. </summary>
     public partial class ServiceAccountUsageMetricName
     {
-        /// <summary> Initializes a new instance of ServiceAccountUsageMetricName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountUsageMetricName"/>. </summary>
         internal ServiceAccountUsageMetricName()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountUsageMetricName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountUsageMetricName"/>. </summary>
         /// <param name="value"> The name of the metric. </param>
         /// <param name="localizedValue"> The friendly name of the metric. </param>
         internal ServiceAccountUsageMetricName(string value, string localizedValue)

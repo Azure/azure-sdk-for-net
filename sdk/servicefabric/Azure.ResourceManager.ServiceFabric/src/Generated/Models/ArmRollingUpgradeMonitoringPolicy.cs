@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> The policy used for monitoring the application upgrade. </summary>
     public partial class ArmRollingUpgradeMonitoringPolicy
     {
-        /// <summary> Initializes a new instance of ArmRollingUpgradeMonitoringPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmRollingUpgradeMonitoringPolicy"/>. </summary>
         public ArmRollingUpgradeMonitoringPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmRollingUpgradeMonitoringPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmRollingUpgradeMonitoringPolicy"/>. </summary>
         /// <param name="failureAction"> The activation Mode of the service package. </param>
         /// <param name="healthCheckWaitDuration"> The amount of time to wait after completing an upgrade domain before applying health policies. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </param>
         /// <param name="healthCheckStableDuration"> The amount of time that the application or cluster must remain healthy before the upgrade proceeds to the next upgrade domain. It is first interpreted as a string representing an ISO 8601 duration. If that fails, then it is interpreted as a number representing the total number of milliseconds. </param>

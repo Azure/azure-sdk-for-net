@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Details of the service principal. </summary>
     public partial class ServicePrincipalProperties
     {
-        /// <summary> Initializes a new instance of ServicePrincipalProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalProperties"/>. </summary>
         public ServicePrincipalProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ServicePrincipalProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalProperties"/>. </summary>
         /// <param name="applicationId"> Application ID of service principal. </param>
         /// <param name="secret"> A secret string that the application uses to prove its identity, also can be referred to as application password (write only). </param>
         internal ServicePrincipalProperties(Guid? applicationId, string secret)

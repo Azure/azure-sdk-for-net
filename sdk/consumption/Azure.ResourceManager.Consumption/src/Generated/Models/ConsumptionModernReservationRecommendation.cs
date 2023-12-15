@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Modern reservation recommendation. </summary>
     public partial class ConsumptionModernReservationRecommendation : ConsumptionReservationRecommendation
     {
-        /// <summary> Initializes a new instance of ConsumptionModernReservationRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionModernReservationRecommendation"/>. </summary>
         internal ConsumptionModernReservationRecommendation()
         {
             SkuProperties = new ChangeTrackingList<ConsumptionSkuProperty>();
             Kind = ReservationRecommendationKind.Modern;
         }
 
-        /// <summary> Initializes a new instance of ConsumptionModernReservationRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionModernReservationRecommendation"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

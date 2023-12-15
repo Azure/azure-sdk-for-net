@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> List of dedicated HSMs. </summary>
     internal partial class DedicatedHsmListResult
     {
-        /// <summary> Initializes a new instance of DedicatedHsmListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedHsmListResult"/>. </summary>
         internal DedicatedHsmListResult()
         {
             Value = new ChangeTrackingList<DedicatedHsmData>();
         }
 
-        /// <summary> Initializes a new instance of DedicatedHsmListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedHsmListResult"/>. </summary>
         /// <param name="value"> The list of dedicated HSMs. </param>
         /// <param name="nextLink"> The URL to get the next set of dedicated hsms. </param>
         internal DedicatedHsmListResult(IReadOnlyList<DedicatedHsmData> value, string nextLink)

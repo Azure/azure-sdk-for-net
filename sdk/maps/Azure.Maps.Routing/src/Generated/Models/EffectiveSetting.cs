@@ -10,12 +10,12 @@ namespace Azure.Maps.Routing.Models
     /// <summary> Effective parameter or data used when calling this Route API. </summary>
     public partial class EffectiveSetting
     {
-        /// <summary> Initializes a new instance of EffectiveSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveSetting"/>. </summary>
         internal EffectiveSetting()
         {
         }
 
-        /// <summary> Initializes a new instance of EffectiveSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveSetting"/>. </summary>
         /// <param name="key"> Name of the parameter used. </param>
         /// <param name="value"> Value of the parameter used. </param>
         internal EffectiveSetting(string key, string value)

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsAccountNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountNameAvailabilityResult"/>. </summary>
         internal DataLakeAnalyticsAccountNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable">
         /// The Boolean value of true or false to indicate whether the Data Lake Analytics account name is available or not.
         /// Serialized Name: NameAvailabilityInformation.nameAvailable

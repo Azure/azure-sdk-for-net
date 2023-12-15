@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes scaling information of a SKU. </summary>
     public partial class ComputeResourceSkuRestrictions
     {
-        /// <summary> Initializes a new instance of ComputeResourceSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuRestrictions"/>. </summary>
         internal ComputeResourceSkuRestrictions()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ComputeResourceSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuRestrictions"/>. </summary>
         /// <param name="restrictionsType"> The type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>

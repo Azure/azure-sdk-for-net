@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Role definition permissions. </summary>
     public partial class RoleDefinitionPermission
     {
-        /// <summary> Initializes a new instance of RoleDefinitionPermission. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleDefinitionPermission"/>. </summary>
         public RoleDefinitionPermission()
         {
             Actions = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Authorization.Models
             NotDataActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RoleDefinitionPermission. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleDefinitionPermission"/>. </summary>
         /// <param name="actions"> Allowed actions. </param>
         /// <param name="notActions"> Denied actions. </param>
         /// <param name="dataActions"> Allowed Data actions. </param>

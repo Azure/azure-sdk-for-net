@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for RequestMethod match conditions. </summary>
     public partial class RequestMethodMatchCondition
     {
-        /// <summary> Initializes a new instance of RequestMethodMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestMethodMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="requestMethodOperator"> Describes operator to be matched. </param>
         public RequestMethodMatchCondition(RequestMethodMatchConditionType conditionType, RequestMethodOperator requestMethodOperator)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
             MatchValues = new ChangeTrackingList<RequestMethodMatchConditionMatchValue>();
         }
 
-        /// <summary> Initializes a new instance of RequestMethodMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestMethodMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="requestMethodOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>

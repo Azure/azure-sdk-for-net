@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.CostManagement
     /// </summary>
     public partial class CostManagementAlertData : ResourceData
     {
-        /// <summary> Initializes a new instance of CostManagementAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementAlertData"/>. </summary>
         public CostManagementAlertData()
         {
         }
 
-        /// <summary> Initializes a new instance of CostManagementAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementAlertData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
         protected HardwareSecurityModulesManagementTestEnvironment testEnvironment => TestEnvironment;
         protected AzureLocation Location;
         protected ResourceGroupResource ResourceGroupResource { get; private set; }
+        protected GenericResourceCollection GenericResourceCollection { get; private set; }
 
         protected HardwareSecurityModulesManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -44,7 +45,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             }
             //TODO will initialize resource groups here as well
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
-            Location = isDedicatedHsm ? AzureLocation.EastUS : AzureLocation.UKWest;
+            Location = isDedicatedHsm ? AzureLocation.NorthCentralUS : AzureLocation.EastUS2;
+            GenericResourceCollection = Client.GetGenericResources();
             ResourceGroupResource = await CreateResourceGroup(DefaultSubscription, "sdkTestsRg", Location);
         }
 

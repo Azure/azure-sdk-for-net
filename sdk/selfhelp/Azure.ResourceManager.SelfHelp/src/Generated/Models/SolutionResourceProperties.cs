@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Solution result. </summary>
     public partial class SolutionResourceProperties
     {
-        /// <summary> Initializes a new instance of SolutionResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SolutionResourceProperties"/>. </summary>
         public SolutionResourceProperties()
         {
             TriggerCriteria = new ChangeTrackingList<TriggerCriterion>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Sections = new ChangeTrackingList<SelfHelpSection>();
         }
 
-        /// <summary> Initializes a new instance of SolutionResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SolutionResourceProperties"/>. </summary>
         /// <param name="triggerCriteria"> Solution request trigger criteria. </param>
         /// <param name="parameters"> Client input parameters to run Solution. </param>
         /// <param name="solutionId"> Solution Id to identify single solution. </param>

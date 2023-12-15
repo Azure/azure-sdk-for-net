@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.HybridNetwork
     /// </summary>
     public partial class NetworkFunctionDefinitionGroupData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionGroupData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetworkFunctionDefinitionGroupData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Class encapsulating restore as files target parameters. </summary>
     public partial class RestoreFilesTargetInfo : RestoreTargetInfoBase
     {
-        /// <summary> Initializes a new instance of RestoreFilesTargetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreFilesTargetInfo"/>. </summary>
         /// <param name="recoverySetting"> Recovery Option. </param>
         /// <param name="targetDetails"> Destination of RestoreAsFiles operation, when destination is not a datasource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetDetails"/> is null. </exception>
@@ -23,6 +23,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             TargetDetails = targetDetails;
             ObjectType = "RestoreFilesTargetInfo";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RestoreFilesTargetInfo"/>. </summary>
+        /// <param name="objectType"> Type of Datasource object, used to initialize the right inherited type. </param>
+        /// <param name="recoverySetting"> Recovery Option. </param>
+        /// <param name="restoreLocation"> Target Restore region. </param>
+        /// <param name="targetDetails"> Destination of RestoreAsFiles operation, when destination is not a datasource. </param>
+        internal RestoreFilesTargetInfo(string objectType, RecoverySetting recoverySetting, AzureLocation? restoreLocation, RestoreFilesTargetDetails targetDetails) : base(objectType, recoverySetting, restoreLocation)
+        {
+            TargetDetails = targetDetails;
+            ObjectType = objectType ?? "RestoreFilesTargetInfo";
         }
 
         /// <summary> Destination of RestoreAsFiles operation, when destination is not a datasource. </summary>

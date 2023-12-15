@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Script activity type. </summary>
     public partial class DataFactoryScriptActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of DataFactoryScriptActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryScriptActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DataFactoryScriptActivity(string name) : base(name)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "Script";
         }
 
-        /// <summary> Initializes a new instance of DataFactoryScriptActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryScriptActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

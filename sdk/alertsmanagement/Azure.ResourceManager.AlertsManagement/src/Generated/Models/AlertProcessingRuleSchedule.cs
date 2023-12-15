@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Scheduling configuration for a given alert processing rule. </summary>
     public partial class AlertProcessingRuleSchedule
     {
-        /// <summary> Initializes a new instance of AlertProcessingRuleSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleSchedule"/>. </summary>
         public AlertProcessingRuleSchedule()
         {
             Recurrences = new ChangeTrackingList<AlertProcessingRuleRecurrence>();
         }
 
-        /// <summary> Initializes a new instance of AlertProcessingRuleSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleSchedule"/>. </summary>
         /// <param name="effectiveFrom"> Scheduling effective from time. Date-Time in ISO-8601 format without timezone suffix. </param>
         /// <param name="effectiveUntil"> Scheduling effective until time. Date-Time in ISO-8601 format without timezone suffix. </param>
         /// <param name="timeZone"> Scheduling time zone. </param>

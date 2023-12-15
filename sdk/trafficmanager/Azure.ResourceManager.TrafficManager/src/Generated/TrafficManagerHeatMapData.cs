@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.TrafficManager
     /// </summary>
     public partial class TrafficManagerHeatMapData : TrafficManagerProxyResourceData
     {
-        /// <summary> Initializes a new instance of TrafficManagerHeatMapData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerHeatMapData"/>. </summary>
         public TrafficManagerHeatMapData()
         {
             Endpoints = new ChangeTrackingList<TrafficManagerHeatMapEndpoint>();
             TrafficFlows = new ChangeTrackingList<TrafficManagerHeatMapTrafficFlow>();
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerHeatMapData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerHeatMapData"/>. </summary>
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>

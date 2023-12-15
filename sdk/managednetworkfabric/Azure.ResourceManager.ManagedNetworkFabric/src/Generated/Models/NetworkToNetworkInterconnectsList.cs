@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of Network To Network Interconnects. </summary>
     internal partial class NetworkToNetworkInterconnectsList
     {
-        /// <summary> Initializes a new instance of NetworkToNetworkInterconnectsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectsList"/>. </summary>
         internal NetworkToNetworkInterconnectsList()
         {
             Value = new ChangeTrackingList<NetworkToNetworkInterconnectData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkToNetworkInterconnectsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectsList"/>. </summary>
         /// <param name="value"> List of NetworkToNetworkInterconnects resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal NetworkToNetworkInterconnectsList(IReadOnlyList<NetworkToNetworkInterconnectData> value, string nextLink)

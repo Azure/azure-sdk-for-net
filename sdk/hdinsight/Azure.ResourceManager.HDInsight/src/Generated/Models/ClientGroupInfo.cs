@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The information of AAD security group. </summary>
     public partial class ClientGroupInfo
     {
-        /// <summary> Initializes a new instance of ClientGroupInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientGroupInfo"/>. </summary>
         public ClientGroupInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ClientGroupInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientGroupInfo"/>. </summary>
         /// <param name="groupName"> The AAD security group name. </param>
         /// <param name="groupId"> The AAD security group id. </param>
         internal ClientGroupInfo(string groupName, string groupId)

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> A list of artifact manifests. </summary>
     internal partial class ArtifactManifestListResult
     {
-        /// <summary> Initializes a new instance of ArtifactManifestListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactManifestListResult"/>. </summary>
         internal ArtifactManifestListResult()
         {
             Value = new ChangeTrackingList<ArtifactManifestData>();
         }
 
-        /// <summary> Initializes a new instance of ArtifactManifestListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactManifestListResult"/>. </summary>
         /// <param name="value"> A list of artifact manifests. </param>
         /// <param name="nextLink"> The URI to get the next set of results. </param>
         internal ArtifactManifestListResult(IReadOnlyList<ArtifactManifestData> value, string nextLink)

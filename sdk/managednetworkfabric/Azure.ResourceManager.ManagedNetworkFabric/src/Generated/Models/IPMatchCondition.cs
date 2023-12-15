@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Defines the condition that can be filtered using the selected IPs. </summary>
     public partial class IPMatchCondition
     {
-        /// <summary> Initializes a new instance of IPMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPMatchCondition"/>. </summary>
         public IPMatchCondition()
         {
             IPPrefixValues = new ChangeTrackingList<string>();
             IPGroupNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of IPMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPMatchCondition"/>. </summary>
         /// <param name="sourceDestinationType"> IP Address type that needs to be matched. </param>
         /// <param name="prefixType"> IP Prefix Type that needs to be matched. </param>
         /// <param name="ipPrefixValues"> The list of IP Prefixes that need to be matched. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Server endpoint recall status object. </summary>
     public partial class ServerEndpointRecallStatus
     {
-        /// <summary> Initializes a new instance of ServerEndpointRecallStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointRecallStatus"/>. </summary>
         internal ServerEndpointRecallStatus()
         {
             RecallErrors = new ChangeTrackingList<ServerEndpointRecallError>();
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointRecallStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointRecallStatus"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="totalRecallErrorsCount"> Total count of recall errors. </param>
         /// <param name="recallErrors"> Array of recall errors. </param>

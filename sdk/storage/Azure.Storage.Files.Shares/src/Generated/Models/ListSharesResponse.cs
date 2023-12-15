@@ -14,7 +14,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> An enumeration of shares. </summary>
     internal partial class ListSharesResponse
     {
-        /// <summary> Initializes a new instance of ListSharesResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListSharesResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="nextMarker"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/> or <paramref name="nextMarker"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.Storage.Files.Shares.Models
             NextMarker = nextMarker;
         }
 
-        /// <summary> Initializes a new instance of ListSharesResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListSharesResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="prefix"></param>
         /// <param name="marker"></param>

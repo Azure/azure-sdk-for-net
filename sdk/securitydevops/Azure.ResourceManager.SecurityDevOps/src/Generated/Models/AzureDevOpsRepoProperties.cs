@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> AzureDevOps Repo properties. </summary>
     public partial class AzureDevOpsRepoProperties
     {
-        /// <summary> Initializes a new instance of AzureDevOpsRepoProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsRepoProperties"/>. </summary>
         public AzureDevOpsRepoProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsRepoProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsRepoProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="repoId"> Gets or sets Azure DevOps repo id. </param>
         /// <param name="repoUri"> Gets or sets AzureDevOps repo url. </param>

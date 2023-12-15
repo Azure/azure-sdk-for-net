@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The Defender for Containers AWS offering. </summary>
     public partial class DefenderForContainersAwsOffering : SecurityCenterCloudOffering
     {
-        /// <summary> Initializes a new instance of DefenderForContainersAwsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOffering"/>. </summary>
         public DefenderForContainersAwsOffering()
         {
             OfferingType = OfferingType.DefenderForContainersAws;
         }
 
-        /// <summary> Initializes a new instance of DefenderForContainersAwsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
         /// <param name="kubernetesService"> The kubernetes service connection configuration. </param>

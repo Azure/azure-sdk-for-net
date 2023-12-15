@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Class Representing Detector Evidence used for analysis. </summary>
     public partial class AnalysisDetectorEvidences
     {
-        /// <summary> Initializes a new instance of AnalysisDetectorEvidences. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisDetectorEvidences"/>. </summary>
         public AnalysisDetectorEvidences()
         {
             Metrics = new ChangeTrackingList<DiagnosticMetricSet>();
             Data = new ChangeTrackingList<IList<AppServiceNameValuePair>>();
         }
 
-        /// <summary> Initializes a new instance of AnalysisDetectorEvidences. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisDetectorEvidences"/>. </summary>
         /// <param name="source"> Name of the Detector. </param>
         /// <param name="detectorDefinition"> Detector Definition. </param>
         /// <param name="metrics"> Source Metrics. </param>

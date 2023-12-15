@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.FrontDoor
         private readonly FrontendEndpointsRestOperations _frontendEndpointRestClient;
         private readonly FrontendEndpointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/frontDoors/frontendEndpoints";
+
         /// <summary> Initializes a new instance of the <see cref="FrontendEndpointResource"/> class for mocking. </summary>
         protected FrontendEndpointResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.FrontDoor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/frontDoors/frontendEndpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A list of NSX Virtual Machines. </summary>
     internal partial class WorkloadNetworkVirtualMachinesList
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkVirtualMachinesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVirtualMachinesList"/>. </summary>
         internal WorkloadNetworkVirtualMachinesList()
         {
             Value = new ChangeTrackingList<WorkloadNetworkVirtualMachineData>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkVirtualMachinesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVirtualMachinesList"/>. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
         internal WorkloadNetworkVirtualMachinesList(IReadOnlyList<WorkloadNetworkVirtualMachineData> value, string nextLink)
