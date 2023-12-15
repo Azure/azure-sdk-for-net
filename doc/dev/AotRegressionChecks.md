@@ -1,9 +1,10 @@
 # Enable AOT compatibility regression testing in CI pipelines
 
-An increasing number of .NET Azure SDK libraries are committed to making their libraries compatible with native AOT. To help support this work, there is now an opt-in pipeline step called "Check for AOT compatibility regressions in \[Package Name\]". This pipeline creates a small sample app that uses a project reference to collect the set of trimming warnings reported for the specified library. This approach for collecting warnings is described in [this article](https://learn.microsoft.com/dotnet/core/deploying/trimming/prepare-libraries-for-trimming?pivots=dotnet-8-0#show-all-warnings-with-test-app).
+An increasing number of .NET Azure SDK libraries are committed to being compatible with native AOT. For more information about native AOT deployment see [this article](https://learn.microsoft.com/dotnet/core/deploying/native-aot/). To support this work, there is now an opt-in pipeline step called "Check for AOT compatibility regressions in \[Package Name\]". This pipeline creates a small sample app that uses a project reference to collect the set of trimming warnings reported for the specified library. This approach for collecting warnings is described in [this article](https://learn.microsoft.com/dotnet/core/deploying/trimming/prepare-libraries-for-trimming?pivots=dotnet-8-0#show-all-warnings-with-test-app).
 
 ## How to enable the pipeline for your package
-#### Collect any expected trimming warnings
+
+### Collect any expected trimming warnings
 
 You can use any of the approaches described in the articles linked at the bottom of this document to find the warnings reported from your library. In an ideal scenario, this would be zero. However, there are cases where a library needs to baseline an expected set of warnings. Sometimes warnings are not straightforward \(or are even impossible\) to resolve, but are not expected to impact the majority of customer use cases. In other cases, warnings may be dependent on other work finishing first (for example, adding a net6.0 target, or upgrading a package dependency version).
 
@@ -19,7 +20,7 @@ Line in the text file:
 
 **Note**: In my case, my local environment uses forward slashes in filepaths, while the pipeline uses back slashes, so using a wildcard was the easiest way to reconcile this.
 
-#### Update ci.yml file
+### Update ci.yml file
 
 The ci.yml file needs to be updated to include the following information:
 ```yml
