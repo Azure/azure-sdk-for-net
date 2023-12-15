@@ -10,6 +10,8 @@ namespace ClientModel.Tests.Mocks;
 
 public class MockMessagDelay : MessageDelay
 {
+    private int _completionCount;
+
     private static readonly Func<int, TimeSpan> DefaultDelayFactory =
         count => TimeSpan.FromSeconds(count);
 
@@ -22,7 +24,9 @@ public class MockMessagDelay : MessageDelay
         _delayFactory = delayFactory;
     }
 
-    public bool IsComplete { get; private set; }
+    public bool IsComplete => _completionCount > 0;
+
+    public int CompletionCount => _completionCount;
 
     public TimeSpan GetDelay(int count) => GetDelayCore(null!, count);
 
@@ -30,7 +34,7 @@ public class MockMessagDelay : MessageDelay
         => _delayFactory(delayCount);
 
     protected override void OnDelayComplete(PipelineMessage message)
-        => IsComplete = true;
+        => _completionCount++;
 
     protected override void WaitCore(TimeSpan duration, CancellationToken cancellationToken)
         => Task.Delay(duration, cancellationToken).GetAwaiter().GetResult();

@@ -17,7 +17,7 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task CanRetryErrorResponse()
+    public async Task RetriesErrorResponse()
     {
         PipelineOptions options = new()
         {
@@ -54,7 +54,7 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
 
         int index = 0;
 
-        // We visited the transport four times due to max 3 retries
+        // We visited the transport four times due to default max 3 retries
         Assert.AreEqual(4, observations.Count);
         Assert.AreEqual("Transport:Transport", observations[index++]);
         Assert.AreEqual("Transport:Transport", observations[index++]);
@@ -88,4 +88,28 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
             Assert.AreEqual("Transport:Transport", observations[index++]);
         }
     }
+
+    [Test]
+    public async Task CanConfigureDelay()
+    {
+        int maxRetryCount = 3;
+        MockMessagDelay delay = new MockMessagDelay(i => TimeSpan.FromMilliseconds(10));
+
+        PipelineOptions options = new()
+        {
+            RetryPolicy = new RequestRetryPolicy(maxRetryCount, delay),
+            Transport = new RetriableTransport("Transport", i => 500)
+        };
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+
+        PipelineMessage message = pipeline.CreateMessage();
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        Assert.AreEqual(maxRetryCount, delay.CompletionCount);
+    }
+
+    //[Test]
+    //public async Task OnlyRetriesRetriableCodes()
+    //{
+    //}
 }
