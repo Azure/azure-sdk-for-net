@@ -82,7 +82,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _iPv6FirewallRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<IPv6FirewallRuleResource>(Response.FromValue(new IPv6FirewallRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _iPv6FirewallRuleRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new SqlArmOperation<IPv6FirewallRuleResource>(Response.FromValue(new IPv6FirewallRuleResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +125,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _iPv6FirewallRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data, cancellationToken);
-                var operation = new SqlArmOperation<IPv6FirewallRuleResource>(Response.FromValue(new IPv6FirewallRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _iPv6FirewallRuleRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new SqlArmOperation<IPv6FirewallRuleResource>(Response.FromValue(new IPv6FirewallRuleResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

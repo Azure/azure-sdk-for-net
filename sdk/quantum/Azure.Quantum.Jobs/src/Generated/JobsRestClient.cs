@@ -47,6 +47,20 @@ namespace Azure.Quantum.Jobs
             _endpoint = endpoint ?? new Uri("https://quantum.azure.com");
         }
 
+        internal RequestUriBuilder CreateListRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/v1.0/subscriptions/", false);
+            uri.AppendPath(_subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(_resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Quantum/workspaces/", false);
+            uri.AppendPath(_workspaceName, true);
+            uri.AppendPath("/jobs", false);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -104,6 +118,21 @@ namespace Azure.Quantum.Jobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string jobId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/v1.0/subscriptions/", false);
+            uri.AppendPath(_subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(_resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Quantum/workspaces/", false);
+            uri.AppendPath(_workspaceName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobId, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string jobId)
@@ -178,6 +207,21 @@ namespace Azure.Quantum.Jobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string jobId, JobDetails job)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/v1.0/subscriptions/", false);
+            uri.AppendPath(_subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(_resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Quantum/workspaces/", false);
+            uri.AppendPath(_workspaceName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobId, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string jobId, JobDetails job)
@@ -270,6 +314,21 @@ namespace Azure.Quantum.Jobs
             }
         }
 
+        internal RequestUriBuilder CreateCancelRequestUri(string jobId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/v1.0/subscriptions/", false);
+            uri.AppendPath(_subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(_resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Quantum/workspaces/", false);
+            uri.AppendPath(_workspaceName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobId, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCancelRequest(string jobId)
         {
             var message = _pipeline.CreateMessage();
@@ -332,6 +391,21 @@ namespace Azure.Quantum.Jobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreatePatchRequestUri(string jobId, IEnumerable<Models.JsonPatchDocument> patchJob)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/v1.0/subscriptions/", false);
+            uri.AppendPath(_subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(_resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Quantum/workspaces/", false);
+            uri.AppendPath(_workspaceName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobId, true);
+            return uri;
         }
 
         internal HttpMessage CreatePatchRequest(string jobId, IEnumerable<Models.JsonPatchDocument> patchJob)
@@ -429,6 +503,14 @@ namespace Azure.Quantum.Jobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink)

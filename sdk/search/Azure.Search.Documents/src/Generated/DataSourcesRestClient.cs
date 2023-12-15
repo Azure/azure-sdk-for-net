@@ -42,6 +42,17 @@ namespace Azure.Search.Documents
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/datasources('", false);
+            uri.AppendPath(dataSourceName, true);
+            uri.AppendPath("')", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string dataSourceName, SearchIndexerDataSourceConnection dataSource, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -141,6 +152,17 @@ namespace Azure.Search.Documents
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string dataSourceName, string ifMatch, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/datasources('", false);
+            uri.AppendPath(dataSourceName, true);
+            uri.AppendPath("')", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string dataSourceName, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -215,6 +237,17 @@ namespace Azure.Search.Documents
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string dataSourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/datasources('", false);
+            uri.AppendPath(dataSourceName, true);
+            uri.AppendPath("')", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string dataSourceName)
         {
             var message = _pipeline.CreateMessage();
@@ -285,6 +318,19 @@ namespace Azure.Search.Documents
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string select)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/datasources", false);
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string select)
         {
             var message = _pipeline.CreateMessage();
@@ -343,6 +389,15 @@ namespace Azure.Search.Documents
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(SearchIndexerDataSourceConnection dataSource)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/datasources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(SearchIndexerDataSourceConnection dataSource)

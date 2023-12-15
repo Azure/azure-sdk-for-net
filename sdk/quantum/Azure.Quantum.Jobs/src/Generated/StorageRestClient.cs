@@ -46,6 +46,20 @@ namespace Azure.Quantum.Jobs
             _endpoint = endpoint ?? new Uri("https://quantum.azure.com");
         }
 
+        internal RequestUriBuilder CreateSasUriRequestUri(BlobDetails blobDetails)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/v1.0/subscriptions/", false);
+            uri.AppendPath(_subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(_resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Quantum/workspaces/", false);
+            uri.AppendPath(_workspaceName, true);
+            uri.AppendPath("/storage/sasUri", false);
+            return uri;
+        }
+
         internal HttpMessage CreateSasUriRequest(BlobDetails blobDetails)
         {
             var message = _pipeline.CreateMessage();

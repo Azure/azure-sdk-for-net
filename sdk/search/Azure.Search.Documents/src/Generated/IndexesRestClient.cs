@@ -42,6 +42,15 @@ namespace Azure.Search.Documents
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(SearchIndex index)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/indexes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(SearchIndex index)
         {
             var message = _pipeline.CreateMessage();
@@ -114,6 +123,19 @@ namespace Azure.Search.Documents
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string select)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/indexes", false);
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string select)
         {
             var message = _pipeline.CreateMessage();
@@ -172,6 +194,21 @@ namespace Azure.Search.Documents
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string indexName, SearchIndex index, bool? allowIndexDowntime, string ifMatch, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/indexes('", false);
+            uri.AppendPath(indexName, true);
+            uri.AppendPath("')", false);
+            if (allowIndexDowntime != null)
+            {
+                uri.AppendQuery("allowIndexDowntime", allowIndexDowntime.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string indexName, SearchIndex index, bool? allowIndexDowntime, string ifMatch, string ifNoneMatch)
@@ -279,6 +316,17 @@ namespace Azure.Search.Documents
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string indexName, string ifMatch, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/indexes('", false);
+            uri.AppendPath(indexName, true);
+            uri.AppendPath("')", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string indexName, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -353,6 +401,17 @@ namespace Azure.Search.Documents
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string indexName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/indexes('", false);
+            uri.AppendPath(indexName, true);
+            uri.AppendPath("')", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string indexName)
         {
             var message = _pipeline.CreateMessage();
@@ -423,6 +482,17 @@ namespace Azure.Search.Documents
             }
         }
 
+        internal RequestUriBuilder CreateGetStatisticsRequestUri(string indexName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/indexes('", false);
+            uri.AppendPath(indexName, true);
+            uri.AppendPath("')/search.stats", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetStatisticsRequest(string indexName)
         {
             var message = _pipeline.CreateMessage();
@@ -491,6 +561,17 @@ namespace Azure.Search.Documents
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAnalyzeRequestUri(string indexName, AnalyzeTextOptions request)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/indexes('", false);
+            uri.AppendPath(indexName, true);
+            uri.AppendPath("')/search.analyze", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAnalyzeRequest(string indexName, AnalyzeTextOptions request)

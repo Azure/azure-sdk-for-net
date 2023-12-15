@@ -46,6 +46,20 @@ namespace Azure.Quantum.Jobs
             _endpoint = endpoint ?? new Uri("https://quantum.azure.com");
         }
 
+        internal RequestUriBuilder CreateGetStatusRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/v1.0/subscriptions/", false);
+            uri.AppendPath(_subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(_resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Quantum/workspaces/", false);
+            uri.AppendPath(_workspaceName, true);
+            uri.AppendPath("/providerStatus", false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetStatusRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -103,6 +117,14 @@ namespace Azure.Quantum.Jobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetStatusNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetStatusNextPageRequest(string nextLink)

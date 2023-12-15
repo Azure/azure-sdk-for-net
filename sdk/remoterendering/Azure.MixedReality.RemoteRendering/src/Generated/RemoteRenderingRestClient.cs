@@ -38,6 +38,18 @@ namespace Azure.MixedReality.RemoteRendering
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateCreateConversionRequestUri(Guid accountId, string conversionId, CreateConversionSettings body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/accounts/", false);
+            uri.AppendPath(accountId, true);
+            uri.AppendPath("/conversions/", false);
+            uri.AppendPath(conversionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateConversionRequest(Guid accountId, string conversionId, CreateConversionSettings body)
         {
             var message = _pipeline.CreateMessage();
@@ -129,6 +141,18 @@ namespace Azure.MixedReality.RemoteRendering
             }
         }
 
+        internal RequestUriBuilder CreateGetConversionRequestUri(Guid accountId, string conversionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/accounts/", false);
+            uri.AppendPath(accountId, true);
+            uri.AppendPath("/conversions/", false);
+            uri.AppendPath(conversionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetConversionRequest(Guid accountId, string conversionId)
         {
             var message = _pipeline.CreateMessage();
@@ -204,6 +228,17 @@ namespace Azure.MixedReality.RemoteRendering
             }
         }
 
+        internal RequestUriBuilder CreateListConversionsRequestUri(Guid accountId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/accounts/", false);
+            uri.AppendPath(accountId, true);
+            uri.AppendPath("/conversions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListConversionsRequest(Guid accountId)
         {
             var message = _pipeline.CreateMessage();
@@ -262,6 +297,18 @@ namespace Azure.MixedReality.RemoteRendering
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateSessionRequestUri(Guid accountId, string sessionId, RenderingSessionOptions body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/accounts/", false);
+            uri.AppendPath(accountId, true);
+            uri.AppendPath("/sessions/", false);
+            uri.AppendPath(sessionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateSessionRequest(Guid accountId, string sessionId, RenderingSessionOptions body)
@@ -355,6 +402,18 @@ namespace Azure.MixedReality.RemoteRendering
             }
         }
 
+        internal RequestUriBuilder CreateGetSessionRequestUri(Guid accountId, string sessionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/accounts/", false);
+            uri.AppendPath(accountId, true);
+            uri.AppendPath("/sessions/", false);
+            uri.AppendPath(sessionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSessionRequest(Guid accountId, string sessionId)
         {
             var message = _pipeline.CreateMessage();
@@ -426,6 +485,18 @@ namespace Azure.MixedReality.RemoteRendering
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateSessionRequestUri(Guid accountId, string sessionId, UpdateSessionOptions body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/accounts/", false);
+            uri.AppendPath(accountId, true);
+            uri.AppendPath("/sessions/", false);
+            uri.AppendPath(sessionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateSessionRequest(Guid accountId, string sessionId, UpdateSessionOptions body)
@@ -515,6 +586,19 @@ namespace Azure.MixedReality.RemoteRendering
             }
         }
 
+        internal RequestUriBuilder CreateStopSessionRequestUri(Guid accountId, string sessionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/accounts/", false);
+            uri.AppendPath(accountId, true);
+            uri.AppendPath("/sessions/", false);
+            uri.AppendPath(sessionId, true);
+            uri.AppendPath("/:stop", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateStopSessionRequest(Guid accountId, string sessionId)
         {
             var message = _pipeline.CreateMessage();
@@ -581,6 +665,17 @@ namespace Azure.MixedReality.RemoteRendering
             }
         }
 
+        internal RequestUriBuilder CreateListSessionsRequestUri(Guid accountId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/accounts/", false);
+            uri.AppendPath(accountId, true);
+            uri.AppendPath("/sessions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListSessionsRequest(Guid accountId)
         {
             var message = _pipeline.CreateMessage();
@@ -637,6 +732,14 @@ namespace Azure.MixedReality.RemoteRendering
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListConversionsNextPageRequestUri(string nextLink, Guid accountId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListConversionsNextPageRequest(string nextLink, Guid accountId)
@@ -708,6 +811,14 @@ namespace Azure.MixedReality.RemoteRendering
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSessionsNextPageRequestUri(string nextLink, Guid accountId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListSessionsNextPageRequest(string nextLink, Guid accountId)

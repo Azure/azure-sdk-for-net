@@ -83,7 +83,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _iotSecuritySolutionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, solutionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<IotSecuritySolutionResource>(Response.FromValue(new IotSecuritySolutionResource(Client, response), response.GetRawResponse()));
+                var uri = _iotSecuritySolutionRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, solutionName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new SecurityCenterArmOperation<IotSecuritySolutionResource>(Response.FromValue(new IotSecuritySolutionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +126,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _iotSecuritySolutionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, solutionName, data, cancellationToken);
-                var operation = new SecurityCenterArmOperation<IotSecuritySolutionResource>(Response.FromValue(new IotSecuritySolutionResource(Client, response), response.GetRawResponse()));
+                var uri = _iotSecuritySolutionRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, solutionName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new SecurityCenterArmOperation<IotSecuritySolutionResource>(Response.FromValue(new IotSecuritySolutionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
