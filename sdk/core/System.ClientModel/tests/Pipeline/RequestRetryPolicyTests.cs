@@ -61,4 +61,31 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
         Assert.AreEqual("Transport:Transport", observations[index++]);
         Assert.AreEqual("Transport:Transport", observations[index++]);
     }
+
+    [Test]
+    public async Task CanConfigureMaxRetryCount()
+    {
+        int maxRetryCount = 10;
+
+        PipelineOptions options = new()
+        {
+            RetryPolicy = new RequestRetryPolicy(maxRetryCount, new MockMessagDelay(i => TimeSpan.FromMilliseconds(10))),
+            Transport = new RetriableTransport("Transport", i => 500)
+        };
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+
+        PipelineMessage message = pipeline.CreateMessage();
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        List<string> observations = ObservablePolicy.GetData(message);
+
+        int index = 0;
+        int observationCount = maxRetryCount + 1;
+
+        Assert.AreEqual(observationCount, observations.Count);
+        for (int i = 0; i < observationCount; i++)
+        {
+            Assert.AreEqual("Transport:Transport", observations[index++]);
+        }
+    }
 }
