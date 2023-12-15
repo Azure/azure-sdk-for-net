@@ -37,6 +37,15 @@ namespace Azure.ResourceManager.BillingBenefits
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateValidatePurchaseRequestUri(SavingsPlanPurchaseValidateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.BillingBenefits/validate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateValidatePurchaseRequest(SavingsPlanPurchaseValidateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -102,6 +111,14 @@ namespace Azure.ResourceManager.BillingBenefits
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateValidatePurchaseNextPageRequestUri(string nextLink, SavingsPlanPurchaseValidateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateValidatePurchaseNextPageRequest(string nextLink, SavingsPlanPurchaseValidateContent content)

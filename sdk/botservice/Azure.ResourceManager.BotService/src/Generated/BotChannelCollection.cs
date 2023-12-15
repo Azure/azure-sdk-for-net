@@ -81,7 +81,9 @@ namespace Azure.ResourceManager.BotService
             try
             {
                 var response = await _botChannelChannelsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BotServiceArmOperation<BotChannelResource>(Response.FromValue(new BotChannelResource(Client, response), response.GetRawResponse()));
+                var uri = _botChannelChannelsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new BotServiceArmOperation<BotChannelResource>(Response.FromValue(new BotChannelResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -120,7 +122,9 @@ namespace Azure.ResourceManager.BotService
             try
             {
                 var response = _botChannelChannelsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, data, cancellationToken);
-                var operation = new BotServiceArmOperation<BotChannelResource>(Response.FromValue(new BotChannelResource(Client, response), response.GetRawResponse()));
+                var uri = _botChannelChannelsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new BotServiceArmOperation<BotChannelResource>(Response.FromValue(new BotChannelResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -1414,6 +1414,23 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
+        internal RequestUriBuilder CreateGetKeysRequestUri(string name, string after, string acceptDatetime, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/keys", false);
+            if (name != null)
+            {
+                uri.AppendQuery("name", name, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (after != null)
+            {
+                uri.AppendQuery("After", after, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetKeysRequest(string name, string after, string acceptDatetime, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1444,6 +1461,23 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
+        internal RequestUriBuilder CreateCheckKeysRequestUri(string name, string after, string acceptDatetime, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/keys", false);
+            if (name != null)
+            {
+                uri.AppendQuery("name", name, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (after != null)
+            {
+                uri.AppendQuery("After", after, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateCheckKeysRequest(string name, string after, string acceptDatetime, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1471,6 +1505,35 @@ namespace Azure.Data.AppConfiguration
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetConfigurationSettingsRequestUri(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, MatchConditions matchConditions, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/kv", false);
+            if (key != null)
+            {
+                uri.AppendQuery("key", key, true);
+            }
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (after != null)
+            {
+                uri.AppendQuery("After", after, true);
+            }
+            if (select != null && Optional.IsCollectionDefined(select))
+            {
+                uri.AppendQueryDelimited("$Select", select, ",", true);
+            }
+            if (snapshot != null)
+            {
+                uri.AppendQuery("snapshot", snapshot, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetConfigurationSettingsRequest(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, MatchConditions matchConditions, RequestContext context)
@@ -1519,6 +1582,35 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
+        internal RequestUriBuilder CreateCheckKeyValuesRequestUri(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, MatchConditions matchConditions, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/kv", false);
+            if (key != null)
+            {
+                uri.AppendQuery("key", key, true);
+            }
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (after != null)
+            {
+                uri.AppendQuery("After", after, true);
+            }
+            if (select != null && Optional.IsCollectionDefined(select))
+            {
+                uri.AppendQueryDelimited("$Select", select, ",", true);
+            }
+            if (snapshot != null)
+            {
+                uri.AppendQuery("snapshot", snapshot, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateCheckKeyValuesRequest(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, MatchConditions matchConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1564,6 +1656,24 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
+        internal RequestUriBuilder CreateGetConfigurationSettingRequestUri(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/kv/", false);
+            uri.AppendPath(key, true);
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (select != null && Optional.IsCollectionDefined(select))
+            {
+                uri.AppendQueryDelimited("$Select", select, ",", true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetConfigurationSettingRequest(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1599,6 +1709,20 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
+        internal RequestUriBuilder CreateSetConfigurationSettingRequestUri(string key, RequestContent content, ContentType contentType, string label, MatchConditions matchConditions, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/kv/", false);
+            uri.AppendPath(key, true);
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSetConfigurationSettingRequest(string key, RequestContent content, ContentType contentType, string label, MatchConditions matchConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1628,6 +1752,20 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteConfigurationSettingRequestUri(string key, string label, ETag? ifMatch, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/kv/", false);
+            uri.AppendPath(key, true);
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteConfigurationSettingRequest(string key, string label, ETag? ifMatch, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
@@ -1653,6 +1791,24 @@ namespace Azure.Data.AppConfiguration
                 request.Headers.Add("If-Match", ifMatch.Value);
             }
             return message;
+        }
+
+        internal RequestUriBuilder CreateCheckKeyValueRequestUri(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/kv/", false);
+            uri.AppendPath(key, true);
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (select != null && Optional.IsCollectionDefined(select))
+            {
+                uri.AppendQueryDelimited("$Select", select, ",", true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateCheckKeyValueRequest(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
@@ -1689,6 +1845,31 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
+        internal RequestUriBuilder CreateGetSnapshotsRequestUri(string name, string after, IEnumerable<string> select, IEnumerable<string> status, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/snapshots", false);
+            if (name != null)
+            {
+                uri.AppendQuery("name", name, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (after != null)
+            {
+                uri.AppendQuery("After", after, true);
+            }
+            if (select != null && Optional.IsCollectionDefined(select))
+            {
+                uri.AppendQueryDelimited("$Select", select, ",", true);
+            }
+            if (status != null && Optional.IsCollectionDefined(status))
+            {
+                uri.AppendQueryDelimited("status", status, ",", true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetSnapshotsRequest(string name, string after, IEnumerable<string> select, IEnumerable<string> status, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1723,6 +1904,19 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
+        internal RequestUriBuilder CreateCheckSnapshotsRequestUri(string after, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/snapshots", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (after != null)
+            {
+                uri.AppendQuery("After", after, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateCheckSnapshotsRequest(string after, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1742,6 +1936,20 @@ namespace Azure.Data.AppConfiguration
                 request.Headers.Add("Sync-Token", _syncToken);
             }
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetSnapshotRequestUri(string name, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/snapshots/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (select != null && Optional.IsCollectionDefined(select))
+            {
+                uri.AppendQueryDelimited("$Select", select, ",", true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetSnapshotRequest(string name, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
@@ -1771,6 +1979,16 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
+        internal RequestUriBuilder CreateCreateSnapshotRequestUri(string name, RequestContent content, ContentType contentType, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/snapshots/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateSnapshotRequest(string name, RequestContent content, ContentType contentType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
@@ -1790,6 +2008,16 @@ namespace Azure.Data.AppConfiguration
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateUpdateSnapshotStatusRequestUri(string name, RequestContent content, ContentType contentType, MatchConditions matchConditions, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/snapshots/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateSnapshotStatusRequest(string name, RequestContent content, ContentType contentType, MatchConditions matchConditions, RequestContext context)
@@ -1817,6 +2045,16 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
+        internal RequestUriBuilder CreateCheckSnapshotRequestUri(string name, MatchConditions matchConditions, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/snapshots/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckSnapshotRequest(string name, MatchConditions matchConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1837,6 +2075,27 @@ namespace Azure.Data.AppConfiguration
                 request.Headers.Add(matchConditions);
             }
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetLabelsRequestUri(string name, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/labels", false);
+            if (name != null)
+            {
+                uri.AppendQuery("name", name, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (after != null)
+            {
+                uri.AppendQuery("After", after, true);
+            }
+            if (select != null && Optional.IsCollectionDefined(select))
+            {
+                uri.AppendQueryDelimited("$Select", select, ",", true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetLabelsRequest(string name, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
@@ -1873,6 +2132,27 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
+        internal RequestUriBuilder CreateCheckLabelsRequestUri(string name, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/labels", false);
+            if (name != null)
+            {
+                uri.AppendQuery("name", name, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (after != null)
+            {
+                uri.AppendQuery("After", after, true);
+            }
+            if (select != null && Optional.IsCollectionDefined(select))
+            {
+                uri.AppendQueryDelimited("$Select", select, ",", true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateCheckLabelsRequest(string name, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1906,6 +2186,20 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
+        internal RequestUriBuilder CreateCreateReadOnlyLockRequestUri(string key, string label, MatchConditions matchConditions, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/locks/", false);
+            uri.AppendPath(key, true);
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateReadOnlyLockRequest(string key, string label, MatchConditions matchConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1933,6 +2227,20 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteReadOnlyLockRequestUri(string key, string label, MatchConditions matchConditions, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/locks/", false);
+            uri.AppendPath(key, true);
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteReadOnlyLockRequest(string key, string label, MatchConditions matchConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1958,6 +2266,31 @@ namespace Azure.Data.AppConfiguration
                 request.Headers.Add(matchConditions);
             }
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetRevisionsRequestUri(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/revisions", false);
+            if (key != null)
+            {
+                uri.AppendQuery("key", key, true);
+            }
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (after != null)
+            {
+                uri.AppendQuery("After", after, true);
+            }
+            if (select != null && Optional.IsCollectionDefined(select))
+            {
+                uri.AppendQueryDelimited("$Select", select, ",", true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetRevisionsRequest(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
@@ -1998,6 +2331,31 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
+        internal RequestUriBuilder CreateCheckRevisionsRequestUri(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/revisions", false);
+            if (key != null)
+            {
+                uri.AppendQuery("key", key, true);
+            }
+            if (label != null)
+            {
+                uri.AppendQuery("label", label, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (after != null)
+            {
+                uri.AppendQuery("After", after, true);
+            }
+            if (select != null && Optional.IsCollectionDefined(select))
+            {
+                uri.AppendQueryDelimited("$Select", select, ",", true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateCheckRevisionsRequest(string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2035,6 +2393,16 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
+        internal RequestUriBuilder CreateGetOperationDetailsRequestUri(string snapshot, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/operations", false);
+            uri.AppendQuery("snapshot", snapshot, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetOperationDetailsRequest(string snapshot, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2048,6 +2416,14 @@ namespace Azure.Data.AppConfiguration
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetKeysNextPageRequestUri(string nextLink, string name, string after, string acceptDatetime, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetKeysNextPageRequest(string nextLink, string name, string after, string acceptDatetime, RequestContext context)
@@ -2069,6 +2445,14 @@ namespace Azure.Data.AppConfiguration
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetConfigurationSettingsNextPageRequestUri(string nextLink, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, MatchConditions matchConditions, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetConfigurationSettingsNextPageRequest(string nextLink, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, string snapshot, MatchConditions matchConditions, RequestContext context)
@@ -2096,6 +2480,14 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
+        internal RequestUriBuilder CreateGetSnapshotsNextPageRequestUri(string nextLink, string name, string after, IEnumerable<string> select, IEnumerable<string> status, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSnapshotsNextPageRequest(string nextLink, string name, string after, IEnumerable<string> select, IEnumerable<string> status, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2111,6 +2503,14 @@ namespace Azure.Data.AppConfiguration
                 request.Headers.Add("Sync-Token", _syncToken);
             }
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetLabelsNextPageRequestUri(string nextLink, string name, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetLabelsNextPageRequest(string nextLink, string name, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
@@ -2132,6 +2532,14 @@ namespace Azure.Data.AppConfiguration
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetRevisionsNextPageRequestUri(string nextLink, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetRevisionsNextPageRequest(string nextLink, string key, string label, string after, string acceptDatetime, IEnumerable<string> select, RequestContext context)

@@ -82,7 +82,9 @@ namespace Azure.ResourceManager.Automanage
             try
             {
                 var response = await _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationProfileAssignmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomanageArmOperation<AutomanageVmConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageVmConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationProfileAssignmentName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AutomanageArmOperation<AutomanageVmConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageVmConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +125,9 @@ namespace Azure.ResourceManager.Automanage
             try
             {
                 var response = _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationProfileAssignmentName, data, cancellationToken);
-                var operation = new AutomanageArmOperation<AutomanageVmConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageVmConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _automanageVmConfigurationProfileAssignmentConfigurationProfileAssignmentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationProfileAssignmentName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AutomanageArmOperation<AutomanageVmConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageVmConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

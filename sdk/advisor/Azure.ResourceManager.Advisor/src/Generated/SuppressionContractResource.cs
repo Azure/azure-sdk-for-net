@@ -175,7 +175,9 @@ namespace Azure.ResourceManager.Advisor
             try
             {
                 var response = await _suppressionContractSuppressionsRestClient.DeleteAsync(Id.Parent.Parent, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AdvisorArmOperation(response);
+                var uri = _suppressionContractSuppressionsRestClient.CreateDeleteRequestUri(Id.Parent.Parent, Id.Parent.Name, Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AdvisorArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -209,7 +211,9 @@ namespace Azure.ResourceManager.Advisor
             try
             {
                 var response = _suppressionContractSuppressionsRestClient.Delete(Id.Parent.Parent, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AdvisorArmOperation(response);
+                var uri = _suppressionContractSuppressionsRestClient.CreateDeleteRequestUri(Id.Parent.Parent, Id.Parent.Name, Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AdvisorArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -247,7 +251,9 @@ namespace Azure.ResourceManager.Advisor
             try
             {
                 var response = await _suppressionContractSuppressionsRestClient.CreateAsync(Id.Parent.Parent, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AdvisorArmOperation<SuppressionContractResource>(Response.FromValue(new SuppressionContractResource(Client, response), response.GetRawResponse()));
+                var uri = _suppressionContractSuppressionsRestClient.CreateCreateRequestUri(Id.Parent.Parent, Id.Parent.Name, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AdvisorArmOperation<SuppressionContractResource>(Response.FromValue(new SuppressionContractResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -285,7 +291,9 @@ namespace Azure.ResourceManager.Advisor
             try
             {
                 var response = _suppressionContractSuppressionsRestClient.Create(Id.Parent.Parent, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AdvisorArmOperation<SuppressionContractResource>(Response.FromValue(new SuppressionContractResource(Client, response), response.GetRawResponse()));
+                var uri = _suppressionContractSuppressionsRestClient.CreateCreateRequestUri(Id.Parent.Parent, Id.Parent.Name, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AdvisorArmOperation<SuppressionContractResource>(Response.FromValue(new SuppressionContractResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

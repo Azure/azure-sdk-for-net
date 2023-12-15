@@ -38,6 +38,17 @@ namespace Azure.Communication.CallAutomation
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreatePlayRequestUri(string callConnectionId, PlayRequestInternal playRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":play", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePlayRequest(string callConnectionId, PlayRequestInternal playRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -110,6 +121,17 @@ namespace Azure.Communication.CallAutomation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStartTranscriptionRequestUri(string callConnectionId, StartTranscriptionRequestInternal startTranscriptionRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":startTranscription", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStartTranscriptionRequest(string callConnectionId, StartTranscriptionRequestInternal startTranscriptionRequest)
@@ -186,6 +208,17 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        internal RequestUriBuilder CreateStopTranscriptionRequestUri(string callConnectionId, StopTranscriptionRequestInternal stopTranscriptionRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":stopTranscription", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateStopTranscriptionRequest(string callConnectionId, StopTranscriptionRequestInternal stopTranscriptionRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -260,6 +293,17 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        internal RequestUriBuilder CreateCancelAllMediaOperationsRequestUri(string callConnectionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":cancelAllMediaOperations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCancelAllMediaOperationsRequest(string callConnectionId)
         {
             var message = _pipeline.CreateMessage();
@@ -318,6 +362,17 @@ namespace Azure.Communication.CallAutomation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRecognizeRequestUri(string callConnectionId, RecognizeRequestInternal recognizeRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":recognize", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRecognizeRequest(string callConnectionId, RecognizeRequestInternal recognizeRequest)
@@ -394,6 +449,17 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        internal RequestUriBuilder CreateStartContinuousDtmfRecognitionRequestUri(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":startContinuousDtmfRecognition", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateStartContinuousDtmfRecognitionRequest(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -468,6 +534,17 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        internal RequestUriBuilder CreateStopContinuousDtmfRecognitionRequestUri(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":stopContinuousDtmfRecognition", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateStopContinuousDtmfRecognitionRequest(string callConnectionId, ContinuousDtmfRecognitionRequestInternal continuousDtmfRecognitionRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -540,6 +617,17 @@ namespace Azure.Communication.CallAutomation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSendDtmfTonesRequestUri(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":sendDtmfTones", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSendDtmfTonesRequest(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequest)
@@ -628,6 +716,17 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        internal RequestUriBuilder CreateUpdateTranscriptionRequestUri(string callConnectionId, UpdateTranscriptionRequestInternal updateTranscriptionRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":updateTranscription", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateTranscriptionRequest(string callConnectionId, UpdateTranscriptionRequestInternal updateTranscriptionRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -704,6 +803,17 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        internal RequestUriBuilder CreateStartHoldMusicRequestUri(string callConnectionId, StartHoldMusicRequestInternal startHoldMusicRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":startHoldMusic", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateStartHoldMusicRequest(string callConnectionId, StartHoldMusicRequestInternal startHoldMusicRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -776,6 +886,17 @@ namespace Azure.Communication.CallAutomation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStopHoldMusicRequestUri(string callConnectionId, StopHoldMusicRequestInternal stopHoldMusicRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":stopHoldMusic", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStopHoldMusicRequest(string callConnectionId, StopHoldMusicRequestInternal stopHoldMusicRequest)

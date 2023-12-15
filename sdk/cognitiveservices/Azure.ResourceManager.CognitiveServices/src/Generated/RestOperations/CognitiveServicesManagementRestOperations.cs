@@ -37,6 +37,19 @@ namespace Azure.ResourceManager.CognitiveServices
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCheckSkuAvailabilityRequestUri(string subscriptionId, AzureLocation location, CognitiveServicesSkuAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/checkSkuAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckSkuAvailabilityRequest(string subscriptionId, AzureLocation location, CognitiveServicesSkuAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -114,6 +127,17 @@ namespace Azure.ResourceManager.CognitiveServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCheckDomainAvailabilityRequestUri(string subscriptionId, CognitiveServicesDomainAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/checkDomainAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckDomainAvailabilityRequest(string subscriptionId, CognitiveServicesDomainAvailabilityContent content)

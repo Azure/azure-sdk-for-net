@@ -248,7 +248,9 @@ namespace Azure.ResourceManager.AgFoodPlatform
             try
             {
                 var response = await _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AgFoodPlatformArmOperation<AgFoodPlatformPrivateEndpointConnectionResource>(Response.FromValue(new AgFoodPlatformPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AgFoodPlatformArmOperation<AgFoodPlatformPrivateEndpointConnectionResource>(Response.FromValue(new AgFoodPlatformPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -286,7 +288,9 @@ namespace Azure.ResourceManager.AgFoodPlatform
             try
             {
                 var response = _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AgFoodPlatformArmOperation<AgFoodPlatformPrivateEndpointConnectionResource>(Response.FromValue(new AgFoodPlatformPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AgFoodPlatformArmOperation<AgFoodPlatformPrivateEndpointConnectionResource>(Response.FromValue(new AgFoodPlatformPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -39,6 +39,32 @@ namespace Azure.Communication.Chat
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateCreateChatThreadRequestUri(string topic, IEnumerable<ChatParticipantInternal> participants)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal RequestUriBuilder CreateListChatThreadsRequestUri(int? maxPageSize, DateTimeOffset? startTime)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads", false);
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+            }
+            if (startTime != null)
+            {
+                uri.AppendQuery("startTime", startTime.Value, "O", true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListChatThreadsRequest(int? maxPageSize, DateTimeOffset? startTime)
         {
             var message = _pipeline.CreateMessage();
@@ -105,6 +131,16 @@ namespace Azure.Communication.Chat
             }
         }
 
+        internal RequestUriBuilder CreateDeleteChatThreadRequestUri(string chatThreadId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads/", false);
+            uri.AppendPath(chatThreadId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteChatThreadRequest(string chatThreadId)
         {
             var message = _pipeline.CreateMessage();
@@ -162,6 +198,14 @@ namespace Azure.Communication.Chat
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListChatThreadsNextPageRequestUri(string nextLink, int? maxPageSize, DateTimeOffset? startTime)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListChatThreadsNextPageRequest(string nextLink, int? maxPageSize, DateTimeOffset? startTime)

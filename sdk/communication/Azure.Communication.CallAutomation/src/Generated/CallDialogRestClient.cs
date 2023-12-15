@@ -38,6 +38,18 @@ namespace Azure.Communication.CallAutomation
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateStartDialogRequestUri(string callConnectionId, string dialogId, StartDialogRequestInternal startDialogRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath("/dialogs/", false);
+            uri.AppendPath(dialogId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateStartDialogRequest(string callConnectionId, string dialogId, StartDialogRequestInternal startDialogRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -133,6 +145,22 @@ namespace Azure.Communication.CallAutomation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStopDialogRequestUri(string callConnectionId, string dialogId, string operationCallbackUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath("/dialogs/", false);
+            uri.AppendPath(dialogId, true);
+            if (operationCallbackUri != null)
+            {
+                uri.AppendQuery("operationCallbackUri", operationCallbackUri, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStopDialogRequest(string callConnectionId, string dialogId, string operationCallbackUri)

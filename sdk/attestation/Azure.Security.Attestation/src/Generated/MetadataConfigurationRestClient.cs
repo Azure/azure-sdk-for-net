@@ -35,6 +35,14 @@ namespace Azure.Security.Attestation
             _instanceUrl = instanceUrl ?? throw new ArgumentNullException(nameof(instanceUrl));
         }
 
+        internal RequestUriBuilder CreateGetRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_instanceUrl, false);
+            uri.AppendPath("/.well-known/openid-configuration", false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest()
         {
             var message = _pipeline.CreateMessage();

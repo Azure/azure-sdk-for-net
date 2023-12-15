@@ -38,6 +38,15 @@ namespace Azure.Security.Attestation
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateAttestOpenEnclaveRequestUri(AttestOpenEnclaveRequest request)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_instanceUrl, false);
+            uri.AppendPath("/attest/OpenEnclave", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateAttestOpenEnclaveRequest(AttestOpenEnclaveRequest request)
         {
             var message = _pipeline.CreateMessage();
@@ -112,6 +121,15 @@ namespace Azure.Security.Attestation
             }
         }
 
+        internal RequestUriBuilder CreateAttestSgxEnclaveRequestUri(AttestSgxEnclaveRequest request)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_instanceUrl, false);
+            uri.AppendPath("/attest/SgxEnclave", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateAttestSgxEnclaveRequest(AttestSgxEnclaveRequest request)
         {
             var message = _pipeline.CreateMessage();
@@ -184,6 +202,15 @@ namespace Azure.Security.Attestation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAttestTpmRequestUri(TpmAttestationRequest request)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_instanceUrl, false);
+            uri.AppendPath("/attest/Tpm", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAttestTpmRequest(TpmAttestationRequest request)

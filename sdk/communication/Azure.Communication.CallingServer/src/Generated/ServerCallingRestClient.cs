@@ -38,6 +38,15 @@ namespace Azure.Communication.CallingServer
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateCreateCallRequestUri(CreateCallRequestInternal createCallRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/calling/callConnections", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateCallRequest(CreateCallRequestInternal createCallRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -110,6 +119,15 @@ namespace Azure.Communication.CallingServer
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAnswerCallRequestUri(AnswerCallRequestInternal answerCallRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/calling/callConnections:answer", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAnswerCallRequest(AnswerCallRequestInternal answerCallRequest)
@@ -188,6 +206,15 @@ namespace Azure.Communication.CallingServer
             }
         }
 
+        internal RequestUriBuilder CreateRedirectCallRequestUri(RedirectCallRequestInternal redirectCallRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/calling/callConnections:redirect", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRedirectCallRequest(RedirectCallRequestInternal redirectCallRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -249,6 +276,15 @@ namespace Azure.Communication.CallingServer
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRejectCallRequestUri(RejectCallRequestInternal rejectCallRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/calling/callConnections:reject", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRejectCallRequest(RejectCallRequestInternal rejectCallRequest)

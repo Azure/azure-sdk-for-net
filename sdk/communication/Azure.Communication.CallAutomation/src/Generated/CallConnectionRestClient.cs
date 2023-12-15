@@ -38,6 +38,16 @@ namespace Azure.Communication.CallAutomation
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetCallRequestUri(string callConnectionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetCallRequest(string callConnectionId)
         {
             var message = _pipeline.CreateMessage();
@@ -107,6 +117,16 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        internal RequestUriBuilder CreateHangupCallRequestUri(string callConnectionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateHangupCallRequest(string callConnectionId)
         {
             var message = _pipeline.CreateMessage();
@@ -164,6 +184,17 @@ namespace Azure.Communication.CallAutomation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateTerminateCallRequestUri(string callConnectionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":terminate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateTerminateCallRequest(string callConnectionId)
@@ -226,6 +257,17 @@ namespace Azure.Communication.CallAutomation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateTransferToParticipantRequestUri(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":transferToParticipant", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateTransferToParticipantRequest(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest)
@@ -314,6 +356,17 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        internal RequestUriBuilder CreateGetParticipantsRequestUri(string callConnectionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath("/participants", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetParticipantsRequest(string callConnectionId)
         {
             var message = _pipeline.CreateMessage();
@@ -382,6 +435,17 @@ namespace Azure.Communication.CallAutomation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAddParticipantRequestUri(string callConnectionId, AddParticipantRequestInternal addParticipantRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath("/participants:add", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAddParticipantRequest(string callConnectionId, AddParticipantRequestInternal addParticipantRequest)
@@ -470,6 +534,17 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        internal RequestUriBuilder CreateRemoveParticipantRequestUri(string callConnectionId, RemoveParticipantRequestInternal removeParticipantRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath("/participants:remove", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRemoveParticipantRequest(string callConnectionId, RemoveParticipantRequestInternal removeParticipantRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -554,6 +629,17 @@ namespace Azure.Communication.CallAutomation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateMuteRequestUri(string callConnectionId, MuteParticipantsRequestInternal muteParticipantsRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath("/participants:mute", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateMuteRequest(string callConnectionId, MuteParticipantsRequestInternal muteParticipantsRequest)
@@ -642,6 +728,17 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        internal RequestUriBuilder CreateUnmuteRequestUri(string callConnectionId, UnmuteParticipantsRequestInternal unmuteParticipantsRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath("/participants:unmute", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUnmuteRequest(string callConnectionId, UnmuteParticipantsRequestInternal unmuteParticipantsRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -726,6 +823,17 @@ namespace Azure.Communication.CallAutomation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCancelAddParticipantRequestUri(string callConnectionId, CancelAddParticipantRequestInternal cancelAddParticipantRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath("/participants:cancelAddParticipant", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCancelAddParticipantRequest(string callConnectionId, CancelAddParticipantRequestInternal cancelAddParticipantRequest)
@@ -814,6 +922,18 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        internal RequestUriBuilder CreateGetParticipantRequestUri(string callConnectionId, string participantRawId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath("/participants/", false);
+            uri.AppendPath(participantRawId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetParticipantRequest(string callConnectionId, string participantRawId)
         {
             var message = _pipeline.CreateMessage();
@@ -893,6 +1013,14 @@ namespace Azure.Communication.CallAutomation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetParticipantsNextPageRequestUri(string nextLink, string callConnectionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetParticipantsNextPageRequest(string nextLink, string callConnectionId)

@@ -38,6 +38,17 @@ namespace Azure.Communication.CallingServer
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreatePlayRequestUri(string callConnectionId, PlayRequestInternal playRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":play", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePlayRequest(string callConnectionId, PlayRequestInternal playRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -111,6 +122,17 @@ namespace Azure.Communication.CallingServer
             }
         }
 
+        internal RequestUriBuilder CreateCancelAllMediaOperationsRequestUri(string callConnectionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":cancelAllMediaOperations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCancelAllMediaOperationsRequest(string callConnectionId)
         {
             var message = _pipeline.CreateMessage();
@@ -168,6 +190,17 @@ namespace Azure.Communication.CallingServer
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRecognizeRequestUri(string callConnectionId, RecognizeRequestInternal recognizeRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":recognize", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRecognizeRequest(string callConnectionId, RecognizeRequestInternal recognizeRequest)
@@ -241,6 +274,15 @@ namespace Azure.Communication.CallingServer
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRecordingRequestUri(StartCallRecordingRequestInternal startCallRecording)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/calling/recordings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRecordingRequest(StartCallRecordingRequestInternal startCallRecording)

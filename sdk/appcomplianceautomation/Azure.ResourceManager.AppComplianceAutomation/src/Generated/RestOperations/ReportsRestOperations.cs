@@ -37,6 +37,35 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string skipToken, int? top, string select, string offerGuid, string reportCreatorTenantId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            if (offerGuid != null)
+            {
+                uri.AppendQuery("offerGuid", offerGuid, true);
+            }
+            if (reportCreatorTenantId != null)
+            {
+                uri.AppendQuery("reportCreatorTenantId", reportCreatorTenantId, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string skipToken, int? top, string select, string offerGuid, string reportCreatorTenantId)
         {
             var message = _pipeline.CreateMessage();
@@ -120,6 +149,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string skipToken, int? top, string select, string offerGuid, string reportCreatorTenantId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string skipToken, int? top, string select, string offerGuid, string reportCreatorTenantId)

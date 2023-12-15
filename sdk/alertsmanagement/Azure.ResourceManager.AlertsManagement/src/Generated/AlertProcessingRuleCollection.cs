@@ -83,7 +83,9 @@ namespace Azure.ResourceManager.AlertsManagement
             try
             {
                 var response = await _alertProcessingRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, alertProcessingRuleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AlertsManagementArmOperation<AlertProcessingRuleResource>(Response.FromValue(new AlertProcessingRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _alertProcessingRuleRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, alertProcessingRuleName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AlertsManagementArmOperation<AlertProcessingRuleResource>(Response.FromValue(new AlertProcessingRuleResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +126,9 @@ namespace Azure.ResourceManager.AlertsManagement
             try
             {
                 var response = _alertProcessingRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, alertProcessingRuleName, data, cancellationToken);
-                var operation = new AlertsManagementArmOperation<AlertProcessingRuleResource>(Response.FromValue(new AlertProcessingRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _alertProcessingRuleRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, alertProcessingRuleName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AlertsManagementArmOperation<AlertProcessingRuleResource>(Response.FromValue(new AlertProcessingRuleResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

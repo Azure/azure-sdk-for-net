@@ -83,7 +83,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _automationScheduleScheduleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<AutomationScheduleResource>(Response.FromValue(new AutomationScheduleResource(Client, response), response.GetRawResponse()));
+                var uri = _automationScheduleScheduleRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, content);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AutomationArmOperation<AutomationScheduleResource>(Response.FromValue(new AutomationScheduleResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +126,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _automationScheduleScheduleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, content, cancellationToken);
-                var operation = new AutomationArmOperation<AutomationScheduleResource>(Response.FromValue(new AutomationScheduleResource(Client, response), response.GetRawResponse()));
+                var uri = _automationScheduleScheduleRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scheduleName, content);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AutomationArmOperation<AutomationScheduleResource>(Response.FromValue(new AutomationScheduleResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

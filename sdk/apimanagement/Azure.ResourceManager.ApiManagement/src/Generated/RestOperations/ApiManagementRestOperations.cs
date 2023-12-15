@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.ApiManagement
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreatePerformConnectivityCheckAsyncRequestUri(string subscriptionId, string resourceGroupName, string serviceName, ConnectivityCheckContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ApiManagement/service/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/connectivityCheck", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePerformConnectivityCheckAsyncRequest(string subscriptionId, string resourceGroupName, string serviceName, ConnectivityCheckContent content)
         {
             var message = _pipeline.CreateMessage();

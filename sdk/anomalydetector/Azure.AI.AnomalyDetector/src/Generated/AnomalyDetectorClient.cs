@@ -1138,6 +1138,16 @@ namespace Azure.AI.AnomalyDetector
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
         }
 
+        internal RequestUriBuilder CreateDetectUnivariateEntireSeriesRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion, true);
+            uri.AppendPath("/timeseries/entire/detect", false);
+            return uri;
+        }
+
         internal HttpMessage CreateDetectUnivariateEntireSeriesRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1153,6 +1163,16 @@ namespace Azure.AI.AnomalyDetector
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateDetectUnivariateLastPointRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion, true);
+            uri.AppendPath("/timeseries/last/detect", false);
+            return uri;
         }
 
         internal HttpMessage CreateDetectUnivariateLastPointRequest(RequestContent content, RequestContext context)
@@ -1172,6 +1192,16 @@ namespace Azure.AI.AnomalyDetector
             return message;
         }
 
+        internal RequestUriBuilder CreateDetectUnivariateChangePointRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion, true);
+            uri.AppendPath("/timeseries/changepoint/detect", false);
+            return uri;
+        }
+
         internal HttpMessage CreateDetectUnivariateChangePointRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1187,6 +1217,17 @@ namespace Azure.AI.AnomalyDetector
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetMultivariateBatchDetectionResultRequestUri(Guid resultId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion, true);
+            uri.AppendPath("/multivariate/detect-batch/", false);
+            uri.AppendPath(resultId, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetMultivariateBatchDetectionResultRequest(Guid resultId, RequestContext context)
@@ -1205,6 +1246,16 @@ namespace Azure.AI.AnomalyDetector
             return message;
         }
 
+        internal RequestUriBuilder CreateTrainMultivariateModelRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion, true);
+            uri.AppendPath("/multivariate/models", false);
+            return uri;
+        }
+
         internal HttpMessage CreateTrainMultivariateModelRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
@@ -1220,6 +1271,24 @@ namespace Azure.AI.AnomalyDetector
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetMultivariateModelsRequestUri(int? skip, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion, true);
+            uri.AppendPath("/multivariate/models", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetMultivariateModelsRequest(int? skip, int? maxCount, RequestContext context)
@@ -1245,6 +1314,17 @@ namespace Azure.AI.AnomalyDetector
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteMultivariateModelRequestUri(string modelId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion, true);
+            uri.AppendPath("/multivariate/models/", false);
+            uri.AppendPath(modelId, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteMultivariateModelRequest(string modelId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -1261,6 +1341,17 @@ namespace Azure.AI.AnomalyDetector
             return message;
         }
 
+        internal RequestUriBuilder CreateGetMultivariateModelRequestUri(string modelId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion, true);
+            uri.AppendPath("/multivariate/models/", false);
+            uri.AppendPath(modelId, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetMultivariateModelRequest(string modelId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1275,6 +1366,18 @@ namespace Azure.AI.AnomalyDetector
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateDetectMultivariateBatchAnomalyRequestUri(string modelId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion, true);
+            uri.AppendPath("/multivariate/models/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath(":detect-batch", false);
+            return uri;
         }
 
         internal HttpMessage CreateDetectMultivariateBatchAnomalyRequest(string modelId, RequestContent content, RequestContext context)
@@ -1296,6 +1399,18 @@ namespace Azure.AI.AnomalyDetector
             return message;
         }
 
+        internal RequestUriBuilder CreateDetectMultivariateLastAnomalyRequestUri(string modelId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion, true);
+            uri.AppendPath("/multivariate/models/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath(":detect-last", false);
+            return uri;
+        }
+
         internal HttpMessage CreateDetectMultivariateLastAnomalyRequest(string modelId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1313,6 +1428,16 @@ namespace Azure.AI.AnomalyDetector
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetMultivariateModelsNextPageRequestUri(string nextLink, int? skip, int? maxCount, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion, true);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetMultivariateModelsNextPageRequest(string nextLink, int? skip, int? maxCount, RequestContext context)

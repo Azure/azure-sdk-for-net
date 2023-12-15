@@ -37,6 +37,37 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string reportName, string skipToken, int? top, string select, string reportCreatorTenantId, string offerGuid)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.AppComplianceAutomation/reports/", false);
+            uri.AppendPath(reportName, true);
+            uri.AppendPath("/snapshots", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            if (reportCreatorTenantId != null)
+            {
+                uri.AppendQuery("reportCreatorTenantId", reportCreatorTenantId, true);
+            }
+            if (offerGuid != null)
+            {
+                uri.AppendQuery("offerGuid", offerGuid, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string reportName, string skipToken, int? top, string select, string reportCreatorTenantId, string offerGuid)
         {
             var message = _pipeline.CreateMessage();
@@ -132,6 +163,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string reportName, string skipToken, int? top, string select, string reportCreatorTenantId, string offerGuid)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string reportName, string skipToken, int? top, string select, string reportCreatorTenantId, string offerGuid)
