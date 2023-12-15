@@ -6,7 +6,7 @@ using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 
-namespace System.ClientModel.Tests;
+namespace System.ClientModel.Tests.Pipeline;
 
 public class ClientPipelineTests
 {

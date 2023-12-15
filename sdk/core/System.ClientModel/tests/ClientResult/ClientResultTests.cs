@@ -5,7 +5,7 @@ using ClientModel.Tests.Mocks;
 using NUnit.Framework;
 using System.ClientModel.Primitives;
 
-namespace System.ClientModel.Tests;
+namespace System.ClientModel.Tests.Results;
 
 public class ClientResultTests
 {
