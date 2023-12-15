@@ -180,6 +180,7 @@ public partial class CompletionsOptions
         Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
         Argument.AssertNotNull(prompts, nameof(prompts));
 
+        DeploymentName = deploymentName;
         Prompts = prompts.ToList();
     }
 

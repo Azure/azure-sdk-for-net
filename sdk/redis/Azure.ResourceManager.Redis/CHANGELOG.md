@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.1 (2023-12-15)
+
+### Features Added
+  - Adds support for using Microsoft Entra token-based authentication for your Azure Cache for Redis instance
+  - Adds support to choose an update channel
+  - Adds support the flush data operation to delete or flush all data in your cache
 
 ## 1.2.1 (2023-11-30)
 
