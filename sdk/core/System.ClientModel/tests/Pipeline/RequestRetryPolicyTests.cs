@@ -19,8 +19,10 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
     [Test]
     public async Task CanRetryErrorResponse()
     {
-        PipelineOptions options = new();
-        options.Transport = new RetriableTransport("Transport", new int[] { 429, 200 });
+        PipelineOptions options = new()
+        {
+            Transport = new RetriableTransport("Transport", new int[] { 429, 200 })
+        };
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
         PipelineMessage message = pipeline.CreateMessage();
@@ -32,6 +34,30 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
 
         // We visited the transport twice due to retries
         Assert.AreEqual(2, observations.Count);
+        Assert.AreEqual("Transport:Transport", observations[index++]);
+        Assert.AreEqual("Transport:Transport", observations[index++]);
+    }
+
+    [Test]
+    public async Task DoesNotExceedRetryCount()
+    {
+        PipelineOptions options = new()
+        {
+            Transport = new RetriableTransport("Transport", i => 500)
+        };
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+
+        PipelineMessage message = pipeline.CreateMessage();
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        List<string> observations = ObservablePolicy.GetData(message);
+
+        int index = 0;
+
+        // We visited the transport four times due to max 3 retries
+        Assert.AreEqual(4, observations.Count);
+        Assert.AreEqual("Transport:Transport", observations[index++]);
+        Assert.AreEqual("Transport:Transport", observations[index++]);
         Assert.AreEqual("Transport:Transport", observations[index++]);
         Assert.AreEqual("Transport:Transport", observations[index++]);
     }

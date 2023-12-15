@@ -12,27 +12,20 @@ namespace ClientModel.Tests.Mocks;
 
 public class RetriableTransport : PipelineTransport
 {
-    private readonly int[] _codes;
+    private readonly Func<int, int> _responseFactory;
     private int _current;
 
     public string Id { get; }
 
     public RetriableTransport(string id, params int[] codes)
+        : this(id, i => codes[i])
     {
-        Id = id;
-        _codes = codes;
     }
 
-    private bool TryGetNextStatus(out int status)
+    public RetriableTransport(string id, Func<int, int> responseFactory)
     {
-        if (_current < _codes.Length)
-        {
-            status = _codes[_current++];
-            return true;
-        }
-
-        status = 0;
-        return false;
+        Id = id;
+        _responseFactory = responseFactory;
     }
 
     protected override PipelineMessage CreateMessageCore()
@@ -44,9 +37,9 @@ public class RetriableTransport : PipelineTransport
     {
         Stamp(message, "Transport");
 
-        if (message is RetriableTransportMessage transportMessage &&
-            TryGetNextStatus(out int status))
+        if (message is RetriableTransportMessage transportMessage)
         {
+            int status = _responseFactory(_current++);
             transportMessage.SetResponse(status);
         }
     }
@@ -55,9 +48,9 @@ public class RetriableTransport : PipelineTransport
     {
         Stamp(message, "Transport");
 
-        if (message is RetriableTransportMessage transportMessage &&
-            TryGetNextStatus(out int status))
+        if (message is RetriableTransportMessage transportMessage)
         {
+            int status = _responseFactory(_current++);
             transportMessage.SetResponse(status);
         }
 
