@@ -551,8 +551,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         {
             CancellationToken cancellationToken = new CancellationToken();
             FunctionResult result = new FunctionResult(true);
-            _mockQueueProcessor.Setup(p => p.BeginProcessingMessageAsync(_queueMessage, cancellationToken)).ReturnsAsync(true);
-            _mockTriggerExecutor.Setup(p => p.ExecuteAsync(_queueMessage, cancellationToken)).ReturnsAsync(result);
+            _mockQueueProcessor.Setup(p => p.BeginProcessingMessageAsync(_queueMessage, It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            _mockTriggerExecutor.Setup(p => p.ExecuteAsync(_queueMessage, It.IsAny<CancellationToken>())).ReturnsAsync(result);
             _mockQueueProcessor.Setup(p => p.CompleteProcessingMessageAsync(_queueMessage, result, It.IsNotIn(cancellationToken))).Returns(Task.FromResult(true));
 
             await _listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(10), cancellationToken);
@@ -569,7 +569,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 string.Empty,
                 new Exception());
 
-            _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken)).Throws(exception);
+            _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>())).Throws(exception);
 
             var result = await _listener.ExecuteAsync(cancellationToken);
             Assert.NotNull(result);
@@ -583,7 +583,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             bool queueExists = false;
             _mockQueue.Setup(p => p.ExistsAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(() => Response.FromValue(queueExists, new MockResponse(queueExists ? 200 : 404)));
-            _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken))
+            _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Response.FromValue(new QueueMessage[0], new MockResponse(200)));
 
             int numIterations = 5;
@@ -602,7 +602,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             }
 
             _mockQueue.Verify(p => p.ExistsAsync(It.IsAny<CancellationToken>()), Times.Exactly(numIterations - numFailedExistenceChecks));
-            _mockQueue.Verify(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken), Times.Exactly(numIterations - numFailedExistenceChecks));
+            _mockQueue.Verify(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()), Times.Exactly(numIterations - numFailedExistenceChecks));
         }
 
         [Test]
@@ -615,7 +615,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 string.Empty,
                 string.Empty,
                 new Exception());
-            _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken)).Throws(exception);
+            _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>())).Throws(exception);
 
             for (int i = 0; i < 5; i++)
             {
@@ -624,14 +624,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             }
 
             _mockQueue.Verify(p => p.ExistsAsync(It.IsAny<CancellationToken>()), Times.Exactly(5));
-            _mockQueue.Verify(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken), Times.Exactly(5));
+            _mockQueue.Verify(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()), Times.Exactly(5));
         }
 
         [Test]
         public async Task ProcessMessageAsync_QueueBeginProcessingMessageReturnsFalse_MessageNotProcessed()
         {
             CancellationToken cancellationToken = new CancellationToken();
-            _mockQueueProcessor.Setup(p => p.BeginProcessingMessageAsync(_queueMessage, cancellationToken)).ReturnsAsync(false);
+            _mockQueueProcessor.Setup(p => p.BeginProcessingMessageAsync(_queueMessage, It.IsAny<CancellationToken>())).ReturnsAsync(false);
 
             await _listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(10), cancellationToken);
         }
@@ -641,8 +641,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         {
             CancellationToken cancellationToken = new CancellationToken();
             FunctionResult result = new FunctionResult(false);
-            _mockQueueProcessor.Setup(p => p.BeginProcessingMessageAsync(_queueMessage, cancellationToken)).ReturnsAsync(true);
-            _mockTriggerExecutor.Setup(p => p.ExecuteAsync(_queueMessage, cancellationToken)).ReturnsAsync(result);
+            _mockQueueProcessor.Setup(p => p.BeginProcessingMessageAsync(_queueMessage, It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            _mockTriggerExecutor.Setup(p => p.ExecuteAsync(_queueMessage, It.IsAny<CancellationToken>())).ReturnsAsync(result);
             _mockQueueProcessor.Setup(p => p.CompleteProcessingMessageAsync(_queueMessage, result, It.IsNotIn(cancellationToken))).Returns(Task.FromResult(true));
 
             await _listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(10), cancellationToken);
