@@ -37,6 +37,21 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByWorkspaceRequestUri(string subscriptionId, string resourceGroupName, string workspaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/firmwares", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByWorkspaceRequest(string subscriptionId, string resourceGroupName, string workspaceName)
         {
             var message = _pipeline.CreateMessage();
@@ -114,6 +129,22 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName, FirmwareData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/firmwares/", false);
+            uri.AppendPath(firmwareName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName, FirmwareData data)
@@ -210,6 +241,22 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName, FirmwarePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/firmwares/", false);
+            uri.AppendPath(firmwareName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName, FirmwarePatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -304,6 +351,22 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/firmwares/", false);
+            uri.AppendPath(firmwareName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
         {
             var message = _pipeline.CreateMessage();
@@ -378,6 +441,22 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/firmwares/", false);
+            uri.AppendPath(firmwareName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
@@ -468,6 +547,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
+        internal RequestUriBuilder CreateGenerateDownloadUrlRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/firmwares/", false);
+            uri.AppendPath(firmwareName, true);
+            uri.AppendPath("/generateDownloadUrl", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGenerateDownloadUrlRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
         {
             var message = _pipeline.CreateMessage();
@@ -551,6 +647,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGenerateFilesystemDownloadUrlRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/firmwares/", false);
+            uri.AppendPath(firmwareName, true);
+            uri.AppendPath("/generateFilesystemDownloadUrl", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGenerateFilesystemDownloadUrlRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
@@ -638,6 +751,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
+        internal RequestUriBuilder CreateGetFirmwareSummaryRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/firmwares/", false);
+            uri.AppendPath(firmwareName, true);
+            uri.AppendPath("/generateSummary", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetFirmwareSummaryRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
         {
             var message = _pipeline.CreateMessage();
@@ -721,6 +851,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSbomComponentsRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/firmwares/", false);
+            uri.AppendPath(firmwareName, true);
+            uri.AppendPath("/generateComponentList", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListSbomComponentsRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
@@ -808,6 +955,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
+        internal RequestUriBuilder CreateGetComponentDetailsRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/firmwares/", false);
+            uri.AppendPath(firmwareName, true);
+            uri.AppendPath("/generateComponentDetails", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetComponentDetailsRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
         {
             var message = _pipeline.CreateMessage();
@@ -891,6 +1055,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBinaryHardeningResultsRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/firmwares/", false);
+            uri.AppendPath(firmwareName, true);
+            uri.AppendPath("/generateBinaryHardeningList", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListBinaryHardeningResultsRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
@@ -978,6 +1159,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
+        internal RequestUriBuilder CreateGetBinaryHardeningSummaryRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/firmwares/", false);
+            uri.AppendPath(firmwareName, true);
+            uri.AppendPath("/generateBinaryHardeningSummary", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetBinaryHardeningSummaryRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
         {
             var message = _pipeline.CreateMessage();
@@ -1061,6 +1259,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetBinaryHardeningDetailsRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/firmwares/", false);
+            uri.AppendPath(firmwareName, true);
+            uri.AppendPath("/generateBinaryHardeningDetails", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetBinaryHardeningDetailsRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
@@ -1148,6 +1363,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
+        internal RequestUriBuilder CreateListPasswordHashesRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/firmwares/", false);
+            uri.AppendPath(firmwareName, true);
+            uri.AppendPath("/generatePasswordHashList", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListPasswordHashesRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
         {
             var message = _pipeline.CreateMessage();
@@ -1231,6 +1463,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListCvesRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/firmwares/", false);
+            uri.AppendPath(firmwareName, true);
+            uri.AppendPath("/generateCveList", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListCvesRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
@@ -1318,6 +1567,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
+        internal RequestUriBuilder CreateGetCveSummaryRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/firmwares/", false);
+            uri.AppendPath(firmwareName, true);
+            uri.AppendPath("/generateCveSummary", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetCveSummaryRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
         {
             var message = _pipeline.CreateMessage();
@@ -1401,6 +1667,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetCryptoCertificateSummaryRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/firmwares/", false);
+            uri.AppendPath(firmwareName, true);
+            uri.AppendPath("/generateCryptoCertificateSummary", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetCryptoCertificateSummaryRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
@@ -1488,6 +1771,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
+        internal RequestUriBuilder CreateGetCryptoKeySummaryRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/firmwares/", false);
+            uri.AppendPath(firmwareName, true);
+            uri.AppendPath("/generateCryptoKeySummary", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetCryptoKeySummaryRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
         {
             var message = _pipeline.CreateMessage();
@@ -1571,6 +1871,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListCryptoCertificatesRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/firmwares/", false);
+            uri.AppendPath(firmwareName, true);
+            uri.AppendPath("/generateCryptoCertificateList", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListCryptoCertificatesRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
@@ -1658,6 +1975,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
+        internal RequestUriBuilder CreateListCryptoKeysRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/firmwares/", false);
+            uri.AppendPath(firmwareName, true);
+            uri.AppendPath("/generateCryptoKeyList", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListCryptoKeysRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
         {
             var message = _pipeline.CreateMessage();
@@ -1743,6 +2077,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
+        internal RequestUriBuilder CreateListByWorkspaceNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByWorkspaceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName)
         {
             var message = _pipeline.CreateMessage();
@@ -1817,6 +2159,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSbomComponentsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListSbomComponentsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
@@ -1899,6 +2249,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
+        internal RequestUriBuilder CreateListBinaryHardeningResultsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListBinaryHardeningResultsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
         {
             var message = _pipeline.CreateMessage();
@@ -1977,6 +2335,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListPasswordHashesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListPasswordHashesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
@@ -2059,6 +2425,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
+        internal RequestUriBuilder CreateListCvesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListCvesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
         {
             var message = _pipeline.CreateMessage();
@@ -2139,6 +2513,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
         }
 
+        internal RequestUriBuilder CreateListCryptoCertificatesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListCryptoCertificatesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
         {
             var message = _pipeline.CreateMessage();
@@ -2217,6 +2599,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListCryptoKeysNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListCryptoKeysNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareName)

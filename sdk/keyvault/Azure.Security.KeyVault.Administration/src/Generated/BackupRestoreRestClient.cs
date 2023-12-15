@@ -36,6 +36,15 @@ namespace Azure.Security.KeyVault.Administration
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateFullBackupRequestUri(string vaultBaseUrl, SASTokenParameter azureStorageBlobContainerUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/backup", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateFullBackupRequest(string vaultBaseUrl, SASTokenParameter azureStorageBlobContainerUri)
         {
             var message = _pipeline.CreateMessage();
@@ -103,6 +112,17 @@ namespace Azure.Security.KeyVault.Administration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateFullBackupStatusRequestUri(string vaultBaseUrl, string jobId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/backup/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendPath("/pending", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateFullBackupStatusRequest(string vaultBaseUrl, string jobId)
@@ -185,6 +205,15 @@ namespace Azure.Security.KeyVault.Administration
             }
         }
 
+        internal RequestUriBuilder CreateFullRestoreOperationRequestUri(string vaultBaseUrl, RestoreOperationParameters restoreBlobDetails)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/restore", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateFullRestoreOperationRequest(string vaultBaseUrl, RestoreOperationParameters restoreBlobDetails)
         {
             var message = _pipeline.CreateMessage();
@@ -252,6 +281,17 @@ namespace Azure.Security.KeyVault.Administration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRestoreStatusRequestUri(string vaultBaseUrl, string jobId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/restore/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendPath("/pending", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRestoreStatusRequest(string vaultBaseUrl, string jobId)
@@ -332,6 +372,17 @@ namespace Azure.Security.KeyVault.Administration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSelectiveKeyRestoreOperationRequestUri(string vaultBaseUrl, string keyName, SelectiveKeyRestoreOperationParameters restoreBlobDetails)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/keys/", false);
+            uri.AppendPath(keyName, true);
+            uri.AppendPath("/restore", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSelectiveKeyRestoreOperationRequest(string vaultBaseUrl, string keyName, SelectiveKeyRestoreOperationParameters restoreBlobDetails)

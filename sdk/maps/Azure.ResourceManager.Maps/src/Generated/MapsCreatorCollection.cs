@@ -82,7 +82,9 @@ namespace Azure.ResourceManager.Maps
             try
             {
                 var response = await _mapsCreatorCreatorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, creatorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MapsArmOperation<MapsCreatorResource>(Response.FromValue(new MapsCreatorResource(Client, response), response.GetRawResponse()));
+                var uri = _mapsCreatorCreatorsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, creatorName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new MapsArmOperation<MapsCreatorResource>(Response.FromValue(new MapsCreatorResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +125,9 @@ namespace Azure.ResourceManager.Maps
             try
             {
                 var response = _mapsCreatorCreatorsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, creatorName, data, cancellationToken);
-                var operation = new MapsArmOperation<MapsCreatorResource>(Response.FromValue(new MapsCreatorResource(Client, response), response.GetRawResponse()));
+                var uri = _mapsCreatorCreatorsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, creatorName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new MapsArmOperation<MapsCreatorResource>(Response.FromValue(new MapsCreatorResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

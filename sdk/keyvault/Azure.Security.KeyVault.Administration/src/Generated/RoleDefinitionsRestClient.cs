@@ -36,6 +36,18 @@ namespace Azure.Security.KeyVault.Administration
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string vaultBaseUrl, string scope, string roleDefinitionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleDefinitions/", false);
+            uri.AppendPath(roleDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string vaultBaseUrl, string scope, string roleDefinitionName)
         {
             var message = _pipeline.CreateMessage();
@@ -117,6 +129,18 @@ namespace Azure.Security.KeyVault.Administration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string vaultBaseUrl, string scope, string roleDefinitionName, RoleDefinitionCreateParameters parameters)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleDefinitions/", false);
+            uri.AppendPath(roleDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string vaultBaseUrl, string scope, string roleDefinitionName, RoleDefinitionCreateParameters parameters)
@@ -224,6 +248,18 @@ namespace Azure.Security.KeyVault.Administration
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string vaultBaseUrl, string scope, string roleDefinitionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleDefinitions/", false);
+            uri.AppendPath(roleDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string vaultBaseUrl, string scope, string roleDefinitionName)
         {
             var message = _pipeline.CreateMessage();
@@ -315,6 +351,21 @@ namespace Azure.Security.KeyVault.Administration
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string vaultBaseUrl, string scope, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleDefinitions", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string vaultBaseUrl, string scope, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -399,6 +450,14 @@ namespace Azure.Security.KeyVault.Administration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string vaultBaseUrl, string scope, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string vaultBaseUrl, string scope, string filter)

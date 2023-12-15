@@ -40,6 +40,15 @@ namespace Azure.IoT.Hub.Service
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetTwinsRequestUri(QuerySpecification querySpecification, string xMsContinuation, string xMsMaxItemCount)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/devices/query", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetTwinsRequest(QuerySpecification querySpecification, string xMsContinuation, string xMsMaxItemCount)
         {
             var message = _pipeline.CreateMessage();

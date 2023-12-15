@@ -176,7 +176,9 @@ namespace Azure.ResourceManager.HybridContainerService
             try
             {
                 var response = await _hybridIdentityMetadataHybridIdentityMetadataRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridContainerServiceArmOperation(response);
+                var uri = _hybridIdentityMetadataHybridIdentityMetadataRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new HybridContainerServiceArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -210,7 +212,9 @@ namespace Azure.ResourceManager.HybridContainerService
             try
             {
                 var response = _hybridIdentityMetadataHybridIdentityMetadataRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new HybridContainerServiceArmOperation(response);
+                var uri = _hybridIdentityMetadataHybridIdentityMetadataRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new HybridContainerServiceArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -248,7 +252,9 @@ namespace Azure.ResourceManager.HybridContainerService
             try
             {
                 var response = await _hybridIdentityMetadataHybridIdentityMetadataRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridContainerServiceArmOperation<HybridIdentityMetadataResource>(Response.FromValue(new HybridIdentityMetadataResource(Client, response), response.GetRawResponse()));
+                var uri = _hybridIdentityMetadataHybridIdentityMetadataRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new HybridContainerServiceArmOperation<HybridIdentityMetadataResource>(Response.FromValue(new HybridIdentityMetadataResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -286,7 +292,9 @@ namespace Azure.ResourceManager.HybridContainerService
             try
             {
                 var response = _hybridIdentityMetadataHybridIdentityMetadataRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new HybridContainerServiceArmOperation<HybridIdentityMetadataResource>(Response.FromValue(new HybridIdentityMetadataResource(Client, response), response.GetRawResponse()));
+                var uri = _hybridIdentityMetadataHybridIdentityMetadataRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new HybridContainerServiceArmOperation<HybridIdentityMetadataResource>(Response.FromValue(new HybridIdentityMetadataResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

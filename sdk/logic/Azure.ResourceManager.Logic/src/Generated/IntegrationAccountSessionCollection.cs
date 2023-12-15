@@ -82,7 +82,9 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = await _integrationAccountSessionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new LogicArmOperation<IntegrationAccountSessionResource>(Response.FromValue(new IntegrationAccountSessionResource(Client, response), response.GetRawResponse()));
+                var uri = _integrationAccountSessionRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new LogicArmOperation<IntegrationAccountSessionResource>(Response.FromValue(new IntegrationAccountSessionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +125,9 @@ namespace Azure.ResourceManager.Logic
             try
             {
                 var response = _integrationAccountSessionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionName, data, cancellationToken);
-                var operation = new LogicArmOperation<IntegrationAccountSessionResource>(Response.FromValue(new IntegrationAccountSessionResource(Client, response), response.GetRawResponse()));
+                var uri = _integrationAccountSessionRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new LogicArmOperation<IntegrationAccountSessionResource>(Response.FromValue(new IntegrationAccountSessionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

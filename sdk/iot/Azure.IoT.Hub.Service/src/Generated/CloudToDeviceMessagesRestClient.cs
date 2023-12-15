@@ -39,6 +39,17 @@ namespace Azure.IoT.Hub.Service
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreatePurgeCloudToDeviceMessageQueueRequestUri(string id)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/devices/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/commands", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePurgeCloudToDeviceMessageQueueRequest(string id)
         {
             var message = _pipeline.CreateMessage();
@@ -109,6 +120,15 @@ namespace Azure.IoT.Hub.Service
             }
         }
 
+        internal RequestUriBuilder CreateReceiveFeedbackNotificationRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/messages/serviceBound/feedback", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateReceiveFeedbackNotificationRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -152,6 +172,16 @@ namespace Azure.IoT.Hub.Service
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCompleteFeedbackNotificationRequestUri(string lockToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/messages/serviceBound/feedback/", false);
+            uri.AppendPath(lockToken, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCompleteFeedbackNotificationRequest(string lockToken)
@@ -210,6 +240,17 @@ namespace Azure.IoT.Hub.Service
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAbandonFeedbackNotificationRequestUri(string lockToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/messages/serviceBound/feedback/", false);
+            uri.AppendPath(lockToken, true);
+            uri.AppendPath("/abandon", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAbandonFeedbackNotificationRequest(string lockToken)

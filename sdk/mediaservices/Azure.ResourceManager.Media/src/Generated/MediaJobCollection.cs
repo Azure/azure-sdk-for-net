@@ -82,7 +82,9 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaJobJobsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<MediaJobResource>(Response.FromValue(new MediaJobResource(Client, response), response.GetRawResponse()));
+                var uri = _mediaJobJobsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new MediaArmOperation<MediaJobResource>(Response.FromValue(new MediaJobResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +125,9 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaJobJobsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, data, cancellationToken);
-                var operation = new MediaArmOperation<MediaJobResource>(Response.FromValue(new MediaJobResource(Client, response), response.GetRawResponse()));
+                var uri = _mediaJobJobsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new MediaArmOperation<MediaJobResource>(Response.FromValue(new MediaJobResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

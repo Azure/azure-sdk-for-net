@@ -82,7 +82,9 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningCodeVersionCodeVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningCodeVersionResource>(Response.FromValue(new MachineLearningCodeVersionResource(Client, response), response.GetRawResponse()));
+                var uri = _machineLearningCodeVersionCodeVersionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new MachineLearningArmOperation<MachineLearningCodeVersionResource>(Response.FromValue(new MachineLearningCodeVersionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +125,9 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningCodeVersionCodeVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningCodeVersionResource>(Response.FromValue(new MachineLearningCodeVersionResource(Client, response), response.GetRawResponse()));
+                var uri = _machineLearningCodeVersionCodeVersionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new MachineLearningArmOperation<MachineLearningCodeVersionResource>(Response.FromValue(new MachineLearningCodeVersionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

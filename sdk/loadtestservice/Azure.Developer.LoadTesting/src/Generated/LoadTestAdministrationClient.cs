@@ -841,6 +841,17 @@ namespace Azure.Developer.LoadTesting
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTestFiles", "value", "nextLink", context);
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateTestRequestUri(string testId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/tests/", false);
+            uri.AppendPath(testId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateTestRequest(string testId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
@@ -859,6 +870,17 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteTestRequestUri(string testId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/tests/", false);
+            uri.AppendPath(testId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteTestRequest(string testId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -875,6 +897,17 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
+        internal RequestUriBuilder CreateGetTestRequestUri(string testId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/tests/", false);
+            uri.AppendPath(testId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetTestRequest(string testId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -889,6 +922,36 @@ namespace Azure.Developer.LoadTesting
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetTestsRequestUri(string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/tests", false);
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            if (search != null)
+            {
+                uri.AppendQuery("search", search, true);
+            }
+            if (lastModifiedStartTime != null)
+            {
+                uri.AppendQuery("lastModifiedStartTime", lastModifiedStartTime.Value, "O", true);
+            }
+            if (lastModifiedEndTime != null)
+            {
+                uri.AppendQuery("lastModifiedEndTime", lastModifiedEndTime.Value, "O", true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetTestsRequest(string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
@@ -926,6 +989,23 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
+        internal RequestUriBuilder CreateUploadTestFileRequestUri(string testId, string fileName, RequestContent content, string fileType, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/tests/", false);
+            uri.AppendPath(testId, true);
+            uri.AppendPath("/files/", false);
+            uri.AppendPath(fileName, true);
+            if (fileType != null)
+            {
+                uri.AppendQuery("fileType", fileType, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUploadTestFileRequest(string testId, string fileName, RequestContent content, string fileType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
@@ -950,6 +1030,19 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
+        internal RequestUriBuilder CreateGetTestFileRequestUri(string testId, string fileName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/tests/", false);
+            uri.AppendPath(testId, true);
+            uri.AppendPath("/files/", false);
+            uri.AppendPath(fileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetTestFileRequest(string testId, string fileName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -966,6 +1059,19 @@ namespace Azure.Developer.LoadTesting
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateDeleteTestFileRequestUri(string testId, string fileName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/tests/", false);
+            uri.AppendPath(testId, true);
+            uri.AppendPath("/files/", false);
+            uri.AppendPath(fileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteTestFileRequest(string testId, string fileName, RequestContext context)
@@ -986,6 +1092,18 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
+        internal RequestUriBuilder CreateGetTestFilesRequestUri(string testId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/tests/", false);
+            uri.AppendPath(testId, true);
+            uri.AppendPath("/files", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetTestFilesRequest(string testId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1001,6 +1119,18 @@ namespace Azure.Developer.LoadTesting
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateAppComponentsRequestUri(string testId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/tests/", false);
+            uri.AppendPath(testId, true);
+            uri.AppendPath("/app-components", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateAppComponentsRequest(string testId, RequestContent content, RequestContext context)
@@ -1022,6 +1152,18 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
+        internal RequestUriBuilder CreateGetAppComponentsRequestUri(string testId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/tests/", false);
+            uri.AppendPath(testId, true);
+            uri.AppendPath("/app-components", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetAppComponentsRequest(string testId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1037,6 +1179,18 @@ namespace Azure.Developer.LoadTesting
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateServerMetricsConfigRequestUri(string testId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/tests/", false);
+            uri.AppendPath(testId, true);
+            uri.AppendPath("/server-metrics-config", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateServerMetricsConfigRequest(string testId, RequestContent content, RequestContext context)
@@ -1058,6 +1212,18 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
+        internal RequestUriBuilder CreateGetServerMetricsConfigRequestUri(string testId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/tests/", false);
+            uri.AppendPath(testId, true);
+            uri.AppendPath("/server-metrics-config", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetServerMetricsConfigRequest(string testId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1075,6 +1241,15 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
+        internal RequestUriBuilder CreateGetTestsNextPageRequestUri(string nextLink, string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetTestsNextPageRequest(string nextLink, string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1087,6 +1262,15 @@ namespace Azure.Developer.LoadTesting
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetTestFilesNextPageRequestUri(string nextLink, string testId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetTestFilesNextPageRequest(string nextLink, string testId, RequestContext context)

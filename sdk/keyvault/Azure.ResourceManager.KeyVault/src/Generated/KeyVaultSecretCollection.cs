@@ -83,7 +83,9 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = await _keyVaultSecretSecretsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new KeyVaultArmOperation<KeyVaultSecretResource>(Response.FromValue(new KeyVaultSecretResource(Client, response), response.GetRawResponse()));
+                var uri = _keyVaultSecretSecretsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, content);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new KeyVaultArmOperation<KeyVaultSecretResource>(Response.FromValue(new KeyVaultSecretResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +126,9 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = _keyVaultSecretSecretsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, content, cancellationToken);
-                var operation = new KeyVaultArmOperation<KeyVaultSecretResource>(Response.FromValue(new KeyVaultSecretResource(Client, response), response.GetRawResponse()));
+                var uri = _keyVaultSecretSecretsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, content);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new KeyVaultArmOperation<KeyVaultSecretResource>(Response.FromValue(new KeyVaultSecretResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

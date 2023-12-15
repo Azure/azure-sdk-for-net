@@ -82,7 +82,9 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = await _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new KeyVaultArmOperation<ManagedHsmPrivateEndpointConnectionResource>(Response.FromValue(new ManagedHsmPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new KeyVaultArmOperation<ManagedHsmPrivateEndpointConnectionResource>(Response.FromValue(new ManagedHsmPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +125,9 @@ namespace Azure.ResourceManager.KeyVault
             try
             {
                 var response = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new KeyVaultArmOperation<ManagedHsmPrivateEndpointConnectionResource>(Response.FromValue(new ManagedHsmPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _managedHsmPrivateEndpointConnectionMHSMPrivateEndpointConnectionsRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new KeyVaultArmOperation<ManagedHsmPrivateEndpointConnectionResource>(Response.FromValue(new ManagedHsmPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

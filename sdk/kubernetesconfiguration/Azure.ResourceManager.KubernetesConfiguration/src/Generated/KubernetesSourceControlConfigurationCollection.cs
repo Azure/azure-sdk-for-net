@@ -94,7 +94,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             try
             {
                 var response = await _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, sourceControlConfigurationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new KubernetesConfigurationArmOperation<KubernetesSourceControlConfigurationResource>(Response.FromValue(new KubernetesSourceControlConfigurationResource(Client, response), response.GetRawResponse()));
+                var uri = _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, sourceControlConfigurationName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new KubernetesConfigurationArmOperation<KubernetesSourceControlConfigurationResource>(Response.FromValue(new KubernetesSourceControlConfigurationResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -135,7 +137,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             try
             {
                 var response = _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, sourceControlConfigurationName, data, cancellationToken);
-                var operation = new KubernetesConfigurationArmOperation<KubernetesSourceControlConfigurationResource>(Response.FromValue(new KubernetesSourceControlConfigurationResource(Client, response), response.GetRawResponse()));
+                var uri = _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, sourceControlConfigurationName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new KubernetesConfigurationArmOperation<KubernetesSourceControlConfigurationResource>(Response.FromValue(new KubernetesSourceControlConfigurationResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

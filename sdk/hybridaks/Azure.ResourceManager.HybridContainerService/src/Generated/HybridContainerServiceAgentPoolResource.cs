@@ -177,7 +177,9 @@ namespace Azure.ResourceManager.HybridContainerService
             try
             {
                 var response = await _hybridContainerServiceAgentPoolagentPoolRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridContainerServiceArmOperation(response);
+                var uri = _hybridContainerServiceAgentPoolagentPoolRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new HybridContainerServiceArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -211,7 +213,9 @@ namespace Azure.ResourceManager.HybridContainerService
             try
             {
                 var response = _hybridContainerServiceAgentPoolagentPoolRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new HybridContainerServiceArmOperation(response);
+                var uri = _hybridContainerServiceAgentPoolagentPoolRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new HybridContainerServiceArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

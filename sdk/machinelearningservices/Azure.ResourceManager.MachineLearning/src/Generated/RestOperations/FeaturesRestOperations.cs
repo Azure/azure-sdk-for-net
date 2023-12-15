@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.MachineLearning
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip, string tags, string featureName, string description)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/featuresets/", false);
+            uri.AppendPath(featuresetName, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(featuresetVersion, true);
+            uri.AppendPath("/features", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip, true);
+            }
+            if (tags != null)
+            {
+                uri.AppendQuery("tags", tags, true);
+            }
+            if (featureName != null)
+            {
+                uri.AppendQuery("featureName", featureName, true);
+            }
+            if (description != null)
+            {
+                uri.AppendQuery("description", description, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip, string tags, string featureName, string description)
         {
             var message = _pipeline.CreateMessage();
@@ -152,6 +187,26 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string featureName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/featuresets/", false);
+            uri.AppendPath(featuresetName, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(featuresetVersion, true);
+            uri.AppendPath("/features/", false);
+            uri.AppendPath(featureName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string featureName)
         {
             var message = _pipeline.CreateMessage();
@@ -250,6 +305,14 @@ namespace Azure.ResourceManager.MachineLearning
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip, string tags, string featureName, string description)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string featuresetName, string featuresetVersion, string skip, string tags, string featureName, string description)

@@ -40,6 +40,15 @@ namespace Azure.IoT.Hub.Service
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateUpdateRegistryRequestUri(IEnumerable<ExportImportDevice> devices)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/devices", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRegistryRequest(IEnumerable<ExportImportDevice> devices)
         {
             var message = _pipeline.CreateMessage();

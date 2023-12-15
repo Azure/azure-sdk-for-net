@@ -39,6 +39,15 @@ namespace Azure.IoT.Hub.Service
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetDeviceStatisticsRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/statistics/devices", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDeviceStatisticsRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -91,6 +100,15 @@ namespace Azure.IoT.Hub.Service
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetServiceStatisticsRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/statistics/service", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetServiceStatisticsRequest()

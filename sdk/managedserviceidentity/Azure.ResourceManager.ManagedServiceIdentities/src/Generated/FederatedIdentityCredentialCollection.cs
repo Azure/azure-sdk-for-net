@@ -82,7 +82,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             try
             {
                 var response = await _federatedIdentityCredentialRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedServiceIdentitiesArmOperation<FederatedIdentityCredentialResource>(Response.FromValue(new FederatedIdentityCredentialResource(Client, response), response.GetRawResponse()));
+                var uri = _federatedIdentityCredentialRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ManagedServiceIdentitiesArmOperation<FederatedIdentityCredentialResource>(Response.FromValue(new FederatedIdentityCredentialResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +125,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             try
             {
                 var response = _federatedIdentityCredentialRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, data, cancellationToken);
-                var operation = new ManagedServiceIdentitiesArmOperation<FederatedIdentityCredentialResource>(Response.FromValue(new FederatedIdentityCredentialResource(Client, response), response.GetRawResponse()));
+                var uri = _federatedIdentityCredentialRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ManagedServiceIdentitiesArmOperation<FederatedIdentityCredentialResource>(Response.FromValue(new FederatedIdentityCredentialResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

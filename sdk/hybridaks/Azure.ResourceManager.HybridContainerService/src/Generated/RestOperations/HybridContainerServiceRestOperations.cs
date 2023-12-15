@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.HybridContainerService
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListOrchestratorsRequestUri(string customLocationResourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(customLocationResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/orchestrators", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListOrchestratorsRequest(string customLocationResourceUri)
         {
             var message = _pipeline.CreateMessage();
@@ -100,6 +111,17 @@ namespace Azure.ResourceManager.HybridContainerService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListVmSkusRequestUri(string customLocationResourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(customLocationResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/vmSkus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListVmSkusRequest(string customLocationResourceUri)

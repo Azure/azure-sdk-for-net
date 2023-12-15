@@ -37,6 +37,15 @@ namespace Azure.AI.MetricsAdvisor
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
+        internal RequestUriBuilder CreateGetActiveSeriesCountRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/stats/latest", false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetActiveSeriesCountRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -89,6 +98,16 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAnomalyAlertingConfigurationRequestUri(Guid configurationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/alert/anomaly/configurations/", false);
+            uri.AppendPath(configurationId, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAnomalyAlertingConfigurationRequest(Guid configurationId)
@@ -146,6 +165,16 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateAnomalyAlertingConfigurationRequestUri(Guid configurationId, AnomalyAlertingConfigurationPatch body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/alert/anomaly/configurations/", false);
+            uri.AppendPath(configurationId, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateAnomalyAlertingConfigurationRequest(Guid configurationId, AnomalyAlertingConfigurationPatch body)
@@ -223,6 +252,16 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateDeleteAnomalyAlertingConfigurationRequestUri(Guid configurationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/alert/anomaly/configurations/", false);
+            uri.AppendPath(configurationId, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteAnomalyAlertingConfigurationRequest(Guid configurationId)
         {
             var message = _pipeline.CreateMessage();
@@ -268,6 +307,15 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateAnomalyAlertingConfigurationRequestUri(AnomalyAlertConfiguration body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/alert/anomaly/configurations", false);
+            return uri;
         }
 
         internal HttpMessage CreateCreateAnomalyAlertingConfigurationRequest(AnomalyAlertConfiguration body)
@@ -332,6 +380,25 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAlertsByAnomalyAlertingConfigurationRequestUri(Guid configurationId, AlertingResultQuery body, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/alert/anomaly/configurations/", false);
+            uri.AppendPath(configurationId, true);
+            uri.AppendPath("/alerts/query", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetAlertsByAnomalyAlertingConfigurationRequest(Guid configurationId, AlertingResultQuery body, int? skip, int? maxpagesize)
@@ -422,6 +489,27 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetAnomaliesFromAlertByAnomalyAlertingConfigurationRequestUri(Guid configurationId, string alertId, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/alert/anomaly/configurations/", false);
+            uri.AppendPath(configurationId, true);
+            uri.AppendPath("/alerts/", false);
+            uri.AppendPath(alertId, true);
+            uri.AppendPath("/anomalies", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetAnomaliesFromAlertByAnomalyAlertingConfigurationRequest(Guid configurationId, string alertId, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
@@ -506,6 +594,27 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetIncidentsFromAlertByAnomalyAlertingConfigurationRequestUri(Guid configurationId, string alertId, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/alert/anomaly/configurations/", false);
+            uri.AppendPath(configurationId, true);
+            uri.AppendPath("/alerts/", false);
+            uri.AppendPath(alertId, true);
+            uri.AppendPath("/incidents", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetIncidentsFromAlertByAnomalyAlertingConfigurationRequest(Guid configurationId, string alertId, int? skip, int? maxpagesize)
@@ -594,6 +703,16 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetAnomalyDetectionConfigurationRequestUri(Guid configurationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
+            uri.AppendPath(configurationId, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetAnomalyDetectionConfigurationRequest(Guid configurationId)
         {
             var message = _pipeline.CreateMessage();
@@ -649,6 +768,16 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateAnomalyDetectionConfigurationRequestUri(Guid configurationId, AnomalyDetectionConfigurationPatch body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
+            uri.AppendPath(configurationId, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateAnomalyDetectionConfigurationRequest(Guid configurationId, AnomalyDetectionConfigurationPatch body)
@@ -726,6 +855,16 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateDeleteAnomalyDetectionConfigurationRequestUri(Guid configurationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
+            uri.AppendPath(configurationId, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteAnomalyDetectionConfigurationRequest(Guid configurationId)
         {
             var message = _pipeline.CreateMessage();
@@ -771,6 +910,15 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateAnomalyDetectionConfigurationRequestUri(AnomalyDetectionConfiguration body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/enrichment/anomalyDetection/configurations", false);
+            return uri;
         }
 
         internal HttpMessage CreateCreateAnomalyDetectionConfigurationRequest(AnomalyDetectionConfiguration body)
@@ -835,6 +983,25 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAnomalyAlertingConfigurationsByAnomalyDetectionConfigurationRequestUri(Guid configurationId, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
+            uri.AppendPath(configurationId, true);
+            uri.AppendPath("/alert/anomaly/configurations", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetAnomalyAlertingConfigurationsByAnomalyDetectionConfigurationRequest(Guid configurationId, int? skip, int? maxpagesize)
@@ -905,6 +1072,17 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSeriesByAnomalyDetectionConfigurationRequestUri(Guid configurationId, DetectionSeriesQuery body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
+            uri.AppendPath(configurationId, true);
+            uri.AppendPath("/series/query", false);
+            return uri;
         }
 
         internal HttpMessage CreateGetSeriesByAnomalyDetectionConfigurationRequest(Guid configurationId, DetectionSeriesQuery body)
@@ -981,6 +1159,25 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAnomaliesByAnomalyDetectionConfigurationRequestUri(Guid configurationId, DetectionAnomalyResultQuery body, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
+            uri.AppendPath(configurationId, true);
+            uri.AppendPath("/anomalies/query", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetAnomaliesByAnomalyDetectionConfigurationRequest(Guid configurationId, DetectionAnomalyResultQuery body, int? skip, int? maxpagesize)
@@ -1071,6 +1268,25 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetDimensionOfAnomaliesByAnomalyDetectionConfigurationRequestUri(Guid configurationId, AnomalyDimensionQuery body, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
+            uri.AppendPath(configurationId, true);
+            uri.AppendPath("/anomalies/dimension/query", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetDimensionOfAnomaliesByAnomalyDetectionConfigurationRequest(Guid configurationId, AnomalyDimensionQuery body, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
@@ -1159,6 +1375,21 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetIncidentsByAnomalyDetectionConfigurationRequestUri(Guid configurationId, DetectionIncidentResultQuery body, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
+            uri.AppendPath(configurationId, true);
+            uri.AppendPath("/incidents/query", false);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetIncidentsByAnomalyDetectionConfigurationRequest(Guid configurationId, DetectionIncidentResultQuery body, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
@@ -1241,6 +1472,25 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetIncidentsByAnomalyDetectionConfigurationNextPagesRequestUri(Guid configurationId, int? maxpagesize, string token)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
+            uri.AppendPath(configurationId, true);
+            uri.AppendPath("/incidents/query", false);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            if (token != null)
+            {
+                uri.AppendQuery("$token", token, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetIncidentsByAnomalyDetectionConfigurationNextPagesRequest(Guid configurationId, int? maxpagesize, string token)
         {
             var message = _pipeline.CreateMessage();
@@ -1309,6 +1559,19 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRootCauseOfIncidentByAnomalyDetectionConfigurationRequestUri(Guid configurationId, string incidentId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
+            uri.AppendPath(configurationId, true);
+            uri.AppendPath("/incidents/", false);
+            uri.AppendPath(incidentId, true);
+            uri.AppendPath("/rootCause", false);
+            return uri;
         }
 
         internal HttpMessage CreateGetRootCauseOfIncidentByAnomalyDetectionConfigurationRequest(Guid configurationId, string incidentId)
@@ -1385,6 +1648,15 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateCreateCredentialRequestUri(DataSourceCredentialEntity body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/credentials", false);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateCredentialRequest(DataSourceCredentialEntity body)
         {
             var message = _pipeline.CreateMessage();
@@ -1447,6 +1719,23 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListCredentialsRequestUri(int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/credentials", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListCredentialsRequest(int? skip, int? maxpagesize)
@@ -1513,6 +1802,16 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateCredentialRequestUri(Guid credentialId, DataSourceCredentialPatch body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/credentials/", false);
+            uri.AppendPath(credentialId, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateCredentialRequest(Guid credentialId, DataSourceCredentialPatch body)
@@ -1590,6 +1889,16 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateDeleteCredentialRequestUri(Guid credentialId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/credentials/", false);
+            uri.AppendPath(credentialId, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteCredentialRequest(Guid credentialId)
         {
             var message = _pipeline.CreateMessage();
@@ -1635,6 +1944,16 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetCredentialRequestUri(Guid credentialId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/credentials/", false);
+            uri.AppendPath(credentialId, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetCredentialRequest(Guid credentialId)
@@ -1692,6 +2011,43 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListDataFeedsRequestUri(string dataFeedName, DataFeedSourceKind? dataSourceType, DataFeedGranularityType? granularityName, DataFeedStatus? status, string creator, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/dataFeeds", false);
+            if (dataFeedName != null)
+            {
+                uri.AppendQuery("dataFeedName", dataFeedName, true);
+            }
+            if (dataSourceType != null)
+            {
+                uri.AppendQuery("dataSourceType", dataSourceType.Value.ToString(), true);
+            }
+            if (granularityName != null)
+            {
+                uri.AppendQuery("granularityName", granularityName.Value.ToString(), true);
+            }
+            if (status != null)
+            {
+                uri.AppendQuery("status", status.Value.ToString(), true);
+            }
+            if (creator != null)
+            {
+                uri.AppendQuery("creator", creator, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListDataFeedsRequest(string dataFeedName, DataFeedSourceKind? dataSourceType, DataFeedGranularityType? granularityName, DataFeedStatus? status, string creator, int? skip, int? maxpagesize)
@@ -1790,6 +2146,15 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateCreateDataFeedRequestUri(DataFeedDetail body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/dataFeeds", false);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateDataFeedRequest(DataFeedDetail body)
         {
             var message = _pipeline.CreateMessage();
@@ -1854,6 +2219,16 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetDataFeedByIdRequestUri(Guid dataFeedId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/dataFeeds/", false);
+            uri.AppendPath(dataFeedId, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDataFeedByIdRequest(Guid dataFeedId)
         {
             var message = _pipeline.CreateMessage();
@@ -1909,6 +2284,16 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateDataFeedRequestUri(Guid dataFeedId, DataFeedDetailPatch body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/dataFeeds/", false);
+            uri.AppendPath(dataFeedId, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateDataFeedRequest(Guid dataFeedId, DataFeedDetailPatch body)
@@ -1986,6 +2371,16 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateDeleteDataFeedRequestUri(Guid dataFeedId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/dataFeeds/", false);
+            uri.AppendPath(dataFeedId, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteDataFeedRequest(Guid dataFeedId)
         {
             var message = _pipeline.CreateMessage();
@@ -2031,6 +2426,16 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetMetricFeedbackRequestUri(Guid feedbackId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/feedback/metric/", false);
+            uri.AppendPath(feedbackId, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetMetricFeedbackRequest(Guid feedbackId)
@@ -2088,6 +2493,23 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMetricFeedbacksRequestUri(MetricFeedbackFilter body, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/feedback/metric/query", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListMetricFeedbacksRequest(MetricFeedbackFilter body, int? skip, int? maxpagesize)
@@ -2174,6 +2596,15 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateCreateMetricFeedbackRequestUri(MetricFeedback body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/feedback/metric", false);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateMetricFeedbackRequest(MetricFeedback body)
         {
             var message = _pipeline.CreateMessage();
@@ -2236,6 +2667,27 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListHooksRequestUri(string hookName, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/hooks", false);
+            if (hookName != null)
+            {
+                uri.AppendQuery("hookName", hookName, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListHooksRequest(string hookName, int? skip, int? maxpagesize)
@@ -2310,6 +2762,15 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateCreateHookRequestUri(NotificationHook body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/hooks", false);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateHookRequest(NotificationHook body)
         {
             var message = _pipeline.CreateMessage();
@@ -2374,6 +2835,16 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetHookRequestUri(Guid hookId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/hooks/", false);
+            uri.AppendPath(hookId, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetHookRequest(Guid hookId)
         {
             var message = _pipeline.CreateMessage();
@@ -2429,6 +2900,16 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateHookRequestUri(Guid hookId, HookInfoPatch body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/hooks/", false);
+            uri.AppendPath(hookId, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateHookRequest(Guid hookId, HookInfoPatch body)
@@ -2506,6 +2987,16 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateDeleteHookRequestUri(Guid hookId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/hooks/", false);
+            uri.AppendPath(hookId, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteHookRequest(Guid hookId)
         {
             var message = _pipeline.CreateMessage();
@@ -2551,6 +3042,25 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDataFeedIngestionStatusRequestUri(Guid dataFeedId, IngestionStatusQueryOptions body, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/dataFeeds/", false);
+            uri.AppendPath(dataFeedId, true);
+            uri.AppendPath("/ingestionStatus/query", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetDataFeedIngestionStatusRequest(Guid dataFeedId, IngestionStatusQueryOptions body, int? skip, int? maxpagesize)
@@ -2641,6 +3151,17 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateResetDataFeedIngestionStatusRequestUri(Guid dataFeedId, IngestionProgressResetOptions body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/dataFeeds/", false);
+            uri.AppendPath(dataFeedId, true);
+            uri.AppendPath("/ingestionProgress/reset", false);
+            return uri;
+        }
+
         internal HttpMessage CreateResetDataFeedIngestionStatusRequest(Guid dataFeedId, IngestionProgressResetOptions body)
         {
             var message = _pipeline.CreateMessage();
@@ -2707,6 +3228,17 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetIngestionProgressRequestUri(Guid dataFeedId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/dataFeeds/", false);
+            uri.AppendPath(dataFeedId, true);
+            uri.AppendPath("/ingestionProgress", false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetIngestionProgressRequest(Guid dataFeedId)
         {
             var message = _pipeline.CreateMessage();
@@ -2763,6 +3295,17 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetMetricDataRequestUri(Guid metricId, MetricDataQueryOptions body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/metrics/", false);
+            uri.AppendPath(metricId, true);
+            uri.AppendPath("/data/query", false);
+            return uri;
         }
 
         internal HttpMessage CreateGetMetricDataRequest(Guid metricId, MetricDataQueryOptions body)
@@ -2839,6 +3382,25 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetMetricSeriesRequestUri(Guid metricId, MetricSeriesQueryOptions body, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/metrics/", false);
+            uri.AppendPath(metricId, true);
+            uri.AppendPath("/series/query", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetMetricSeriesRequest(Guid metricId, MetricSeriesQueryOptions body, int? skip, int? maxpagesize)
@@ -2929,6 +3491,25 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetMetricDimensionRequestUri(Guid metricId, MetricDimensionQueryOptions body, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/metrics/", false);
+            uri.AppendPath(metricId, true);
+            uri.AppendPath("/dimension/query", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetMetricDimensionRequest(Guid metricId, MetricDimensionQueryOptions body, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
@@ -3017,6 +3598,25 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetAnomalyDetectionConfigurationsByMetricRequestUri(Guid metricId, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/metrics/", false);
+            uri.AppendPath(metricId, true);
+            uri.AppendPath("/enrichment/anomalyDetection/configurations", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetAnomalyDetectionConfigurationsByMetricRequest(Guid metricId, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
@@ -3085,6 +3685,25 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetEnrichmentStatusByMetricRequestUri(Guid metricId, EnrichmentStatusQueryOption body, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/metrics/", false);
+            uri.AppendPath(metricId, true);
+            uri.AppendPath("/status/enrichment/anomalyDetection/query", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetEnrichmentStatusByMetricRequest(Guid metricId, EnrichmentStatusQueryOption body, int? skip, int? maxpagesize)
@@ -3175,6 +3794,16 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetAlertsByAnomalyAlertingConfigurationNextRequestUri(string nextLink, AlertingResultQuery body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetAlertsByAnomalyAlertingConfigurationNextRequest(string nextLink, AlertingResultQuery body)
         {
             var message = _pipeline.CreateMessage();
@@ -3256,6 +3885,16 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAnomaliesByAnomalyDetectionConfigurationNextRequestUri(string nextLink, DetectionAnomalyResultQuery body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetAnomaliesByAnomalyDetectionConfigurationNextRequest(string nextLink, DetectionAnomalyResultQuery body)
@@ -3341,6 +3980,16 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextRequestUri(string nextLink, AnomalyDimensionQuery body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextRequest(string nextLink, AnomalyDimensionQuery body)
         {
             var message = _pipeline.CreateMessage();
@@ -3422,6 +4071,16 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMetricFeedbacksNextRequestUri(string nextLink, MetricFeedbackFilter body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListMetricFeedbacksNextRequest(string nextLink, MetricFeedbackFilter body)
@@ -3507,6 +4166,16 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetDataFeedIngestionStatusNextRequestUri(string nextLink, IngestionStatusQueryOptions body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDataFeedIngestionStatusNextRequest(string nextLink, IngestionStatusQueryOptions body)
         {
             var message = _pipeline.CreateMessage();
@@ -3588,6 +4257,16 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetMetricSeriesNextRequestUri(string nextLink, MetricSeriesQueryOptions body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetMetricSeriesNextRequest(string nextLink, MetricSeriesQueryOptions body)
@@ -3673,6 +4352,16 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetMetricDimensionNextRequestUri(string nextLink, MetricDimensionQueryOptions body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetMetricDimensionNextRequest(string nextLink, MetricDimensionQueryOptions body)
         {
             var message = _pipeline.CreateMessage();
@@ -3756,6 +4445,16 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetEnrichmentStatusByMetricNextRequestUri(string nextLink, EnrichmentStatusQueryOption body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendPath("/", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetEnrichmentStatusByMetricNextRequest(string nextLink, EnrichmentStatusQueryOption body)
         {
             var message = _pipeline.CreateMessage();
@@ -3837,6 +4536,15 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAlertsByAnomalyAlertingConfigurationNextPageRequestUri(string nextLink, Guid configurationId, AlertingResultQuery body, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetAlertsByAnomalyAlertingConfigurationNextPageRequest(string nextLink, Guid configurationId, AlertingResultQuery body, int? skip, int? maxpagesize)
@@ -3923,6 +4631,15 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetAnomaliesFromAlertByAnomalyAlertingConfigurationNextPageRequestUri(string nextLink, Guid configurationId, string alertId, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetAnomaliesFromAlertByAnomalyAlertingConfigurationNextPageRequest(string nextLink, Guid configurationId, string alertId, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
@@ -4005,6 +4722,15 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetIncidentsFromAlertByAnomalyAlertingConfigurationNextPageRequestUri(string nextLink, Guid configurationId, string alertId, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetIncidentsFromAlertByAnomalyAlertingConfigurationNextPageRequest(string nextLink, Guid configurationId, string alertId, int? skip, int? maxpagesize)
@@ -4091,6 +4817,15 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetAnomalyAlertingConfigurationsByAnomalyDetectionConfigurationNextPageRequestUri(string nextLink, Guid configurationId, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetAnomalyAlertingConfigurationsByAnomalyDetectionConfigurationNextPageRequest(string nextLink, Guid configurationId, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
@@ -4163,6 +4898,15 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAnomaliesByAnomalyDetectionConfigurationNextPageRequestUri(string nextLink, Guid configurationId, DetectionAnomalyResultQuery body, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetAnomaliesByAnomalyDetectionConfigurationNextPageRequest(string nextLink, Guid configurationId, DetectionAnomalyResultQuery body, int? skip, int? maxpagesize)
@@ -4249,6 +4993,15 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextPageRequestUri(string nextLink, Guid configurationId, AnomalyDimensionQuery body, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDimensionOfAnomaliesByAnomalyDetectionConfigurationNextPageRequest(string nextLink, Guid configurationId, AnomalyDimensionQuery body, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
@@ -4333,6 +5086,15 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetIncidentsByAnomalyDetectionConfigurationNextPageRequestUri(string nextLink, Guid configurationId, DetectionIncidentResultQuery body, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetIncidentsByAnomalyDetectionConfigurationNextPageRequest(string nextLink, Guid configurationId, DetectionIncidentResultQuery body, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
@@ -4415,6 +5177,15 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetIncidentsByAnomalyDetectionConfigurationNextPagesNextPageRequestUri(string nextLink, Guid configurationId, int? maxpagesize, string token)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetIncidentsByAnomalyDetectionConfigurationNextPagesNextPageRequest(string nextLink, Guid configurationId, int? maxpagesize, string token)
         {
             var message = _pipeline.CreateMessage();
@@ -4489,6 +5260,15 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateListCredentialsNextPageRequestUri(string nextLink, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListCredentialsNextPageRequest(string nextLink, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
@@ -4559,6 +5339,15 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListDataFeedsNextPageRequestUri(string nextLink, string dataFeedName, DataFeedSourceKind? dataSourceType, DataFeedGranularityType? granularityName, DataFeedStatus? status, string creator, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListDataFeedsNextPageRequest(string nextLink, string dataFeedName, DataFeedSourceKind? dataSourceType, DataFeedGranularityType? granularityName, DataFeedStatus? status, string creator, int? skip, int? maxpagesize)
@@ -4643,6 +5432,15 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateListMetricFeedbacksNextPageRequestUri(string nextLink, MetricFeedbackFilter body, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListMetricFeedbacksNextPageRequest(string nextLink, MetricFeedbackFilter body, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
@@ -4725,6 +5523,15 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateListHooksNextPageRequestUri(string nextLink, string hookName, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListHooksNextPageRequest(string nextLink, string hookName, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
@@ -4797,6 +5604,15 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDataFeedIngestionStatusNextPageRequestUri(string nextLink, Guid dataFeedId, IngestionStatusQueryOptions body, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetDataFeedIngestionStatusNextPageRequest(string nextLink, Guid dataFeedId, IngestionStatusQueryOptions body, int? skip, int? maxpagesize)
@@ -4883,6 +5699,15 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetMetricSeriesNextPageRequestUri(string nextLink, Guid metricId, MetricSeriesQueryOptions body, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetMetricSeriesNextPageRequest(string nextLink, Guid metricId, MetricSeriesQueryOptions body, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
@@ -4965,6 +5790,15 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetMetricDimensionNextPageRequestUri(string nextLink, Guid metricId, MetricDimensionQueryOptions body, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetMetricDimensionNextPageRequest(string nextLink, Guid metricId, MetricDimensionQueryOptions body, int? skip, int? maxpagesize)
@@ -5051,6 +5885,15 @@ namespace Azure.AI.MetricsAdvisor
             }
         }
 
+        internal RequestUriBuilder CreateGetAnomalyDetectionConfigurationsByMetricNextPageRequestUri(string nextLink, Guid metricId, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetAnomalyDetectionConfigurationsByMetricNextPageRequest(string nextLink, Guid metricId, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
@@ -5123,6 +5966,15 @@ namespace Azure.AI.MetricsAdvisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetEnrichmentStatusByMetricNextPageRequestUri(string nextLink, Guid metricId, EnrichmentStatusQueryOption body, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/metricsadvisor/v1.0", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetEnrichmentStatusByMetricNextPageRequest(string nextLink, Guid metricId, EnrichmentStatusQueryOption body, int? skip, int? maxpagesize)

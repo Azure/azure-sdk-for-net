@@ -177,7 +177,9 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningEnvironmentVersionEnvironmentVersionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation(response);
+                var uri = _machineLearningEnvironmentVersionEnvironmentVersionsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new MachineLearningArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -211,7 +213,9 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningEnvironmentVersionEnvironmentVersionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MachineLearningArmOperation(response);
+                var uri = _machineLearningEnvironmentVersionEnvironmentVersionsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new MachineLearningArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -249,7 +253,9 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningEnvironmentVersionEnvironmentVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningEnvironmentVersionResource>(Response.FromValue(new MachineLearningEnvironmentVersionResource(Client, response), response.GetRawResponse()));
+                var uri = _machineLearningEnvironmentVersionEnvironmentVersionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new MachineLearningArmOperation<MachineLearningEnvironmentVersionResource>(Response.FromValue(new MachineLearningEnvironmentVersionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -287,7 +293,9 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningEnvironmentVersionEnvironmentVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningEnvironmentVersionResource>(Response.FromValue(new MachineLearningEnvironmentVersionResource(Client, response), response.GetRawResponse()));
+                var uri = _machineLearningEnvironmentVersionEnvironmentVersionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new MachineLearningArmOperation<MachineLearningEnvironmentVersionResource>(Response.FromValue(new MachineLearningEnvironmentVersionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

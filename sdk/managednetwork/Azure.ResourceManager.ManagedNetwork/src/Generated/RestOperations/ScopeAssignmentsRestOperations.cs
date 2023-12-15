@@ -37,6 +37,18 @@ namespace Azure.ResourceManager.ManagedNetwork
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string scope, string scopeAssignmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedNetwork/scopeAssignments/", false);
+            uri.AppendPath(scopeAssignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string scope, string scopeAssignmentName)
         {
             var message = _pipeline.CreateMessage();
@@ -111,6 +123,18 @@ namespace Azure.ResourceManager.ManagedNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string scope, string scopeAssignmentName, ScopeAssignmentData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedNetwork/scopeAssignments/", false);
+            uri.AppendPath(scopeAssignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string scope, string scopeAssignmentName, ScopeAssignmentData data)
@@ -195,6 +219,18 @@ namespace Azure.ResourceManager.ManagedNetwork
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string scope, string scopeAssignmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedNetwork/scopeAssignments/", false);
+            uri.AppendPath(scopeAssignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string scope, string scopeAssignmentName)
         {
             var message = _pipeline.CreateMessage();
@@ -254,6 +290,17 @@ namespace Azure.ResourceManager.ManagedNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedNetwork/scopeAssignments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string scope)
@@ -319,6 +366,14 @@ namespace Azure.ResourceManager.ManagedNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string scope)

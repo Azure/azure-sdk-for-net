@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.HybridContainerService
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusters/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/agentPools/", false);
+            uri.AppendPath(agentPoolName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName)
         {
             var message = _pipeline.CreateMessage();
@@ -125,6 +141,22 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, HybridContainerServiceAgentPoolData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusters/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/agentPools/", false);
+            uri.AppendPath(agentPoolName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, HybridContainerServiceAgentPoolData data)
         {
             var message = _pipeline.CreateMessage();
@@ -209,6 +241,22 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusters/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/agentPools/", false);
+            uri.AppendPath(agentPoolName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName)
         {
             var message = _pipeline.CreateMessage();
@@ -283,6 +331,22 @@ namespace Azure.ResourceManager.HybridContainerService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, HybridContainerServiceAgentPoolData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusters/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/agentPools/", false);
+            uri.AppendPath(agentPoolName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, HybridContainerServiceAgentPoolData data)
@@ -377,6 +441,21 @@ namespace Azure.ResourceManager.HybridContainerService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByProvisionedClusterRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusters/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/agentPools", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByProvisionedClusterRequest(string subscriptionId, string resourceGroupName, string resourceName)

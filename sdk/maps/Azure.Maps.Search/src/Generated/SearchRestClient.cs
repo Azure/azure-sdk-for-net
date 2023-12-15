@@ -43,6 +43,20 @@ namespace Azure.Maps.Search
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateListPolygonsRequestUri(JsonFormat format, IEnumerable<string> geometryIds)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/search/polygon/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (geometryIds != null && Optional.IsCollectionDefined(geometryIds))
+            {
+                uri.AppendQueryDelimited("geometries", geometryIds, ",", true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListPolygonsRequest(JsonFormat format, IEnumerable<string> geometryIds)
         {
             var message = _pipeline.CreateMessage();
@@ -138,6 +152,97 @@ namespace Azure.Maps.Search
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateFuzzySearchRequestUri(ResponseFormat format, string query, bool? isTypeAhead, int? top, int? skip, IEnumerable<int> categoryFilter, IEnumerable<string> countryFilter, double? lat, double? lon, int? radiusInMeters, string topLeft, string btmRight, string language, IEnumerable<SearchIndex> extendedPostalCodesFor, int? minFuzzyLevel, int? maxFuzzyLevel, IEnumerable<SearchIndex> indexFilter, IEnumerable<string> brandFilter, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter, GeographicEntity? entityType, LocalizedMapView? localizedMapView, OperatingHoursRange? operatingHours)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/search/fuzzy/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("query", query, true);
+            if (isTypeAhead != null)
+            {
+                uri.AppendQuery("typeahead", isTypeAhead.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("limit", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("ofs", skip.Value, true);
+            }
+            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
+            {
+                uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
+            }
+            if (countryFilter != null && Optional.IsCollectionDefined(countryFilter))
+            {
+                uri.AppendQueryDelimited("countrySet", countryFilter, ",", true);
+            }
+            if (lat != null)
+            {
+                uri.AppendQuery("lat", lat.Value, true);
+            }
+            if (lon != null)
+            {
+                uri.AppendQuery("lon", lon.Value, true);
+            }
+            if (radiusInMeters != null)
+            {
+                uri.AppendQuery("radius", radiusInMeters.Value, true);
+            }
+            if (topLeft != null)
+            {
+                uri.AppendQuery("topLeft", topLeft, true);
+            }
+            if (btmRight != null)
+            {
+                uri.AppendQuery("btmRight", btmRight, true);
+            }
+            if (language != null)
+            {
+                uri.AppendQuery("language", language, true);
+            }
+            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
+            {
+                uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
+            }
+            if (minFuzzyLevel != null)
+            {
+                uri.AppendQuery("minFuzzyLevel", minFuzzyLevel.Value, true);
+            }
+            if (maxFuzzyLevel != null)
+            {
+                uri.AppendQuery("maxFuzzyLevel", maxFuzzyLevel.Value, true);
+            }
+            if (indexFilter != null && Optional.IsCollectionDefined(indexFilter))
+            {
+                uri.AppendQueryDelimited("idxSet", indexFilter, ",", true);
+            }
+            if (brandFilter != null && Optional.IsCollectionDefined(brandFilter))
+            {
+                uri.AppendQueryDelimited("brandSet", brandFilter, ",", true);
+            }
+            if (electricVehicleConnectorFilter != null && Optional.IsCollectionDefined(electricVehicleConnectorFilter))
+            {
+                uri.AppendQueryDelimited("connectorSet", electricVehicleConnectorFilter, ",", true);
+            }
+            if (entityType != null)
+            {
+                uri.AppendQuery("entityType", entityType.Value.ToString(), true);
+            }
+            if (localizedMapView != null)
+            {
+                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+            }
+            if (operatingHours != null)
+            {
+                uri.AppendQuery("openingHours", operatingHours.Value.ToString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateFuzzySearchRequest(ResponseFormat format, string query, bool? isTypeAhead, int? top, int? skip, IEnumerable<int> categoryFilter, IEnumerable<string> countryFilter, double? lat, double? lon, int? radiusInMeters, string topLeft, string btmRight, string language, IEnumerable<SearchIndex> extendedPostalCodesFor, int? minFuzzyLevel, int? maxFuzzyLevel, IEnumerable<SearchIndex> indexFilter, IEnumerable<string> brandFilter, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter, GeographicEntity? entityType, LocalizedMapView? localizedMapView, OperatingHoursRange? operatingHours)
@@ -576,6 +681,81 @@ namespace Azure.Maps.Search
             }
         }
 
+        internal RequestUriBuilder CreateSearchPointOfInterestRequestUri(ResponseFormat format, string query, bool? isTypeAhead, int? top, int? skip, IEnumerable<int> categoryFilter, IEnumerable<string> countryFilter, double? lat, double? lon, int? radiusInMeters, string topLeft, string btmRight, string language, IEnumerable<PointOfInterestExtendedPostalCodes> extendedPostalCodesFor, IEnumerable<string> brandFilter, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter, LocalizedMapView? localizedMapView, OperatingHoursRange? operatingHours)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/search/poi/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("query", query, true);
+            if (isTypeAhead != null)
+            {
+                uri.AppendQuery("typeahead", isTypeAhead.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("limit", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("ofs", skip.Value, true);
+            }
+            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
+            {
+                uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
+            }
+            if (countryFilter != null && Optional.IsCollectionDefined(countryFilter))
+            {
+                uri.AppendQueryDelimited("countrySet", countryFilter, ",", true);
+            }
+            if (lat != null)
+            {
+                uri.AppendQuery("lat", lat.Value, true);
+            }
+            if (lon != null)
+            {
+                uri.AppendQuery("lon", lon.Value, true);
+            }
+            if (radiusInMeters != null)
+            {
+                uri.AppendQuery("radius", radiusInMeters.Value, true);
+            }
+            if (topLeft != null)
+            {
+                uri.AppendQuery("topLeft", topLeft, true);
+            }
+            if (btmRight != null)
+            {
+                uri.AppendQuery("btmRight", btmRight, true);
+            }
+            if (language != null)
+            {
+                uri.AppendQuery("language", language, true);
+            }
+            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
+            {
+                uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
+            }
+            if (brandFilter != null && Optional.IsCollectionDefined(brandFilter))
+            {
+                uri.AppendQueryDelimited("brandSet", brandFilter, ",", true);
+            }
+            if (electricVehicleConnectorFilter != null && Optional.IsCollectionDefined(electricVehicleConnectorFilter))
+            {
+                uri.AppendQueryDelimited("connectorSet", electricVehicleConnectorFilter, ",", true);
+            }
+            if (localizedMapView != null)
+            {
+                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+            }
+            if (operatingHours != null)
+            {
+                uri.AppendQuery("openingHours", operatingHours.Value.ToString(), true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateSearchPointOfInterestRequest(ResponseFormat format, string query, bool? isTypeAhead, int? top, int? skip, IEnumerable<int> categoryFilter, IEnumerable<string> countryFilter, double? lat, double? lon, int? radiusInMeters, string topLeft, string btmRight, string language, IEnumerable<PointOfInterestExtendedPostalCodes> extendedPostalCodesFor, IEnumerable<string> brandFilter, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter, LocalizedMapView? localizedMapView, OperatingHoursRange? operatingHours)
         {
             var message = _pipeline.CreateMessage();
@@ -890,6 +1070,58 @@ namespace Azure.Maps.Search
             }
         }
 
+        internal RequestUriBuilder CreateSearchNearbyPointOfInterestRequestUri(ResponseFormat format, double lat, double lon, int? top, int? skip, IEnumerable<int> categoryFilter, IEnumerable<string> countryFilter, int? radiusInMeters, string language, IEnumerable<SearchIndex> extendedPostalCodesFor, IEnumerable<string> brandFilter, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter, LocalizedMapView? localizedMapView)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/search/nearby/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("lat", lat, true);
+            uri.AppendQuery("lon", lon, true);
+            if (top != null)
+            {
+                uri.AppendQuery("limit", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("ofs", skip.Value, true);
+            }
+            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
+            {
+                uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
+            }
+            if (countryFilter != null && Optional.IsCollectionDefined(countryFilter))
+            {
+                uri.AppendQueryDelimited("countrySet", countryFilter, ",", true);
+            }
+            if (radiusInMeters != null)
+            {
+                uri.AppendQuery("radius", radiusInMeters.Value, true);
+            }
+            if (language != null)
+            {
+                uri.AppendQuery("language", language, true);
+            }
+            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
+            {
+                uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
+            }
+            if (brandFilter != null && Optional.IsCollectionDefined(brandFilter))
+            {
+                uri.AppendQueryDelimited("brandSet", brandFilter, ",", true);
+            }
+            if (electricVehicleConnectorFilter != null && Optional.IsCollectionDefined(electricVehicleConnectorFilter))
+            {
+                uri.AppendQueryDelimited("connectorSet", electricVehicleConnectorFilter, ",", true);
+            }
+            if (localizedMapView != null)
+            {
+                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateSearchNearbyPointOfInterestRequest(ResponseFormat format, double lat, double lon, int? top, int? skip, IEnumerable<int> categoryFilter, IEnumerable<string> countryFilter, int? radiusInMeters, string language, IEnumerable<SearchIndex> extendedPostalCodesFor, IEnumerable<string> brandFilter, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter, LocalizedMapView? localizedMapView)
         {
             var message = _pipeline.CreateMessage();
@@ -1175,6 +1407,81 @@ namespace Azure.Maps.Search
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSearchPointOfInterestCategoryRequestUri(ResponseFormat format, string query, bool? isTypeAhead, int? top, int? skip, IEnumerable<int> categoryFilter, IEnumerable<string> countryFilter, double? lat, double? lon, int? radiusInMeters, string topLeft, string btmRight, string language, IEnumerable<SearchIndex> extendedPostalCodesFor, IEnumerable<string> brandFilter, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter, LocalizedMapView? localizedMapView, OperatingHoursRange? operatingHours)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/search/poi/category/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("query", query, true);
+            if (isTypeAhead != null)
+            {
+                uri.AppendQuery("typeahead", isTypeAhead.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("limit", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("ofs", skip.Value, true);
+            }
+            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
+            {
+                uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
+            }
+            if (countryFilter != null && Optional.IsCollectionDefined(countryFilter))
+            {
+                uri.AppendQueryDelimited("countrySet", countryFilter, ",", true);
+            }
+            if (lat != null)
+            {
+                uri.AppendQuery("lat", lat.Value, true);
+            }
+            if (lon != null)
+            {
+                uri.AppendQuery("lon", lon.Value, true);
+            }
+            if (radiusInMeters != null)
+            {
+                uri.AppendQuery("radius", radiusInMeters.Value, true);
+            }
+            if (topLeft != null)
+            {
+                uri.AppendQuery("topLeft", topLeft, true);
+            }
+            if (btmRight != null)
+            {
+                uri.AppendQuery("btmRight", btmRight, true);
+            }
+            if (language != null)
+            {
+                uri.AppendQuery("language", language, true);
+            }
+            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
+            {
+                uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
+            }
+            if (brandFilter != null && Optional.IsCollectionDefined(brandFilter))
+            {
+                uri.AppendQueryDelimited("brandSet", brandFilter, ",", true);
+            }
+            if (electricVehicleConnectorFilter != null && Optional.IsCollectionDefined(electricVehicleConnectorFilter))
+            {
+                uri.AppendQueryDelimited("connectorSet", electricVehicleConnectorFilter, ",", true);
+            }
+            if (localizedMapView != null)
+            {
+                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+            }
+            if (operatingHours != null)
+            {
+                uri.AppendQuery("openingHours", operatingHours.Value.ToString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateSearchPointOfInterestCategoryRequest(ResponseFormat format, string query, bool? isTypeAhead, int? top, int? skip, IEnumerable<int> categoryFilter, IEnumerable<string> countryFilter, double? lat, double? lon, int? radiusInMeters, string topLeft, string btmRight, string language, IEnumerable<SearchIndex> extendedPostalCodesFor, IEnumerable<string> brandFilter, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter, LocalizedMapView? localizedMapView, OperatingHoursRange? operatingHours)
@@ -1515,6 +1822,20 @@ namespace Azure.Maps.Search
             }
         }
 
+        internal RequestUriBuilder CreateGetPointOfInterestCategoryTreeRequestUri(JsonFormat format, string language)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/search/poi/category/tree/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (language != null)
+            {
+                uri.AppendQuery("language", language, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetPointOfInterestCategoryTreeRequest(JsonFormat format, string language)
         {
             var message = _pipeline.CreateMessage();
@@ -1600,6 +1921,69 @@ namespace Azure.Maps.Search
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSearchAddressRequestUri(ResponseFormat format, string query, bool? isTypeAhead, int? top, int? skip, IEnumerable<string> countryFilter, double? lat, double? lon, int? radiusInMeters, string topLeft, string btmRight, string language, IEnumerable<SearchIndex> extendedPostalCodesFor, GeographicEntity? entityType, LocalizedMapView? localizedMapView)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/search/address/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("query", query, true);
+            if (isTypeAhead != null)
+            {
+                uri.AppendQuery("typeahead", isTypeAhead.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("limit", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("ofs", skip.Value, true);
+            }
+            if (countryFilter != null && Optional.IsCollectionDefined(countryFilter))
+            {
+                uri.AppendQueryDelimited("countrySet", countryFilter, ",", true);
+            }
+            if (lat != null)
+            {
+                uri.AppendQuery("lat", lat.Value, true);
+            }
+            if (lon != null)
+            {
+                uri.AppendQuery("lon", lon.Value, true);
+            }
+            if (radiusInMeters != null)
+            {
+                uri.AppendQuery("radius", radiusInMeters.Value, true);
+            }
+            if (topLeft != null)
+            {
+                uri.AppendQuery("topLeft", topLeft, true);
+            }
+            if (btmRight != null)
+            {
+                uri.AppendQuery("btmRight", btmRight, true);
+            }
+            if (language != null)
+            {
+                uri.AppendQuery("language", language, true);
+            }
+            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
+            {
+                uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
+            }
+            if (entityType != null)
+            {
+                uri.AppendQuery("entityType", entityType.Value.ToString(), true);
+            }
+            if (localizedMapView != null)
+            {
+                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateSearchAddressRequest(ResponseFormat format, string query, bool? isTypeAhead, int? top, int? skip, IEnumerable<string> countryFilter, double? lat, double? lon, int? radiusInMeters, string topLeft, string btmRight, string language, IEnumerable<SearchIndex> extendedPostalCodesFor, GeographicEntity? entityType, LocalizedMapView? localizedMapView)
@@ -1862,6 +2246,64 @@ namespace Azure.Maps.Search
             }
         }
 
+        internal RequestUriBuilder CreateReverseSearchAddressRequestUri(ResponseFormat format, IEnumerable<double> query, string language, bool? includeSpeedLimit, int? heading, int? radiusInMeters, string number, bool? includeRoadUse, IEnumerable<RoadKind> roadUse, bool? allowFreeformNewline, bool? includeMatchType, GeographicEntity? entityType, LocalizedMapView? localizedMapView)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/search/address/reverse/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (query != null && Optional.IsCollectionDefined(query))
+            {
+                uri.AppendQueryDelimited("query", query, ",", true);
+            }
+            if (language != null)
+            {
+                uri.AppendQuery("language", language, true);
+            }
+            if (includeSpeedLimit != null)
+            {
+                uri.AppendQuery("returnSpeedLimit", includeSpeedLimit.Value, true);
+            }
+            if (heading != null)
+            {
+                uri.AppendQuery("heading", heading.Value, true);
+            }
+            if (radiusInMeters != null)
+            {
+                uri.AppendQuery("radius", radiusInMeters.Value, true);
+            }
+            if (number != null)
+            {
+                uri.AppendQuery("number", number, true);
+            }
+            if (includeRoadUse != null)
+            {
+                uri.AppendQuery("returnRoadUse", includeRoadUse.Value, true);
+            }
+            if (roadUse != null && Optional.IsCollectionDefined(roadUse))
+            {
+                uri.AppendQueryDelimited("roadUse", roadUse, ",", true);
+            }
+            if (allowFreeformNewline != null)
+            {
+                uri.AppendQuery("allowFreeformNewline", allowFreeformNewline.Value, true);
+            }
+            if (includeMatchType != null)
+            {
+                uri.AppendQuery("returnMatchType", includeMatchType.Value, true);
+            }
+            if (entityType != null)
+            {
+                uri.AppendQuery("entityType", entityType.Value.ToString(), true);
+            }
+            if (localizedMapView != null)
+            {
+                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateReverseSearchAddressRequest(ResponseFormat format, IEnumerable<double> query, string language, bool? includeSpeedLimit, int? heading, int? radiusInMeters, string number, bool? includeRoadUse, IEnumerable<RoadKind> roadUse, bool? allowFreeformNewline, bool? includeMatchType, GeographicEntity? entityType, LocalizedMapView? localizedMapView)
         {
             var message = _pipeline.CreateMessage();
@@ -2063,6 +2505,40 @@ namespace Azure.Maps.Search
             }
         }
 
+        internal RequestUriBuilder CreateReverseSearchCrossStreetAddressRequestUri(ResponseFormat format, IEnumerable<double> query, int? top, int? heading, int? radiusInMeters, string language, LocalizedMapView? localizedMapView)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/search/address/reverse/crossStreet/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (query != null && Optional.IsCollectionDefined(query))
+            {
+                uri.AppendQueryDelimited("query", query, ",", true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("limit", top.Value, true);
+            }
+            if (heading != null)
+            {
+                uri.AppendQuery("heading", heading.Value, true);
+            }
+            if (radiusInMeters != null)
+            {
+                uri.AppendQuery("radius", radiusInMeters.Value, true);
+            }
+            if (language != null)
+            {
+                uri.AppendQuery("language", language, true);
+            }
+            if (localizedMapView != null)
+            {
+                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateReverseSearchCrossStreetAddressRequest(ResponseFormat format, IEnumerable<double> query, int? top, int? heading, int? radiusInMeters, string language, LocalizedMapView? localizedMapView)
         {
             var message = _pipeline.CreateMessage();
@@ -2200,6 +2676,77 @@ namespace Azure.Maps.Search
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSearchStructuredAddressRequestUri(ResponseFormat format, string countryCode, string language, int? top, int? skip, string streetNumber, string streetName, string crossStreet, string municipality, string municipalitySubdivision, string countryTertiarySubdivision, string countrySecondarySubdivision, string countrySubdivision, string postalCode, IEnumerable<SearchIndex> extendedPostalCodesFor, GeographicEntity? entityType, LocalizedMapView? localizedMapView)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/search/address/structured/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (language != null)
+            {
+                uri.AppendQuery("language", language, true);
+            }
+            uri.AppendQuery("countryCode", countryCode, true);
+            if (top != null)
+            {
+                uri.AppendQuery("limit", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("ofs", skip.Value, true);
+            }
+            if (streetNumber != null)
+            {
+                uri.AppendQuery("streetNumber", streetNumber, true);
+            }
+            if (streetName != null)
+            {
+                uri.AppendQuery("streetName", streetName, true);
+            }
+            if (crossStreet != null)
+            {
+                uri.AppendQuery("crossStreet", crossStreet, true);
+            }
+            if (municipality != null)
+            {
+                uri.AppendQuery("municipality", municipality, true);
+            }
+            if (municipalitySubdivision != null)
+            {
+                uri.AppendQuery("municipalitySubdivision", municipalitySubdivision, true);
+            }
+            if (countryTertiarySubdivision != null)
+            {
+                uri.AppendQuery("countryTertiarySubdivision", countryTertiarySubdivision, true);
+            }
+            if (countrySecondarySubdivision != null)
+            {
+                uri.AppendQuery("countrySecondarySubdivision", countrySecondarySubdivision, true);
+            }
+            if (countrySubdivision != null)
+            {
+                uri.AppendQuery("countrySubdivision", countrySubdivision, true);
+            }
+            if (postalCode != null)
+            {
+                uri.AppendQuery("postalCode", postalCode, true);
+            }
+            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
+            {
+                uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
+            }
+            if (entityType != null)
+            {
+                uri.AppendQuery("entityType", entityType.Value.ToString(), true);
+            }
+            if (localizedMapView != null)
+            {
+                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateSearchStructuredAddressRequest(ResponseFormat format, string countryCode, string language, int? top, int? skip, string streetNumber, string streetName, string crossStreet, string municipality, string municipalitySubdivision, string countryTertiarySubdivision, string countrySecondarySubdivision, string countrySubdivision, string postalCode, IEnumerable<SearchIndex> extendedPostalCodesFor, GeographicEntity? entityType, LocalizedMapView? localizedMapView)
@@ -2474,6 +3021,45 @@ namespace Azure.Maps.Search
             }
         }
 
+        internal RequestUriBuilder CreateSearchInsideGeometryRequestUri(ResponseFormat format, string query, SearchInsideGeometryRequest geometry, int? top, string language, IEnumerable<int> categoryFilter, IEnumerable<SearchIndex> extendedPostalCodesFor, IEnumerable<SearchIndex> indexFilter, LocalizedMapView? localizedMapView, OperatingHoursRange? operatingHours)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/search/geometry/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("query", query, true);
+            if (top != null)
+            {
+                uri.AppendQuery("limit", top.Value, true);
+            }
+            if (language != null)
+            {
+                uri.AppendQuery("language", language, true);
+            }
+            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
+            {
+                uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
+            }
+            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
+            {
+                uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
+            }
+            if (indexFilter != null && Optional.IsCollectionDefined(indexFilter))
+            {
+                uri.AppendQueryDelimited("idxSet", indexFilter, ",", true);
+            }
+            if (localizedMapView != null)
+            {
+                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+            }
+            if (operatingHours != null)
+            {
+                uri.AppendQuery("openingHours", operatingHours.Value.ToString(), true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateSearchInsideGeometryRequest(ResponseFormat format, string query, SearchInsideGeometryRequest geometry, int? top, string language, IEnumerable<int> categoryFilter, IEnumerable<SearchIndex> extendedPostalCodesFor, IEnumerable<SearchIndex> indexFilter, LocalizedMapView? localizedMapView, OperatingHoursRange? operatingHours)
         {
             var message = _pipeline.CreateMessage();
@@ -2708,6 +3294,42 @@ namespace Azure.Maps.Search
             }
         }
 
+        internal RequestUriBuilder CreateSearchAlongRouteRequestUri(ResponseFormat format, string query, int maxDetourTime, SearchAlongRouteRequest route, int? top, IEnumerable<string> brandFilter, IEnumerable<int> categoryFilter, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter, LocalizedMapView? localizedMapView, OperatingHoursRange? operatingHours)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/search/alongRoute/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("query", query, true);
+            uri.AppendQuery("maxDetourTime", maxDetourTime, true);
+            if (top != null)
+            {
+                uri.AppendQuery("limit", top.Value, true);
+            }
+            if (brandFilter != null && Optional.IsCollectionDefined(brandFilter))
+            {
+                uri.AppendQueryDelimited("brandSet", brandFilter, ",", true);
+            }
+            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
+            {
+                uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
+            }
+            if (electricVehicleConnectorFilter != null && Optional.IsCollectionDefined(electricVehicleConnectorFilter))
+            {
+                uri.AppendQueryDelimited("connectorSet", electricVehicleConnectorFilter, ",", true);
+            }
+            if (localizedMapView != null)
+            {
+                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+            }
+            if (operatingHours != null)
+            {
+                uri.AppendQuery("openingHours", operatingHours.Value.ToString(), true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateSearchAlongRouteRequest(ResponseFormat format, string query, int maxDetourTime, SearchAlongRouteRequest route, int? top, IEnumerable<string> brandFilter, IEnumerable<int> categoryFilter, IEnumerable<ElectricVehicleConnector> electricVehicleConnectorFilter, LocalizedMapView? localizedMapView, OperatingHoursRange? operatingHours)
         {
             var message = _pipeline.CreateMessage();
@@ -2929,6 +3551,16 @@ namespace Azure.Maps.Search
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateFuzzySearchBatchSyncRequestUri(JsonFormat format, BatchRequestInternal batchRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/search/fuzzy/batch/sync/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateFuzzySearchBatchSyncRequest(JsonFormat format, BatchRequestInternal batchRequest)
@@ -3308,6 +3940,16 @@ namespace Azure.Maps.Search
             }
         }
 
+        internal RequestUriBuilder CreateFuzzySearchBatchRequestUri(JsonFormat format, BatchRequestInternal batchRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/search/fuzzy/batch/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateFuzzySearchBatchRequest(JsonFormat format, BatchRequestInternal batchRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -3679,6 +4321,16 @@ namespace Azure.Maps.Search
             }
         }
 
+        internal RequestUriBuilder CreateGetFuzzySearchBatchRequestUri(string batchId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/search/fuzzy/batch/", false);
+            uri.AppendPath(batchId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetFuzzySearchBatchRequest(string batchId)
         {
             var message = _pipeline.CreateMessage();
@@ -4044,6 +4696,16 @@ namespace Azure.Maps.Search
             }
         }
 
+        internal RequestUriBuilder CreateSearchAddressBatchSyncRequestUri(JsonFormat format, BatchRequestInternal batchRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/search/address/batch/sync/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSearchAddressBatchSyncRequest(JsonFormat format, BatchRequestInternal batchRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -4405,6 +5067,16 @@ namespace Azure.Maps.Search
             }
         }
 
+        internal RequestUriBuilder CreateSearchAddressBatchRequestUri(JsonFormat format, BatchRequestInternal batchRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/search/address/batch/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSearchAddressBatchRequest(JsonFormat format, BatchRequestInternal batchRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -4760,6 +5432,16 @@ namespace Azure.Maps.Search
             }
         }
 
+        internal RequestUriBuilder CreateGetSearchAddressBatchRequestUri(string batchId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/search/address/batch/", false);
+            uri.AppendPath(batchId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSearchAddressBatchRequest(string batchId)
         {
             var message = _pipeline.CreateMessage();
@@ -5107,6 +5789,16 @@ namespace Azure.Maps.Search
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateReverseSearchAddressBatchSyncRequestUri(JsonFormat format, BatchRequestInternal batchRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/search/address/reverse/batch/sync/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateReverseSearchAddressBatchSyncRequest(JsonFormat format, BatchRequestInternal batchRequest)
@@ -5474,6 +6166,16 @@ namespace Azure.Maps.Search
             }
         }
 
+        internal RequestUriBuilder CreateReverseSearchAddressBatchRequestUri(JsonFormat format, BatchRequestInternal batchRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/search/address/reverse/batch/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateReverseSearchAddressBatchRequest(JsonFormat format, BatchRequestInternal batchRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -5831,6 +6533,16 @@ namespace Azure.Maps.Search
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetReverseSearchAddressBatchRequestUri(string batchId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/search/address/reverse/batch/", false);
+            uri.AppendPath(batchId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetReverseSearchAddressBatchRequest(string batchId)

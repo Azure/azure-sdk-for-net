@@ -41,6 +41,17 @@ namespace Azure.Maps.Geolocation
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetLocationRequestUri(JsonFormat format, string ipAddress)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/geolocation/ip/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("ip", ipAddress, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetLocationRequest(JsonFormat format, string ipAddress)
         {
             var message = _pipeline.CreateMessage();
