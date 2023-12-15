@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests
 {
-    internal static class ReaderWriterTestSource
+    public static class ReaderWriterTestSource
     {
         private static List<BinaryData> InvalidOperationBinaryData = new List<BinaryData>
         {
