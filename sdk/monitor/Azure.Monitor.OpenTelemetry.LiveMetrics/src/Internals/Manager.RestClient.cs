@@ -18,8 +18,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         /// </summary>
         private string _etag = string.Empty;
 
-        private bool _pingHasRun = false;
-        private bool _postHasRun = false;
         private DateTimeOffset _lastSuccessfulPing = DateTimeOffset.UtcNow;
         private DateTimeOffset _lastSuccessfulPost = DateTimeOffset.UtcNow;
 
@@ -27,7 +25,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         {
             try
             {
-                _pingHasRun = true;
                 Debug.WriteLine($"{DateTime.Now}: OnPing invoked.");
 
                 var response = _quickPulseSDKClientAPIsRestClient.PingCustom(
@@ -90,7 +87,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         {
             try
             {
-                _postHasRun = true;
                 Debug.WriteLine($"{DateTime.Now}: OnPost invoked.");
 
                 var dataPoint = GetDataPoint();

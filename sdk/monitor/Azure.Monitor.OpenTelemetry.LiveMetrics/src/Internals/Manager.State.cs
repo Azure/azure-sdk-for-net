@@ -52,7 +52,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             _shouldCollect = false;
             _callbackAction = OnPing;
             _period = _pingPeriod;
-            _evaluateBackoff = () => _pingHasRun && DateTimeOffset.UtcNow - _lastSuccessfulPing > _maximumPingInterval;
+            _lastSuccessfulPing = DateTimeOffset.UtcNow;
+            _evaluateBackoff = () => DateTimeOffset.UtcNow - _lastSuccessfulPing > _maximumPingInterval;
         }
 
         private void SetPostState()
@@ -61,7 +62,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             _shouldCollect = true;
             _callbackAction = OnPost;
             _period = _postPeriod;
-            _evaluateBackoff = () => _postHasRun && DateTimeOffset.UtcNow - _lastSuccessfulPost > _maximumPostInterval;
+            _lastSuccessfulPost = DateTimeOffset.UtcNow;
+            _evaluateBackoff = () => DateTimeOffset.UtcNow - _lastSuccessfulPost > _maximumPostInterval;
         }
 
         private void SetBackoffState()
@@ -71,8 +73,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             _callbackAction = BackoffConcluded;
             _period = _backoffPeriod;
             _evaluateBackoff = () => false;
-
-            _pingHasRun = _postHasRun = false;
         }
 
         private void BackoffConcluded()
