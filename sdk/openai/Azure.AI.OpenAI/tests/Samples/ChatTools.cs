@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ public partial class ChatTools
 {
     [Test]
     [Ignore("Only verifying that the sample builds")]
-    public async Task LegacyChatFunctions()
+    public async Task ChatToolSample()
     {
         string endpoint = "https://myaccount.openai.azure.com/";
         var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -85,25 +86,17 @@ public partial class ChatTools
         ChatChoice responseChoice = response.Value.Choices[0];
         if (responseChoice.FinishReason == CompletionsFinishReason.ToolCalls)
         {
-            List<ChatRequestToolMessage> toolCallResolutionMessages = new();
+            // Add the assistant message with tool calls to the conversation history
+            ChatRequestAssistantMessage toolCallHistoryMessage = new(responseChoice.Message);
+            chatCompletionsOptions.Messages.Add(toolCallHistoryMessage);
+
+            // Add a new tool message for each tool call that is resolved
             foreach (ChatCompletionsToolCall toolCall in responseChoice.Message.ToolCalls)
             {
-                toolCallResolutionMessages.Add(GetToolCallResponseMessage(toolCall));
+                chatCompletionsOptions.Messages.Add(GetToolCallResponseMessage(toolCall));
             }
 
-            // Include the ToolCall message from the assistant in the conversation history, too
-            var toolCallHistoryMessage = new ChatRequestAssistantMessage(responseChoice.Message.Content);
-            foreach (ChatCompletionsToolCall requestedToolCall in responseChoice.Message.ToolCalls)
-            {
-                toolCallHistoryMessage.ToolCalls.Add(requestedToolCall);
-            }
-
-            // Now make a new request using all the messages, including the original
-            chatCompletionsOptions.Messages.Add(toolCallHistoryMessage);
-            foreach (ChatRequestToolMessage resolutionMessage in toolCallResolutionMessages)
-            {
-                chatCompletionsOptions.Messages.Add(resolutionMessage);
-            }
+            // Now make a new request with all the messages thus far, including the original
         }
         #endregion
 
@@ -111,6 +104,94 @@ public partial class ChatTools
         chatCompletionsOptions.ToolChoice = ChatCompletionsToolChoice.Auto; // let the model decide
         chatCompletionsOptions.ToolChoice = ChatCompletionsToolChoice.None; // don't call tools
         chatCompletionsOptions.ToolChoice = getWeatherTool; // only use the specified tool
+        #endregion
+    }
+
+    [Test]
+    [Ignore("Only verifying that the sample builds")]
+    public async Task StreamingChatToolSample()
+    {
+        string endpoint = "https://myaccount.openai.azure.com/";
+        var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
+
+        var getWeatherTool = new ChatCompletionsFunctionToolDefinition()
+        {
+            Name = "get_current_weather",
+            Description = "Get the current weather in a given location",
+            Parameters = BinaryData.FromObjectAsJson(
+            new
+            {
+                Type = "object",
+                Properties = new
+                {
+                    Location = new
+                    {
+                        Type = "string",
+                        Description = "The city and state, e.g. San Francisco, CA",
+                    },
+                    Unit = new
+                    {
+                        Type = "string",
+                        Enum = new[] { "celsius", "fahrenheit" },
+                    }
+                },
+                Required = new[] { "location" },
+            },
+            new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
+        };
+
+        var chatCompletionsOptions = new ChatCompletionsOptions()
+        {
+            DeploymentName = "gpt-35-turbo-1106",
+            Messages = { new ChatRequestUserMessage("What's the weather like in Boston?") },
+            Tools = { getWeatherTool },
+        };
+
+        #region Snippet:ChatTools:StreamingChatTools
+        Dictionary<int, string> toolCallIdsByIndex = new();
+        Dictionary<int, string> functionNamesByIndex = new();
+        Dictionary<int, StringBuilder> functionArgmentBuildersByIndex = new();
+        StringBuilder contentBuilder = new();
+
+        await foreach (StreamingChatCompletionsUpdate chatUpdate
+            in await client.GetChatCompletionsStreamingAsync(chatCompletionsOptions))
+        {
+            if (chatUpdate.ToolCallUpdate is StreamingFunctionToolCallUpdate functionToolCallUpdate)
+            {
+                if (functionToolCallUpdate.Id != null)
+                {
+                    toolCallIdsByIndex[functionToolCallUpdate.ToolCallIndex] = functionToolCallUpdate.Id;
+                }
+                if (functionToolCallUpdate.Name != null)
+                {
+                    functionNamesByIndex[functionToolCallUpdate.ToolCallIndex] = functionToolCallUpdate.Name;
+                }
+                if (functionToolCallUpdate.ArgumentsUpdate != null)
+                {
+                    StringBuilder argumentsBuilder
+                        = functionArgmentBuildersByIndex.TryGetValue(
+                            functionToolCallUpdate.ToolCallIndex,
+                            out StringBuilder existingBuilder) ? existingBuilder : new StringBuilder();
+                    argumentsBuilder.Append(functionToolCallUpdate.ArgumentsUpdate);
+                }
+            }
+            if (chatUpdate.ContentUpdate != null)
+            {
+                contentBuilder.Append(chatUpdate.ContentUpdate);
+            }
+        }
+
+        ChatRequestAssistantMessage assistantHistoryMessage = new(contentBuilder.ToString());
+        foreach (KeyValuePair<int, string> indexIdPair in toolCallIdsByIndex)
+        {
+            assistantHistoryMessage.ToolCalls.Add(new ChatCompletionsFunctionToolCall(
+                id: indexIdPair.Value,
+                functionNamesByIndex[indexIdPair.Key],
+                functionArgmentBuildersByIndex[indexIdPair.Key].ToString()));
+        }
+        chatCompletionsOptions.Messages.Add(assistantHistoryMessage);
+
+        // Add request tool messages and proceed just like non-streaming
         #endregion
     }
 }
