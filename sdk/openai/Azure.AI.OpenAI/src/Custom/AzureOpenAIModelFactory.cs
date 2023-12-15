@@ -29,7 +29,7 @@ public static partial class AzureOpenAIModelFactory
     public static ChatChoice ChatChoice(
         ChatResponseMessage message = null,
         int index = default,
-        CompletionsFinishReason finishReason = default,
+        CompletionsFinishReason? finishReason = null,
         ChatFinishDetails finishDetails = null,
         ChatResponseMessage deltaMessage = null,
         ContentFilterResultsForChoice contentFilterResults = null,

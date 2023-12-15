@@ -29,6 +29,8 @@
   - `ToolCallUpdate.Id` remains unchanged.
   - Instead of casting `ToolCallUpdate` to `ChatCompletionsFunctionToolCall`, cast it to `StreamingToolCallUpdate`.
   - Update cast instance use of `functionToolCallUpdate.Arguments` to accumulate `functionToolCallUpdate.ArgumentsUpdate`.
+- Removed the parameterized constructor of the `ChatCompletionsOptions` class that only received the messages as a parameter in favor of the parameterized constructor that receives the deployment name as well. This makes it consistent with the implementation of other Options classes.
+- Removed the setter of the `Input` property of the `EmbeddingsOptions` class as per the guidelines for collection properties.
 
 ### Bugs Fixed
 
